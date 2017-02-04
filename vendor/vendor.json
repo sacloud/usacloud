@@ -1,0 +1,85 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "Hn63+11E2ZtKrUqw94A3qsG1N00=",
+			"path": "github.com/astaxie/flatmap",
+			"revision": "c0e84c00d8d55d6290cf8a6093a80d6f94240b12",
+			"revisionTime": "2016-05-05T14:55:28Z"
+		},
+		{
+			"checksumSHA1": "0EhLvZ6Og9HYqJtCc2Dzs1EgM30=",
+			"path": "github.com/bitly/go-simplejson",
+			"revision": "da1a8928f709389522c8023062a3739f3b4af419",
+			"revisionTime": "2017-02-06T15:46:32Z"
+		},
+		{
+			"checksumSHA1": "dvabztWVQX8f6oMLRyv4dLH+TGY=",
+			"path": "github.com/davecgh/go-spew/spew",
+			"revision": "346938d642f2ec3594ed81d874461961cd0faa76",
+			"revisionTime": "2016-10-29T20:57:26Z"
+		},
+		{
+			"checksumSHA1": "0MZ+LgAY36oK73IE9297Vf4NTXU=",
+			"path": "github.com/huandu/xstrings",
+			"revision": "3959339b333561bf62a38b424fd41517c2c90f40",
+			"revisionTime": "2015-11-30T12:51:19Z"
+		},
+		{
+			"checksumSHA1": "MNkKJyk2TazKMJYbal5wFHybpyA=",
+			"path": "github.com/mattn/go-runewidth",
+			"revision": "14207d285c6c197daabb5c9793d63e7af9ab2d50",
+			"revisionTime": "2017-02-01T02:35:40Z"
+		},
+		{
+			"checksumSHA1": "h+oCMj21PiQfIdBog0eyUtF1djs=",
+			"path": "github.com/olekukonko/tablewriter",
+			"revision": "febf2d34b54a69ce7530036c7503b1c9fbfdf0bb",
+			"revisionTime": "2017-01-28T05:05:32Z"
+		},
+		{
+			"checksumSHA1": "LuFv4/jlrmFNnDb/5SCSEPAM9vU=",
+			"path": "github.com/pmezard/go-difflib/difflib",
+			"revision": "792786c7400a136282c1664665ae0a8db921c6c2",
+			"revisionTime": "2016-01-10T10:55:54Z"
+		},
+		{
+			"checksumSHA1": "WDN0aBT7ydlh1XoUn2x49bAIJTw=",
+			"path": "github.com/sacloud/libsacloud",
+			"revision": "41d8ddede81557b47c137607d283cd1a89044d2d",
+			"revisionTime": "2017-02-16T01:41:46Z"
+		},
+		{
+			"checksumSHA1": "rjED1M54dHptivgMfoVpUD4zO7k=",
+			"path": "github.com/sacloud/libsacloud/api",
+			"revision": "c158ca80be2bfd6ec5e52b0fb9004b461ef56351",
+			"revisionTime": "2017-02-16T01:22:34Z"
+		},
+		{
+			"checksumSHA1": "PT67OITWum6eYXd9XfFhBcK4fK4=",
+			"path": "github.com/sacloud/libsacloud/sacloud",
+			"revision": "c158ca80be2bfd6ec5e52b0fb9004b461ef56351",
+			"revisionTime": "2017-02-16T01:22:34Z"
+		},
+		{
+			"checksumSHA1": "9yCxWQ82SzSqohDLwcz0ZjsDwJM=",
+			"path": "github.com/sacloud/libsacloud/sacloud/ostype",
+			"revision": "c158ca80be2bfd6ec5e52b0fb9004b461ef56351",
+			"revisionTime": "2017-02-16T01:22:34Z"
+		},
+		{
+			"checksumSHA1": "JXUVA1jky8ZX8w09p2t5KLs97Nc=",
+			"path": "github.com/stretchr/testify/assert",
+			"revision": "4d4bfba8f1d1027c4fdbe371823030df51419987",
+			"revisionTime": "2017-01-30T11:31:45Z"
+		},
+		{
+			"checksumSHA1": "exMnsyei9H9PgttMUskof6S2554=",
+			"path": "gopkg.in/urfave/cli.v2",
+			"revision": "e485446237011b8abac93919242e6f059ad56c87",
+			"revisionTime": "2016-10-29T22:39:47Z"
+		}
+	],
+	"rootPath": "github.com/sacloud/usacloud"
+}

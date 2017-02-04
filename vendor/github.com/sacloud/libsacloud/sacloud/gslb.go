@@ -1,0 +1,158 @@
+package sacloud
+
+// GSLB GSLB(CommonServiceItem)
+type GSLB struct {
+	*Resource        // ID
+	propName         // 名称
+	propDescription  // 説明
+	propServiceClass // サービスクラス
+	propIcon         // アイコン
+	propTags         // タグ
+	propCreatedAt    // 作成日時
+	PropModifiedAt   // 変更日時
+
+	Status   GSLBStatus   `json:",omitempty"` // ステータス
+	Provider GSLBProvider `json:",omitempty"` // プロバイダ
+	Settings GSLBSettings `json:",omitempty"` // GSLB設定
+
+}
+
+// GSLBSettings GSLB設定
+type GSLBSettings struct {
+	GSLB GSLBRecordSets `json:",omitempty"` // GSLB GSLBエントリー
+}
+
+// GSLBStatus GSLBステータス
+type GSLBStatus struct {
+	FQDN string `json:",omitempty"` // GSLBのFQDN
+}
+
+// GSLBProvider プロバイダ
+type GSLBProvider struct {
+	Class string `json:",omitempty"` // クラス
+}
+
+// CreateNewGSLB GSLB作成
+func CreateNewGSLB(gslbName string) *GSLB {
+	return &GSLB{
+		Resource: &Resource{},
+		propName: propName{Name: gslbName},
+		Provider: GSLBProvider{
+			Class: "gslb",
+		},
+		Settings: GSLBSettings{
+			GSLB: GSLBRecordSets{
+				DelayLoop:   10,
+				HealthCheck: defaultGSLBHealthCheck,
+				Weighted:    "True",
+				Servers:     []GSLBServer{},
+			},
+		},
+	}
+
+}
+
+// AllowGSLBHealthCheckProtocol GSLB監視プロトコルリスト
+func AllowGSLBHealthCheckProtocol() []string {
+	return []string{"http", "https", "ping", "tcp"}
+}
+
+// HasGSLBServer GSLB配下にサーバーを保持しているか判定
+func (d *GSLB) HasGSLBServer() bool {
+	return len(d.Settings.GSLB.Servers) > 0
+}
+
+// CreateGSLBServer GSLB配下のサーバーを作成
+func (d *GSLB) CreateGSLBServer(ip string) *GSLBServer {
+	return &GSLBServer{
+		IPAddress: ip,
+		Enabled:   "True",
+		Weight:    "1",
+	}
+}
+
+// AddGSLBServer GSLB配下にサーバーを追加
+func (d *GSLB) AddGSLBServer(server *GSLBServer) {
+	var isExist = false
+	for i := range d.Settings.GSLB.Servers {
+		if d.Settings.GSLB.Servers[i].IPAddress == server.IPAddress {
+			d.Settings.GSLB.Servers[i].Enabled = server.Enabled
+			d.Settings.GSLB.Servers[i].Weight = server.Weight
+			isExist = true
+		}
+	}
+
+	if !isExist {
+		d.Settings.GSLB.Servers = append(d.Settings.GSLB.Servers, *server)
+	}
+}
+
+// ClearGSLBServer GSLB配下のサーバーをクリア
+func (d *GSLB) ClearGSLBServer() {
+	d.Settings.GSLB.Servers = []GSLBServer{}
+}
+
+// GSLBRecordSets GSLBエントリー
+type GSLBRecordSets struct {
+	DelayLoop   int             `json:",omitempty"` // 監視間隔
+	HealthCheck GSLBHealthCheck `json:",omitempty"` // ヘルスチェック
+	Weighted    string          `json:",omitempty"` // ウェイト
+	SorryServer string          `json:",omitempty"` // ソーリーサーバー
+	Servers     []GSLBServer    // サーバー
+}
+
+// AddServer GSLB配下のサーバーを追加
+func (g *GSLBRecordSets) AddServer(ip string) {
+	var record GSLBServer
+	var isExist = false
+	for i := range g.Servers {
+		if g.Servers[i].IPAddress == ip {
+			isExist = true
+		}
+	}
+
+	if !isExist {
+		record = GSLBServer{
+			IPAddress: ip,
+			Enabled:   "True",
+			Weight:    "1",
+		}
+		g.Servers = append(g.Servers, record)
+	}
+}
+
+// DeleteServer GSLB配下のサーバーを削除
+func (g *GSLBRecordSets) DeleteServer(ip string) {
+	res := []GSLBServer{}
+	for i := range g.Servers {
+		if g.Servers[i].IPAddress != ip {
+			res = append(res, g.Servers[i])
+		}
+	}
+
+	g.Servers = res
+}
+
+// GSLBServer GSLB配下のサーバー
+type GSLBServer struct {
+	IPAddress string `json:",omitempty"` // IPアドレス
+	Enabled   string `json:",omitempty"` // 有効/無効
+	Weight    string `json:",omitempty"` // ウェイト
+
+}
+
+// GSLBHealthCheck ヘルスチェック
+type GSLBHealthCheck struct {
+	Protocol string `json:",omitempty"` // プロトコル
+	Host     string `json:",omitempty"` // 対象ホスト
+	Path     string `json:",omitempty"` // HTTP/HTTPSの場合のリクエストパス
+	Status   string `json:",omitempty"` // 期待するステータスコード
+	Port     string `json:",omitempty"` // ポート番号
+}
+
+var defaultGSLBHealthCheck = GSLBHealthCheck{
+	Protocol: "http",
+	Host:     "",
+	Path:     "/",
+	Status:   "200",
+}
