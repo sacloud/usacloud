@@ -10,11 +10,11 @@ import (
 
 // ListInternetParam is input parameters for the sacloud API
 type ListInternetParam struct {
+	Max  int
+	Sort []string
 	Name []string
 	Id   []int64
 	From int
-	Max  int
-	Sort []string
 }
 
 // NewListInternetParam return new ListInternetParam
@@ -78,6 +78,20 @@ func (p *ListInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListInternetParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListInternetParam) GetMax() int {
+	return p.Max
+}
+func (p *ListInternetParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListInternetParam) GetSort() []string {
+	return p.Sort
+}
 func (p *ListInternetParam) SetName(v []string) {
 	p.Name = v
 }
@@ -98,18 +112,4 @@ func (p *ListInternetParam) SetFrom(v int) {
 
 func (p *ListInternetParam) GetFrom() int {
 	return p.From
-}
-func (p *ListInternetParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListInternetParam) GetMax() int {
-	return p.Max
-}
-func (p *ListInternetParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListInternetParam) GetSort() []string {
-	return p.Sort
 }

@@ -10,10 +10,10 @@ import (
 
 // CreateSwitchParam is input parameters for the sacloud API
 type CreateSwitchParam struct {
-	Tags        []string
-	Icon        int64
 	Name        string
 	Description string
+	Tags        []string
+	Icon        int64
 }
 
 // NewCreateSwitchParam return new CreateSwitchParam
@@ -25,20 +25,6 @@ func NewCreateSwitchParam() *CreateSwitchParam {
 func (p *CreateSwitchParam) Validate() []error {
 	errors := []error{}
 	{
-		validator := define.Resources["Switch"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["create"].Params["icon"].ValidateFunc
-		errs := validator("--icon", p.Icon)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := define.Resources["Switch"].Commands["create"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
 		if errs != nil {
@@ -48,6 +34,20 @@ func (p *CreateSwitchParam) Validate() []error {
 	{
 		validator := define.Resources["Switch"].Commands["create"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["create"].Params["icon"].ValidateFunc
+		errs := validator("--icon", p.Icon)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -80,20 +80,6 @@ func (p *CreateSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *CreateSwitchParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateSwitchParam) GetTags() []string {
-	return p.Tags
-}
-func (p *CreateSwitchParam) SetIcon(v int64) {
-	p.Icon = v
-}
-
-func (p *CreateSwitchParam) GetIcon() int64 {
-	return p.Icon
-}
 func (p *CreateSwitchParam) SetName(v string) {
 	p.Name = v
 }
@@ -107,4 +93,18 @@ func (p *CreateSwitchParam) SetDescription(v string) {
 
 func (p *CreateSwitchParam) GetDescription() string {
 	return p.Description
+}
+func (p *CreateSwitchParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateSwitchParam) GetTags() []string {
+	return p.Tags
+}
+func (p *CreateSwitchParam) SetIcon(v int64) {
+	p.Icon = v
+}
+
+func (p *CreateSwitchParam) GetIcon() int64 {
+	return p.Icon
 }

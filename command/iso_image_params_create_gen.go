@@ -10,12 +10,12 @@ import (
 
 // CreateISOImageParam is input parameters for the sacloud API
 type CreateISOImageParam struct {
+	Icon        int64
+	Name        string
 	Description string
 	Size        int
 	IsoFile     string
 	Tags        []string
-	Icon        int64
-	Name        string
 }
 
 // NewCreateISOImageParam return new CreateISOImageParam
@@ -29,6 +29,20 @@ func NewCreateISOImageParam() *CreateISOImageParam {
 // Validate checks current values in model
 func (p *CreateISOImageParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["ISOImage"].Commands["create"].Params["icon"].ValidateFunc
+		errs := validator("--icon", p.Icon)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := define.Resources["ISOImage"].Commands["create"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
@@ -71,20 +85,6 @@ func (p *CreateISOImageParam) Validate() []error {
 			errors = append(errors, errs...)
 		}
 	}
-	{
-		validator := define.Resources["ISOImage"].Commands["create"].Params["icon"].ValidateFunc
-		errs := validator("--icon", p.Icon)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	return errors
 }
@@ -113,6 +113,20 @@ func (p *CreateISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CreateISOImageParam) SetIcon(v int64) {
+	p.Icon = v
+}
+
+func (p *CreateISOImageParam) GetIcon() int64 {
+	return p.Icon
+}
+func (p *CreateISOImageParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateISOImageParam) GetName() string {
+	return p.Name
+}
 func (p *CreateISOImageParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -140,18 +154,4 @@ func (p *CreateISOImageParam) SetTags(v []string) {
 
 func (p *CreateISOImageParam) GetTags() []string {
 	return p.Tags
-}
-func (p *CreateISOImageParam) SetIcon(v int64) {
-	p.Icon = v
-}
-
-func (p *CreateISOImageParam) GetIcon() int64 {
-	return p.Icon
-}
-func (p *CreateISOImageParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateISOImageParam) GetName() string {
-	return p.Name
 }

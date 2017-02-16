@@ -10,12 +10,12 @@ import (
 
 // UpdateInternetParam is input parameters for the sacloud API
 type UpdateInternetParam struct {
-	Tags        []string
-	Icon        int64
-	BandWidth   int
 	Id          int64
 	Name        string
 	Description string
+	Tags        []string
+	Icon        int64
+	BandWidth   int
 }
 
 // NewUpdateInternetParam return new UpdateInternetParam
@@ -29,34 +29,6 @@ func NewUpdateInternetParam() *UpdateInternetParam {
 // Validate checks current values in model
 func (p *UpdateInternetParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := define.Resources["Internet"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Internet"].Commands["update"].Params["icon"].ValidateFunc
-		errs := validator("--icon", p.Icon)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--band-width", p.BandWidth)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Internet"].Commands["update"].Params["band-width"].ValidateFunc
-		errs := validator("--band-width", p.BandWidth)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := validateRequired
 		errs := validator("--id", p.Id)
@@ -81,6 +53,34 @@ func (p *UpdateInternetParam) Validate() []error {
 	{
 		validator := define.Resources["Internet"].Commands["update"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Internet"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Internet"].Commands["update"].Params["icon"].ValidateFunc
+		errs := validator("--icon", p.Icon)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--band-width", p.BandWidth)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Internet"].Commands["update"].Params["band-width"].ValidateFunc
+		errs := validator("--band-width", p.BandWidth)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -113,27 +113,6 @@ func (p *UpdateInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *UpdateInternetParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *UpdateInternetParam) GetTags() []string {
-	return p.Tags
-}
-func (p *UpdateInternetParam) SetIcon(v int64) {
-	p.Icon = v
-}
-
-func (p *UpdateInternetParam) GetIcon() int64 {
-	return p.Icon
-}
-func (p *UpdateInternetParam) SetBandWidth(v int) {
-	p.BandWidth = v
-}
-
-func (p *UpdateInternetParam) GetBandWidth() int {
-	return p.BandWidth
-}
 func (p *UpdateInternetParam) SetId(v int64) {
 	p.Id = v
 }
@@ -154,4 +133,25 @@ func (p *UpdateInternetParam) SetDescription(v string) {
 
 func (p *UpdateInternetParam) GetDescription() string {
 	return p.Description
+}
+func (p *UpdateInternetParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *UpdateInternetParam) GetTags() []string {
+	return p.Tags
+}
+func (p *UpdateInternetParam) SetIcon(v int64) {
+	p.Icon = v
+}
+
+func (p *UpdateInternetParam) GetIcon() int64 {
+	return p.Icon
+}
+func (p *UpdateInternetParam) SetBandWidth(v int) {
+	p.BandWidth = v
+}
+
+func (p *UpdateInternetParam) GetBandWidth() int {
+	return p.BandWidth
 }

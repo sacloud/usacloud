@@ -10,11 +10,11 @@ import (
 
 // ListISOImageParam is input parameters for the sacloud API
 type ListISOImageParam struct {
+	Name []string
 	Id   []int64
 	From int
 	Max  int
 	Sort []string
-	Name []string
 }
 
 // NewListISOImageParam return new ListISOImageParam
@@ -26,6 +26,15 @@ func NewListISOImageParam() *ListISOImageParam {
 func (p *ListISOImageParam) Validate() []error {
 	errors := []error{}
 	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		validator := define.Resources["ISOImage"].Commands["list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -36,15 +45,6 @@ func (p *ListISOImageParam) Validate() []error {
 		errs := validateConflicts("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -78,6 +78,13 @@ func (p *ListISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListISOImageParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListISOImageParam) GetName() []string {
+	return p.Name
+}
 func (p *ListISOImageParam) SetId(v []int64) {
 	p.Id = v
 }
@@ -105,11 +112,4 @@ func (p *ListISOImageParam) SetSort(v []string) {
 
 func (p *ListISOImageParam) GetSort() []string {
 	return p.Sort
-}
-func (p *ListISOImageParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListISOImageParam) GetName() []string {
-	return p.Name
 }

@@ -10,10 +10,10 @@ import (
 
 // UpdateSwitchParam is input parameters for the sacloud API
 type UpdateSwitchParam struct {
-	Icon        int64
 	Name        string
 	Description string
 	Tags        []string
+	Icon        int64
 	Id          int64
 }
 
@@ -25,13 +25,6 @@ func NewUpdateSwitchParam() *UpdateSwitchParam {
 // Validate checks current values in model
 func (p *UpdateSwitchParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := define.Resources["Switch"].Commands["update"].Params["icon"].ValidateFunc
-		errs := validator("--icon", p.Icon)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := define.Resources["Switch"].Commands["update"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
@@ -49,6 +42,13 @@ func (p *UpdateSwitchParam) Validate() []error {
 	{
 		validator := define.Resources["Switch"].Commands["update"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["update"].Params["icon"].ValidateFunc
+		errs := validator("--icon", p.Icon)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -95,13 +95,6 @@ func (p *UpdateSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *UpdateSwitchParam) SetIcon(v int64) {
-	p.Icon = v
-}
-
-func (p *UpdateSwitchParam) GetIcon() int64 {
-	return p.Icon
-}
 func (p *UpdateSwitchParam) SetName(v string) {
 	p.Name = v
 }
@@ -122,6 +115,13 @@ func (p *UpdateSwitchParam) SetTags(v []string) {
 
 func (p *UpdateSwitchParam) GetTags() []string {
 	return p.Tags
+}
+func (p *UpdateSwitchParam) SetIcon(v int64) {
+	p.Icon = v
+}
+
+func (p *UpdateSwitchParam) GetIcon() int64 {
+	return p.Icon
 }
 func (p *UpdateSwitchParam) SetId(v int64) {
 	p.Id = v

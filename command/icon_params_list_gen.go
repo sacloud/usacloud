@@ -10,11 +10,11 @@ import (
 
 // ListIconParam is input parameters for the sacloud API
 type ListIconParam struct {
+	Max  int
+	Sort []string
 	Name []string
 	Id   []int64
 	From int
-	Max  int
-	Sort []string
 }
 
 // NewListIconParam return new ListIconParam
@@ -78,6 +78,20 @@ func (p *ListIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListIconParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListIconParam) GetMax() int {
+	return p.Max
+}
+func (p *ListIconParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListIconParam) GetSort() []string {
+	return p.Sort
+}
 func (p *ListIconParam) SetName(v []string) {
 	p.Name = v
 }
@@ -98,18 +112,4 @@ func (p *ListIconParam) SetFrom(v int) {
 
 func (p *ListIconParam) GetFrom() int {
 	return p.From
-}
-func (p *ListIconParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListIconParam) GetMax() int {
-	return p.Max
-}
-func (p *ListIconParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListIconParam) GetSort() []string {
-	return p.Sort
 }
