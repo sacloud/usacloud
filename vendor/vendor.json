@@ -75,6 +75,12 @@
 			"revisionTime": "2017-01-30T11:31:45Z"
 		},
 		{
+			"checksumSHA1": "UHGJnJ4wrdMqimTN1U1DiEesi74=",
+			"path": "github.com/webguerilla/ftps",
+			"revision": "166035d4757922d70bb9747556298c802b410f35",
+			"revisionTime": "2014-08-12T21:16:33Z"
+		},
+		{
 			"checksumSHA1": "exMnsyei9H9PgttMUskof6S2554=",
 			"path": "gopkg.in/urfave/cli.v2",
 			"revision": "e485446237011b8abac93919242e6f059ad56c87",

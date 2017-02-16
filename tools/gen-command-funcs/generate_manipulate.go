@@ -36,7 +36,7 @@ var manipulateCommandTemplate = `
 	{{.SetParamActions}}
 
 	// TODO Remove and implements here!!
-	return fmt.Errorf("Not Implements {{.FuncName}}")
+	return fmt.Errorf("Not Implements {{.FuncName}} : %#v" , p)
 
 	// call manipurate functions
 	// res, err := api.XXXX(params.Id, p)

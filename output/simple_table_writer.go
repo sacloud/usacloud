@@ -25,6 +25,7 @@ func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) tableWriter {
 
 	w.table.SetHeader(headers)
 	w.table.SetAlignment(tablewriter.ALIGN_LEFT)
+	w.table.SetAutoWrapText(false)
 	return w
 }
 

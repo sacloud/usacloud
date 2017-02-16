@@ -10,6 +10,7 @@ const (
 	HandlerAndParams
 	HandlerOrParams
 	HandlerCustomFunc
+	HandlerNoop
 )
 
 // IsWhenListOnly return true when HandlerType is able to use with CommandList
