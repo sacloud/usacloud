@@ -48,14 +48,29 @@ func main() {
 			os.Exit(2)
 		}
 
-		err := generateResource(resource)
+		src, err := generateResource(resource)
 		if err != nil {
 			log.Fatalf("writing output: %s", err)
 		}
+
+		// Write to file.
+		baseName := ctx.InputModelFileName()
+		outputName := filepath.Join(ctx.Gopath(), destination, strings.ToLower(baseName))
+
+		err = ioutil.WriteFile(outputName, tools.Sformat([]byte(src)), 0644)
+		if err != nil {
+			log.Fatalf("writing output: %s", err)
+		}
+		fmt.Printf("generated: %s\n", filepath.Join(destination, strings.ToLower(baseName)))
 	}
 }
 
-func generateResource(resource *schema.Resource) error {
+func generateResource(resource *schema.Resource) (string, error) {
+
+	var commands []map[string]interface{}
+	buf := bytes.NewBufferString("")
+	t := template.New("t")
+	template.Must(t.Parse(srcTemplate))
 
 	// build commands
 	for k, c := range resource.Commands {
@@ -63,29 +78,20 @@ func generateResource(resource *schema.Resource) error {
 
 		params, err := buildCommandParams(c)
 		if err != nil {
-			return err
+			return "", err
 		}
 
-		buf := bytes.NewBufferString("")
-		t := template.New("t")
-		template.Must(t.Parse(srcTemplate))
-
-		err = t.Execute(buf, params)
-		if err != nil {
-			return err
-		}
-
-		// Write to file.
-		baseName := ctx.InputModelFileName()
-		outputName := filepath.Join(ctx.Gopath(), destination, strings.ToLower(baseName))
-
-		err = ioutil.WriteFile(outputName, tools.Sformat([]byte(buf.String())), 0644)
-		if err != nil {
-			return err
-		}
-		fmt.Printf("generated: %s\n", filepath.Join(destination, strings.ToLower(baseName)))
+		commands = append(commands, params)
 	}
-	return nil
+
+	err := t.Execute(buf, map[string]interface{}{
+		"Commands": commands,
+	})
+	if err != nil {
+		return "", err
+	}
+
+	return buf.String(), nil
 }
 
 func buildCommandParams(command *schema.Command) (map[string]interface{}, error) {
@@ -252,6 +258,8 @@ import (
     "github.com/sacloud/usacloud/output"
 )
 
+{{ range .Commands -}}
+
 // {{.Name}} is input parameters for the sacloud API
 type {{.Name}} struct {
     {{ range .Fields -}}
@@ -309,6 +317,7 @@ func (p *{{.Name}}) Get{{.ParamName}}() {{.TypeName}} {
 	return p.{{.ParamName}}
 }
 {{ end }}
+{{- end }}
 `
 
 func getFieldTypeString(t schema.ValueType) (string, error) {

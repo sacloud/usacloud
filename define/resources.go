@@ -6,6 +6,7 @@ package define
 import "github.com/sacloud/usacloud/schema"
 
 var Resources map[string]*schema.Resource = map[string]*schema.Resource{
+	"Archive":  ArchiveResource(),
 	"Bridge":   BridgeResource(),
 	"Icon":     IconResource(),
 	"Internet": InternetResource(),

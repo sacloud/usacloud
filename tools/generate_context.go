@@ -105,7 +105,7 @@ func (c *GenerateContext) CurrentParam() *schema.Schema {
 */
 
 func (c *GenerateContext) InputModelFileName() string {
-	return fmt.Sprintf("%s_params_%s_gen.go", c.SnakeR(), c.SnakeC())
+	return fmt.Sprintf("params_%s_gen.go", c.SnakeR())
 }
 
 func (c *GenerateContext) InputModelTypeName() string {
@@ -150,13 +150,13 @@ func (c *GenerateContext) CommandFuncName() string {
 
 func (c *GenerateContext) CommandFileName(useCustomCommand bool) string {
 	if useCustomCommand {
-		return fmt.Sprintf("%s_command_%s.go", c.SnakeR(), c.SnakeC())
+		return fmt.Sprintf("command_%s_%s.go", c.SnakeR(), c.SnakeC())
 	}
-	return fmt.Sprintf("%s_command_%s_gen.go", c.SnakeR(), c.SnakeC())
+	return fmt.Sprintf("command_%s_%s_gen.go", c.SnakeR(), c.SnakeC())
 }
 
 func (c *GenerateContext) CLICommandsFileName() string {
-	return fmt.Sprintf("%s_cli_gen.go", c.SnakeR())
+	return fmt.Sprintf("cli_%s_gen.go", c.SnakeR())
 }
 
 func (c *GenerateContext) CommandResourceName() string {

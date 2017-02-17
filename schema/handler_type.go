@@ -7,6 +7,7 @@ const (
 	HandlerPathThrough HandlerType = iota
 	HandlerPathThroughEach
 	HandlerSort
+	HandlerFilterBy
 	HandlerAndParams
 	HandlerOrParams
 	HandlerCustomFunc
@@ -36,7 +37,7 @@ func (h HandlerType) IsNeedSliceValue() bool {
 // CanSetDestinationProp return true when HandlerType is able to have DestinationProp
 func (h HandlerType) CanSetDestinationProp() bool {
 	switch h {
-	case HandlerPathThrough, HandlerPathThroughEach, HandlerAndParams, HandlerOrParams:
+	case HandlerPathThrough, HandlerPathThroughEach, HandlerFilterBy, HandlerAndParams, HandlerOrParams:
 		return true
 	default:
 		return false

@@ -107,7 +107,7 @@ func internetDetailExcludes() []string {
 
 func internetCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"name":        paramName,
+		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
 		"icon":        getParamSubResourceID("Icon"),

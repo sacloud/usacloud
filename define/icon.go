@@ -76,7 +76,7 @@ func iconDetailExcludes() []string {
 
 func iconCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"name": paramName,
+		"name": paramRequiredName,
 		"tags": paramTags,
 		"image": {
 			Type:          schema.TypeString,

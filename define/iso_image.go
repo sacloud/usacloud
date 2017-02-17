@@ -82,13 +82,14 @@ func ISOImageResource() *schema.Resource {
 }
 
 func isoImageListParam() map[string]*schema.Schema {
-	return CommonListParam
+	return mergeParameterMap(CommonListParam, paramScopeCond)
 }
 
 func isoImageListColumns() []output.ColumnDef {
 	return []output.ColumnDef{
 		{Name: "ID"},
 		{Name: "Name"},
+		{Name: "Scope"},
 	}
 }
 
@@ -97,40 +98,34 @@ func isoImageDetailIncludes() []string {
 }
 
 func isoImageDetailExcludes() []string {
-	return []string{}
-}
-
-var isoImageCommonParam = map[string]*schema.Schema{
-	"name":        paramName,
-	"description": paramDescription,
-	"tags":        paramTags,
-	"icon":        getParamSubResourceID("Icon"),
-}
-
-var isoImageFileParam = map[string]*schema.Schema{
-	"iso-file": {
-		Type:          schema.TypeString,
-		HandlerType:   schema.HandlerCustomFunc,
-		Description:   "set iso image file",
-		Required:      true,
-		ValidateFunc:  validateFileExists(),
-		CustomHandler: iconSetImageContentUseBase64,
-	},
-}
-var isoImageSizeParam = map[string]*schema.Schema{
-	"size": {
-		Type:            schema.TypeInt,
-		HandlerType:     schema.HandlerPathThrough,
-		Description:     "set iso size(GB)",
-		DestinationProp: "SetSizeGB",
-		Required:        true,
-		DefaultValue:    5,
-		ValidateFunc:    validateInIntValues(5, 10),
-	},
+	return []string{
+		"Storage.",
+	}
 }
 
 func isoImageCreateParam() map[string]*schema.Schema {
-	return mergeParameterMap(isoImageCommonParam, isoImageSizeParam, isoImageFileParam)
+	return map[string]*schema.Schema{
+		"name":        paramRequiredName,
+		"description": paramDescription,
+		"tags":        paramTags,
+		"icon":        getParamSubResourceID("Icon"),
+		"size": {
+			Type:            schema.TypeInt,
+			HandlerType:     schema.HandlerPathThrough,
+			Description:     "set iso size(GB)",
+			DestinationProp: "SetSizeGB",
+			Required:        true,
+			DefaultValue:    5,
+			ValidateFunc:    validateInIntValues(5, 10),
+		},
+		"iso-file": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set iso image file",
+			Required:     true,
+			ValidateFunc: validateFileExists(),
+		},
+	}
 }
 
 func isoImageReadParam() map[string]*schema.Schema {
@@ -140,10 +135,13 @@ func isoImageReadParam() map[string]*schema.Schema {
 }
 
 func isoImageUpdateParam() map[string]*schema.Schema {
-	updateParam := map[string]*schema.Schema{
-		"id": paramID,
+	return map[string]*schema.Schema{
+		"id":          paramID,
+		"name":        paramName,
+		"description": paramDescription,
+		"tags":        paramTags,
+		"icon":        getParamSubResourceID("Icon"),
 	}
-	return mergeParameterMap(updateParam, isoImageCommonParam)
 }
 
 func isoImageDeleteParam() map[string]*schema.Schema {
@@ -153,16 +151,22 @@ func isoImageDeleteParam() map[string]*schema.Schema {
 }
 
 func isoImageUploadParam() map[string]*schema.Schema {
-	uploadParam := map[string]*schema.Schema{
+	return map[string]*schema.Schema{
 		"id": paramID,
+		"iso-file": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set iso image file",
+			Required:     true,
+			ValidateFunc: validateFileExists(),
+		},
 	}
-	return mergeParameterMap(uploadParam, isoImageFileParam)
 }
 
 func isoImageDownloadParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
-		"iso-file": {
+		"file-destination": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "set file destination path",

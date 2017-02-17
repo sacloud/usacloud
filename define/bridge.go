@@ -80,7 +80,7 @@ func bridgeDetailExcludes() []string {
 
 func bridgeCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"name":        paramName,
+		"name":        paramRequiredName,
 		"description": paramDescription,
 	}
 }
@@ -92,10 +92,11 @@ func bridgeReadParam() map[string]*schema.Schema {
 }
 
 func bridgeUpdateParam() map[string]*schema.Schema {
-	updateParam := map[string]*schema.Schema{
-		"id": paramID,
+	return map[string]*schema.Schema{
+		"id":          paramID,
+		"name":        paramName,
+		"description": paramDescription,
 	}
-	return mergeParameterMap(bridgeCreateParam(), updateParam)
 }
 
 func bridgeDeleteParam() map[string]*schema.Schema {

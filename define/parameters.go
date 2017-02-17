@@ -13,6 +13,13 @@ var (
 		Description:  "set resource display name",
 		ValidateFunc: validateStrLen(1, 64),
 	}
+	paramRequiredName = &schema.Schema{
+		Type:         schema.TypeString,
+		HandlerType:  schema.HandlerPathThrough,
+		Description:  "set resource display name",
+		Required:     true,
+		ValidateFunc: validateStrLen(1, 64),
+	}
 	paramDescription = &schema.Schema{
 		Type:         schema.TypeString,
 		HandlerType:  schema.HandlerPathThrough,
@@ -90,5 +97,14 @@ var CommonListParam map[string]*schema.Schema = map[string]*schema.Schema{
 		Type:        schema.TypeStringList,
 		HandlerType: schema.HandlerSort,
 		Description: "set field(s) for sort",
+	},
+}
+
+var paramScopeCond = map[string]*schema.Schema{
+	"scope": {
+		Type:         schema.TypeString,
+		HandlerType:  schema.HandlerFilterBy,
+		Description:  "set filter by scope('user' or 'shared')",
+		ValidateFunc: validateInStrValues("user", "shared"),
 	},
 }

@@ -118,7 +118,7 @@ func switchDetailExcludes() []string {
 
 func switchCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"name":        paramName,
+		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
 		"icon":        getParamSubResourceID("Icon"),
@@ -132,10 +132,13 @@ func switchReadParam() map[string]*schema.Schema {
 }
 
 func switchUpdateParam() map[string]*schema.Schema {
-	updateParam := map[string]*schema.Schema{
-		"id": paramID,
+	return map[string]*schema.Schema{
+		"id":          paramID,
+		"name":        paramName,
+		"description": paramDescription,
+		"tags":        paramTags,
+		"icon":        getParamSubResourceID("Icon"),
 	}
-	return mergeParameterMap(switchCreateParam(), updateParam)
 }
 
 func switchDeleteParam() map[string]*schema.Schema {

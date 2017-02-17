@@ -58,13 +58,13 @@ func generateFindSetParamActions(command *schema.Command) (string, error) {
 		t := template.New("c")
 		template.Must(t.Parse(findSetParamTemplates[p.HandlerType]))
 
-		validator := fmt.Sprintf(`params.getCommandDef().Params["%s"].ValidateFunc`, ctx.P)
+		customHandlerName := fmt.Sprintf(`params.getCommandDef().Params["%s"].CustomHandler`, ctx.P)
 
 		err := t.Execute(b, map[string]interface{}{
-			"ParamName":      ctx.InputParamFieldName(),
-			"SetterFuncName": ctx.InputParamSetterFuncName(),
-			"Destination":    ctx.InputParamDestinationName(),
-			"Validator":      validator,
+			"ParamName":         ctx.InputParamFieldName(),
+			"SetterFuncName":    ctx.InputParamSetterFuncName(),
+			"Destination":       ctx.InputParamDestinationName(),
+			"CustomHandlerName": customHandlerName,
 		})
 		if err != nil {
 			return "", err
@@ -90,6 +90,10 @@ var findSetParamTemplates = map[schema.HandlerType]string{
 			setSortBy(finder , v)
 		}
 	}`,
+	schema.HandlerFilterBy: `
+	if !isEmpty(params.{{.ParamName}}) {
+		finder.SetFilterBy("{{.ParamName}}", params.{{.ParamName}})
+	}`,
 	schema.HandlerAndParams: `
 	if !isEmpty(params.{{.ParamName}}) {
 		for _ , v := range params.{{.ParamName}} {
@@ -104,6 +108,6 @@ var findSetParamTemplates = map[schema.HandlerType]string{
 	}`,
 	schema.HandlerCustomFunc: `
 	if !isEmpty(params.{{.ParamName}}) {
-		{{.Validator}}("{{.ParamName}}" , params , finder)
+		{{.CustomHandlerName}}("{{.ParamName}}" , params , finder)
 	}`,
 }
