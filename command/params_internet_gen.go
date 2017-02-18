@@ -206,12 +206,12 @@ func (p *ReadInternetParam) GetId() int64 {
 
 // UpdateInternetParam is input parameters for the sacloud API
 type UpdateInternetParam struct {
-	Icon        int64
-	BandWidth   int
-	Id          int64
 	Name        string
 	Description string
 	Tags        []string
+	Icon        int64
+	BandWidth   int
+	Id          int64
 }
 
 // NewUpdateInternetParam return new UpdateInternetParam
@@ -225,6 +225,27 @@ func NewUpdateInternetParam() *UpdateInternetParam {
 // Validate checks current values in model
 func (p *UpdateInternetParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["Internet"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Internet"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Internet"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := define.Resources["Internet"].Commands["update"].Params["icon"].ValidateFunc
 		errs := validator("--icon", p.Icon)
@@ -260,27 +281,6 @@ func (p *UpdateInternetParam) Validate() []error {
 			errors = append(errors, errs...)
 		}
 	}
-	{
-		validator := define.Resources["Internet"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Internet"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Internet"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	return errors
 }
@@ -309,27 +309,6 @@ func (p *UpdateInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *UpdateInternetParam) SetIcon(v int64) {
-	p.Icon = v
-}
-
-func (p *UpdateInternetParam) GetIcon() int64 {
-	return p.Icon
-}
-func (p *UpdateInternetParam) SetBandWidth(v int) {
-	p.BandWidth = v
-}
-
-func (p *UpdateInternetParam) GetBandWidth() int {
-	return p.BandWidth
-}
-func (p *UpdateInternetParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *UpdateInternetParam) GetId() int64 {
-	return p.Id
-}
 func (p *UpdateInternetParam) SetName(v string) {
 	p.Name = v
 }
@@ -350,6 +329,27 @@ func (p *UpdateInternetParam) SetTags(v []string) {
 
 func (p *UpdateInternetParam) GetTags() []string {
 	return p.Tags
+}
+func (p *UpdateInternetParam) SetIcon(v int64) {
+	p.Icon = v
+}
+
+func (p *UpdateInternetParam) GetIcon() int64 {
+	return p.Icon
+}
+func (p *UpdateInternetParam) SetBandWidth(v int) {
+	p.BandWidth = v
+}
+
+func (p *UpdateInternetParam) GetBandWidth() int {
+	return p.BandWidth
+}
+func (p *UpdateInternetParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *UpdateInternetParam) GetId() int64 {
+	return p.Id
 }
 
 // DeleteInternetParam is input parameters for the sacloud API
@@ -505,11 +505,11 @@ func (p *UpdateBandwidthInternetParam) GetBandWidth() int {
 
 // ListInternetParam is input parameters for the sacloud API
 type ListInternetParam struct {
-	From int
 	Max  int
 	Sort []string
 	Name []string
 	Id   []int64
+	From int
 }
 
 // NewListInternetParam return new ListInternetParam
@@ -573,13 +573,6 @@ func (p *ListInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListInternetParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListInternetParam) GetFrom() int {
-	return p.From
-}
 func (p *ListInternetParam) SetMax(v int) {
 	p.Max = v
 }
@@ -607,4 +600,11 @@ func (p *ListInternetParam) SetId(v []int64) {
 
 func (p *ListInternetParam) GetId() []int64 {
 	return p.Id
+}
+func (p *ListInternetParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListInternetParam) GetFrom() int {
+	return p.From
 }

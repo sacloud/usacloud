@@ -23,6 +23,7 @@ func newDetailTableWriter(out io.Writer, includes []string, excludes []string) t
 
 	w.table.SetHeader([]string{"Name", "Value"})
 	w.table.SetAlignment(tablewriter.ALIGN_LEFT)
+	w.table.SetAutoWrapText(false)
 
 	return w
 }

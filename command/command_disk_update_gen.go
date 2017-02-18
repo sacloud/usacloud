@@ -6,13 +6,13 @@ import (
 	"fmt"
 )
 
-func SwitchUpdate(ctx Context, params *UpdateSwitchParam) error {
+func DiskUpdate(ctx Context, params *UpdateDiskParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetSwitchAPI()
+	api := client.GetDiskAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("SwitchUpdate is failed: %s", e)
+		return fmt.Errorf("DiskUpdate is failed: %s", e)
 	}
 
 	// set params
@@ -22,6 +22,9 @@ func SwitchUpdate(ctx Context, params *UpdateSwitchParam) error {
 	}
 	if ctx.IsSet("icon") {
 		p.SetIconByID(params.Icon)
+	}
+	if ctx.IsSet("connection") {
+		p.SetDiskConnectionByStr(params.Connection)
 	}
 	if ctx.IsSet("name") {
 		p.SetName(params.Name)
@@ -33,7 +36,7 @@ func SwitchUpdate(ctx Context, params *UpdateSwitchParam) error {
 	// call Update(id)
 	res, err := api.Update(params.Id, p)
 	if err != nil {
-		return fmt.Errorf("SwitchUpdate is failed: %s", err)
+		return fmt.Errorf("DiskUpdate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

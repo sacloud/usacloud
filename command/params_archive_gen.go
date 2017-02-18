@@ -8,463 +8,6 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListArchiveParam is input parameters for the sacloud API
-type ListArchiveParam struct {
-	Sort  []string
-	Name  []string
-	Id    []int64
-	From  int
-	Max   int
-	Scope string
-}
-
-// NewListArchiveParam return new ListArchiveParam
-func NewListArchiveParam() *ListArchiveParam {
-	return &ListArchiveParam{}
-}
-
-// Validate checks current values in model
-func (p *ListArchiveParam) Validate() []error {
-	errors := []error{}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Archive"].Commands["list"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--id", p.Id, map[string]interface{}{
-
-			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Archive"].Commands["list"].Params["scope"].ValidateFunc
-		errs := validator("--scope", p.Scope)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ListArchiveParam) getResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *ListArchiveParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["list"]
-}
-
-func (p *ListArchiveParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ListArchiveParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ListArchiveParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ListArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ListArchiveParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListArchiveParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListArchiveParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListArchiveParam) GetName() []string {
-	return p.Name
-}
-func (p *ListArchiveParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListArchiveParam) GetId() []int64 {
-	return p.Id
-}
-func (p *ListArchiveParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListArchiveParam) GetFrom() int {
-	return p.From
-}
-func (p *ListArchiveParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListArchiveParam) GetMax() int {
-	return p.Max
-}
-func (p *ListArchiveParam) SetScope(v string) {
-	p.Scope = v
-}
-
-func (p *ListArchiveParam) GetScope() string {
-	return p.Scope
-}
-
-// WaitForCopyArchiveParam is input parameters for the sacloud API
-type WaitForCopyArchiveParam struct {
-	Id int64
-}
-
-// NewWaitForCopyArchiveParam return new WaitForCopyArchiveParam
-func NewWaitForCopyArchiveParam() *WaitForCopyArchiveParam {
-	return &WaitForCopyArchiveParam{}
-}
-
-// Validate checks current values in model
-func (p *WaitForCopyArchiveParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Archive"].Commands["wait-for-copy"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *WaitForCopyArchiveParam) getResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *WaitForCopyArchiveParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["wait-for-copy"]
-}
-
-func (p *WaitForCopyArchiveParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *WaitForCopyArchiveParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *WaitForCopyArchiveParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *WaitForCopyArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *WaitForCopyArchiveParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *WaitForCopyArchiveParam) GetId() int64 {
-	return p.Id
-}
-
-// FtpCloseArchiveParam is input parameters for the sacloud API
-type FtpCloseArchiveParam struct {
-	Id int64
-}
-
-// NewFtpCloseArchiveParam return new FtpCloseArchiveParam
-func NewFtpCloseArchiveParam() *FtpCloseArchiveParam {
-	return &FtpCloseArchiveParam{}
-}
-
-// Validate checks current values in model
-func (p *FtpCloseArchiveParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Archive"].Commands["ftp-close"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *FtpCloseArchiveParam) getResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *FtpCloseArchiveParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["ftp-close"]
-}
-
-func (p *FtpCloseArchiveParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *FtpCloseArchiveParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *FtpCloseArchiveParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *FtpCloseArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *FtpCloseArchiveParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *FtpCloseArchiveParam) GetId() int64 {
-	return p.Id
-}
-
-// CreateArchiveParam is input parameters for the sacloud API
-type CreateArchiveParam struct {
-	Description   string
-	Tags          []string
-	Icon          int64
-	Size          int
-	ArchiveFile   string
-	SourceDisk    int64
-	SourceArchive int64
-	Name          string
-}
-
-// NewCreateArchiveParam return new CreateArchiveParam
-func NewCreateArchiveParam() *CreateArchiveParam {
-	return &CreateArchiveParam{}
-}
-
-// Validate checks current values in model
-func (p *CreateArchiveParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := define.Resources["Archive"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Archive"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Archive"].Commands["create"].Params["icon"].ValidateFunc
-		errs := validator("--icon", p.Icon)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Archive"].Commands["create"].Params["size"].ValidateFunc
-		errs := validator("--size", p.Size)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--size", p.Size, map[string]interface{}{
-
-			"--source-archive": p.SourceArchive,
-			"--source-disk":    p.SourceDisk,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Archive"].Commands["create"].Params["archive-file"].ValidateFunc
-		errs := validator("--archive-file", p.ArchiveFile)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--archive-file", p.ArchiveFile, map[string]interface{}{
-
-			"--source-archive": p.SourceArchive,
-			"--source-disk":    p.SourceDisk,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Archive"].Commands["create"].Params["source-disk"].ValidateFunc
-		errs := validator("--source-disk", p.SourceDisk)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--source-disk", p.SourceDisk, map[string]interface{}{
-
-			"--archive-file":   p.ArchiveFile,
-			"--size":           p.Size,
-			"--source-archive": p.SourceArchive,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Archive"].Commands["create"].Params["source-archive"].ValidateFunc
-		errs := validator("--source-archive", p.SourceArchive)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--source-archive", p.SourceArchive, map[string]interface{}{
-
-			"--archive-file": p.ArchiveFile,
-			"--size":         p.Size,
-			"--source-disk":  p.SourceDisk,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Archive"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *CreateArchiveParam) getResourceDef() *schema.Resource {
-	return define.Resources["Archive"]
-}
-
-func (p *CreateArchiveParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["create"]
-}
-
-func (p *CreateArchiveParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *CreateArchiveParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *CreateArchiveParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *CreateArchiveParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *CreateArchiveParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *CreateArchiveParam) GetDescription() string {
-	return p.Description
-}
-func (p *CreateArchiveParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateArchiveParam) GetTags() []string {
-	return p.Tags
-}
-func (p *CreateArchiveParam) SetIcon(v int64) {
-	p.Icon = v
-}
-
-func (p *CreateArchiveParam) GetIcon() int64 {
-	return p.Icon
-}
-func (p *CreateArchiveParam) SetSize(v int) {
-	p.Size = v
-}
-
-func (p *CreateArchiveParam) GetSize() int {
-	return p.Size
-}
-func (p *CreateArchiveParam) SetArchiveFile(v string) {
-	p.ArchiveFile = v
-}
-
-func (p *CreateArchiveParam) GetArchiveFile() string {
-	return p.ArchiveFile
-}
-func (p *CreateArchiveParam) SetSourceDisk(v int64) {
-	p.SourceDisk = v
-}
-
-func (p *CreateArchiveParam) GetSourceDisk() int64 {
-	return p.SourceDisk
-}
-func (p *CreateArchiveParam) SetSourceArchive(v int64) {
-	p.SourceArchive = v
-}
-
-func (p *CreateArchiveParam) GetSourceArchive() int64 {
-	return p.SourceArchive
-}
-func (p *CreateArchiveParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateArchiveParam) GetName() string {
-	return p.Name
-}
-
 // ReadArchiveParam is input parameters for the sacloud API
 type ReadArchiveParam struct {
 	Id int64
@@ -712,6 +255,463 @@ func (p *DeleteArchiveParam) SetId(v int64) {
 
 func (p *DeleteArchiveParam) GetId() int64 {
 	return p.Id
+}
+
+// WaitForCopyArchiveParam is input parameters for the sacloud API
+type WaitForCopyArchiveParam struct {
+	Id int64
+}
+
+// NewWaitForCopyArchiveParam return new WaitForCopyArchiveParam
+func NewWaitForCopyArchiveParam() *WaitForCopyArchiveParam {
+	return &WaitForCopyArchiveParam{}
+}
+
+// Validate checks current values in model
+func (p *WaitForCopyArchiveParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Archive"].Commands["wait-for-copy"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *WaitForCopyArchiveParam) getResourceDef() *schema.Resource {
+	return define.Resources["Archive"]
+}
+
+func (p *WaitForCopyArchiveParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["wait-for-copy"]
+}
+
+func (p *WaitForCopyArchiveParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *WaitForCopyArchiveParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *WaitForCopyArchiveParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *WaitForCopyArchiveParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *WaitForCopyArchiveParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *WaitForCopyArchiveParam) GetId() int64 {
+	return p.Id
+}
+
+// FtpCloseArchiveParam is input parameters for the sacloud API
+type FtpCloseArchiveParam struct {
+	Id int64
+}
+
+// NewFtpCloseArchiveParam return new FtpCloseArchiveParam
+func NewFtpCloseArchiveParam() *FtpCloseArchiveParam {
+	return &FtpCloseArchiveParam{}
+}
+
+// Validate checks current values in model
+func (p *FtpCloseArchiveParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Archive"].Commands["ftp-close"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *FtpCloseArchiveParam) getResourceDef() *schema.Resource {
+	return define.Resources["Archive"]
+}
+
+func (p *FtpCloseArchiveParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["ftp-close"]
+}
+
+func (p *FtpCloseArchiveParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *FtpCloseArchiveParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *FtpCloseArchiveParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *FtpCloseArchiveParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *FtpCloseArchiveParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *FtpCloseArchiveParam) GetId() int64 {
+	return p.Id
+}
+
+// ListArchiveParam is input parameters for the sacloud API
+type ListArchiveParam struct {
+	Scope string
+	Max   int
+	Sort  []string
+	Name  []string
+	Id    []int64
+	From  int
+}
+
+// NewListArchiveParam return new ListArchiveParam
+func NewListArchiveParam() *ListArchiveParam {
+	return &ListArchiveParam{}
+}
+
+// Validate checks current values in model
+func (p *ListArchiveParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Archive"].Commands["list"].Params["scope"].ValidateFunc
+		errs := validator("--scope", p.Scope)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Archive"].Commands["list"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--id", p.Id, map[string]interface{}{
+
+			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ListArchiveParam) getResourceDef() *schema.Resource {
+	return define.Resources["Archive"]
+}
+
+func (p *ListArchiveParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["list"]
+}
+
+func (p *ListArchiveParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ListArchiveParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ListArchiveParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ListArchiveParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListArchiveParam) SetScope(v string) {
+	p.Scope = v
+}
+
+func (p *ListArchiveParam) GetScope() string {
+	return p.Scope
+}
+func (p *ListArchiveParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListArchiveParam) GetMax() int {
+	return p.Max
+}
+func (p *ListArchiveParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListArchiveParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListArchiveParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListArchiveParam) GetName() []string {
+	return p.Name
+}
+func (p *ListArchiveParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListArchiveParam) GetId() []int64 {
+	return p.Id
+}
+func (p *ListArchiveParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListArchiveParam) GetFrom() int {
+	return p.From
+}
+
+// CreateArchiveParam is input parameters for the sacloud API
+type CreateArchiveParam struct {
+	Tags          []string
+	Icon          int64
+	Size          int
+	ArchiveFile   string
+	SourceDisk    int64
+	SourceArchive int64
+	Name          string
+	Description   string
+}
+
+// NewCreateArchiveParam return new CreateArchiveParam
+func NewCreateArchiveParam() *CreateArchiveParam {
+	return &CreateArchiveParam{}
+}
+
+// Validate checks current values in model
+func (p *CreateArchiveParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Archive"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Archive"].Commands["create"].Params["icon"].ValidateFunc
+		errs := validator("--icon", p.Icon)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Archive"].Commands["create"].Params["size"].ValidateFunc
+		errs := validator("--size", p.Size)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--size", p.Size, map[string]interface{}{
+
+			"--source-archive": p.SourceArchive,
+			"--source-disk":    p.SourceDisk,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Archive"].Commands["create"].Params["archive-file"].ValidateFunc
+		errs := validator("--archive-file", p.ArchiveFile)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--archive-file", p.ArchiveFile, map[string]interface{}{
+
+			"--source-archive": p.SourceArchive,
+			"--source-disk":    p.SourceDisk,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Archive"].Commands["create"].Params["source-disk"].ValidateFunc
+		errs := validator("--source-disk", p.SourceDisk)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--source-disk", p.SourceDisk, map[string]interface{}{
+
+			"--archive-file":   p.ArchiveFile,
+			"--size":           p.Size,
+			"--source-archive": p.SourceArchive,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Archive"].Commands["create"].Params["source-archive"].ValidateFunc
+		errs := validator("--source-archive", p.SourceArchive)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--source-archive", p.SourceArchive, map[string]interface{}{
+
+			"--archive-file": p.ArchiveFile,
+			"--size":         p.Size,
+			"--source-disk":  p.SourceDisk,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Archive"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Archive"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *CreateArchiveParam) getResourceDef() *schema.Resource {
+	return define.Resources["Archive"]
+}
+
+func (p *CreateArchiveParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["create"]
+}
+
+func (p *CreateArchiveParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *CreateArchiveParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *CreateArchiveParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *CreateArchiveParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateArchiveParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateArchiveParam) GetTags() []string {
+	return p.Tags
+}
+func (p *CreateArchiveParam) SetIcon(v int64) {
+	p.Icon = v
+}
+
+func (p *CreateArchiveParam) GetIcon() int64 {
+	return p.Icon
+}
+func (p *CreateArchiveParam) SetSize(v int) {
+	p.Size = v
+}
+
+func (p *CreateArchiveParam) GetSize() int {
+	return p.Size
+}
+func (p *CreateArchiveParam) SetArchiveFile(v string) {
+	p.ArchiveFile = v
+}
+
+func (p *CreateArchiveParam) GetArchiveFile() string {
+	return p.ArchiveFile
+}
+func (p *CreateArchiveParam) SetSourceDisk(v int64) {
+	p.SourceDisk = v
+}
+
+func (p *CreateArchiveParam) GetSourceDisk() int64 {
+	return p.SourceDisk
+}
+func (p *CreateArchiveParam) SetSourceArchive(v int64) {
+	p.SourceArchive = v
+}
+
+func (p *CreateArchiveParam) GetSourceArchive() int64 {
+	return p.SourceArchive
+}
+func (p *CreateArchiveParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateArchiveParam) GetName() string {
+	return p.Name
+}
+func (p *CreateArchiveParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateArchiveParam) GetDescription() string {
+	return p.Description
 }
 
 // UploadArchiveParam is input parameters for the sacloud API

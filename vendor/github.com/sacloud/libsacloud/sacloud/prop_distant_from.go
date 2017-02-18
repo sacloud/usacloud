@@ -10,6 +10,11 @@ func (p *propDistantFrom) GetDistantFrom() []int64 {
 	return p.DistantFrom
 }
 
+// SetDistantFrom ストレージ隔離対象ディスク 設定
+func (p *propDistantFrom) SetDistantFrom(ids []int64) {
+	p.DistantFrom = ids
+}
+
 // AddDistantFrom ストレージ隔離対象ディスク 追加
 func (p *propDistantFrom) AddDistantFrom(id int64) {
 	p.DistantFrom = append(p.DistantFrom, id)

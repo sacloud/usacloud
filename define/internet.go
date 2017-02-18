@@ -114,6 +114,7 @@ func internetCreateParam() map[string]*schema.Schema {
 		"nw-masklen": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
+			Aliases:         []string{"network-masklen"},
 			Description:     "set Global-IPAddress prefix",
 			DestinationProp: "SetNetworkMaskLen",
 			Required:        true,

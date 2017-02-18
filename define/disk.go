@@ -45,6 +45,57 @@ func DiskResource() *schema.Resource {
 			IncludeFields: diskDetailIncludes(),
 			ExcludeFields: diskDetailExcludes(),
 		},
+		"edit": {
+			Type:             schema.CommandManipulate,
+			Aliases:          []string{"config"},
+			Params:           diskConfigParam(),
+			IncludeFields:    diskDetailIncludes(),
+			ExcludeFields:    diskDetailExcludes(),
+			UseCustomCommand: true,
+		},
+		"wait-for-copy": {
+			Type:             schema.CommandManipulate,
+			Aliases:          []string{"wait"},
+			Params:           diskWaitForCopyParam(),
+			IncludeFields:    diskDetailIncludes(),
+			ExcludeFields:    diskDetailExcludes(),
+			UseCustomCommand: true,
+		},
+		"reinstall-from-archive": {
+			Type:             schema.CommandManipulate,
+			Params:           diskReinstallFromArchiveParam(),
+			IncludeFields:    diskDetailIncludes(),
+			ExcludeFields:    diskDetailExcludes(),
+			UseCustomCommand: true,
+		},
+		"reinstall-from-disk": {
+			Type:             schema.CommandManipulate,
+			Params:           diskReinstallFromDiskParam(),
+			IncludeFields:    diskDetailIncludes(),
+			ExcludeFields:    diskDetailExcludes(),
+			UseCustomCommand: true,
+		},
+		"reinstall-to-blank": {
+			Type:             schema.CommandManipulate,
+			Params:           diskReinstallToBlankParam(),
+			IncludeFields:    diskDetailIncludes(),
+			ExcludeFields:    diskDetailExcludes(),
+			UseCustomCommand: true,
+		},
+		"server-connect": {
+			Type:             schema.CommandManipulate,
+			Params:           diskServerConnectParam(),
+			IncludeFields:    diskDetailIncludes(),
+			ExcludeFields:    diskDetailExcludes(),
+			UseCustomCommand: true,
+		},
+		"server-disconnect": {
+			Type:             schema.CommandManipulate,
+			Params:           diskServerDisconnectParam(),
+			IncludeFields:    diskDetailIncludes(),
+			ExcludeFields:    diskDetailExcludes(),
+			UseCustomCommand: true,
+		},
 	}
 
 	return &schema.Resource{
@@ -69,7 +120,10 @@ func diskDetailIncludes() []string {
 }
 
 func diskDetailExcludes() []string {
-	return []string{}
+	return []string{
+		"SourceArchive.Storage.",
+		"Storage.",
+	}
 }
 
 func diskCreateParam() map[string]*schema.Schema {
@@ -79,9 +133,22 @@ func diskCreateParam() map[string]*schema.Schema {
 		"tags":        paramTags,
 		"icon":        getParamSubResourceID("Icon"),
 		"plan": {
-			Type:        schema.TypeString,
-			HandlerType: schema.HandlerPathThrough,
-			Description: "set disk plan('hdd' or 'ssd')",
+			Type:            schema.TypeString,
+			HandlerType:     schema.HandlerPathThrough,
+			DestinationProp: "SetDiskPlan",
+			Required:        true,
+			DefaultValue:    "ssd",
+			Description:     "set disk plan('hdd' or 'ssd')",
+			ValidateFunc:    validateInStrValues("ssd", "hdd"),
+		},
+		"connection": {
+			Type:            schema.TypeString,
+			HandlerType:     schema.HandlerPathThrough,
+			DestinationProp: "SetDiskConnectionByStr",
+			Required:        true,
+			DefaultValue:    "virtio",
+			Description:     "set disk connection('virtio' or 'ide')",
+			ValidateFunc:    validateInStrValues("virtio", "ide"),
 		},
 		"size": {
 			Type:            schema.TypeInt,
@@ -89,8 +156,8 @@ func diskCreateParam() map[string]*schema.Schema {
 			Description:     "set disk size(GB)",
 			DestinationProp: "SetSizeGB",
 			DefaultValue:    20,
-			ValidateFunc:    validateInIntValues(20, 40, 60, 80, 100, 250, 500, 750, 1000),
-			ConflictsWith:   []string{"source-disk", "source-disk"},
+			Required:        true,
+			ValidateFunc:    validateInIntValues(20, 40, 60, 80, 100, 250, 500, 750, 1000, 2000, 4000),
 		},
 		"source-archive": {
 			Type:            schema.TypeInt64,
@@ -98,7 +165,7 @@ func diskCreateParam() map[string]*schema.Schema {
 			DestinationProp: "SetSourceArchive",
 			Description:     "set source disk ID",
 			ValidateFunc:    validateSakuraID(),
-			ConflictsWith:   []string{"disk-file", "source-disk", "size"},
+			ConflictsWith:   []string{"source-disk"},
 		},
 		"source-disk": {
 			Type:            schema.TypeInt64,
@@ -106,7 +173,18 @@ func diskCreateParam() map[string]*schema.Schema {
 			DestinationProp: "SetSourceDisk",
 			Description:     "set source disk ID",
 			ValidateFunc:    validateSakuraID(),
-			ConflictsWith:   []string{"disk-file", "source-disk", "size"},
+			ConflictsWith:   []string{"source-archive"},
+		},
+		"distant-from": {
+			Type:         schema.TypeIntList,
+			HandlerType:  schema.HandlerPathThrough,
+			Description:  "set distant from disk IDs",
+			ValidateFunc: validateIntSlice(validateSakuraID()),
+		},
+		"async": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "set async flag(if true,return with non block)",
 		},
 	}
 }
@@ -124,6 +202,13 @@ func diskUpdateParam() map[string]*schema.Schema {
 		"description": paramDescription,
 		"tags":        paramTags,
 		"icon":        getParamSubResourceID("Icon"),
+		"connection": {
+			Type:            schema.TypeString,
+			HandlerType:     schema.HandlerPathThrough,
+			DestinationProp: "SetDiskConnectionByStr",
+			Description:     "set disk connection('virtio' or 'ide')",
+			ValidateFunc:    validateInStrValues("virtio", "ide"),
+		},
 	}
 }
 
@@ -133,38 +218,151 @@ func diskDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func diskUploadParam() map[string]*schema.Schema {
+func diskConfigParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
-		"disk-file": {
-			Type:         schema.TypeString,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "set disk image file",
-			Required:     true,
-			ValidateFunc: validateFileExists(),
+		"hostname": {
+			Type:            schema.TypeString,
+			HandlerType:     schema.HandlerPathThrough,
+			DestinationProp: "SetHostName",
+			Description:     "set hostname",
 		},
-	}
-}
-
-func diskDownloadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-		"file-destination": {
+		"password": {
 			Type:        schema.TypeString,
-			HandlerType: schema.HandlerNoop,
-			Description: "set file destination path",
-			Required:    true,
+			HandlerType: schema.HandlerPathThrough,
+			Description: "set password",
+		},
+		"ssh-key": {
+			Type:            schema.TypeStringList,
+			HandlerType:     schema.HandlerPathThrough,
+			DestinationProp: "SetSSHKeys",
+			Description:     "set ssh key(s)",
+		},
+		"disable-password-auth": {
+			Type:            schema.TypeBool,
+			Aliases:         []string{"disable-pw-auth"},
+			HandlerType:     schema.HandlerPathThrough,
+			DestinationProp: "SetDisablePWAuth",
+			Description:     "disable password auth on SSH",
+		},
+		"startup-script": {
+			Type:            schema.TypeStringList,
+			Aliases:         []string{"note"},
+			HandlerType:     schema.HandlerPathThrough,
+			DestinationProp: "SetNotes",
+			Description:     "set startup script(s)",
+		},
+		"ipaddress": {
+			Type:            schema.TypeString,
+			Aliases:         []string{"ip"},
+			HandlerType:     schema.HandlerPathThrough,
+			DestinationProp: "SetUserIPAddress",
+			Description:     "set ipaddress",
+		},
+		"default-route": {
+			Type:            schema.TypeString,
+			Aliases:         []string{"gateway"},
+			HandlerType:     schema.HandlerPathThrough,
+			DestinationProp: "SetDefaultRoute",
+			Description:     "set default gateway",
+		},
+		"nw-masklen": {
+			Type:            schema.TypeInt,
+			HandlerType:     schema.HandlerPathThrough,
+			Aliases:         []string{"network-masklen"},
+			Description:     "set ipaddress  prefix",
+			DestinationProp: "SetNetworkMaskLen",
+			DefaultValue:    24,
+			ValidateFunc:    validateIntRange(8, 29),
 		},
 	}
 }
 
-func diskOpenFTPParam() map[string]*schema.Schema {
+func diskWaitForCopyParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
 	}
 }
 
-func diskCloseFTPParam() map[string]*schema.Schema {
+func diskReinstallFromArchiveParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": paramID,
+		"source-archive": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set source disk ID",
+			Required:     true,
+			ValidateFunc: validateSakuraID(),
+		},
+		"distant-from": {
+			Type:         schema.TypeIntList,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set distant from disk IDs",
+			ValidateFunc: validateIntSlice(validateSakuraID()),
+		},
+		"async": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "set async flag(if true,return with non block)",
+		},
+	}
+}
+
+func diskReinstallFromDiskParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": paramID,
+		"source-disk": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set source disk ID",
+			Required:     true,
+			ValidateFunc: validateSakuraID(),
+		},
+		"distant-from": {
+			Type:         schema.TypeIntList,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set distant from disk IDs",
+			ValidateFunc: validateIntSlice(validateSakuraID()),
+		},
+		"async": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "set async flag(if true,return with non block)",
+		},
+	}
+}
+
+func diskReinstallToBlankParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": paramID,
+		"distant-from": {
+			Type:         schema.TypeIntList,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set distant from disk IDs",
+			ValidateFunc: validateIntSlice(validateSakuraID()),
+		},
+		"async": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "set async flag(if true,return with non block)",
+		},
+	}
+}
+
+func diskServerConnectParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": paramID,
+		"server": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set source disk ID",
+			Required:     true,
+			ValidateFunc: validateSakuraID(),
+		},
+	}
+}
+
+func diskServerDisconnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
 	}

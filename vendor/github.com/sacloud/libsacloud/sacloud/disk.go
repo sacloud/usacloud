@@ -1,5 +1,7 @@
 package sacloud
 
+import "fmt"
+
 // Disk ディスク
 type Disk struct {
 	*Resource          // ID
@@ -60,6 +62,18 @@ func CreateNewDisk() *Disk {
 		propPlanID:         propPlanID{Plan: DiskPlanSSD},
 		propDiskConnection: propDiskConnection{Connection: DiskConnectionVirtio},
 		propSizeMB:         propSizeMB{SizeMB: 20480},
+	}
+}
+
+// SetDiskPlan プラン文字列(ssd or sdd)からプラン設定
+func (d *Disk) SetDiskPlan(strPlan string) {
+	switch strPlan {
+	case "ssd":
+		d.Plan = DiskPlanSSD
+	case "hdd":
+		d.Plan = DiskPlanHDD
+	default:
+		panic(fmt.Errorf("Invalid plan:%s", strPlan))
 	}
 }
 

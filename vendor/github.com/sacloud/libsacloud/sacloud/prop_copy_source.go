@@ -9,6 +9,9 @@ type propCopySource struct {
 
 // SetSourceArchive ソースアーカイブ設定
 func (p *propCopySource) SetSourceArchive(sourceID int64) {
+	if sourceID == EmptyID {
+		return
+	}
 	p.SourceArchive = &Archive{
 		Resource: &Resource{ID: sourceID},
 	}
@@ -17,6 +20,9 @@ func (p *propCopySource) SetSourceArchive(sourceID int64) {
 
 // SetSourceDisk ソースディスク設定
 func (p *propCopySource) SetSourceDisk(sourceID int64) {
+	if sourceID == EmptyID {
+		return
+	}
 	p.SourceDisk = &Disk{
 		Resource: &Resource{ID: sourceID},
 	}

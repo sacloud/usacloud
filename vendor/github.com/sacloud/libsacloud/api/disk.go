@@ -80,8 +80,18 @@ func (api *DiskAPI) install(id int64, body *sacloud.Disk) (bool, error) {
 		method = "PUT"
 		uri    = fmt.Sprintf("%s/%d/install", api.getResourceURL(), id)
 	)
-
-	return api.modify(method, uri, body)
+	//HACK: さくらのAPI側仕様: 戻り値:Successがbool値へ変換できないため文字列で受ける
+	type diskResponse struct {
+		*sacloud.ResultFlagValue
+		// Success
+		Success string `json:",omitempty"`
+	}
+	res := &diskResponse{}
+	err := api.baseAPI.request(method, uri, body, res)
+	if err != nil {
+		return false, err
+	}
+	return res.IsOk, nil
 }
 
 // ReinstallFromBlank ブランクディスクから再インストール
@@ -93,16 +103,22 @@ func (api *DiskAPI) ReinstallFromBlank(id int64, sizeMB int) (bool, error) {
 }
 
 // ReinstallFromArchive アーカイブからの再インストール
-func (api *DiskAPI) ReinstallFromArchive(id int64, archiveID int64) (bool, error) {
+func (api *DiskAPI) ReinstallFromArchive(id int64, archiveID int64, distantFrom ...int64) (bool, error) {
 	var body = &sacloud.Disk{}
 	body.SetSourceArchive(archiveID)
+	if len(distantFrom) > 0 {
+		body.SetDistantFrom(distantFrom)
+	}
 	return api.install(id, body)
 }
 
 // ReinstallFromDisk ディスクからの再インストール
-func (api *DiskAPI) ReinstallFromDisk(id int64, diskID int64) (bool, error) {
+func (api *DiskAPI) ReinstallFromDisk(id int64, diskID int64, distantFrom ...int64) (bool, error) {
 	var body = &sacloud.Disk{}
 	body.SetSourceDisk(diskID)
+	if len(distantFrom) > 0 {
+		body.SetDistantFrom(distantFrom)
+	}
 	return api.install(id, body)
 }
 
@@ -111,6 +127,15 @@ func (api *DiskAPI) ToBlank(diskID int64) (bool, error) {
 	var (
 		method = "PUT"
 		uri    = fmt.Sprintf("%s/%d/to/blank", api.getResourceURL(), diskID)
+	)
+	return api.modify(method, uri, nil)
+}
+
+// ResizePartition パーティションのリサイズ
+func (api *DiskAPI) ResizePartition(diskID int64) (bool, error) {
+	var (
+		method = "PUT"
+		uri    = fmt.Sprintf("%s/%d/resize-partition", api.getResourceURL(), diskID)
 	)
 	return api.modify(method, uri, nil)
 }
