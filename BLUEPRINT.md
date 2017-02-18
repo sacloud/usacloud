@@ -14,6 +14,7 @@
   - アーカイブやISOイメージなどのFTPSでのアップロード/ダウンロード
   - リソース全削除
 
+- (検討中)`golang.org/x/crypto/ssh`によるSSHクライアント機能の実装
 
 ### コマンドのイメージ
 
@@ -189,8 +190,7 @@ $ server help
 * disk-detach          : 
   
   interface-info       : 
-* interface-connect    : 
-* interface-disconnect :
+* interface-add        : 
   
 # 単体操作 = *
     

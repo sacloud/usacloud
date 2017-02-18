@@ -14,7 +14,7 @@ func DiskReinstallFromArchive(ctx Context, params *ReinstallFromArchiveDiskParam
 	}
 
 	// call manipurate functions
-	_, err := api.ReinstallFromArchive(params.Id, params.SourceArchive, params.DistantFrom...)
+	_, err := api.ReinstallFromArchive(params.Id, params.SourceArchiveId, params.DistantFrom...)
 	if err != nil {
 		return fmt.Errorf("DiskReinstallFromArchive is failed: %s", err)
 	}

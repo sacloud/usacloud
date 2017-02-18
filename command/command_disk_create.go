@@ -14,15 +14,15 @@ func DiskCreate(ctx Context, params *CreateDiskParam) error {
 	// set params
 
 	p.SetDescription(params.Description)
-	p.SetIconByID(params.Icon)
+	p.SetIconByID(params.IconId)
 	p.SetDiskPlan(params.Plan)
 	p.SetSizeGB(params.Size)
 	p.SetDistantFrom(params.DistantFrom)
 	p.SetName(params.Name)
 	p.SetTags(params.Tags)
 	p.SetDiskConnection(sacloud.EDiskConnection(params.Connection))
-	p.SetSourceArchive(params.SourceArchive)
-	p.SetSourceDisk(params.SourceDisk)
+	p.SetSourceArchive(params.SourceArchiveId)
+	p.SetSourceDisk(params.SourceDiskId)
 
 	// call Create(id)
 	res, err := api.Create(p)

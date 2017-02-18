@@ -62,7 +62,7 @@ func bridgeListColumns() []output.ColumnDef {
 		{
 			Name:    "Switch(this zone only)",
 			Sources: []string{"SwitchInZone.ID", "SwitchInZone.Name"},
-			Format:  "%s:%s",
+			Format:  "%s(%s)",
 		},
 	}
 }

@@ -14,9 +14,8 @@ func ISOImageCreate(ctx Context, params *CreateISOImageParam) error {
 	// set params
 
 	p.SetTags(params.Tags)
-	p.SetIconByID(params.Icon)
+	p.SetIconByID(params.IconId)
 	p.SetSizeGB(params.Size)
-	params.getCommandDef().Params["iso-file"].CustomHandler("IsoFile", params, p)
 	p.SetName(params.Name)
 	p.SetDescription(params.Description)
 

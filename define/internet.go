@@ -110,7 +110,7 @@ func internetCreateParam() map[string]*schema.Schema {
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon":        getParamSubResourceID("Icon"),
+		"icon-id":     getParamSubResourceID("Icon"),
 		"nw-masklen": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
@@ -136,7 +136,7 @@ func internetUpdateParam() map[string]*schema.Schema {
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon":        getParamSubResourceID("Icon"),
+		"icon-id":     getParamSubResourceID("Icon"),
 		"band-width": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,

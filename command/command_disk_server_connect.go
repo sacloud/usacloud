@@ -19,7 +19,7 @@ func DiskServerConnect(ctx Context, params *ServerConnectDiskParam) error {
 	}
 
 	// server is exists?
-	server, e := client.GetServerAPI().Read(params.Server)
+	server, e := client.GetServerAPI().Read(params.ServerId)
 	if e != nil || server == nil {
 		return fmt.Errorf("DiskServerConnect is failed: Server(ID:%d) isnot exists: %s", params.Id, e)
 	}
@@ -30,7 +30,7 @@ func DiskServerConnect(ctx Context, params *ServerConnectDiskParam) error {
 	}
 
 	// call manipurate functions
-	_, err := api.ConnectToServer(params.Id, params.Server)
+	_, err := api.ConnectToServer(params.Id, params.ServerId)
 	if err != nil {
 		return fmt.Errorf("DiskServerConnect is failed: %s", err)
 	}

@@ -138,6 +138,8 @@ func buildFlagsParams(params map[string]*schema.Schema) ([]map[string]interface{
 		d := ""
 		if s.DefaultValue != nil {
 			switch s.DefaultValue.(type) {
+			case bool:
+				d = fmt.Sprintf("%t", s.DefaultValue)
 			case int, int64:
 				d = fmt.Sprintf("%d", s.DefaultValue)
 			case string:
@@ -162,11 +164,16 @@ func buildFlagsParams(params map[string]*schema.Schema) ([]map[string]interface{
 			dest = fmt.Sprintf("&%s", ctx.InputParamVariableName())
 		}
 
+		usage := s.Description
+		if s.Required {
+			usage = fmt.Sprintf("[Required] %s", usage)
+		}
+
 		param := map[string]interface{}{
 			"FlagType":        ts,
 			"Name":            ctx.InputParamFlagName(),
 			"Aliases":         tools.FlattenStringList(s.Aliases),
-			"Usage":           s.Description,
+			"Usage":           usage,
 			"EnvVars":         tools.FlattenStringList(s.EnvVars),
 			"DefaultValue":    d,
 			"DefaultText":     s.DefaultText,
@@ -316,7 +323,7 @@ func init() {
 					}
 
 					// create command context
-					ctx := NewContext(c, {{.ParamName}})
+					ctx := NewContext(c, c.Args().Slice(), {{.ParamName}})
 
 					// Run command with params
 					{{.Action}}

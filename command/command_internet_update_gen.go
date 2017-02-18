@@ -26,8 +26,8 @@ func InternetUpdate(ctx Context, params *UpdateInternetParam) error {
 	if ctx.IsSet("tags") {
 		p.SetTags(params.Tags)
 	}
-	if ctx.IsSet("icon") {
-		p.SetIconByID(params.Icon)
+	if ctx.IsSet("icon-id") {
+		p.SetIconByID(params.IconId)
 	}
 	if ctx.IsSet("band-width") {
 		p.SetBandWidthMbps(params.BandWidth)

@@ -108,15 +108,14 @@ func isoImageCreateParam() map[string]*schema.Schema {
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon":        getParamSubResourceID("Icon"),
+		"icon-id":     getParamSubResourceID("Icon"),
 		"size": {
-			Type:            schema.TypeInt,
-			HandlerType:     schema.HandlerPathThrough,
-			Description:     "set iso size(GB)",
-			DestinationProp: "SetSizeGB",
-			Required:        true,
-			DefaultValue:    5,
-			ValidateFunc:    validateInIntValues(5, 10),
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set iso size(GB)",
+			Required:     true,
+			DefaultValue: 5,
+			ValidateFunc: validateInIntValues(5, 10),
 		},
 		"iso-file": {
 			Type:         schema.TypeString,
@@ -140,7 +139,7 @@ func isoImageUpdateParam() map[string]*schema.Schema {
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon":        getParamSubResourceID("Icon"),
+		"icon-id":     getParamSubResourceID("Icon"),
 	}
 }
 

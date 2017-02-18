@@ -6,6 +6,7 @@ import (
 	"github.com/sacloud/usacloud/version"
 	"gopkg.in/urfave/cli.v2"
 	"os"
+	"sort"
 )
 
 var (
@@ -37,6 +38,15 @@ func main() {
 		for _, command := range command.Commands {
 			fmt.Println(command.Name)
 		}
+	}
+
+	// sort each flags
+	sort.Sort(cli.FlagsByName(app.Flags))
+	for _, command := range app.Commands {
+		for _, subCommand := range command.Subcommands {
+			sort.Sort(cli.FlagsByName(subCommand.Flags))
+		}
+		sort.Sort(cli.FlagsByName(command.Flags))
 	}
 
 	app.Run(os.Args)

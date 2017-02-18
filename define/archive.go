@@ -115,37 +115,37 @@ func archiveCreateParam() map[string]*schema.Schema {
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon":        getParamSubResourceID("Icon"),
+		"icon-id":     getParamSubResourceID("Icon"),
 		"size": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
 			Description:     "set archive size(GB)",
 			DestinationProp: "SetSizeGB",
 			ValidateFunc:    validateInIntValues(20, 40, 60, 80, 100, 250, 500, 750, 1000),
-			ConflictsWith:   []string{"source-archive", "source-disk"},
+			ConflictsWith:   []string{"source-archive-id", "source-disk-id"},
 		},
 		"archive-file": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "set archive image file",
 			ValidateFunc:  validateFileExists(),
-			ConflictsWith: []string{"source-archive", "source-disk"},
+			ConflictsWith: []string{"source-archive-id", "source-disk-id"},
 		},
-		"source-disk": {
+		"source-disk-id": {
 			Type:            schema.TypeInt64,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetSourceDisk",
 			Description:     "set source disk ID",
 			ValidateFunc:    validateSakuraID(),
-			ConflictsWith:   []string{"archive-file", "source-archive", "size"},
+			ConflictsWith:   []string{"archive-file", "source-archive-id", "size"},
 		},
-		"source-archive": {
+		"source-archive-id": {
 			Type:            schema.TypeInt64,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetSourceArchive",
 			Description:     "set source archive ID",
 			ValidateFunc:    validateSakuraID(),
-			ConflictsWith:   []string{"archive-file", "source-disk", "size"},
+			ConflictsWith:   []string{"archive-file", "source-disk-id", "size"},
 		},
 	}
 }
@@ -162,7 +162,7 @@ func archiveUpdateParam() map[string]*schema.Schema {
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon":        getParamSubResourceID("Icon"),
+		"icon-id":     getParamSubResourceID("Icon"),
 	}
 }
 

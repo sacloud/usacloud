@@ -2,9 +2,11 @@ package command
 
 import (
 	"fmt"
+	"github.com/mitchellh/go-homedir"
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/version"
+	"path/filepath"
 	"strings"
 )
 
@@ -50,4 +52,24 @@ func getOutputWriter(formater output.OutputFormater) output.Output {
 	default:
 		return output.NewTableOutput(o.Out, o.Err, formater)
 	}
+}
+
+func StringIDs(ids []int64) []string {
+	var strIDs []string
+
+	for _, v := range ids {
+		if v != 0 {
+			strIDs = append(strIDs, fmt.Sprintf("%d", v))
+		}
+	}
+
+	return strIDs
+}
+
+func getSSHPrivateKeyStorePath(serverID int64) (string, error) {
+	homeDir, err := homedir.Dir()
+	if err != nil {
+		return "", fmt.Errorf("ServerCreate is failed: getting HomeDir is failed:%s", err)
+	}
+	return filepath.Join(homeDir, ".ssh", fmt.Sprintf("sacloud_pkey_%d", serverID)), nil
 }

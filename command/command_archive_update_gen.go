@@ -26,8 +26,8 @@ func ArchiveUpdate(ctx Context, params *UpdateArchiveParam) error {
 	if ctx.IsSet("tags") {
 		p.SetTags(params.Tags)
 	}
-	if ctx.IsSet("icon") {
-		p.SetIconByID(params.Icon)
+	if ctx.IsSet("icon-id") {
+		p.SetIconByID(params.IconId)
 	}
 
 	// call Update(id)

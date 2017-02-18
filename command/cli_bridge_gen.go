@@ -7,104 +7,16 @@ import (
 )
 
 func init() {
-	listParam := NewListBridgeParam()
-	createParam := NewCreateBridgeParam()
 	readParam := NewReadBridgeParam()
 	updateParam := NewUpdateBridgeParam()
 	deleteParam := NewDeleteBridgeParam()
+	listParam := NewListBridgeParam()
+	createParam := NewCreateBridgeParam()
 
 	cliCommand := &cli.Command{
 		Name:  "bridge",
 		Usage: "A manage commands of Bridge",
 		Subcommands: []*cli.Command{
-			{
-				Name:    "list",
-				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List Bridge",
-				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
-					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					listParam.Name = c.StringSlice("name")
-					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, listParam)
-
-					// Run command with params
-					return BridgeList(ctx, listParam)
-				},
-			},
-			{
-				Name:    "create",
-				Aliases: []string{"c"},
-				Usage:   "Create Bridge",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set resource display name",
-						Destination: &createParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &createParam.Description,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, createParam)
-
-					// Run command with params
-					return BridgeCreate(ctx, createParam)
-				},
-			},
 			{
 				Name:      "read",
 				Aliases:   []string{"r"},
@@ -113,7 +25,7 @@ func init() {
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
-						Usage:       "set resource ID",
+						Usage:       "[Required] set resource ID",
 						Destination: &readParam.Id,
 					},
 				},
@@ -135,7 +47,7 @@ func init() {
 					}
 
 					// create command context
-					ctx := NewContext(c, readParam)
+					ctx := NewContext(c, c.Args().Slice(), readParam)
 
 					// Run command with params
 					return BridgeRead(ctx, readParam)
@@ -149,7 +61,7 @@ func init() {
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
-						Usage:       "set resource ID",
+						Usage:       "[Required] set resource ID",
 						Destination: &updateParam.Id,
 					},
 					&cli.StringFlag{
@@ -182,7 +94,7 @@ func init() {
 					}
 
 					// create command context
-					ctx := NewContext(c, updateParam)
+					ctx := NewContext(c, c.Args().Slice(), updateParam)
 
 					// Run command with params
 					return BridgeUpdate(ctx, updateParam)
@@ -196,7 +108,7 @@ func init() {
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
-						Usage:       "set resource ID",
+						Usage:       "[Required] set resource ID",
 						Destination: &deleteParam.Id,
 					},
 				},
@@ -218,10 +130,98 @@ func init() {
 					}
 
 					// create command context
-					ctx := NewContext(c, deleteParam)
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
 
 					// Run command with params
 					return BridgeDelete(ctx, deleteParam)
+				},
+			},
+			{
+				Name:    "list",
+				Aliases: []string{"l", "ls", "find"},
+				Usage:   "List Bridge",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					listParam.Name = c.StringSlice("name")
+					listParam.Id = c.Int64Slice("id")
+					listParam.Sort = c.StringSlice("sort")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := listParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), listParam)
+
+					// Run command with params
+					return BridgeList(ctx, listParam)
+				},
+			},
+			{
+				Name:    "create",
+				Aliases: []string{"c"},
+				Usage:   "Create Bridge",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &createParam.Description,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := createParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), createParam)
+
+					// Run command with params
+					return BridgeCreate(ctx, createParam)
 				},
 			},
 		},

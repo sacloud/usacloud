@@ -111,7 +111,27 @@ func diskListColumns() []output.ColumnDef {
 	return []output.ColumnDef{
 		{Name: "ID"},
 		{Name: "Name"},
-		{Name: "Scope"},
+		{
+			Name:    "Server",
+			Sources: []string{"Server.ID", "Server.Name"},
+			Format:  "%s(%s)",
+		},
+		{
+			Name:    "Plan",
+			Sources: []string{"Plan.ID"},
+			ValueMapping: []map[string]string{
+				{
+					"4": "ssd",
+					"2": "hdd",
+				},
+			},
+		},
+		{
+			Name:    "Size",
+			Sources: []string{"SizeMB"},
+			Format:  "%sMB",
+		},
+		{Name: "Connection"},
 	}
 }
 
@@ -131,7 +151,7 @@ func diskCreateParam() map[string]*schema.Schema {
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon":        getParamSubResourceID("Icon"),
+		"icon-id":     getParamSubResourceID("Icon"),
 		"plan": {
 			Type:            schema.TypeString,
 			HandlerType:     schema.HandlerPathThrough,
@@ -159,21 +179,21 @@ func diskCreateParam() map[string]*schema.Schema {
 			Required:        true,
 			ValidateFunc:    validateInIntValues(20, 40, 60, 80, 100, 250, 500, 750, 1000, 2000, 4000),
 		},
-		"source-archive": {
+		"source-archive-id": {
 			Type:            schema.TypeInt64,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetSourceArchive",
 			Description:     "set source disk ID",
 			ValidateFunc:    validateSakuraID(),
-			ConflictsWith:   []string{"source-disk"},
+			ConflictsWith:   []string{"source-disk-id"},
 		},
-		"source-disk": {
+		"source-disk-id": {
 			Type:            schema.TypeInt64,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetSourceDisk",
 			Description:     "set source disk ID",
 			ValidateFunc:    validateSakuraID(),
-			ConflictsWith:   []string{"source-archive"},
+			ConflictsWith:   []string{"source-archive-id"},
 		},
 		"distant-from": {
 			Type:         schema.TypeIntList,
@@ -201,7 +221,7 @@ func diskUpdateParam() map[string]*schema.Schema {
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon":        getParamSubResourceID("Icon"),
+		"icon-id":     getParamSubResourceID("Icon"),
 		"connection": {
 			Type:            schema.TypeString,
 			HandlerType:     schema.HandlerPathThrough,
@@ -232,11 +252,12 @@ func diskConfigParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerPathThrough,
 			Description: "set password",
 		},
-		"ssh-key": {
-			Type:            schema.TypeStringList,
+		"ssh-key-ids": {
+			Type:            schema.TypeIntList,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetSSHKeys",
-			Description:     "set ssh key(s)",
+			Description:     "set ssh-key ID(s)",
+			ValidateFunc:    validateIntSlice(validateSakuraID()),
 		},
 		"disable-password-auth": {
 			Type:            schema.TypeBool,
@@ -245,12 +266,13 @@ func diskConfigParam() map[string]*schema.Schema {
 			DestinationProp: "SetDisablePWAuth",
 			Description:     "disable password auth on SSH",
 		},
-		"startup-script": {
-			Type:            schema.TypeStringList,
-			Aliases:         []string{"note"},
+		"startup-script-ids": {
+			Type:            schema.TypeIntList,
+			Aliases:         []string{"note-ids"},
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetNotes",
-			Description:     "set startup script(s)",
+			Description:     "set startup-script ID(s)",
+			ValidateFunc:    validateIntSlice(validateSakuraID()),
 		},
 		"ipaddress": {
 			Type:            schema.TypeString,
@@ -287,7 +309,7 @@ func diskWaitForCopyParam() map[string]*schema.Schema {
 func diskReinstallFromArchiveParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
-		"source-archive": {
+		"source-archive-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source disk ID",
@@ -311,7 +333,7 @@ func diskReinstallFromArchiveParam() map[string]*schema.Schema {
 func diskReinstallFromDiskParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
-		"source-disk": {
+		"source-disk-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source disk ID",
@@ -352,10 +374,10 @@ func diskReinstallToBlankParam() map[string]*schema.Schema {
 func diskServerConnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
-		"server": {
+		"server-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
-			Description:  "set source disk ID",
+			Description:  "set target server ID",
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
 		},

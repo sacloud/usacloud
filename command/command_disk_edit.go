@@ -18,13 +18,13 @@ func DiskEdit(ctx Context, params *EditDiskParam) error {
 		p.SetPassword(params.Password)
 	}
 	if ctx.IsSet("ssh-key") {
-		p.SetSSHKeys(params.SshKey)
+		p.SetSSHKeys(StringIDs(params.SshKeyIds))
 	}
 	if ctx.IsSet("disable-password-auth") {
 		p.SetDisablePWAuth(params.DisablePasswordAuth)
 	}
 	if ctx.IsSet("startup-script") {
-		p.SetNotes(params.StartupScript)
+		p.SetNotes(StringIDs(params.StartupScriptIds))
 	}
 	if ctx.IsSet("ipaddress") {
 		p.SetUserIPAddress(params.Ipaddress)

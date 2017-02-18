@@ -38,10 +38,18 @@ func (w *simpleTableWriter) append(values map[string]string) {
 		exists := false
 		var sources []interface{}
 		// collect source values
-		for _, source := range def.GetSources() {
+		for i, source := range def.GetSources() {
 			var s string
 			if v, ok := values[source]; ok {
 				s = v
+
+				if i < len(def.ValueMapping) {
+					mapping := def.ValueMapping[i]
+					if mapped, ok := mapping[s]; ok {
+						s = mapped
+					}
+				}
+
 			}
 			if s != "" {
 				exists = true

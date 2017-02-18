@@ -14,15 +14,15 @@ func ArchiveCreate(ctx Context, params *CreateArchiveParam) error {
 	// set params
 	p.SetDescription(params.Description)
 	p.SetTags(params.Tags)
-	p.SetIconByID(params.Icon)
+	p.SetIconByID(params.IconId)
 	p.SetName(params.Name)
 
-	needUpload := params.SourceDisk == 0 && params.SourceArchive == 0
+	needUpload := params.SourceDiskId == 0 && params.SourceArchiveId == 0
 
-	if params.SourceDisk != 0 {
-		p.SetSourceDisk(params.SourceDisk)
-	} else if params.SourceArchive != 0 {
-		p.SetSourceArchive(params.SourceArchive)
+	if params.SourceDiskId != 0 {
+		p.SetSourceDisk(params.SourceDiskId)
+	} else if params.SourceArchiveId != 0 {
+		p.SetSourceArchive(params.SourceArchiveId)
 	} else {
 		p.SetSizeGB(params.Size)
 	}

@@ -19,6 +19,13 @@ type Server struct {
 	propCreatedAt         // 作成日時
 }
 
+const (
+	// ServerMaxInterfaceLen サーバーに接続できるNICの最大数
+	ServerMaxInterfaceLen = 10
+	// ServerMaxDiskLen サーバーに接続できるディスクの最大数
+	ServerMaxDiskLen = 4
+)
+
 // KeyboardRequest キーボード送信リクエスト
 type KeyboardRequest struct {
 	Keys []string `json:",omitempty"` // キー(複数)

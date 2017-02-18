@@ -12,5 +12,6 @@ var Resources map[string]*schema.Resource = map[string]*schema.Resource{
 	"Icon":     IconResource(),
 	"Internet": InternetResource(),
 	"ISOImage": ISOImageResource(),
+	"Server":   ServerResource(),
 	"Switch":   SwitchResource(),
 }

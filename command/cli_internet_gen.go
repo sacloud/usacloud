@@ -7,17 +7,154 @@ import (
 )
 
 func init() {
-	updateBandwidthParam := NewUpdateBandwidthInternetParam()
-	listParam := NewListInternetParam()
-	createParam := NewCreateInternetParam()
 	readParam := NewReadInternetParam()
 	updateParam := NewUpdateInternetParam()
 	deleteParam := NewDeleteInternetParam()
+	updateBandwidthParam := NewUpdateBandwidthInternetParam()
+	listParam := NewListInternetParam()
+	createParam := NewCreateInternetParam()
 
 	cliCommand := &cli.Command{
 		Name:  "internet",
 		Usage: "A manage commands of Internet",
 		Subcommands: []*cli.Command{
+			{
+				Name:      "read",
+				Aliases:   []string{"r"},
+				Usage:     "Read Internet",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &readParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := readParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), readParam)
+
+					// Run command with params
+					return InternetRead(ctx, readParam)
+				},
+			},
+			{
+				Name:      "update",
+				Aliases:   []string{"u"},
+				Usage:     "Update Internet",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &updateParam.Description,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
+					},
+					&cli.IntFlag{
+						Name:        "band-width",
+						Usage:       "[Required] set band-width(Mbpm)",
+						Value:       100,
+						Destination: &updateParam.BandWidth,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "set resource display name",
+						Destination: &updateParam.Name,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					updateParam.Tags = c.StringSlice("tags")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := updateParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), updateParam)
+
+					// Run command with params
+					return InternetUpdate(ctx, updateParam)
+				},
+			},
+			{
+				Name:      "delete",
+				Aliases:   []string{"d", "rm"},
+				Usage:     "Delete Internet",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &deleteParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := deleteParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// Run command with params
+					return InternetDelete(ctx, deleteParam)
+				},
+			},
 			{
 				Name:      "update-bandwidth",
 				Usage:     "UpdateBandwidth Internet",
@@ -25,12 +162,12 @@ func init() {
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
-						Usage:       "set resource ID",
+						Usage:       "[Required] set resource ID",
 						Destination: &updateBandwidthParam.Id,
 					},
 					&cli.IntFlag{
 						Name:        "band-width",
-						Usage:       "set band-width(Mbpm)",
+						Usage:       "[Required] set band-width(Mbpm)",
 						Value:       100,
 						Destination: &updateBandwidthParam.BandWidth,
 					},
@@ -53,7 +190,7 @@ func init() {
 					}
 
 					// create command context
-					ctx := NewContext(c, updateBandwidthParam)
+					ctx := NewContext(c, c.Args().Slice(), updateBandwidthParam)
 
 					// Run command with params
 					return InternetUpdateBandwidth(ctx, updateBandwidthParam)
@@ -90,9 +227,9 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
+					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -105,7 +242,7 @@ func init() {
 					}
 
 					// create command context
-					ctx := NewContext(c, listParam)
+					ctx := NewContext(c, c.Args().Slice(), listParam)
 
 					// Run command with params
 					return InternetList(ctx, listParam)
@@ -127,20 +264,20 @@ func init() {
 						Usage: "set resource tags",
 					},
 					&cli.Int64Flag{
-						Name:        "icon",
+						Name:        "icon-id",
 						Usage:       "set Icon ID",
-						Destination: &createParam.Icon,
+						Destination: &createParam.IconId,
 					},
 					&cli.IntFlag{
 						Name:        "nw-masklen",
 						Aliases:     []string{"network-masklen"},
-						Usage:       "set Global-IPAddress prefix",
+						Usage:       "[Required] set Global-IPAddress prefix",
 						Value:       28,
 						Destination: &createParam.NwMasklen,
 					},
 					&cli.StringFlag{
 						Name:        "name",
-						Usage:       "set resource display name",
+						Usage:       "[Required] set resource display name",
 						Destination: &createParam.Name,
 					},
 				},
@@ -160,147 +297,10 @@ func init() {
 					}
 
 					// create command context
-					ctx := NewContext(c, createParam)
+					ctx := NewContext(c, c.Args().Slice(), createParam)
 
 					// Run command with params
 					return InternetCreate(ctx, createParam)
-				},
-			},
-			{
-				Name:      "read",
-				Aliases:   []string{"r"},
-				Usage:     "Read Internet",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "set resource ID",
-						Destination: &readParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, readParam)
-
-					// Run command with params
-					return InternetRead(ctx, readParam)
-				},
-			},
-			{
-				Name:      "update",
-				Aliases:   []string{"u"},
-				Usage:     "Update Internet",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "band-width",
-						Usage:       "set band-width(Mbpm)",
-						Value:       100,
-						Destination: &updateParam.BandWidth,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "set resource ID",
-						Destination: &updateParam.Id,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set resource display name",
-						Destination: &updateParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.Icon,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					updateParam.Tags = c.StringSlice("tags")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, updateParam)
-
-					// Run command with params
-					return InternetUpdate(ctx, updateParam)
-				},
-			},
-			{
-				Name:      "delete",
-				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete Internet",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "set resource ID",
-						Destination: &deleteParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, deleteParam)
-
-					// Run command with params
-					return InternetDelete(ctx, deleteParam)
 				},
 			},
 		},

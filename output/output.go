@@ -23,9 +23,10 @@ type tableWriter interface {
 }
 
 type ColumnDef struct {
-	Name    string
-	Sources []string
-	Format  string
+	Name         string
+	Sources      []string
+	Format       string
+	ValueMapping []map[string]string
 }
 
 func (d *ColumnDef) GetSources() []string {

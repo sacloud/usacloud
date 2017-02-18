@@ -3,6 +3,7 @@ package define
 import (
 	"fmt"
 	"github.com/sacloud/usacloud/schema"
+	"net"
 	"os"
 	"strings"
 	"unicode/utf8"
@@ -247,6 +248,30 @@ func validateFileExists() schema.SchemaValidateFunc {
 			_, err := os.Stat(path)
 			if err != nil {
 				res = append(res, fmt.Errorf("%q: File must be exists", fieldName))
+			}
+		}
+
+		return res
+	}
+}
+
+func validateIPv4Address() schema.SchemaValidateFunc {
+	return func(fieldName string, object interface{}) []error {
+		res := []error{}
+
+		// if target is nil , return OK(Use required attr if necessary)
+		if object == nil {
+			return res
+		}
+
+		if value, ok := object.(string); ok {
+			if value == "" {
+				return res
+			}
+
+			ip := net.ParseIP(value)
+			if ip == nil || ip.To4() == nil {
+				res = append(res, fmt.Errorf("%q: Invalid IPv4 address format", fieldName))
 			}
 		}
 

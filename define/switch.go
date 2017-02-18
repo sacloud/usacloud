@@ -121,7 +121,7 @@ func switchCreateParam() map[string]*schema.Schema {
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon":        getParamSubResourceID("Icon"),
+		"icon-id":     getParamSubResourceID("Icon"),
 	}
 }
 
@@ -137,7 +137,7 @@ func switchUpdateParam() map[string]*schema.Schema {
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon":        getParamSubResourceID("Icon"),
+		"icon-id":     getParamSubResourceID("Icon"),
 	}
 }
 
