@@ -10,11 +10,11 @@ import (
 
 // ListIconParam is input parameters for the sacloud API
 type ListIconParam struct {
-	Sort []string
 	Name []string
 	Id   []int64
 	From int
 	Max  int
+	Sort []string
 }
 
 // NewListIconParam return new ListIconParam
@@ -78,13 +78,6 @@ func (p *ListIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListIconParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListIconParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListIconParam) SetName(v []string) {
 	p.Name = v
 }
@@ -113,12 +106,19 @@ func (p *ListIconParam) SetMax(v int) {
 func (p *ListIconParam) GetMax() int {
 	return p.Max
 }
+func (p *ListIconParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListIconParam) GetSort() []string {
+	return p.Sort
+}
 
 // CreateIconParam is input parameters for the sacloud API
 type CreateIconParam struct {
+	Name  string
 	Tags  []string
 	Image string
-	Name  string
 }
 
 // NewCreateIconParam return new CreateIconParam
@@ -129,6 +129,20 @@ func NewCreateIconParam() *CreateIconParam {
 // Validate checks current values in model
 func (p *CreateIconParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Icon"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := define.Resources["Icon"].Commands["create"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
@@ -146,20 +160,6 @@ func (p *CreateIconParam) Validate() []error {
 	{
 		validator := define.Resources["Icon"].Commands["create"].Params["image"].ValidateFunc
 		errs := validator("--image", p.Image)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Icon"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -192,6 +192,13 @@ func (p *CreateIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CreateIconParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateIconParam) GetName() string {
+	return p.Name
+}
 func (p *CreateIconParam) SetTags(v []string) {
 	p.Tags = v
 }
@@ -205,13 +212,6 @@ func (p *CreateIconParam) SetImage(v string) {
 
 func (p *CreateIconParam) GetImage() string {
 	return p.Image
-}
-func (p *CreateIconParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateIconParam) GetName() string {
-	return p.Name
 }
 
 // ReadIconParam is input parameters for the sacloud API
@@ -279,9 +279,9 @@ func (p *ReadIconParam) GetId() int64 {
 
 // UpdateIconParam is input parameters for the sacloud API
 type UpdateIconParam struct {
+	Id   int64
 	Name string
 	Tags []string
-	Id   int64
 }
 
 // NewUpdateIconParam return new UpdateIconParam
@@ -293,20 +293,6 @@ func NewUpdateIconParam() *UpdateIconParam {
 func (p *UpdateIconParam) Validate() []error {
 	errors := []error{}
 	{
-		validator := define.Resources["Icon"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Icon"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := validateRequired
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -316,6 +302,20 @@ func (p *UpdateIconParam) Validate() []error {
 	{
 		validator := define.Resources["Icon"].Commands["update"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Icon"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Icon"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -348,6 +348,13 @@ func (p *UpdateIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdateIconParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *UpdateIconParam) GetId() int64 {
+	return p.Id
+}
 func (p *UpdateIconParam) SetName(v string) {
 	p.Name = v
 }
@@ -361,13 +368,6 @@ func (p *UpdateIconParam) SetTags(v []string) {
 
 func (p *UpdateIconParam) GetTags() []string {
 	return p.Tags
-}
-func (p *UpdateIconParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *UpdateIconParam) GetId() int64 {
-	return p.Id
 }
 
 // DeleteIconParam is input parameters for the sacloud API

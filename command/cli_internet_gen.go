@@ -7,118 +7,17 @@ import (
 )
 
 func init() {
-	readParam := NewReadInternetParam()
-	updateParam := NewUpdateInternetParam()
 	deleteParam := NewDeleteInternetParam()
 	updateBandwidthParam := NewUpdateBandwidthInternetParam()
 	listParam := NewListInternetParam()
 	createParam := NewCreateInternetParam()
+	readParam := NewReadInternetParam()
+	updateParam := NewUpdateInternetParam()
 
 	cliCommand := &cli.Command{
 		Name:  "internet",
 		Usage: "A manage commands of Internet",
 		Subcommands: []*cli.Command{
-			{
-				Name:      "read",
-				Aliases:   []string{"r"},
-				Usage:     "Read Internet",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &readParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), readParam)
-
-					// Run command with params
-					return InternetRead(ctx, readParam)
-				},
-			},
-			{
-				Name:      "update",
-				Aliases:   []string{"u"},
-				Usage:     "Update Internet",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
-					},
-					&cli.IntFlag{
-						Name:        "band-width",
-						Usage:       "[Required] set band-width(Mbpm)",
-						Value:       100,
-						Destination: &updateParam.BandWidth,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set resource display name",
-						Destination: &updateParam.Name,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					updateParam.Tags = c.StringSlice("tags")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), updateParam)
-
-					// Run command with params
-					return InternetUpdate(ctx, updateParam)
-				},
-			},
 			{
 				Name:      "delete",
 				Aliases:   []string{"d", "rm"},
@@ -201,6 +100,11 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List Internet",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
 					&cli.StringSliceFlag{
 						Name:  "sort",
 						Usage: "set field(s) for sort",
@@ -217,11 +121,6 @@ func init() {
 						Name:        "from",
 						Usage:       "set offset",
 						Destination: &listParam.From,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -301,6 +200,107 @@ func init() {
 
 					// Run command with params
 					return InternetCreate(ctx, createParam)
+				},
+			},
+			{
+				Name:      "read",
+				Aliases:   []string{"r"},
+				Usage:     "Read Internet",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &readParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := readParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), readParam)
+
+					// Run command with params
+					return InternetRead(ctx, readParam)
+				},
+			},
+			{
+				Name:      "update",
+				Aliases:   []string{"u"},
+				Usage:     "Update Internet",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
+					},
+					&cli.IntFlag{
+						Name:        "band-width",
+						Usage:       "[Required] set band-width(Mbpm)",
+						Value:       100,
+						Destination: &updateParam.BandWidth,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "set resource display name",
+						Destination: &updateParam.Name,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &updateParam.Description,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					updateParam.Tags = c.StringSlice("tags")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := updateParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), updateParam)
+
+					// Run command with params
+					return InternetUpdate(ctx, updateParam)
 				},
 			},
 		},

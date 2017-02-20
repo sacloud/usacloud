@@ -7,56 +7,21 @@ import (
 )
 
 func init() {
-	ftpOpenParam := NewFtpOpenArchiveParam()
 	listParam := NewListArchiveParam()
-	readParam := NewReadArchiveParam()
-	updateParam := NewUpdateArchiveParam()
 	uploadParam := NewUploadArchiveParam()
 	downloadParam := NewDownloadArchiveParam()
 	waitForCopyParam := NewWaitForCopyArchiveParam()
-	createParam := NewCreateArchiveParam()
-	deleteParam := NewDeleteArchiveParam()
+	ftpOpenParam := NewFtpOpenArchiveParam()
 	ftpCloseParam := NewFtpCloseArchiveParam()
+	createParam := NewCreateArchiveParam()
+	readParam := NewReadArchiveParam()
+	updateParam := NewUpdateArchiveParam()
+	deleteParam := NewDeleteArchiveParam()
 
 	cliCommand := &cli.Command{
 		Name:  "archive",
 		Usage: "A manage commands of Archive",
 		Subcommands: []*cli.Command{
-			{
-				Name:      "ftp-open",
-				Usage:     "FtpOpen Archive",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &ftpOpenParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := ftpOpenParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), ftpOpenParam)
-
-					// Run command with params
-					return ArchiveFtpOpen(ctx, ftpOpenParam)
-				},
-			},
 			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
@@ -66,11 +31,6 @@ func init() {
 						Name:        "scope",
 						Usage:       "set filter by scope('user' or 'shared')",
 						Destination: &listParam.Scope,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
 					},
 					&cli.StringSliceFlag{
 						Name:  "sort",
@@ -88,6 +48,11 @@ func init() {
 						Name:        "from",
 						Usage:       "set offset",
 						Destination: &listParam.From,
+					},
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -112,101 +77,6 @@ func init() {
 
 					// Run command with params
 					return ArchiveList(ctx, listParam)
-				},
-			},
-			{
-				Name:      "read",
-				Aliases:   []string{"r"},
-				Usage:     "Read Archive",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &readParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), readParam)
-
-					// Run command with params
-					return ArchiveRead(ctx, readParam)
-				},
-			},
-			{
-				Name:      "update",
-				Aliases:   []string{"u"},
-				Usage:     "Update Archive",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set resource display name",
-						Destination: &updateParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					updateParam.Tags = c.StringSlice("tags")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), updateParam)
-
-					// Run command with params
-					return ArchiveUpdate(ctx, updateParam)
 				},
 			},
 			{
@@ -325,29 +195,94 @@ func init() {
 				},
 			},
 			{
+				Name:      "ftp-open",
+				Usage:     "FtpOpen Archive",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &ftpOpenParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := ftpOpenParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), ftpOpenParam)
+
+					// Run command with params
+					return ArchiveFtpOpen(ctx, ftpOpenParam)
+				},
+			},
+			{
+				Name:      "ftp-close",
+				Usage:     "FtpClose Archive",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &ftpCloseParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := ftpCloseParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), ftpCloseParam)
+
+					// Run command with params
+					return ArchiveFtpClose(ctx, ftpCloseParam)
+				},
+			},
+			{
 				Name:    "create",
 				Aliases: []string{"c"},
 				Usage:   "Create Archive",
 				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "size",
-						Usage:       "set archive size(GB)",
-						Destination: &createParam.Size,
-					},
-					&cli.StringFlag{
-						Name:        "archive-file",
-						Usage:       "set archive image file",
-						Destination: &createParam.ArchiveFile,
-					},
-					&cli.Int64Flag{
-						Name:        "source-archive-id",
-						Usage:       "set source archive ID",
-						Destination: &createParam.SourceArchiveId,
-					},
 					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "[Required] set resource display name",
 						Destination: &createParam.Name,
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &createParam.IconId,
+					},
+					&cli.IntFlag{
+						Name:        "size",
+						Usage:       "set archive size(GB)",
+						Destination: &createParam.Size,
 					},
 					&cli.StringFlag{
 						Name:        "description",
@@ -359,15 +294,20 @@ func init() {
 						Name:  "tags",
 						Usage: "set resource tags",
 					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &createParam.IconId,
+					&cli.StringFlag{
+						Name:        "archive-file",
+						Usage:       "set archive image file",
+						Destination: &createParam.ArchiveFile,
 					},
 					&cli.Int64Flag{
 						Name:        "source-disk-id",
 						Usage:       "set source disk ID",
 						Destination: &createParam.SourceDiskId,
+					},
+					&cli.Int64Flag{
+						Name:        "source-archive-id",
+						Usage:       "set source archive ID",
+						Destination: &createParam.SourceArchiveId,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -390,6 +330,101 @@ func init() {
 
 					// Run command with params
 					return ArchiveCreate(ctx, createParam)
+				},
+			},
+			{
+				Name:      "read",
+				Aliases:   []string{"r"},
+				Usage:     "Read Archive",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &readParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := readParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), readParam)
+
+					// Run command with params
+					return ArchiveRead(ctx, readParam)
+				},
+			},
+			{
+				Name:      "update",
+				Aliases:   []string{"u"},
+				Usage:     "Update Archive",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "set resource display name",
+						Destination: &updateParam.Name,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &updateParam.Description,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					updateParam.Tags = c.StringSlice("tags")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := updateParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), updateParam)
+
+					// Run command with params
+					return ArchiveUpdate(ctx, updateParam)
 				},
 			},
 			{
@@ -426,41 +461,6 @@ func init() {
 
 					// Run command with params
 					return ArchiveDelete(ctx, deleteParam)
-				},
-			},
-			{
-				Name:      "ftp-close",
-				Usage:     "FtpClose Archive",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &ftpCloseParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := ftpCloseParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), ftpCloseParam)
-
-					// Run command with params
-					return ArchiveFtpClose(ctx, ftpCloseParam)
 				},
 			},
 		},

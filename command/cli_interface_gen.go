@@ -7,20 +7,20 @@ import (
 )
 
 func init() {
-	listParam := NewListIconParam()
-	createParam := NewCreateIconParam()
-	readParam := NewReadIconParam()
-	updateParam := NewUpdateIconParam()
-	deleteParam := NewDeleteIconParam()
+	listParam := NewListInterfaceParam()
+	createParam := NewCreateInterfaceParam()
+	readParam := NewReadInterfaceParam()
+	updateParam := NewUpdateInterfaceParam()
+	deleteParam := NewDeleteInterfaceParam()
 
 	cliCommand := &cli.Command{
-		Name:  "icon",
-		Usage: "A manage commands of Icon",
+		Name:  "interface",
+		Usage: "A manage commands of Interface",
 		Subcommands: []*cli.Command{
 			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List Icon",
+				Usage:   "List Interface",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
 						Name:        "from",
@@ -48,9 +48,9 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
 					listParam.Sort = c.StringSlice("sort")
-					listParam.Name = c.StringSlice("name")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -66,33 +66,21 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), listParam)
 
 					// Run command with params
-					return IconList(ctx, listParam)
+					return InterfaceList(ctx, listParam)
 				},
 			},
 			{
 				Name:    "create",
 				Aliases: []string{"c"},
-				Usage:   "Create Icon",
+				Usage:   "Create Interface",
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.StringFlag{
-						Name:        "image",
-						Usage:       "[Required] set icon image",
-						Destination: &createParam.Image,
+					&cli.Int64Flag{
+						Name:        "server-id",
+						Usage:       "[Required] set server ID",
+						Destination: &createParam.ServerId,
 					},
 				},
 				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					createParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -108,13 +96,13 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), createParam)
 
 					// Run command with params
-					return IconCreate(ctx, createParam)
+					return InterfaceCreate(ctx, createParam)
 				},
 			},
 			{
 				Name:      "read",
 				Aliases:   []string{"r"},
-				Usage:     "Read Icon",
+				Usage:     "Read Interface",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -144,13 +132,13 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), readParam)
 
 					// Run command with params
-					return IconRead(ctx, readParam)
+					return InterfaceRead(ctx, readParam)
 				},
 			},
 			{
 				Name:      "update",
 				Aliases:   []string{"u"},
-				Usage:     "Update Icon",
+				Usage:     "Update Interface",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -159,19 +147,12 @@ func init() {
 						Destination: &updateParam.Id,
 					},
 					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set resource display name",
-						Destination: &updateParam.Name,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
+						Name:        "user-ipaddress",
+						Usage:       "set user-ipaddress",
+						Destination: &updateParam.UserIpaddress,
 					},
 				},
 				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					updateParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -192,13 +173,13 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), updateParam)
 
 					// Run command with params
-					return IconUpdate(ctx, updateParam)
+					return InterfaceUpdate(ctx, updateParam)
 				},
 			},
 			{
 				Name:      "delete",
 				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete Icon",
+				Usage:     "Delete Interface",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -228,7 +209,7 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), deleteParam)
 
 					// Run command with params
-					return IconDelete(ctx, deleteParam)
+					return InterfaceDelete(ctx, deleteParam)
 				},
 			},
 		},

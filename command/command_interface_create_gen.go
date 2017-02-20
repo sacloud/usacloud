@@ -6,26 +6,20 @@ import (
 	"fmt"
 )
 
-func SwitchCreate(ctx Context, params *CreateSwitchParam) error {
+func InterfaceCreate(ctx Context, params *CreateInterfaceParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetSwitchAPI()
+	api := client.GetInterfaceAPI()
 	p := api.New()
 
 	// set params
 
-	p.SetName(params.Name)
-
-	p.SetDescription(params.Description)
-
-	p.SetTags(params.Tags)
-
-	p.SetIconByID(params.IconId)
+	p.SetServerID(params.ServerId)
 
 	// call Create(id)
 	res, err := api.Create(p)
 	if err != nil {
-		return fmt.Errorf("SwitchCreate is failed: %s", err)
+		return fmt.Errorf("InterfaceCreate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

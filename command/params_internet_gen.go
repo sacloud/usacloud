@@ -10,11 +10,11 @@ import (
 
 // ListInternetParam is input parameters for the sacloud API
 type ListInternetParam struct {
-	Sort []string
 	Name []string
 	Id   []int64
 	From int
 	Max  int
+	Sort []string
 }
 
 // NewListInternetParam return new ListInternetParam
@@ -78,13 +78,6 @@ func (p *ListInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListInternetParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListInternetParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListInternetParam) SetName(v []string) {
 	p.Name = v
 }
@@ -112,6 +105,13 @@ func (p *ListInternetParam) SetMax(v int) {
 
 func (p *ListInternetParam) GetMax() int {
 	return p.Max
+}
+func (p *ListInternetParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListInternetParam) GetSort() []string {
+	return p.Sort
 }
 
 // CreateInternetParam is input parameters for the sacloud API
@@ -312,12 +312,12 @@ func (p *ReadInternetParam) GetId() int64 {
 
 // UpdateInternetParam is input parameters for the sacloud API
 type UpdateInternetParam struct {
+	Name        string
 	Description string
 	Tags        []string
 	IconId      int64
 	BandWidth   int
 	Id          int64
-	Name        string
 }
 
 // NewUpdateInternetParam return new UpdateInternetParam
@@ -331,6 +331,13 @@ func NewUpdateInternetParam() *UpdateInternetParam {
 // Validate checks current values in model
 func (p *UpdateInternetParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["Internet"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := define.Resources["Internet"].Commands["update"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
@@ -380,13 +387,6 @@ func (p *UpdateInternetParam) Validate() []error {
 			errors = append(errors, errs...)
 		}
 	}
-	{
-		validator := define.Resources["Internet"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	return errors
 }
@@ -415,6 +415,13 @@ func (p *UpdateInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdateInternetParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateInternetParam) GetName() string {
+	return p.Name
+}
 func (p *UpdateInternetParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -449,13 +456,6 @@ func (p *UpdateInternetParam) SetId(v int64) {
 
 func (p *UpdateInternetParam) GetId() int64 {
 	return p.Id
-}
-func (p *UpdateInternetParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateInternetParam) GetName() string {
-	return p.Name
 }
 
 // DeleteInternetParam is input parameters for the sacloud API

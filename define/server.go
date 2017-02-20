@@ -124,35 +124,35 @@ func ServerResource() *schema.Resource {
 			Type:               schema.CommandManipulate,
 			Params:             serverInterfaceInfoParam(),
 			TableType:          output.TableSimple,
-			TableColumnDefines: interfaceListColumns(),
+			TableColumnDefines: serverInterfaceListColumns(),
 			UseCustomCommand:   true,
 		},
 		"interface-add-for-internet": {
 			Type:               schema.CommandManipulate,
 			Params:             serverInterfaceAddForInternetParam(),
 			TableType:          output.TableSimple,
-			TableColumnDefines: interfaceListColumns(),
+			TableColumnDefines: serverInterfaceListColumns(),
 			UseCustomCommand:   true,
 		},
 		"interface-add-for-router": {
 			Type:               schema.CommandManipulate,
 			Params:             serverInterfaceAddForRouterParam(),
 			TableType:          output.TableSimple,
-			TableColumnDefines: interfaceListColumns(),
+			TableColumnDefines: serverInterfaceListColumns(),
 			UseCustomCommand:   true,
 		},
 		"interface-add-for-switch": {
 			Type:               schema.CommandManipulate,
 			Params:             serverInterfaceAddForSwitchParam(),
 			TableType:          output.TableSimple,
-			TableColumnDefines: interfaceListColumns(),
+			TableColumnDefines: serverInterfaceListColumns(),
 			UseCustomCommand:   true,
 		},
 		"interface-add-disconnected": {
 			Type:               schema.CommandManipulate,
 			Params:             serverInterfaceAddDisconnectedParam(),
 			TableType:          output.TableSimple,
-			TableColumnDefines: interfaceListColumns(),
+			TableColumnDefines: serverInterfaceListColumns(),
 			UseCustomCommand:   true,
 		},
 	}
@@ -191,7 +191,7 @@ func serverListColumns() []output.ColumnDef {
 	}
 }
 
-func interfaceListColumns() []output.ColumnDef {
+func serverInterfaceListColumns() []output.ColumnDef {
 	return []output.ColumnDef{
 		{Name: "ID"},
 		{

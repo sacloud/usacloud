@@ -17,9 +17,6 @@ func SwitchUpdate(ctx Context, params *UpdateSwitchParam) error {
 
 	// set params
 
-	if ctx.IsSet("icon-id") {
-		p.SetIconByID(params.IconId)
-	}
 	if ctx.IsSet("name") {
 		p.SetName(params.Name)
 	}
@@ -28,6 +25,9 @@ func SwitchUpdate(ctx Context, params *UpdateSwitchParam) error {
 	}
 	if ctx.IsSet("tags") {
 		p.SetTags(params.Tags)
+	}
+	if ctx.IsSet("icon-id") {
+		p.SetIconByID(params.IconId)
 	}
 
 	// call Update(id)
