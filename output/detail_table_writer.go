@@ -44,7 +44,7 @@ func (w *detailTableWriter) append(values map[string]string) {
 
 	// include
 	for _, k := range sortedKeys {
-		if w.needInclude(k, includes) && !w.needExclude(k, w.excludes) {
+		if w.needInclude(k, includes) && !w.needExclude(k, w.excludes) && k != "__ORDER__" {
 
 			sv := values[k]
 			if sv == "" {

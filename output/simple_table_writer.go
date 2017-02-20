@@ -20,7 +20,11 @@ func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) tableWriter {
 
 	var headers []string
 	for _, def := range columnDefs {
-		headers = append(headers, def.Name)
+		name := def.Name
+		if name == "__ORDER__" {
+			name = "#"
+		}
+		headers = append(headers, name)
 	}
 
 	w.table.SetHeader(headers)

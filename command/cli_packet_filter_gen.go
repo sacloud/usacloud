@@ -7,26 +7,34 @@ import (
 )
 
 func init() {
-	listParam := NewListArchiveParam()
-	createParam := NewCreateArchiveParam()
-	waitForCopyParam := NewWaitForCopyArchiveParam()
-	ftpOpenParam := NewFtpOpenArchiveParam()
-	ftpCloseParam := NewFtpCloseArchiveParam()
-	readParam := NewReadArchiveParam()
-	updateParam := NewUpdateArchiveParam()
-	deleteParam := NewDeleteArchiveParam()
-	uploadParam := NewUploadArchiveParam()
-	downloadParam := NewDownloadArchiveParam()
+	listParam := NewListPacketFilterParam()
+	readParam := NewReadPacketFilterParam()
+	updateParam := NewUpdatePacketFilterParam()
+	ruleListParam := NewRuleListPacketFilterParam()
+	ruleDeleteParam := NewRuleDeletePacketFilterParam()
+	createParam := NewCreatePacketFilterParam()
+	deleteParam := NewDeletePacketFilterParam()
+	ruleAddParam := NewRuleAddPacketFilterParam()
+	ruleUpdateParam := NewRuleUpdatePacketFilterParam()
 
 	cliCommand := &cli.Command{
-		Name:  "archive",
-		Usage: "A manage commands of Archive",
+		Name:  "packet-filter",
+		Usage: "A manage commands of PacketFilter",
 		Subcommands: []*cli.Command{
 			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List Archive",
+				Usage:   "List PacketFilter",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
 					&cli.StringSliceFlag{
 						Name:  "name",
 						Usage: "set filter by name(s)",
@@ -39,20 +47,6 @@ func init() {
 						Name:        "from",
 						Usage:       "set offset",
 						Destination: &listParam.From,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
-					&cli.StringFlag{
-						Name:        "scope",
-						Usage:       "set filter by scope('user' or 'shared')",
-						Destination: &listParam.Scope,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -76,186 +70,13 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), listParam)
 
 					// Run command with params
-					return ArchiveList(ctx, listParam)
-				},
-			},
-			{
-				Name:    "create",
-				Aliases: []string{"c"},
-				Usage:   "Create Archive",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &createParam.Description,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &createParam.IconId,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
-					},
-					&cli.IntFlag{
-						Name:        "size",
-						Usage:       "set archive size(GB)",
-						Destination: &createParam.Size,
-					},
-					&cli.StringFlag{
-						Name:        "archive-file",
-						Usage:       "set archive image file",
-						Destination: &createParam.ArchiveFile,
-					},
-					&cli.Int64Flag{
-						Name:        "source-disk-id",
-						Usage:       "set source disk ID",
-						Destination: &createParam.SourceDiskId,
-					},
-					&cli.Int64Flag{
-						Name:        "source-archive-id",
-						Usage:       "set source archive ID",
-						Destination: &createParam.SourceArchiveId,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					createParam.Tags = c.StringSlice("tags")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), createParam)
-
-					// Run command with params
-					return ArchiveCreate(ctx, createParam)
-				},
-			},
-			{
-				Name:      "wait-for-copy",
-				Usage:     "WaitForCopy Archive",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &waitForCopyParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := waitForCopyParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), waitForCopyParam)
-
-					// Run command with params
-					return ArchiveWaitForCopy(ctx, waitForCopyParam)
-				},
-			},
-			{
-				Name:      "ftp-open",
-				Usage:     "FtpOpen Archive",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &ftpOpenParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := ftpOpenParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), ftpOpenParam)
-
-					// Run command with params
-					return ArchiveFtpOpen(ctx, ftpOpenParam)
-				},
-			},
-			{
-				Name:      "ftp-close",
-				Usage:     "FtpClose Archive",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &ftpCloseParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := ftpCloseParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), ftpCloseParam)
-
-					// Run command with params
-					return ArchiveFtpClose(ctx, ftpCloseParam)
+					return PacketFilterList(ctx, listParam)
 				},
 			},
 			{
 				Name:      "read",
 				Aliases:   []string{"r"},
-				Usage:     "Read Archive",
+				Usage:     "Read PacketFilter",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -285,13 +106,13 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), readParam)
 
 					// Run command with params
-					return ArchiveRead(ctx, readParam)
+					return PacketFilterRead(ctx, readParam)
 				},
 			},
 			{
 				Name:      "update",
 				Aliases:   []string{"u"},
-				Usage:     "Update Archive",
+				Usage:     "Update PacketFilter",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -310,20 +131,8 @@ func init() {
 						Usage:       "set resource description",
 						Destination: &updateParam.Description,
 					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
-					},
 				},
 				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					updateParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -344,13 +153,125 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), updateParam)
 
 					// Run command with params
-					return ArchiveUpdate(ctx, updateParam)
+					return PacketFilterUpdate(ctx, updateParam)
+				},
+			},
+			{
+				Name:      "rule-list",
+				Aliases:   []string{"rules"},
+				Usage:     "RuleList PacketFilter",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &ruleListParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := ruleListParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), ruleListParam)
+
+					// Run command with params
+					return PacketFilterRuleList(ctx, ruleListParam)
+				},
+			},
+			{
+				Name:      "rule-delete",
+				Usage:     "RuleDelete PacketFilter",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &ruleDeleteParam.Id,
+					},
+					&cli.IntFlag{
+						Name:        "index",
+						Usage:       "[Required] index of target rule",
+						Destination: &ruleDeleteParam.Index,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := ruleDeleteParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), ruleDeleteParam)
+
+					// Run command with params
+					return PacketFilterRuleDelete(ctx, ruleDeleteParam)
+				},
+			},
+			{
+				Name:    "create",
+				Aliases: []string{"c"},
+				Usage:   "Create PacketFilter",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &createParam.Description,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := createParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), createParam)
+
+					// Run command with params
+					return PacketFilterCreate(ctx, createParam)
 				},
 			},
 			{
 				Name:      "delete",
 				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete Archive",
+				Usage:     "Delete PacketFilter",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -380,23 +301,56 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), deleteParam)
 
 					// Run command with params
-					return ArchiveDelete(ctx, deleteParam)
+					return PacketFilterDelete(ctx, deleteParam)
 				},
 			},
 			{
-				Name:      "upload",
-				Usage:     "Upload Archive",
+				Name:      "rule-add",
+				Usage:     "RuleAdd PacketFilter",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "index",
+						Usage:       "index to insert rule into",
+						Value:       1,
+						Destination: &ruleAddParam.Index,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &ruleAddParam.Description,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &uploadParam.Id,
+						Destination: &ruleAddParam.Id,
 					},
 					&cli.StringFlag{
-						Name:        "archive-file",
-						Usage:       "[Required] set archive image file",
-						Destination: &uploadParam.ArchiveFile,
+						Name:        "protocol",
+						Usage:       "set target protocol[tcp/udp/icmp/fragment/ip]",
+						Destination: &ruleAddParam.Protocol,
+					},
+					&cli.StringFlag{
+						Name:        "source-network",
+						Usage:       "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]",
+						Destination: &ruleAddParam.SourceNetwork,
+					},
+					&cli.StringFlag{
+						Name:        "source-port",
+						Usage:       "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
+						Destination: &ruleAddParam.SourcePort,
+					},
+					&cli.StringFlag{
+						Name:        "destination-port",
+						Aliases:     []string{"dest-port"},
+						Usage:       "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
+						Destination: &ruleAddParam.DestinationPort,
+					},
+					&cli.StringFlag{
+						Name:        "action",
+						Usage:       "set action[allow/deny]",
+						Destination: &ruleAddParam.Action,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -412,31 +366,63 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := uploadParam.Validate(); len(errors) > 0 {
+					if errors := ruleAddParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), uploadParam)
+					ctx := NewContext(c, c.Args().Slice(), ruleAddParam)
 
 					// Run command with params
-					return ArchiveUpload(ctx, uploadParam)
+					return PacketFilterRuleAdd(ctx, ruleAddParam)
 				},
 			},
 			{
-				Name:      "download",
-				Usage:     "Download Archive",
+				Name:      "rule-update",
+				Usage:     "RuleUpdate PacketFilter",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "index",
+						Usage:       "[Required] index of target rule",
+						Destination: &ruleUpdateParam.Index,
+					},
+					&cli.StringFlag{
+						Name:        "protocol",
+						Usage:       "set target protocol[tcp/udp/icmp/fragment/ip]",
+						Destination: &ruleUpdateParam.Protocol,
+					},
+					&cli.StringFlag{
+						Name:        "source-port",
+						Usage:       "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
+						Destination: &ruleUpdateParam.SourcePort,
+					},
+					&cli.StringFlag{
+						Name:        "destination-port",
+						Aliases:     []string{"dest-port"},
+						Usage:       "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
+						Destination: &ruleUpdateParam.DestinationPort,
+					},
+					&cli.StringFlag{
+						Name:        "action",
+						Usage:       "set action[allow/deny]",
+						Destination: &ruleUpdateParam.Action,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &ruleUpdateParam.Description,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &downloadParam.Id,
+						Destination: &ruleUpdateParam.Id,
 					},
 					&cli.StringFlag{
-						Name:        "file-destination",
-						Usage:       "[Required] set file destination path",
-						Destination: &downloadParam.FileDestination,
+						Name:        "source-network",
+						Usage:       "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]",
+						Destination: &ruleUpdateParam.SourceNetwork,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -452,15 +438,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := downloadParam.Validate(); len(errors) > 0 {
+					if errors := ruleUpdateParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), downloadParam)
+					ctx := NewContext(c, c.Args().Slice(), ruleUpdateParam)
 
 					// Run command with params
-					return ArchiveDownload(ctx, downloadParam)
+					return PacketFilterRuleUpdate(ctx, ruleUpdateParam)
 				},
 			},
 		},

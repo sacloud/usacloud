@@ -6,13 +6,14 @@ package define
 import "github.com/sacloud/usacloud/schema"
 
 var Resources map[string]*schema.Resource = map[string]*schema.Resource{
-	"Archive":   ArchiveResource(),
-	"Bridge":    BridgeResource(),
-	"Disk":      DiskResource(),
-	"Icon":      IconResource(),
-	"Interface": InterfaceResource(),
-	"Internet":  InternetResource(),
-	"ISOImage":  ISOImageResource(),
-	"Server":    ServerResource(),
-	"Switch":    SwitchResource(),
+	"Archive":      ArchiveResource(),
+	"Bridge":       BridgeResource(),
+	"Disk":         DiskResource(),
+	"Icon":         IconResource(),
+	"Interface":    InterfaceResource(),
+	"Internet":     InternetResource(),
+	"ISOImage":     ISOImageResource(),
+	"PacketFilter": PacketFilterResource(),
+	"Server":       ServerResource(),
+	"Switch":       SwitchResource(),
 }

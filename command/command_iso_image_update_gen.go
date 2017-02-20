@@ -17,9 +17,6 @@ func ISOImageUpdate(ctx Context, params *UpdateISOImageParam) error {
 
 	// set params
 
-	if ctx.IsSet("name") {
-		p.SetName(params.Name)
-	}
 	if ctx.IsSet("description") {
 		p.SetDescription(params.Description)
 	}
@@ -28,6 +25,9 @@ func ISOImageUpdate(ctx Context, params *UpdateISOImageParam) error {
 	}
 	if ctx.IsSet("icon-id") {
 		p.SetIconByID(params.IconId)
+	}
+	if ctx.IsSet("name") {
+		p.SetName(params.Name)
 	}
 
 	// call Update(id)

@@ -73,6 +73,7 @@ func (o *tableOutput) Print(targets ...interface{}) error {
 			return fmt.Errorf("TableOutput:Print: create flatmap is failed: %v", err)
 		}
 
+		flatMap["__ORDER__"] = fmt.Sprintf("%d", i+1)
 		table.append(flatMap)
 	}
 

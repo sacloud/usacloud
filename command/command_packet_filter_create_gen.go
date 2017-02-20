@@ -6,28 +6,22 @@ import (
 	"fmt"
 )
 
-func InternetCreate(ctx Context, params *CreateInternetParam) error {
+func PacketFilterCreate(ctx Context, params *CreatePacketFilterParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetInternetAPI()
+	api := client.GetPacketFilterAPI()
 	p := api.New()
 
 	// set params
 
-	p.SetDescription(params.Description)
-
-	p.SetTags(params.Tags)
-
-	p.SetIconByID(params.IconId)
-
-	p.SetNetworkMaskLen(params.NwMasklen)
-
 	p.SetName(params.Name)
+
+	p.SetDescription(params.Description)
 
 	// call Create(id)
 	res, err := api.Create(p)
 	if err != nil {
-		return fmt.Errorf("InternetCreate is failed: %s", err)
+		return fmt.Errorf("PacketFilterCreate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)
