@@ -76,6 +76,16 @@ func PacketFilterResource() *schema.Resource {
 			TableColumnDefines: packetFilterRuleListColumns(),
 			UseCustomCommand:   true,
 		},
+		"interface-connect": {
+			Type:             schema.CommandManipulate,
+			Params:           packetFilterInterfaceConnectParam(),
+			UseCustomCommand: true,
+		},
+		"interface-disconnect": {
+			Type:             schema.CommandManipulate,
+			Params:           packetFilterInterfaceDisconnectParam(),
+			UseCustomCommand: true,
+		},
 	}
 
 	return &schema.Resource{
@@ -252,6 +262,32 @@ func packetFilterRuleDeleteParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target rule",
 			Required:    true,
+		},
+	}
+}
+
+func packetFilterInterfaceConnectParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": paramID,
+		"interface-id": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set interface ID",
+			Required:     true,
+			ValidateFunc: validateSakuraID(),
+		},
+	}
+}
+
+func packetFilterInterfaceDisconnectParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": paramID,
+		"interface-id": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set interface ID",
+			Required:     true,
+			ValidateFunc: validateSakuraID(),
 		},
 	}
 }

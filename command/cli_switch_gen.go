@@ -7,53 +7,18 @@ import (
 )
 
 func init() {
-	bridgeDisconnectParam := NewBridgeDisconnectSwitchParam()
 	listParam := NewListSwitchParam()
 	createParam := NewCreateSwitchParam()
 	readParam := NewReadSwitchParam()
 	updateParam := NewUpdateSwitchParam()
 	deleteParam := NewDeleteSwitchParam()
 	bridgeConnectParam := NewBridgeConnectSwitchParam()
+	bridgeDisconnectParam := NewBridgeDisconnectSwitchParam()
 
 	cliCommand := &cli.Command{
 		Name:  "switch",
 		Usage: "A manage commands of Switch",
 		Subcommands: []*cli.Command{
-			{
-				Name:      "bridge-disconnect",
-				Usage:     "BridgeDisconnect Switch",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &bridgeDisconnectParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := bridgeDisconnectParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), bridgeDisconnectParam)
-
-					// Run command with params
-					return SwitchBridgeDisconnect(ctx, bridgeDisconnectParam)
-				},
-			},
 			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
@@ -323,6 +288,41 @@ func init() {
 
 					// Run command with params
 					return SwitchBridgeConnect(ctx, bridgeConnectParam)
+				},
+			},
+			{
+				Name:      "bridge-disconnect",
+				Usage:     "BridgeDisconnect Switch",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &bridgeDisconnectParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := bridgeDisconnectParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), bridgeDisconnectParam)
+
+					// Run command with params
+					return SwitchBridgeDisconnect(ctx, bridgeDisconnectParam)
 				},
 			},
 		},

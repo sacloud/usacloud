@@ -45,6 +45,16 @@ func InterfaceResource() *schema.Resource {
 			IncludeFields: interfaceDetailIncludes(),
 			ExcludeFields: interfaceDetailExcludes(),
 		},
+		"packet-filter-connect": {
+			Type:             schema.CommandManipulate,
+			Params:           interfacePacketFilterConnectParam(),
+			UseCustomCommand: true,
+		},
+		"packet-filter-disconnect": {
+			Type:             schema.CommandManipulate,
+			Params:           interfacePacketFilterDisconnectParam(),
+			UseCustomCommand: true,
+		},
 	}
 
 	return &schema.Resource{
@@ -138,5 +148,31 @@ func interfaceUpdateParam() map[string]*schema.Schema {
 func interfaceDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
+	}
+}
+
+func interfacePacketFilterConnectParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": paramID,
+		"packet-filter-id": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set packet filter ID",
+			Required:     true,
+			ValidateFunc: validateSakuraID(),
+		},
+	}
+}
+
+func interfacePacketFilterDisconnectParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": paramID,
+		"packet-filter-id": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set packet filter ID",
+			Required:     true,
+			ValidateFunc: validateSakuraID(),
+		},
 	}
 }

@@ -13,14 +13,6 @@ func BridgeList(ctx Context, params *ListBridgeParam) error {
 
 	finder.SetEmpty()
 
-	if !isEmpty(params.Max) {
-		finder.SetLimit(params.Max)
-	}
-	if !isEmpty(params.Sort) {
-		for _, v := range params.Sort {
-			setSortBy(finder, v)
-		}
-	}
 	if !isEmpty(params.Name) {
 		for _, v := range params.Name {
 			finder.SetFilterBy("Name", v)
@@ -33,6 +25,14 @@ func BridgeList(ctx Context, params *ListBridgeParam) error {
 	}
 	if !isEmpty(params.From) {
 		finder.SetOffset(params.From)
+	}
+	if !isEmpty(params.Max) {
+		finder.SetLimit(params.Max)
+	}
+	if !isEmpty(params.Sort) {
+		for _, v := range params.Sort {
+			setSortBy(finder, v)
+		}
 	}
 
 	// call Find()

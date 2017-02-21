@@ -84,9 +84,9 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -111,15 +111,15 @@ func init() {
 				Usage:   "Create Bridge",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
-					},
-					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
 						Destination: &createParam.Description,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -183,6 +183,12 @@ func init() {
 				Usage:     "Update Bridge",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &updateParam.Description,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
@@ -192,12 +198,6 @@ func init() {
 						Name:        "name",
 						Usage:       "set resource display name",
 						Destination: &updateParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
 					},
 				},
 				Action: func(c *cli.Context) error {

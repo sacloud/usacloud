@@ -8,6 +8,358 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// ReadDiskParam is input parameters for the sacloud API
+type ReadDiskParam struct {
+	Id int64
+}
+
+// NewReadDiskParam return new ReadDiskParam
+func NewReadDiskParam() *ReadDiskParam {
+	return &ReadDiskParam{}
+}
+
+// Validate checks current values in model
+func (p *ReadDiskParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["read"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ReadDiskParam) getResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *ReadDiskParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["read"]
+}
+
+func (p *ReadDiskParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ReadDiskParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ReadDiskParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ReadDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ReadDiskParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ReadDiskParam) GetId() int64 {
+	return p.Id
+}
+
+// UpdateDiskParam is input parameters for the sacloud API
+type UpdateDiskParam struct {
+	Connection  string
+	Id          int64
+	Name        string
+	Description string
+	Tags        []string
+	IconId      int64
+}
+
+// NewUpdateDiskParam return new UpdateDiskParam
+func NewUpdateDiskParam() *UpdateDiskParam {
+	return &UpdateDiskParam{}
+}
+
+// Validate checks current values in model
+func (p *UpdateDiskParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Disk"].Commands["update"].Params["connection"].ValidateFunc
+		errs := validator("--connection", p.Connection)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["update"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *UpdateDiskParam) getResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *UpdateDiskParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["update"]
+}
+
+func (p *UpdateDiskParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *UpdateDiskParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *UpdateDiskParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *UpdateDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateDiskParam) SetConnection(v string) {
+	p.Connection = v
+}
+
+func (p *UpdateDiskParam) GetConnection() string {
+	return p.Connection
+}
+func (p *UpdateDiskParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *UpdateDiskParam) GetId() int64 {
+	return p.Id
+}
+func (p *UpdateDiskParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateDiskParam) GetName() string {
+	return p.Name
+}
+func (p *UpdateDiskParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdateDiskParam) GetDescription() string {
+	return p.Description
+}
+func (p *UpdateDiskParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *UpdateDiskParam) GetTags() []string {
+	return p.Tags
+}
+func (p *UpdateDiskParam) SetIconId(v int64) {
+	p.IconId = v
+}
+
+func (p *UpdateDiskParam) GetIconId() int64 {
+	return p.IconId
+}
+
+// EditDiskParam is input parameters for the sacloud API
+type EditDiskParam struct {
+	Password            string
+	Hostname            string
+	SshKeyIds           []int64
+	DisablePasswordAuth bool
+	StartupScriptIds    []int64
+	Ipaddress           string
+	DefaultRoute        string
+	NwMasklen           int
+	Id                  int64
+}
+
+// NewEditDiskParam return new EditDiskParam
+func NewEditDiskParam() *EditDiskParam {
+	return &EditDiskParam{
+
+		NwMasklen: 24,
+	}
+}
+
+// Validate checks current values in model
+func (p *EditDiskParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Disk"].Commands["edit"].Params["ssh-key-ids"].ValidateFunc
+		errs := validator("--ssh-key-ids", p.SshKeyIds)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["edit"].Params["startup-script-ids"].ValidateFunc
+		errs := validator("--startup-script-ids", p.StartupScriptIds)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["edit"].Params["nw-masklen"].ValidateFunc
+		errs := validator("--nw-masklen", p.NwMasklen)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["edit"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *EditDiskParam) getResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *EditDiskParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["edit"]
+}
+
+func (p *EditDiskParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *EditDiskParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *EditDiskParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *EditDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *EditDiskParam) SetPassword(v string) {
+	p.Password = v
+}
+
+func (p *EditDiskParam) GetPassword() string {
+	return p.Password
+}
+func (p *EditDiskParam) SetHostname(v string) {
+	p.Hostname = v
+}
+
+func (p *EditDiskParam) GetHostname() string {
+	return p.Hostname
+}
+func (p *EditDiskParam) SetSshKeyIds(v []int64) {
+	p.SshKeyIds = v
+}
+
+func (p *EditDiskParam) GetSshKeyIds() []int64 {
+	return p.SshKeyIds
+}
+func (p *EditDiskParam) SetDisablePasswordAuth(v bool) {
+	p.DisablePasswordAuth = v
+}
+
+func (p *EditDiskParam) GetDisablePasswordAuth() bool {
+	return p.DisablePasswordAuth
+}
+func (p *EditDiskParam) SetStartupScriptIds(v []int64) {
+	p.StartupScriptIds = v
+}
+
+func (p *EditDiskParam) GetStartupScriptIds() []int64 {
+	return p.StartupScriptIds
+}
+func (p *EditDiskParam) SetIpaddress(v string) {
+	p.Ipaddress = v
+}
+
+func (p *EditDiskParam) GetIpaddress() string {
+	return p.Ipaddress
+}
+func (p *EditDiskParam) SetDefaultRoute(v string) {
+	p.DefaultRoute = v
+}
+
+func (p *EditDiskParam) GetDefaultRoute() string {
+	return p.DefaultRoute
+}
+func (p *EditDiskParam) SetNwMasklen(v int) {
+	p.NwMasklen = v
+}
+
+func (p *EditDiskParam) GetNwMasklen() int {
+	return p.NwMasklen
+}
+func (p *EditDiskParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *EditDiskParam) GetId() int64 {
+	return p.Id
+}
+
 // ReinstallFromArchiveDiskParam is input parameters for the sacloud API
 type ReinstallFromArchiveDiskParam struct {
 	Id              int64
@@ -224,6 +576,177 @@ func (p *ReinstallFromDiskDiskParam) GetDistantFrom() []int64 {
 	return p.DistantFrom
 }
 
+// ReinstallToBlankDiskParam is input parameters for the sacloud API
+type ReinstallToBlankDiskParam struct {
+	Id          int64
+	DistantFrom []int64
+	Async       bool
+}
+
+// NewReinstallToBlankDiskParam return new ReinstallToBlankDiskParam
+func NewReinstallToBlankDiskParam() *ReinstallToBlankDiskParam {
+	return &ReinstallToBlankDiskParam{}
+}
+
+// Validate checks current values in model
+func (p *ReinstallToBlankDiskParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["reinstall-to-blank"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["reinstall-to-blank"].Params["distant-from"].ValidateFunc
+		errs := validator("--distant-from", p.DistantFrom)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ReinstallToBlankDiskParam) getResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *ReinstallToBlankDiskParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["reinstall-to-blank"]
+}
+
+func (p *ReinstallToBlankDiskParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ReinstallToBlankDiskParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ReinstallToBlankDiskParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ReinstallToBlankDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ReinstallToBlankDiskParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetId() int64 {
+	return p.Id
+}
+func (p *ReinstallToBlankDiskParam) SetDistantFrom(v []int64) {
+	p.DistantFrom = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetDistantFrom() []int64 {
+	return p.DistantFrom
+}
+func (p *ReinstallToBlankDiskParam) SetAsync(v bool) {
+	p.Async = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetAsync() bool {
+	return p.Async
+}
+
+// ServerConnectDiskParam is input parameters for the sacloud API
+type ServerConnectDiskParam struct {
+	ServerId int64
+	Id       int64
+}
+
+// NewServerConnectDiskParam return new ServerConnectDiskParam
+func NewServerConnectDiskParam() *ServerConnectDiskParam {
+	return &ServerConnectDiskParam{}
+}
+
+// Validate checks current values in model
+func (p *ServerConnectDiskParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--server-id", p.ServerId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["server-connect"].Params["server-id"].ValidateFunc
+		errs := validator("--server-id", p.ServerId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["server-connect"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ServerConnectDiskParam) getResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *ServerConnectDiskParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["server-connect"]
+}
+
+func (p *ServerConnectDiskParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ServerConnectDiskParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ServerConnectDiskParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ServerConnectDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ServerConnectDiskParam) SetServerId(v int64) {
+	p.ServerId = v
+}
+
+func (p *ServerConnectDiskParam) GetServerId() int64 {
+	return p.ServerId
+}
+func (p *ServerConnectDiskParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ServerConnectDiskParam) GetId() int64 {
+	return p.Id
+}
+
 // ServerDisconnectDiskParam is input parameters for the sacloud API
 type ServerDisconnectDiskParam struct {
 	Id int64
@@ -287,19 +810,140 @@ func (p *ServerDisconnectDiskParam) GetId() int64 {
 	return p.Id
 }
 
+// ListDiskParam is input parameters for the sacloud API
+type ListDiskParam struct {
+	Name  []string
+	Id    []int64
+	From  int
+	Max   int
+	Sort  []string
+	Scope string
+}
+
+// NewListDiskParam return new ListDiskParam
+func NewListDiskParam() *ListDiskParam {
+	return &ListDiskParam{}
+}
+
+// Validate checks current values in model
+func (p *ListDiskParam) Validate() []error {
+	errors := []error{}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["list"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--id", p.Id, map[string]interface{}{
+
+			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["list"].Params["scope"].ValidateFunc
+		errs := validator("--scope", p.Scope)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ListDiskParam) getResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *ListDiskParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["list"]
+}
+
+func (p *ListDiskParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ListDiskParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ListDiskParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ListDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListDiskParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListDiskParam) GetName() []string {
+	return p.Name
+}
+func (p *ListDiskParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListDiskParam) GetId() []int64 {
+	return p.Id
+}
+func (p *ListDiskParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListDiskParam) GetFrom() int {
+	return p.From
+}
+func (p *ListDiskParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListDiskParam) GetMax() int {
+	return p.Max
+}
+func (p *ListDiskParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListDiskParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListDiskParam) SetScope(v string) {
+	p.Scope = v
+}
+
+func (p *ListDiskParam) GetScope() string {
+	return p.Scope
+}
+
 // CreateDiskParam is input parameters for the sacloud API
 type CreateDiskParam struct {
-	Async           bool
-	Name            string
+	IconId          int64
 	Plan            string
 	Connection      string
 	Size            int
-	SourceArchiveId int64
 	SourceDiskId    int64
-	DistantFrom     []int64
-	Description     string
 	Tags            []string
-	IconId          int64
+	Description     string
+	SourceArchiveId int64
+	DistantFrom     []int64
+	Async           bool
+	Name            string
 }
 
 // NewCreateDiskParam return new CreateDiskParam
@@ -318,15 +962,8 @@ func NewCreateDiskParam() *CreateDiskParam {
 func (p *CreateDiskParam) Validate() []error {
 	errors := []error{}
 	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
+		validator := define.Resources["Disk"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -374,22 +1011,6 @@ func (p *CreateDiskParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["Disk"].Commands["create"].Params["source-archive-id"].ValidateFunc
-		errs := validator("--source-archive-id", p.SourceArchiveId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--source-archive-id", p.SourceArchiveId, map[string]interface{}{
-
-			"--source-disk-id": p.SourceDiskId,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := define.Resources["Disk"].Commands["create"].Params["source-disk-id"].ValidateFunc
 		errs := validator("--source-disk-id", p.SourceDiskId)
 		if errs != nil {
@@ -406,8 +1027,8 @@ func (p *CreateDiskParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["Disk"].Commands["create"].Params["distant-from"].ValidateFunc
-		errs := validator("--distant-from", p.DistantFrom)
+		validator := define.Resources["Disk"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -420,15 +1041,38 @@ func (p *CreateDiskParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["Disk"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
+		validator := define.Resources["Disk"].Commands["create"].Params["source-archive-id"].ValidateFunc
+		errs := validator("--source-archive-id", p.SourceArchiveId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["Disk"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
+		errs := validateConflicts("--source-archive-id", p.SourceArchiveId, map[string]interface{}{
+
+			"--source-disk-id": p.SourceDiskId,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["create"].Params["distant-from"].ValidateFunc
+		errs := validator("--distant-from", p.DistantFrom)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -461,19 +1105,12 @@ func (p *CreateDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *CreateDiskParam) SetAsync(v bool) {
-	p.Async = v
+func (p *CreateDiskParam) SetIconId(v int64) {
+	p.IconId = v
 }
 
-func (p *CreateDiskParam) GetAsync() bool {
-	return p.Async
-}
-func (p *CreateDiskParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateDiskParam) GetName() string {
-	return p.Name
+func (p *CreateDiskParam) GetIconId() int64 {
+	return p.IconId
 }
 func (p *CreateDiskParam) SetPlan(v string) {
 	p.Plan = v
@@ -496,33 +1133,12 @@ func (p *CreateDiskParam) SetSize(v int) {
 func (p *CreateDiskParam) GetSize() int {
 	return p.Size
 }
-func (p *CreateDiskParam) SetSourceArchiveId(v int64) {
-	p.SourceArchiveId = v
-}
-
-func (p *CreateDiskParam) GetSourceArchiveId() int64 {
-	return p.SourceArchiveId
-}
 func (p *CreateDiskParam) SetSourceDiskId(v int64) {
 	p.SourceDiskId = v
 }
 
 func (p *CreateDiskParam) GetSourceDiskId() int64 {
 	return p.SourceDiskId
-}
-func (p *CreateDiskParam) SetDistantFrom(v []int64) {
-	p.DistantFrom = v
-}
-
-func (p *CreateDiskParam) GetDistantFrom() []int64 {
-	return p.DistantFrom
-}
-func (p *CreateDiskParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *CreateDiskParam) GetDescription() string {
-	return p.Description
 }
 func (p *CreateDiskParam) SetTags(v []string) {
 	p.Tags = v
@@ -531,150 +1147,40 @@ func (p *CreateDiskParam) SetTags(v []string) {
 func (p *CreateDiskParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateDiskParam) SetIconId(v int64) {
-	p.IconId = v
-}
-
-func (p *CreateDiskParam) GetIconId() int64 {
-	return p.IconId
-}
-
-// UpdateDiskParam is input parameters for the sacloud API
-type UpdateDiskParam struct {
-	Connection  string
-	Id          int64
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-}
-
-// NewUpdateDiskParam return new UpdateDiskParam
-func NewUpdateDiskParam() *UpdateDiskParam {
-	return &UpdateDiskParam{}
-}
-
-// Validate checks current values in model
-func (p *UpdateDiskParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := define.Resources["Disk"].Commands["update"].Params["connection"].ValidateFunc
-		errs := validator("--connection", p.Connection)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["update"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *UpdateDiskParam) getResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *UpdateDiskParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["update"]
-}
-
-func (p *UpdateDiskParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *UpdateDiskParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *UpdateDiskParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *UpdateDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *UpdateDiskParam) SetConnection(v string) {
-	p.Connection = v
-}
-
-func (p *UpdateDiskParam) GetConnection() string {
-	return p.Connection
-}
-func (p *UpdateDiskParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *UpdateDiskParam) GetId() int64 {
-	return p.Id
-}
-func (p *UpdateDiskParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateDiskParam) GetName() string {
-	return p.Name
-}
-func (p *UpdateDiskParam) SetDescription(v string) {
+func (p *CreateDiskParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateDiskParam) GetDescription() string {
+func (p *CreateDiskParam) GetDescription() string {
 	return p.Description
 }
-func (p *UpdateDiskParam) SetTags(v []string) {
-	p.Tags = v
+func (p *CreateDiskParam) SetSourceArchiveId(v int64) {
+	p.SourceArchiveId = v
 }
 
-func (p *UpdateDiskParam) GetTags() []string {
-	return p.Tags
+func (p *CreateDiskParam) GetSourceArchiveId() int64 {
+	return p.SourceArchiveId
 }
-func (p *UpdateDiskParam) SetIconId(v int64) {
-	p.IconId = v
+func (p *CreateDiskParam) SetDistantFrom(v []int64) {
+	p.DistantFrom = v
 }
 
-func (p *UpdateDiskParam) GetIconId() int64 {
-	return p.IconId
+func (p *CreateDiskParam) GetDistantFrom() []int64 {
+	return p.DistantFrom
+}
+func (p *CreateDiskParam) SetAsync(v bool) {
+	p.Async = v
+}
+
+func (p *CreateDiskParam) GetAsync() bool {
+	return p.Async
+}
+func (p *CreateDiskParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateDiskParam) GetName() string {
+	return p.Name
 }
 
 // DeleteDiskParam is input parameters for the sacloud API
@@ -801,510 +1307,4 @@ func (p *WaitForCopyDiskParam) SetId(v int64) {
 
 func (p *WaitForCopyDiskParam) GetId() int64 {
 	return p.Id
-}
-
-// ServerConnectDiskParam is input parameters for the sacloud API
-type ServerConnectDiskParam struct {
-	Id       int64
-	ServerId int64
-}
-
-// NewServerConnectDiskParam return new ServerConnectDiskParam
-func NewServerConnectDiskParam() *ServerConnectDiskParam {
-	return &ServerConnectDiskParam{}
-}
-
-// Validate checks current values in model
-func (p *ServerConnectDiskParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["server-connect"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--server-id", p.ServerId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["server-connect"].Params["server-id"].ValidateFunc
-		errs := validator("--server-id", p.ServerId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ServerConnectDiskParam) getResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *ServerConnectDiskParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["server-connect"]
-}
-
-func (p *ServerConnectDiskParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ServerConnectDiskParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ServerConnectDiskParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ServerConnectDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ServerConnectDiskParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ServerConnectDiskParam) GetId() int64 {
-	return p.Id
-}
-func (p *ServerConnectDiskParam) SetServerId(v int64) {
-	p.ServerId = v
-}
-
-func (p *ServerConnectDiskParam) GetServerId() int64 {
-	return p.ServerId
-}
-
-// ListDiskParam is input parameters for the sacloud API
-type ListDiskParam struct {
-	Sort  []string
-	Scope string
-	Name  []string
-	Id    []int64
-	From  int
-	Max   int
-}
-
-// NewListDiskParam return new ListDiskParam
-func NewListDiskParam() *ListDiskParam {
-	return &ListDiskParam{}
-}
-
-// Validate checks current values in model
-func (p *ListDiskParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := define.Resources["Disk"].Commands["list"].Params["scope"].ValidateFunc
-		errs := validator("--scope", p.Scope)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["list"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--id", p.Id, map[string]interface{}{
-
-			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ListDiskParam) getResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *ListDiskParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["list"]
-}
-
-func (p *ListDiskParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ListDiskParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ListDiskParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ListDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ListDiskParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListDiskParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListDiskParam) SetScope(v string) {
-	p.Scope = v
-}
-
-func (p *ListDiskParam) GetScope() string {
-	return p.Scope
-}
-func (p *ListDiskParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListDiskParam) GetName() []string {
-	return p.Name
-}
-func (p *ListDiskParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListDiskParam) GetId() []int64 {
-	return p.Id
-}
-func (p *ListDiskParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListDiskParam) GetFrom() int {
-	return p.From
-}
-func (p *ListDiskParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListDiskParam) GetMax() int {
-	return p.Max
-}
-
-// ReadDiskParam is input parameters for the sacloud API
-type ReadDiskParam struct {
-	Id int64
-}
-
-// NewReadDiskParam return new ReadDiskParam
-func NewReadDiskParam() *ReadDiskParam {
-	return &ReadDiskParam{}
-}
-
-// Validate checks current values in model
-func (p *ReadDiskParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["read"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ReadDiskParam) getResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *ReadDiskParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["read"]
-}
-
-func (p *ReadDiskParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ReadDiskParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ReadDiskParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ReadDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ReadDiskParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ReadDiskParam) GetId() int64 {
-	return p.Id
-}
-
-// EditDiskParam is input parameters for the sacloud API
-type EditDiskParam struct {
-	StartupScriptIds    []int64
-	NwMasklen           int
-	Id                  int64
-	Password            string
-	DisablePasswordAuth bool
-	DefaultRoute        string
-	Hostname            string
-	SshKeyIds           []int64
-	Ipaddress           string
-}
-
-// NewEditDiskParam return new EditDiskParam
-func NewEditDiskParam() *EditDiskParam {
-	return &EditDiskParam{
-
-		NwMasklen: 24,
-	}
-}
-
-// Validate checks current values in model
-func (p *EditDiskParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := define.Resources["Disk"].Commands["edit"].Params["startup-script-ids"].ValidateFunc
-		errs := validator("--startup-script-ids", p.StartupScriptIds)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["edit"].Params["nw-masklen"].ValidateFunc
-		errs := validator("--nw-masklen", p.NwMasklen)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["edit"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["edit"].Params["ssh-key-ids"].ValidateFunc
-		errs := validator("--ssh-key-ids", p.SshKeyIds)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *EditDiskParam) getResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *EditDiskParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["edit"]
-}
-
-func (p *EditDiskParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *EditDiskParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *EditDiskParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *EditDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *EditDiskParam) SetStartupScriptIds(v []int64) {
-	p.StartupScriptIds = v
-}
-
-func (p *EditDiskParam) GetStartupScriptIds() []int64 {
-	return p.StartupScriptIds
-}
-func (p *EditDiskParam) SetNwMasklen(v int) {
-	p.NwMasklen = v
-}
-
-func (p *EditDiskParam) GetNwMasklen() int {
-	return p.NwMasklen
-}
-func (p *EditDiskParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *EditDiskParam) GetId() int64 {
-	return p.Id
-}
-func (p *EditDiskParam) SetPassword(v string) {
-	p.Password = v
-}
-
-func (p *EditDiskParam) GetPassword() string {
-	return p.Password
-}
-func (p *EditDiskParam) SetDisablePasswordAuth(v bool) {
-	p.DisablePasswordAuth = v
-}
-
-func (p *EditDiskParam) GetDisablePasswordAuth() bool {
-	return p.DisablePasswordAuth
-}
-func (p *EditDiskParam) SetDefaultRoute(v string) {
-	p.DefaultRoute = v
-}
-
-func (p *EditDiskParam) GetDefaultRoute() string {
-	return p.DefaultRoute
-}
-func (p *EditDiskParam) SetHostname(v string) {
-	p.Hostname = v
-}
-
-func (p *EditDiskParam) GetHostname() string {
-	return p.Hostname
-}
-func (p *EditDiskParam) SetSshKeyIds(v []int64) {
-	p.SshKeyIds = v
-}
-
-func (p *EditDiskParam) GetSshKeyIds() []int64 {
-	return p.SshKeyIds
-}
-func (p *EditDiskParam) SetIpaddress(v string) {
-	p.Ipaddress = v
-}
-
-func (p *EditDiskParam) GetIpaddress() string {
-	return p.Ipaddress
-}
-
-// ReinstallToBlankDiskParam is input parameters for the sacloud API
-type ReinstallToBlankDiskParam struct {
-	Id          int64
-	DistantFrom []int64
-	Async       bool
-}
-
-// NewReinstallToBlankDiskParam return new ReinstallToBlankDiskParam
-func NewReinstallToBlankDiskParam() *ReinstallToBlankDiskParam {
-	return &ReinstallToBlankDiskParam{}
-}
-
-// Validate checks current values in model
-func (p *ReinstallToBlankDiskParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["reinstall-to-blank"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Disk"].Commands["reinstall-to-blank"].Params["distant-from"].ValidateFunc
-		errs := validator("--distant-from", p.DistantFrom)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ReinstallToBlankDiskParam) getResourceDef() *schema.Resource {
-	return define.Resources["Disk"]
-}
-
-func (p *ReinstallToBlankDiskParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["reinstall-to-blank"]
-}
-
-func (p *ReinstallToBlankDiskParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ReinstallToBlankDiskParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ReinstallToBlankDiskParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ReinstallToBlankDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ReinstallToBlankDiskParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ReinstallToBlankDiskParam) GetId() int64 {
-	return p.Id
-}
-func (p *ReinstallToBlankDiskParam) SetDistantFrom(v []int64) {
-	p.DistantFrom = v
-}
-
-func (p *ReinstallToBlankDiskParam) GetDistantFrom() []int64 {
-	return p.DistantFrom
-}
-func (p *ReinstallToBlankDiskParam) SetAsync(v bool) {
-	p.Async = v
-}
-
-func (p *ReinstallToBlankDiskParam) GetAsync() bool {
-	return p.Async
 }

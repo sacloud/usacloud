@@ -8,169 +8,13 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// UpdateIconParam is input parameters for the sacloud API
-type UpdateIconParam struct {
-	Id   int64
-	Name string
-	Tags []string
-}
-
-// NewUpdateIconParam return new UpdateIconParam
-func NewUpdateIconParam() *UpdateIconParam {
-	return &UpdateIconParam{}
-}
-
-// Validate checks current values in model
-func (p *UpdateIconParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Icon"].Commands["update"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Icon"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Icon"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *UpdateIconParam) getResourceDef() *schema.Resource {
-	return define.Resources["Icon"]
-}
-
-func (p *UpdateIconParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["update"]
-}
-
-func (p *UpdateIconParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *UpdateIconParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *UpdateIconParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *UpdateIconParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *UpdateIconParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *UpdateIconParam) GetId() int64 {
-	return p.Id
-}
-func (p *UpdateIconParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateIconParam) GetName() string {
-	return p.Name
-}
-func (p *UpdateIconParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *UpdateIconParam) GetTags() []string {
-	return p.Tags
-}
-
-// DeleteIconParam is input parameters for the sacloud API
-type DeleteIconParam struct {
-	Id int64
-}
-
-// NewDeleteIconParam return new DeleteIconParam
-func NewDeleteIconParam() *DeleteIconParam {
-	return &DeleteIconParam{}
-}
-
-// Validate checks current values in model
-func (p *DeleteIconParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Icon"].Commands["delete"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *DeleteIconParam) getResourceDef() *schema.Resource {
-	return define.Resources["Icon"]
-}
-
-func (p *DeleteIconParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["delete"]
-}
-
-func (p *DeleteIconParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *DeleteIconParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *DeleteIconParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *DeleteIconParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DeleteIconParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *DeleteIconParam) GetId() int64 {
-	return p.Id
-}
-
 // ListIconParam is input parameters for the sacloud API
 type ListIconParam struct {
+	From int
+	Max  int
 	Sort []string
 	Name []string
 	Id   []int64
-	From int
-	Max  int
 }
 
 // NewListIconParam return new ListIconParam
@@ -234,6 +78,20 @@ func (p *ListIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListIconParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListIconParam) GetFrom() int {
+	return p.From
+}
+func (p *ListIconParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListIconParam) GetMax() int {
+	return p.Max
+}
 func (p *ListIconParam) SetSort(v []string) {
 	p.Sort = v
 }
@@ -255,26 +113,12 @@ func (p *ListIconParam) SetId(v []int64) {
 func (p *ListIconParam) GetId() []int64 {
 	return p.Id
 }
-func (p *ListIconParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListIconParam) GetFrom() int {
-	return p.From
-}
-func (p *ListIconParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListIconParam) GetMax() int {
-	return p.Max
-}
 
 // CreateIconParam is input parameters for the sacloud API
 type CreateIconParam struct {
+	Name  string
 	Tags  []string
 	Image string
-	Name  string
 }
 
 // NewCreateIconParam return new CreateIconParam
@@ -285,6 +129,20 @@ func NewCreateIconParam() *CreateIconParam {
 // Validate checks current values in model
 func (p *CreateIconParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Icon"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := define.Resources["Icon"].Commands["create"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
@@ -302,20 +160,6 @@ func (p *CreateIconParam) Validate() []error {
 	{
 		validator := define.Resources["Icon"].Commands["create"].Params["image"].ValidateFunc
 		errs := validator("--image", p.Image)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Icon"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -348,6 +192,13 @@ func (p *CreateIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CreateIconParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateIconParam) GetName() string {
+	return p.Name
+}
 func (p *CreateIconParam) SetTags(v []string) {
 	p.Tags = v
 }
@@ -361,13 +212,6 @@ func (p *CreateIconParam) SetImage(v string) {
 
 func (p *CreateIconParam) GetImage() string {
 	return p.Image
-}
-func (p *CreateIconParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateIconParam) GetName() string {
-	return p.Name
 }
 
 // ReadIconParam is input parameters for the sacloud API
@@ -430,5 +274,161 @@ func (p *ReadIconParam) SetId(v int64) {
 }
 
 func (p *ReadIconParam) GetId() int64 {
+	return p.Id
+}
+
+// UpdateIconParam is input parameters for the sacloud API
+type UpdateIconParam struct {
+	Name string
+	Tags []string
+	Id   int64
+}
+
+// NewUpdateIconParam return new UpdateIconParam
+func NewUpdateIconParam() *UpdateIconParam {
+	return &UpdateIconParam{}
+}
+
+// Validate checks current values in model
+func (p *UpdateIconParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Icon"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Icon"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Icon"].Commands["update"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *UpdateIconParam) getResourceDef() *schema.Resource {
+	return define.Resources["Icon"]
+}
+
+func (p *UpdateIconParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["update"]
+}
+
+func (p *UpdateIconParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *UpdateIconParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *UpdateIconParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *UpdateIconParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateIconParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateIconParam) GetName() string {
+	return p.Name
+}
+func (p *UpdateIconParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *UpdateIconParam) GetTags() []string {
+	return p.Tags
+}
+func (p *UpdateIconParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *UpdateIconParam) GetId() int64 {
+	return p.Id
+}
+
+// DeleteIconParam is input parameters for the sacloud API
+type DeleteIconParam struct {
+	Id int64
+}
+
+// NewDeleteIconParam return new DeleteIconParam
+func NewDeleteIconParam() *DeleteIconParam {
+	return &DeleteIconParam{}
+}
+
+// Validate checks current values in model
+func (p *DeleteIconParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Icon"].Commands["delete"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DeleteIconParam) getResourceDef() *schema.Resource {
+	return define.Resources["Icon"]
+}
+
+func (p *DeleteIconParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["delete"]
+}
+
+func (p *DeleteIconParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *DeleteIconParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *DeleteIconParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *DeleteIconParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DeleteIconParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *DeleteIconParam) GetId() int64 {
 	return p.Id
 }

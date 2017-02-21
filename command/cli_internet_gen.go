@@ -23,6 +23,14 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List Internet",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
 					&cli.Int64SliceFlag{
 						Name:  "id",
 						Usage: "set filter by id(s)",
@@ -37,21 +45,13 @@ func init() {
 						Usage:       "set limit",
 						Destination: &listParam.Max,
 					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
+					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -75,6 +75,13 @@ func init() {
 				Aliases: []string{"c"},
 				Usage:   "Create Internet",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "nw-masklen",
+						Aliases:     []string{"network-masklen"},
+						Usage:       "[Required] set Global-IPAddress prefix",
+						Value:       28,
+						Destination: &createParam.NwMasklen,
+					},
 					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "[Required] set resource display name",
@@ -94,13 +101,6 @@ func init() {
 						Name:        "icon-id",
 						Usage:       "set Icon ID",
 						Destination: &createParam.IconId,
-					},
-					&cli.IntFlag{
-						Name:        "nw-masklen",
-						Aliases:     []string{"network-masklen"},
-						Usage:       "[Required] set Global-IPAddress prefix",
-						Value:       28,
-						Destination: &createParam.NwMasklen,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -167,6 +167,17 @@ func init() {
 				Usage:     "Update Internet",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "band-width",
+						Usage:       "[Required] set band-width(Mbpm)",
+						Value:       100,
+						Destination: &updateParam.BandWidth,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
 					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "set resource display name",
@@ -186,17 +197,6 @@ func init() {
 						Name:        "icon-id",
 						Usage:       "set Icon ID",
 						Destination: &updateParam.IconId,
-					},
-					&cli.IntFlag{
-						Name:        "band-width",
-						Usage:       "[Required] set band-width(Mbpm)",
-						Value:       100,
-						Destination: &updateParam.BandWidth,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -267,16 +267,16 @@ func init() {
 				Usage:     "UpdateBandwidth Internet",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateBandwidthParam.Id,
-					},
 					&cli.IntFlag{
 						Name:        "band-width",
 						Usage:       "[Required] set band-width(Mbpm)",
 						Value:       100,
 						Destination: &updateBandwidthParam.BandWidth,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateBandwidthParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {
