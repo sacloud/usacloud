@@ -17,9 +17,6 @@ func DiskUpdate(ctx Context, params *UpdateDiskParam) error {
 
 	// set params
 
-	if ctx.IsSet("description") {
-		p.SetDescription(params.Description)
-	}
 	if ctx.IsSet("tags") {
 		p.SetTags(params.Tags)
 	}
@@ -31,6 +28,9 @@ func DiskUpdate(ctx Context, params *UpdateDiskParam) error {
 	}
 	if ctx.IsSet("name") {
 		p.SetName(params.Name)
+	}
+	if ctx.IsSet("description") {
+		p.SetDescription(params.Description)
 	}
 
 	// call Update(id)

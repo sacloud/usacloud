@@ -6,19 +6,13 @@ import (
 	"fmt"
 )
 
-func LicenseList(ctx Context, params *ListLicenseParam) error {
+func RegionList(ctx Context, params *ListRegionParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetLicenseAPI()
+	finder := client.GetRegionAPI()
 
 	finder.SetEmpty()
 
-	if !isEmpty(params.From) {
-		finder.SetOffset(params.From)
-	}
-	if !isEmpty(params.Max) {
-		finder.SetLimit(params.Max)
-	}
 	if !isEmpty(params.Sort) {
 		for _, v := range params.Sort {
 			setSortBy(finder, v)
@@ -34,16 +28,22 @@ func LicenseList(ctx Context, params *ListLicenseParam) error {
 			finder.SetFilterMultiBy("ID", v)
 		}
 	}
+	if !isEmpty(params.From) {
+		finder.SetOffset(params.From)
+	}
+	if !isEmpty(params.Max) {
+		finder.SetLimit(params.Max)
+	}
 
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("LicenseList is failed: %s", err)
+		return fmt.Errorf("RegionList is failed: %s", err)
 	}
 
 	list := []interface{}{}
-	for i := range res.Licenses {
-		list = append(list, &res.Licenses[i])
+	for i := range res.Regions {
+		list = append(list, &res.Regions[i])
 	}
 
 	return ctx.GetOutput().Print(list...)

@@ -213,7 +213,32 @@ func validateSakuraID() schema.SchemaValidateFunc {
 			s := fmt.Sprintf("%d", id)
 			strlen := utf8.RuneCountInString(s)
 			if id < 0 || strlen != idLen {
-				res = append(res, fmt.Errorf("%q: Resource ID must be a 12 digit number", fieldName))
+				res = append(res, fmt.Errorf("%q: Resource ID must be a %d digit number", fieldName, idLen))
+			}
+		}
+
+		return res
+	}
+}
+
+func validateSakuraShortID(digit int) schema.SchemaValidateFunc {
+	return func(fieldName string, object interface{}) []error {
+		res := []error{}
+		idLen := digit
+
+		// if target is nil , return OK(Use required attr if necessary)
+		if object == nil {
+			return res
+		}
+
+		if id, ok := object.(int64); ok {
+			if id == 0 {
+				return res
+			}
+			s := fmt.Sprintf("%d", id)
+			strlen := utf8.RuneCountInString(s)
+			if id < 0 || strlen != idLen {
+				res = append(res, fmt.Errorf("%q: Resource ID must be a %d digit number", fieldName, idLen))
 			}
 		}
 

@@ -17,11 +17,11 @@ func IconUpdate(ctx Context, params *UpdateIconParam) error {
 
 	// set params
 
-	if ctx.IsSet("tags") {
-		p.SetTags(params.Tags)
-	}
 	if ctx.IsSet("name") {
 		p.SetName(params.Name)
+	}
+	if ctx.IsSet("tags") {
+		p.SetTags(params.Tags)
 	}
 
 	// call Update(id)

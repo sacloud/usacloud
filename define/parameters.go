@@ -45,6 +45,16 @@ func getParamResourceID(resourceName string) *schema.Schema {
 	}
 }
 
+func getParamResourceShortID(resourceName string, digit int) *schema.Schema {
+	return &schema.Schema{
+		Type:         schema.TypeInt64,
+		HandlerType:  schema.HandlerPathThrough,
+		Description:  fmt.Sprintf("set %s", resourceName),
+		Required:     true,
+		ValidateFunc: validateSakuraShortID(digit),
+	}
+}
+
 func getParamSubResourceID(resourceName string) *schema.Schema {
 	return &schema.Schema{
 		Type:            schema.TypeInt64,

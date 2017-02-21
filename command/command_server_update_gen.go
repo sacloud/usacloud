@@ -17,6 +17,9 @@ func ServerUpdate(ctx Context, params *UpdateServerParam) error {
 
 	// set params
 
+	if ctx.IsSet("icon-id") {
+		p.SetIconByID(params.IconId)
+	}
 	if ctx.IsSet("name") {
 		p.SetName(params.Name)
 	}
@@ -25,9 +28,6 @@ func ServerUpdate(ctx Context, params *UpdateServerParam) error {
 	}
 	if ctx.IsSet("tags") {
 		p.SetTags(params.Tags)
-	}
-	if ctx.IsSet("icon-id") {
-		p.SetIconByID(params.IconId)
 	}
 
 	// call Update(id)
