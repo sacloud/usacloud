@@ -14,6 +14,8 @@ func InternetCreate(ctx Context, params *CreateInternetParam) error {
 
 	// set params
 
+	p.SetNetworkMaskLen(params.NwMasklen)
+
 	p.SetName(params.Name)
 
 	p.SetDescription(params.Description)
@@ -21,8 +23,6 @@ func InternetCreate(ctx Context, params *CreateInternetParam) error {
 	p.SetTags(params.Tags)
 
 	p.SetIconByID(params.IconId)
-
-	p.SetNetworkMaskLen(params.NwMasklen)
 
 	// call Create(id)
 	res, err := api.Create(p)

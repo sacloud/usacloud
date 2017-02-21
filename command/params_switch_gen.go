@@ -435,11 +435,11 @@ func (p *ReadSwitchParam) GetId() int64 {
 
 // UpdateSwitchParam is input parameters for the sacloud API
 type UpdateSwitchParam struct {
+	Id          int64
+	Name        string
 	Description string
 	Tags        []string
 	IconId      int64
-	Id          int64
-	Name        string
 }
 
 // NewUpdateSwitchParam return new UpdateSwitchParam
@@ -450,27 +450,6 @@ func NewUpdateSwitchParam() *UpdateSwitchParam {
 // Validate checks current values in model
 func (p *UpdateSwitchParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := define.Resources["Switch"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := validateRequired
 		errs := validator("--id", p.Id)
@@ -488,6 +467,27 @@ func (p *UpdateSwitchParam) Validate() []error {
 	{
 		validator := define.Resources["Switch"].Commands["update"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -520,6 +520,20 @@ func (p *UpdateSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdateSwitchParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *UpdateSwitchParam) GetId() int64 {
+	return p.Id
+}
+func (p *UpdateSwitchParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateSwitchParam) GetName() string {
+	return p.Name
+}
 func (p *UpdateSwitchParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -540,20 +554,6 @@ func (p *UpdateSwitchParam) SetIconId(v int64) {
 
 func (p *UpdateSwitchParam) GetIconId() int64 {
 	return p.IconId
-}
-func (p *UpdateSwitchParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *UpdateSwitchParam) GetId() int64 {
-	return p.Id
-}
-func (p *UpdateSwitchParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateSwitchParam) GetName() string {
-	return p.Name
 }
 
 // DeleteSwitchParam is input parameters for the sacloud API

@@ -16,5 +16,6 @@ var Resources map[string]*schema.Resource = map[string]*schema.Resource{
 	"License":      LicenseResource(),
 	"PacketFilter": PacketFilterResource(),
 	"Server":       ServerResource(),
+	"SSHKey":       SSHKeyResource(),
 	"Switch":       SwitchResource(),
 }

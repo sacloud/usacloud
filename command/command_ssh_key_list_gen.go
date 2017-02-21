@@ -6,10 +6,10 @@ import (
 	"fmt"
 )
 
-func PacketFilterList(ctx Context, params *ListPacketFilterParam) error {
+func SSHKeyList(ctx Context, params *ListSSHKeyParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetPacketFilterAPI()
+	finder := client.GetSSHKeyAPI()
 
 	finder.SetEmpty()
 
@@ -38,12 +38,12 @@ func PacketFilterList(ctx Context, params *ListPacketFilterParam) error {
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("PacketFilterList is failed: %s", err)
+		return fmt.Errorf("SSHKeyList is failed: %s", err)
 	}
 
 	list := []interface{}{}
-	for i := range res.PacketFilters {
-		list = append(list, &res.PacketFilters[i])
+	for i := range res.SSHKeys {
+		list = append(list, &res.SSHKeys[i])
 	}
 
 	return ctx.GetOutput().Print(list...)

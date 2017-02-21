@@ -7,62 +7,21 @@ import (
 )
 
 func init() {
-	updateBandwidthParam := NewUpdateBandwidthInternetParam()
-	listParam := NewListInternetParam()
-	createParam := NewCreateInternetParam()
-	readParam := NewReadInternetParam()
-	updateParam := NewUpdateInternetParam()
-	deleteParam := NewDeleteInternetParam()
+	listParam := NewListSSHKeyParam()
+	createParam := NewCreateSSHKeyParam()
+	readParam := NewReadSSHKeyParam()
+	updateParam := NewUpdateSSHKeyParam()
+	deleteParam := NewDeleteSSHKeyParam()
+	generateParam := NewGenerateSSHKeyParam()
 
 	cliCommand := &cli.Command{
-		Name:  "internet",
-		Usage: "A manage commands of Internet",
+		Name:  "ssh-key",
+		Usage: "A manage commands of SSHKey",
 		Subcommands: []*cli.Command{
-			{
-				Name:      "update-bandwidth",
-				Usage:     "UpdateBandwidth Internet",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateBandwidthParam.Id,
-					},
-					&cli.IntFlag{
-						Name:        "band-width",
-						Usage:       "[Required] set band-width(Mbpm)",
-						Value:       100,
-						Destination: &updateBandwidthParam.BandWidth,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := updateBandwidthParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), updateBandwidthParam)
-
-					// Run command with params
-					return InternetUpdateBandwidth(ctx, updateBandwidthParam)
-				},
-			},
 			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List Internet",
+				Usage:   "List SSHKey",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -108,21 +67,14 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), listParam)
 
 					// Run command with params
-					return InternetList(ctx, listParam)
+					return SSHKeyList(ctx, listParam)
 				},
 			},
 			{
 				Name:    "create",
 				Aliases: []string{"c"},
-				Usage:   "Create Internet",
+				Usage:   "Create SSHKey",
 				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "nw-masklen",
-						Aliases:     []string{"network-masklen"},
-						Usage:       "[Required] set Global-IPAddress prefix",
-						Value:       28,
-						Destination: &createParam.NwMasklen,
-					},
 					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "[Required] set resource display name",
@@ -134,20 +86,18 @@ func init() {
 						Usage:       "set resource description",
 						Destination: &createParam.Description,
 					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
+					&cli.StringFlag{
+						Name:        "public-key-content",
+						Usage:       "set public-key",
+						Destination: &createParam.PublicKeyContent,
 					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &createParam.IconId,
+					&cli.StringFlag{
+						Name:        "public-key",
+						Usage:       "set icon image",
+						Destination: &createParam.PublicKey,
 					},
 				},
 				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					createParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -163,13 +113,13 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), createParam)
 
 					// Run command with params
-					return InternetCreate(ctx, createParam)
+					return SSHKeyCreate(ctx, createParam)
 				},
 			},
 			{
 				Name:      "read",
 				Aliases:   []string{"r"},
-				Usage:     "Read Internet",
+				Usage:     "Read SSHKey",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -199,15 +149,20 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), readParam)
 
 					// Run command with params
-					return InternetRead(ctx, readParam)
+					return SSHKeyRead(ctx, readParam)
 				},
 			},
 			{
 				Name:      "update",
 				Aliases:   []string{"u"},
-				Usage:     "Update Internet",
+				Usage:     "Update SSHKey",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
 					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "set resource display name",
@@ -219,31 +174,8 @@ func init() {
 						Usage:       "set resource description",
 						Destination: &updateParam.Description,
 					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
-					},
-					&cli.IntFlag{
-						Name:        "band-width",
-						Usage:       "[Required] set band-width(Mbpm)",
-						Value:       100,
-						Destination: &updateParam.BandWidth,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
 				},
 				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					updateParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -264,13 +196,13 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), updateParam)
 
 					// Run command with params
-					return InternetUpdate(ctx, updateParam)
+					return SSHKeyUpdate(ctx, updateParam)
 				},
 			},
 			{
 				Name:      "delete",
 				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete Internet",
+				Usage:     "Delete SSHKey",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -300,7 +232,60 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), deleteParam)
 
 					// Run command with params
-					return InternetDelete(ctx, deleteParam)
+					return SSHKeyDelete(ctx, deleteParam)
+				},
+			},
+			{
+				Name:      "generate",
+				Aliases:   []string{"g", "gen"},
+				Usage:     "Generate SSHKey",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "pass-phrase",
+						Usage:       "set ssh-key pass phrase",
+						Destination: &generateParam.PassPhrase,
+					},
+					&cli.StringFlag{
+						Name:        "private-key-output",
+						Aliases:     []string{"file"},
+						Usage:       "set ssh-key privatekey output path",
+						Destination: &generateParam.PrivateKeyOutput,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &generateParam.Name,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &generateParam.Description,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := generateParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), generateParam)
+
+					// Run command with params
+					return SSHKeyGenerate(ctx, generateParam)
 				},
 			},
 		},
