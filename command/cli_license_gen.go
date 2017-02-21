@@ -7,21 +7,25 @@ import (
 )
 
 func init() {
-	listParam := NewListIconParam()
-	createParam := NewCreateIconParam()
-	readParam := NewReadIconParam()
-	updateParam := NewUpdateIconParam()
-	deleteParam := NewDeleteIconParam()
+	listParam := NewListLicenseParam()
+	createParam := NewCreateLicenseParam()
+	readParam := NewReadLicenseParam()
+	updateParam := NewUpdateLicenseParam()
+	deleteParam := NewDeleteLicenseParam()
 
 	cliCommand := &cli.Command{
-		Name:  "icon",
-		Usage: "A manage commands of Icon",
+		Name:  "license",
+		Usage: "A manage commands of License",
 		Subcommands: []*cli.Command{
 			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List Icon",
+				Usage:   "List License",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
 					&cli.StringSliceFlag{
 						Name:  "name",
 						Usage: "set filter by name(s)",
@@ -40,17 +44,13 @@ func init() {
 						Usage:       "set limit",
 						Destination: &listParam.Max,
 					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
+					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -66,33 +66,26 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), listParam)
 
 					// Run command with params
-					return IconList(ctx, listParam)
+					return LicenseList(ctx, listParam)
 				},
 			},
 			{
 				Name:    "create",
 				Aliases: []string{"c"},
-				Usage:   "Create Icon",
+				Usage:   "Create License",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "[Required] set resource display name",
 						Destination: &createParam.Name,
 					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.StringFlag{
-						Name:        "image",
-						Usage:       "[Required] set icon image",
-						Destination: &createParam.Image,
+					&cli.Int64Flag{
+						Name:        "license-info-id",
+						Usage:       "set LicenseInfo ID",
+						Destination: &createParam.LicenseInfoId,
 					},
 				},
 				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					createParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -108,13 +101,13 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), createParam)
 
 					// Run command with params
-					return IconCreate(ctx, createParam)
+					return LicenseCreate(ctx, createParam)
 				},
 			},
 			{
 				Name:      "read",
 				Aliases:   []string{"r"},
-				Usage:     "Read Icon",
+				Usage:     "Read License",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -144,13 +137,13 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), readParam)
 
 					// Run command with params
-					return IconRead(ctx, readParam)
+					return LicenseRead(ctx, readParam)
 				},
 			},
 			{
 				Name:      "update",
 				Aliases:   []string{"u"},
-				Usage:     "Update Icon",
+				Usage:     "Update License",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -163,15 +156,8 @@ func init() {
 						Usage:       "set resource display name",
 						Destination: &updateParam.Name,
 					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
 				},
 				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					updateParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -192,13 +178,13 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), updateParam)
 
 					// Run command with params
-					return IconUpdate(ctx, updateParam)
+					return LicenseUpdate(ctx, updateParam)
 				},
 			},
 			{
 				Name:      "delete",
 				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete Icon",
+				Usage:     "Delete License",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -228,7 +214,7 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), deleteParam)
 
 					// Run command with params
-					return IconDelete(ctx, deleteParam)
+					return LicenseDelete(ctx, deleteParam)
 				},
 			},
 		},

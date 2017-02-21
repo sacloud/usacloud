@@ -8,6 +8,91 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// BridgeConnectSwitchParam is input parameters for the sacloud API
+type BridgeConnectSwitchParam struct {
+	Id       int64
+	BridgeId int64
+}
+
+// NewBridgeConnectSwitchParam return new BridgeConnectSwitchParam
+func NewBridgeConnectSwitchParam() *BridgeConnectSwitchParam {
+	return &BridgeConnectSwitchParam{}
+}
+
+// Validate checks current values in model
+func (p *BridgeConnectSwitchParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["bridge-connect"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--bridge-id", p.BridgeId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["bridge-connect"].Params["bridge-id"].ValidateFunc
+		errs := validator("--bridge-id", p.BridgeId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *BridgeConnectSwitchParam) getResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *BridgeConnectSwitchParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["bridge-connect"]
+}
+
+func (p *BridgeConnectSwitchParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *BridgeConnectSwitchParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *BridgeConnectSwitchParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *BridgeConnectSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *BridgeConnectSwitchParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *BridgeConnectSwitchParam) GetId() int64 {
+	return p.Id
+}
+func (p *BridgeConnectSwitchParam) SetBridgeId(v int64) {
+	p.BridgeId = v
+}
+
+func (p *BridgeConnectSwitchParam) GetBridgeId() int64 {
+	return p.BridgeId
+}
+
 // BridgeDisconnectSwitchParam is input parameters for the sacloud API
 type BridgeDisconnectSwitchParam struct {
 	Id int64
@@ -350,11 +435,11 @@ func (p *ReadSwitchParam) GetId() int64 {
 
 // UpdateSwitchParam is input parameters for the sacloud API
 type UpdateSwitchParam struct {
-	Name        string
 	Description string
 	Tags        []string
 	IconId      int64
 	Id          int64
+	Name        string
 }
 
 // NewUpdateSwitchParam return new UpdateSwitchParam
@@ -365,13 +450,6 @@ func NewUpdateSwitchParam() *UpdateSwitchParam {
 // Validate checks current values in model
 func (p *UpdateSwitchParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := define.Resources["Switch"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := define.Resources["Switch"].Commands["update"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
@@ -407,6 +485,13 @@ func (p *UpdateSwitchParam) Validate() []error {
 			errors = append(errors, errs...)
 		}
 	}
+	{
+		validator := define.Resources["Switch"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return errors
 }
@@ -435,13 +520,6 @@ func (p *UpdateSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *UpdateSwitchParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateSwitchParam) GetName() string {
-	return p.Name
-}
 func (p *UpdateSwitchParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -469,6 +547,13 @@ func (p *UpdateSwitchParam) SetId(v int64) {
 
 func (p *UpdateSwitchParam) GetId() int64 {
 	return p.Id
+}
+func (p *UpdateSwitchParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateSwitchParam) GetName() string {
+	return p.Name
 }
 
 // DeleteSwitchParam is input parameters for the sacloud API
@@ -532,89 +617,4 @@ func (p *DeleteSwitchParam) SetId(v int64) {
 
 func (p *DeleteSwitchParam) GetId() int64 {
 	return p.Id
-}
-
-// BridgeConnectSwitchParam is input parameters for the sacloud API
-type BridgeConnectSwitchParam struct {
-	Id       int64
-	BridgeId int64
-}
-
-// NewBridgeConnectSwitchParam return new BridgeConnectSwitchParam
-func NewBridgeConnectSwitchParam() *BridgeConnectSwitchParam {
-	return &BridgeConnectSwitchParam{}
-}
-
-// Validate checks current values in model
-func (p *BridgeConnectSwitchParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["bridge-connect"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--bridge-id", p.BridgeId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["bridge-connect"].Params["bridge-id"].ValidateFunc
-		errs := validator("--bridge-id", p.BridgeId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *BridgeConnectSwitchParam) getResourceDef() *schema.Resource {
-	return define.Resources["Switch"]
-}
-
-func (p *BridgeConnectSwitchParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["bridge-connect"]
-}
-
-func (p *BridgeConnectSwitchParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *BridgeConnectSwitchParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *BridgeConnectSwitchParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *BridgeConnectSwitchParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *BridgeConnectSwitchParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *BridgeConnectSwitchParam) GetId() int64 {
-	return p.Id
-}
-func (p *BridgeConnectSwitchParam) SetBridgeId(v int64) {
-	p.BridgeId = v
-}
-
-func (p *BridgeConnectSwitchParam) GetBridgeId() int64 {
-	return p.BridgeId
 }

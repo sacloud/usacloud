@@ -13,6 +13,7 @@ var Resources map[string]*schema.Resource = map[string]*schema.Resource{
 	"Interface":    InterfaceResource(),
 	"Internet":     InternetResource(),
 	"ISOImage":     ISOImageResource(),
+	"License":      LicenseResource(),
 	"PacketFilter": PacketFilterResource(),
 	"Server":       ServerResource(),
 	"Switch":       SwitchResource(),

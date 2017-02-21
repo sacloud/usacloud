@@ -10,3 +10,18 @@ type License struct {
 
 	LicenseInfo *ProductLicense `json:",omitempty"` // ライセンス情報
 }
+
+// GetLicenseInfo ライセンス情報 取得
+func (l *License) GetLicenseInfo() *ProductLicense {
+	return l.LicenseInfo
+}
+
+// SetLicenseInfo ライセンス情報 設定
+func (l *License) SetLicenseInfo(license *ProductLicense) {
+	l.LicenseInfo = license
+}
+
+// SetLicenseInfoByID ライセンス情報 設定
+func (l *License) SetLicenseInfoByID(id int64) {
+	l.LicenseInfo = &ProductLicense{Resource: NewResource(id)}
+}

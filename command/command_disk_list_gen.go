@@ -13,9 +13,6 @@ func DiskList(ctx Context, params *ListDiskParam) error {
 
 	finder.SetEmpty()
 
-	if !isEmpty(params.Scope) {
-		finder.SetFilterBy("Scope", params.Scope)
-	}
 	if !isEmpty(params.From) {
 		finder.SetOffset(params.From)
 	}
@@ -36,6 +33,9 @@ func DiskList(ctx Context, params *ListDiskParam) error {
 		for _, v := range params.Id {
 			finder.SetFilterMultiBy("ID", v)
 		}
+	}
+	if !isEmpty(params.Scope) {
+		finder.SetFilterBy("Scope", params.Scope)
 	}
 
 	// call Find()

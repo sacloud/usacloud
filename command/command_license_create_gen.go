@@ -6,22 +6,22 @@ import (
 	"fmt"
 )
 
-func PacketFilterCreate(ctx Context, params *CreatePacketFilterParam) error {
+func LicenseCreate(ctx Context, params *CreateLicenseParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetPacketFilterAPI()
+	api := client.GetLicenseAPI()
 	p := api.New()
 
 	// set params
 
-	p.SetDescription(params.Description)
-
 	p.SetName(params.Name)
+
+	p.SetLicenseInfoByID(params.LicenseInfoId)
 
 	// call Create(id)
 	res, err := api.Create(p)
 	if err != nil {
-		return fmt.Errorf("PacketFilterCreate is failed: %s", err)
+		return fmt.Errorf("LicenseCreate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)
