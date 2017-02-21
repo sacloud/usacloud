@@ -54,7 +54,7 @@ func IconResource() *schema.Resource {
 }
 
 func iconListParam() map[string]*schema.Schema {
-	return CommonListParam
+	return mergeParameterMap(CommonListParam, paramScopeCond)
 }
 
 func iconListColumns() []output.ColumnDef {

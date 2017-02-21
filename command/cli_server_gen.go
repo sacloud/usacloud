@@ -7,39 +7,260 @@ import (
 )
 
 func init() {
+	interfaceInfoParam := NewInterfaceInfoServerParam()
+	interfaceAddForSwitchParam := NewInterfaceAddForSwitchServerParam()
+	interfaceAddForInternetParam := NewInterfaceAddForInternetServerParam()
 	buildParam := NewBuildServerParam()
-	shutdownParam := NewShutdownServerParam()
-	diskInfoParam := NewDiskInfoServerParam()
-	interfaceAddForRouterParam := NewInterfaceAddForRouterServerParam()
-	waitForDownParam := NewWaitForDownServerParam()
-	isoInfoParam := NewIsoInfoServerParam()
-	interfaceAddDisconnectedParam := NewInterfaceAddDisconnectedServerParam()
 	updateParam := NewUpdateServerParam()
+	deleteParam := NewDeleteServerParam()
+	resetParam := NewResetServerParam()
+	waitForBootParam := NewWaitForBootServerParam()
+	diskInfoParam := NewDiskInfoServerParam()
+	readParam := NewReadServerParam()
+	shutdownParam := NewShutdownServerParam()
+	diskConnectParam := NewDiskConnectServerParam()
+	diskDisconnectParam := NewDiskDisconnectServerParam()
+	interfaceAddDisconnectedParam := NewInterfaceAddDisconnectedServerParam()
+	isoInsertParam := NewIsoInsertServerParam()
+	isoEjectParam := NewIsoEjectServerParam()
+	listParam := NewListServerParam()
 	sshParam := NewSshServerParam()
 	bootParam := NewBootServerParam()
 	planChangeParam := NewPlanChangeServerParam()
-	diskConnectParam := NewDiskConnectServerParam()
-	diskDisconnectParam := NewDiskDisconnectServerParam()
-	interfaceAddForInternetParam := NewInterfaceAddForInternetServerParam()
-	readParam := NewReadServerParam()
-	resetParam := NewResetServerParam()
-	waitForBootParam := NewWaitForBootServerParam()
-	isoEjectParam := NewIsoEjectServerParam()
-	interfaceAddForSwitchParam := NewInterfaceAddForSwitchServerParam()
-	listParam := NewListServerParam()
-	deleteParam := NewDeleteServerParam()
-	isoInsertParam := NewIsoInsertServerParam()
-	interfaceInfoParam := NewInterfaceInfoServerParam()
+	waitForDownParam := NewWaitForDownServerParam()
+	isoInfoParam := NewIsoInfoServerParam()
+	interfaceAddForRouterParam := NewInterfaceAddForRouterServerParam()
 
 	cliCommand := &cli.Command{
 		Name:  "server",
 		Usage: "A manage commands of Server",
 		Subcommands: []*cli.Command{
 			{
+				Name:      "interface-info",
+				Usage:     "InterfaceInfo Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &interfaceInfoParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := interfaceInfoParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), interfaceInfoParam)
+
+					// Run command with params
+					return ServerInterfaceInfo(ctx, interfaceInfoParam)
+				},
+			},
+			{
+				Name:      "interface-add-for-switch",
+				Usage:     "InterfaceAddForSwitch Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &interfaceAddForSwitchParam.Id,
+					},
+					&cli.BoolFlag{
+						Name:        "without-disk-edit",
+						Usage:       "set skip edit-disk flag. if true, don't call DiskEdit API after interface added",
+						Destination: &interfaceAddForSwitchParam.WithoutDiskEdit,
+					},
+					&cli.Int64Flag{
+						Name:        "switch-id",
+						Usage:       "[Required] set connect switch ID",
+						Destination: &interfaceAddForSwitchParam.SwitchId,
+					},
+					&cli.StringFlag{
+						Name:        "ipaddress",
+						Aliases:     []string{"ip"},
+						Usage:       "set ipaddress",
+						Destination: &interfaceAddForSwitchParam.Ipaddress,
+					},
+					&cli.StringFlag{
+						Name:        "default-route",
+						Aliases:     []string{"gateway"},
+						Usage:       "set default gateway",
+						Destination: &interfaceAddForSwitchParam.DefaultRoute,
+					},
+					&cli.IntFlag{
+						Name:        "nw-masklen",
+						Aliases:     []string{"network-masklen"},
+						Usage:       "set ipaddress  prefix",
+						Value:       24,
+						Destination: &interfaceAddForSwitchParam.NwMasklen,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := interfaceAddForSwitchParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), interfaceAddForSwitchParam)
+
+					// Run command with params
+					return ServerInterfaceAddForSwitch(ctx, interfaceAddForSwitchParam)
+				},
+			},
+			{
+				Name:      "interface-add-for-internet",
+				Usage:     "InterfaceAddForInternet Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &interfaceAddForInternetParam.Id,
+					},
+					&cli.BoolFlag{
+						Name:        "without-disk-edit",
+						Usage:       "set skip edit-disk flag. if true, don't call DiskEdit API after interface added",
+						Destination: &interfaceAddForInternetParam.WithoutDiskEdit,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := interfaceAddForInternetParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), interfaceAddForInternetParam)
+
+					// Run command with params
+					return ServerInterfaceAddForInternet(ctx, interfaceAddForInternetParam)
+				},
+			},
+			{
 				Name:    "build",
 				Aliases: []string{"b"},
 				Usage:   "Build Server",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "disk-mode",
+						Usage:       "[Required] disk create mode[create/connect/diskless]",
+						Value:       "create",
+						Destination: &buildParam.DiskMode,
+					},
+					&cli.StringFlag{
+						Name:        "password",
+						Usage:       "set password",
+						Destination: &buildParam.Password,
+					},
+					&cli.BoolFlag{
+						Name:        "startup-scripts-ephemeral",
+						Usage:       "set startup script persist mode(if true, script will delete after create server)",
+						Value:       true,
+						Destination: &buildParam.StartupScriptsEphemeral,
+					},
+					&cli.StringFlag{
+						Name:        "default-route",
+						Aliases:     []string{"gateway"},
+						Usage:       "set default gateway",
+						Destination: &buildParam.DefaultRoute,
+					},
+					&cli.StringFlag{
+						Name:        "ssh-key-mode",
+						Usage:       "ssh-key mode[none/id/generate/upload]",
+						Destination: &buildParam.SshKeyMode,
+					},
+					&cli.Int64Flag{
+						Name:        "iso-image-id",
+						Usage:       "set iso-image ID",
+						Destination: &buildParam.IsoImageId,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &buildParam.Description,
+					},
+					&cli.BoolFlag{
+						Name:        "us-keyboard",
+						Usage:       "use us-keyboard",
+						Destination: &buildParam.UsKeyboard,
+					},
+					&cli.IntFlag{
+						Name:        "memory",
+						Usage:       "[Required] set memory size(GB)",
+						Value:       1,
+						Destination: &buildParam.Memory,
+					},
+					&cli.StringFlag{
+						Name:        "os-type",
+						Usage:       "set source OS type",
+						Destination: &buildParam.OsType,
+					},
+					&cli.Int64SliceFlag{
+						Name:    "startup-script-ids",
+						Aliases: []string{"note-ids"},
+						Usage:   "set startup script ID(s)",
+					},
+					&cli.IntFlag{
+						Name:        "nw-masklen",
+						Aliases:     []string{"network-masklen"},
+						Usage:       "set ipaddress  prefix",
+						Value:       24,
+						Destination: &buildParam.NwMasklen,
+					},
+					&cli.StringFlag{
+						Name:        "ssh-key-name",
+						Usage:       "set ssh-key name",
+						Destination: &buildParam.SshKeyName,
+					},
+					&cli.StringFlag{
+						Name:        "ssh-key-description",
+						Usage:       "set ssh-key description",
+						Destination: &buildParam.SshKeyDescription,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &buildParam.Name,
+					},
 					&cli.IntFlag{
 						Name:        "core",
 						Usage:       "[Required] set CPU core count",
@@ -47,30 +268,43 @@ func init() {
 						Destination: &buildParam.Core,
 					},
 					&cli.StringFlag{
-						Name:        "disk-mode",
-						Usage:       "[Required] disk create mode[create/connect/diskless]",
-						Value:       "create",
-						Destination: &buildParam.DiskMode,
+						Name:        "disk-connection",
+						Usage:       "set disk connection('virtio' or 'ide')",
+						Value:       "virtio",
+						Destination: &buildParam.DiskConnection,
 					},
 					&cli.BoolFlag{
-						Name:        "us-keyboard",
-						Usage:       "use us-keyboard",
-						Destination: &buildParam.UsKeyboard,
+						Name:        "disable-password-auth",
+						Aliases:     []string{"disable-pw-auth"},
+						Usage:       "disable password auth on SSH",
+						Destination: &buildParam.DisablePasswordAuth,
 					},
-					&cli.BoolFlag{
-						Name:        "disable-boot-after-create",
-						Usage:       "boot after create",
-						Value:       false,
-						Destination: &buildParam.DisableBootAfterCreate,
-					},
-					&cli.Int64SliceFlag{
-						Name:  "ssh-key-ids",
-						Usage: "set ssh-key ID(s)",
+					&cli.StringSliceFlag{
+						Name:    "startup-scripts",
+						Aliases: []string{"notes"},
+						Usage:   "set startup script(s)",
 					},
 					&cli.StringFlag{
-						Name:        "ssh-key-name",
-						Usage:       "set ssh-key name",
-						Destination: &buildParam.SshKeyName,
+						Name:        "network-mode",
+						Usage:       "[Required] network connection mode[shared/switch/disconnect/none]",
+						Value:       "shared",
+						Destination: &buildParam.NetworkMode,
+					},
+					&cli.BoolFlag{
+						Name:        "use-nic-virtio",
+						Usage:       "use virtio on nic",
+						Value:       true,
+						Destination: &buildParam.UseNicVirtio,
+					},
+					&cli.StringFlag{
+						Name:        "ssh-key-pass-phrase",
+						Usage:       "set ssh-key pass phrase",
+						Destination: &buildParam.SshKeyPassPhrase,
+					},
+					&cli.StringFlag{
+						Name:        "ssh-key-private-key-output",
+						Usage:       "set ssh-key privatekey output path",
+						Destination: &buildParam.SshKeyPrivateKeyOutput,
 					},
 					&cli.StringSliceFlag{
 						Name:  "ssh-key-public-keys",
@@ -82,160 +316,11 @@ func init() {
 						Value:       true,
 						Destination: &buildParam.SshKeyEphemeral,
 					},
-					&cli.Int64SliceFlag{
-						Name:  "distant-from",
-						Usage: "set distant from disk IDs",
-					},
-					&cli.Int64Flag{
-						Name:        "switch-id",
-						Usage:       "set connect switch ID",
-						Destination: &buildParam.SwitchId,
-					},
-					&cli.BoolFlag{
-						Name:        "startup-scripts-ephemeral",
-						Usage:       "set startup script persist mode(if true, script will delete after create server)",
-						Value:       true,
-						Destination: &buildParam.StartupScriptsEphemeral,
-					},
-					&cli.StringFlag{
-						Name:        "ssh-key-mode",
-						Usage:       "ssh-key mode[none/id/generate/upload]",
-						Destination: &buildParam.SshKeyMode,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &buildParam.Description,
-					},
-					&cli.StringFlag{
-						Name:        "password",
-						Usage:       "set password",
-						Destination: &buildParam.Password,
-					},
-					&cli.StringFlag{
-						Name:        "default-route",
-						Aliases:     []string{"gateway"},
-						Usage:       "set default gateway",
-						Destination: &buildParam.DefaultRoute,
-					},
-					&cli.Int64Flag{
-						Name:        "iso-image-id",
-						Usage:       "set iso-image ID",
-						Destination: &buildParam.IsoImageId,
-					},
-					&cli.StringFlag{
-						Name:        "ssh-key-private-key-output",
-						Usage:       "set ssh-key privatekey output path",
-						Destination: &buildParam.SshKeyPrivateKeyOutput,
-					},
-					&cli.StringSliceFlag{
-						Name:  "ssh-key-public-key-files",
-						Usage: "set ssh-key public key file",
-					},
-					&cli.Int64Flag{
-						Name:        "source-archive-id",
-						Usage:       "set source disk ID",
-						Destination: &buildParam.SourceArchiveId,
-					},
-					&cli.StringFlag{
-						Name:        "hostname",
-						Usage:       "set hostname",
-						Destination: &buildParam.Hostname,
-					},
-					&cli.BoolFlag{
-						Name:        "disable-password-auth",
-						Aliases:     []string{"disable-pw-auth"},
-						Usage:       "disable password auth on SSH",
-						Destination: &buildParam.DisablePasswordAuth,
-					},
-					&cli.IntFlag{
-						Name:        "nw-masklen",
-						Aliases:     []string{"network-masklen"},
-						Usage:       "set ipaddress  prefix",
-						Value:       24,
-						Destination: &buildParam.NwMasklen,
-					},
-					&cli.StringFlag{
-						Name:        "ssh-key-pass-phrase",
-						Usage:       "set ssh-key pass phrase",
-						Destination: &buildParam.SshKeyPassPhrase,
-					},
-					&cli.StringFlag{
-						Name:        "ssh-key-description",
-						Usage:       "set ssh-key description",
-						Destination: &buildParam.SshKeyDescription,
-					},
-					&cli.StringFlag{
-						Name:        "disk-connection",
-						Usage:       "set disk connection('virtio' or 'ide')",
-						Value:       "virtio",
-						Destination: &buildParam.DiskConnection,
-					},
-					&cli.BoolFlag{
-						Name:        "use-nic-virtio",
-						Usage:       "use virtio on nic",
-						Value:       true,
-						Destination: &buildParam.UseNicVirtio,
-					},
-					&cli.Int64Flag{
-						Name:        "packet-filter-id",
-						Usage:       "set packet filter ID",
-						Destination: &buildParam.PacketFilterId,
-					},
-					&cli.StringFlag{
-						Name:        "ipaddress",
-						Aliases:     []string{"ip"},
-						Usage:       "set ipaddress",
-						Destination: &buildParam.Ipaddress,
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &buildParam.IconId,
-					},
-					&cli.IntFlag{
-						Name:        "memory",
-						Usage:       "[Required] set memory size(GB)",
-						Value:       1,
-						Destination: &buildParam.Memory,
-					},
 					&cli.IntFlag{
 						Name:        "disk-size",
 						Usage:       "set disk size(GB)",
 						Value:       20,
 						Destination: &buildParam.DiskSize,
-					},
-					&cli.StringFlag{
-						Name:        "os-type",
-						Usage:       "set source OS type",
-						Destination: &buildParam.OsType,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &buildParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "network-mode",
-						Usage:       "[Required] network connection mode[shared/switch/disconnect/none]",
-						Value:       "shared",
-						Destination: &buildParam.NetworkMode,
-					},
-					&cli.StringSliceFlag{
-						Name:    "startup-scripts",
-						Aliases: []string{"notes"},
-						Usage:   "set startup script(s)",
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.StringFlag{
-						Name:        "disk-plan",
-						Usage:       "set disk plan('hdd' or 'ssd')",
-						Value:       "ssd",
-						Destination: &buildParam.DiskPlan,
 					},
 					&cli.Int64Flag{
 						Name:        "source-disk-id",
@@ -248,21 +333,75 @@ func init() {
 						Destination: &buildParam.DiskId,
 					},
 					&cli.Int64SliceFlag{
-						Name:    "startup-script-ids",
-						Aliases: []string{"note-ids"},
-						Usage:   "set startup script ID(s)",
+						Name:  "ssh-key-ids",
+						Usage: "set ssh-key ID(s)",
+					},
+					&cli.BoolFlag{
+						Name:        "disable-boot-after-create",
+						Usage:       "boot after create",
+						Value:       false,
+						Destination: &buildParam.DisableBootAfterCreate,
+					},
+					&cli.StringFlag{
+						Name:        "disk-plan",
+						Usage:       "set disk plan('hdd' or 'ssd')",
+						Value:       "ssd",
+						Destination: &buildParam.DiskPlan,
+					},
+					&cli.Int64Flag{
+						Name:        "source-archive-id",
+						Usage:       "set source disk ID",
+						Destination: &buildParam.SourceArchiveId,
+					},
+					&cli.StringFlag{
+						Name:        "ipaddress",
+						Aliases:     []string{"ip"},
+						Usage:       "set ipaddress",
+						Destination: &buildParam.Ipaddress,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "distant-from",
+						Usage: "set distant from disk IDs",
+					},
+					&cli.StringFlag{
+						Name:        "hostname",
+						Usage:       "set hostname",
+						Destination: &buildParam.Hostname,
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &buildParam.IconId,
+					},
+					&cli.Int64Flag{
+						Name:        "packet-filter-id",
+						Usage:       "set packet filter ID",
+						Destination: &buildParam.PacketFilterId,
+					},
+					&cli.Int64Flag{
+						Name:        "switch-id",
+						Usage:       "set connect switch ID",
+						Destination: &buildParam.SwitchId,
+					},
+					&cli.StringSliceFlag{
+						Name:  "ssh-key-public-key-files",
+						Usage: "set ssh-key public key file",
 					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
 					buildParam.StartupScripts = c.StringSlice("startup-scripts")
-					buildParam.Tags = c.StringSlice("tags")
-					buildParam.StartupScriptIds = c.Int64Slice("startup-script-ids")
 					buildParam.SshKeyPublicKeys = c.StringSlice("ssh-key-public-keys")
-					buildParam.DistantFrom = c.Int64Slice("distant-from")
 					buildParam.SshKeyIds = c.Int64Slice("ssh-key-ids")
+					buildParam.Tags = c.StringSlice("tags")
+					buildParam.DistantFrom = c.Int64Slice("distant-from")
 					buildParam.SshKeyPublicKeyFiles = c.StringSlice("ssh-key-public-key-files")
+					buildParam.StartupScriptIds = c.Int64Slice("startup-script-ids")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -279,256 +418,6 @@ func init() {
 
 					// Run command with params
 					return ServerBuild(ctx, buildParam)
-				},
-			},
-			{
-				Name:      "shutdown",
-				Aliases:   []string{"power-off"},
-				Usage:     "Shutdown Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.BoolFlag{
-						Name:        "force",
-						Usage:       "force shutdown flag",
-						Destination: &shutdownParam.Force,
-					},
-					&cli.BoolFlag{
-						Name:        "async",
-						Usage:       "set async flag(if true,return with non block)",
-						Destination: &shutdownParam.Async,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &shutdownParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := shutdownParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), shutdownParam)
-
-					// Run command with params
-					return ServerShutdown(ctx, shutdownParam)
-				},
-			},
-			{
-				Name:      "disk-info",
-				Usage:     "DiskInfo Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &diskInfoParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := diskInfoParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), diskInfoParam)
-
-					// Run command with params
-					return ServerDiskInfo(ctx, diskInfoParam)
-				},
-			},
-			{
-				Name:      "interface-add-for-router",
-				Usage:     "InterfaceAddForRouter Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &interfaceAddForRouterParam.Id,
-					},
-					&cli.BoolFlag{
-						Name:        "without-disk-edit",
-						Usage:       "set skip edit-disk flag. if true, don't call DiskEdit API after interface added",
-						Destination: &interfaceAddForRouterParam.WithoutDiskEdit,
-					},
-					&cli.Int64Flag{
-						Name:        "switch-id",
-						Usage:       "[Required] set connect switch(connected to router) ID",
-						Destination: &interfaceAddForRouterParam.SwitchId,
-					},
-					&cli.StringFlag{
-						Name:        "ipaddress",
-						Aliases:     []string{"ip"},
-						Usage:       "set ipaddress",
-						Destination: &interfaceAddForRouterParam.Ipaddress,
-					},
-					&cli.StringFlag{
-						Name:        "default-route",
-						Aliases:     []string{"gateway"},
-						Usage:       "set default gateway",
-						Destination: &interfaceAddForRouterParam.DefaultRoute,
-					},
-					&cli.IntFlag{
-						Name:        "nw-masklen",
-						Aliases:     []string{"network-masklen"},
-						Usage:       "set ipaddress  prefix",
-						Value:       24,
-						Destination: &interfaceAddForRouterParam.NwMasklen,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := interfaceAddForRouterParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), interfaceAddForRouterParam)
-
-					// Run command with params
-					return ServerInterfaceAddForRouter(ctx, interfaceAddForRouterParam)
-				},
-			},
-			{
-				Name:      "wait-for-down",
-				Usage:     "WaitForDown Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &waitForDownParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := waitForDownParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), waitForDownParam)
-
-					// Run command with params
-					return ServerWaitForDown(ctx, waitForDownParam)
-				},
-			},
-			{
-				Name:      "iso-info",
-				Usage:     "IsoInfo Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &isoInfoParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := isoInfoParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), isoInfoParam)
-
-					// Run command with params
-					return ServerIsoInfo(ctx, isoInfoParam)
-				},
-			},
-			{
-				Name:      "interface-add-disconnected",
-				Usage:     "InterfaceAddDisconnected Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &interfaceAddDisconnectedParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := interfaceAddDisconnectedParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), interfaceAddDisconnectedParam)
-
-					// Run command with params
-					return ServerInterfaceAddDisconnected(ctx, interfaceAddDisconnectedParam)
 				},
 			},
 			{
@@ -588,6 +477,510 @@ func init() {
 
 					// Run command with params
 					return ServerUpdate(ctx, updateParam)
+				},
+			},
+			{
+				Name:      "delete",
+				Aliases:   []string{"d", "rm"},
+				Usage:     "Delete Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &deleteParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := deleteParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// Run command with params
+					return ServerDelete(ctx, deleteParam)
+				},
+			},
+			{
+				Name:      "reset",
+				Usage:     "Reset Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &resetParam.Id,
+					},
+					&cli.BoolFlag{
+						Name:        "async",
+						Usage:       "set async flag(if true,return with non block)",
+						Destination: &resetParam.Async,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := resetParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), resetParam)
+
+					// Run command with params
+					return ServerReset(ctx, resetParam)
+				},
+			},
+			{
+				Name:      "wait-for-boot",
+				Usage:     "WaitForBoot Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &waitForBootParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := waitForBootParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), waitForBootParam)
+
+					// Run command with params
+					return ServerWaitForBoot(ctx, waitForBootParam)
+				},
+			},
+			{
+				Name:      "disk-info",
+				Usage:     "DiskInfo Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &diskInfoParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := diskInfoParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), diskInfoParam)
+
+					// Run command with params
+					return ServerDiskInfo(ctx, diskInfoParam)
+				},
+			},
+			{
+				Name:      "read",
+				Aliases:   []string{"r"},
+				Usage:     "Read Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &readParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := readParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), readParam)
+
+					// Run command with params
+					return ServerRead(ctx, readParam)
+				},
+			},
+			{
+				Name:      "shutdown",
+				Aliases:   []string{"power-off"},
+				Usage:     "Shutdown Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:        "async",
+						Usage:       "set async flag(if true,return with non block)",
+						Destination: &shutdownParam.Async,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &shutdownParam.Id,
+					},
+					&cli.BoolFlag{
+						Name:        "force",
+						Usage:       "force shutdown flag",
+						Destination: &shutdownParam.Force,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := shutdownParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), shutdownParam)
+
+					// Run command with params
+					return ServerShutdown(ctx, shutdownParam)
+				},
+			},
+			{
+				Name:      "disk-connect",
+				Usage:     "DiskConnect Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &diskConnectParam.Id,
+					},
+					&cli.Int64Flag{
+						Name:        "disk-id",
+						Usage:       "[Required] set target disk ID",
+						Destination: &diskConnectParam.DiskId,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := diskConnectParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), diskConnectParam)
+
+					// Run command with params
+					return ServerDiskConnect(ctx, diskConnectParam)
+				},
+			},
+			{
+				Name:      "disk-disconnect",
+				Usage:     "DiskDisconnect Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &diskDisconnectParam.Id,
+					},
+					&cli.Int64Flag{
+						Name:        "disk-id",
+						Usage:       "[Required] set target disk ID",
+						Destination: &diskDisconnectParam.DiskId,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := diskDisconnectParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), diskDisconnectParam)
+
+					// Run command with params
+					return ServerDiskDisconnect(ctx, diskDisconnectParam)
+				},
+			},
+			{
+				Name:      "interface-add-disconnected",
+				Usage:     "InterfaceAddDisconnected Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &interfaceAddDisconnectedParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := interfaceAddDisconnectedParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), interfaceAddDisconnectedParam)
+
+					// Run command with params
+					return ServerInterfaceAddDisconnected(ctx, interfaceAddDisconnectedParam)
+				},
+			},
+			{
+				Name:      "iso-insert",
+				Usage:     "IsoInsert Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &isoInsertParam.IconId,
+					},
+					&cli.StringFlag{
+						Name:        "iso-file",
+						Usage:       "set iso image file",
+						Destination: &isoInsertParam.IsoFile,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &isoInsertParam.Description,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "set resource display name",
+						Destination: &isoInsertParam.Name,
+					},
+					&cli.IntFlag{
+						Name:        "size",
+						Usage:       "set iso size(GB)",
+						Value:       5,
+						Destination: &isoInsertParam.Size,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &isoInsertParam.Id,
+					},
+					&cli.Int64Flag{
+						Name:        "iso-image-id",
+						Usage:       "set iso-image ID",
+						Destination: &isoInsertParam.IsoImageId,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					isoInsertParam.Tags = c.StringSlice("tags")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := isoInsertParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), isoInsertParam)
+
+					// Run command with params
+					return ServerIsoInsert(ctx, isoInsertParam)
+				},
+			},
+			{
+				Name:      "iso-eject",
+				Usage:     "IsoEject Server",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &isoEjectParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := isoEjectParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), isoEjectParam)
+
+					// Run command with params
+					return ServerIsoEject(ctx, isoEjectParam)
+				},
+			},
+			{
+				Name:    "list",
+				Aliases: []string{"l", "ls", "find"},
+				Usage:   "List Server",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
+					},
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					listParam.Name = c.StringSlice("name")
+					listParam.Id = c.Int64Slice("id")
+					listParam.Sort = c.StringSlice("sort")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := listParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), listParam)
+
+					// Run command with params
+					return ServerList(ctx, listParam)
 				},
 			},
 			{
@@ -745,19 +1138,14 @@ func init() {
 				},
 			},
 			{
-				Name:      "disk-connect",
-				Usage:     "DiskConnect Server",
+				Name:      "wait-for-down",
+				Usage:     "WaitForDown Server",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &diskConnectParam.Id,
-					},
-					&cli.Int64Flag{
-						Name:        "disk-id",
-						Usage:       "[Required] set target disk ID",
-						Destination: &diskConnectParam.DiskId,
+						Destination: &waitForDownParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -773,31 +1161,26 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := diskConnectParam.Validate(); len(errors) > 0 {
+					if errors := waitForDownParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), diskConnectParam)
+					ctx := NewContext(c, c.Args().Slice(), waitForDownParam)
 
 					// Run command with params
-					return ServerDiskConnect(ctx, diskConnectParam)
+					return ServerWaitForDown(ctx, waitForDownParam)
 				},
 			},
 			{
-				Name:      "disk-disconnect",
-				Usage:     "DiskDisconnect Server",
+				Name:      "iso-info",
+				Usage:     "IsoInfo Server",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &diskDisconnectParam.Id,
-					},
-					&cli.Int64Flag{
-						Name:        "disk-id",
-						Usage:       "[Required] set target disk ID",
-						Destination: &diskDisconnectParam.DiskId,
+						Destination: &isoInfoParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -813,329 +1196,55 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := diskDisconnectParam.Validate(); len(errors) > 0 {
+					if errors := isoInfoParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), diskDisconnectParam)
+					ctx := NewContext(c, c.Args().Slice(), isoInfoParam)
 
 					// Run command with params
-					return ServerDiskDisconnect(ctx, diskDisconnectParam)
+					return ServerIsoInfo(ctx, isoInfoParam)
 				},
 			},
 			{
-				Name:      "interface-add-for-internet",
-				Usage:     "InterfaceAddForInternet Server",
+				Name:      "interface-add-for-router",
+				Usage:     "InterfaceAddForRouter Server",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &interfaceAddForInternetParam.Id,
+						Destination: &interfaceAddForRouterParam.Id,
 					},
 					&cli.BoolFlag{
 						Name:        "without-disk-edit",
 						Usage:       "set skip edit-disk flag. if true, don't call DiskEdit API after interface added",
-						Destination: &interfaceAddForInternetParam.WithoutDiskEdit,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := interfaceAddForInternetParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), interfaceAddForInternetParam)
-
-					// Run command with params
-					return ServerInterfaceAddForInternet(ctx, interfaceAddForInternetParam)
-				},
-			},
-			{
-				Name:      "read",
-				Aliases:   []string{"r"},
-				Usage:     "Read Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &readParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), readParam)
-
-					// Run command with params
-					return ServerRead(ctx, readParam)
-				},
-			},
-			{
-				Name:      "reset",
-				Usage:     "Reset Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &resetParam.Id,
-					},
-					&cli.BoolFlag{
-						Name:        "async",
-						Usage:       "set async flag(if true,return with non block)",
-						Destination: &resetParam.Async,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := resetParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), resetParam)
-
-					// Run command with params
-					return ServerReset(ctx, resetParam)
-				},
-			},
-			{
-				Name:      "wait-for-boot",
-				Usage:     "WaitForBoot Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &waitForBootParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := waitForBootParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), waitForBootParam)
-
-					// Run command with params
-					return ServerWaitForBoot(ctx, waitForBootParam)
-				},
-			},
-			{
-				Name:      "iso-eject",
-				Usage:     "IsoEject Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &isoEjectParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := isoEjectParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), isoEjectParam)
-
-					// Run command with params
-					return ServerIsoEject(ctx, isoEjectParam)
-				},
-			},
-			{
-				Name:      "interface-add-for-switch",
-				Usage:     "InterfaceAddForSwitch Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "nw-masklen",
-						Aliases:     []string{"network-masklen"},
-						Usage:       "set ipaddress  prefix",
-						Value:       24,
-						Destination: &interfaceAddForSwitchParam.NwMasklen,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &interfaceAddForSwitchParam.Id,
-					},
-					&cli.BoolFlag{
-						Name:        "without-disk-edit",
-						Usage:       "set skip edit-disk flag. if true, don't call DiskEdit API after interface added",
-						Destination: &interfaceAddForSwitchParam.WithoutDiskEdit,
+						Destination: &interfaceAddForRouterParam.WithoutDiskEdit,
 					},
 					&cli.Int64Flag{
 						Name:        "switch-id",
-						Usage:       "[Required] set connect switch ID",
-						Destination: &interfaceAddForSwitchParam.SwitchId,
+						Usage:       "[Required] set connect switch(connected to router) ID",
+						Destination: &interfaceAddForRouterParam.SwitchId,
 					},
 					&cli.StringFlag{
 						Name:        "ipaddress",
 						Aliases:     []string{"ip"},
 						Usage:       "set ipaddress",
-						Destination: &interfaceAddForSwitchParam.Ipaddress,
+						Destination: &interfaceAddForRouterParam.Ipaddress,
 					},
 					&cli.StringFlag{
 						Name:        "default-route",
 						Aliases:     []string{"gateway"},
 						Usage:       "set default gateway",
-						Destination: &interfaceAddForSwitchParam.DefaultRoute,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := interfaceAddForSwitchParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), interfaceAddForSwitchParam)
-
-					// Run command with params
-					return ServerInterfaceAddForSwitch(ctx, interfaceAddForSwitchParam)
-				},
-			},
-			{
-				Name:    "list",
-				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List Server",
-				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
+						Destination: &interfaceAddForRouterParam.DefaultRoute,
 					},
 					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					listParam.Sort = c.StringSlice("sort")
-					listParam.Name = c.StringSlice("name")
-					listParam.Id = c.Int64Slice("id")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), listParam)
-
-					// Run command with params
-					return ServerList(ctx, listParam)
-				},
-			},
-			{
-				Name:      "delete",
-				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &deleteParam.Id,
+						Name:        "nw-masklen",
+						Aliases:     []string{"network-masklen"},
+						Usage:       "set ipaddress  prefix",
+						Value:       24,
+						Destination: &interfaceAddForRouterParam.NwMasklen,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -1151,124 +1260,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := interfaceAddForRouterParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := NewContext(c, c.Args().Slice(), interfaceAddForRouterParam)
 
 					// Run command with params
-					return ServerDelete(ctx, deleteParam)
-				},
-			},
-			{
-				Name:      "iso-insert",
-				Usage:     "IsoInsert Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &isoInsertParam.Description,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &isoInsertParam.IconId,
-					},
-					&cli.StringFlag{
-						Name:        "iso-file",
-						Usage:       "set iso image file",
-						Destination: &isoInsertParam.IsoFile,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &isoInsertParam.Id,
-					},
-					&cli.Int64Flag{
-						Name:        "iso-image-id",
-						Usage:       "set iso-image ID",
-						Destination: &isoInsertParam.IsoImageId,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set resource display name",
-						Destination: &isoInsertParam.Name,
-					},
-					&cli.IntFlag{
-						Name:        "size",
-						Usage:       "set iso size(GB)",
-						Value:       5,
-						Destination: &isoInsertParam.Size,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					isoInsertParam.Tags = c.StringSlice("tags")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := isoInsertParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), isoInsertParam)
-
-					// Run command with params
-					return ServerIsoInsert(ctx, isoInsertParam)
-				},
-			},
-			{
-				Name:      "interface-info",
-				Usage:     "InterfaceInfo Server",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &interfaceInfoParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := interfaceInfoParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), interfaceInfoParam)
-
-					// Run command with params
-					return ServerInterfaceInfo(ctx, interfaceInfoParam)
+					return ServerInterfaceAddForRouter(ctx, interfaceAddForRouterParam)
 				},
 			},
 		},

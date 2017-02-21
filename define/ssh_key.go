@@ -98,7 +98,7 @@ func sshKeyCreateParam() map[string]*schema.Schema {
 		"public-key": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
-			Description:  "set icon image",
+			Description:  "set public-key from file",
 			ValidateFunc: validateFileExists(),
 		},
 	}

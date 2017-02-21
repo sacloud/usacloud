@@ -6,13 +6,16 @@ import (
 	"fmt"
 )
 
-func ISOImageList(ctx Context, params *ListISOImageParam) error {
+func StartupScriptList(ctx Context, params *ListStartupScriptParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetCDROMAPI()
+	finder := client.GetNoteAPI()
 
 	finder.SetEmpty()
 
+	if !isEmpty(params.Scope) {
+		finder.SetFilterBy("Scope", params.Scope)
+	}
 	if !isEmpty(params.Id) {
 		for _, v := range params.Id {
 			finder.SetFilterMultiBy("ID", v)
@@ -34,19 +37,16 @@ func ISOImageList(ctx Context, params *ListISOImageParam) error {
 			finder.SetFilterBy("Name", v)
 		}
 	}
-	if !isEmpty(params.Scope) {
-		finder.SetFilterBy("Scope", params.Scope)
-	}
 
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("ISOImageList is failed: %s", err)
+		return fmt.Errorf("StartupScriptList is failed: %s", err)
 	}
 
 	list := []interface{}{}
-	for i := range res.CDROMs {
-		list = append(list, &res.CDROMs[i])
+	for i := range res.Notes {
+		list = append(list, &res.Notes[i])
 	}
 
 	return ctx.GetOutput().Print(list...)

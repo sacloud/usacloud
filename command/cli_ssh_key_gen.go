@@ -7,30 +7,75 @@ import (
 )
 
 func init() {
+	generateParam := NewGenerateSSHKeyParam()
 	listParam := NewListSSHKeyParam()
 	createParam := NewCreateSSHKeyParam()
 	readParam := NewReadSSHKeyParam()
 	updateParam := NewUpdateSSHKeyParam()
 	deleteParam := NewDeleteSSHKeyParam()
-	generateParam := NewGenerateSSHKeyParam()
 
 	cliCommand := &cli.Command{
 		Name:  "ssh-key",
 		Usage: "A manage commands of SSHKey",
 		Subcommands: []*cli.Command{
 			{
+				Name:      "generate",
+				Aliases:   []string{"g", "gen"},
+				Usage:     "Generate SSHKey",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "pass-phrase",
+						Usage:       "set ssh-key pass phrase",
+						Destination: &generateParam.PassPhrase,
+					},
+					&cli.StringFlag{
+						Name:        "private-key-output",
+						Aliases:     []string{"file"},
+						Usage:       "set ssh-key privatekey output path",
+						Destination: &generateParam.PrivateKeyOutput,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &generateParam.Name,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &generateParam.Description,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := generateParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), generateParam)
+
+					// Run command with params
+					return SSHKeyGenerate(ctx, generateParam)
+				},
+			},
+			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List SSHKey",
 				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
 					&cli.IntFlag{
 						Name:        "from",
 						Usage:       "set offset",
@@ -45,13 +90,21 @@ func init() {
 						Name:  "sort",
 						Usage: "set field(s) for sort",
 					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -76,6 +129,16 @@ func init() {
 				Usage:   "Create SSHKey",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
+						Name:        "public-key-content",
+						Usage:       "set public-key",
+						Destination: &createParam.PublicKeyContent,
+					},
+					&cli.StringFlag{
+						Name:        "public-key",
+						Usage:       "set public-key from file",
+						Destination: &createParam.PublicKey,
+					},
+					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "[Required] set resource display name",
 						Destination: &createParam.Name,
@@ -85,16 +148,6 @@ func init() {
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
 						Destination: &createParam.Description,
-					},
-					&cli.StringFlag{
-						Name:        "public-key-content",
-						Usage:       "set public-key",
-						Destination: &createParam.PublicKeyContent,
-					},
-					&cli.StringFlag{
-						Name:        "public-key",
-						Usage:       "set icon image",
-						Destination: &createParam.PublicKey,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -233,59 +286,6 @@ func init() {
 
 					// Run command with params
 					return SSHKeyDelete(ctx, deleteParam)
-				},
-			},
-			{
-				Name:      "generate",
-				Aliases:   []string{"g", "gen"},
-				Usage:     "Generate SSHKey",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "pass-phrase",
-						Usage:       "set ssh-key pass phrase",
-						Destination: &generateParam.PassPhrase,
-					},
-					&cli.StringFlag{
-						Name:        "private-key-output",
-						Aliases:     []string{"file"},
-						Usage:       "set ssh-key privatekey output path",
-						Destination: &generateParam.PrivateKeyOutput,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &generateParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &generateParam.Description,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := generateParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), generateParam)
-
-					// Run command with params
-					return SSHKeyGenerate(ctx, generateParam)
 				},
 			},
 		},

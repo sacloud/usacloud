@@ -8,6 +8,354 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// RuleAddPacketFilterParam is input parameters for the sacloud API
+type RuleAddPacketFilterParam struct {
+	SourceNetwork   string
+	Action          string
+	Description     string
+	Index           int
+	Protocol        string
+	SourcePort      string
+	DestinationPort string
+	Id              int64
+}
+
+// NewRuleAddPacketFilterParam return new RuleAddPacketFilterParam
+func NewRuleAddPacketFilterParam() *RuleAddPacketFilterParam {
+	return &RuleAddPacketFilterParam{
+
+		Index: 1,
+	}
+}
+
+// Validate checks current values in model
+func (p *RuleAddPacketFilterParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["source-network"].ValidateFunc
+		errs := validator("--source-network", p.SourceNetwork)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["action"].ValidateFunc
+		errs := validator("--action", p.Action)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["source-port"].ValidateFunc
+		errs := validator("--source-port", p.SourcePort)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["destination-port"].ValidateFunc
+		errs := validator("--destination-port", p.DestinationPort)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *RuleAddPacketFilterParam) getResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *RuleAddPacketFilterParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["rule-add"]
+}
+
+func (p *RuleAddPacketFilterParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *RuleAddPacketFilterParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *RuleAddPacketFilterParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *RuleAddPacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *RuleAddPacketFilterParam) SetSourceNetwork(v string) {
+	p.SourceNetwork = v
+}
+
+func (p *RuleAddPacketFilterParam) GetSourceNetwork() string {
+	return p.SourceNetwork
+}
+func (p *RuleAddPacketFilterParam) SetAction(v string) {
+	p.Action = v
+}
+
+func (p *RuleAddPacketFilterParam) GetAction() string {
+	return p.Action
+}
+func (p *RuleAddPacketFilterParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *RuleAddPacketFilterParam) GetDescription() string {
+	return p.Description
+}
+func (p *RuleAddPacketFilterParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *RuleAddPacketFilterParam) GetIndex() int {
+	return p.Index
+}
+func (p *RuleAddPacketFilterParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *RuleAddPacketFilterParam) GetProtocol() string {
+	return p.Protocol
+}
+func (p *RuleAddPacketFilterParam) SetSourcePort(v string) {
+	p.SourcePort = v
+}
+
+func (p *RuleAddPacketFilterParam) GetSourcePort() string {
+	return p.SourcePort
+}
+func (p *RuleAddPacketFilterParam) SetDestinationPort(v string) {
+	p.DestinationPort = v
+}
+
+func (p *RuleAddPacketFilterParam) GetDestinationPort() string {
+	return p.DestinationPort
+}
+func (p *RuleAddPacketFilterParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *RuleAddPacketFilterParam) GetId() int64 {
+	return p.Id
+}
+
+// RuleDeletePacketFilterParam is input parameters for the sacloud API
+type RuleDeletePacketFilterParam struct {
+	Id    int64
+	Index int
+}
+
+// NewRuleDeletePacketFilterParam return new RuleDeletePacketFilterParam
+func NewRuleDeletePacketFilterParam() *RuleDeletePacketFilterParam {
+	return &RuleDeletePacketFilterParam{}
+}
+
+// Validate checks current values in model
+func (p *RuleDeletePacketFilterParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["PacketFilter"].Commands["rule-delete"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *RuleDeletePacketFilterParam) getResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *RuleDeletePacketFilterParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["rule-delete"]
+}
+
+func (p *RuleDeletePacketFilterParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *RuleDeletePacketFilterParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *RuleDeletePacketFilterParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *RuleDeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *RuleDeletePacketFilterParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *RuleDeletePacketFilterParam) GetId() int64 {
+	return p.Id
+}
+func (p *RuleDeletePacketFilterParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *RuleDeletePacketFilterParam) GetIndex() int {
+	return p.Index
+}
+
+// ListPacketFilterParam is input parameters for the sacloud API
+type ListPacketFilterParam struct {
+	From int
+	Max  int
+	Sort []string
+	Name []string
+	Id   []int64
+}
+
+// NewListPacketFilterParam return new ListPacketFilterParam
+func NewListPacketFilterParam() *ListPacketFilterParam {
+	return &ListPacketFilterParam{}
+}
+
+// Validate checks current values in model
+func (p *ListPacketFilterParam) Validate() []error {
+	errors := []error{}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["PacketFilter"].Commands["list"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--id", p.Id, map[string]interface{}{
+
+			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ListPacketFilterParam) getResourceDef() *schema.Resource {
+	return define.Resources["PacketFilter"]
+}
+
+func (p *ListPacketFilterParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["list"]
+}
+
+func (p *ListPacketFilterParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ListPacketFilterParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ListPacketFilterParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ListPacketFilterParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListPacketFilterParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListPacketFilterParam) GetFrom() int {
+	return p.From
+}
+func (p *ListPacketFilterParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListPacketFilterParam) GetMax() int {
+	return p.Max
+}
+func (p *ListPacketFilterParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListPacketFilterParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListPacketFilterParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListPacketFilterParam) GetName() []string {
+	return p.Name
+}
+func (p *ListPacketFilterParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListPacketFilterParam) GetId() []int64 {
+	return p.Id
+}
+
 // ReadPacketFilterParam is input parameters for the sacloud API
 type ReadPacketFilterParam struct {
 	Id int64
@@ -73,9 +421,9 @@ func (p *ReadPacketFilterParam) GetId() int64 {
 
 // UpdatePacketFilterParam is input parameters for the sacloud API
 type UpdatePacketFilterParam struct {
+	Description string
 	Id          int64
 	Name        string
-	Description string
 }
 
 // NewUpdatePacketFilterParam return new UpdatePacketFilterParam
@@ -86,6 +434,13 @@ func NewUpdatePacketFilterParam() *UpdatePacketFilterParam {
 // Validate checks current values in model
 func (p *UpdatePacketFilterParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["PacketFilter"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := validateRequired
 		errs := validator("--id", p.Id)
@@ -103,13 +458,6 @@ func (p *UpdatePacketFilterParam) Validate() []error {
 	{
 		validator := define.Resources["PacketFilter"].Commands["update"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["PacketFilter"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -142,6 +490,13 @@ func (p *UpdatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdatePacketFilterParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdatePacketFilterParam) GetDescription() string {
+	return p.Description
+}
 func (p *UpdatePacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -156,191 +511,19 @@ func (p *UpdatePacketFilterParam) SetName(v string) {
 func (p *UpdatePacketFilterParam) GetName() string {
 	return p.Name
 }
-func (p *UpdatePacketFilterParam) SetDescription(v string) {
-	p.Description = v
+
+// DeletePacketFilterParam is input parameters for the sacloud API
+type DeletePacketFilterParam struct {
+	Id int64
 }
 
-func (p *UpdatePacketFilterParam) GetDescription() string {
-	return p.Description
-}
-
-// RuleAddPacketFilterParam is input parameters for the sacloud API
-type RuleAddPacketFilterParam struct {
-	Action          string
-	Id              int64
-	SourceNetwork   string
-	DestinationPort string
-	Description     string
-	Index           int
-	Protocol        string
-	SourcePort      string
-}
-
-// NewRuleAddPacketFilterParam return new RuleAddPacketFilterParam
-func NewRuleAddPacketFilterParam() *RuleAddPacketFilterParam {
-	return &RuleAddPacketFilterParam{
-
-		Index: 1,
-	}
+// NewDeletePacketFilterParam return new DeletePacketFilterParam
+func NewDeletePacketFilterParam() *DeletePacketFilterParam {
+	return &DeletePacketFilterParam{}
 }
 
 // Validate checks current values in model
-func (p *RuleAddPacketFilterParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["action"].ValidateFunc
-		errs := validator("--action", p.Action)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["source-network"].ValidateFunc
-		errs := validator("--source-network", p.SourceNetwork)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["destination-port"].ValidateFunc
-		errs := validator("--destination-port", p.DestinationPort)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["PacketFilter"].Commands["rule-add"].Params["source-port"].ValidateFunc
-		errs := validator("--source-port", p.SourcePort)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *RuleAddPacketFilterParam) getResourceDef() *schema.Resource {
-	return define.Resources["PacketFilter"]
-}
-
-func (p *RuleAddPacketFilterParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["rule-add"]
-}
-
-func (p *RuleAddPacketFilterParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *RuleAddPacketFilterParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *RuleAddPacketFilterParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *RuleAddPacketFilterParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *RuleAddPacketFilterParam) SetAction(v string) {
-	p.Action = v
-}
-
-func (p *RuleAddPacketFilterParam) GetAction() string {
-	return p.Action
-}
-func (p *RuleAddPacketFilterParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *RuleAddPacketFilterParam) GetId() int64 {
-	return p.Id
-}
-func (p *RuleAddPacketFilterParam) SetSourceNetwork(v string) {
-	p.SourceNetwork = v
-}
-
-func (p *RuleAddPacketFilterParam) GetSourceNetwork() string {
-	return p.SourceNetwork
-}
-func (p *RuleAddPacketFilterParam) SetDestinationPort(v string) {
-	p.DestinationPort = v
-}
-
-func (p *RuleAddPacketFilterParam) GetDestinationPort() string {
-	return p.DestinationPort
-}
-func (p *RuleAddPacketFilterParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *RuleAddPacketFilterParam) GetDescription() string {
-	return p.Description
-}
-func (p *RuleAddPacketFilterParam) SetIndex(v int) {
-	p.Index = v
-}
-
-func (p *RuleAddPacketFilterParam) GetIndex() int {
-	return p.Index
-}
-func (p *RuleAddPacketFilterParam) SetProtocol(v string) {
-	p.Protocol = v
-}
-
-func (p *RuleAddPacketFilterParam) GetProtocol() string {
-	return p.Protocol
-}
-func (p *RuleAddPacketFilterParam) SetSourcePort(v string) {
-	p.SourcePort = v
-}
-
-func (p *RuleAddPacketFilterParam) GetSourcePort() string {
-	return p.SourcePort
-}
-
-// InterfaceConnectPacketFilterParam is input parameters for the sacloud API
-type InterfaceConnectPacketFilterParam struct {
-	Id          int64
-	InterfaceId int64
-}
-
-// NewInterfaceConnectPacketFilterParam return new InterfaceConnectPacketFilterParam
-func NewInterfaceConnectPacketFilterParam() *InterfaceConnectPacketFilterParam {
-	return &InterfaceConnectPacketFilterParam{}
-}
-
-// Validate checks current values in model
-func (p *InterfaceConnectPacketFilterParam) Validate() []error {
+func (p *DeletePacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -350,22 +533,8 @@ func (p *InterfaceConnectPacketFilterParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["PacketFilter"].Commands["interface-connect"].Params["id"].ValidateFunc
+		validator := define.Resources["PacketFilter"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--interface-id", p.InterfaceId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["PacketFilter"].Commands["interface-connect"].Params["interface-id"].ValidateFunc
-		errs := validator("--interface-id", p.InterfaceId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -374,43 +543,36 @@ func (p *InterfaceConnectPacketFilterParam) Validate() []error {
 	return errors
 }
 
-func (p *InterfaceConnectPacketFilterParam) getResourceDef() *schema.Resource {
+func (p *DeletePacketFilterParam) getResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *InterfaceConnectPacketFilterParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["interface-connect"]
+func (p *DeletePacketFilterParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["delete"]
 }
 
-func (p *InterfaceConnectPacketFilterParam) GetIncludeFields() []string {
+func (p *DeletePacketFilterParam) GetIncludeFields() []string {
 	return p.getCommandDef().IncludeFields
 }
 
-func (p *InterfaceConnectPacketFilterParam) GetExcludeFields() []string {
+func (p *DeletePacketFilterParam) GetExcludeFields() []string {
 	return p.getCommandDef().ExcludeFields
 }
 
-func (p *InterfaceConnectPacketFilterParam) GetTableType() output.OutputTableType {
+func (p *DeletePacketFilterParam) GetTableType() output.OutputTableType {
 	return p.getCommandDef().TableType
 }
 
-func (p *InterfaceConnectPacketFilterParam) GetColumnDefs() []output.ColumnDef {
+func (p *DeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *InterfaceConnectPacketFilterParam) SetId(v int64) {
+func (p *DeletePacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
 
-func (p *InterfaceConnectPacketFilterParam) GetId() int64 {
+func (p *DeletePacketFilterParam) GetId() int64 {
 	return p.Id
-}
-func (p *InterfaceConnectPacketFilterParam) SetInterfaceId(v int64) {
-	p.InterfaceId = v
-}
-
-func (p *InterfaceConnectPacketFilterParam) GetInterfaceId() int64 {
-	return p.InterfaceId
 }
 
 // InterfaceDisconnectPacketFilterParam is input parameters for the sacloud API
@@ -500,8 +662,8 @@ func (p *InterfaceDisconnectPacketFilterParam) GetInterfaceId() int64 {
 
 // CreatePacketFilterParam is input parameters for the sacloud API
 type CreatePacketFilterParam struct {
-	Name        string
 	Description string
+	Name        string
 }
 
 // NewCreatePacketFilterParam return new CreatePacketFilterParam
@@ -513,6 +675,13 @@ func NewCreatePacketFilterParam() *CreatePacketFilterParam {
 func (p *CreatePacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
+		validator := define.Resources["PacketFilter"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		validator := validateRequired
 		errs := validator("--name", p.Name)
 		if errs != nil {
@@ -522,13 +691,6 @@ func (p *CreatePacketFilterParam) Validate() []error {
 	{
 		validator := define.Resources["PacketFilter"].Commands["create"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["PacketFilter"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -561,13 +723,6 @@ func (p *CreatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *CreatePacketFilterParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreatePacketFilterParam) GetName() string {
-	return p.Name
-}
 func (p *CreatePacketFilterParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -575,68 +730,12 @@ func (p *CreatePacketFilterParam) SetDescription(v string) {
 func (p *CreatePacketFilterParam) GetDescription() string {
 	return p.Description
 }
-
-// DeletePacketFilterParam is input parameters for the sacloud API
-type DeletePacketFilterParam struct {
-	Id int64
+func (p *CreatePacketFilterParam) SetName(v string) {
+	p.Name = v
 }
 
-// NewDeletePacketFilterParam return new DeletePacketFilterParam
-func NewDeletePacketFilterParam() *DeletePacketFilterParam {
-	return &DeletePacketFilterParam{}
-}
-
-// Validate checks current values in model
-func (p *DeletePacketFilterParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["PacketFilter"].Commands["delete"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *DeletePacketFilterParam) getResourceDef() *schema.Resource {
-	return define.Resources["PacketFilter"]
-}
-
-func (p *DeletePacketFilterParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["delete"]
-}
-
-func (p *DeletePacketFilterParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *DeletePacketFilterParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *DeletePacketFilterParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *DeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DeletePacketFilterParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *DeletePacketFilterParam) GetId() int64 {
-	return p.Id
+func (p *CreatePacketFilterParam) GetName() string {
+	return p.Name
 }
 
 // RuleListPacketFilterParam is input parameters for the sacloud API
@@ -704,12 +803,12 @@ func (p *RuleListPacketFilterParam) GetId() int64 {
 
 // RuleUpdatePacketFilterParam is input parameters for the sacloud API
 type RuleUpdatePacketFilterParam struct {
-	Index           int
-	Protocol        string
+	Id              int64
 	SourceNetwork   string
 	DestinationPort string
 	Action          string
-	Id              int64
+	Index           int
+	Protocol        string
 	SourcePort      string
 	Description     string
 }
@@ -724,14 +823,14 @@ func (p *RuleUpdatePacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--index", p.Index)
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["PacketFilter"].Commands["rule-update"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
+		validator := define.Resources["PacketFilter"].Commands["rule-update"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -759,14 +858,14 @@ func (p *RuleUpdatePacketFilterParam) Validate() []error {
 	}
 	{
 		validator := validateRequired
-		errs := validator("--id", p.Id)
+		errs := validator("--index", p.Index)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["PacketFilter"].Commands["rule-update"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
+		validator := define.Resources["PacketFilter"].Commands["rule-update"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -813,19 +912,12 @@ func (p *RuleUpdatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *RuleUpdatePacketFilterParam) SetIndex(v int) {
-	p.Index = v
+func (p *RuleUpdatePacketFilterParam) SetId(v int64) {
+	p.Id = v
 }
 
-func (p *RuleUpdatePacketFilterParam) GetIndex() int {
-	return p.Index
-}
-func (p *RuleUpdatePacketFilterParam) SetProtocol(v string) {
-	p.Protocol = v
-}
-
-func (p *RuleUpdatePacketFilterParam) GetProtocol() string {
-	return p.Protocol
+func (p *RuleUpdatePacketFilterParam) GetId() int64 {
+	return p.Id
 }
 func (p *RuleUpdatePacketFilterParam) SetSourceNetwork(v string) {
 	p.SourceNetwork = v
@@ -848,12 +940,19 @@ func (p *RuleUpdatePacketFilterParam) SetAction(v string) {
 func (p *RuleUpdatePacketFilterParam) GetAction() string {
 	return p.Action
 }
-func (p *RuleUpdatePacketFilterParam) SetId(v int64) {
-	p.Id = v
+func (p *RuleUpdatePacketFilterParam) SetIndex(v int) {
+	p.Index = v
 }
 
-func (p *RuleUpdatePacketFilterParam) GetId() int64 {
-	return p.Id
+func (p *RuleUpdatePacketFilterParam) GetIndex() int {
+	return p.Index
+}
+func (p *RuleUpdatePacketFilterParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetProtocol() string {
+	return p.Protocol
 }
 func (p *RuleUpdatePacketFilterParam) SetSourcePort(v string) {
 	p.SourcePort = v
@@ -870,19 +969,19 @@ func (p *RuleUpdatePacketFilterParam) GetDescription() string {
 	return p.Description
 }
 
-// RuleDeletePacketFilterParam is input parameters for the sacloud API
-type RuleDeletePacketFilterParam struct {
-	Id    int64
-	Index int
+// InterfaceConnectPacketFilterParam is input parameters for the sacloud API
+type InterfaceConnectPacketFilterParam struct {
+	Id          int64
+	InterfaceId int64
 }
 
-// NewRuleDeletePacketFilterParam return new RuleDeletePacketFilterParam
-func NewRuleDeletePacketFilterParam() *RuleDeletePacketFilterParam {
-	return &RuleDeletePacketFilterParam{}
+// NewInterfaceConnectPacketFilterParam return new InterfaceConnectPacketFilterParam
+func NewInterfaceConnectPacketFilterParam() *InterfaceConnectPacketFilterParam {
+	return &InterfaceConnectPacketFilterParam{}
 }
 
 // Validate checks current values in model
-func (p *RuleDeletePacketFilterParam) Validate() []error {
+func (p *InterfaceConnectPacketFilterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -892,7 +991,7 @@ func (p *RuleDeletePacketFilterParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["PacketFilter"].Commands["rule-delete"].Params["id"].ValidateFunc
+		validator := define.Resources["PacketFilter"].Commands["interface-connect"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -900,7 +999,14 @@ func (p *RuleDeletePacketFilterParam) Validate() []error {
 	}
 	{
 		validator := validateRequired
-		errs := validator("--index", p.Index)
+		errs := validator("--interface-id", p.InterfaceId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["PacketFilter"].Commands["interface-connect"].Params["interface-id"].ValidateFunc
+		errs := validator("--interface-id", p.InterfaceId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -909,147 +1015,41 @@ func (p *RuleDeletePacketFilterParam) Validate() []error {
 	return errors
 }
 
-func (p *RuleDeletePacketFilterParam) getResourceDef() *schema.Resource {
+func (p *InterfaceConnectPacketFilterParam) getResourceDef() *schema.Resource {
 	return define.Resources["PacketFilter"]
 }
 
-func (p *RuleDeletePacketFilterParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["rule-delete"]
+func (p *InterfaceConnectPacketFilterParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["interface-connect"]
 }
 
-func (p *RuleDeletePacketFilterParam) GetIncludeFields() []string {
+func (p *InterfaceConnectPacketFilterParam) GetIncludeFields() []string {
 	return p.getCommandDef().IncludeFields
 }
 
-func (p *RuleDeletePacketFilterParam) GetExcludeFields() []string {
+func (p *InterfaceConnectPacketFilterParam) GetExcludeFields() []string {
 	return p.getCommandDef().ExcludeFields
 }
 
-func (p *RuleDeletePacketFilterParam) GetTableType() output.OutputTableType {
+func (p *InterfaceConnectPacketFilterParam) GetTableType() output.OutputTableType {
 	return p.getCommandDef().TableType
 }
 
-func (p *RuleDeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
+func (p *InterfaceConnectPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *RuleDeletePacketFilterParam) SetId(v int64) {
+func (p *InterfaceConnectPacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
 
-func (p *RuleDeletePacketFilterParam) GetId() int64 {
+func (p *InterfaceConnectPacketFilterParam) GetId() int64 {
 	return p.Id
 }
-func (p *RuleDeletePacketFilterParam) SetIndex(v int) {
-	p.Index = v
+func (p *InterfaceConnectPacketFilterParam) SetInterfaceId(v int64) {
+	p.InterfaceId = v
 }
 
-func (p *RuleDeletePacketFilterParam) GetIndex() int {
-	return p.Index
-}
-
-// ListPacketFilterParam is input parameters for the sacloud API
-type ListPacketFilterParam struct {
-	Id   []int64
-	From int
-	Max  int
-	Sort []string
-	Name []string
-}
-
-// NewListPacketFilterParam return new ListPacketFilterParam
-func NewListPacketFilterParam() *ListPacketFilterParam {
-	return &ListPacketFilterParam{}
-}
-
-// Validate checks current values in model
-func (p *ListPacketFilterParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := define.Resources["PacketFilter"].Commands["list"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--id", p.Id, map[string]interface{}{
-
-			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ListPacketFilterParam) getResourceDef() *schema.Resource {
-	return define.Resources["PacketFilter"]
-}
-
-func (p *ListPacketFilterParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["list"]
-}
-
-func (p *ListPacketFilterParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ListPacketFilterParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ListPacketFilterParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ListPacketFilterParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ListPacketFilterParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListPacketFilterParam) GetId() []int64 {
-	return p.Id
-}
-func (p *ListPacketFilterParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListPacketFilterParam) GetFrom() int {
-	return p.From
-}
-func (p *ListPacketFilterParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListPacketFilterParam) GetMax() int {
-	return p.Max
-}
-func (p *ListPacketFilterParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListPacketFilterParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListPacketFilterParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListPacketFilterParam) GetName() []string {
-	return p.Name
+func (p *InterfaceConnectPacketFilterParam) GetInterfaceId() int64 {
+	return p.InterfaceId
 }

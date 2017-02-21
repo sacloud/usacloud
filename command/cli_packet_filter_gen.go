@@ -7,58 +7,22 @@ import (
 )
 
 func init() {
-	ruleListParam := NewRuleListPacketFilterParam()
 	ruleDeleteParam := NewRuleDeletePacketFilterParam()
-	interfaceDisconnectParam := NewInterfaceDisconnectPacketFilterParam()
+	interfaceConnectParam := NewInterfaceConnectPacketFilterParam()
 	listParam := NewListPacketFilterParam()
 	createParam := NewCreatePacketFilterParam()
-	updateParam := NewUpdatePacketFilterParam()
-	ruleUpdateParam := NewRuleUpdatePacketFilterParam()
-	interfaceConnectParam := NewInterfaceConnectPacketFilterParam()
 	readParam := NewReadPacketFilterParam()
-	deleteParam := NewDeletePacketFilterParam()
+	updateParam := NewUpdatePacketFilterParam()
 	ruleAddParam := NewRuleAddPacketFilterParam()
+	ruleUpdateParam := NewRuleUpdatePacketFilterParam()
+	deleteParam := NewDeletePacketFilterParam()
+	ruleListParam := NewRuleListPacketFilterParam()
+	interfaceDisconnectParam := NewInterfaceDisconnectPacketFilterParam()
 
 	cliCommand := &cli.Command{
 		Name:  "packet-filter",
 		Usage: "A manage commands of PacketFilter",
 		Subcommands: []*cli.Command{
-			{
-				Name:      "rule-list",
-				Aliases:   []string{"rules"},
-				Usage:     "RuleList PacketFilter",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &ruleListParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := ruleListParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), ruleListParam)
-
-					// Run command with params
-					return PacketFilterRuleList(ctx, ruleListParam)
-				},
-			},
 			{
 				Name:      "rule-delete",
 				Usage:     "RuleDelete PacketFilter",
@@ -100,19 +64,19 @@ func init() {
 				},
 			},
 			{
-				Name:      "interface-disconnect",
-				Usage:     "InterfaceDisconnect PacketFilter",
+				Name:      "interface-connect",
+				Usage:     "InterfaceConnect PacketFilter",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
-						Name:        "interface-id",
-						Usage:       "[Required] set interface ID",
-						Destination: &interfaceDisconnectParam.InterfaceId,
-					},
-					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &interfaceDisconnectParam.Id,
+						Destination: &interfaceConnectParam.Id,
+					},
+					&cli.Int64Flag{
+						Name:        "interface-id",
+						Usage:       "[Required] set interface ID",
+						Destination: &interfaceConnectParam.InterfaceId,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -128,15 +92,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := interfaceDisconnectParam.Validate(); len(errors) > 0 {
+					if errors := interfaceConnectParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), interfaceDisconnectParam)
+					ctx := NewContext(c, c.Args().Slice(), interfaceConnectParam)
 
 					// Run command with params
-					return PacketFilterInterfaceDisconnect(ctx, interfaceDisconnectParam)
+					return PacketFilterInterfaceConnect(ctx, interfaceConnectParam)
 				},
 			},
 			{
@@ -228,6 +192,42 @@ func init() {
 				},
 			},
 			{
+				Name:      "read",
+				Aliases:   []string{"r"},
+				Usage:     "Read PacketFilter",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &readParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := readParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), readParam)
+
+					// Run command with params
+					return PacketFilterRead(ctx, readParam)
+				},
+			},
+			{
 				Name:      "update",
 				Aliases:   []string{"u"},
 				Usage:     "Update PacketFilter",
@@ -275,37 +275,83 @@ func init() {
 				},
 			},
 			{
-				Name:      "rule-update",
-				Usage:     "RuleUpdate PacketFilter",
+				Name:      "rule-add",
+				Usage:     "RuleAdd PacketFilter",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &ruleAddParam.Id,
+					},
+					&cli.IntFlag{
+						Name:        "index",
+						Usage:       "index to insert rule into",
+						Value:       1,
+						Destination: &ruleAddParam.Index,
+					},
 					&cli.StringFlag{
 						Name:        "destination-port",
 						Aliases:     []string{"dest-port"},
 						Usage:       "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
-						Destination: &ruleUpdateParam.DestinationPort,
+						Destination: &ruleAddParam.DestinationPort,
 					},
 					&cli.StringFlag{
 						Name:        "action",
 						Usage:       "set action[allow/deny]",
-						Destination: &ruleUpdateParam.Action,
+						Destination: &ruleAddParam.Action,
+					},
+					&cli.StringFlag{
+						Name:        "protocol",
+						Usage:       "set target protocol[tcp/udp/icmp/fragment/ip]",
+						Destination: &ruleAddParam.Protocol,
 					},
 					&cli.StringFlag{
 						Name:        "source-network",
 						Usage:       "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]",
-						Destination: &ruleUpdateParam.SourceNetwork,
+						Destination: &ruleAddParam.SourceNetwork,
 					},
 					&cli.StringFlag{
 						Name:        "source-port",
 						Usage:       "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
-						Destination: &ruleUpdateParam.SourcePort,
+						Destination: &ruleAddParam.SourcePort,
 					},
 					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
-						Destination: &ruleUpdateParam.Description,
+						Destination: &ruleAddParam.Description,
 					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := ruleAddParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), ruleAddParam)
+
+					// Run command with params
+					return PacketFilterRuleAdd(ctx, ruleAddParam)
+				},
+			},
+			{
+				Name:      "rule-update",
+				Usage:     "RuleUpdate PacketFilter",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
@@ -320,6 +366,33 @@ func init() {
 						Name:        "protocol",
 						Usage:       "set target protocol[tcp/udp/icmp/fragment/ip]",
 						Destination: &ruleUpdateParam.Protocol,
+					},
+					&cli.StringFlag{
+						Name:        "action",
+						Usage:       "set action[allow/deny]",
+						Destination: &ruleUpdateParam.Action,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &ruleUpdateParam.Description,
+					},
+					&cli.StringFlag{
+						Name:        "source-network",
+						Usage:       "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]",
+						Destination: &ruleUpdateParam.SourceNetwork,
+					},
+					&cli.StringFlag{
+						Name:        "source-port",
+						Usage:       "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
+						Destination: &ruleUpdateParam.SourcePort,
+					},
+					&cli.StringFlag{
+						Name:        "destination-port",
+						Aliases:     []string{"dest-port"},
+						Usage:       "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
+						Destination: &ruleUpdateParam.DestinationPort,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -344,82 +417,6 @@ func init() {
 
 					// Run command with params
 					return PacketFilterRuleUpdate(ctx, ruleUpdateParam)
-				},
-			},
-			{
-				Name:      "interface-connect",
-				Usage:     "InterfaceConnect PacketFilter",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "interface-id",
-						Usage:       "[Required] set interface ID",
-						Destination: &interfaceConnectParam.InterfaceId,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &interfaceConnectParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := interfaceConnectParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), interfaceConnectParam)
-
-					// Run command with params
-					return PacketFilterInterfaceConnect(ctx, interfaceConnectParam)
-				},
-			},
-			{
-				Name:      "read",
-				Aliases:   []string{"r"},
-				Usage:     "Read PacketFilter",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &readParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), readParam)
-
-					// Run command with params
-					return PacketFilterRead(ctx, readParam)
 				},
 			},
 			{
@@ -459,52 +456,15 @@ func init() {
 				},
 			},
 			{
-				Name:      "rule-add",
-				Usage:     "RuleAdd PacketFilter",
+				Name:      "rule-list",
+				Aliases:   []string{"rules"},
+				Usage:     "RuleList PacketFilter",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "protocol",
-						Usage:       "set target protocol[tcp/udp/icmp/fragment/ip]",
-						Destination: &ruleAddParam.Protocol,
-					},
-					&cli.StringFlag{
-						Name:        "source-port",
-						Usage:       "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
-						Destination: &ruleAddParam.SourcePort,
-					},
-					&cli.StringFlag{
-						Name:        "destination-port",
-						Aliases:     []string{"dest-port"},
-						Usage:       "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
-						Destination: &ruleAddParam.DestinationPort,
-					},
-					&cli.StringFlag{
-						Name:        "action",
-						Usage:       "set action[allow/deny]",
-						Destination: &ruleAddParam.Action,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &ruleAddParam.Description,
-					},
-					&cli.IntFlag{
-						Name:        "index",
-						Usage:       "index to insert rule into",
-						Value:       1,
-						Destination: &ruleAddParam.Index,
-					},
-					&cli.StringFlag{
-						Name:        "source-network",
-						Usage:       "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]",
-						Destination: &ruleAddParam.SourceNetwork,
-					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &ruleAddParam.Id,
+						Destination: &ruleListParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -520,15 +480,55 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := ruleAddParam.Validate(); len(errors) > 0 {
+					if errors := ruleListParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), ruleAddParam)
+					ctx := NewContext(c, c.Args().Slice(), ruleListParam)
 
 					// Run command with params
-					return PacketFilterRuleAdd(ctx, ruleAddParam)
+					return PacketFilterRuleList(ctx, ruleListParam)
+				},
+			},
+			{
+				Name:      "interface-disconnect",
+				Usage:     "InterfaceDisconnect PacketFilter",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &interfaceDisconnectParam.Id,
+					},
+					&cli.Int64Flag{
+						Name:        "interface-id",
+						Usage:       "[Required] set interface ID",
+						Destination: &interfaceDisconnectParam.InterfaceId,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := interfaceDisconnectParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), interfaceDisconnectParam)
+
+					// Run command with params
+					return PacketFilterInterfaceDisconnect(ctx, interfaceDisconnectParam)
 				},
 			},
 		},

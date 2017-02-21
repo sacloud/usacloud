@@ -8,69 +8,6 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// DeleteLicenseParam is input parameters for the sacloud API
-type DeleteLicenseParam struct {
-	Id int64
-}
-
-// NewDeleteLicenseParam return new DeleteLicenseParam
-func NewDeleteLicenseParam() *DeleteLicenseParam {
-	return &DeleteLicenseParam{}
-}
-
-// Validate checks current values in model
-func (p *DeleteLicenseParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["License"].Commands["delete"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *DeleteLicenseParam) getResourceDef() *schema.Resource {
-	return define.Resources["License"]
-}
-
-func (p *DeleteLicenseParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["delete"]
-}
-
-func (p *DeleteLicenseParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *DeleteLicenseParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *DeleteLicenseParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *DeleteLicenseParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DeleteLicenseParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *DeleteLicenseParam) GetId() int64 {
-	return p.Id
-}
-
 // ListLicenseParam is input parameters for the sacloud API
 type ListLicenseParam struct {
 	Name []string
@@ -179,8 +116,8 @@ func (p *ListLicenseParam) GetSort() []string {
 
 // CreateLicenseParam is input parameters for the sacloud API
 type CreateLicenseParam struct {
-	LicenseInfoId int64
 	Name          string
+	LicenseInfoId int64
 }
 
 // NewCreateLicenseParam return new CreateLicenseParam
@@ -233,19 +170,19 @@ func (p *CreateLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *CreateLicenseParam) SetLicenseInfoId(v int64) {
-	p.LicenseInfoId = v
-}
-
-func (p *CreateLicenseParam) GetLicenseInfoId() int64 {
-	return p.LicenseInfoId
-}
 func (p *CreateLicenseParam) SetName(v string) {
 	p.Name = v
 }
 
 func (p *CreateLicenseParam) GetName() string {
 	return p.Name
+}
+func (p *CreateLicenseParam) SetLicenseInfoId(v int64) {
+	p.LicenseInfoId = v
+}
+
+func (p *CreateLicenseParam) GetLicenseInfoId() int64 {
+	return p.LicenseInfoId
 }
 
 // ReadLicenseParam is input parameters for the sacloud API
@@ -313,8 +250,8 @@ func (p *ReadLicenseParam) GetId() int64 {
 
 // UpdateLicenseParam is input parameters for the sacloud API
 type UpdateLicenseParam struct {
-	Id   int64
 	Name string
+	Id   int64
 }
 
 // NewUpdateLicenseParam return new UpdateLicenseParam
@@ -326,6 +263,13 @@ func NewUpdateLicenseParam() *UpdateLicenseParam {
 func (p *UpdateLicenseParam) Validate() []error {
 	errors := []error{}
 	{
+		validator := define.Resources["License"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		validator := validateRequired
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -335,13 +279,6 @@ func (p *UpdateLicenseParam) Validate() []error {
 	{
 		validator := define.Resources["License"].Commands["update"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["License"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -374,6 +311,13 @@ func (p *UpdateLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdateLicenseParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateLicenseParam) GetName() string {
+	return p.Name
+}
 func (p *UpdateLicenseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -381,10 +325,66 @@ func (p *UpdateLicenseParam) SetId(v int64) {
 func (p *UpdateLicenseParam) GetId() int64 {
 	return p.Id
 }
-func (p *UpdateLicenseParam) SetName(v string) {
-	p.Name = v
+
+// DeleteLicenseParam is input parameters for the sacloud API
+type DeleteLicenseParam struct {
+	Id int64
 }
 
-func (p *UpdateLicenseParam) GetName() string {
-	return p.Name
+// NewDeleteLicenseParam return new DeleteLicenseParam
+func NewDeleteLicenseParam() *DeleteLicenseParam {
+	return &DeleteLicenseParam{}
+}
+
+// Validate checks current values in model
+func (p *DeleteLicenseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["License"].Commands["delete"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DeleteLicenseParam) getResourceDef() *schema.Resource {
+	return define.Resources["License"]
+}
+
+func (p *DeleteLicenseParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["delete"]
+}
+
+func (p *DeleteLicenseParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *DeleteLicenseParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *DeleteLicenseParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *DeleteLicenseParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DeleteLicenseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *DeleteLicenseParam) GetId() int64 {
+	return p.Id
 }

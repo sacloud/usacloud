@@ -8,29 +8,19 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// SshServerParam is input parameters for the sacloud API
-type SshServerParam struct {
-	Id       int64
-	Key      string
-	User     string
-	Port     int
-	Password string
-	Proxy    string
-	OpenPty  bool
+// ResetServerParam is input parameters for the sacloud API
+type ResetServerParam struct {
+	Id    int64
+	Async bool
 }
 
-// NewSshServerParam return new SshServerParam
-func NewSshServerParam() *SshServerParam {
-	return &SshServerParam{
-
-		Port: 22,
-
-		OpenPty: true,
-	}
+// NewResetServerParam return new ResetServerParam
+func NewResetServerParam() *ResetServerParam {
+	return &ResetServerParam{}
 }
 
 // Validate checks current values in model
-func (p *SshServerParam) Validate() []error {
+func (p *ResetServerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -40,22 +30,8 @@ func (p *SshServerParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["Server"].Commands["ssh"].Params["id"].ValidateFunc
+		validator := define.Resources["Server"].Commands["reset"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["ssh"].Params["key"].ValidateFunc
-		errs := validator("--key", p.Key)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--port", p.Port)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -64,185 +40,57 @@ func (p *SshServerParam) Validate() []error {
 	return errors
 }
 
-func (p *SshServerParam) getResourceDef() *schema.Resource {
+func (p *ResetServerParam) getResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *SshServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["ssh"]
+func (p *ResetServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["reset"]
 }
 
-func (p *SshServerParam) GetIncludeFields() []string {
+func (p *ResetServerParam) GetIncludeFields() []string {
 	return p.getCommandDef().IncludeFields
 }
 
-func (p *SshServerParam) GetExcludeFields() []string {
+func (p *ResetServerParam) GetExcludeFields() []string {
 	return p.getCommandDef().ExcludeFields
 }
 
-func (p *SshServerParam) GetTableType() output.OutputTableType {
+func (p *ResetServerParam) GetTableType() output.OutputTableType {
 	return p.getCommandDef().TableType
 }
 
-func (p *SshServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ResetServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *SshServerParam) SetId(v int64) {
+func (p *ResetServerParam) SetId(v int64) {
 	p.Id = v
 }
 
-func (p *SshServerParam) GetId() int64 {
+func (p *ResetServerParam) GetId() int64 {
 	return p.Id
 }
-func (p *SshServerParam) SetKey(v string) {
-	p.Key = v
+func (p *ResetServerParam) SetAsync(v bool) {
+	p.Async = v
 }
 
-func (p *SshServerParam) GetKey() string {
-	return p.Key
-}
-func (p *SshServerParam) SetUser(v string) {
-	p.User = v
+func (p *ResetServerParam) GetAsync() bool {
+	return p.Async
 }
 
-func (p *SshServerParam) GetUser() string {
-	return p.User
-}
-func (p *SshServerParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *SshServerParam) GetPort() int {
-	return p.Port
-}
-func (p *SshServerParam) SetPassword(v string) {
-	p.Password = v
-}
-
-func (p *SshServerParam) GetPassword() string {
-	return p.Password
-}
-func (p *SshServerParam) SetProxy(v string) {
-	p.Proxy = v
-}
-
-func (p *SshServerParam) GetProxy() string {
-	return p.Proxy
-}
-func (p *SshServerParam) SetOpenPty(v bool) {
-	p.OpenPty = v
-}
-
-func (p *SshServerParam) GetOpenPty() bool {
-	return p.OpenPty
-}
-
-// PlanChangeServerParam is input parameters for the sacloud API
-type PlanChangeServerParam struct {
-	Id     int64
-	Core   int
-	Memory int
-}
-
-// NewPlanChangeServerParam return new PlanChangeServerParam
-func NewPlanChangeServerParam() *PlanChangeServerParam {
-	return &PlanChangeServerParam{}
-}
-
-// Validate checks current values in model
-func (p *PlanChangeServerParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["plan-change"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--core", p.Core)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--memory", p.Memory)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *PlanChangeServerParam) getResourceDef() *schema.Resource {
-	return define.Resources["Server"]
-}
-
-func (p *PlanChangeServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["plan-change"]
-}
-
-func (p *PlanChangeServerParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *PlanChangeServerParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *PlanChangeServerParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *PlanChangeServerParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *PlanChangeServerParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *PlanChangeServerParam) GetId() int64 {
-	return p.Id
-}
-func (p *PlanChangeServerParam) SetCore(v int) {
-	p.Core = v
-}
-
-func (p *PlanChangeServerParam) GetCore() int {
-	return p.Core
-}
-func (p *PlanChangeServerParam) SetMemory(v int) {
-	p.Memory = v
-}
-
-func (p *PlanChangeServerParam) GetMemory() int {
-	return p.Memory
-}
-
-// WaitForBootServerParam is input parameters for the sacloud API
-type WaitForBootServerParam struct {
+// IsoInfoServerParam is input parameters for the sacloud API
+type IsoInfoServerParam struct {
 	Id int64
 }
 
-// NewWaitForBootServerParam return new WaitForBootServerParam
-func NewWaitForBootServerParam() *WaitForBootServerParam {
-	return &WaitForBootServerParam{}
+// NewIsoInfoServerParam return new IsoInfoServerParam
+func NewIsoInfoServerParam() *IsoInfoServerParam {
+	return &IsoInfoServerParam{}
 }
 
 // Validate checks current values in model
-func (p *WaitForBootServerParam) Validate() []error {
+func (p *IsoInfoServerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -252,7 +100,7 @@ func (p *WaitForBootServerParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["Server"].Commands["wait-for-boot"].Params["id"].ValidateFunc
+		validator := define.Resources["Server"].Commands["iso-info"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -262,193 +110,36 @@ func (p *WaitForBootServerParam) Validate() []error {
 	return errors
 }
 
-func (p *WaitForBootServerParam) getResourceDef() *schema.Resource {
+func (p *IsoInfoServerParam) getResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *WaitForBootServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["wait-for-boot"]
+func (p *IsoInfoServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["iso-info"]
 }
 
-func (p *WaitForBootServerParam) GetIncludeFields() []string {
+func (p *IsoInfoServerParam) GetIncludeFields() []string {
 	return p.getCommandDef().IncludeFields
 }
 
-func (p *WaitForBootServerParam) GetExcludeFields() []string {
+func (p *IsoInfoServerParam) GetExcludeFields() []string {
 	return p.getCommandDef().ExcludeFields
 }
 
-func (p *WaitForBootServerParam) GetTableType() output.OutputTableType {
+func (p *IsoInfoServerParam) GetTableType() output.OutputTableType {
 	return p.getCommandDef().TableType
 }
 
-func (p *WaitForBootServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *IsoInfoServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *WaitForBootServerParam) SetId(v int64) {
+func (p *IsoInfoServerParam) SetId(v int64) {
 	p.Id = v
 }
 
-func (p *WaitForBootServerParam) GetId() int64 {
+func (p *IsoInfoServerParam) GetId() int64 {
 	return p.Id
-}
-
-// IsoInsertServerParam is input parameters for the sacloud API
-type IsoInsertServerParam struct {
-	IsoFile     string
-	Id          int64
-	IconId      int64
-	Size        int
-	Tags        []string
-	IsoImageId  int64
-	Name        string
-	Description string
-}
-
-// NewIsoInsertServerParam return new IsoInsertServerParam
-func NewIsoInsertServerParam() *IsoInsertServerParam {
-	return &IsoInsertServerParam{
-
-		Size: 5,
-	}
-}
-
-// Validate checks current values in model
-func (p *IsoInsertServerParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["iso-insert"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["iso-insert"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["iso-insert"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["iso-insert"].Params["iso-image-id"].ValidateFunc
-		errs := validator("--iso-image-id", p.IsoImageId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["iso-insert"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["iso-insert"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *IsoInsertServerParam) getResourceDef() *schema.Resource {
-	return define.Resources["Server"]
-}
-
-func (p *IsoInsertServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["iso-insert"]
-}
-
-func (p *IsoInsertServerParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *IsoInsertServerParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *IsoInsertServerParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *IsoInsertServerParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *IsoInsertServerParam) SetIsoFile(v string) {
-	p.IsoFile = v
-}
-
-func (p *IsoInsertServerParam) GetIsoFile() string {
-	return p.IsoFile
-}
-func (p *IsoInsertServerParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *IsoInsertServerParam) GetId() int64 {
-	return p.Id
-}
-func (p *IsoInsertServerParam) SetIconId(v int64) {
-	p.IconId = v
-}
-
-func (p *IsoInsertServerParam) GetIconId() int64 {
-	return p.IconId
-}
-func (p *IsoInsertServerParam) SetSize(v int) {
-	p.Size = v
-}
-
-func (p *IsoInsertServerParam) GetSize() int {
-	return p.Size
-}
-func (p *IsoInsertServerParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *IsoInsertServerParam) GetTags() []string {
-	return p.Tags
-}
-func (p *IsoInsertServerParam) SetIsoImageId(v int64) {
-	p.IsoImageId = v
-}
-
-func (p *IsoInsertServerParam) GetIsoImageId() int64 {
-	return p.IsoImageId
-}
-func (p *IsoInsertServerParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *IsoInsertServerParam) GetName() string {
-	return p.Name
-}
-func (p *IsoInsertServerParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *IsoInsertServerParam) GetDescription() string {
-	return p.Description
 }
 
 // DiskInfoServerParam is input parameters for the sacloud API
@@ -587,12 +278,12 @@ func (p *InterfaceAddForInternetServerParam) GetWithoutDiskEdit() bool {
 
 // InterfaceAddForRouterServerParam is input parameters for the sacloud API
 type InterfaceAddForRouterServerParam struct {
-	WithoutDiskEdit bool
-	SwitchId        int64
-	Ipaddress       string
 	DefaultRoute    string
 	NwMasklen       int
 	Id              int64
+	WithoutDiskEdit bool
+	SwitchId        int64
+	Ipaddress       string
 }
 
 // NewInterfaceAddForRouterServerParam return new InterfaceAddForRouterServerParam
@@ -606,27 +297,6 @@ func NewInterfaceAddForRouterServerParam() *InterfaceAddForRouterServerParam {
 // Validate checks current values in model
 func (p *InterfaceAddForRouterServerParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["interface-add-for-router"].Params["switch-id"].ValidateFunc
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["interface-add-for-router"].Params["ipaddress"].ValidateFunc
-		errs := validator("--ipaddress", p.Ipaddress)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := define.Resources["Server"].Commands["interface-add-for-router"].Params["default-route"].ValidateFunc
 		errs := validator("--default-route", p.DefaultRoute)
@@ -651,6 +321,27 @@ func (p *InterfaceAddForRouterServerParam) Validate() []error {
 	{
 		validator := define.Resources["Server"].Commands["interface-add-for-router"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--switch-id", p.SwitchId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["interface-add-for-router"].Params["switch-id"].ValidateFunc
+		errs := validator("--switch-id", p.SwitchId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["interface-add-for-router"].Params["ipaddress"].ValidateFunc
+		errs := validator("--ipaddress", p.Ipaddress)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -683,6 +374,27 @@ func (p *InterfaceAddForRouterServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *InterfaceAddForRouterServerParam) SetDefaultRoute(v string) {
+	p.DefaultRoute = v
+}
+
+func (p *InterfaceAddForRouterServerParam) GetDefaultRoute() string {
+	return p.DefaultRoute
+}
+func (p *InterfaceAddForRouterServerParam) SetNwMasklen(v int) {
+	p.NwMasklen = v
+}
+
+func (p *InterfaceAddForRouterServerParam) GetNwMasklen() int {
+	return p.NwMasklen
+}
+func (p *InterfaceAddForRouterServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *InterfaceAddForRouterServerParam) GetId() int64 {
+	return p.Id
+}
 func (p *InterfaceAddForRouterServerParam) SetWithoutDiskEdit(v bool) {
 	p.WithoutDiskEdit = v
 }
@@ -704,26 +416,364 @@ func (p *InterfaceAddForRouterServerParam) SetIpaddress(v string) {
 func (p *InterfaceAddForRouterServerParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *InterfaceAddForRouterServerParam) SetDefaultRoute(v string) {
-	p.DefaultRoute = v
+
+// ListServerParam is input parameters for the sacloud API
+type ListServerParam struct {
+	Sort []string
+	Name []string
+	Id   []int64
+	From int
+	Max  int
 }
 
-func (p *InterfaceAddForRouterServerParam) GetDefaultRoute() string {
-	return p.DefaultRoute
-}
-func (p *InterfaceAddForRouterServerParam) SetNwMasklen(v int) {
-	p.NwMasklen = v
+// NewListServerParam return new ListServerParam
+func NewListServerParam() *ListServerParam {
+	return &ListServerParam{}
 }
 
-func (p *InterfaceAddForRouterServerParam) GetNwMasklen() int {
-	return p.NwMasklen
+// Validate checks current values in model
+func (p *ListServerParam) Validate() []error {
+	errors := []error{}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["list"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--id", p.Id, map[string]interface{}{
+
+			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
 }
-func (p *InterfaceAddForRouterServerParam) SetId(v int64) {
+
+func (p *ListServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *ListServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["list"]
+}
+
+func (p *ListServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ListServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ListServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ListServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListServerParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListServerParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListServerParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListServerParam) GetName() []string {
+	return p.Name
+}
+func (p *ListServerParam) SetId(v []int64) {
 	p.Id = v
 }
 
-func (p *InterfaceAddForRouterServerParam) GetId() int64 {
+func (p *ListServerParam) GetId() []int64 {
 	return p.Id
+}
+func (p *ListServerParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListServerParam) GetFrom() int {
+	return p.From
+}
+func (p *ListServerParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListServerParam) GetMax() int {
+	return p.Max
+}
+
+// UpdateServerParam is input parameters for the sacloud API
+type UpdateServerParam struct {
+	Id          int64
+	Name        string
+	Description string
+	Tags        []string
+	IconId      int64
+}
+
+// NewUpdateServerParam return new UpdateServerParam
+func NewUpdateServerParam() *UpdateServerParam {
+	return &UpdateServerParam{}
+}
+
+// Validate checks current values in model
+func (p *UpdateServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["update"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *UpdateServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *UpdateServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["update"]
+}
+
+func (p *UpdateServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *UpdateServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *UpdateServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *UpdateServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *UpdateServerParam) GetId() int64 {
+	return p.Id
+}
+func (p *UpdateServerParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateServerParam) GetName() string {
+	return p.Name
+}
+func (p *UpdateServerParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdateServerParam) GetDescription() string {
+	return p.Description
+}
+func (p *UpdateServerParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *UpdateServerParam) GetTags() []string {
+	return p.Tags
+}
+func (p *UpdateServerParam) SetIconId(v int64) {
+	p.IconId = v
+}
+
+func (p *UpdateServerParam) GetIconId() int64 {
+	return p.IconId
+}
+
+// SshServerParam is input parameters for the sacloud API
+type SshServerParam struct {
+	Proxy    string
+	OpenPty  bool
+	Id       int64
+	Key      string
+	User     string
+	Port     int
+	Password string
+}
+
+// NewSshServerParam return new SshServerParam
+func NewSshServerParam() *SshServerParam {
+	return &SshServerParam{
+
+		OpenPty: true,
+
+		Port: 22,
+	}
+}
+
+// Validate checks current values in model
+func (p *SshServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["ssh"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["ssh"].Params["key"].ValidateFunc
+		errs := validator("--key", p.Key)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *SshServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *SshServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["ssh"]
+}
+
+func (p *SshServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *SshServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *SshServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *SshServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *SshServerParam) SetProxy(v string) {
+	p.Proxy = v
+}
+
+func (p *SshServerParam) GetProxy() string {
+	return p.Proxy
+}
+func (p *SshServerParam) SetOpenPty(v bool) {
+	p.OpenPty = v
+}
+
+func (p *SshServerParam) GetOpenPty() bool {
+	return p.OpenPty
+}
+func (p *SshServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *SshServerParam) GetId() int64 {
+	return p.Id
+}
+func (p *SshServerParam) SetKey(v string) {
+	p.Key = v
+}
+
+func (p *SshServerParam) GetKey() string {
+	return p.Key
+}
+func (p *SshServerParam) SetUser(v string) {
+	p.User = v
+}
+
+func (p *SshServerParam) GetUser() string {
+	return p.User
+}
+func (p *SshServerParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *SshServerParam) GetPort() int {
+	return p.Port
+}
+func (p *SshServerParam) SetPassword(v string) {
+	p.Password = v
+}
+
+func (p *SshServerParam) GetPassword() string {
+	return p.Password
 }
 
 // InterfaceAddDisconnectedServerParam is input parameters for the sacloud API
@@ -791,73 +841,73 @@ func (p *InterfaceAddDisconnectedServerParam) GetId() int64 {
 
 // BuildServerParam is input parameters for the sacloud API
 type BuildServerParam struct {
-	DiskConnection          string
-	DiskSize                int
-	StartupScriptIds        []int64
-	SshKeyPrivateKeyOutput  string
-	Tags                    []string
-	DisableBootAfterCreate  bool
-	SourceDiskId            int64
-	UseNicVirtio            bool
-	PacketFilterId          int64
-	SshKeyMode              string
-	SshKeyName              string
-	SshKeyPublicKeys        []string
-	DistantFrom             []int64
-	NetworkMode             string
-	StartupScriptsEphemeral bool
-	Ipaddress               string
-	SourceArchiveId         int64
-	Hostname                string
-	SshKeyPublicKeyFiles    []string
-	SshKeyEphemeral         bool
+	Name                    string
 	Core                    int
-	DiskMode                string
-	SwitchId                int64
-	Password                string
-	SshKeyPassPhrase        string
+	NwMasklen               int
+	SshKeyPublicKeys        []string
+	SshKeyEphemeral         bool
+	DistantFrom             []int64
 	StartupScripts          []string
 	IconId                  int64
-	OsType                  string
-	DiskId                  int64
-	DefaultRoute            string
-	NwMasklen               int
-	SshKeyIds               []int64
-	Name                    string
-	Memory                  int
-	DiskPlan                string
 	DisablePasswordAuth     bool
-	SshKeyDescription       string
+	StartupScriptsEphemeral bool
+	DefaultRoute            string
+	DiskPlan                string
+	UseNicVirtio            bool
+	SshKeyPrivateKeyOutput  string
 	IsoImageId              int64
-	Description             string
+	SshKeyMode              string
+	SshKeyPublicKeyFiles    []string
 	UsKeyboard              bool
+	DisableBootAfterCreate  bool
+	SourceArchiveId         int64
+	DiskId                  int64
+	StartupScriptIds        []int64
+	Ipaddress               string
+	SshKeyIds               []int64
+	SshKeyName              string
+	Memory                  int
+	DiskConnection          string
+	OsType                  string
+	SwitchId                int64
+	SshKeyDescription       string
+	Description             string
+	Tags                    []string
+	DiskMode                string
+	Hostname                string
+	Password                string
+	SshKeyPassPhrase        string
+	DiskSize                int
+	SourceDiskId            int64
+	NetworkMode             string
+	PacketFilterId          int64
 }
 
 // NewBuildServerParam return new BuildServerParam
 func NewBuildServerParam() *BuildServerParam {
 	return &BuildServerParam{
 
-		DiskConnection: "virtio",
-
-		DiskSize: 20,
-
-		UseNicVirtio: true,
-
-		NetworkMode: "shared",
-
-		StartupScriptsEphemeral: true,
-
-		SshKeyEphemeral: true,
-
 		Core: 1,
-
-		DiskMode: "create",
 
 		NwMasklen: 24,
 
-		Memory: 1,
+		SshKeyEphemeral: true,
+
+		StartupScriptsEphemeral: true,
 
 		DiskPlan: "ssd",
+
+		UseNicVirtio: true,
+
+		Memory: 1,
+
+		DiskConnection: "virtio",
+
+		DiskMode: "create",
+
+		DiskSize: 20,
+
+		NetworkMode: "shared",
 	}
 }
 
@@ -865,46 +915,29 @@ func NewBuildServerParam() *BuildServerParam {
 func (p *BuildServerParam) Validate() []error {
 	errors := []error{}
 	{
-		validator := define.Resources["Server"].Commands["build"].Params["disk-connection"].ValidateFunc
-		errs := validator("--disk-connection", p.DiskConnection)
+		validator := validateRequired
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["Server"].Commands["build"].Params["disk-size"].ValidateFunc
-		errs := validator("--disk-size", p.DiskSize)
+		validator := define.Resources["Server"].Commands["build"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["Server"].Commands["build"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
+		validator := validateRequired
+		errs := validator("--core", p.Core)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["Server"].Commands["build"].Params["source-disk-id"].ValidateFunc
-		errs := validator("--source-disk-id", p.SourceDiskId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--source-disk-id", p.SourceDiskId, map[string]interface{}{
-
-			"--os-type":           p.OsType,
-			"--source-archive-id": p.SourceArchiveId,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["packet-filter-id"].ValidateFunc
-		errs := validator("--packet-filter-id", p.PacketFilterId)
+		validator := define.Resources["Server"].Commands["build"].Params["nw-masklen"].ValidateFunc
+		errs := validator("--nw-masklen", p.NwMasklen)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -917,22 +950,36 @@ func (p *BuildServerParam) Validate() []error {
 		}
 	}
 	{
-		validator := validateRequired
-		errs := validator("--network-mode", p.NetworkMode)
+		validator := define.Resources["Server"].Commands["build"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["Server"].Commands["build"].Params["network-mode"].ValidateFunc
-		errs := validator("--network-mode", p.NetworkMode)
+		validator := define.Resources["Server"].Commands["build"].Params["default-route"].ValidateFunc
+		errs := validator("--default-route", p.DefaultRoute)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["Server"].Commands["build"].Params["ipaddress"].ValidateFunc
-		errs := validator("--ipaddress", p.Ipaddress)
+		validator := define.Resources["Server"].Commands["build"].Params["disk-plan"].ValidateFunc
+		errs := validator("--disk-plan", p.DiskPlan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["iso-image-id"].ValidateFunc
+		errs := validator("--iso-image-id", p.IsoImageId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-public-key-files"].ValidateFunc
+		errs := validator("--ssh-key-public-key-files", p.SshKeyPublicKeyFiles)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -955,50 +1002,45 @@ func (p *BuildServerParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-public-key-files"].ValidateFunc
-		errs := validator("--ssh-key-public-key-files", p.SshKeyPublicKeyFiles)
+		validator := define.Resources["Server"].Commands["build"].Params["disk-id"].ValidateFunc
+		errs := validator("--disk-id", p.DiskId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--disk-id", p.DiskId, map[string]interface{}{
+
+			"--os-type": p.OsType,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["ipaddress"].ValidateFunc
+		errs := validator("--ipaddress", p.Ipaddress)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-ids"].ValidateFunc
+		errs := validator("--ssh-key-ids", p.SshKeyIds)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := validateRequired
-		errs := validator("--core", p.Core)
+		errs := validator("--memory", p.Memory)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := validateRequired
-		errs := validator("--disk-mode", p.DiskMode)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["disk-mode"].ValidateFunc
-		errs := validator("--disk-mode", p.DiskMode)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["switch-id"].ValidateFunc
-		errs := validator("--switch-id", p.SwitchId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-pass-phrase"].ValidateFunc
-		errs := validator("--ssh-key-pass-phrase", p.SshKeyPassPhrase)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
+		validator := define.Resources["Server"].Commands["build"].Params["disk-connection"].ValidateFunc
+		errs := validator("--disk-connection", p.DiskConnection)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1021,73 +1063,8 @@ func (p *BuildServerParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["Server"].Commands["build"].Params["disk-id"].ValidateFunc
-		errs := validator("--disk-id", p.DiskId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--disk-id", p.DiskId, map[string]interface{}{
-
-			"--os-type": p.OsType,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["default-route"].ValidateFunc
-		errs := validator("--default-route", p.DefaultRoute)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["nw-masklen"].ValidateFunc
-		errs := validator("--nw-masklen", p.NwMasklen)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-ids"].ValidateFunc
-		errs := validator("--ssh-key-ids", p.SshKeyIds)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--memory", p.Memory)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["disk-plan"].ValidateFunc
-		errs := validator("--disk-plan", p.DiskPlan)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["build"].Params["iso-image-id"].ValidateFunc
-		errs := validator("--iso-image-id", p.IsoImageId)
+		validator := define.Resources["Server"].Commands["build"].Params["switch-id"].ValidateFunc
+		errs := validator("--switch-id", p.SwitchId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1095,6 +1072,79 @@ func (p *BuildServerParam) Validate() []error {
 	{
 		validator := define.Resources["Server"].Commands["build"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--disk-mode", p.DiskMode)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["disk-mode"].ValidateFunc
+		errs := validator("--disk-mode", p.DiskMode)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-pass-phrase"].ValidateFunc
+		errs := validator("--ssh-key-pass-phrase", p.SshKeyPassPhrase)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["disk-size"].ValidateFunc
+		errs := validator("--disk-size", p.DiskSize)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["source-disk-id"].ValidateFunc
+		errs := validator("--source-disk-id", p.SourceDiskId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--source-disk-id", p.SourceDiskId, map[string]interface{}{
+
+			"--os-type":           p.OsType,
+			"--source-archive-id": p.SourceArchiveId,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--network-mode", p.NetworkMode)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["network-mode"].ValidateFunc
+		errs := validator("--network-mode", p.NetworkMode)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["packet-filter-id"].ValidateFunc
+		errs := validator("--packet-filter-id", p.PacketFilterId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1127,145 +1177,12 @@ func (p *BuildServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *BuildServerParam) SetDiskConnection(v string) {
-	p.DiskConnection = v
+func (p *BuildServerParam) SetName(v string) {
+	p.Name = v
 }
 
-func (p *BuildServerParam) GetDiskConnection() string {
-	return p.DiskConnection
-}
-func (p *BuildServerParam) SetDiskSize(v int) {
-	p.DiskSize = v
-}
-
-func (p *BuildServerParam) GetDiskSize() int {
-	return p.DiskSize
-}
-func (p *BuildServerParam) SetStartupScriptIds(v []int64) {
-	p.StartupScriptIds = v
-}
-
-func (p *BuildServerParam) GetStartupScriptIds() []int64 {
-	return p.StartupScriptIds
-}
-func (p *BuildServerParam) SetSshKeyPrivateKeyOutput(v string) {
-	p.SshKeyPrivateKeyOutput = v
-}
-
-func (p *BuildServerParam) GetSshKeyPrivateKeyOutput() string {
-	return p.SshKeyPrivateKeyOutput
-}
-func (p *BuildServerParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *BuildServerParam) GetTags() []string {
-	return p.Tags
-}
-func (p *BuildServerParam) SetDisableBootAfterCreate(v bool) {
-	p.DisableBootAfterCreate = v
-}
-
-func (p *BuildServerParam) GetDisableBootAfterCreate() bool {
-	return p.DisableBootAfterCreate
-}
-func (p *BuildServerParam) SetSourceDiskId(v int64) {
-	p.SourceDiskId = v
-}
-
-func (p *BuildServerParam) GetSourceDiskId() int64 {
-	return p.SourceDiskId
-}
-func (p *BuildServerParam) SetUseNicVirtio(v bool) {
-	p.UseNicVirtio = v
-}
-
-func (p *BuildServerParam) GetUseNicVirtio() bool {
-	return p.UseNicVirtio
-}
-func (p *BuildServerParam) SetPacketFilterId(v int64) {
-	p.PacketFilterId = v
-}
-
-func (p *BuildServerParam) GetPacketFilterId() int64 {
-	return p.PacketFilterId
-}
-func (p *BuildServerParam) SetSshKeyMode(v string) {
-	p.SshKeyMode = v
-}
-
-func (p *BuildServerParam) GetSshKeyMode() string {
-	return p.SshKeyMode
-}
-func (p *BuildServerParam) SetSshKeyName(v string) {
-	p.SshKeyName = v
-}
-
-func (p *BuildServerParam) GetSshKeyName() string {
-	return p.SshKeyName
-}
-func (p *BuildServerParam) SetSshKeyPublicKeys(v []string) {
-	p.SshKeyPublicKeys = v
-}
-
-func (p *BuildServerParam) GetSshKeyPublicKeys() []string {
-	return p.SshKeyPublicKeys
-}
-func (p *BuildServerParam) SetDistantFrom(v []int64) {
-	p.DistantFrom = v
-}
-
-func (p *BuildServerParam) GetDistantFrom() []int64 {
-	return p.DistantFrom
-}
-func (p *BuildServerParam) SetNetworkMode(v string) {
-	p.NetworkMode = v
-}
-
-func (p *BuildServerParam) GetNetworkMode() string {
-	return p.NetworkMode
-}
-func (p *BuildServerParam) SetStartupScriptsEphemeral(v bool) {
-	p.StartupScriptsEphemeral = v
-}
-
-func (p *BuildServerParam) GetStartupScriptsEphemeral() bool {
-	return p.StartupScriptsEphemeral
-}
-func (p *BuildServerParam) SetIpaddress(v string) {
-	p.Ipaddress = v
-}
-
-func (p *BuildServerParam) GetIpaddress() string {
-	return p.Ipaddress
-}
-func (p *BuildServerParam) SetSourceArchiveId(v int64) {
-	p.SourceArchiveId = v
-}
-
-func (p *BuildServerParam) GetSourceArchiveId() int64 {
-	return p.SourceArchiveId
-}
-func (p *BuildServerParam) SetHostname(v string) {
-	p.Hostname = v
-}
-
-func (p *BuildServerParam) GetHostname() string {
-	return p.Hostname
-}
-func (p *BuildServerParam) SetSshKeyPublicKeyFiles(v []string) {
-	p.SshKeyPublicKeyFiles = v
-}
-
-func (p *BuildServerParam) GetSshKeyPublicKeyFiles() []string {
-	return p.SshKeyPublicKeyFiles
-}
-func (p *BuildServerParam) SetSshKeyEphemeral(v bool) {
-	p.SshKeyEphemeral = v
-}
-
-func (p *BuildServerParam) GetSshKeyEphemeral() bool {
-	return p.SshKeyEphemeral
+func (p *BuildServerParam) GetName() string {
+	return p.Name
 }
 func (p *BuildServerParam) SetCore(v int) {
 	p.Core = v
@@ -1274,33 +1191,33 @@ func (p *BuildServerParam) SetCore(v int) {
 func (p *BuildServerParam) GetCore() int {
 	return p.Core
 }
-func (p *BuildServerParam) SetDiskMode(v string) {
-	p.DiskMode = v
+func (p *BuildServerParam) SetNwMasklen(v int) {
+	p.NwMasklen = v
 }
 
-func (p *BuildServerParam) GetDiskMode() string {
-	return p.DiskMode
+func (p *BuildServerParam) GetNwMasklen() int {
+	return p.NwMasklen
 }
-func (p *BuildServerParam) SetSwitchId(v int64) {
-	p.SwitchId = v
-}
-
-func (p *BuildServerParam) GetSwitchId() int64 {
-	return p.SwitchId
-}
-func (p *BuildServerParam) SetPassword(v string) {
-	p.Password = v
+func (p *BuildServerParam) SetSshKeyPublicKeys(v []string) {
+	p.SshKeyPublicKeys = v
 }
 
-func (p *BuildServerParam) GetPassword() string {
-	return p.Password
+func (p *BuildServerParam) GetSshKeyPublicKeys() []string {
+	return p.SshKeyPublicKeys
 }
-func (p *BuildServerParam) SetSshKeyPassPhrase(v string) {
-	p.SshKeyPassPhrase = v
+func (p *BuildServerParam) SetSshKeyEphemeral(v bool) {
+	p.SshKeyEphemeral = v
 }
 
-func (p *BuildServerParam) GetSshKeyPassPhrase() string {
-	return p.SshKeyPassPhrase
+func (p *BuildServerParam) GetSshKeyEphemeral() bool {
+	return p.SshKeyEphemeral
+}
+func (p *BuildServerParam) SetDistantFrom(v []int64) {
+	p.DistantFrom = v
+}
+
+func (p *BuildServerParam) GetDistantFrom() []int64 {
+	return p.DistantFrom
 }
 func (p *BuildServerParam) SetStartupScripts(v []string) {
 	p.StartupScripts = v
@@ -1316,19 +1233,19 @@ func (p *BuildServerParam) SetIconId(v int64) {
 func (p *BuildServerParam) GetIconId() int64 {
 	return p.IconId
 }
-func (p *BuildServerParam) SetOsType(v string) {
-	p.OsType = v
+func (p *BuildServerParam) SetDisablePasswordAuth(v bool) {
+	p.DisablePasswordAuth = v
 }
 
-func (p *BuildServerParam) GetOsType() string {
-	return p.OsType
+func (p *BuildServerParam) GetDisablePasswordAuth() bool {
+	return p.DisablePasswordAuth
 }
-func (p *BuildServerParam) SetDiskId(v int64) {
-	p.DiskId = v
+func (p *BuildServerParam) SetStartupScriptsEphemeral(v bool) {
+	p.StartupScriptsEphemeral = v
 }
 
-func (p *BuildServerParam) GetDiskId() int64 {
-	return p.DiskId
+func (p *BuildServerParam) GetStartupScriptsEphemeral() bool {
+	return p.StartupScriptsEphemeral
 }
 func (p *BuildServerParam) SetDefaultRoute(v string) {
 	p.DefaultRoute = v
@@ -1337,34 +1254,6 @@ func (p *BuildServerParam) SetDefaultRoute(v string) {
 func (p *BuildServerParam) GetDefaultRoute() string {
 	return p.DefaultRoute
 }
-func (p *BuildServerParam) SetNwMasklen(v int) {
-	p.NwMasklen = v
-}
-
-func (p *BuildServerParam) GetNwMasklen() int {
-	return p.NwMasklen
-}
-func (p *BuildServerParam) SetSshKeyIds(v []int64) {
-	p.SshKeyIds = v
-}
-
-func (p *BuildServerParam) GetSshKeyIds() []int64 {
-	return p.SshKeyIds
-}
-func (p *BuildServerParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *BuildServerParam) GetName() string {
-	return p.Name
-}
-func (p *BuildServerParam) SetMemory(v int) {
-	p.Memory = v
-}
-
-func (p *BuildServerParam) GetMemory() int {
-	return p.Memory
-}
 func (p *BuildServerParam) SetDiskPlan(v string) {
 	p.DiskPlan = v
 }
@@ -1372,19 +1261,19 @@ func (p *BuildServerParam) SetDiskPlan(v string) {
 func (p *BuildServerParam) GetDiskPlan() string {
 	return p.DiskPlan
 }
-func (p *BuildServerParam) SetDisablePasswordAuth(v bool) {
-	p.DisablePasswordAuth = v
+func (p *BuildServerParam) SetUseNicVirtio(v bool) {
+	p.UseNicVirtio = v
 }
 
-func (p *BuildServerParam) GetDisablePasswordAuth() bool {
-	return p.DisablePasswordAuth
+func (p *BuildServerParam) GetUseNicVirtio() bool {
+	return p.UseNicVirtio
 }
-func (p *BuildServerParam) SetSshKeyDescription(v string) {
-	p.SshKeyDescription = v
+func (p *BuildServerParam) SetSshKeyPrivateKeyOutput(v string) {
+	p.SshKeyPrivateKeyOutput = v
 }
 
-func (p *BuildServerParam) GetSshKeyDescription() string {
-	return p.SshKeyDescription
+func (p *BuildServerParam) GetSshKeyPrivateKeyOutput() string {
+	return p.SshKeyPrivateKeyOutput
 }
 func (p *BuildServerParam) SetIsoImageId(v int64) {
 	p.IsoImageId = v
@@ -1393,12 +1282,19 @@ func (p *BuildServerParam) SetIsoImageId(v int64) {
 func (p *BuildServerParam) GetIsoImageId() int64 {
 	return p.IsoImageId
 }
-func (p *BuildServerParam) SetDescription(v string) {
-	p.Description = v
+func (p *BuildServerParam) SetSshKeyMode(v string) {
+	p.SshKeyMode = v
 }
 
-func (p *BuildServerParam) GetDescription() string {
-	return p.Description
+func (p *BuildServerParam) GetSshKeyMode() string {
+	return p.SshKeyMode
+}
+func (p *BuildServerParam) SetSshKeyPublicKeyFiles(v []string) {
+	p.SshKeyPublicKeyFiles = v
+}
+
+func (p *BuildServerParam) GetSshKeyPublicKeyFiles() []string {
+	return p.SshKeyPublicKeyFiles
 }
 func (p *BuildServerParam) SetUsKeyboard(v bool) {
 	p.UsKeyboard = v
@@ -1407,143 +1303,173 @@ func (p *BuildServerParam) SetUsKeyboard(v bool) {
 func (p *BuildServerParam) GetUsKeyboard() bool {
 	return p.UsKeyboard
 }
-
-// UpdateServerParam is input parameters for the sacloud API
-type UpdateServerParam struct {
-	Tags        []string
-	IconId      int64
-	Id          int64
-	Name        string
-	Description string
+func (p *BuildServerParam) SetDisableBootAfterCreate(v bool) {
+	p.DisableBootAfterCreate = v
 }
 
-// NewUpdateServerParam return new UpdateServerParam
-func NewUpdateServerParam() *UpdateServerParam {
-	return &UpdateServerParam{}
+func (p *BuildServerParam) GetDisableBootAfterCreate() bool {
+	return p.DisableBootAfterCreate
+}
+func (p *BuildServerParam) SetSourceArchiveId(v int64) {
+	p.SourceArchiveId = v
 }
 
-// Validate checks current values in model
-func (p *UpdateServerParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := define.Resources["Server"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["update"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
+func (p *BuildServerParam) GetSourceArchiveId() int64 {
+	return p.SourceArchiveId
+}
+func (p *BuildServerParam) SetDiskId(v int64) {
+	p.DiskId = v
 }
 
-func (p *UpdateServerParam) getResourceDef() *schema.Resource {
-	return define.Resources["Server"]
+func (p *BuildServerParam) GetDiskId() int64 {
+	return p.DiskId
+}
+func (p *BuildServerParam) SetStartupScriptIds(v []int64) {
+	p.StartupScriptIds = v
 }
 
-func (p *UpdateServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["update"]
+func (p *BuildServerParam) GetStartupScriptIds() []int64 {
+	return p.StartupScriptIds
+}
+func (p *BuildServerParam) SetIpaddress(v string) {
+	p.Ipaddress = v
 }
 
-func (p *UpdateServerParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
+func (p *BuildServerParam) GetIpaddress() string {
+	return p.Ipaddress
+}
+func (p *BuildServerParam) SetSshKeyIds(v []int64) {
+	p.SshKeyIds = v
 }
 
-func (p *UpdateServerParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
+func (p *BuildServerParam) GetSshKeyIds() []int64 {
+	return p.SshKeyIds
+}
+func (p *BuildServerParam) SetSshKeyName(v string) {
+	p.SshKeyName = v
 }
 
-func (p *UpdateServerParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
+func (p *BuildServerParam) GetSshKeyName() string {
+	return p.SshKeyName
+}
+func (p *BuildServerParam) SetMemory(v int) {
+	p.Memory = v
 }
 
-func (p *UpdateServerParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
+func (p *BuildServerParam) GetMemory() int {
+	return p.Memory
+}
+func (p *BuildServerParam) SetDiskConnection(v string) {
+	p.DiskConnection = v
 }
 
-func (p *UpdateServerParam) SetTags(v []string) {
-	p.Tags = v
+func (p *BuildServerParam) GetDiskConnection() string {
+	return p.DiskConnection
+}
+func (p *BuildServerParam) SetOsType(v string) {
+	p.OsType = v
 }
 
-func (p *UpdateServerParam) GetTags() []string {
-	return p.Tags
+func (p *BuildServerParam) GetOsType() string {
+	return p.OsType
 }
-func (p *UpdateServerParam) SetIconId(v int64) {
-	p.IconId = v
-}
-
-func (p *UpdateServerParam) GetIconId() int64 {
-	return p.IconId
-}
-func (p *UpdateServerParam) SetId(v int64) {
-	p.Id = v
+func (p *BuildServerParam) SetSwitchId(v int64) {
+	p.SwitchId = v
 }
 
-func (p *UpdateServerParam) GetId() int64 {
-	return p.Id
+func (p *BuildServerParam) GetSwitchId() int64 {
+	return p.SwitchId
 }
-func (p *UpdateServerParam) SetName(v string) {
-	p.Name = v
+func (p *BuildServerParam) SetSshKeyDescription(v string) {
+	p.SshKeyDescription = v
 }
 
-func (p *UpdateServerParam) GetName() string {
-	return p.Name
+func (p *BuildServerParam) GetSshKeyDescription() string {
+	return p.SshKeyDescription
 }
-func (p *UpdateServerParam) SetDescription(v string) {
+func (p *BuildServerParam) SetDescription(v string) {
 	p.Description = v
 }
 
-func (p *UpdateServerParam) GetDescription() string {
+func (p *BuildServerParam) GetDescription() string {
 	return p.Description
 }
-
-// BootServerParam is input parameters for the sacloud API
-type BootServerParam struct {
-	Id    int64
-	Async bool
+func (p *BuildServerParam) SetTags(v []string) {
+	p.Tags = v
 }
 
-// NewBootServerParam return new BootServerParam
-func NewBootServerParam() *BootServerParam {
-	return &BootServerParam{}
+func (p *BuildServerParam) GetTags() []string {
+	return p.Tags
+}
+func (p *BuildServerParam) SetDiskMode(v string) {
+	p.DiskMode = v
+}
+
+func (p *BuildServerParam) GetDiskMode() string {
+	return p.DiskMode
+}
+func (p *BuildServerParam) SetHostname(v string) {
+	p.Hostname = v
+}
+
+func (p *BuildServerParam) GetHostname() string {
+	return p.Hostname
+}
+func (p *BuildServerParam) SetPassword(v string) {
+	p.Password = v
+}
+
+func (p *BuildServerParam) GetPassword() string {
+	return p.Password
+}
+func (p *BuildServerParam) SetSshKeyPassPhrase(v string) {
+	p.SshKeyPassPhrase = v
+}
+
+func (p *BuildServerParam) GetSshKeyPassPhrase() string {
+	return p.SshKeyPassPhrase
+}
+func (p *BuildServerParam) SetDiskSize(v int) {
+	p.DiskSize = v
+}
+
+func (p *BuildServerParam) GetDiskSize() int {
+	return p.DiskSize
+}
+func (p *BuildServerParam) SetSourceDiskId(v int64) {
+	p.SourceDiskId = v
+}
+
+func (p *BuildServerParam) GetSourceDiskId() int64 {
+	return p.SourceDiskId
+}
+func (p *BuildServerParam) SetNetworkMode(v string) {
+	p.NetworkMode = v
+}
+
+func (p *BuildServerParam) GetNetworkMode() string {
+	return p.NetworkMode
+}
+func (p *BuildServerParam) SetPacketFilterId(v int64) {
+	p.PacketFilterId = v
+}
+
+func (p *BuildServerParam) GetPacketFilterId() int64 {
+	return p.PacketFilterId
+}
+
+// ReadServerParam is input parameters for the sacloud API
+type ReadServerParam struct {
+	Id int64
+}
+
+// NewReadServerParam return new ReadServerParam
+func NewReadServerParam() *ReadServerParam {
+	return &ReadServerParam{}
 }
 
 // Validate checks current values in model
-func (p *BootServerParam) Validate() []error {
+func (p *ReadServerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -1553,7 +1479,7 @@ func (p *BootServerParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["Server"].Commands["boot"].Params["id"].ValidateFunc
+		validator := define.Resources["Server"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1563,122 +1489,36 @@ func (p *BootServerParam) Validate() []error {
 	return errors
 }
 
-func (p *BootServerParam) getResourceDef() *schema.Resource {
+func (p *ReadServerParam) getResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *BootServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["boot"]
+func (p *ReadServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["read"]
 }
 
-func (p *BootServerParam) GetIncludeFields() []string {
+func (p *ReadServerParam) GetIncludeFields() []string {
 	return p.getCommandDef().IncludeFields
 }
 
-func (p *BootServerParam) GetExcludeFields() []string {
+func (p *ReadServerParam) GetExcludeFields() []string {
 	return p.getCommandDef().ExcludeFields
 }
 
-func (p *BootServerParam) GetTableType() output.OutputTableType {
+func (p *ReadServerParam) GetTableType() output.OutputTableType {
 	return p.getCommandDef().TableType
 }
 
-func (p *BootServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *ReadServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *BootServerParam) SetId(v int64) {
+func (p *ReadServerParam) SetId(v int64) {
 	p.Id = v
 }
 
-func (p *BootServerParam) GetId() int64 {
+func (p *ReadServerParam) GetId() int64 {
 	return p.Id
-}
-func (p *BootServerParam) SetAsync(v bool) {
-	p.Async = v
-}
-
-func (p *BootServerParam) GetAsync() bool {
-	return p.Async
-}
-
-// ShutdownServerParam is input parameters for the sacloud API
-type ShutdownServerParam struct {
-	Async bool
-	Id    int64
-	Force bool
-}
-
-// NewShutdownServerParam return new ShutdownServerParam
-func NewShutdownServerParam() *ShutdownServerParam {
-	return &ShutdownServerParam{}
-}
-
-// Validate checks current values in model
-func (p *ShutdownServerParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["shutdown"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ShutdownServerParam) getResourceDef() *schema.Resource {
-	return define.Resources["Server"]
-}
-
-func (p *ShutdownServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["shutdown"]
-}
-
-func (p *ShutdownServerParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ShutdownServerParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ShutdownServerParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ShutdownServerParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ShutdownServerParam) SetAsync(v bool) {
-	p.Async = v
-}
-
-func (p *ShutdownServerParam) GetAsync() bool {
-	return p.Async
-}
-func (p *ShutdownServerParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ShutdownServerParam) GetId() int64 {
-	return p.Id
-}
-func (p *ShutdownServerParam) SetForce(v bool) {
-	p.Force = v
-}
-
-func (p *ShutdownServerParam) GetForce() bool {
-	return p.Force
 }
 
 // WaitForDownServerParam is input parameters for the sacloud API
@@ -1742,436 +1582,6 @@ func (p *WaitForDownServerParam) SetId(v int64) {
 
 func (p *WaitForDownServerParam) GetId() int64 {
 	return p.Id
-}
-
-// IsoEjectServerParam is input parameters for the sacloud API
-type IsoEjectServerParam struct {
-	Id int64
-}
-
-// NewIsoEjectServerParam return new IsoEjectServerParam
-func NewIsoEjectServerParam() *IsoEjectServerParam {
-	return &IsoEjectServerParam{}
-}
-
-// Validate checks current values in model
-func (p *IsoEjectServerParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["iso-eject"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *IsoEjectServerParam) getResourceDef() *schema.Resource {
-	return define.Resources["Server"]
-}
-
-func (p *IsoEjectServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["iso-eject"]
-}
-
-func (p *IsoEjectServerParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *IsoEjectServerParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *IsoEjectServerParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *IsoEjectServerParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *IsoEjectServerParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *IsoEjectServerParam) GetId() int64 {
-	return p.Id
-}
-
-// DiskDisconnectServerParam is input parameters for the sacloud API
-type DiskDisconnectServerParam struct {
-	Id     int64
-	DiskId int64
-}
-
-// NewDiskDisconnectServerParam return new DiskDisconnectServerParam
-func NewDiskDisconnectServerParam() *DiskDisconnectServerParam {
-	return &DiskDisconnectServerParam{}
-}
-
-// Validate checks current values in model
-func (p *DiskDisconnectServerParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["disk-disconnect"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--disk-id", p.DiskId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["disk-disconnect"].Params["disk-id"].ValidateFunc
-		errs := validator("--disk-id", p.DiskId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *DiskDisconnectServerParam) getResourceDef() *schema.Resource {
-	return define.Resources["Server"]
-}
-
-func (p *DiskDisconnectServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["disk-disconnect"]
-}
-
-func (p *DiskDisconnectServerParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *DiskDisconnectServerParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *DiskDisconnectServerParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *DiskDisconnectServerParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DiskDisconnectServerParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *DiskDisconnectServerParam) GetId() int64 {
-	return p.Id
-}
-func (p *DiskDisconnectServerParam) SetDiskId(v int64) {
-	p.DiskId = v
-}
-
-func (p *DiskDisconnectServerParam) GetDiskId() int64 {
-	return p.DiskId
-}
-
-// DeleteServerParam is input parameters for the sacloud API
-type DeleteServerParam struct {
-	Id int64
-}
-
-// NewDeleteServerParam return new DeleteServerParam
-func NewDeleteServerParam() *DeleteServerParam {
-	return &DeleteServerParam{}
-}
-
-// Validate checks current values in model
-func (p *DeleteServerParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["delete"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *DeleteServerParam) getResourceDef() *schema.Resource {
-	return define.Resources["Server"]
-}
-
-func (p *DeleteServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["delete"]
-}
-
-func (p *DeleteServerParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *DeleteServerParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *DeleteServerParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *DeleteServerParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DeleteServerParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *DeleteServerParam) GetId() int64 {
-	return p.Id
-}
-
-// ResetServerParam is input parameters for the sacloud API
-type ResetServerParam struct {
-	Id    int64
-	Async bool
-}
-
-// NewResetServerParam return new ResetServerParam
-func NewResetServerParam() *ResetServerParam {
-	return &ResetServerParam{}
-}
-
-// Validate checks current values in model
-func (p *ResetServerParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["reset"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ResetServerParam) getResourceDef() *schema.Resource {
-	return define.Resources["Server"]
-}
-
-func (p *ResetServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["reset"]
-}
-
-func (p *ResetServerParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ResetServerParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ResetServerParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ResetServerParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ResetServerParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ResetServerParam) GetId() int64 {
-	return p.Id
-}
-func (p *ResetServerParam) SetAsync(v bool) {
-	p.Async = v
-}
-
-func (p *ResetServerParam) GetAsync() bool {
-	return p.Async
-}
-
-// IsoInfoServerParam is input parameters for the sacloud API
-type IsoInfoServerParam struct {
-	Id int64
-}
-
-// NewIsoInfoServerParam return new IsoInfoServerParam
-func NewIsoInfoServerParam() *IsoInfoServerParam {
-	return &IsoInfoServerParam{}
-}
-
-// Validate checks current values in model
-func (p *IsoInfoServerParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["iso-info"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *IsoInfoServerParam) getResourceDef() *schema.Resource {
-	return define.Resources["Server"]
-}
-
-func (p *IsoInfoServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["iso-info"]
-}
-
-func (p *IsoInfoServerParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *IsoInfoServerParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *IsoInfoServerParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *IsoInfoServerParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *IsoInfoServerParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *IsoInfoServerParam) GetId() int64 {
-	return p.Id
-}
-
-// DiskConnectServerParam is input parameters for the sacloud API
-type DiskConnectServerParam struct {
-	Id     int64
-	DiskId int64
-}
-
-// NewDiskConnectServerParam return new DiskConnectServerParam
-func NewDiskConnectServerParam() *DiskConnectServerParam {
-	return &DiskConnectServerParam{}
-}
-
-// Validate checks current values in model
-func (p *DiskConnectServerParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["disk-connect"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--disk-id", p.DiskId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["disk-connect"].Params["disk-id"].ValidateFunc
-		errs := validator("--disk-id", p.DiskId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *DiskConnectServerParam) getResourceDef() *schema.Resource {
-	return define.Resources["Server"]
-}
-
-func (p *DiskConnectServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["disk-connect"]
-}
-
-func (p *DiskConnectServerParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *DiskConnectServerParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *DiskConnectServerParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *DiskConnectServerParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DiskConnectServerParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *DiskConnectServerParam) GetId() int64 {
-	return p.Id
-}
-func (p *DiskConnectServerParam) SetDiskId(v int64) {
-	p.DiskId = v
-}
-
-func (p *DiskConnectServerParam) GetDiskId() int64 {
-	return p.DiskId
 }
 
 // InterfaceInfoServerParam is input parameters for the sacloud API
@@ -2378,124 +1788,20 @@ func (p *InterfaceAddForSwitchServerParam) GetWithoutDiskEdit() bool {
 	return p.WithoutDiskEdit
 }
 
-// ListServerParam is input parameters for the sacloud API
-type ListServerParam struct {
-	Name []string
-	Id   []int64
-	From int
-	Max  int
-	Sort []string
+// PlanChangeServerParam is input parameters for the sacloud API
+type PlanChangeServerParam struct {
+	Id     int64
+	Core   int
+	Memory int
 }
 
-// NewListServerParam return new ListServerParam
-func NewListServerParam() *ListServerParam {
-	return &ListServerParam{}
+// NewPlanChangeServerParam return new PlanChangeServerParam
+func NewPlanChangeServerParam() *PlanChangeServerParam {
+	return &PlanChangeServerParam{}
 }
 
 // Validate checks current values in model
-func (p *ListServerParam) Validate() []error {
-	errors := []error{}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Server"].Commands["list"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--id", p.Id, map[string]interface{}{
-
-			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ListServerParam) getResourceDef() *schema.Resource {
-	return define.Resources["Server"]
-}
-
-func (p *ListServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["list"]
-}
-
-func (p *ListServerParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ListServerParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ListServerParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ListServerParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ListServerParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListServerParam) GetName() []string {
-	return p.Name
-}
-func (p *ListServerParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListServerParam) GetId() []int64 {
-	return p.Id
-}
-func (p *ListServerParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListServerParam) GetFrom() int {
-	return p.From
-}
-func (p *ListServerParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListServerParam) GetMax() int {
-	return p.Max
-}
-func (p *ListServerParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListServerParam) GetSort() []string {
-	return p.Sort
-}
-
-// ReadServerParam is input parameters for the sacloud API
-type ReadServerParam struct {
-	Id int64
-}
-
-// NewReadServerParam return new ReadServerParam
-func NewReadServerParam() *ReadServerParam {
-	return &ReadServerParam{}
-}
-
-// Validate checks current values in model
-func (p *ReadServerParam) Validate() []error {
+func (p *PlanChangeServerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -2505,7 +1811,98 @@ func (p *ReadServerParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["Server"].Commands["read"].Params["id"].ValidateFunc
+		validator := define.Resources["Server"].Commands["plan-change"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--core", p.Core)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--memory", p.Memory)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *PlanChangeServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *PlanChangeServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["plan-change"]
+}
+
+func (p *PlanChangeServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *PlanChangeServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *PlanChangeServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *PlanChangeServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *PlanChangeServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *PlanChangeServerParam) GetId() int64 {
+	return p.Id
+}
+func (p *PlanChangeServerParam) SetCore(v int) {
+	p.Core = v
+}
+
+func (p *PlanChangeServerParam) GetCore() int {
+	return p.Core
+}
+func (p *PlanChangeServerParam) SetMemory(v int) {
+	p.Memory = v
+}
+
+func (p *PlanChangeServerParam) GetMemory() int {
+	return p.Memory
+}
+
+// WaitForBootServerParam is input parameters for the sacloud API
+type WaitForBootServerParam struct {
+	Id int64
+}
+
+// NewWaitForBootServerParam return new WaitForBootServerParam
+func NewWaitForBootServerParam() *WaitForBootServerParam {
+	return &WaitForBootServerParam{}
+}
+
+// Validate checks current values in model
+func (p *WaitForBootServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["wait-for-boot"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2515,34 +1912,637 @@ func (p *ReadServerParam) Validate() []error {
 	return errors
 }
 
-func (p *ReadServerParam) getResourceDef() *schema.Resource {
+func (p *WaitForBootServerParam) getResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *ReadServerParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["read"]
+func (p *WaitForBootServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["wait-for-boot"]
 }
 
-func (p *ReadServerParam) GetIncludeFields() []string {
+func (p *WaitForBootServerParam) GetIncludeFields() []string {
 	return p.getCommandDef().IncludeFields
 }
 
-func (p *ReadServerParam) GetExcludeFields() []string {
+func (p *WaitForBootServerParam) GetExcludeFields() []string {
 	return p.getCommandDef().ExcludeFields
 }
 
-func (p *ReadServerParam) GetTableType() output.OutputTableType {
+func (p *WaitForBootServerParam) GetTableType() output.OutputTableType {
 	return p.getCommandDef().TableType
 }
 
-func (p *ReadServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *WaitForBootServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ReadServerParam) SetId(v int64) {
+func (p *WaitForBootServerParam) SetId(v int64) {
 	p.Id = v
 }
 
-func (p *ReadServerParam) GetId() int64 {
+func (p *WaitForBootServerParam) GetId() int64 {
 	return p.Id
+}
+
+// IsoInsertServerParam is input parameters for the sacloud API
+type IsoInsertServerParam struct {
+	Description string
+	Tags        []string
+	IconId      int64
+	Name        string
+	IsoImageId  int64
+	Size        int
+	IsoFile     string
+	Id          int64
+}
+
+// NewIsoInsertServerParam return new IsoInsertServerParam
+func NewIsoInsertServerParam() *IsoInsertServerParam {
+	return &IsoInsertServerParam{
+
+		Size: 5,
+	}
+}
+
+// Validate checks current values in model
+func (p *IsoInsertServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Server"].Commands["iso-insert"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["iso-insert"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["iso-insert"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["iso-insert"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["iso-insert"].Params["iso-image-id"].ValidateFunc
+		errs := validator("--iso-image-id", p.IsoImageId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["iso-insert"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *IsoInsertServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *IsoInsertServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["iso-insert"]
+}
+
+func (p *IsoInsertServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *IsoInsertServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *IsoInsertServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *IsoInsertServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *IsoInsertServerParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *IsoInsertServerParam) GetDescription() string {
+	return p.Description
+}
+func (p *IsoInsertServerParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *IsoInsertServerParam) GetTags() []string {
+	return p.Tags
+}
+func (p *IsoInsertServerParam) SetIconId(v int64) {
+	p.IconId = v
+}
+
+func (p *IsoInsertServerParam) GetIconId() int64 {
+	return p.IconId
+}
+func (p *IsoInsertServerParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *IsoInsertServerParam) GetName() string {
+	return p.Name
+}
+func (p *IsoInsertServerParam) SetIsoImageId(v int64) {
+	p.IsoImageId = v
+}
+
+func (p *IsoInsertServerParam) GetIsoImageId() int64 {
+	return p.IsoImageId
+}
+func (p *IsoInsertServerParam) SetSize(v int) {
+	p.Size = v
+}
+
+func (p *IsoInsertServerParam) GetSize() int {
+	return p.Size
+}
+func (p *IsoInsertServerParam) SetIsoFile(v string) {
+	p.IsoFile = v
+}
+
+func (p *IsoInsertServerParam) GetIsoFile() string {
+	return p.IsoFile
+}
+func (p *IsoInsertServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *IsoInsertServerParam) GetId() int64 {
+	return p.Id
+}
+
+// IsoEjectServerParam is input parameters for the sacloud API
+type IsoEjectServerParam struct {
+	Id int64
+}
+
+// NewIsoEjectServerParam return new IsoEjectServerParam
+func NewIsoEjectServerParam() *IsoEjectServerParam {
+	return &IsoEjectServerParam{}
+}
+
+// Validate checks current values in model
+func (p *IsoEjectServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["iso-eject"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *IsoEjectServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *IsoEjectServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["iso-eject"]
+}
+
+func (p *IsoEjectServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *IsoEjectServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *IsoEjectServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *IsoEjectServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *IsoEjectServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *IsoEjectServerParam) GetId() int64 {
+	return p.Id
+}
+
+// DiskConnectServerParam is input parameters for the sacloud API
+type DiskConnectServerParam struct {
+	Id     int64
+	DiskId int64
+}
+
+// NewDiskConnectServerParam return new DiskConnectServerParam
+func NewDiskConnectServerParam() *DiskConnectServerParam {
+	return &DiskConnectServerParam{}
+}
+
+// Validate checks current values in model
+func (p *DiskConnectServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["disk-connect"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--disk-id", p.DiskId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["disk-connect"].Params["disk-id"].ValidateFunc
+		errs := validator("--disk-id", p.DiskId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DiskConnectServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *DiskConnectServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["disk-connect"]
+}
+
+func (p *DiskConnectServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *DiskConnectServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *DiskConnectServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *DiskConnectServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DiskConnectServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *DiskConnectServerParam) GetId() int64 {
+	return p.Id
+}
+func (p *DiskConnectServerParam) SetDiskId(v int64) {
+	p.DiskId = v
+}
+
+func (p *DiskConnectServerParam) GetDiskId() int64 {
+	return p.DiskId
+}
+
+// DiskDisconnectServerParam is input parameters for the sacloud API
+type DiskDisconnectServerParam struct {
+	Id     int64
+	DiskId int64
+}
+
+// NewDiskDisconnectServerParam return new DiskDisconnectServerParam
+func NewDiskDisconnectServerParam() *DiskDisconnectServerParam {
+	return &DiskDisconnectServerParam{}
+}
+
+// Validate checks current values in model
+func (p *DiskDisconnectServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["disk-disconnect"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--disk-id", p.DiskId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["disk-disconnect"].Params["disk-id"].ValidateFunc
+		errs := validator("--disk-id", p.DiskId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DiskDisconnectServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *DiskDisconnectServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["disk-disconnect"]
+}
+
+func (p *DiskDisconnectServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *DiskDisconnectServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *DiskDisconnectServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *DiskDisconnectServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DiskDisconnectServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *DiskDisconnectServerParam) GetId() int64 {
+	return p.Id
+}
+func (p *DiskDisconnectServerParam) SetDiskId(v int64) {
+	p.DiskId = v
+}
+
+func (p *DiskDisconnectServerParam) GetDiskId() int64 {
+	return p.DiskId
+}
+
+// DeleteServerParam is input parameters for the sacloud API
+type DeleteServerParam struct {
+	Id int64
+}
+
+// NewDeleteServerParam return new DeleteServerParam
+func NewDeleteServerParam() *DeleteServerParam {
+	return &DeleteServerParam{}
+}
+
+// Validate checks current values in model
+func (p *DeleteServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["delete"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DeleteServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *DeleteServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["delete"]
+}
+
+func (p *DeleteServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *DeleteServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *DeleteServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *DeleteServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DeleteServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *DeleteServerParam) GetId() int64 {
+	return p.Id
+}
+
+// BootServerParam is input parameters for the sacloud API
+type BootServerParam struct {
+	Id    int64
+	Async bool
+}
+
+// NewBootServerParam return new BootServerParam
+func NewBootServerParam() *BootServerParam {
+	return &BootServerParam{}
+}
+
+// Validate checks current values in model
+func (p *BootServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["boot"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *BootServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *BootServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["boot"]
+}
+
+func (p *BootServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *BootServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *BootServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *BootServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *BootServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *BootServerParam) GetId() int64 {
+	return p.Id
+}
+func (p *BootServerParam) SetAsync(v bool) {
+	p.Async = v
+}
+
+func (p *BootServerParam) GetAsync() bool {
+	return p.Async
+}
+
+// ShutdownServerParam is input parameters for the sacloud API
+type ShutdownServerParam struct {
+	Id    int64
+	Force bool
+	Async bool
+}
+
+// NewShutdownServerParam return new ShutdownServerParam
+func NewShutdownServerParam() *ShutdownServerParam {
+	return &ShutdownServerParam{}
+}
+
+// Validate checks current values in model
+func (p *ShutdownServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["shutdown"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ShutdownServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *ShutdownServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["shutdown"]
+}
+
+func (p *ShutdownServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ShutdownServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ShutdownServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ShutdownServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ShutdownServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ShutdownServerParam) GetId() int64 {
+	return p.Id
+}
+func (p *ShutdownServerParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *ShutdownServerParam) GetForce() bool {
+	return p.Force
+}
+func (p *ShutdownServerParam) SetAsync(v bool) {
+	p.Async = v
+}
+
+func (p *ShutdownServerParam) GetAsync() bool {
+	return p.Async
 }
