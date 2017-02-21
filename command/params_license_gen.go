@@ -8,13 +8,76 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// DeleteLicenseParam is input parameters for the sacloud API
+type DeleteLicenseParam struct {
+	Id int64
+}
+
+// NewDeleteLicenseParam return new DeleteLicenseParam
+func NewDeleteLicenseParam() *DeleteLicenseParam {
+	return &DeleteLicenseParam{}
+}
+
+// Validate checks current values in model
+func (p *DeleteLicenseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["License"].Commands["delete"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DeleteLicenseParam) getResourceDef() *schema.Resource {
+	return define.Resources["License"]
+}
+
+func (p *DeleteLicenseParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["delete"]
+}
+
+func (p *DeleteLicenseParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *DeleteLicenseParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *DeleteLicenseParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *DeleteLicenseParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DeleteLicenseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *DeleteLicenseParam) GetId() int64 {
+	return p.Id
+}
+
 // ListLicenseParam is input parameters for the sacloud API
 type ListLicenseParam struct {
+	Sort []string
+	Name []string
 	Id   []int64
 	From int
 	Max  int
-	Sort []string
-	Name []string
 }
 
 // NewListLicenseParam return new ListLicenseParam
@@ -26,6 +89,15 @@ func NewListLicenseParam() *ListLicenseParam {
 func (p *ListLicenseParam) Validate() []error {
 	errors := []error{}
 	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		validator := define.Resources["License"].Commands["list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -36,15 +108,6 @@ func (p *ListLicenseParam) Validate() []error {
 		errs := validateConflicts("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -78,6 +141,20 @@ func (p *ListLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListLicenseParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListLicenseParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListLicenseParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListLicenseParam) GetName() []string {
+	return p.Name
+}
 func (p *ListLicenseParam) SetId(v []int64) {
 	p.Id = v
 }
@@ -98,20 +175,6 @@ func (p *ListLicenseParam) SetMax(v int) {
 
 func (p *ListLicenseParam) GetMax() int {
 	return p.Max
-}
-func (p *ListLicenseParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListLicenseParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListLicenseParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListLicenseParam) GetName() []string {
-	return p.Name
 }
 
 // CreateLicenseParam is input parameters for the sacloud API
@@ -324,67 +387,4 @@ func (p *UpdateLicenseParam) SetName(v string) {
 
 func (p *UpdateLicenseParam) GetName() string {
 	return p.Name
-}
-
-// DeleteLicenseParam is input parameters for the sacloud API
-type DeleteLicenseParam struct {
-	Id int64
-}
-
-// NewDeleteLicenseParam return new DeleteLicenseParam
-func NewDeleteLicenseParam() *DeleteLicenseParam {
-	return &DeleteLicenseParam{}
-}
-
-// Validate checks current values in model
-func (p *DeleteLicenseParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["License"].Commands["delete"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *DeleteLicenseParam) getResourceDef() *schema.Resource {
-	return define.Resources["License"]
-}
-
-func (p *DeleteLicenseParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["delete"]
-}
-
-func (p *DeleteLicenseParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *DeleteLicenseParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *DeleteLicenseParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *DeleteLicenseParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DeleteLicenseParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *DeleteLicenseParam) GetId() int64 {
-	return p.Id
 }

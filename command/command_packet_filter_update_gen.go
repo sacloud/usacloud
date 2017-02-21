@@ -17,11 +17,11 @@ func PacketFilterUpdate(ctx Context, params *UpdatePacketFilterParam) error {
 
 	// set params
 
-	if ctx.IsSet("description") {
-		p.SetDescription(params.Description)
-	}
 	if ctx.IsSet("name") {
 		p.SetName(params.Name)
+	}
+	if ctx.IsSet("description") {
+		p.SetDescription(params.Description)
 	}
 
 	// call Update(id)

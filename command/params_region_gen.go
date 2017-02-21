@@ -10,11 +10,11 @@ import (
 
 // ListRegionParam is input parameters for the sacloud API
 type ListRegionParam struct {
-	Max  int
-	Sort []string
 	Name []string
 	Id   []int64
 	From int
+	Max  int
+	Sort []string
 }
 
 // NewListRegionParam return new ListRegionParam
@@ -78,20 +78,6 @@ func (p *ListRegionParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListRegionParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListRegionParam) GetMax() int {
-	return p.Max
-}
-func (p *ListRegionParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListRegionParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListRegionParam) SetName(v []string) {
 	p.Name = v
 }
@@ -112,6 +98,20 @@ func (p *ListRegionParam) SetFrom(v int) {
 
 func (p *ListRegionParam) GetFrom() int {
 	return p.From
+}
+func (p *ListRegionParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListRegionParam) GetMax() int {
+	return p.Max
+}
+func (p *ListRegionParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListRegionParam) GetSort() []string {
+	return p.Sort
 }
 
 // ReadRegionParam is input parameters for the sacloud API

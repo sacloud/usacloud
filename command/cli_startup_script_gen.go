@@ -7,11 +7,11 @@ import (
 )
 
 func init() {
-	updateParam := NewUpdateStartupScriptParam()
-	deleteParam := NewDeleteStartupScriptParam()
 	listParam := NewListStartupScriptParam()
 	createParam := NewCreateStartupScriptParam()
 	readParam := NewReadStartupScriptParam()
+	updateParam := NewUpdateStartupScriptParam()
+	deleteParam := NewDeleteStartupScriptParam()
 
 	cliCommand := &cli.Command{
 		Name:    "startup-script",
@@ -19,120 +19,27 @@ func init() {
 		Usage:   "A manage commands of StartupScript",
 		Subcommands: []*cli.Command{
 			{
-				Name:      "update",
-				Aliases:   []string{"u"},
-				Usage:     "Update StartupScript",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &updateParam.Name,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
-					},
-					&cli.StringFlag{
-						Name:        "script-content",
-						Aliases:     []string{"note-content"},
-						Usage:       "set script content",
-						Destination: &updateParam.ScriptContent,
-					},
-					&cli.StringFlag{
-						Name:        "script",
-						Aliases:     []string{"note"},
-						Usage:       "set script from file",
-						Destination: &updateParam.Script,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					updateParam.Tags = c.StringSlice("tags")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), updateParam)
-
-					// Run command with params
-					return StartupScriptUpdate(ctx, updateParam)
-				},
-			},
-			{
-				Name:      "delete",
-				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete StartupScript",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &deleteParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), deleteParam)
-
-					// Run command with params
-					return StartupScriptDelete(ctx, deleteParam)
-				},
-			},
-			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List StartupScript",
 				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
 					},
 					&cli.StringFlag{
 						Name:        "scope",
 						Usage:       "set filter by scope('user' or 'shared')",
 						Destination: &listParam.Scope,
+					},
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
 					},
 					&cli.IntFlag{
 						Name:        "max",
@@ -142,14 +49,6 @@ func init() {
 					&cli.StringSliceFlag{
 						Name:  "sort",
 						Usage: "set field(s) for sort",
-					},
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -264,6 +163,107 @@ func init() {
 
 					// Run command with params
 					return StartupScriptRead(ctx, readParam)
+				},
+			},
+			{
+				Name:      "update",
+				Aliases:   []string{"u"},
+				Usage:     "Update StartupScript",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &updateParam.Name,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
+					},
+					&cli.StringFlag{
+						Name:        "script-content",
+						Aliases:     []string{"note-content"},
+						Usage:       "set script content",
+						Destination: &updateParam.ScriptContent,
+					},
+					&cli.StringFlag{
+						Name:        "script",
+						Aliases:     []string{"note"},
+						Usage:       "set script from file",
+						Destination: &updateParam.Script,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					updateParam.Tags = c.StringSlice("tags")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := updateParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), updateParam)
+
+					// Run command with params
+					return StartupScriptUpdate(ctx, updateParam)
+				},
+			},
+			{
+				Name:      "delete",
+				Aliases:   []string{"d", "rm"},
+				Usage:     "Delete StartupScript",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &deleteParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := deleteParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// Run command with params
+					return StartupScriptDelete(ctx, deleteParam)
 				},
 			},
 		},

@@ -91,15 +91,15 @@ func init() {
 				Usage:     "Update Interface",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
 					&cli.StringFlag{
 						Name:        "user-ipaddress",
 						Usage:       "set user-ipaddress",
 						Destination: &updateParam.UserIpaddress,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {

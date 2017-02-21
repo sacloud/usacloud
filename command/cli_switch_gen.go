@@ -7,145 +7,18 @@ import (
 )
 
 func init() {
-	bridgeConnectParam := NewBridgeConnectSwitchParam()
-	bridgeDisconnectParam := NewBridgeDisconnectSwitchParam()
-	listParam := NewListSwitchParam()
 	createParam := NewCreateSwitchParam()
 	readParam := NewReadSwitchParam()
 	updateParam := NewUpdateSwitchParam()
 	deleteParam := NewDeleteSwitchParam()
+	bridgeConnectParam := NewBridgeConnectSwitchParam()
+	bridgeDisconnectParam := NewBridgeDisconnectSwitchParam()
+	listParam := NewListSwitchParam()
 
 	cliCommand := &cli.Command{
 		Name:  "switch",
 		Usage: "A manage commands of Switch",
 		Subcommands: []*cli.Command{
-			{
-				Name:      "bridge-connect",
-				Usage:     "BridgeConnect Switch",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &bridgeConnectParam.Id,
-					},
-					&cli.Int64Flag{
-						Name:        "bridge-id",
-						Usage:       "[Required] set bridge ID",
-						Destination: &bridgeConnectParam.BridgeId,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := bridgeConnectParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), bridgeConnectParam)
-
-					// Run command with params
-					return SwitchBridgeConnect(ctx, bridgeConnectParam)
-				},
-			},
-			{
-				Name:      "bridge-disconnect",
-				Usage:     "BridgeDisconnect Switch",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &bridgeDisconnectParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := bridgeDisconnectParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), bridgeDisconnectParam)
-
-					// Run command with params
-					return SwitchBridgeDisconnect(ctx, bridgeDisconnectParam)
-				},
-			},
-			{
-				Name:    "list",
-				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List Switch",
-				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
-					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					listParam.Name = c.StringSlice("name")
-					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), listParam)
-
-					// Run command with params
-					return SwitchList(ctx, listParam)
-				},
-			},
 			{
 				Name:    "create",
 				Aliases: []string{"c"},
@@ -236,6 +109,10 @@ func init() {
 				Usage:     "Update Switch",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
 					&cli.Int64Flag{
 						Name:        "icon-id",
 						Usage:       "set Icon ID",
@@ -256,10 +133,6 @@ func init() {
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
 						Destination: &updateParam.Description,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -323,6 +196,133 @@ func init() {
 
 					// Run command with params
 					return SwitchDelete(ctx, deleteParam)
+				},
+			},
+			{
+				Name:      "bridge-connect",
+				Usage:     "BridgeConnect Switch",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &bridgeConnectParam.Id,
+					},
+					&cli.Int64Flag{
+						Name:        "bridge-id",
+						Usage:       "[Required] set bridge ID",
+						Destination: &bridgeConnectParam.BridgeId,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := bridgeConnectParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), bridgeConnectParam)
+
+					// Run command with params
+					return SwitchBridgeConnect(ctx, bridgeConnectParam)
+				},
+			},
+			{
+				Name:      "bridge-disconnect",
+				Usage:     "BridgeDisconnect Switch",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &bridgeDisconnectParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := bridgeDisconnectParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), bridgeDisconnectParam)
+
+					// Run command with params
+					return SwitchBridgeDisconnect(ctx, bridgeDisconnectParam)
+				},
+			},
+			{
+				Name:    "list",
+				Aliases: []string{"l", "ls", "find"},
+				Usage:   "List Switch",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					listParam.Id = c.Int64Slice("id")
+					listParam.Sort = c.StringSlice("sort")
+					listParam.Name = c.StringSlice("name")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := listParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), listParam)
+
+					// Run command with params
+					return SwitchList(ctx, listParam)
 				},
 			},
 		},
