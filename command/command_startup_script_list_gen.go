@@ -23,13 +23,13 @@ func StartupScriptList(ctx Context, params *ListStartupScriptParam) error {
 			finder.SetFilterBy("Name", v)
 		}
 	}
+	if !isEmpty(params.Scope) {
+		finder.SetFilterBy("Scope", params.Scope)
+	}
 	if !isEmpty(params.Id) {
 		for _, v := range params.Id {
 			finder.SetFilterMultiBy("ID", v)
 		}
-	}
-	if !isEmpty(params.Scope) {
-		finder.SetFilterBy("Scope", params.Scope)
 	}
 	if !isEmpty(params.From) {
 		finder.SetOffset(params.From)

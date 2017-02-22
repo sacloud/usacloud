@@ -114,6 +114,11 @@ func init() {
 				Usage:     "Update StartupScript",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
 					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "[Required] set resource display name",
@@ -139,11 +144,6 @@ func init() {
 						Aliases:     []string{"note"},
 						Usage:       "set script from file",
 						Destination: &updateParam.Script,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -214,19 +214,6 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List StartupScript",
 				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
-					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
 					&cli.IntFlag{
 						Name:        "max",
 						Usage:       "set limit",
@@ -236,18 +223,31 @@ func init() {
 						Name:  "sort",
 						Usage: "set field(s) for sort",
 					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
 					&cli.StringFlag{
 						Name:        "scope",
 						Usage:       "set filter by scope('user' or 'shared')",
 						Destination: &listParam.Scope,
 					},
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
+					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {

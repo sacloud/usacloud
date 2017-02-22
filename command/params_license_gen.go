@@ -10,11 +10,11 @@ import (
 
 // ListLicenseParam is input parameters for the sacloud API
 type ListLicenseParam struct {
-	Name []string
 	Id   []int64
 	From int
 	Max  int
 	Sort []string
+	Name []string
 }
 
 // NewListLicenseParam return new ListLicenseParam
@@ -26,15 +26,6 @@ func NewListLicenseParam() *ListLicenseParam {
 func (p *ListLicenseParam) Validate() []error {
 	errors := []error{}
 	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := define.Resources["License"].Commands["list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -45,6 +36,15 @@ func (p *ListLicenseParam) Validate() []error {
 		errs := validateConflicts("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -78,13 +78,6 @@ func (p *ListLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListLicenseParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListLicenseParam) GetName() []string {
-	return p.Name
-}
 func (p *ListLicenseParam) SetId(v []int64) {
 	p.Id = v
 }
@@ -112,6 +105,13 @@ func (p *ListLicenseParam) SetSort(v []string) {
 
 func (p *ListLicenseParam) GetSort() []string {
 	return p.Sort
+}
+func (p *ListLicenseParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListLicenseParam) GetName() []string {
+	return p.Name
 }
 
 // CreateLicenseParam is input parameters for the sacloud API

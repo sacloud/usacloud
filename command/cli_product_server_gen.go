@@ -20,6 +20,10 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List ProductServer",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
 					&cli.Int64SliceFlag{
 						Name:  "id",
 						Usage: "set filter by id(s)",
@@ -37,10 +41,6 @@ func init() {
 					&cli.StringSliceFlag{
 						Name:  "sort",
 						Usage: "set field(s) for sort",
-					},
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
 					},
 				},
 				Action: func(c *cli.Context) error {

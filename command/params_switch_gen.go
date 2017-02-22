@@ -8,255 +8,6 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ReadSwitchParam is input parameters for the sacloud API
-type ReadSwitchParam struct {
-	Id int64
-}
-
-// NewReadSwitchParam return new ReadSwitchParam
-func NewReadSwitchParam() *ReadSwitchParam {
-	return &ReadSwitchParam{}
-}
-
-// Validate checks current values in model
-func (p *ReadSwitchParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["read"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ReadSwitchParam) getResourceDef() *schema.Resource {
-	return define.Resources["Switch"]
-}
-
-func (p *ReadSwitchParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["read"]
-}
-
-func (p *ReadSwitchParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ReadSwitchParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ReadSwitchParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ReadSwitchParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ReadSwitchParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ReadSwitchParam) GetId() int64 {
-	return p.Id
-}
-
-// UpdateSwitchParam is input parameters for the sacloud API
-type UpdateSwitchParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Id          int64
-}
-
-// NewUpdateSwitchParam return new UpdateSwitchParam
-func NewUpdateSwitchParam() *UpdateSwitchParam {
-	return &UpdateSwitchParam{}
-}
-
-// Validate checks current values in model
-func (p *UpdateSwitchParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := define.Resources["Switch"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["update"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *UpdateSwitchParam) getResourceDef() *schema.Resource {
-	return define.Resources["Switch"]
-}
-
-func (p *UpdateSwitchParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["update"]
-}
-
-func (p *UpdateSwitchParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *UpdateSwitchParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *UpdateSwitchParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *UpdateSwitchParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *UpdateSwitchParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateSwitchParam) GetName() string {
-	return p.Name
-}
-func (p *UpdateSwitchParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *UpdateSwitchParam) GetDescription() string {
-	return p.Description
-}
-func (p *UpdateSwitchParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *UpdateSwitchParam) GetTags() []string {
-	return p.Tags
-}
-func (p *UpdateSwitchParam) SetIconId(v int64) {
-	p.IconId = v
-}
-
-func (p *UpdateSwitchParam) GetIconId() int64 {
-	return p.IconId
-}
-func (p *UpdateSwitchParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *UpdateSwitchParam) GetId() int64 {
-	return p.Id
-}
-
-// DeleteSwitchParam is input parameters for the sacloud API
-type DeleteSwitchParam struct {
-	Id int64
-}
-
-// NewDeleteSwitchParam return new DeleteSwitchParam
-func NewDeleteSwitchParam() *DeleteSwitchParam {
-	return &DeleteSwitchParam{}
-}
-
-// Validate checks current values in model
-func (p *DeleteSwitchParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["delete"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *DeleteSwitchParam) getResourceDef() *schema.Resource {
-	return define.Resources["Switch"]
-}
-
-func (p *DeleteSwitchParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["delete"]
-}
-
-func (p *DeleteSwitchParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *DeleteSwitchParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *DeleteSwitchParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *DeleteSwitchParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DeleteSwitchParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *DeleteSwitchParam) GetId() int64 {
-	return p.Id
-}
-
 // BridgeConnectSwitchParam is input parameters for the sacloud API
 type BridgeConnectSwitchParam struct {
 	Id       int64
@@ -513,10 +264,10 @@ func (p *ListSwitchParam) GetSort() []string {
 
 // CreateSwitchParam is input parameters for the sacloud API
 type CreateSwitchParam struct {
-	IconId      int64
-	Name        string
 	Description string
 	Tags        []string
+	IconId      int64
+	Name        string
 }
 
 // NewCreateSwitchParam return new CreateSwitchParam
@@ -527,6 +278,20 @@ func NewCreateSwitchParam() *CreateSwitchParam {
 // Validate checks current values in model
 func (p *CreateSwitchParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["Switch"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := define.Resources["Switch"].Commands["create"].Params["icon-id"].ValidateFunc
 		errs := validator("--icon-id", p.IconId)
@@ -544,20 +309,6 @@ func (p *CreateSwitchParam) Validate() []error {
 	{
 		validator := define.Resources["Switch"].Commands["create"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -590,6 +341,20 @@ func (p *CreateSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CreateSwitchParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateSwitchParam) GetDescription() string {
+	return p.Description
+}
+func (p *CreateSwitchParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateSwitchParam) GetTags() []string {
+	return p.Tags
+}
 func (p *CreateSwitchParam) SetIconId(v int64) {
 	p.IconId = v
 }
@@ -604,17 +369,252 @@ func (p *CreateSwitchParam) SetName(v string) {
 func (p *CreateSwitchParam) GetName() string {
 	return p.Name
 }
-func (p *CreateSwitchParam) SetDescription(v string) {
-	p.Description = v
+
+// ReadSwitchParam is input parameters for the sacloud API
+type ReadSwitchParam struct {
+	Id int64
 }
 
-func (p *CreateSwitchParam) GetDescription() string {
-	return p.Description
+// NewReadSwitchParam return new ReadSwitchParam
+func NewReadSwitchParam() *ReadSwitchParam {
+	return &ReadSwitchParam{}
 }
-func (p *CreateSwitchParam) SetTags(v []string) {
+
+// Validate checks current values in model
+func (p *ReadSwitchParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["read"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ReadSwitchParam) getResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *ReadSwitchParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["read"]
+}
+
+func (p *ReadSwitchParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ReadSwitchParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ReadSwitchParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ReadSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ReadSwitchParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ReadSwitchParam) GetId() int64 {
+	return p.Id
+}
+
+// UpdateSwitchParam is input parameters for the sacloud API
+type UpdateSwitchParam struct {
+	Tags        []string
+	IconId      int64
+	Id          int64
+	Name        string
+	Description string
+}
+
+// NewUpdateSwitchParam return new UpdateSwitchParam
+func NewUpdateSwitchParam() *UpdateSwitchParam {
+	return &UpdateSwitchParam{}
+}
+
+// Validate checks current values in model
+func (p *UpdateSwitchParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Switch"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["update"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *UpdateSwitchParam) getResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *UpdateSwitchParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["update"]
+}
+
+func (p *UpdateSwitchParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *UpdateSwitchParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *UpdateSwitchParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *UpdateSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateSwitchParam) SetTags(v []string) {
 	p.Tags = v
 }
 
-func (p *CreateSwitchParam) GetTags() []string {
+func (p *UpdateSwitchParam) GetTags() []string {
 	return p.Tags
+}
+func (p *UpdateSwitchParam) SetIconId(v int64) {
+	p.IconId = v
+}
+
+func (p *UpdateSwitchParam) GetIconId() int64 {
+	return p.IconId
+}
+func (p *UpdateSwitchParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *UpdateSwitchParam) GetId() int64 {
+	return p.Id
+}
+func (p *UpdateSwitchParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateSwitchParam) GetName() string {
+	return p.Name
+}
+func (p *UpdateSwitchParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdateSwitchParam) GetDescription() string {
+	return p.Description
+}
+
+// DeleteSwitchParam is input parameters for the sacloud API
+type DeleteSwitchParam struct {
+	Id int64
+}
+
+// NewDeleteSwitchParam return new DeleteSwitchParam
+func NewDeleteSwitchParam() *DeleteSwitchParam {
+	return &DeleteSwitchParam{}
+}
+
+// Validate checks current values in model
+func (p *DeleteSwitchParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["delete"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DeleteSwitchParam) getResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *DeleteSwitchParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["delete"]
+}
+
+func (p *DeleteSwitchParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *DeleteSwitchParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *DeleteSwitchParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *DeleteSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DeleteSwitchParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *DeleteSwitchParam) GetId() int64 {
+	return p.Id
 }

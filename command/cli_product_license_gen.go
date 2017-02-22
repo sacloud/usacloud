@@ -7,66 +7,14 @@ import (
 )
 
 func init() {
-	listParam := NewListProductLicenseParam()
 	readParam := NewReadProductLicenseParam()
+	listParam := NewListProductLicenseParam()
 
 	cliCommand := &cli.Command{
 		Name:    "product-license",
 		Aliases: []string{"license-info"},
 		Usage:   "A manage commands of ProductLicense",
 		Subcommands: []*cli.Command{
-			{
-				Name:    "list",
-				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List ProductLicense",
-				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
-					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					listParam.Sort = c.StringSlice("sort")
-					listParam.Name = c.StringSlice("name")
-					listParam.Id = c.Int64Slice("id")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), listParam)
-
-					// Run command with params
-					return ProductLicenseList(ctx, listParam)
-				},
-			},
 			{
 				Name:      "read",
 				Aliases:   []string{"r"},
@@ -101,6 +49,58 @@ func init() {
 
 					// Run command with params
 					return ProductLicenseRead(ctx, readParam)
+				},
+			},
+			{
+				Name:    "list",
+				Aliases: []string{"l", "ls", "find"},
+				Usage:   "List ProductLicense",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
+					},
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					listParam.Sort = c.StringSlice("sort")
+					listParam.Name = c.StringSlice("name")
+					listParam.Id = c.Int64Slice("id")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := listParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), listParam)
+
+					// Run command with params
+					return ProductLicenseList(ctx, listParam)
 				},
 			},
 		},

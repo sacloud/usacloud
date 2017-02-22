@@ -8,14 +8,77 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// DeleteIconParam is input parameters for the sacloud API
+type DeleteIconParam struct {
+	Id int64
+}
+
+// NewDeleteIconParam return new DeleteIconParam
+func NewDeleteIconParam() *DeleteIconParam {
+	return &DeleteIconParam{}
+}
+
+// Validate checks current values in model
+func (p *DeleteIconParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Icon"].Commands["delete"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DeleteIconParam) getResourceDef() *schema.Resource {
+	return define.Resources["Icon"]
+}
+
+func (p *DeleteIconParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["delete"]
+}
+
+func (p *DeleteIconParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *DeleteIconParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *DeleteIconParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *DeleteIconParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DeleteIconParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *DeleteIconParam) GetId() int64 {
+	return p.Id
+}
+
 // ListIconParam is input parameters for the sacloud API
 type ListIconParam struct {
+	Max   int
+	Scope string
+	Sort  []string
 	Name  []string
 	Id    []int64
 	From  int
-	Max   int
-	Sort  []string
-	Scope string
 }
 
 // NewListIconParam return new ListIconParam
@@ -26,6 +89,13 @@ func NewListIconParam() *ListIconParam {
 // Validate checks current values in model
 func (p *ListIconParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["Icon"].Commands["list"].Params["scope"].ValidateFunc
+		errs := validator("--scope", p.Scope)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
 
@@ -47,13 +117,6 @@ func (p *ListIconParam) Validate() []error {
 
 			"--name": p.Name,
 		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Icon"].Commands["list"].Params["scope"].ValidateFunc
-		errs := validator("--scope", p.Scope)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -86,6 +149,27 @@ func (p *ListIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListIconParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListIconParam) GetMax() int {
+	return p.Max
+}
+func (p *ListIconParam) SetScope(v string) {
+	p.Scope = v
+}
+
+func (p *ListIconParam) GetScope() string {
+	return p.Scope
+}
+func (p *ListIconParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListIconParam) GetSort() []string {
+	return p.Sort
+}
 func (p *ListIconParam) SetName(v []string) {
 	p.Name = v
 }
@@ -106,27 +190,6 @@ func (p *ListIconParam) SetFrom(v int) {
 
 func (p *ListIconParam) GetFrom() int {
 	return p.From
-}
-func (p *ListIconParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListIconParam) GetMax() int {
-	return p.Max
-}
-func (p *ListIconParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListIconParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListIconParam) SetScope(v string) {
-	p.Scope = v
-}
-
-func (p *ListIconParam) GetScope() string {
-	return p.Scope
 }
 
 // CreateIconParam is input parameters for the sacloud API
@@ -383,67 +446,4 @@ func (p *UpdateIconParam) SetName(v string) {
 
 func (p *UpdateIconParam) GetName() string {
 	return p.Name
-}
-
-// DeleteIconParam is input parameters for the sacloud API
-type DeleteIconParam struct {
-	Id int64
-}
-
-// NewDeleteIconParam return new DeleteIconParam
-func NewDeleteIconParam() *DeleteIconParam {
-	return &DeleteIconParam{}
-}
-
-// Validate checks current values in model
-func (p *DeleteIconParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Icon"].Commands["delete"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *DeleteIconParam) getResourceDef() *schema.Resource {
-	return define.Resources["Icon"]
-}
-
-func (p *DeleteIconParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["delete"]
-}
-
-func (p *DeleteIconParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *DeleteIconParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *DeleteIconParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *DeleteIconParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DeleteIconParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *DeleteIconParam) GetId() int64 {
-	return p.Id
 }

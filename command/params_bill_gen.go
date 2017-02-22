@@ -81,9 +81,9 @@ func (p *ListBillParam) GetMonth() int {
 
 // CsvBillParam is input parameters for the sacloud API
 type CsvBillParam struct {
+	BillOutput string
 	Id         int64
 	NoHeader   bool
-	BillOutput string
 }
 
 // NewCsvBillParam return new CsvBillParam
@@ -136,6 +136,13 @@ func (p *CsvBillParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CsvBillParam) SetBillOutput(v string) {
+	p.BillOutput = v
+}
+
+func (p *CsvBillParam) GetBillOutput() string {
+	return p.BillOutput
+}
 func (p *CsvBillParam) SetId(v int64) {
 	p.Id = v
 }
@@ -149,11 +156,4 @@ func (p *CsvBillParam) SetNoHeader(v bool) {
 
 func (p *CsvBillParam) GetNoHeader() bool {
 	return p.NoHeader
-}
-func (p *CsvBillParam) SetBillOutput(v string) {
-	p.BillOutput = v
-}
-
-func (p *CsvBillParam) GetBillOutput() string {
-	return p.BillOutput
 }

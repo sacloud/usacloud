@@ -8,175 +8,6 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListInterfaceParam is input parameters for the sacloud API
-type ListInterfaceParam struct {
-	Name []string
-	Id   []int64
-	From int
-	Max  int
-	Sort []string
-}
-
-// NewListInterfaceParam return new ListInterfaceParam
-func NewListInterfaceParam() *ListInterfaceParam {
-	return &ListInterfaceParam{}
-}
-
-// Validate checks current values in model
-func (p *ListInterfaceParam) Validate() []error {
-	errors := []error{}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Interface"].Commands["list"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--id", p.Id, map[string]interface{}{
-
-			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ListInterfaceParam) getResourceDef() *schema.Resource {
-	return define.Resources["Interface"]
-}
-
-func (p *ListInterfaceParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["list"]
-}
-
-func (p *ListInterfaceParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ListInterfaceParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ListInterfaceParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ListInterfaceParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ListInterfaceParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListInterfaceParam) GetName() []string {
-	return p.Name
-}
-func (p *ListInterfaceParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListInterfaceParam) GetId() []int64 {
-	return p.Id
-}
-func (p *ListInterfaceParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListInterfaceParam) GetFrom() int {
-	return p.From
-}
-func (p *ListInterfaceParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListInterfaceParam) GetMax() int {
-	return p.Max
-}
-func (p *ListInterfaceParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListInterfaceParam) GetSort() []string {
-	return p.Sort
-}
-
-// CreateInterfaceParam is input parameters for the sacloud API
-type CreateInterfaceParam struct {
-	ServerId int64
-}
-
-// NewCreateInterfaceParam return new CreateInterfaceParam
-func NewCreateInterfaceParam() *CreateInterfaceParam {
-	return &CreateInterfaceParam{}
-}
-
-// Validate checks current values in model
-func (p *CreateInterfaceParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--server-id", p.ServerId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Interface"].Commands["create"].Params["server-id"].ValidateFunc
-		errs := validator("--server-id", p.ServerId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *CreateInterfaceParam) getResourceDef() *schema.Resource {
-	return define.Resources["Interface"]
-}
-
-func (p *CreateInterfaceParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["create"]
-}
-
-func (p *CreateInterfaceParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *CreateInterfaceParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *CreateInterfaceParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *CreateInterfaceParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *CreateInterfaceParam) SetServerId(v int64) {
-	p.ServerId = v
-}
-
-func (p *CreateInterfaceParam) GetServerId() int64 {
-	return p.ServerId
-}
-
 // ReadInterfaceParam is input parameters for the sacloud API
 type ReadInterfaceParam struct {
 	Id int64
@@ -383,8 +214,8 @@ func (p *DeleteInterfaceParam) GetId() int64 {
 
 // PacketFilterConnectInterfaceParam is input parameters for the sacloud API
 type PacketFilterConnectInterfaceParam struct {
-	PacketFilterId int64
 	Id             int64
+	PacketFilterId int64
 }
 
 // NewPacketFilterConnectInterfaceParam return new PacketFilterConnectInterfaceParam
@@ -397,20 +228,6 @@ func (p *PacketFilterConnectInterfaceParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--packet-filter-id", p.PacketFilterId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Interface"].Commands["packet-filter-connect"].Params["packet-filter-id"].ValidateFunc
-		errs := validator("--packet-filter-id", p.PacketFilterId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -419,6 +236,20 @@ func (p *PacketFilterConnectInterfaceParam) Validate() []error {
 	{
 		validator := define.Resources["Interface"].Commands["packet-filter-connect"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--packet-filter-id", p.PacketFilterId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Interface"].Commands["packet-filter-connect"].Params["packet-filter-id"].ValidateFunc
+		errs := validator("--packet-filter-id", p.PacketFilterId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -451,19 +282,19 @@ func (p *PacketFilterConnectInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *PacketFilterConnectInterfaceParam) SetPacketFilterId(v int64) {
-	p.PacketFilterId = v
-}
-
-func (p *PacketFilterConnectInterfaceParam) GetPacketFilterId() int64 {
-	return p.PacketFilterId
-}
 func (p *PacketFilterConnectInterfaceParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *PacketFilterConnectInterfaceParam) GetId() int64 {
 	return p.Id
+}
+func (p *PacketFilterConnectInterfaceParam) SetPacketFilterId(v int64) {
+	p.PacketFilterId = v
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetPacketFilterId() int64 {
+	return p.PacketFilterId
 }
 
 // PacketFilterDisconnectInterfaceParam is input parameters for the sacloud API
@@ -549,4 +380,173 @@ func (p *PacketFilterDisconnectInterfaceParam) SetPacketFilterId(v int64) {
 
 func (p *PacketFilterDisconnectInterfaceParam) GetPacketFilterId() int64 {
 	return p.PacketFilterId
+}
+
+// ListInterfaceParam is input parameters for the sacloud API
+type ListInterfaceParam struct {
+	From int
+	Max  int
+	Sort []string
+	Name []string
+	Id   []int64
+}
+
+// NewListInterfaceParam return new ListInterfaceParam
+func NewListInterfaceParam() *ListInterfaceParam {
+	return &ListInterfaceParam{}
+}
+
+// Validate checks current values in model
+func (p *ListInterfaceParam) Validate() []error {
+	errors := []error{}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Interface"].Commands["list"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--id", p.Id, map[string]interface{}{
+
+			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ListInterfaceParam) getResourceDef() *schema.Resource {
+	return define.Resources["Interface"]
+}
+
+func (p *ListInterfaceParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["list"]
+}
+
+func (p *ListInterfaceParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ListInterfaceParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ListInterfaceParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ListInterfaceParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListInterfaceParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListInterfaceParam) GetFrom() int {
+	return p.From
+}
+func (p *ListInterfaceParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListInterfaceParam) GetMax() int {
+	return p.Max
+}
+func (p *ListInterfaceParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListInterfaceParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListInterfaceParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListInterfaceParam) GetName() []string {
+	return p.Name
+}
+func (p *ListInterfaceParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListInterfaceParam) GetId() []int64 {
+	return p.Id
+}
+
+// CreateInterfaceParam is input parameters for the sacloud API
+type CreateInterfaceParam struct {
+	ServerId int64
+}
+
+// NewCreateInterfaceParam return new CreateInterfaceParam
+func NewCreateInterfaceParam() *CreateInterfaceParam {
+	return &CreateInterfaceParam{}
+}
+
+// Validate checks current values in model
+func (p *CreateInterfaceParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--server-id", p.ServerId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Interface"].Commands["create"].Params["server-id"].ValidateFunc
+		errs := validator("--server-id", p.ServerId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *CreateInterfaceParam) getResourceDef() *schema.Resource {
+	return define.Resources["Interface"]
+}
+
+func (p *CreateInterfaceParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["create"]
+}
+
+func (p *CreateInterfaceParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *CreateInterfaceParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *CreateInterfaceParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *CreateInterfaceParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateInterfaceParam) SetServerId(v int64) {
+	p.ServerId = v
+}
+
+func (p *CreateInterfaceParam) GetServerId() int64 {
+	return p.ServerId
 }

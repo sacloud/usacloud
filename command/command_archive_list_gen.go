@@ -13,13 +13,16 @@ func ArchiveList(ctx Context, params *ListArchiveParam) error {
 
 	finder.SetEmpty()
 
+	if !isEmpty(params.From) {
+		finder.SetOffset(params.From)
+	}
+	if !isEmpty(params.Max) {
+		finder.SetLimit(params.Max)
+	}
 	if !isEmpty(params.Sort) {
 		for _, v := range params.Sort {
 			setSortBy(finder, v)
 		}
-	}
-	if !isEmpty(params.Scope) {
-		finder.SetFilterBy("Scope", params.Scope)
 	}
 	if !isEmpty(params.Name) {
 		for _, v := range params.Name {
@@ -31,11 +34,8 @@ func ArchiveList(ctx Context, params *ListArchiveParam) error {
 			finder.SetFilterMultiBy("ID", v)
 		}
 	}
-	if !isEmpty(params.From) {
-		finder.SetOffset(params.From)
-	}
-	if !isEmpty(params.Max) {
-		finder.SetLimit(params.Max)
+	if !isEmpty(params.Scope) {
+		finder.SetFilterBy("Scope", params.Scope)
 	}
 
 	// call Find()

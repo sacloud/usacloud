@@ -23,6 +23,10 @@ func init() {
 				Usage:   "List License",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
+					&cli.StringSliceFlag{
 						Name:  "name",
 						Usage: "set filter by name(s)",
 					},
@@ -40,17 +44,13 @@ func init() {
 						Usage:       "set limit",
 						Destination: &listParam.Max,
 					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
 					listParam.Sort = c.StringSlice("sort")
-					listParam.Name = c.StringSlice("name")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -146,15 +146,15 @@ func init() {
 				Usage:     "Update License",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
 					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "set resource display name",
 						Destination: &updateParam.Name,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {

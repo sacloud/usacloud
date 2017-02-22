@@ -23,10 +23,6 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List SSHKey",
 				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
 					&cli.Int64SliceFlag{
 						Name:  "id",
 						Usage: "set filter by id(s)",
@@ -45,13 +41,17 @@ func init() {
 						Name:  "sort",
 						Usage: "set field(s) for sort",
 					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					listParam.Id = c.Int64Slice("id")
 					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
+					listParam.Id = c.Int64Slice("id")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -76,11 +76,6 @@ func init() {
 				Usage:   "Create SSHKey",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
-					},
-					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
@@ -95,6 +90,11 @@ func init() {
 						Name:        "public-key",
 						Usage:       "set public-key from file",
 						Destination: &createParam.PublicKey,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -242,11 +242,6 @@ func init() {
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &generateParam.Name,
-					},
-					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
@@ -262,6 +257,11 @@ func init() {
 						Aliases:     []string{"file"},
 						Usage:       "set ssh-key privatekey output path",
 						Destination: &generateParam.PrivateKeyOutput,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &generateParam.Name,
 					},
 				},
 				Action: func(c *cli.Context) error {

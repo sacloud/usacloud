@@ -26,5 +26,6 @@ var Resources map[string]*schema.Resource = map[string]*schema.Resource{
 	"SSHKey":          SSHKeyResource(),
 	"StartupScript":   StartupScriptResource(),
 	"Switch":          SwitchResource(),
+	"WebAccel":        WebAccelResource(),
 	"Zone":            ZoneResource(),
 }

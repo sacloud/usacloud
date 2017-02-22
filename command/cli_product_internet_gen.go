@@ -21,6 +21,10 @@ func init() {
 				Usage:   "List ProductInternet",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
+					&cli.StringSliceFlag{
 						Name:  "name",
 						Usage: "set filter by name(s)",
 					},
@@ -37,10 +41,6 @@ func init() {
 						Name:        "max",
 						Usage:       "set limit",
 						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
 					},
 				},
 				Action: func(c *cli.Context) error {

@@ -73,12 +73,12 @@ func (p *DeleteStartupScriptParam) GetId() int64 {
 
 // ListStartupScriptParam is input parameters for the sacloud API
 type ListStartupScriptParam struct {
-	Scope string
+	Name  []string
 	Id    []int64
 	From  int
 	Max   int
 	Sort  []string
-	Name  []string
+	Scope string
 }
 
 // NewListStartupScriptParam return new ListStartupScriptParam
@@ -90,8 +90,10 @@ func NewListStartupScriptParam() *ListStartupScriptParam {
 func (p *ListStartupScriptParam) Validate() []error {
 	errors := []error{}
 	{
-		validator := define.Resources["StartupScript"].Commands["list"].Params["scope"].ValidateFunc
-		errs := validator("--scope", p.Scope)
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -113,10 +115,8 @@ func (p *ListStartupScriptParam) Validate() []error {
 		}
 	}
 	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
+		validator := define.Resources["StartupScript"].Commands["list"].Params["scope"].ValidateFunc
+		errs := validator("--scope", p.Scope)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -149,12 +149,12 @@ func (p *ListStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListStartupScriptParam) SetScope(v string) {
-	p.Scope = v
+func (p *ListStartupScriptParam) SetName(v []string) {
+	p.Name = v
 }
 
-func (p *ListStartupScriptParam) GetScope() string {
-	return p.Scope
+func (p *ListStartupScriptParam) GetName() []string {
+	return p.Name
 }
 func (p *ListStartupScriptParam) SetId(v []int64) {
 	p.Id = v
@@ -184,21 +184,21 @@ func (p *ListStartupScriptParam) SetSort(v []string) {
 func (p *ListStartupScriptParam) GetSort() []string {
 	return p.Sort
 }
-func (p *ListStartupScriptParam) SetName(v []string) {
-	p.Name = v
+func (p *ListStartupScriptParam) SetScope(v string) {
+	p.Scope = v
 }
 
-func (p *ListStartupScriptParam) GetName() []string {
-	return p.Name
+func (p *ListStartupScriptParam) GetScope() string {
+	return p.Scope
 }
 
 // CreateStartupScriptParam is input parameters for the sacloud API
 type CreateStartupScriptParam struct {
-	ScriptContent string
-	Script        string
 	Name          string
 	Tags          []string
 	IconId        int64
+	ScriptContent string
+	Script        string
 }
 
 // NewCreateStartupScriptParam return new CreateStartupScriptParam
@@ -209,22 +209,6 @@ func NewCreateStartupScriptParam() *CreateStartupScriptParam {
 // Validate checks current values in model
 func (p *CreateStartupScriptParam) Validate() []error {
 	errors := []error{}
-	{
-		errs := validateConflicts("--script-content", p.ScriptContent, map[string]interface{}{
-
-			"--script": p.Script,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["StartupScript"].Commands["create"].Params["script"].ValidateFunc
-		errs := validator("--script", p.Script)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := validateRequired
 		errs := validator("--name", p.Name)
@@ -249,6 +233,22 @@ func (p *CreateStartupScriptParam) Validate() []error {
 	{
 		validator := define.Resources["StartupScript"].Commands["create"].Params["icon-id"].ValidateFunc
 		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--script-content", p.ScriptContent, map[string]interface{}{
+
+			"--script": p.Script,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["StartupScript"].Commands["create"].Params["script"].ValidateFunc
+		errs := validator("--script", p.Script)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -281,20 +281,6 @@ func (p *CreateStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *CreateStartupScriptParam) SetScriptContent(v string) {
-	p.ScriptContent = v
-}
-
-func (p *CreateStartupScriptParam) GetScriptContent() string {
-	return p.ScriptContent
-}
-func (p *CreateStartupScriptParam) SetScript(v string) {
-	p.Script = v
-}
-
-func (p *CreateStartupScriptParam) GetScript() string {
-	return p.Script
-}
 func (p *CreateStartupScriptParam) SetName(v string) {
 	p.Name = v
 }
@@ -315,6 +301,20 @@ func (p *CreateStartupScriptParam) SetIconId(v int64) {
 
 func (p *CreateStartupScriptParam) GetIconId() int64 {
 	return p.IconId
+}
+func (p *CreateStartupScriptParam) SetScriptContent(v string) {
+	p.ScriptContent = v
+}
+
+func (p *CreateStartupScriptParam) GetScriptContent() string {
+	return p.ScriptContent
+}
+func (p *CreateStartupScriptParam) SetScript(v string) {
+	p.Script = v
+}
+
+func (p *CreateStartupScriptParam) GetScript() string {
+	return p.Script
 }
 
 // ReadStartupScriptParam is input parameters for the sacloud API
@@ -382,12 +382,12 @@ func (p *ReadStartupScriptParam) GetId() int64 {
 
 // UpdateStartupScriptParam is input parameters for the sacloud API
 type UpdateStartupScriptParam struct {
-	Id            int64
-	Name          string
 	Tags          []string
 	IconId        int64
 	ScriptContent string
 	Script        string
+	Id            int64
+	Name          string
 }
 
 // NewUpdateStartupScriptParam return new UpdateStartupScriptParam
@@ -398,34 +398,6 @@ func NewUpdateStartupScriptParam() *UpdateStartupScriptParam {
 // Validate checks current values in model
 func (p *UpdateStartupScriptParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["StartupScript"].Commands["update"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["StartupScript"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := define.Resources["StartupScript"].Commands["update"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
@@ -452,6 +424,34 @@ func (p *UpdateStartupScriptParam) Validate() []error {
 	{
 		validator := define.Resources["StartupScript"].Commands["update"].Params["script"].ValidateFunc
 		errs := validator("--script", p.Script)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["StartupScript"].Commands["update"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["StartupScript"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -484,20 +484,6 @@ func (p *UpdateStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *UpdateStartupScriptParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *UpdateStartupScriptParam) GetId() int64 {
-	return p.Id
-}
-func (p *UpdateStartupScriptParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateStartupScriptParam) GetName() string {
-	return p.Name
-}
 func (p *UpdateStartupScriptParam) SetTags(v []string) {
 	p.Tags = v
 }
@@ -525,4 +511,18 @@ func (p *UpdateStartupScriptParam) SetScript(v string) {
 
 func (p *UpdateStartupScriptParam) GetScript() string {
 	return p.Script
+}
+func (p *UpdateStartupScriptParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *UpdateStartupScriptParam) GetId() int64 {
+	return p.Id
+}
+func (p *UpdateStartupScriptParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateStartupScriptParam) GetName() string {
+	return p.Name
 }

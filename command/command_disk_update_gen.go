@@ -17,6 +17,9 @@ func DiskUpdate(ctx Context, params *UpdateDiskParam) error {
 
 	// set params
 
+	if ctx.IsSet("connection") {
+		p.SetDiskConnectionByStr(params.Connection)
+	}
 	if ctx.IsSet("name") {
 		p.SetName(params.Name)
 	}
@@ -28,9 +31,6 @@ func DiskUpdate(ctx Context, params *UpdateDiskParam) error {
 	}
 	if ctx.IsSet("icon-id") {
 		p.SetIconByID(params.IconId)
-	}
-	if ctx.IsSet("connection") {
-		p.SetDiskConnectionByStr(params.Connection)
 	}
 
 	// call Update(id)
