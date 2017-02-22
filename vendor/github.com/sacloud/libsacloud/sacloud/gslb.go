@@ -1,5 +1,7 @@
 package sacloud
 
+import "fmt"
+
 // GSLB GSLB(CommonServiceItem)
 type GSLB struct {
 	*Resource        // ID
@@ -155,4 +157,60 @@ var defaultGSLBHealthCheck = GSLBHealthCheck{
 	Host:     "",
 	Path:     "/",
 	Status:   "200",
+}
+
+// SetHttpHealthCheck HTTPヘルスチェック 設定
+func (g *GSLB) SetHttpHealthCheck(hostHeader string, path string, responseCode int) {
+	g.Settings.GSLB.HealthCheck.Protocol = "http"
+	g.Settings.GSLB.HealthCheck.Host = hostHeader
+	g.Settings.GSLB.HealthCheck.Path = path
+	g.Settings.GSLB.HealthCheck.Status = fmt.Sprintf("%d", responseCode)
+	g.Settings.GSLB.HealthCheck.Port = ""
+
+}
+
+// SetHttpsHealthCheck HTTPSヘルスチェック 設定
+func (g *GSLB) SetHttpsHealthCheck(hostHeader string, path string, responseCode int) {
+	g.Settings.GSLB.HealthCheck.Protocol = "https"
+	g.Settings.GSLB.HealthCheck.Host = hostHeader
+	g.Settings.GSLB.HealthCheck.Path = path
+	g.Settings.GSLB.HealthCheck.Status = fmt.Sprintf("%d", responseCode)
+	g.Settings.GSLB.HealthCheck.Port = ""
+}
+
+// SetPingHealthCheck Pingヘルスチェック 設定
+func (g *GSLB) SetPingHealthCheck() {
+	g.Settings.GSLB.HealthCheck.Protocol = "ping"
+	g.Settings.GSLB.HealthCheck.Host = ""
+	g.Settings.GSLB.HealthCheck.Path = ""
+	g.Settings.GSLB.HealthCheck.Status = ""
+	g.Settings.GSLB.HealthCheck.Port = ""
+}
+
+// SetTCPHealthCheck TCPヘルスチェック 設定
+func (g *GSLB) SetTCPHealthCheck(port int) {
+	g.Settings.GSLB.HealthCheck.Protocol = "tcp"
+	g.Settings.GSLB.HealthCheck.Host = ""
+	g.Settings.GSLB.HealthCheck.Path = ""
+	g.Settings.GSLB.HealthCheck.Status = ""
+	g.Settings.GSLB.HealthCheck.Port = fmt.Sprintf("%d", port)
+}
+
+// SetDelayLoop 監視間隔秒数 設定
+func (g *GSLB) SetDelayLoop(delayLoop int) {
+	g.Settings.GSLB.DelayLoop = delayLoop
+}
+
+// SetWeightedEnable 重み付け応答 有効/無効 設定
+func (g *GSLB) SetWeightedEnable(enable bool) {
+	v := "True"
+	if !enable {
+		v = "False"
+	}
+	g.Settings.GSLB.Weighted = v
+}
+
+// SetSorryServer ソーリーサーバ 設定
+func (g *GSLB) SetSorryServer(server string) {
+	g.Settings.GSLB.SorryServer = server
 }

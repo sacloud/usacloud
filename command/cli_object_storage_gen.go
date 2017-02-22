@@ -116,6 +116,12 @@ func init() {
 				ArgsUsage: "[PATH] [FILE]",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
+						Name:        "bucket",
+						Usage:       "set bucket",
+						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
+						Destination: &getParam.Bucket,
+					},
+					&cli.StringFlag{
 						Name:        "access-key",
 						Usage:       "[Required] set access-key",
 						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
@@ -126,12 +132,6 @@ func init() {
 						Usage:       "[Required] set access-key",
 						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
 						Destination: &getParam.SecretKey,
-					},
-					&cli.StringFlag{
-						Name:        "bucket",
-						Usage:       "set bucket",
-						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
-						Destination: &getParam.Bucket,
 					},
 				},
 				Action: func(c *cli.Context) error {

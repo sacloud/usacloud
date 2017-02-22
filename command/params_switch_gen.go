@@ -116,10 +116,10 @@ func (p *ListSwitchParam) GetSort() []string {
 
 // CreateSwitchParam is input parameters for the sacloud API
 type CreateSwitchParam struct {
-	Tags        []string
-	IconId      int64
 	Name        string
 	Description string
+	Tags        []string
+	IconId      int64
 }
 
 // NewCreateSwitchParam return new CreateSwitchParam
@@ -130,20 +130,6 @@ func NewCreateSwitchParam() *CreateSwitchParam {
 // Validate checks current values in model
 func (p *CreateSwitchParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := define.Resources["Switch"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := validateRequired
 		errs := validator("--name", p.Name)
@@ -161,6 +147,20 @@ func (p *CreateSwitchParam) Validate() []error {
 	{
 		validator := define.Resources["Switch"].Commands["create"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -193,20 +193,6 @@ func (p *CreateSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *CreateSwitchParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateSwitchParam) GetTags() []string {
-	return p.Tags
-}
-func (p *CreateSwitchParam) SetIconId(v int64) {
-	p.IconId = v
-}
-
-func (p *CreateSwitchParam) GetIconId() int64 {
-	return p.IconId
-}
 func (p *CreateSwitchParam) SetName(v string) {
 	p.Name = v
 }
@@ -220,6 +206,20 @@ func (p *CreateSwitchParam) SetDescription(v string) {
 
 func (p *CreateSwitchParam) GetDescription() string {
 	return p.Description
+}
+func (p *CreateSwitchParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateSwitchParam) GetTags() []string {
+	return p.Tags
+}
+func (p *CreateSwitchParam) SetIconId(v int64) {
+	p.IconId = v
+}
+
+func (p *CreateSwitchParam) GetIconId() int64 {
+	return p.IconId
 }
 
 // ReadSwitchParam is input parameters for the sacloud API
@@ -287,11 +287,11 @@ func (p *ReadSwitchParam) GetId() int64 {
 
 // UpdateSwitchParam is input parameters for the sacloud API
 type UpdateSwitchParam struct {
+	IconId      int64
 	Id          int64
 	Name        string
 	Description string
 	Tags        []string
-	IconId      int64
 }
 
 // NewUpdateSwitchParam return new UpdateSwitchParam
@@ -302,6 +302,13 @@ func NewUpdateSwitchParam() *UpdateSwitchParam {
 // Validate checks current values in model
 func (p *UpdateSwitchParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["Switch"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := validateRequired
 		errs := validator("--id", p.Id)
@@ -337,13 +344,6 @@ func (p *UpdateSwitchParam) Validate() []error {
 			errors = append(errors, errs...)
 		}
 	}
-	{
-		validator := define.Resources["Switch"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	return errors
 }
@@ -372,6 +372,13 @@ func (p *UpdateSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdateSwitchParam) SetIconId(v int64) {
+	p.IconId = v
+}
+
+func (p *UpdateSwitchParam) GetIconId() int64 {
+	return p.IconId
+}
 func (p *UpdateSwitchParam) SetId(v int64) {
 	p.Id = v
 }
@@ -399,13 +406,6 @@ func (p *UpdateSwitchParam) SetTags(v []string) {
 
 func (p *UpdateSwitchParam) GetTags() []string {
 	return p.Tags
-}
-func (p *UpdateSwitchParam) SetIconId(v int64) {
-	p.IconId = v
-}
-
-func (p *UpdateSwitchParam) GetIconId() int64 {
-	return p.IconId
 }
 
 // DeleteSwitchParam is input parameters for the sacloud API
@@ -473,8 +473,8 @@ func (p *DeleteSwitchParam) GetId() int64 {
 
 // BridgeConnectSwitchParam is input parameters for the sacloud API
 type BridgeConnectSwitchParam struct {
-	BridgeId int64
 	Id       int64
+	BridgeId int64
 }
 
 // NewBridgeConnectSwitchParam return new BridgeConnectSwitchParam
@@ -487,20 +487,6 @@ func (p *BridgeConnectSwitchParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--bridge-id", p.BridgeId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["bridge-connect"].Params["bridge-id"].ValidateFunc
-		errs := validator("--bridge-id", p.BridgeId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
 		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -509,6 +495,20 @@ func (p *BridgeConnectSwitchParam) Validate() []error {
 	{
 		validator := define.Resources["Switch"].Commands["bridge-connect"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--bridge-id", p.BridgeId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["bridge-connect"].Params["bridge-id"].ValidateFunc
+		errs := validator("--bridge-id", p.BridgeId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -541,19 +541,19 @@ func (p *BridgeConnectSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *BridgeConnectSwitchParam) SetBridgeId(v int64) {
-	p.BridgeId = v
-}
-
-func (p *BridgeConnectSwitchParam) GetBridgeId() int64 {
-	return p.BridgeId
-}
 func (p *BridgeConnectSwitchParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *BridgeConnectSwitchParam) GetId() int64 {
 	return p.Id
+}
+func (p *BridgeConnectSwitchParam) SetBridgeId(v int64) {
+	p.BridgeId = v
+}
+
+func (p *BridgeConnectSwitchParam) GetBridgeId() int64 {
+	return p.BridgeId
 }
 
 // BridgeDisconnectSwitchParam is input parameters for the sacloud API

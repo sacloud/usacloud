@@ -6,13 +6,18 @@ import (
 	"fmt"
 )
 
-func IconList(ctx Context, params *ListIconParam) error {
+func GSLBList(ctx Context, params *ListGSLBParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetIconAPI()
+	finder := client.GetGSLBAPI()
 
 	finder.SetEmpty()
 
+	if !isEmpty(params.Name) {
+		for _, v := range params.Name {
+			finder.SetFilterBy("Name", v)
+		}
+	}
 	if !isEmpty(params.Id) {
 		for _, v := range params.Id {
 			finder.SetFilterMultiBy("ID", v)
@@ -24,29 +29,21 @@ func IconList(ctx Context, params *ListIconParam) error {
 	if !isEmpty(params.Max) {
 		finder.SetLimit(params.Max)
 	}
-	if !isEmpty(params.Scope) {
-		finder.SetFilterBy("Scope", params.Scope)
-	}
 	if !isEmpty(params.Sort) {
 		for _, v := range params.Sort {
 			setSortBy(finder, v)
-		}
-	}
-	if !isEmpty(params.Name) {
-		for _, v := range params.Name {
-			finder.SetFilterBy("Name", v)
 		}
 	}
 
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("IconList is failed: %s", err)
+		return fmt.Errorf("GSLBList is failed: %s", err)
 	}
 
 	list := []interface{}{}
-	for i := range res.Icons {
-		list = append(list, &res.Icons[i])
+	for i := range res.CommonServiceGSLBItems {
+		list = append(list, &res.CommonServiceGSLBItems[i])
 	}
 
 	return ctx.GetOutput().Print(list...)

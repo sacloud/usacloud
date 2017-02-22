@@ -19,15 +19,6 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List Region",
 				Flags: []cli.Flag{
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
-					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
 					&cli.IntFlag{
 						Name:        "max",
 						Usage:       "set limit",
@@ -40,6 +31,15 @@ func init() {
 					&cli.StringSliceFlag{
 						Name:  "name",
 						Usage: "set filter by name(s)",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
 					},
 				},
 				Action: func(c *cli.Context) error {

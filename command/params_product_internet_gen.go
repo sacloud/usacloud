@@ -8,6 +8,69 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// ReadProductInternetParam is input parameters for the sacloud API
+type ReadProductInternetParam struct {
+	Id int64
+}
+
+// NewReadProductInternetParam return new ReadProductInternetParam
+func NewReadProductInternetParam() *ReadProductInternetParam {
+	return &ReadProductInternetParam{}
+}
+
+// Validate checks current values in model
+func (p *ReadProductInternetParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ProductInternet"].Commands["read"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ReadProductInternetParam) getResourceDef() *schema.Resource {
+	return define.Resources["ProductInternet"]
+}
+
+func (p *ReadProductInternetParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["read"]
+}
+
+func (p *ReadProductInternetParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ReadProductInternetParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ReadProductInternetParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ReadProductInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ReadProductInternetParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ReadProductInternetParam) GetId() int64 {
+	return p.Id
+}
+
 // ListProductInternetParam is input parameters for the sacloud API
 type ListProductInternetParam struct {
 	Id   []int64
@@ -112,67 +175,4 @@ func (p *ListProductInternetParam) SetName(v []string) {
 
 func (p *ListProductInternetParam) GetName() []string {
 	return p.Name
-}
-
-// ReadProductInternetParam is input parameters for the sacloud API
-type ReadProductInternetParam struct {
-	Id int64
-}
-
-// NewReadProductInternetParam return new ReadProductInternetParam
-func NewReadProductInternetParam() *ReadProductInternetParam {
-	return &ReadProductInternetParam{}
-}
-
-// Validate checks current values in model
-func (p *ReadProductInternetParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ProductInternet"].Commands["read"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ReadProductInternetParam) getResourceDef() *schema.Resource {
-	return define.Resources["ProductInternet"]
-}
-
-func (p *ReadProductInternetParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["read"]
-}
-
-func (p *ReadProductInternetParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ReadProductInternetParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ReadProductInternetParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ReadProductInternetParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ReadProductInternetParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ReadProductInternetParam) GetId() int64 {
-	return p.Id
 }

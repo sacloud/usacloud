@@ -14,11 +14,11 @@ func IconCreate(ctx Context, params *CreateIconParam) error {
 
 	// set params
 
-	params.getCommandDef().Params["image"].CustomHandler("Image", params, p)
-
 	p.SetName(params.Name)
 
 	p.SetTags(params.Tags)
+
+	params.getCommandDef().Params["image"].CustomHandler("Image", params, p)
 
 	// call Create(id)
 	res, err := api.Create(p)

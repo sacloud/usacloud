@@ -447,11 +447,11 @@ func (p *PacketFilterDisconnectInterfaceParam) GetPacketFilterId() int64 {
 
 // ListInterfaceParam is input parameters for the sacloud API
 type ListInterfaceParam struct {
-	Name []string
-	Id   []int64
 	From int
 	Max  int
 	Sort []string
+	Name []string
+	Id   []int64
 }
 
 // NewListInterfaceParam return new ListInterfaceParam
@@ -515,20 +515,6 @@ func (p *ListInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListInterfaceParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListInterfaceParam) GetName() []string {
-	return p.Name
-}
-func (p *ListInterfaceParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListInterfaceParam) GetId() []int64 {
-	return p.Id
-}
 func (p *ListInterfaceParam) SetFrom(v int) {
 	p.From = v
 }
@@ -549,4 +535,18 @@ func (p *ListInterfaceParam) SetSort(v []string) {
 
 func (p *ListInterfaceParam) GetSort() []string {
 	return p.Sort
+}
+func (p *ListInterfaceParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListInterfaceParam) GetName() []string {
+	return p.Name
+}
+func (p *ListInterfaceParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListInterfaceParam) GetId() []int64 {
+	return p.Id
 }

@@ -83,32 +83,32 @@
 		{
 			"checksumSHA1": "WDN0aBT7ydlh1XoUn2x49bAIJTw=",
 			"path": "github.com/sacloud/libsacloud",
-			"revision": "35ed32adae1c1dbba89acfaab463a044ebcfe1be",
-			"revisionTime": "2017-02-21T07:47:54Z"
+			"revision": "44f0854f4ceffb9d4e4ad4e7436a87e20ff508ec",
+			"revisionTime": "2017-02-22T10:52:41Z"
 		},
 		{
 			"checksumSHA1": "i8ZZUfGEbzhl4JKUX5yA8a5snsE=",
 			"path": "github.com/sacloud/libsacloud/api",
-			"revision": "35ed32adae1c1dbba89acfaab463a044ebcfe1be",
-			"revisionTime": "2017-02-21T07:47:54Z"
+			"revision": "44f0854f4ceffb9d4e4ad4e7436a87e20ff508ec",
+			"revisionTime": "2017-02-22T10:52:41Z"
 		},
 		{
 			"checksumSHA1": "M+4X93DNse0AvmUYq1E9JnvztV8=",
 			"path": "github.com/sacloud/libsacloud/builder",
-			"revision": "35ed32adae1c1dbba89acfaab463a044ebcfe1be",
-			"revisionTime": "2017-02-21T07:47:54Z"
+			"revision": "44f0854f4ceffb9d4e4ad4e7436a87e20ff508ec",
+			"revisionTime": "2017-02-22T10:52:41Z"
 		},
 		{
-			"checksumSHA1": "w+nt5VOF9pCG0yOT6oBv6xiJc7U=",
+			"checksumSHA1": "3H274xTmbwpQuvjfljy70oWHwCs=",
 			"path": "github.com/sacloud/libsacloud/sacloud",
-			"revision": "35ed32adae1c1dbba89acfaab463a044ebcfe1be",
-			"revisionTime": "2017-02-21T07:47:54Z"
+			"revision": "44f0854f4ceffb9d4e4ad4e7436a87e20ff508ec",
+			"revisionTime": "2017-02-22T10:52:41Z"
 		},
 		{
 			"checksumSHA1": "IwXS9M7ZBr/M0yqSChLvwrSh+U4=",
 			"path": "github.com/sacloud/libsacloud/sacloud/ostype",
-			"revision": "35ed32adae1c1dbba89acfaab463a044ebcfe1be",
-			"revisionTime": "2017-02-21T07:47:54Z"
+			"revision": "44f0854f4ceffb9d4e4ad4e7436a87e20ff508ec",
+			"revisionTime": "2017-02-22T10:52:41Z"
 		},
 		{
 			"checksumSHA1": "JXUVA1jky8ZX8w09p2t5KLs97Nc=",
@@ -159,10 +159,10 @@
 			"revisionTime": "2017-02-16T21:06:26Z"
 		},
 		{
-			"checksumSHA1": "exMnsyei9H9PgttMUskof6S2554=",
+			"checksumSHA1": "1Rx4tdcCywDRfdX4Tzn/7riP6Go=",
 			"path": "gopkg.in/urfave/cli.v2",
-			"revision": "e485446237011b8abac93919242e6f059ad56c87",
-			"revisionTime": "2016-10-29T22:39:47Z"
+			"revision": "04b2f4ff79cf1fd71e138bafc67df8bbdb5b81c2",
+			"revisionTime": "2017-02-15T05:18:00Z"
 		}
 	],
 	"rootPath": "github.com/sacloud/usacloud"
