@@ -10,11 +10,11 @@ import (
 
 // ListSSHKeyParam is input parameters for the sacloud API
 type ListSSHKeyParam struct {
-	Sort []string
-	Name []string
 	Id   []int64
 	From int
 	Max  int
+	Sort []string
+	Name []string
 }
 
 // NewListSSHKeyParam return new ListSSHKeyParam
@@ -26,15 +26,6 @@ func NewListSSHKeyParam() *ListSSHKeyParam {
 func (p *ListSSHKeyParam) Validate() []error {
 	errors := []error{}
 	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := define.Resources["SSHKey"].Commands["list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -45,6 +36,15 @@ func (p *ListSSHKeyParam) Validate() []error {
 		errs := validateConflicts("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -78,20 +78,6 @@ func (p *ListSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListSSHKeyParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListSSHKeyParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListSSHKeyParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListSSHKeyParam) GetName() []string {
-	return p.Name
-}
 func (p *ListSSHKeyParam) SetId(v []int64) {
 	p.Id = v
 }
@@ -113,13 +99,27 @@ func (p *ListSSHKeyParam) SetMax(v int) {
 func (p *ListSSHKeyParam) GetMax() int {
 	return p.Max
 }
+func (p *ListSSHKeyParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListSSHKeyParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListSSHKeyParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListSSHKeyParam) GetName() []string {
+	return p.Name
+}
 
 // CreateSSHKeyParam is input parameters for the sacloud API
 type CreateSSHKeyParam struct {
+	Name             string
 	Description      string
 	PublicKeyContent string
 	PublicKey        string
-	Name             string
 }
 
 // NewCreateSSHKeyParam return new CreateSSHKeyParam
@@ -130,6 +130,20 @@ func NewCreateSSHKeyParam() *CreateSSHKeyParam {
 // Validate checks current values in model
 func (p *CreateSSHKeyParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SSHKey"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := define.Resources["SSHKey"].Commands["create"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
@@ -149,20 +163,6 @@ func (p *CreateSSHKeyParam) Validate() []error {
 	{
 		validator := define.Resources["SSHKey"].Commands["create"].Params["public-key"].ValidateFunc
 		errs := validator("--public-key", p.PublicKey)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["SSHKey"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -195,6 +195,13 @@ func (p *CreateSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CreateSSHKeyParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateSSHKeyParam) GetName() string {
+	return p.Name
+}
 func (p *CreateSSHKeyParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -215,13 +222,6 @@ func (p *CreateSSHKeyParam) SetPublicKey(v string) {
 
 func (p *CreateSSHKeyParam) GetPublicKey() string {
 	return p.PublicKey
-}
-func (p *CreateSSHKeyParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateSSHKeyParam) GetName() string {
-	return p.Name
 }
 
 // ReadSSHKeyParam is input parameters for the sacloud API
@@ -289,9 +289,9 @@ func (p *ReadSSHKeyParam) GetId() int64 {
 
 // UpdateSSHKeyParam is input parameters for the sacloud API
 type UpdateSSHKeyParam struct {
-	Name        string
 	Description string
 	Id          int64
+	Name        string
 }
 
 // NewUpdateSSHKeyParam return new UpdateSSHKeyParam
@@ -302,13 +302,6 @@ func NewUpdateSSHKeyParam() *UpdateSSHKeyParam {
 // Validate checks current values in model
 func (p *UpdateSSHKeyParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := define.Resources["SSHKey"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := define.Resources["SSHKey"].Commands["update"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
@@ -326,6 +319,13 @@ func (p *UpdateSSHKeyParam) Validate() []error {
 	{
 		validator := define.Resources["SSHKey"].Commands["update"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SSHKey"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -358,13 +358,6 @@ func (p *UpdateSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *UpdateSSHKeyParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateSSHKeyParam) GetName() string {
-	return p.Name
-}
 func (p *UpdateSSHKeyParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -378,6 +371,13 @@ func (p *UpdateSSHKeyParam) SetId(v int64) {
 
 func (p *UpdateSSHKeyParam) GetId() int64 {
 	return p.Id
+}
+func (p *UpdateSSHKeyParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateSSHKeyParam) GetName() string {
+	return p.Name
 }
 
 // DeleteSSHKeyParam is input parameters for the sacloud API
@@ -445,10 +445,10 @@ func (p *DeleteSSHKeyParam) GetId() int64 {
 
 // GenerateSSHKeyParam is input parameters for the sacloud API
 type GenerateSSHKeyParam struct {
-	PrivateKeyOutput string
 	Name             string
 	Description      string
 	PassPhrase       string
+	PrivateKeyOutput string
 }
 
 // NewGenerateSSHKeyParam return new GenerateSSHKeyParam
@@ -515,13 +515,6 @@ func (p *GenerateSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *GenerateSSHKeyParam) SetPrivateKeyOutput(v string) {
-	p.PrivateKeyOutput = v
-}
-
-func (p *GenerateSSHKeyParam) GetPrivateKeyOutput() string {
-	return p.PrivateKeyOutput
-}
 func (p *GenerateSSHKeyParam) SetName(v string) {
 	p.Name = v
 }
@@ -542,4 +535,11 @@ func (p *GenerateSSHKeyParam) SetPassPhrase(v string) {
 
 func (p *GenerateSSHKeyParam) GetPassPhrase() string {
 	return p.PassPhrase
+}
+func (p *GenerateSSHKeyParam) SetPrivateKeyOutput(v string) {
+	p.PrivateKeyOutput = v
+}
+
+func (p *GenerateSSHKeyParam) GetPrivateKeyOutput() string {
+	return p.PrivateKeyOutput
 }

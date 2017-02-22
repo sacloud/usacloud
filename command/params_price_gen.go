@@ -10,11 +10,11 @@ import (
 
 // ListPriceParam is input parameters for the sacloud API
 type ListPriceParam struct {
-	Max  int
-	Sort []string
 	Name []string
 	Id   []int64
 	From int
+	Max  int
+	Sort []string
 }
 
 // NewListPriceParam return new ListPriceParam
@@ -78,20 +78,6 @@ func (p *ListPriceParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListPriceParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListPriceParam) GetMax() int {
-	return p.Max
-}
-func (p *ListPriceParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListPriceParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListPriceParam) SetName(v []string) {
 	p.Name = v
 }
@@ -112,4 +98,18 @@ func (p *ListPriceParam) SetFrom(v int) {
 
 func (p *ListPriceParam) GetFrom() int {
 	return p.From
+}
+func (p *ListPriceParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListPriceParam) GetMax() int {
+	return p.Max
+}
+func (p *ListPriceParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListPriceParam) GetSort() []string {
+	return p.Sort
 }

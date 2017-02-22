@@ -10,12 +10,12 @@ import (
 
 // ListStartupScriptParam is input parameters for the sacloud API
 type ListStartupScriptParam struct {
+	Name  []string
+	Id    []int64
 	From  int
 	Max   int
 	Sort  []string
 	Scope string
-	Name  []string
-	Id    []int64
 }
 
 // NewListStartupScriptParam return new ListStartupScriptParam
@@ -26,13 +26,6 @@ func NewListStartupScriptParam() *ListStartupScriptParam {
 // Validate checks current values in model
 func (p *ListStartupScriptParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := define.Resources["StartupScript"].Commands["list"].Params["scope"].ValidateFunc
-		errs := validator("--scope", p.Scope)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
 
@@ -54,6 +47,13 @@ func (p *ListStartupScriptParam) Validate() []error {
 
 			"--name": p.Name,
 		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["StartupScript"].Commands["list"].Params["scope"].ValidateFunc
+		errs := validator("--scope", p.Scope)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -86,6 +86,20 @@ func (p *ListStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListStartupScriptParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListStartupScriptParam) GetName() []string {
+	return p.Name
+}
+func (p *ListStartupScriptParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListStartupScriptParam) GetId() []int64 {
+	return p.Id
+}
 func (p *ListStartupScriptParam) SetFrom(v int) {
 	p.From = v
 }
@@ -113,20 +127,6 @@ func (p *ListStartupScriptParam) SetScope(v string) {
 
 func (p *ListStartupScriptParam) GetScope() string {
 	return p.Scope
-}
-func (p *ListStartupScriptParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListStartupScriptParam) GetName() []string {
-	return p.Name
-}
-func (p *ListStartupScriptParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListStartupScriptParam) GetId() []int64 {
-	return p.Id
 }
 
 // CreateStartupScriptParam is input parameters for the sacloud API

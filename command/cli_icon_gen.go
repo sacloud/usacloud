@@ -22,19 +22,6 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List Icon",
 				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
 					&cli.Int64SliceFlag{
 						Name:  "id",
 						Usage: "set filter by id(s)",
@@ -44,10 +31,23 @@ func init() {
 						Usage:       "set offset",
 						Destination: &listParam.From,
 					},
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
 					&cli.StringFlag{
 						Name:        "scope",
 						Usage:       "set filter by scope('user' or 'shared')",
 						Destination: &listParam.Scope,
+					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -80,6 +80,11 @@ func init() {
 				Usage:   "Create Icon",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
+						Name:        "image",
+						Usage:       "[Required] set icon image",
+						Destination: &createParam.Image,
+					},
+					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "[Required] set resource display name",
 						Destination: &createParam.Name,
@@ -87,11 +92,6 @@ func init() {
 					&cli.StringSliceFlag{
 						Name:  "tags",
 						Usage: "set resource tags",
-					},
-					&cli.StringFlag{
-						Name:        "image",
-						Usage:       "[Required] set icon image",
-						Destination: &createParam.Image,
 					},
 				},
 				Action: func(c *cli.Context) error {

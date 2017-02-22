@@ -7,16 +7,109 @@ import (
 )
 
 func init() {
-	getParam := NewGetObjectStorageParam()
-	deleteParam := NewDeleteObjectStorageParam()
 	listParam := NewListObjectStorageParam()
 	putParam := NewPutObjectStorageParam()
+	getParam := NewGetObjectStorageParam()
+	deleteParam := NewDeleteObjectStorageParam()
 
 	cliCommand := &cli.Command{
 		Name:    "object-storage",
 		Aliases: []string{"ojs"},
 		Usage:   "A manage commands of ObjectStorage",
 		Subcommands: []*cli.Command{
+			{
+				Name:      "list",
+				Aliases:   []string{"l", "ls"},
+				Usage:     "List ObjectStorage",
+				ArgsUsage: "[PATH]",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "access-key",
+						Usage:       "[Required] set access-key",
+						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
+						Destination: &listParam.AccessKey,
+					},
+					&cli.StringFlag{
+						Name:        "secret-key",
+						Usage:       "[Required] set access-key",
+						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
+						Destination: &listParam.SecretKey,
+					},
+					&cli.StringFlag{
+						Name:        "bucket",
+						Usage:       "set bucket",
+						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
+						Destination: &listParam.Bucket,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := listParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), listParam)
+
+					// Run command with params
+					return ObjectStorageList(ctx, listParam)
+				},
+			},
+			{
+				Name:      "put",
+				Usage:     "Put ObjectStorage",
+				ArgsUsage: "[FILE] [PATH]",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "access-key",
+						Usage:       "[Required] set access-key",
+						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
+						Destination: &putParam.AccessKey,
+					},
+					&cli.StringFlag{
+						Name:        "secret-key",
+						Usage:       "[Required] set access-key",
+						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
+						Destination: &putParam.SecretKey,
+					},
+					&cli.StringFlag{
+						Name:        "bucket",
+						Usage:       "set bucket",
+						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
+						Destination: &putParam.Bucket,
+					},
+					&cli.StringFlag{
+						Name:        "content-type",
+						Usage:       "set content-type",
+						Value:       "application/octet-stream",
+						Destination: &putParam.ContentType,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := putParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), putParam)
+
+					// Run command with params
+					return ObjectStoragePut(ctx, putParam)
+				},
+			},
 			{
 				Name:      "get",
 				Usage:     "Get ObjectStorage",
@@ -102,99 +195,6 @@ func init() {
 
 					// Run command with params
 					return ObjectStorageDelete(ctx, deleteParam)
-				},
-			},
-			{
-				Name:      "list",
-				Aliases:   []string{"l", "ls"},
-				Usage:     "List ObjectStorage",
-				ArgsUsage: "[PATH]",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "access-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
-						Destination: &listParam.AccessKey,
-					},
-					&cli.StringFlag{
-						Name:        "secret-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
-						Destination: &listParam.SecretKey,
-					},
-					&cli.StringFlag{
-						Name:        "bucket",
-						Usage:       "set bucket",
-						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
-						Destination: &listParam.Bucket,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), listParam)
-
-					// Run command with params
-					return ObjectStorageList(ctx, listParam)
-				},
-			},
-			{
-				Name:      "put",
-				Usage:     "Put ObjectStorage",
-				ArgsUsage: "[FILE] [PATH]",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "secret-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
-						Destination: &putParam.SecretKey,
-					},
-					&cli.StringFlag{
-						Name:        "bucket",
-						Usage:       "set bucket",
-						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
-						Destination: &putParam.Bucket,
-					},
-					&cli.StringFlag{
-						Name:        "content-type",
-						Usage:       "set content-type",
-						Value:       "application/octet-stream",
-						Destination: &putParam.ContentType,
-					},
-					&cli.StringFlag{
-						Name:        "access-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
-						Destination: &putParam.AccessKey,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := putParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), putParam)
-
-					// Run command with params
-					return ObjectStoragePut(ctx, putParam)
 				},
 			},
 		},

@@ -10,11 +10,11 @@ import (
 
 // ListProductLicenseParam is input parameters for the sacloud API
 type ListProductLicenseParam struct {
-	From int
 	Max  int
 	Sort []string
 	Name []string
 	Id   []int64
+	From int
 }
 
 // NewListProductLicenseParam return new ListProductLicenseParam
@@ -78,13 +78,6 @@ func (p *ListProductLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListProductLicenseParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListProductLicenseParam) GetFrom() int {
-	return p.From
-}
 func (p *ListProductLicenseParam) SetMax(v int) {
 	p.Max = v
 }
@@ -112,6 +105,13 @@ func (p *ListProductLicenseParam) SetId(v []int64) {
 
 func (p *ListProductLicenseParam) GetId() []int64 {
 	return p.Id
+}
+func (p *ListProductLicenseParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListProductLicenseParam) GetFrom() int {
+	return p.From
 }
 
 // ReadProductLicenseParam is input parameters for the sacloud API

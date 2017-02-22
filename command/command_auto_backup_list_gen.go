@@ -6,21 +6,13 @@ import (
 	"fmt"
 )
 
-func ProductDiskList(ctx Context, params *ListProductDiskParam) error {
+func AutoBackupList(ctx Context, params *ListAutoBackupParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetProductDiskAPI()
+	finder := client.GetAutoBackupAPI()
 
 	finder.SetEmpty()
 
-	if !isEmpty(params.Max) {
-		finder.SetLimit(params.Max)
-	}
-	if !isEmpty(params.Sort) {
-		for _, v := range params.Sort {
-			setSortBy(finder, v)
-		}
-	}
 	if !isEmpty(params.Name) {
 		for _, v := range params.Name {
 			finder.SetFilterBy("Name", v)
@@ -34,16 +26,24 @@ func ProductDiskList(ctx Context, params *ListProductDiskParam) error {
 	if !isEmpty(params.From) {
 		finder.SetOffset(params.From)
 	}
+	if !isEmpty(params.Max) {
+		finder.SetLimit(params.Max)
+	}
+	if !isEmpty(params.Sort) {
+		for _, v := range params.Sort {
+			setSortBy(finder, v)
+		}
+	}
 
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("ProductDiskList is failed: %s", err)
+		return fmt.Errorf("AutoBackupList is failed: %s", err)
 	}
 
 	list := []interface{}{}
-	for i := range res.DiskPlans {
-		list = append(list, &res.DiskPlans[i])
+	for i := range res.CommonServiceAutoBackupItems {
+		list = append(list, &res.CommonServiceAutoBackupItems[i])
 	}
 
 	return ctx.GetOutput().Print(list...)

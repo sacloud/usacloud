@@ -8,112 +8,6 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListInterfaceParam is input parameters for the sacloud API
-type ListInterfaceParam struct {
-	Name []string
-	Id   []int64
-	From int
-	Max  int
-	Sort []string
-}
-
-// NewListInterfaceParam return new ListInterfaceParam
-func NewListInterfaceParam() *ListInterfaceParam {
-	return &ListInterfaceParam{}
-}
-
-// Validate checks current values in model
-func (p *ListInterfaceParam) Validate() []error {
-	errors := []error{}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Interface"].Commands["list"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--id", p.Id, map[string]interface{}{
-
-			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ListInterfaceParam) getResourceDef() *schema.Resource {
-	return define.Resources["Interface"]
-}
-
-func (p *ListInterfaceParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["list"]
-}
-
-func (p *ListInterfaceParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ListInterfaceParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ListInterfaceParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ListInterfaceParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ListInterfaceParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListInterfaceParam) GetName() []string {
-	return p.Name
-}
-func (p *ListInterfaceParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListInterfaceParam) GetId() []int64 {
-	return p.Id
-}
-func (p *ListInterfaceParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListInterfaceParam) GetFrom() int {
-	return p.From
-}
-func (p *ListInterfaceParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListInterfaceParam) GetMax() int {
-	return p.Max
-}
-func (p *ListInterfaceParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListInterfaceParam) GetSort() []string {
-	return p.Sort
-}
-
 // CreateInterfaceParam is input parameters for the sacloud API
 type CreateInterfaceParam struct {
 	ServerId int64
@@ -549,4 +443,110 @@ func (p *PacketFilterDisconnectInterfaceParam) SetPacketFilterId(v int64) {
 
 func (p *PacketFilterDisconnectInterfaceParam) GetPacketFilterId() int64 {
 	return p.PacketFilterId
+}
+
+// ListInterfaceParam is input parameters for the sacloud API
+type ListInterfaceParam struct {
+	Name []string
+	Id   []int64
+	From int
+	Max  int
+	Sort []string
+}
+
+// NewListInterfaceParam return new ListInterfaceParam
+func NewListInterfaceParam() *ListInterfaceParam {
+	return &ListInterfaceParam{}
+}
+
+// Validate checks current values in model
+func (p *ListInterfaceParam) Validate() []error {
+	errors := []error{}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Interface"].Commands["list"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--id", p.Id, map[string]interface{}{
+
+			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ListInterfaceParam) getResourceDef() *schema.Resource {
+	return define.Resources["Interface"]
+}
+
+func (p *ListInterfaceParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["list"]
+}
+
+func (p *ListInterfaceParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ListInterfaceParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ListInterfaceParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ListInterfaceParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListInterfaceParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListInterfaceParam) GetName() []string {
+	return p.Name
+}
+func (p *ListInterfaceParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListInterfaceParam) GetId() []int64 {
+	return p.Id
+}
+func (p *ListInterfaceParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListInterfaceParam) GetFrom() int {
+	return p.From
+}
+func (p *ListInterfaceParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListInterfaceParam) GetMax() int {
+	return p.Max
+}
+func (p *ListInterfaceParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListInterfaceParam) GetSort() []string {
+	return p.Sort
 }

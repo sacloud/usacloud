@@ -7,67 +7,21 @@ import (
 )
 
 func init() {
-	bridgeDisconnectParam := NewBridgeDisconnectSwitchParam()
-	listParam := NewListSwitchParam()
-	createParam := NewCreateSwitchParam()
-	readParam := NewReadSwitchParam()
-	updateParam := NewUpdateSwitchParam()
-	deleteParam := NewDeleteSwitchParam()
-	bridgeConnectParam := NewBridgeConnectSwitchParam()
+	listParam := NewListAutoBackupParam()
+	createParam := NewCreateAutoBackupParam()
+	readParam := NewReadAutoBackupParam()
+	updateParam := NewUpdateAutoBackupParam()
+	deleteParam := NewDeleteAutoBackupParam()
 
 	cliCommand := &cli.Command{
-		Name:  "switch",
-		Usage: "A manage commands of Switch",
+		Name:  "auto-backup",
+		Usage: "A manage commands of AutoBackup",
 		Subcommands: []*cli.Command{
-			{
-				Name:      "bridge-disconnect",
-				Usage:     "BridgeDisconnect Switch",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &bridgeDisconnectParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := bridgeDisconnectParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), bridgeDisconnectParam)
-
-					// Run command with params
-					return SwitchBridgeDisconnect(ctx, bridgeDisconnectParam)
-				},
-			},
 			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List Switch",
+				Usage:   "List AutoBackup",
 				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
 					&cli.StringSliceFlag{
 						Name:  "name",
 						Usage: "set filter by name(s)",
@@ -80,6 +34,15 @@ func init() {
 						Name:        "from",
 						Usage:       "set offset",
 						Destination: &listParam.From,
+					},
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -103,24 +66,35 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), listParam)
 
 					// Run command with params
-					return SwitchList(ctx, listParam)
+					return AutoBackupList(ctx, listParam)
 				},
 			},
 			{
 				Name:    "create",
 				Aliases: []string{"c"},
-				Usage:   "Create Switch",
+				Usage:   "Create AutoBackup",
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
-					},
 					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
 						Destination: &createParam.Description,
+					},
+					&cli.IntFlag{
+						Name:        "generation",
+						Usage:       "[Required] set backup generation[1-10]",
+						Value:       1,
+						Destination: &createParam.Generation,
+					},
+					&cli.StringSliceFlag{
+						Name:  "weekdays",
+						Usage: "[Required] set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
+						Value: cli.NewStringSlice("all"),
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
 					},
 					&cli.StringSliceFlag{
 						Name:  "tags",
@@ -131,10 +105,22 @@ func init() {
 						Usage:       "set Icon ID",
 						Destination: &createParam.IconId,
 					},
+					&cli.IntFlag{
+						Name:        "start-hour",
+						Usage:       "[Required] set backup start hour[0/6/12/18]",
+						Value:       0,
+						Destination: &createParam.StartHour,
+					},
+					&cli.Int64Flag{
+						Name:        "disk-id",
+						Usage:       "[Required] set target diskID ",
+						Destination: &createParam.DiskId,
+					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					createParam.Weekdays = c.StringSlice("weekdays")
 					createParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
@@ -151,13 +137,13 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), createParam)
 
 					// Run command with params
-					return SwitchCreate(ctx, createParam)
+					return AutoBackupCreate(ctx, createParam)
 				},
 			},
 			{
 				Name:      "read",
 				Aliases:   []string{"r"},
-				Usage:     "Read Switch",
+				Usage:     "Read AutoBackup",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -187,19 +173,33 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), readParam)
 
 					// Run command with params
-					return SwitchRead(ctx, readParam)
+					return AutoBackupRead(ctx, readParam)
 				},
 			},
 			{
 				Name:      "update",
 				Aliases:   []string{"u"},
-				Usage:     "Update Switch",
+				Usage:     "Update AutoBackup",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
 						Destination: &updateParam.Id,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
+					},
+					&cli.IntFlag{
+						Name:        "start-hour",
+						Usage:       "set backup start hour[0/6/12/18]",
+						Destination: &updateParam.StartHour,
 					},
 					&cli.StringFlag{
 						Name:        "name",
@@ -212,20 +212,21 @@ func init() {
 						Usage:       "set resource description",
 						Destination: &updateParam.Description,
 					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
+					&cli.IntFlag{
+						Name:        "generation",
+						Usage:       "set backup generation[1-10]",
+						Destination: &updateParam.Generation,
 					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
+					&cli.StringSliceFlag{
+						Name:  "weekdays",
+						Usage: "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
 					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
 					updateParam.Tags = c.StringSlice("tags")
+					updateParam.Weekdays = c.StringSlice("weekdays")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -246,13 +247,13 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), updateParam)
 
 					// Run command with params
-					return SwitchUpdate(ctx, updateParam)
+					return AutoBackupUpdate(ctx, updateParam)
 				},
 			},
 			{
 				Name:      "delete",
 				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete Switch",
+				Usage:     "Delete AutoBackup",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
@@ -282,47 +283,7 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), deleteParam)
 
 					// Run command with params
-					return SwitchDelete(ctx, deleteParam)
-				},
-			},
-			{
-				Name:      "bridge-connect",
-				Usage:     "BridgeConnect Switch",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &bridgeConnectParam.Id,
-					},
-					&cli.Int64Flag{
-						Name:        "bridge-id",
-						Usage:       "[Required] set bridge ID",
-						Destination: &bridgeConnectParam.BridgeId,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := bridgeConnectParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), bridgeConnectParam)
-
-					// Run command with params
-					return SwitchBridgeConnect(ctx, bridgeConnectParam)
+					return AutoBackupDelete(ctx, deleteParam)
 				},
 			},
 		},

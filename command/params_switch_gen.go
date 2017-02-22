@@ -8,217 +8,6 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// DeleteSwitchParam is input parameters for the sacloud API
-type DeleteSwitchParam struct {
-	Id int64
-}
-
-// NewDeleteSwitchParam return new DeleteSwitchParam
-func NewDeleteSwitchParam() *DeleteSwitchParam {
-	return &DeleteSwitchParam{}
-}
-
-// Validate checks current values in model
-func (p *DeleteSwitchParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["delete"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *DeleteSwitchParam) getResourceDef() *schema.Resource {
-	return define.Resources["Switch"]
-}
-
-func (p *DeleteSwitchParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["delete"]
-}
-
-func (p *DeleteSwitchParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *DeleteSwitchParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *DeleteSwitchParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *DeleteSwitchParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DeleteSwitchParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *DeleteSwitchParam) GetId() int64 {
-	return p.Id
-}
-
-// BridgeConnectSwitchParam is input parameters for the sacloud API
-type BridgeConnectSwitchParam struct {
-	Id       int64
-	BridgeId int64
-}
-
-// NewBridgeConnectSwitchParam return new BridgeConnectSwitchParam
-func NewBridgeConnectSwitchParam() *BridgeConnectSwitchParam {
-	return &BridgeConnectSwitchParam{}
-}
-
-// Validate checks current values in model
-func (p *BridgeConnectSwitchParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["bridge-connect"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--bridge-id", p.BridgeId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["bridge-connect"].Params["bridge-id"].ValidateFunc
-		errs := validator("--bridge-id", p.BridgeId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *BridgeConnectSwitchParam) getResourceDef() *schema.Resource {
-	return define.Resources["Switch"]
-}
-
-func (p *BridgeConnectSwitchParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["bridge-connect"]
-}
-
-func (p *BridgeConnectSwitchParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *BridgeConnectSwitchParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *BridgeConnectSwitchParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *BridgeConnectSwitchParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *BridgeConnectSwitchParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *BridgeConnectSwitchParam) GetId() int64 {
-	return p.Id
-}
-func (p *BridgeConnectSwitchParam) SetBridgeId(v int64) {
-	p.BridgeId = v
-}
-
-func (p *BridgeConnectSwitchParam) GetBridgeId() int64 {
-	return p.BridgeId
-}
-
-// BridgeDisconnectSwitchParam is input parameters for the sacloud API
-type BridgeDisconnectSwitchParam struct {
-	Id int64
-}
-
-// NewBridgeDisconnectSwitchParam return new BridgeDisconnectSwitchParam
-func NewBridgeDisconnectSwitchParam() *BridgeDisconnectSwitchParam {
-	return &BridgeDisconnectSwitchParam{}
-}
-
-// Validate checks current values in model
-func (p *BridgeDisconnectSwitchParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["bridge-disconnect"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *BridgeDisconnectSwitchParam) getResourceDef() *schema.Resource {
-	return define.Resources["Switch"]
-}
-
-func (p *BridgeDisconnectSwitchParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["bridge-disconnect"]
-}
-
-func (p *BridgeDisconnectSwitchParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *BridgeDisconnectSwitchParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *BridgeDisconnectSwitchParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *BridgeDisconnectSwitchParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *BridgeDisconnectSwitchParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *BridgeDisconnectSwitchParam) GetId() int64 {
-	return p.Id
-}
-
 // ListSwitchParam is input parameters for the sacloud API
 type ListSwitchParam struct {
 	Name []string
@@ -327,10 +116,10 @@ func (p *ListSwitchParam) GetSort() []string {
 
 // CreateSwitchParam is input parameters for the sacloud API
 type CreateSwitchParam struct {
-	Name        string
-	Description string
 	Tags        []string
 	IconId      int64
+	Name        string
+	Description string
 }
 
 // NewCreateSwitchParam return new CreateSwitchParam
@@ -341,6 +130,20 @@ func NewCreateSwitchParam() *CreateSwitchParam {
 // Validate checks current values in model
 func (p *CreateSwitchParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["Switch"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := validateRequired
 		errs := validator("--name", p.Name)
@@ -358,20 +161,6 @@ func (p *CreateSwitchParam) Validate() []error {
 	{
 		validator := define.Resources["Switch"].Commands["create"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Switch"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -404,20 +193,6 @@ func (p *CreateSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *CreateSwitchParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateSwitchParam) GetName() string {
-	return p.Name
-}
-func (p *CreateSwitchParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *CreateSwitchParam) GetDescription() string {
-	return p.Description
-}
 func (p *CreateSwitchParam) SetTags(v []string) {
 	p.Tags = v
 }
@@ -431,6 +206,20 @@ func (p *CreateSwitchParam) SetIconId(v int64) {
 
 func (p *CreateSwitchParam) GetIconId() int64 {
 	return p.IconId
+}
+func (p *CreateSwitchParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateSwitchParam) GetName() string {
+	return p.Name
+}
+func (p *CreateSwitchParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateSwitchParam) GetDescription() string {
+	return p.Description
 }
 
 // ReadSwitchParam is input parameters for the sacloud API
@@ -617,4 +406,215 @@ func (p *UpdateSwitchParam) SetIconId(v int64) {
 
 func (p *UpdateSwitchParam) GetIconId() int64 {
 	return p.IconId
+}
+
+// DeleteSwitchParam is input parameters for the sacloud API
+type DeleteSwitchParam struct {
+	Id int64
+}
+
+// NewDeleteSwitchParam return new DeleteSwitchParam
+func NewDeleteSwitchParam() *DeleteSwitchParam {
+	return &DeleteSwitchParam{}
+}
+
+// Validate checks current values in model
+func (p *DeleteSwitchParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["delete"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DeleteSwitchParam) getResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *DeleteSwitchParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["delete"]
+}
+
+func (p *DeleteSwitchParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *DeleteSwitchParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *DeleteSwitchParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *DeleteSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DeleteSwitchParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *DeleteSwitchParam) GetId() int64 {
+	return p.Id
+}
+
+// BridgeConnectSwitchParam is input parameters for the sacloud API
+type BridgeConnectSwitchParam struct {
+	BridgeId int64
+	Id       int64
+}
+
+// NewBridgeConnectSwitchParam return new BridgeConnectSwitchParam
+func NewBridgeConnectSwitchParam() *BridgeConnectSwitchParam {
+	return &BridgeConnectSwitchParam{}
+}
+
+// Validate checks current values in model
+func (p *BridgeConnectSwitchParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--bridge-id", p.BridgeId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["bridge-connect"].Params["bridge-id"].ValidateFunc
+		errs := validator("--bridge-id", p.BridgeId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["bridge-connect"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *BridgeConnectSwitchParam) getResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *BridgeConnectSwitchParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["bridge-connect"]
+}
+
+func (p *BridgeConnectSwitchParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *BridgeConnectSwitchParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *BridgeConnectSwitchParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *BridgeConnectSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *BridgeConnectSwitchParam) SetBridgeId(v int64) {
+	p.BridgeId = v
+}
+
+func (p *BridgeConnectSwitchParam) GetBridgeId() int64 {
+	return p.BridgeId
+}
+func (p *BridgeConnectSwitchParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *BridgeConnectSwitchParam) GetId() int64 {
+	return p.Id
+}
+
+// BridgeDisconnectSwitchParam is input parameters for the sacloud API
+type BridgeDisconnectSwitchParam struct {
+	Id int64
+}
+
+// NewBridgeDisconnectSwitchParam return new BridgeDisconnectSwitchParam
+func NewBridgeDisconnectSwitchParam() *BridgeDisconnectSwitchParam {
+	return &BridgeDisconnectSwitchParam{}
+}
+
+// Validate checks current values in model
+func (p *BridgeDisconnectSwitchParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Switch"].Commands["bridge-disconnect"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *BridgeDisconnectSwitchParam) getResourceDef() *schema.Resource {
+	return define.Resources["Switch"]
+}
+
+func (p *BridgeDisconnectSwitchParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["bridge-disconnect"]
+}
+
+func (p *BridgeDisconnectSwitchParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *BridgeDisconnectSwitchParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *BridgeDisconnectSwitchParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *BridgeDisconnectSwitchParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *BridgeDisconnectSwitchParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetId() int64 {
+	return p.Id
 }

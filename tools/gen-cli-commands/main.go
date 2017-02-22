@@ -145,9 +145,13 @@ func buildFlagsParams(params map[string]*schema.Schema) ([]map[string]interface{
 			case string:
 				d = fmt.Sprintf("\"%s\"", s.DefaultValue)
 			case []string:
-				d = fmt.Sprintf("[]string{\"%s\"}", strings.Join(s.DefaultValue.([]string), "\",\""))
-			case []int, []int64:
-				d = fmt.Sprintf("[]string{\"%s\"}", strings.Join(s.DefaultValue.([]string), "\",\""))
+				d = fmt.Sprintf("cli.NewStringSlice(\"%s\")", strings.Join(s.DefaultValue.([]string), "\",\""))
+			case []int64:
+				tmp := []string{}
+				for _, v := range s.DefaultValue.([]int64) {
+					tmp = append(tmp, fmt.Sprintf("%d", v))
+				}
+				d = fmt.Sprintf("cli.NewInt64Slice(%s)", strings.Join(tmp, ","))
 			default:
 				return res, fmt.Errorf("Set DefaultValue is not implement: %v", s.DefaultValue)
 			}

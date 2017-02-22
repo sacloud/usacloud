@@ -7,139 +7,27 @@ import (
 )
 
 func init() {
-	deleteParam := NewDeleteInterfaceParam()
-	packetFilterConnectParam := NewPacketFilterConnectInterfaceParam()
-	packetFilterDisconnectParam := NewPacketFilterDisconnectInterfaceParam()
 	listParam := NewListInterfaceParam()
 	createParam := NewCreateInterfaceParam()
 	readParam := NewReadInterfaceParam()
 	updateParam := NewUpdateInterfaceParam()
+	deleteParam := NewDeleteInterfaceParam()
+	packetFilterConnectParam := NewPacketFilterConnectInterfaceParam()
+	packetFilterDisconnectParam := NewPacketFilterDisconnectInterfaceParam()
 
 	cliCommand := &cli.Command{
 		Name:  "interface",
 		Usage: "A manage commands of Interface",
 		Subcommands: []*cli.Command{
 			{
-				Name:      "delete",
-				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete Interface",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &deleteParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), deleteParam)
-
-					// Run command with params
-					return InterfaceDelete(ctx, deleteParam)
-				},
-			},
-			{
-				Name:      "packet-filter-connect",
-				Usage:     "PacketFilterConnect Interface",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &packetFilterConnectParam.Id,
-					},
-					&cli.Int64Flag{
-						Name:        "packet-filter-id",
-						Usage:       "[Required] set packet filter ID",
-						Destination: &packetFilterConnectParam.PacketFilterId,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := packetFilterConnectParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), packetFilterConnectParam)
-
-					// Run command with params
-					return InterfacePacketFilterConnect(ctx, packetFilterConnectParam)
-				},
-			},
-			{
-				Name:      "packet-filter-disconnect",
-				Usage:     "PacketFilterDisconnect Interface",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &packetFilterDisconnectParam.Id,
-					},
-					&cli.Int64Flag{
-						Name:        "packet-filter-id",
-						Usage:       "[Required] set packet filter ID",
-						Destination: &packetFilterDisconnectParam.PacketFilterId,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := packetFilterDisconnectParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), packetFilterDisconnectParam)
-
-					// Run command with params
-					return InterfacePacketFilterDisconnect(ctx, packetFilterDisconnectParam)
-				},
-			},
-			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List Interface",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
 					&cli.Int64SliceFlag{
 						Name:  "id",
 						Usage: "set filter by id(s)",
@@ -157,10 +45,6 @@ func init() {
 					&cli.StringSliceFlag{
 						Name:  "sort",
 						Usage: "set field(s) for sort",
-					},
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -292,6 +176,122 @@ func init() {
 
 					// Run command with params
 					return InterfaceUpdate(ctx, updateParam)
+				},
+			},
+			{
+				Name:      "delete",
+				Aliases:   []string{"d", "rm"},
+				Usage:     "Delete Interface",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &deleteParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := deleteParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// Run command with params
+					return InterfaceDelete(ctx, deleteParam)
+				},
+			},
+			{
+				Name:      "packet-filter-connect",
+				Usage:     "PacketFilterConnect Interface",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &packetFilterConnectParam.Id,
+					},
+					&cli.Int64Flag{
+						Name:        "packet-filter-id",
+						Usage:       "[Required] set packet filter ID",
+						Destination: &packetFilterConnectParam.PacketFilterId,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := packetFilterConnectParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), packetFilterConnectParam)
+
+					// Run command with params
+					return InterfacePacketFilterConnect(ctx, packetFilterConnectParam)
+				},
+			},
+			{
+				Name:      "packet-filter-disconnect",
+				Usage:     "PacketFilterDisconnect Interface",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "packet-filter-id",
+						Usage:       "[Required] set packet filter ID",
+						Destination: &packetFilterDisconnectParam.PacketFilterId,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &packetFilterDisconnectParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := packetFilterDisconnectParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), packetFilterDisconnectParam)
+
+					// Run command with params
+					return InterfacePacketFilterDisconnect(ctx, packetFilterDisconnectParam)
 				},
 			},
 		},

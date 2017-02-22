@@ -179,9 +179,9 @@ func (p *PutObjectStorageParam) GetContentType() string {
 
 // GetObjectStorageParam is input parameters for the sacloud API
 type GetObjectStorageParam struct {
+	AccessKey string
 	SecretKey string
 	Bucket    string
-	AccessKey string
 }
 
 // NewGetObjectStorageParam return new GetObjectStorageParam
@@ -194,14 +194,14 @@ func (p *GetObjectStorageParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--secret-key", p.SecretKey)
+		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := validateRequired
-		errs := validator("--access-key", p.AccessKey)
+		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -234,6 +234,13 @@ func (p *GetObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *GetObjectStorageParam) SetAccessKey(v string) {
+	p.AccessKey = v
+}
+
+func (p *GetObjectStorageParam) GetAccessKey() string {
+	return p.AccessKey
+}
 func (p *GetObjectStorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
 }
@@ -248,19 +255,12 @@ func (p *GetObjectStorageParam) SetBucket(v string) {
 func (p *GetObjectStorageParam) GetBucket() string {
 	return p.Bucket
 }
-func (p *GetObjectStorageParam) SetAccessKey(v string) {
-	p.AccessKey = v
-}
-
-func (p *GetObjectStorageParam) GetAccessKey() string {
-	return p.AccessKey
-}
 
 // DeleteObjectStorageParam is input parameters for the sacloud API
 type DeleteObjectStorageParam struct {
-	AccessKey string
 	SecretKey string
 	Bucket    string
+	AccessKey string
 }
 
 // NewDeleteObjectStorageParam return new DeleteObjectStorageParam
@@ -273,14 +273,14 @@ func (p *DeleteObjectStorageParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--access-key", p.AccessKey)
+		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := validateRequired
-		errs := validator("--secret-key", p.SecretKey)
+		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -313,13 +313,6 @@ func (p *DeleteObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *DeleteObjectStorageParam) SetAccessKey(v string) {
-	p.AccessKey = v
-}
-
-func (p *DeleteObjectStorageParam) GetAccessKey() string {
-	return p.AccessKey
-}
 func (p *DeleteObjectStorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
 }
@@ -333,4 +326,11 @@ func (p *DeleteObjectStorageParam) SetBucket(v string) {
 
 func (p *DeleteObjectStorageParam) GetBucket() string {
 	return p.Bucket
+}
+func (p *DeleteObjectStorageParam) SetAccessKey(v string) {
+	p.AccessKey = v
+}
+
+func (p *DeleteObjectStorageParam) GetAccessKey() string {
+	return p.AccessKey
 }

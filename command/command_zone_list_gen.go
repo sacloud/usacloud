@@ -13,6 +13,9 @@ func ZoneList(ctx Context, params *ListZoneParam) error {
 
 	finder.SetEmpty()
 
+	if !isEmpty(params.Max) {
+		finder.SetLimit(params.Max)
+	}
 	if !isEmpty(params.Sort) {
 		for _, v := range params.Sort {
 			setSortBy(finder, v)
@@ -30,9 +33,6 @@ func ZoneList(ctx Context, params *ListZoneParam) error {
 	}
 	if !isEmpty(params.From) {
 		finder.SetOffset(params.From)
-	}
-	if !isEmpty(params.Max) {
-		finder.SetLimit(params.Max)
 	}
 
 	// call Find()

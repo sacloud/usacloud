@@ -10,11 +10,11 @@ import (
 
 // ListProductDiskParam is input parameters for the sacloud API
 type ListProductDiskParam struct {
+	Max  int
+	Sort []string
 	Name []string
 	Id   []int64
 	From int
-	Max  int
-	Sort []string
 }
 
 // NewListProductDiskParam return new ListProductDiskParam
@@ -78,6 +78,20 @@ func (p *ListProductDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListProductDiskParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListProductDiskParam) GetMax() int {
+	return p.Max
+}
+func (p *ListProductDiskParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListProductDiskParam) GetSort() []string {
+	return p.Sort
+}
 func (p *ListProductDiskParam) SetName(v []string) {
 	p.Name = v
 }
@@ -98,20 +112,6 @@ func (p *ListProductDiskParam) SetFrom(v int) {
 
 func (p *ListProductDiskParam) GetFrom() int {
 	return p.From
-}
-func (p *ListProductDiskParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListProductDiskParam) GetMax() int {
-	return p.Max
-}
-func (p *ListProductDiskParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListProductDiskParam) GetSort() []string {
-	return p.Sort
 }
 
 // ReadProductDiskParam is input parameters for the sacloud API

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/version"
 	"gopkg.in/urfave/cli.v2"
@@ -29,16 +28,16 @@ func main() {
 	app.Version = version.FullVersion()
 
 	app.EnableShellCompletion = true
-	app.ShellComplete = func(c *cli.Context) {
-		// This will complete if no args are passed
-		if c.NArg() > 0 {
-			return
-		}
-
-		for _, command := range command.Commands {
-			fmt.Println(command.Name)
-		}
-	}
+	//app.ShellComplete = func(c *cli.Context) {
+	//	// This will complete if no args are passed
+	//	if c.NArg() > 0 {
+	//		return
+	//	}
+	//
+	//	for _, command := range command.Commands {
+	//		fmt.Println(command.Name)
+	//	}
+	//}
 
 	// sort each flags
 	sort.Sort(cli.FlagsByName(app.Flags))
