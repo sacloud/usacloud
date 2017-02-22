@@ -37,6 +37,9 @@ command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-func
 build: clean gen vet
 	go build -ldflags "-s -w -X `go list ./version`.Revision=`git rev-parse --short HEAD 2>/dev/null`" -o $(CURDIR)/bin/$(BIN_NAME) $(CURDIR)/main.go
 
+build-force: clean gen-force vet
+	go build -ldflags "-s -w -X `go list ./version`.Revision=`git rev-parse --short HEAD 2>/dev/null`" -o $(CURDIR)/bin/$(BIN_NAME) $(CURDIR)/main.go
+
 build-x: clean vet
 	sh -c "'$(CURDIR)/scripts/build.sh' '$(BIN_NAME)'"
 

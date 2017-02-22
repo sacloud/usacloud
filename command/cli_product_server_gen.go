@@ -20,6 +20,15 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List ProductServer",
 				Flags: []cli.Flag{
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
+					},
 					&cli.IntFlag{
 						Name:        "max",
 						Usage:       "set limit",
@@ -33,22 +42,13 @@ func init() {
 						Name:  "name",
 						Usage: "set filter by name(s)",
 					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
-					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Id = c.Int64Slice("id")
 					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
-					listParam.Id = c.Int64Slice("id")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {

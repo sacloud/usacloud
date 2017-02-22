@@ -7,6 +7,7 @@ import "github.com/sacloud/usacloud/schema"
 
 var Resources map[string]*schema.Resource = map[string]*schema.Resource{
 	"Archive":         ArchiveResource(),
+	"Bill":            BillResource(),
 	"Bridge":          BridgeResource(),
 	"Disk":            DiskResource(),
 	"Icon":            IconResource(),

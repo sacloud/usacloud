@@ -23,6 +23,15 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List Internet",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
 					&cli.StringSliceFlag{
 						Name:  "name",
 						Usage: "set filter by name(s)",
@@ -35,15 +44,6 @@ func init() {
 						Name:        "from",
 						Usage:       "set offset",
 						Destination: &listParam.From,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -75,13 +75,6 @@ func init() {
 				Aliases: []string{"c"},
 				Usage:   "Create Internet",
 				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "nw-masklen",
-						Aliases:     []string{"network-masklen"},
-						Usage:       "[Required] set Global-IPAddress prefix",
-						Value:       28,
-						Destination: &createParam.NwMasklen,
-					},
 					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "[Required] set resource display name",
@@ -101,6 +94,13 @@ func init() {
 						Name:        "icon-id",
 						Usage:       "set Icon ID",
 						Destination: &createParam.IconId,
+					},
+					&cli.IntFlag{
+						Name:        "nw-masklen",
+						Aliases:     []string{"network-masklen"},
+						Usage:       "[Required] set Global-IPAddress prefix",
+						Value:       28,
+						Destination: &createParam.NwMasklen,
 					},
 				},
 				Action: func(c *cli.Context) error {

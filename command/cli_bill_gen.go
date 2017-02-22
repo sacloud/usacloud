@@ -7,24 +7,33 @@ import (
 )
 
 func init() {
-	readParam := NewReadProductDiskParam()
-	listParam := NewListProductDiskParam()
+	csvParam := NewCsvBillParam()
+	listParam := NewListBillParam()
 
 	cliCommand := &cli.Command{
-		Name:    "product-disk",
-		Aliases: []string{"disk-plan"},
-		Usage:   "A manage commands of ProductDisk",
+		Name:  "bill",
+		Usage: "A manage commands of Bill",
 		Subcommands: []*cli.Command{
 			{
-				Name:      "read",
-				Aliases:   []string{"r"},
-				Usage:     "Read ProductDisk",
+				Name:      "csv",
+				Usage:     "Csv Bill",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "bill-output",
+						Aliases:     []string{"file"},
+						Usage:       "set bill-detail output path",
+						Destination: &csvParam.BillOutput,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &readParam.Id,
+						Usage:       "[Required] set bill ID",
+						Destination: &csvParam.Id,
+					},
+					&cli.BoolFlag{
+						Name:        "no-header",
+						Usage:       "set output header flag",
+						Destination: &csvParam.NoHeader,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -40,51 +49,34 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
+					if errors := csvParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), readParam)
+					ctx := NewContext(c, c.Args().Slice(), csvParam)
 
 					// Run command with params
-					return ProductDiskRead(ctx, readParam)
+					return BillCsv(ctx, csvParam)
 				},
 			},
 			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List ProductDisk",
+				Usage:   "List Bill",
 				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
+					&cli.IntFlag{
+						Name:        "year",
+						Usage:       "set year",
+						Destination: &listParam.Year,
 					},
 					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
+						Name:        "month",
+						Usage:       "set month",
+						Destination: &listParam.Month,
 					},
 				},
 				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					listParam.Name = c.StringSlice("name")
-					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -100,7 +92,7 @@ func init() {
 					ctx := NewContext(c, c.Args().Slice(), listParam)
 
 					// Run command with params
-					return ProductDiskList(ctx, listParam)
+					return BillList(ctx, listParam)
 				},
 			},
 		},

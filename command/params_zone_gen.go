@@ -10,11 +10,11 @@ import (
 
 // ListZoneParam is input parameters for the sacloud API
 type ListZoneParam struct {
+	From int
 	Max  int
 	Sort []string
 	Name []string
 	Id   []int64
-	From int
 }
 
 // NewListZoneParam return new ListZoneParam
@@ -78,6 +78,13 @@ func (p *ListZoneParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListZoneParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListZoneParam) GetFrom() int {
+	return p.From
+}
 func (p *ListZoneParam) SetMax(v int) {
 	p.Max = v
 }
@@ -105,13 +112,6 @@ func (p *ListZoneParam) SetId(v []int64) {
 
 func (p *ListZoneParam) GetId() []int64 {
 	return p.Id
-}
-func (p *ListZoneParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListZoneParam) GetFrom() int {
-	return p.From
 }
 
 // ReadZoneParam is input parameters for the sacloud API

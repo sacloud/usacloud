@@ -5,6 +5,7 @@ import (
 	"github.com/sacloud/usacloud/schema"
 	"net"
 	"os"
+	"regexp"
 	"strings"
 	"unicode/utf8"
 )
@@ -239,6 +240,30 @@ func validateSakuraShortID(digit int) schema.SchemaValidateFunc {
 			strlen := utf8.RuneCountInString(s)
 			if id < 0 || strlen > idLen {
 				res = append(res, fmt.Errorf("%q: Resource ID must be less than %d digits", fieldName, idLen))
+			}
+		}
+
+		return res
+	}
+}
+
+func validateMemberCD() schema.SchemaValidateFunc {
+	return func(fieldName string, object interface{}) []error {
+		res := []error{}
+
+		// if target is nil , return OK(Use required attr if necessary)
+		if object == nil {
+			return res
+		}
+
+		if cd, ok := object.(string); ok {
+			if cd == "" {
+				return res
+			}
+
+			r := regexp.MustCompile(`^[\w]+[\w\-]*[\w]+$`)
+			if !r.MatchString(cd) {
+				res = append(res, fmt.Errorf("%q: memberCD must be [0-9A-Za-z_]", fieldName))
 			}
 		}
 

@@ -17,6 +17,9 @@ func InternetUpdate(ctx Context, params *UpdateInternetParam) error {
 
 	// set params
 
+	if ctx.IsSet("name") {
+		p.SetName(params.Name)
+	}
 	if ctx.IsSet("description") {
 		p.SetDescription(params.Description)
 	}
@@ -28,9 +31,6 @@ func InternetUpdate(ctx Context, params *UpdateInternetParam) error {
 	}
 	if ctx.IsSet("band-width") {
 		p.SetBandWidthMbps(params.BandWidth)
-	}
-	if ctx.IsSet("name") {
-		p.SetName(params.Name)
 	}
 
 	// call Update(id)

@@ -7,48 +7,18 @@ import (
 )
 
 func init() {
-	createParam := NewCreateInterfaceParam()
 	readParam := NewReadInterfaceParam()
 	updateParam := NewUpdateInterfaceParam()
 	deleteParam := NewDeleteInterfaceParam()
 	packetFilterConnectParam := NewPacketFilterConnectInterfaceParam()
 	packetFilterDisconnectParam := NewPacketFilterDisconnectInterfaceParam()
 	listParam := NewListInterfaceParam()
+	createParam := NewCreateInterfaceParam()
 
 	cliCommand := &cli.Command{
 		Name:  "interface",
 		Usage: "A manage commands of Interface",
 		Subcommands: []*cli.Command{
-			{
-				Name:    "create",
-				Aliases: []string{"c"},
-				Usage:   "Create Interface",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "server-id",
-						Usage:       "[Required] set server ID",
-						Destination: &createParam.ServerId,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), createParam)
-
-					// Run command with params
-					return InterfaceCreate(ctx, createParam)
-				},
-			},
 			{
 				Name:      "read",
 				Aliases:   []string{"r"},
@@ -91,15 +61,15 @@ func init() {
 				Usage:     "Update Interface",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "user-ipaddress",
-						Usage:       "set user-ipaddress",
-						Destination: &updateParam.UserIpaddress,
-					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
 						Destination: &updateParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "user-ipaddress",
+						Usage:       "set user-ipaddress",
+						Destination: &updateParam.UserIpaddress,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -248,10 +218,6 @@ func init() {
 				Usage:   "List Interface",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
-					&cli.StringSliceFlag{
 						Name:  "name",
 						Usage: "set filter by name(s)",
 					},
@@ -269,13 +235,17 @@ func init() {
 						Usage:       "set limit",
 						Destination: &listParam.Max,
 					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
+					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -292,6 +262,36 @@ func init() {
 
 					// Run command with params
 					return InterfaceList(ctx, listParam)
+				},
+			},
+			{
+				Name:    "create",
+				Aliases: []string{"c"},
+				Usage:   "Create Interface",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "server-id",
+						Usage:       "[Required] set server ID",
+						Destination: &createParam.ServerId,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := createParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), createParam)
+
+					// Run command with params
+					return InterfaceCreate(ctx, createParam)
 				},
 			},
 		},

@@ -7,21 +7,67 @@ import (
 )
 
 func init() {
+	deleteParam := NewDeleteIconParam()
 	listParam := NewListIconParam()
 	createParam := NewCreateIconParam()
 	readParam := NewReadIconParam()
 	updateParam := NewUpdateIconParam()
-	deleteParam := NewDeleteIconParam()
 
 	cliCommand := &cli.Command{
 		Name:  "icon",
 		Usage: "A manage commands of Icon",
 		Subcommands: []*cli.Command{
 			{
+				Name:      "delete",
+				Aliases:   []string{"d", "rm"},
+				Usage:     "Delete Icon",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &deleteParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := deleteParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// Run command with params
+					return IconDelete(ctx, deleteParam)
+				},
+			},
+			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List Icon",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "scope",
+						Usage:       "set filter by scope('user' or 'shared')",
+						Destination: &listParam.Scope,
+					},
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
 					&cli.StringSliceFlag{
 						Name:  "sort",
 						Usage: "set field(s) for sort",
@@ -38,16 +84,6 @@ func init() {
 						Name:        "from",
 						Usage:       "set offset",
 						Destination: &listParam.From,
-					},
-					&cli.StringFlag{
-						Name:        "scope",
-						Usage:       "set filter by scope('user' or 'shared')",
-						Destination: &listParam.Scope,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -158,6 +194,10 @@ func init() {
 				Usage:     "Update Icon",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
@@ -167,10 +207,6 @@ func init() {
 						Name:        "name",
 						Usage:       "set resource display name",
 						Destination: &updateParam.Name,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -198,42 +234,6 @@ func init() {
 
 					// Run command with params
 					return IconUpdate(ctx, updateParam)
-				},
-			},
-			{
-				Name:      "delete",
-				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete Icon",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &deleteParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), deleteParam)
-
-					// Run command with params
-					return IconDelete(ctx, deleteParam)
 				},
 			},
 		},
