@@ -7,17 +7,17 @@ import (
 )
 
 func init() {
-	reinstallFromDiskParam := NewReinstallFromDiskDiskParam()
+	updateParam := NewUpdateDiskParam()
+	deleteParam := NewDeleteDiskParam()
+	reinstallToBlankParam := NewReinstallToBlankDiskParam()
 	serverDisconnectParam := NewServerDisconnectDiskParam()
 	listParam := NewListDiskParam()
-	deleteParam := NewDeleteDiskParam()
+	readParam := NewReadDiskParam()
 	waitForCopyParam := NewWaitForCopyDiskParam()
 	reinstallFromArchiveParam := NewReinstallFromArchiveDiskParam()
-	reinstallToBlankParam := NewReinstallToBlankDiskParam()
+	reinstallFromDiskParam := NewReinstallFromDiskDiskParam()
 	serverConnectParam := NewServerConnectDiskParam()
 	createParam := NewCreateDiskParam()
-	readParam := NewReadDiskParam()
-	updateParam := NewUpdateDiskParam()
 	editParam := NewEditDiskParam()
 
 	cliCommand := &cli.Command{
@@ -25,34 +25,46 @@ func init() {
 		Usage: "A manage commands of Disk",
 		Subcommands: []*cli.Command{
 			{
-				Name:      "reinstall-from-disk",
-				Usage:     "ReinstallFromDisk Disk",
+				Name:      "update",
+				Aliases:   []string{"u"},
+				Usage:     "Update Disk",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "connection",
+						Usage:       "set disk connection('virtio' or 'ide')",
+						Destination: &updateParam.Connection,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &reinstallFromDiskParam.Id,
+						Destination: &updateParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "set resource display name",
+						Destination: &updateParam.Name,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &updateParam.Description,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
 					},
 					&cli.Int64Flag{
-						Name:        "source-disk-id",
-						Usage:       "[Required] set source disk ID",
-						Destination: &reinstallFromDiskParam.SourceDiskId,
-					},
-					&cli.Int64SliceFlag{
-						Name:  "distant-from",
-						Usage: "set distant from disk IDs",
-					},
-					&cli.BoolFlag{
-						Name:        "async",
-						Usage:       "set async flag(if true,return with non block)",
-						Destination: &reinstallFromDiskParam.Async,
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
 					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					reinstallFromDiskParam.DistantFrom = c.Int64Slice("distant-from")
+					updateParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -65,15 +77,98 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := reinstallFromDiskParam.Validate(); len(errors) > 0 {
+					if errors := updateParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), reinstallFromDiskParam)
+					ctx := NewContext(c, c.Args().Slice(), updateParam)
 
 					// Run command with params
-					return DiskReinstallFromDisk(ctx, reinstallFromDiskParam)
+					return DiskUpdate(ctx, updateParam)
+				},
+			},
+			{
+				Name:      "delete",
+				Aliases:   []string{"d", "rm"},
+				Usage:     "Delete Disk",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &deleteParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := deleteParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// Run command with params
+					return DiskDelete(ctx, deleteParam)
+				},
+			},
+			{
+				Name:      "reinstall-to-blank",
+				Usage:     "ReinstallToBlank Disk",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &reinstallToBlankParam.Id,
+					},
+					&cli.Int64SliceFlag{
+						Name:  "distant-from",
+						Usage: "set distant from disk IDs",
+					},
+					&cli.BoolFlag{
+						Name:        "async",
+						Usage:       "set async flag(if true,return with non block)",
+						Destination: &reinstallToBlankParam.Async,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					reinstallToBlankParam.DistantFrom = c.Int64Slice("distant-from")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := reinstallToBlankParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), reinstallToBlankParam)
+
+					// Run command with params
+					return DiskReinstallToBlank(ctx, reinstallToBlankParam)
 				},
 			},
 			{
@@ -116,6 +211,11 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List Disk",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "scope",
+						Usage:       "set filter by scope('user' or 'shared')",
+						Destination: &listParam.Scope,
+					},
 					&cli.StringSliceFlag{
 						Name:  "sort",
 						Usage: "set field(s) for sort",
@@ -138,18 +238,13 @@ func init() {
 						Usage:       "set limit",
 						Destination: &listParam.Max,
 					},
-					&cli.StringFlag{
-						Name:        "scope",
-						Usage:       "set filter by scope('user' or 'shared')",
-						Destination: &listParam.Scope,
-					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
 					listParam.Sort = c.StringSlice("sort")
-					listParam.Name = c.StringSlice("name")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -169,15 +264,15 @@ func init() {
 				},
 			},
 			{
-				Name:      "delete",
-				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete Disk",
+				Name:      "read",
+				Aliases:   []string{"r"},
+				Usage:     "Read Disk",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &deleteParam.Id,
+						Destination: &readParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -193,15 +288,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := readParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := NewContext(c, c.Args().Slice(), readParam)
 
 					// Run command with params
-					return DiskDelete(ctx, deleteParam)
+					return DiskRead(ctx, readParam)
 				},
 			},
 			{
@@ -293,29 +388,34 @@ func init() {
 				},
 			},
 			{
-				Name:      "reinstall-to-blank",
-				Usage:     "ReinstallToBlank Disk",
+				Name:      "reinstall-from-disk",
+				Usage:     "ReinstallFromDisk Disk",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:        "async",
+						Usage:       "set async flag(if true,return with non block)",
+						Destination: &reinstallFromDiskParam.Async,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &reinstallToBlankParam.Id,
+						Destination: &reinstallFromDiskParam.Id,
+					},
+					&cli.Int64Flag{
+						Name:        "source-disk-id",
+						Usage:       "[Required] set source disk ID",
+						Destination: &reinstallFromDiskParam.SourceDiskId,
 					},
 					&cli.Int64SliceFlag{
 						Name:  "distant-from",
 						Usage: "set distant from disk IDs",
 					},
-					&cli.BoolFlag{
-						Name:        "async",
-						Usage:       "set async flag(if true,return with non block)",
-						Destination: &reinstallToBlankParam.Async,
-					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					reinstallToBlankParam.DistantFrom = c.Int64Slice("distant-from")
+					reinstallFromDiskParam.DistantFrom = c.Int64Slice("distant-from")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -328,15 +428,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := reinstallToBlankParam.Validate(); len(errors) > 0 {
+					if errors := reinstallFromDiskParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), reinstallToBlankParam)
+					ctx := NewContext(c, c.Args().Slice(), reinstallFromDiskParam)
 
 					// Run command with params
-					return DiskReinstallToBlank(ctx, reinstallToBlankParam)
+					return DiskReinstallFromDisk(ctx, reinstallFromDiskParam)
 				},
 			},
 			{
@@ -385,19 +485,19 @@ func init() {
 				Usage:   "Create Disk",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &createParam.Description,
 					},
 					&cli.StringSliceFlag{
 						Name:  "tags",
 						Usage: "set resource tags",
 					},
-					&cli.StringFlag{
-						Name:        "plan",
-						Usage:       "[Required] set disk plan('hdd' or 'ssd')",
-						Value:       "ssd",
-						Destination: &createParam.Plan,
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &createParam.IconId,
 					},
 					&cli.StringFlag{
 						Name:        "connection",
@@ -416,15 +516,9 @@ func init() {
 						Destination: &createParam.Async,
 					},
 					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &createParam.Description,
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &createParam.IconId,
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
 					},
 					&cli.IntFlag{
 						Name:        "size",
@@ -441,12 +535,18 @@ func init() {
 						Name:  "distant-from",
 						Usage: "set distant from disk IDs",
 					},
+					&cli.StringFlag{
+						Name:        "plan",
+						Usage:       "[Required] set disk plan('hdd' or 'ssd')",
+						Value:       "ssd",
+						Destination: &createParam.Plan,
+					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					createParam.Tags = c.StringSlice("tags")
 					createParam.DistantFrom = c.Int64Slice("distant-from")
+					createParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -466,106 +566,6 @@ func init() {
 				},
 			},
 			{
-				Name:      "read",
-				Aliases:   []string{"r"},
-				Usage:     "Read Disk",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &readParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), readParam)
-
-					// Run command with params
-					return DiskRead(ctx, readParam)
-				},
-			},
-			{
-				Name:      "update",
-				Aliases:   []string{"u"},
-				Usage:     "Update Disk",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set resource display name",
-						Destination: &updateParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
-					},
-					&cli.StringFlag{
-						Name:        "connection",
-						Usage:       "set disk connection('virtio' or 'ide')",
-						Destination: &updateParam.Connection,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					updateParam.Tags = c.StringSlice("tags")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), updateParam)
-
-					// Run command with params
-					return DiskUpdate(ctx, updateParam)
-				},
-			},
-			{
 				Name:      "edit",
 				Aliases:   []string{"config"},
 				Usage:     "Edit Disk",
@@ -576,16 +576,11 @@ func init() {
 						Usage:       "set hostname",
 						Destination: &editParam.Hostname,
 					},
-					&cli.StringFlag{
-						Name:        "password",
-						Usage:       "set password",
-						Destination: &editParam.Password,
-					},
-					&cli.StringFlag{
-						Name:        "ipaddress",
-						Aliases:     []string{"ip"},
-						Usage:       "set ipaddress",
-						Destination: &editParam.Ipaddress,
+					&cli.BoolFlag{
+						Name:        "disable-password-auth",
+						Aliases:     []string{"disable-pw-auth"},
+						Usage:       "disable password auth on SSH",
+						Destination: &editParam.DisablePasswordAuth,
 					},
 					&cli.StringFlag{
 						Name:        "default-route",
@@ -600,25 +595,30 @@ func init() {
 						Value:       24,
 						Destination: &editParam.NwMasklen,
 					},
+					&cli.StringFlag{
+						Name:        "ipaddress",
+						Aliases:     []string{"ip"},
+						Usage:       "set ipaddress",
+						Destination: &editParam.Ipaddress,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
 						Destination: &editParam.Id,
 					},
-					&cli.BoolFlag{
-						Name:        "disable-password-auth",
-						Aliases:     []string{"disable-pw-auth"},
-						Usage:       "disable password auth on SSH",
-						Destination: &editParam.DisablePasswordAuth,
+					&cli.StringFlag{
+						Name:        "password",
+						Usage:       "set password",
+						Destination: &editParam.Password,
+					},
+					&cli.Int64SliceFlag{
+						Name:  "ssh-key-ids",
+						Usage: "set ssh-key ID(s)",
 					},
 					&cli.Int64SliceFlag{
 						Name:    "startup-script-ids",
 						Aliases: []string{"note-ids"},
 						Usage:   "set startup-script ID(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "ssh-key-ids",
-						Usage: "set ssh-key ID(s)",
 					},
 				},
 				Action: func(c *cli.Context) error {

@@ -8,246 +8,6 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListLicenseParam is input parameters for the sacloud API
-type ListLicenseParam struct {
-	Id   []int64
-	From int
-	Max  int
-	Sort []string
-	Name []string
-}
-
-// NewListLicenseParam return new ListLicenseParam
-func NewListLicenseParam() *ListLicenseParam {
-	return &ListLicenseParam{}
-}
-
-// Validate checks current values in model
-func (p *ListLicenseParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := define.Resources["License"].Commands["list"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--id", p.Id, map[string]interface{}{
-
-			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ListLicenseParam) getResourceDef() *schema.Resource {
-	return define.Resources["License"]
-}
-
-func (p *ListLicenseParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["list"]
-}
-
-func (p *ListLicenseParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ListLicenseParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ListLicenseParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ListLicenseParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ListLicenseParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListLicenseParam) GetId() []int64 {
-	return p.Id
-}
-func (p *ListLicenseParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListLicenseParam) GetFrom() int {
-	return p.From
-}
-func (p *ListLicenseParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListLicenseParam) GetMax() int {
-	return p.Max
-}
-func (p *ListLicenseParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListLicenseParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListLicenseParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListLicenseParam) GetName() []string {
-	return p.Name
-}
-
-// CreateLicenseParam is input parameters for the sacloud API
-type CreateLicenseParam struct {
-	Name          string
-	LicenseInfoId int64
-}
-
-// NewCreateLicenseParam return new CreateLicenseParam
-func NewCreateLicenseParam() *CreateLicenseParam {
-	return &CreateLicenseParam{}
-}
-
-// Validate checks current values in model
-func (p *CreateLicenseParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["License"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *CreateLicenseParam) getResourceDef() *schema.Resource {
-	return define.Resources["License"]
-}
-
-func (p *CreateLicenseParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["create"]
-}
-
-func (p *CreateLicenseParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *CreateLicenseParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *CreateLicenseParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *CreateLicenseParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *CreateLicenseParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateLicenseParam) GetName() string {
-	return p.Name
-}
-func (p *CreateLicenseParam) SetLicenseInfoId(v int64) {
-	p.LicenseInfoId = v
-}
-
-func (p *CreateLicenseParam) GetLicenseInfoId() int64 {
-	return p.LicenseInfoId
-}
-
-// ReadLicenseParam is input parameters for the sacloud API
-type ReadLicenseParam struct {
-	Id int64
-}
-
-// NewReadLicenseParam return new ReadLicenseParam
-func NewReadLicenseParam() *ReadLicenseParam {
-	return &ReadLicenseParam{}
-}
-
-// Validate checks current values in model
-func (p *ReadLicenseParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["License"].Commands["read"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ReadLicenseParam) getResourceDef() *schema.Resource {
-	return define.Resources["License"]
-}
-
-func (p *ReadLicenseParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["read"]
-}
-
-func (p *ReadLicenseParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ReadLicenseParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ReadLicenseParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ReadLicenseParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ReadLicenseParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ReadLicenseParam) GetId() int64 {
-	return p.Id
-}
-
 // UpdateLicenseParam is input parameters for the sacloud API
 type UpdateLicenseParam struct {
 	Id   int64
@@ -386,5 +146,245 @@ func (p *DeleteLicenseParam) SetId(v int64) {
 }
 
 func (p *DeleteLicenseParam) GetId() int64 {
+	return p.Id
+}
+
+// ListLicenseParam is input parameters for the sacloud API
+type ListLicenseParam struct {
+	Name []string
+	Id   []int64
+	From int
+	Max  int
+	Sort []string
+}
+
+// NewListLicenseParam return new ListLicenseParam
+func NewListLicenseParam() *ListLicenseParam {
+	return &ListLicenseParam{}
+}
+
+// Validate checks current values in model
+func (p *ListLicenseParam) Validate() []error {
+	errors := []error{}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["License"].Commands["list"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--id", p.Id, map[string]interface{}{
+
+			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ListLicenseParam) getResourceDef() *schema.Resource {
+	return define.Resources["License"]
+}
+
+func (p *ListLicenseParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["list"]
+}
+
+func (p *ListLicenseParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ListLicenseParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ListLicenseParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ListLicenseParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListLicenseParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListLicenseParam) GetName() []string {
+	return p.Name
+}
+func (p *ListLicenseParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListLicenseParam) GetId() []int64 {
+	return p.Id
+}
+func (p *ListLicenseParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListLicenseParam) GetFrom() int {
+	return p.From
+}
+func (p *ListLicenseParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListLicenseParam) GetMax() int {
+	return p.Max
+}
+func (p *ListLicenseParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListLicenseParam) GetSort() []string {
+	return p.Sort
+}
+
+// CreateLicenseParam is input parameters for the sacloud API
+type CreateLicenseParam struct {
+	Name          string
+	LicenseInfoId int64
+}
+
+// NewCreateLicenseParam return new CreateLicenseParam
+func NewCreateLicenseParam() *CreateLicenseParam {
+	return &CreateLicenseParam{}
+}
+
+// Validate checks current values in model
+func (p *CreateLicenseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["License"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *CreateLicenseParam) getResourceDef() *schema.Resource {
+	return define.Resources["License"]
+}
+
+func (p *CreateLicenseParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["create"]
+}
+
+func (p *CreateLicenseParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *CreateLicenseParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *CreateLicenseParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *CreateLicenseParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateLicenseParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateLicenseParam) GetName() string {
+	return p.Name
+}
+func (p *CreateLicenseParam) SetLicenseInfoId(v int64) {
+	p.LicenseInfoId = v
+}
+
+func (p *CreateLicenseParam) GetLicenseInfoId() int64 {
+	return p.LicenseInfoId
+}
+
+// ReadLicenseParam is input parameters for the sacloud API
+type ReadLicenseParam struct {
+	Id int64
+}
+
+// NewReadLicenseParam return new ReadLicenseParam
+func NewReadLicenseParam() *ReadLicenseParam {
+	return &ReadLicenseParam{}
+}
+
+// Validate checks current values in model
+func (p *ReadLicenseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["License"].Commands["read"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ReadLicenseParam) getResourceDef() *schema.Resource {
+	return define.Resources["License"]
+}
+
+func (p *ReadLicenseParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["read"]
+}
+
+func (p *ReadLicenseParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ReadLicenseParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ReadLicenseParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ReadLicenseParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ReadLicenseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ReadLicenseParam) GetId() int64 {
 	return p.Id
 }

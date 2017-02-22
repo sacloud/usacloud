@@ -7,50 +7,14 @@ import (
 )
 
 func init() {
-	readParam := NewReadProductLicenseParam()
 	listParam := NewListProductLicenseParam()
+	readParam := NewReadProductLicenseParam()
 
 	cliCommand := &cli.Command{
 		Name:    "product-license",
 		Aliases: []string{"license-info"},
 		Usage:   "A manage commands of ProductLicense",
 		Subcommands: []*cli.Command{
-			{
-				Name:      "read",
-				Aliases:   []string{"r"},
-				Usage:     "Read ProductLicense",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &readParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), readParam)
-
-					// Run command with params
-					return ProductLicenseRead(ctx, readParam)
-				},
-			},
 			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
@@ -101,6 +65,42 @@ func init() {
 
 					// Run command with params
 					return ProductLicenseList(ctx, listParam)
+				},
+			},
+			{
+				Name:      "read",
+				Aliases:   []string{"r"},
+				Usage:     "Read ProductLicense",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &readParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := readParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), readParam)
+
+					// Run command with params
+					return ProductLicenseRead(ctx, readParam)
 				},
 			},
 		},

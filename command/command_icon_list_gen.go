@@ -13,17 +13,6 @@ func IconList(ctx Context, params *ListIconParam) error {
 
 	finder.SetEmpty()
 
-	if !isEmpty(params.Id) {
-		for _, v := range params.Id {
-			finder.SetFilterMultiBy("ID", v)
-		}
-	}
-	if !isEmpty(params.From) {
-		finder.SetOffset(params.From)
-	}
-	if !isEmpty(params.Max) {
-		finder.SetLimit(params.Max)
-	}
 	if !isEmpty(params.Sort) {
 		for _, v := range params.Sort {
 			setSortBy(finder, v)
@@ -36,6 +25,17 @@ func IconList(ctx Context, params *ListIconParam) error {
 	}
 	if !isEmpty(params.Scope) {
 		finder.SetFilterBy("Scope", params.Scope)
+	}
+	if !isEmpty(params.Id) {
+		for _, v := range params.Id {
+			finder.SetFilterMultiBy("ID", v)
+		}
+	}
+	if !isEmpty(params.From) {
+		finder.SetOffset(params.From)
+	}
+	if !isEmpty(params.Max) {
+		finder.SetLimit(params.Max)
 	}
 
 	// call Find()

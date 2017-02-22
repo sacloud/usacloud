@@ -23,6 +23,17 @@ func init() {
 				Aliases: []string{"c"},
 				Usage:   "Create Internet",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &createParam.Description,
+					},
 					&cli.StringSliceFlag{
 						Name:  "tags",
 						Usage: "set resource tags",
@@ -38,17 +49,6 @@ func init() {
 						Usage:       "[Required] set Global-IPAddress prefix",
 						Value:       28,
 						Destination: &createParam.NwMasklen,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &createParam.Description,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -256,6 +256,15 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List Internet",
 				Flags: []cli.Flag{
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
+					},
 					&cli.IntFlag{
 						Name:        "max",
 						Usage:       "set limit",
@@ -269,22 +278,13 @@ func init() {
 						Name:  "name",
 						Usage: "set filter by name(s)",
 					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
-					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {

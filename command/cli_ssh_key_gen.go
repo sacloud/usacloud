@@ -76,6 +76,11 @@ func init() {
 				Usage:   "Create SSHKey",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
+					},
+					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
@@ -90,11 +95,6 @@ func init() {
 						Name:        "public-key",
 						Usage:       "set public-key from file",
 						Destination: &createParam.PublicKey,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -242,12 +242,6 @@ func init() {
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &generateParam.Description,
-					},
-					&cli.StringFlag{
 						Name:        "pass-phrase",
 						Usage:       "set ssh-key pass phrase",
 						Destination: &generateParam.PassPhrase,
@@ -262,6 +256,12 @@ func init() {
 						Name:        "name",
 						Usage:       "[Required] set resource display name",
 						Destination: &generateParam.Name,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &generateParam.Description,
 					},
 				},
 				Action: func(c *cli.Context) error {

@@ -9,6 +9,7 @@ type Command struct {
 	Type                CommandType
 	Aliases             []string
 	Usage               string
+	ArgsUsage           string
 	Params              map[string]*Schema
 	AltResource         string // 空の場合はResourceのキーをCamelizeしてsacloud.XXXを対象とする。
 	ListResultFieldName string

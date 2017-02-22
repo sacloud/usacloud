@@ -100,7 +100,7 @@ func buildCommandsParams(command *schema.Command) (map[string]interface{}, error
 	if usage == "" {
 		usage = fmt.Sprintf("%s %s", ctx.CamelC(), ctx.CamelR())
 	}
-	argsUsage := ""
+	argsUsage := command.ArgsUsage
 	if command.Type.IsRequiredIDType() {
 		argsUsage = "[ResourceID]"
 	}

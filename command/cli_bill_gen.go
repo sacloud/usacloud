@@ -20,14 +20,14 @@ func init() {
 				Usage:   "List Bill",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
-						Name:        "month",
-						Usage:       "set month",
-						Destination: &listParam.Month,
-					},
-					&cli.IntFlag{
 						Name:        "year",
 						Usage:       "set year",
 						Destination: &listParam.Year,
+					},
+					&cli.IntFlag{
+						Name:        "month",
+						Usage:       "set month",
+						Destination: &listParam.Month,
 					},
 				},
 				Action: func(c *cli.Context) error {
