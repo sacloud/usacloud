@@ -8,6 +8,85 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// CsvBillParam is input parameters for the sacloud API
+type CsvBillParam struct {
+	BillOutput string
+	Id         int64
+	NoHeader   bool
+}
+
+// NewCsvBillParam return new CsvBillParam
+func NewCsvBillParam() *CsvBillParam {
+	return &CsvBillParam{}
+}
+
+// Validate checks current values in model
+func (p *CsvBillParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Bill"].Commands["csv"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *CsvBillParam) getResourceDef() *schema.Resource {
+	return define.Resources["Bill"]
+}
+
+func (p *CsvBillParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["csv"]
+}
+
+func (p *CsvBillParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *CsvBillParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *CsvBillParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *CsvBillParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CsvBillParam) SetBillOutput(v string) {
+	p.BillOutput = v
+}
+
+func (p *CsvBillParam) GetBillOutput() string {
+	return p.BillOutput
+}
+func (p *CsvBillParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *CsvBillParam) GetId() int64 {
+	return p.Id
+}
+func (p *CsvBillParam) SetNoHeader(v bool) {
+	p.NoHeader = v
+}
+
+func (p *CsvBillParam) GetNoHeader() bool {
+	return p.NoHeader
+}
+
 // ListBillParam is input parameters for the sacloud API
 type ListBillParam struct {
 	Year  int
@@ -77,83 +156,4 @@ func (p *ListBillParam) SetMonth(v int) {
 
 func (p *ListBillParam) GetMonth() int {
 	return p.Month
-}
-
-// CsvBillParam is input parameters for the sacloud API
-type CsvBillParam struct {
-	Id         int64
-	NoHeader   bool
-	BillOutput string
-}
-
-// NewCsvBillParam return new CsvBillParam
-func NewCsvBillParam() *CsvBillParam {
-	return &CsvBillParam{}
-}
-
-// Validate checks current values in model
-func (p *CsvBillParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Bill"].Commands["csv"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *CsvBillParam) getResourceDef() *schema.Resource {
-	return define.Resources["Bill"]
-}
-
-func (p *CsvBillParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["csv"]
-}
-
-func (p *CsvBillParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *CsvBillParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *CsvBillParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *CsvBillParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *CsvBillParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *CsvBillParam) GetId() int64 {
-	return p.Id
-}
-func (p *CsvBillParam) SetNoHeader(v bool) {
-	p.NoHeader = v
-}
-
-func (p *CsvBillParam) GetNoHeader() bool {
-	return p.NoHeader
-}
-func (p *CsvBillParam) SetBillOutput(v string) {
-	p.BillOutput = v
-}
-
-func (p *CsvBillParam) GetBillOutput() string {
-	return p.BillOutput
 }

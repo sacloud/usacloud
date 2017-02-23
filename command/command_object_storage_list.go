@@ -21,6 +21,9 @@ func ObjectStorageList(ctx Context, params *ListObjectStorageParam) error {
 	if path != "" && strings.HasPrefix(path, "/") {
 		path = strings.Replace(path, "/", "", 1)
 	}
+	if path != "" && !strings.HasSuffix(path, "/") {
+		path = fmt.Sprintf("%s/", path)
+	}
 
 	// on SakuraCloud, bucket name is same as AccessKey
 	if params.Bucket == "" {

@@ -10,7 +10,6 @@ import (
 
 // DeleteCacheWebAccelParam is input parameters for the sacloud API
 type DeleteCacheWebAccelParam struct {
-	Url []string
 }
 
 // NewDeleteCacheWebAccelParam return new DeleteCacheWebAccelParam
@@ -21,13 +20,6 @@ func NewDeleteCacheWebAccelParam() *DeleteCacheWebAccelParam {
 // Validate checks current values in model
 func (p *DeleteCacheWebAccelParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--url", p.Url)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 
 	return errors
 }
@@ -54,12 +46,4 @@ func (p *DeleteCacheWebAccelParam) GetTableType() output.OutputTableType {
 
 func (p *DeleteCacheWebAccelParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DeleteCacheWebAccelParam) SetUrl(v []string) {
-	p.Url = v
-}
-
-func (p *DeleteCacheWebAccelParam) GetUrl() []string {
-	return p.Url
 }

@@ -242,8 +242,8 @@ func (p *ReadInterfaceParam) GetId() int64 {
 
 // UpdateInterfaceParam is input parameters for the sacloud API
 type UpdateInterfaceParam struct {
-	Id            int64
 	UserIpaddress string
+	Id            int64
 }
 
 // NewUpdateInterfaceParam return new UpdateInterfaceParam
@@ -255,6 +255,13 @@ func NewUpdateInterfaceParam() *UpdateInterfaceParam {
 func (p *UpdateInterfaceParam) Validate() []error {
 	errors := []error{}
 	{
+		validator := define.Resources["Interface"].Commands["update"].Params["user-ipaddress"].ValidateFunc
+		errs := validator("--user-ipaddress", p.UserIpaddress)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		validator := validateRequired
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -264,13 +271,6 @@ func (p *UpdateInterfaceParam) Validate() []error {
 	{
 		validator := define.Resources["Interface"].Commands["update"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Interface"].Commands["update"].Params["user-ipaddress"].ValidateFunc
-		errs := validator("--user-ipaddress", p.UserIpaddress)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -303,19 +303,19 @@ func (p *UpdateInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *UpdateInterfaceParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *UpdateInterfaceParam) GetId() int64 {
-	return p.Id
-}
 func (p *UpdateInterfaceParam) SetUserIpaddress(v string) {
 	p.UserIpaddress = v
 }
 
 func (p *UpdateInterfaceParam) GetUserIpaddress() string {
 	return p.UserIpaddress
+}
+func (p *UpdateInterfaceParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *UpdateInterfaceParam) GetId() int64 {
+	return p.Id
 }
 
 // DeleteInterfaceParam is input parameters for the sacloud API

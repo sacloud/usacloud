@@ -20,7 +20,7 @@ func ObjectStorageGet(ctx Context, params *GetObjectStorageParam) error {
 		filePath = ctx.Args()[1]
 	}
 
-	// path
+	// remote path
 	path := ""
 	path = ctx.Args()[0]
 	if path != "" && strings.HasPrefix(path, "/") {

@@ -14,6 +14,7 @@ func WebAccelResource() *schema.Resource {
 			Params:             webAccelDeleteCacheParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: webAccelListColumns(),
+			ArgsUsage:          "[URLs]...",
 			UseCustomCommand:   true,
 		},
 	}
@@ -32,11 +33,12 @@ func webAccelListColumns() []output.ColumnDef {
 
 func webAccelDeleteCacheParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"url": {
-			Type:        schema.TypeStringList,
-			HandlerType: schema.HandlerNoop,
-			Required:    true,
-			Description: "set delete-cache(purge) targets",
-		},
+	// URLs use from os.Args
+	//"url": {
+	//	Type:        schema.TypeStringList,
+	//	HandlerType: schema.HandlerNoop,
+	//	Required:    true,
+	//	Description: "set delete-cache(purge) targets",
+	//},
 	}
 }

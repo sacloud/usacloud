@@ -18,16 +18,7 @@ func init() {
 				Aliases:   []string{"purge"},
 				Usage:     "DeleteCache WebAccel",
 				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "url",
-						Usage: "[Required] set delete-cache(purge) targets",
-					},
-				},
 				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					deleteCacheParam.Url = c.StringSlice("url")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {

@@ -7,35 +7,90 @@ import (
 )
 
 func init() {
-	uploadParam := NewUploadArchiveParam()
+	updateParam := NewUpdateArchiveParam()
+	deleteParam := NewDeleteArchiveParam()
+	waitForCopyParam := NewWaitForCopyArchiveParam()
 	ftpOpenParam := NewFtpOpenArchiveParam()
 	ftpCloseParam := NewFtpCloseArchiveParam()
+	listParam := NewListArchiveParam()
 	createParam := NewCreateArchiveParam()
 	readParam := NewReadArchiveParam()
-	deleteParam := NewDeleteArchiveParam()
+	uploadParam := NewUploadArchiveParam()
 	downloadParam := NewDownloadArchiveParam()
-	waitForCopyParam := NewWaitForCopyArchiveParam()
-	listParam := NewListArchiveParam()
-	updateParam := NewUpdateArchiveParam()
 
 	cliCommand := &cli.Command{
 		Name:  "archive",
 		Usage: "A manage commands of Archive",
 		Subcommands: []*cli.Command{
 			{
-				Name:      "upload",
-				Usage:     "Upload Archive",
+				Name:      "update",
+				Aliases:   []string{"u"},
+				Usage:     "Update Archive",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &uploadParam.Id,
+						Destination: &updateParam.Id,
 					},
 					&cli.StringFlag{
-						Name:        "archive-file",
-						Usage:       "[Required] set archive image file",
-						Destination: &uploadParam.ArchiveFile,
+						Name:        "name",
+						Usage:       "set resource display name",
+						Destination: &updateParam.Name,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &updateParam.Description,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					updateParam.Tags = c.StringSlice("tags")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := updateParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), updateParam)
+
+					// Run command with params
+					return ArchiveUpdate(ctx, updateParam)
+				},
+			},
+			{
+				Name:      "delete",
+				Aliases:   []string{"d", "rm"},
+				Usage:     "Delete Archive",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &deleteParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -51,15 +106,50 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := uploadParam.Validate(); len(errors) > 0 {
+					if errors := deleteParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), uploadParam)
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
 
 					// Run command with params
-					return ArchiveUpload(ctx, uploadParam)
+					return ArchiveDelete(ctx, deleteParam)
+				},
+			},
+			{
+				Name:      "wait-for-copy",
+				Usage:     "WaitForCopy Archive",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &waitForCopyParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := waitForCopyParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), waitForCopyParam)
+
+					// Run command with params
+					return ArchiveWaitForCopy(ctx, waitForCopyParam)
 				},
 			},
 			{
@@ -133,20 +223,67 @@ func init() {
 				},
 			},
 			{
+				Name:    "list",
+				Aliases: []string{"l", "ls", "find"},
+				Usage:   "List Archive",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
+					},
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
+					&cli.StringFlag{
+						Name:        "scope",
+						Usage:       "set filter by scope('user' or 'shared')",
+						Destination: &listParam.Scope,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					listParam.Sort = c.StringSlice("sort")
+					listParam.Name = c.StringSlice("name")
+					listParam.Id = c.Int64Slice("id")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := listParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), listParam)
+
+					// Run command with params
+					return ArchiveList(ctx, listParam)
+				},
+			},
+			{
 				Name:    "create",
 				Aliases: []string{"c"},
 				Usage:   "Create Archive",
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "archive-file",
-						Usage:       "set archive image file",
-						Destination: &createParam.ArchiveFile,
-					},
-					&cli.Int64Flag{
-						Name:        "source-archive-id",
-						Usage:       "set source archive ID",
-						Destination: &createParam.SourceArchiveId,
-					},
 					&cli.Int64Flag{
 						Name:        "icon-id",
 						Usage:       "set Icon ID",
@@ -157,25 +294,35 @@ func init() {
 						Usage:       "set archive size(GB)",
 						Destination: &createParam.Size,
 					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "source-disk-id",
-						Usage:       "set source disk ID",
-						Destination: &createParam.SourceDiskId,
+					&cli.StringFlag{
+						Name:        "archive-file",
+						Usage:       "set archive image file",
+						Destination: &createParam.ArchiveFile,
 					},
 					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "[Required] set resource display name",
 						Destination: &createParam.Name,
 					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:        "source-archive-id",
+						Usage:       "set source archive ID",
+						Destination: &createParam.SourceArchiveId,
+					},
 					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
 						Destination: &createParam.Description,
+					},
+					&cli.Int64Flag{
+						Name:        "source-disk-id",
+						Usage:       "set source disk ID",
+						Destination: &createParam.SourceDiskId,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -237,15 +384,19 @@ func init() {
 				},
 			},
 			{
-				Name:      "delete",
-				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete Archive",
+				Name:      "upload",
+				Usage:     "Upload Archive",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &deleteParam.Id,
+						Destination: &uploadParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "archive-file",
+						Usage:       "[Required] set archive image file",
+						Destination: &uploadParam.ArchiveFile,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -261,15 +412,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := uploadParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := NewContext(c, c.Args().Slice(), uploadParam)
 
 					// Run command with params
-					return ArchiveDelete(ctx, deleteParam)
+					return ArchiveUpload(ctx, uploadParam)
 				},
 			},
 			{
@@ -310,157 +461,6 @@ func init() {
 
 					// Run command with params
 					return ArchiveDownload(ctx, downloadParam)
-				},
-			},
-			{
-				Name:      "wait-for-copy",
-				Usage:     "WaitForCopy Archive",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &waitForCopyParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := waitForCopyParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), waitForCopyParam)
-
-					// Run command with params
-					return ArchiveWaitForCopy(ctx, waitForCopyParam)
-				},
-			},
-			{
-				Name:    "list",
-				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List Archive",
-				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
-					&cli.StringFlag{
-						Name:        "scope",
-						Usage:       "set filter by scope('user' or 'shared')",
-						Destination: &listParam.Scope,
-					},
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
-					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					listParam.Sort = c.StringSlice("sort")
-					listParam.Name = c.StringSlice("name")
-					listParam.Id = c.Int64Slice("id")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), listParam)
-
-					// Run command with params
-					return ArchiveList(ctx, listParam)
-				},
-			},
-			{
-				Name:      "update",
-				Aliases:   []string{"u"},
-				Usage:     "Update Archive",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set resource display name",
-						Destination: &updateParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					updateParam.Tags = c.StringSlice("tags")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), updateParam)
-
-					// Run command with params
-					return ArchiveUpdate(ctx, updateParam)
 				},
 			},
 		},

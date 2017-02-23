@@ -10,11 +10,11 @@ import (
 
 // ListBridgeParam is input parameters for the sacloud API
 type ListBridgeParam struct {
-	Max  int
-	Sort []string
 	Name []string
 	Id   []int64
 	From int
+	Max  int
+	Sort []string
 }
 
 // NewListBridgeParam return new ListBridgeParam
@@ -78,20 +78,6 @@ func (p *ListBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListBridgeParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListBridgeParam) GetMax() int {
-	return p.Max
-}
-func (p *ListBridgeParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListBridgeParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListBridgeParam) SetName(v []string) {
 	p.Name = v
 }
@@ -112,6 +98,20 @@ func (p *ListBridgeParam) SetFrom(v int) {
 
 func (p *ListBridgeParam) GetFrom() int {
 	return p.From
+}
+func (p *ListBridgeParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListBridgeParam) GetMax() int {
+	return p.Max
+}
+func (p *ListBridgeParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListBridgeParam) GetSort() []string {
+	return p.Sort
 }
 
 // CreateBridgeParam is input parameters for the sacloud API

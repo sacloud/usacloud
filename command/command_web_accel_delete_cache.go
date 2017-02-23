@@ -11,9 +11,14 @@ func WebAccelDeleteCache(ctx Context, params *DeleteCacheWebAccelParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetWebAccelAPI()
+	urls := ctx.Args()
 
 	// validate
-	for _, target := range params.Url {
+	if len(urls) == 0 {
+		return fmt.Errorf("URL is required")
+	}
+
+	for _, target := range urls {
 		_, err := url.Parse(target)
 		if err != nil {
 			return fmt.Errorf("URL is invalid: %s", err)
@@ -21,7 +26,7 @@ func WebAccelDeleteCache(ctx Context, params *DeleteCacheWebAccelParam) error {
 	}
 
 	// call manipurate functions
-	res, err := api.DeleteCache(params.Url...)
+	res, err := api.DeleteCache(urls...)
 	if err != nil {
 		return fmt.Errorf("WebAccelDeleteCache is failed: %s", err)
 	}

@@ -7,32 +7,58 @@ import (
 )
 
 func init() {
+	readParam := NewReadSimpleMonitorParam()
 	updateParam := NewUpdateSimpleMonitorParam()
 	deleteParam := NewDeleteSimpleMonitorParam()
 	listParam := NewListSimpleMonitorParam()
 	createParam := NewCreateSimpleMonitorParam()
-	readParam := NewReadSimpleMonitorParam()
 
 	cliCommand := &cli.Command{
 		Name:  "simple-monitor",
 		Usage: "A manage commands of SimpleMonitor",
 		Subcommands: []*cli.Command{
 			{
+				Name:      "read",
+				Aliases:   []string{"r"},
+				Usage:     "Read SimpleMonitor",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &readParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := readParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), readParam)
+
+					// Run command with params
+					return SimpleMonitorRead(ctx, readParam)
+				},
+			},
+			{
 				Name:      "update",
 				Aliases:   []string{"u"},
 				Usage:     "Update SimpleMonitor",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "port",
-						Usage:       "set port of tcp monitoring",
-						Destination: &updateParam.Port,
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
-					},
 					&cli.StringFlag{
 						Name:        "path",
 						Usage:       "set path of http/https monitoring request",
@@ -43,34 +69,10 @@ func init() {
 						Usage:       "set monitoring enable/disable",
 						Destination: &updateParam.Enabled,
 					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
 					&cli.StringFlag{
-						Name:        "host-header",
-						Usage:       "set host header of http/https monitoring request",
-						Destination: &updateParam.HostHeader,
-					},
-					&cli.IntFlag{
-						Name:        "response-code",
-						Usage:       "set response-code of http/https monitoring request",
-						Destination: &updateParam.ResponseCode,
-					},
-					&cli.IntFlag{
-						Name:        "delay-loop",
-						Usage:       "set delay-loop of monitoring(minute)",
-						Destination: &updateParam.DelayLoop,
-					},
-					&cli.BoolFlag{
-						Name:        "notify-email",
-						Usage:       "enable e-mail notification",
-						Destination: &updateParam.NotifyEmail,
+						Name:        "dns-excepted",
+						Usage:       "set DNS query excepted value",
+						Destination: &updateParam.DnsExcepted,
 					},
 					&cli.StringFlag{
 						Name:        "email-type",
@@ -78,25 +80,59 @@ func init() {
 						Destination: &updateParam.EmailType,
 					},
 					&cli.StringFlag{
-						Name:        "slack-webhook",
-						Usage:       "set slack-webhook URL",
-						Destination: &updateParam.SlackWebhook,
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &updateParam.Description,
 					},
 					&cli.StringFlag{
 						Name:        "protocol",
 						Usage:       "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
 						Destination: &updateParam.Protocol,
 					},
-					&cli.StringFlag{
-						Name:        "dns-excepted",
-						Usage:       "set DNS query excepted value",
-						Destination: &updateParam.DnsExcepted,
+					&cli.IntFlag{
+						Name:        "delay-loop",
+						Usage:       "set delay-loop of monitoring(minute)",
+						Destination: &updateParam.DelayLoop,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
+					&cli.IntFlag{
+						Name:        "response-code",
+						Usage:       "set response-code of http/https monitoring request",
+						Destination: &updateParam.ResponseCode,
+					},
+					&cli.IntFlag{
+						Name:        "port",
+						Usage:       "set port of tcp monitoring",
+						Destination: &updateParam.Port,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
 					},
 					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
+						Name:        "host-header",
+						Usage:       "set host header of http/https monitoring request",
+						Destination: &updateParam.HostHeader,
+					},
+					&cli.BoolFlag{
+						Name:        "notify-email",
+						Usage:       "enable e-mail notification",
+						Destination: &updateParam.NotifyEmail,
+					},
+					&cli.StringFlag{
+						Name:        "slack-webhook",
+						Usage:       "set slack-webhook URL",
+						Destination: &updateParam.SlackWebhook,
 					},
 					&cli.StringFlag{
 						Name:        "dns-qname",
@@ -172,14 +208,6 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List SimpleMonitor",
 				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
 					&cli.IntFlag{
 						Name:        "from",
 						Usage:       "set offset",
@@ -194,13 +222,21 @@ func init() {
 						Name:  "sort",
 						Usage: "set field(s) for sort",
 					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
 					listParam.Sort = c.StringSlice("sort")
-					listParam.Name = c.StringSlice("name")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -224,57 +260,38 @@ func init() {
 				Aliases: []string{"c"},
 				Usage:   "Create SimpleMonitor",
 				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &createParam.IconId,
-					},
-					&cli.IntFlag{
-						Name:        "delay-loop",
-						Usage:       "[Required] set delay-loop of monitoring(minute)",
-						Value:       1,
-						Destination: &createParam.DelayLoop,
-					},
-					&cli.BoolFlag{
-						Name:        "enabled",
-						Usage:       "[Required] set monitoring enable/disable",
-						Value:       true,
-						Destination: &createParam.Enabled,
-					},
 					&cli.StringFlag{
 						Name:        "dns-excepted",
 						Usage:       "set DNS query excepted value",
 						Destination: &createParam.DnsExcepted,
 					},
-					&cli.IntFlag{
-						Name:        "response-code",
-						Usage:       "set response-code of http/https monitoring request",
-						Destination: &createParam.ResponseCode,
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &createParam.IconId,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &createParam.Description,
+					},
+					&cli.StringFlag{
+						Name:        "protocol",
+						Usage:       "[Required] set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
+						Value:       "ping",
+						Destination: &createParam.Protocol,
 					},
 					&cli.IntFlag{
 						Name:        "port",
 						Usage:       "set port of tcp monitoring",
 						Destination: &createParam.Port,
 					},
-					&cli.StringFlag{
-						Name:        "path",
-						Usage:       "set path of http/https monitoring request",
-						Destination: &createParam.Path,
-					},
-					&cli.StringFlag{
-						Name:        "email-type",
-						Usage:       "set e-mail type",
-						Destination: &createParam.EmailType,
-					},
-					&cli.StringFlag{
-						Name:        "host-header",
-						Usage:       "set host header of http/https monitoring request",
-						Destination: &createParam.HostHeader,
-					},
-					&cli.StringFlag{
-						Name:        "dns-qname",
-						Usage:       "set DNS query target name",
-						Destination: &createParam.DnsQname,
+					&cli.IntFlag{
+						Name:        "delay-loop",
+						Usage:       "[Required] set delay-loop of monitoring(minute)",
+						Value:       1,
+						Destination: &createParam.DelayLoop,
 					},
 					&cli.BoolFlag{
 						Name:        "notify-email",
@@ -288,14 +305,25 @@ func init() {
 						Destination: &createParam.SlackWebhook,
 					},
 					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &createParam.Description,
+						Name:        "path",
+						Usage:       "set path of http/https monitoring request",
+						Destination: &createParam.Path,
 					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
+					&cli.IntFlag{
+						Name:        "response-code",
+						Usage:       "set response-code of http/https monitoring request",
+						Destination: &createParam.ResponseCode,
+					},
+					&cli.BoolFlag{
+						Name:        "enabled",
+						Usage:       "[Required] set monitoring enable/disable",
+						Value:       true,
+						Destination: &createParam.Enabled,
+					},
+					&cli.StringFlag{
+						Name:        "dns-qname",
+						Usage:       "set DNS query target name",
+						Destination: &createParam.DnsQname,
 					},
 					&cli.StringFlag{
 						Name:        "target",
@@ -303,10 +331,18 @@ func init() {
 						Destination: &createParam.Target,
 					},
 					&cli.StringFlag{
-						Name:        "protocol",
-						Usage:       "[Required] set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
-						Value:       "ping",
-						Destination: &createParam.Protocol,
+						Name:        "host-header",
+						Usage:       "set host header of http/https monitoring request",
+						Destination: &createParam.HostHeader,
+					},
+					&cli.StringFlag{
+						Name:        "email-type",
+						Usage:       "set e-mail type",
+						Destination: &createParam.EmailType,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -329,42 +365,6 @@ func init() {
 
 					// Run command with params
 					return SimpleMonitorCreate(ctx, createParam)
-				},
-			},
-			{
-				Name:      "read",
-				Aliases:   []string{"r"},
-				Usage:     "Read SimpleMonitor",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &readParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), readParam)
-
-					// Run command with params
-					return SimpleMonitorRead(ctx, readParam)
 				},
 			},
 		},
