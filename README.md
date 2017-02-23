@@ -149,8 +149,8 @@ COPYRIGHT:
 #### Examples: Connect to server by SSH
 
 ```bash
-    # connect to server by ssh using generated private-key
-    $ usacloud server ssh [ServerID]
+    # connect to server by ssh using generated private-key(Not supported on Windows)
+    $ usacloud server ssh [ServerID]
     
     # [not implemented yet]exec command by SSH
     $ usacloud server ssh-exec cat /etc/passwd
