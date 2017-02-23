@@ -24,12 +24,6 @@ func init() {
 				ArgsUsage: "[PATH]",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "access-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
-						Destination: &listParam.AccessKey,
-					},
-					&cli.StringFlag{
 						Name:        "secret-key",
 						Usage:       "[Required] set access-key",
 						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
@@ -40,6 +34,12 @@ func init() {
 						Usage:       "set bucket",
 						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
 						Destination: &listParam.Bucket,
+					},
+					&cli.StringFlag{
+						Name:        "access-key",
+						Usage:       "[Required] set access-key",
+						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
+						Destination: &listParam.AccessKey,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -67,6 +67,12 @@ func init() {
 				ArgsUsage: "[FILE] [PATH]",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
+						Name:        "content-type",
+						Usage:       "set content-type",
+						Value:       "application/octet-stream",
+						Destination: &putParam.ContentType,
+					},
+					&cli.StringFlag{
 						Name:        "access-key",
 						Usage:       "[Required] set access-key",
 						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
@@ -83,12 +89,6 @@ func init() {
 						Usage:       "set bucket",
 						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
 						Destination: &putParam.Bucket,
-					},
-					&cli.StringFlag{
-						Name:        "content-type",
-						Usage:       "set content-type",
-						Value:       "application/octet-stream",
-						Destination: &putParam.ContentType,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -160,6 +160,12 @@ func init() {
 				ArgsUsage: "[PATH]",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
+						Name:        "access-key",
+						Usage:       "[Required] set access-key",
+						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
+						Destination: &deleteParam.AccessKey,
+					},
+					&cli.StringFlag{
 						Name:        "secret-key",
 						Usage:       "[Required] set access-key",
 						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
@@ -170,12 +176,6 @@ func init() {
 						Usage:       "set bucket",
 						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
 						Destination: &deleteParam.Bucket,
-					},
-					&cli.StringFlag{
-						Name:        "access-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
-						Destination: &deleteParam.AccessKey,
 					},
 				},
 				Action: func(c *cli.Context) error {

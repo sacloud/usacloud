@@ -64,6 +64,14 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List Interface",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
 					&cli.IntFlag{
 						Name:        "from",
 						Usage:       "set offset",
@@ -77,14 +85,6 @@ func init() {
 					&cli.StringSliceFlag{
 						Name:  "sort",
 						Usage: "set field(s) for sort",
-					},
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -183,15 +183,15 @@ func init() {
 				Usage:     "Update Interface",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
 					&cli.StringFlag{
 						Name:        "user-ipaddress",
 						Usage:       "set user-ipaddress",
 						Destination: &updateParam.UserIpaddress,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {

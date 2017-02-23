@@ -27,6 +27,7 @@ var Resources map[string]*schema.Resource = map[string]*schema.Resource{
 	"ProductServer":   ProductServerResource(),
 	"Region":          RegionResource(),
 	"Server":          ServerResource(),
+	"SimpleMonitor":   SimpleMonitorResource(),
 	"SSHKey":          SSHKeyResource(),
 	"StartupScript":   StartupScriptResource(),
 	"Switch":          SwitchResource(),

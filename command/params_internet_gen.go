@@ -161,11 +161,11 @@ func (p *UpdateBandwidthInternetParam) GetBandWidth() int {
 
 // ListInternetParam is input parameters for the sacloud API
 type ListInternetParam struct {
-	Name []string
-	Id   []int64
 	From int
 	Max  int
 	Sort []string
+	Name []string
+	Id   []int64
 }
 
 // NewListInternetParam return new ListInternetParam
@@ -229,20 +229,6 @@ func (p *ListInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListInternetParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListInternetParam) GetName() []string {
-	return p.Name
-}
-func (p *ListInternetParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListInternetParam) GetId() []int64 {
-	return p.Id
-}
 func (p *ListInternetParam) SetFrom(v int) {
 	p.From = v
 }
@@ -264,14 +250,28 @@ func (p *ListInternetParam) SetSort(v []string) {
 func (p *ListInternetParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListInternetParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListInternetParam) GetName() []string {
+	return p.Name
+}
+func (p *ListInternetParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListInternetParam) GetId() []int64 {
+	return p.Id
+}
 
 // CreateInternetParam is input parameters for the sacloud API
 type CreateInternetParam struct {
-	NwMasklen   int
-	Name        string
 	Description string
 	Tags        []string
 	IconId      int64
+	NwMasklen   int
+	Name        string
 }
 
 // NewCreateInternetParam return new CreateInternetParam
@@ -285,6 +285,27 @@ func NewCreateInternetParam() *CreateInternetParam {
 // Validate checks current values in model
 func (p *CreateInternetParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["Internet"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Internet"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Internet"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := validateRequired
 		errs := validator("--nw-masklen", p.NwMasklen)
@@ -309,27 +330,6 @@ func (p *CreateInternetParam) Validate() []error {
 	{
 		validator := define.Resources["Internet"].Commands["create"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Internet"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Internet"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Internet"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -362,20 +362,6 @@ func (p *CreateInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *CreateInternetParam) SetNwMasklen(v int) {
-	p.NwMasklen = v
-}
-
-func (p *CreateInternetParam) GetNwMasklen() int {
-	return p.NwMasklen
-}
-func (p *CreateInternetParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateInternetParam) GetName() string {
-	return p.Name
-}
 func (p *CreateInternetParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -396,6 +382,20 @@ func (p *CreateInternetParam) SetIconId(v int64) {
 
 func (p *CreateInternetParam) GetIconId() int64 {
 	return p.IconId
+}
+func (p *CreateInternetParam) SetNwMasklen(v int) {
+	p.NwMasklen = v
+}
+
+func (p *CreateInternetParam) GetNwMasklen() int {
+	return p.NwMasklen
+}
+func (p *CreateInternetParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateInternetParam) GetName() string {
+	return p.Name
 }
 
 // ReadInternetParam is input parameters for the sacloud API

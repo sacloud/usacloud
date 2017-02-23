@@ -6,18 +6,13 @@ import (
 	"fmt"
 )
 
-func ZoneList(ctx Context, params *ListZoneParam) error {
+func SimpleMonitorList(ctx Context, params *ListSimpleMonitorParam) error {
 
 	client := ctx.GetAPIClient()
-	finder := client.GetZoneAPI()
+	finder := client.GetSimpleMonitorAPI()
 
 	finder.SetEmpty()
 
-	if !isEmpty(params.Id) {
-		for _, v := range params.Id {
-			finder.SetFilterMultiBy("ID", v)
-		}
-	}
 	if !isEmpty(params.From) {
 		finder.SetOffset(params.From)
 	}
@@ -34,16 +29,21 @@ func ZoneList(ctx Context, params *ListZoneParam) error {
 			finder.SetFilterBy("Name", v)
 		}
 	}
+	if !isEmpty(params.Id) {
+		for _, v := range params.Id {
+			finder.SetFilterMultiBy("ID", v)
+		}
+	}
 
 	// call Find()
 	res, err := finder.Find()
 	if err != nil {
-		return fmt.Errorf("ZoneList is failed: %s", err)
+		return fmt.Errorf("SimpleMonitorList is failed: %s", err)
 	}
 
 	list := []interface{}{}
-	for i := range res.Zones {
-		list = append(list, &res.Zones[i])
+	for i := range res.SimpleMonitors {
+		list = append(list, &res.SimpleMonitors[i])
 	}
 
 	return ctx.GetOutput().Print(list...)

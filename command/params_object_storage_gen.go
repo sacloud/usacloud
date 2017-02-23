@@ -89,10 +89,10 @@ func (p *ListObjectStorageParam) GetBucket() string {
 
 // PutObjectStorageParam is input parameters for the sacloud API
 type PutObjectStorageParam struct {
+	ContentType string
 	AccessKey   string
 	SecretKey   string
 	Bucket      string
-	ContentType string
 }
 
 // NewPutObjectStorageParam return new PutObjectStorageParam
@@ -148,6 +148,13 @@ func (p *PutObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *PutObjectStorageParam) SetContentType(v string) {
+	p.ContentType = v
+}
+
+func (p *PutObjectStorageParam) GetContentType() string {
+	return p.ContentType
+}
 func (p *PutObjectStorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
@@ -168,13 +175,6 @@ func (p *PutObjectStorageParam) SetBucket(v string) {
 
 func (p *PutObjectStorageParam) GetBucket() string {
 	return p.Bucket
-}
-func (p *PutObjectStorageParam) SetContentType(v string) {
-	p.ContentType = v
-}
-
-func (p *PutObjectStorageParam) GetContentType() string {
-	return p.ContentType
 }
 
 // GetObjectStorageParam is input parameters for the sacloud API
@@ -258,9 +258,9 @@ func (p *GetObjectStorageParam) GetBucket() string {
 
 // DeleteObjectStorageParam is input parameters for the sacloud API
 type DeleteObjectStorageParam struct {
-	AccessKey string
 	SecretKey string
 	Bucket    string
+	AccessKey string
 }
 
 // NewDeleteObjectStorageParam return new DeleteObjectStorageParam
@@ -273,14 +273,14 @@ func (p *DeleteObjectStorageParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--access-key", p.AccessKey)
+		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := validateRequired
-		errs := validator("--secret-key", p.SecretKey)
+		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -313,13 +313,6 @@ func (p *DeleteObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *DeleteObjectStorageParam) SetAccessKey(v string) {
-	p.AccessKey = v
-}
-
-func (p *DeleteObjectStorageParam) GetAccessKey() string {
-	return p.AccessKey
-}
 func (p *DeleteObjectStorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
 }
@@ -333,4 +326,11 @@ func (p *DeleteObjectStorageParam) SetBucket(v string) {
 
 func (p *DeleteObjectStorageParam) GetBucket() string {
 	return p.Bucket
+}
+func (p *DeleteObjectStorageParam) SetAccessKey(v string) {
+	p.AccessKey = v
+}
+
+func (p *DeleteObjectStorageParam) GetAccessKey() string {
+	return p.AccessKey
 }

@@ -7,20 +7,145 @@ import (
 )
 
 func init() {
-	readParam := NewReadDNSParam()
 	recordAddParam := NewRecordAddDNSParam()
+	recordDeleteParam := NewRecordDeleteDNSParam()
+	readParam := NewReadDNSParam()
+	updateParam := NewUpdateDNSParam()
+	deleteParam := NewDeleteDNSParam()
 	recordUpdateParam := NewRecordUpdateDNSParam()
 	listParam := NewListDNSParam()
 	createParam := NewCreateDNSParam()
-	updateParam := NewUpdateDNSParam()
-	deleteParam := NewDeleteDNSParam()
 	recordListParam := NewRecordListDNSParam()
-	recordDeleteParam := NewRecordDeleteDNSParam()
 
 	cliCommand := &cli.Command{
 		Name:  "dns",
 		Usage: "A manage commands of DNS",
 		Subcommands: []*cli.Command{
+			{
+				Name:      "record-add",
+				Usage:     "RecordAdd DNS",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "srv-port",
+						Usage:       "set SRV priority",
+						Value:       0,
+						Destination: &recordAddParam.SrvPort,
+					},
+					&cli.StringFlag{
+						Name:        "srv-target",
+						Usage:       "set SRV priority",
+						Destination: &recordAddParam.SrvTarget,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set name",
+						Destination: &recordAddParam.Name,
+					},
+					&cli.StringFlag{
+						Name:        "type",
+						Usage:       "[Required] set record type[A/AAAA/NS/CNAME/MX/TXT/SRV]",
+						Destination: &recordAddParam.Type,
+					},
+					&cli.IntFlag{
+						Name:        "ttl",
+						Usage:       "set ttl",
+						Value:       3600,
+						Destination: &recordAddParam.Ttl,
+					},
+					&cli.IntFlag{
+						Name:        "mx-priority",
+						Usage:       "set MX priority",
+						Value:       10,
+						Destination: &recordAddParam.MxPriority,
+					},
+					&cli.IntFlag{
+						Name:        "srv-priority",
+						Usage:       "set SRV priority",
+						Value:       0,
+						Destination: &recordAddParam.SrvPriority,
+					},
+					&cli.IntFlag{
+						Name:        "srv-weight",
+						Usage:       "set SRV priority",
+						Value:       0,
+						Destination: &recordAddParam.SrvWeight,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &recordAddParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "value",
+						Usage:       "set record data",
+						Destination: &recordAddParam.Value,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := recordAddParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), recordAddParam)
+
+					// Run command with params
+					return DNSRecordAdd(ctx, recordAddParam)
+				},
+			},
+			{
+				Name:      "record-delete",
+				Usage:     "RecordDelete DNS",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &recordDeleteParam.Id,
+					},
+					&cli.IntFlag{
+						Name:        "index",
+						Usage:       "[Required] index of target record",
+						Destination: &recordDeleteParam.Index,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := recordDeleteParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), recordDeleteParam)
+
+					// Run command with params
+					return DNSRecordDelete(ctx, recordDeleteParam)
+				},
+			},
 			{
 				Name:      "read",
 				Aliases:   []string{"r"},
@@ -58,64 +183,69 @@ func init() {
 				},
 			},
 			{
-				Name:      "record-add",
-				Usage:     "RecordAdd DNS",
+				Name:      "update",
+				Aliases:   []string{"u"},
+				Usage:     "Update DNS",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &updateParam.Description,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					updateParam.Tags = c.StringSlice("tags")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := updateParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), updateParam)
+
+					// Run command with params
+					return DNSUpdate(ctx, updateParam)
+				},
+			},
+			{
+				Name:      "delete",
+				Aliases:   []string{"d", "rm"},
+				Usage:     "Delete DNS",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &recordAddParam.Id,
-					},
-					&cli.IntFlag{
-						Name:        "mx-priority",
-						Usage:       "set MX priority",
-						Value:       10,
-						Destination: &recordAddParam.MxPriority,
-					},
-					&cli.IntFlag{
-						Name:        "srv-port",
-						Usage:       "set SRV priority",
-						Value:       0,
-						Destination: &recordAddParam.SrvPort,
-					},
-					&cli.StringFlag{
-						Name:        "srv-target",
-						Usage:       "set SRV priority",
-						Destination: &recordAddParam.SrvTarget,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set name",
-						Destination: &recordAddParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "type",
-						Usage:       "[Required] set record type[A/AAAA/NS/CNAME/MX/TXT/SRV]",
-						Destination: &recordAddParam.Type,
-					},
-					&cli.StringFlag{
-						Name:        "value",
-						Usage:       "set record data",
-						Destination: &recordAddParam.Value,
-					},
-					&cli.IntFlag{
-						Name:        "ttl",
-						Usage:       "set ttl",
-						Value:       3600,
-						Destination: &recordAddParam.Ttl,
-					},
-					&cli.IntFlag{
-						Name:        "srv-priority",
-						Usage:       "set SRV priority",
-						Value:       0,
-						Destination: &recordAddParam.SrvPriority,
-					},
-					&cli.IntFlag{
-						Name:        "srv-weight",
-						Usage:       "set SRV priority",
-						Value:       0,
-						Destination: &recordAddParam.SrvWeight,
+						Destination: &deleteParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -131,15 +261,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := recordAddParam.Validate(); len(errors) > 0 {
+					if errors := deleteParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), recordAddParam)
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
 
 					// Run command with params
-					return DNSRecordAdd(ctx, recordAddParam)
+					return DNSDelete(ctx, deleteParam)
 				},
 			},
 			{
@@ -147,35 +277,30 @@ func init() {
 				Usage:     "RecordUpdate DNS",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set name",
-						Destination: &recordUpdateParam.Name,
-					},
 					&cli.IntFlag{
 						Name:        "mx-priority",
 						Usage:       "set MX priority",
 						Destination: &recordUpdateParam.MxPriority,
 					},
 					&cli.IntFlag{
-						Name:        "srv-port",
+						Name:        "srv-priority",
 						Usage:       "set SRV priority",
-						Destination: &recordUpdateParam.SrvPort,
+						Destination: &recordUpdateParam.SrvPriority,
+					},
+					&cli.IntFlag{
+						Name:        "srv-weight",
+						Usage:       "set SRV priority",
+						Destination: &recordUpdateParam.SrvWeight,
 					},
 					&cli.StringFlag{
 						Name:        "srv-target",
 						Usage:       "set SRV priority",
 						Destination: &recordUpdateParam.SrvTarget,
 					},
-					&cli.IntFlag{
-						Name:        "index",
-						Usage:       "[Required] index of target record",
-						Destination: &recordUpdateParam.Index,
-					},
 					&cli.StringFlag{
-						Name:        "type",
-						Usage:       "set record type[A/AAAA/NS/CNAME/MX/TXT/SRV]",
-						Destination: &recordUpdateParam.Type,
+						Name:        "name",
+						Usage:       "set name",
+						Destination: &recordUpdateParam.Name,
 					},
 					&cli.StringFlag{
 						Name:        "value",
@@ -188,19 +313,24 @@ func init() {
 						Destination: &recordUpdateParam.Ttl,
 					},
 					&cli.IntFlag{
-						Name:        "srv-priority",
+						Name:        "srv-port",
 						Usage:       "set SRV priority",
-						Destination: &recordUpdateParam.SrvPriority,
-					},
-					&cli.IntFlag{
-						Name:        "srv-weight",
-						Usage:       "set SRV priority",
-						Destination: &recordUpdateParam.SrvWeight,
+						Destination: &recordUpdateParam.SrvPort,
 					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
 						Destination: &recordUpdateParam.Id,
+					},
+					&cli.IntFlag{
+						Name:        "index",
+						Usage:       "[Required] index of target record",
+						Destination: &recordUpdateParam.Index,
+					},
+					&cli.StringFlag{
+						Name:        "type",
+						Usage:       "set record type[A/AAAA/NS/CNAME/MX/TXT/SRV]",
+						Destination: &recordUpdateParam.Type,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -285,11 +415,6 @@ func init() {
 				Usage:   "Create DNS",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set DNS zone name",
-						Destination: &createParam.Name,
-					},
-					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
@@ -303,6 +428,11 @@ func init() {
 						Name:        "icon-id",
 						Usage:       "set Icon ID",
 						Destination: &createParam.IconId,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set DNS zone name",
+						Destination: &createParam.Name,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -325,96 +455,6 @@ func init() {
 
 					// Run command with params
 					return DNSCreate(ctx, createParam)
-				},
-			},
-			{
-				Name:      "update",
-				Aliases:   []string{"u"},
-				Usage:     "Update DNS",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					updateParam.Tags = c.StringSlice("tags")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), updateParam)
-
-					// Run command with params
-					return DNSUpdate(ctx, updateParam)
-				},
-			},
-			{
-				Name:      "delete",
-				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete DNS",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &deleteParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), deleteParam)
-
-					// Run command with params
-					return DNSDelete(ctx, deleteParam)
 				},
 			},
 			{
@@ -450,46 +490,6 @@ func init() {
 
 					// Run command with params
 					return DNSRecordList(ctx, recordListParam)
-				},
-			},
-			{
-				Name:      "record-delete",
-				Usage:     "RecordDelete DNS",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &recordDeleteParam.Id,
-					},
-					&cli.IntFlag{
-						Name:        "index",
-						Usage:       "[Required] index of target record",
-						Destination: &recordDeleteParam.Index,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := recordDeleteParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), recordDeleteParam)
-
-					// Run command with params
-					return DNSRecordDelete(ctx, recordDeleteParam)
 				},
 			},
 		},

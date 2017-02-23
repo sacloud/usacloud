@@ -10,11 +10,11 @@ import (
 
 // ListProductInternetParam is input parameters for the sacloud API
 type ListProductInternetParam struct {
-	Name []string
 	Id   []int64
 	From int
 	Max  int
 	Sort []string
+	Name []string
 }
 
 // NewListProductInternetParam return new ListProductInternetParam
@@ -26,15 +26,6 @@ func NewListProductInternetParam() *ListProductInternetParam {
 func (p *ListProductInternetParam) Validate() []error {
 	errors := []error{}
 	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := define.Resources["ProductInternet"].Commands["list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -45,6 +36,15 @@ func (p *ListProductInternetParam) Validate() []error {
 		errs := validateConflicts("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -78,13 +78,6 @@ func (p *ListProductInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListProductInternetParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListProductInternetParam) GetName() []string {
-	return p.Name
-}
 func (p *ListProductInternetParam) SetId(v []int64) {
 	p.Id = v
 }
@@ -112,6 +105,13 @@ func (p *ListProductInternetParam) SetSort(v []string) {
 
 func (p *ListProductInternetParam) GetSort() []string {
 	return p.Sort
+}
+func (p *ListProductInternetParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListProductInternetParam) GetName() []string {
+	return p.Name
 }
 
 // ReadProductInternetParam is input parameters for the sacloud API
