@@ -14,9 +14,9 @@ func BridgeCreate(ctx Context, params *CreateBridgeParam) error {
 
 	// set params
 
-	p.SetDescription(params.Description)
-
 	p.SetName(params.Name)
+
+	p.SetDescription(params.Description)
 
 	// call Create(id)
 	res, err := api.Create(p)

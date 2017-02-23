@@ -13,6 +13,11 @@ func PacketFilterList(ctx Context, params *ListPacketFilterParam) error {
 
 	finder.SetEmpty()
 
+	if !isEmpty(params.Name) {
+		for _, v := range params.Name {
+			finder.SetFilterBy("Name", v)
+		}
+	}
 	if !isEmpty(params.Id) {
 		for _, v := range params.Id {
 			finder.SetFilterMultiBy("ID", v)
@@ -27,11 +32,6 @@ func PacketFilterList(ctx Context, params *ListPacketFilterParam) error {
 	if !isEmpty(params.Sort) {
 		for _, v := range params.Sort {
 			setSortBy(finder, v)
-		}
-	}
-	if !isEmpty(params.Name) {
-		for _, v := range params.Name {
-			finder.SetFilterBy("Name", v)
 		}
 	}
 

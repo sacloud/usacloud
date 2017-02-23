@@ -8,6 +8,164 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// GetObjectStorageParam is input parameters for the sacloud API
+type GetObjectStorageParam struct {
+	AccessKey string
+	SecretKey string
+	Bucket    string
+}
+
+// NewGetObjectStorageParam return new GetObjectStorageParam
+func NewGetObjectStorageParam() *GetObjectStorageParam {
+	return &GetObjectStorageParam{}
+}
+
+// Validate checks current values in model
+func (p *GetObjectStorageParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--access-key", p.AccessKey)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--secret-key", p.SecretKey)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *GetObjectStorageParam) getResourceDef() *schema.Resource {
+	return define.Resources["ObjectStorage"]
+}
+
+func (p *GetObjectStorageParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["get"]
+}
+
+func (p *GetObjectStorageParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *GetObjectStorageParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *GetObjectStorageParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *GetObjectStorageParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *GetObjectStorageParam) SetAccessKey(v string) {
+	p.AccessKey = v
+}
+
+func (p *GetObjectStorageParam) GetAccessKey() string {
+	return p.AccessKey
+}
+func (p *GetObjectStorageParam) SetSecretKey(v string) {
+	p.SecretKey = v
+}
+
+func (p *GetObjectStorageParam) GetSecretKey() string {
+	return p.SecretKey
+}
+func (p *GetObjectStorageParam) SetBucket(v string) {
+	p.Bucket = v
+}
+
+func (p *GetObjectStorageParam) GetBucket() string {
+	return p.Bucket
+}
+
+// DeleteObjectStorageParam is input parameters for the sacloud API
+type DeleteObjectStorageParam struct {
+	AccessKey string
+	SecretKey string
+	Bucket    string
+}
+
+// NewDeleteObjectStorageParam return new DeleteObjectStorageParam
+func NewDeleteObjectStorageParam() *DeleteObjectStorageParam {
+	return &DeleteObjectStorageParam{}
+}
+
+// Validate checks current values in model
+func (p *DeleteObjectStorageParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--access-key", p.AccessKey)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--secret-key", p.SecretKey)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DeleteObjectStorageParam) getResourceDef() *schema.Resource {
+	return define.Resources["ObjectStorage"]
+}
+
+func (p *DeleteObjectStorageParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["delete"]
+}
+
+func (p *DeleteObjectStorageParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *DeleteObjectStorageParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *DeleteObjectStorageParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *DeleteObjectStorageParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DeleteObjectStorageParam) SetAccessKey(v string) {
+	p.AccessKey = v
+}
+
+func (p *DeleteObjectStorageParam) GetAccessKey() string {
+	return p.AccessKey
+}
+func (p *DeleteObjectStorageParam) SetSecretKey(v string) {
+	p.SecretKey = v
+}
+
+func (p *DeleteObjectStorageParam) GetSecretKey() string {
+	return p.SecretKey
+}
+func (p *DeleteObjectStorageParam) SetBucket(v string) {
+	p.Bucket = v
+}
+
+func (p *DeleteObjectStorageParam) GetBucket() string {
+	return p.Bucket
+}
+
 // ListObjectStorageParam is input parameters for the sacloud API
 type ListObjectStorageParam struct {
 	AccessKey string
@@ -89,10 +247,10 @@ func (p *ListObjectStorageParam) GetBucket() string {
 
 // PutObjectStorageParam is input parameters for the sacloud API
 type PutObjectStorageParam struct {
-	AccessKey   string
 	SecretKey   string
 	Bucket      string
 	ContentType string
+	AccessKey   string
 }
 
 // NewPutObjectStorageParam return new PutObjectStorageParam
@@ -108,14 +266,14 @@ func (p *PutObjectStorageParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--access-key", p.AccessKey)
+		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := validateRequired
-		errs := validator("--secret-key", p.SecretKey)
+		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -148,13 +306,6 @@ func (p *PutObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *PutObjectStorageParam) SetAccessKey(v string) {
-	p.AccessKey = v
-}
-
-func (p *PutObjectStorageParam) GetAccessKey() string {
-	return p.AccessKey
-}
 func (p *PutObjectStorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
 }
@@ -176,161 +327,10 @@ func (p *PutObjectStorageParam) SetContentType(v string) {
 func (p *PutObjectStorageParam) GetContentType() string {
 	return p.ContentType
 }
-
-// GetObjectStorageParam is input parameters for the sacloud API
-type GetObjectStorageParam struct {
-	SecretKey string
-	Bucket    string
-	AccessKey string
-}
-
-// NewGetObjectStorageParam return new GetObjectStorageParam
-func NewGetObjectStorageParam() *GetObjectStorageParam {
-	return &GetObjectStorageParam{}
-}
-
-// Validate checks current values in model
-func (p *GetObjectStorageParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--secret-key", p.SecretKey)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--access-key", p.AccessKey)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *GetObjectStorageParam) getResourceDef() *schema.Resource {
-	return define.Resources["ObjectStorage"]
-}
-
-func (p *GetObjectStorageParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["get"]
-}
-
-func (p *GetObjectStorageParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *GetObjectStorageParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *GetObjectStorageParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *GetObjectStorageParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *GetObjectStorageParam) SetSecretKey(v string) {
-	p.SecretKey = v
-}
-
-func (p *GetObjectStorageParam) GetSecretKey() string {
-	return p.SecretKey
-}
-func (p *GetObjectStorageParam) SetBucket(v string) {
-	p.Bucket = v
-}
-
-func (p *GetObjectStorageParam) GetBucket() string {
-	return p.Bucket
-}
-func (p *GetObjectStorageParam) SetAccessKey(v string) {
+func (p *PutObjectStorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
 
-func (p *GetObjectStorageParam) GetAccessKey() string {
-	return p.AccessKey
-}
-
-// DeleteObjectStorageParam is input parameters for the sacloud API
-type DeleteObjectStorageParam struct {
-	SecretKey string
-	Bucket    string
-	AccessKey string
-}
-
-// NewDeleteObjectStorageParam return new DeleteObjectStorageParam
-func NewDeleteObjectStorageParam() *DeleteObjectStorageParam {
-	return &DeleteObjectStorageParam{}
-}
-
-// Validate checks current values in model
-func (p *DeleteObjectStorageParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--secret-key", p.SecretKey)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--access-key", p.AccessKey)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *DeleteObjectStorageParam) getResourceDef() *schema.Resource {
-	return define.Resources["ObjectStorage"]
-}
-
-func (p *DeleteObjectStorageParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["delete"]
-}
-
-func (p *DeleteObjectStorageParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *DeleteObjectStorageParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *DeleteObjectStorageParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *DeleteObjectStorageParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DeleteObjectStorageParam) SetSecretKey(v string) {
-	p.SecretKey = v
-}
-
-func (p *DeleteObjectStorageParam) GetSecretKey() string {
-	return p.SecretKey
-}
-func (p *DeleteObjectStorageParam) SetBucket(v string) {
-	p.Bucket = v
-}
-
-func (p *DeleteObjectStorageParam) GetBucket() string {
-	return p.Bucket
-}
-func (p *DeleteObjectStorageParam) SetAccessKey(v string) {
-	p.AccessKey = v
-}
-
-func (p *DeleteObjectStorageParam) GetAccessKey() string {
+func (p *PutObjectStorageParam) GetAccessKey() string {
 	return p.AccessKey
 }

@@ -22,15 +22,6 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List AutoBackup",
 				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
 					&cli.StringSliceFlag{
 						Name:  "name",
 						Usage: "set filter by name(s)",
@@ -44,13 +35,22 @@ func init() {
 						Usage:       "set offset",
 						Destination: &listParam.From,
 					},
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
 					listParam.Sort = c.StringSlice("sort")
-					listParam.Name = c.StringSlice("name")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -75,15 +75,19 @@ func init() {
 				Usage:   "Create AutoBackup",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
+					},
+					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
 						Destination: &createParam.Description,
 					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &createParam.IconId,
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
 					},
 					&cli.IntFlag{
 						Name:        "start-hour",
@@ -96,14 +100,10 @@ func init() {
 						Usage: "[Required] set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
 						Value: cli.NewStringSlice("all"),
 					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &createParam.IconId,
 					},
 					&cli.IntFlag{
 						Name:        "generation",
@@ -120,8 +120,8 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					createParam.Tags = c.StringSlice("tags")
 					createParam.Weekdays = c.StringSlice("weekdays")
+					createParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -187,16 +187,6 @@ func init() {
 						Usage:       "set resource display name",
 						Destination: &updateParam.Name,
 					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
 					&cli.StringSliceFlag{
 						Name:  "weekdays",
 						Usage: "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
@@ -205,6 +195,10 @@ func init() {
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
 						Destination: &updateParam.Id,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
 					},
 					&cli.Int64Flag{
 						Name:        "icon-id",
@@ -220,6 +214,12 @@ func init() {
 						Name:        "start-hour",
 						Usage:       "set backup start hour[0/6/12/18]",
 						Destination: &updateParam.StartHour,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &updateParam.Description,
 					},
 				},
 				Action: func(c *cli.Context) error {

@@ -8,6 +8,284 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// CreateISOImageParam is input parameters for the sacloud API
+type CreateISOImageParam struct {
+	Tags        []string
+	IconId      int64
+	Size        int
+	IsoFile     string
+	Name        string
+	Description string
+}
+
+// NewCreateISOImageParam return new CreateISOImageParam
+func NewCreateISOImageParam() *CreateISOImageParam {
+	return &CreateISOImageParam{
+
+		Size: 5,
+	}
+}
+
+// Validate checks current values in model
+func (p *CreateISOImageParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["ISOImage"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--size", p.Size)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["create"].Params["size"].ValidateFunc
+		errs := validator("--size", p.Size)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--iso-file", p.IsoFile)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["create"].Params["iso-file"].ValidateFunc
+		errs := validator("--iso-file", p.IsoFile)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *CreateISOImageParam) getResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *CreateISOImageParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["create"]
+}
+
+func (p *CreateISOImageParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *CreateISOImageParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *CreateISOImageParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *CreateISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateISOImageParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateISOImageParam) GetTags() []string {
+	return p.Tags
+}
+func (p *CreateISOImageParam) SetIconId(v int64) {
+	p.IconId = v
+}
+
+func (p *CreateISOImageParam) GetIconId() int64 {
+	return p.IconId
+}
+func (p *CreateISOImageParam) SetSize(v int) {
+	p.Size = v
+}
+
+func (p *CreateISOImageParam) GetSize() int {
+	return p.Size
+}
+func (p *CreateISOImageParam) SetIsoFile(v string) {
+	p.IsoFile = v
+}
+
+func (p *CreateISOImageParam) GetIsoFile() string {
+	return p.IsoFile
+}
+func (p *CreateISOImageParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateISOImageParam) GetName() string {
+	return p.Name
+}
+func (p *CreateISOImageParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateISOImageParam) GetDescription() string {
+	return p.Description
+}
+
+// UpdateISOImageParam is input parameters for the sacloud API
+type UpdateISOImageParam struct {
+	IconId      int64
+	Id          int64
+	Name        string
+	Description string
+	Tags        []string
+}
+
+// NewUpdateISOImageParam return new UpdateISOImageParam
+func NewUpdateISOImageParam() *UpdateISOImageParam {
+	return &UpdateISOImageParam{}
+}
+
+// Validate checks current values in model
+func (p *UpdateISOImageParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["ISOImage"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["update"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *UpdateISOImageParam) getResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *UpdateISOImageParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["update"]
+}
+
+func (p *UpdateISOImageParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *UpdateISOImageParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *UpdateISOImageParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *UpdateISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateISOImageParam) SetIconId(v int64) {
+	p.IconId = v
+}
+
+func (p *UpdateISOImageParam) GetIconId() int64 {
+	return p.IconId
+}
+func (p *UpdateISOImageParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *UpdateISOImageParam) GetId() int64 {
+	return p.Id
+}
+func (p *UpdateISOImageParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateISOImageParam) GetName() string {
+	return p.Name
+}
+func (p *UpdateISOImageParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdateISOImageParam) GetDescription() string {
+	return p.Description
+}
+func (p *UpdateISOImageParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *UpdateISOImageParam) GetTags() []string {
+	return p.Tags
+}
+
 // DeleteISOImageParam is input parameters for the sacloud API
 type DeleteISOImageParam struct {
 	Id int64
@@ -68,594 +346,6 @@ func (p *DeleteISOImageParam) SetId(v int64) {
 }
 
 func (p *DeleteISOImageParam) GetId() int64 {
-	return p.Id
-}
-
-// FtpOpenISOImageParam is input parameters for the sacloud API
-type FtpOpenISOImageParam struct {
-	Id int64
-}
-
-// NewFtpOpenISOImageParam return new FtpOpenISOImageParam
-func NewFtpOpenISOImageParam() *FtpOpenISOImageParam {
-	return &FtpOpenISOImageParam{}
-}
-
-// Validate checks current values in model
-func (p *FtpOpenISOImageParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["ftp-open"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *FtpOpenISOImageParam) getResourceDef() *schema.Resource {
-	return define.Resources["ISOImage"]
-}
-
-func (p *FtpOpenISOImageParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["ftp-open"]
-}
-
-func (p *FtpOpenISOImageParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *FtpOpenISOImageParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *FtpOpenISOImageParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *FtpOpenISOImageParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *FtpOpenISOImageParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *FtpOpenISOImageParam) GetId() int64 {
-	return p.Id
-}
-
-// ListISOImageParam is input parameters for the sacloud API
-type ListISOImageParam struct {
-	Name  []string
-	Id    []int64
-	From  int
-	Max   int
-	Sort  []string
-	Scope string
-}
-
-// NewListISOImageParam return new ListISOImageParam
-func NewListISOImageParam() *ListISOImageParam {
-	return &ListISOImageParam{}
-}
-
-// Validate checks current values in model
-func (p *ListISOImageParam) Validate() []error {
-	errors := []error{}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["list"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--id", p.Id, map[string]interface{}{
-
-			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["list"].Params["scope"].ValidateFunc
-		errs := validator("--scope", p.Scope)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ListISOImageParam) getResourceDef() *schema.Resource {
-	return define.Resources["ISOImage"]
-}
-
-func (p *ListISOImageParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["list"]
-}
-
-func (p *ListISOImageParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ListISOImageParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ListISOImageParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ListISOImageParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ListISOImageParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListISOImageParam) GetName() []string {
-	return p.Name
-}
-func (p *ListISOImageParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListISOImageParam) GetId() []int64 {
-	return p.Id
-}
-func (p *ListISOImageParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListISOImageParam) GetFrom() int {
-	return p.From
-}
-func (p *ListISOImageParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListISOImageParam) GetMax() int {
-	return p.Max
-}
-func (p *ListISOImageParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListISOImageParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListISOImageParam) SetScope(v string) {
-	p.Scope = v
-}
-
-func (p *ListISOImageParam) GetScope() string {
-	return p.Scope
-}
-
-// CreateISOImageParam is input parameters for the sacloud API
-type CreateISOImageParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Size        int
-	IsoFile     string
-}
-
-// NewCreateISOImageParam return new CreateISOImageParam
-func NewCreateISOImageParam() *CreateISOImageParam {
-	return &CreateISOImageParam{
-
-		Size: 5,
-	}
-}
-
-// Validate checks current values in model
-func (p *CreateISOImageParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--size", p.Size)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["create"].Params["size"].ValidateFunc
-		errs := validator("--size", p.Size)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--iso-file", p.IsoFile)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["create"].Params["iso-file"].ValidateFunc
-		errs := validator("--iso-file", p.IsoFile)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *CreateISOImageParam) getResourceDef() *schema.Resource {
-	return define.Resources["ISOImage"]
-}
-
-func (p *CreateISOImageParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["create"]
-}
-
-func (p *CreateISOImageParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *CreateISOImageParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *CreateISOImageParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *CreateISOImageParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *CreateISOImageParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateISOImageParam) GetName() string {
-	return p.Name
-}
-func (p *CreateISOImageParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *CreateISOImageParam) GetDescription() string {
-	return p.Description
-}
-func (p *CreateISOImageParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateISOImageParam) GetTags() []string {
-	return p.Tags
-}
-func (p *CreateISOImageParam) SetIconId(v int64) {
-	p.IconId = v
-}
-
-func (p *CreateISOImageParam) GetIconId() int64 {
-	return p.IconId
-}
-func (p *CreateISOImageParam) SetSize(v int) {
-	p.Size = v
-}
-
-func (p *CreateISOImageParam) GetSize() int {
-	return p.Size
-}
-func (p *CreateISOImageParam) SetIsoFile(v string) {
-	p.IsoFile = v
-}
-
-func (p *CreateISOImageParam) GetIsoFile() string {
-	return p.IsoFile
-}
-
-// UpdateISOImageParam is input parameters for the sacloud API
-type UpdateISOImageParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Id          int64
-}
-
-// NewUpdateISOImageParam return new UpdateISOImageParam
-func NewUpdateISOImageParam() *UpdateISOImageParam {
-	return &UpdateISOImageParam{}
-}
-
-// Validate checks current values in model
-func (p *UpdateISOImageParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := define.Resources["ISOImage"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["update"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *UpdateISOImageParam) getResourceDef() *schema.Resource {
-	return define.Resources["ISOImage"]
-}
-
-func (p *UpdateISOImageParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["update"]
-}
-
-func (p *UpdateISOImageParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *UpdateISOImageParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *UpdateISOImageParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *UpdateISOImageParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *UpdateISOImageParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateISOImageParam) GetName() string {
-	return p.Name
-}
-func (p *UpdateISOImageParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *UpdateISOImageParam) GetDescription() string {
-	return p.Description
-}
-func (p *UpdateISOImageParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *UpdateISOImageParam) GetTags() []string {
-	return p.Tags
-}
-func (p *UpdateISOImageParam) SetIconId(v int64) {
-	p.IconId = v
-}
-
-func (p *UpdateISOImageParam) GetIconId() int64 {
-	return p.IconId
-}
-func (p *UpdateISOImageParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *UpdateISOImageParam) GetId() int64 {
-	return p.Id
-}
-
-// FtpCloseISOImageParam is input parameters for the sacloud API
-type FtpCloseISOImageParam struct {
-	Id int64
-}
-
-// NewFtpCloseISOImageParam return new FtpCloseISOImageParam
-func NewFtpCloseISOImageParam() *FtpCloseISOImageParam {
-	return &FtpCloseISOImageParam{}
-}
-
-// Validate checks current values in model
-func (p *FtpCloseISOImageParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["ftp-close"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *FtpCloseISOImageParam) getResourceDef() *schema.Resource {
-	return define.Resources["ISOImage"]
-}
-
-func (p *FtpCloseISOImageParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["ftp-close"]
-}
-
-func (p *FtpCloseISOImageParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *FtpCloseISOImageParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *FtpCloseISOImageParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *FtpCloseISOImageParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *FtpCloseISOImageParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *FtpCloseISOImageParam) GetId() int64 {
-	return p.Id
-}
-
-// ReadISOImageParam is input parameters for the sacloud API
-type ReadISOImageParam struct {
-	Id int64
-}
-
-// NewReadISOImageParam return new ReadISOImageParam
-func NewReadISOImageParam() *ReadISOImageParam {
-	return &ReadISOImageParam{}
-}
-
-// Validate checks current values in model
-func (p *ReadISOImageParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ISOImage"].Commands["read"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ReadISOImageParam) getResourceDef() *schema.Resource {
-	return define.Resources["ISOImage"]
-}
-
-func (p *ReadISOImageParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["read"]
-}
-
-func (p *ReadISOImageParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ReadISOImageParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ReadISOImageParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ReadISOImageParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ReadISOImageParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ReadISOImageParam) GetId() int64 {
 	return p.Id
 }
 
@@ -744,6 +434,253 @@ func (p *UploadISOImageParam) GetIsoFile() string {
 	return p.IsoFile
 }
 
+// FtpCloseISOImageParam is input parameters for the sacloud API
+type FtpCloseISOImageParam struct {
+	Id int64
+}
+
+// NewFtpCloseISOImageParam return new FtpCloseISOImageParam
+func NewFtpCloseISOImageParam() *FtpCloseISOImageParam {
+	return &FtpCloseISOImageParam{}
+}
+
+// Validate checks current values in model
+func (p *FtpCloseISOImageParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["ftp-close"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *FtpCloseISOImageParam) getResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *FtpCloseISOImageParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["ftp-close"]
+}
+
+func (p *FtpCloseISOImageParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *FtpCloseISOImageParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *FtpCloseISOImageParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *FtpCloseISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *FtpCloseISOImageParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *FtpCloseISOImageParam) GetId() int64 {
+	return p.Id
+}
+
+// ListISOImageParam is input parameters for the sacloud API
+type ListISOImageParam struct {
+	From  int
+	Max   int
+	Sort  []string
+	Name  []string
+	Id    []int64
+	Scope string
+}
+
+// NewListISOImageParam return new ListISOImageParam
+func NewListISOImageParam() *ListISOImageParam {
+	return &ListISOImageParam{}
+}
+
+// Validate checks current values in model
+func (p *ListISOImageParam) Validate() []error {
+	errors := []error{}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["list"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--id", p.Id, map[string]interface{}{
+
+			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["list"].Params["scope"].ValidateFunc
+		errs := validator("--scope", p.Scope)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ListISOImageParam) getResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *ListISOImageParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["list"]
+}
+
+func (p *ListISOImageParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ListISOImageParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ListISOImageParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ListISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListISOImageParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListISOImageParam) GetFrom() int {
+	return p.From
+}
+func (p *ListISOImageParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListISOImageParam) GetMax() int {
+	return p.Max
+}
+func (p *ListISOImageParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListISOImageParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListISOImageParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListISOImageParam) GetName() []string {
+	return p.Name
+}
+func (p *ListISOImageParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListISOImageParam) GetId() []int64 {
+	return p.Id
+}
+func (p *ListISOImageParam) SetScope(v string) {
+	p.Scope = v
+}
+
+func (p *ListISOImageParam) GetScope() string {
+	return p.Scope
+}
+
+// ReadISOImageParam is input parameters for the sacloud API
+type ReadISOImageParam struct {
+	Id int64
+}
+
+// NewReadISOImageParam return new ReadISOImageParam
+func NewReadISOImageParam() *ReadISOImageParam {
+	return &ReadISOImageParam{}
+}
+
+// Validate checks current values in model
+func (p *ReadISOImageParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["read"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ReadISOImageParam) getResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *ReadISOImageParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["read"]
+}
+
+func (p *ReadISOImageParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ReadISOImageParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ReadISOImageParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ReadISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ReadISOImageParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ReadISOImageParam) GetId() int64 {
+	return p.Id
+}
+
 // DownloadISOImageParam is input parameters for the sacloud API
 type DownloadISOImageParam struct {
 	Id              int64
@@ -820,4 +757,67 @@ func (p *DownloadISOImageParam) SetFileDestination(v string) {
 
 func (p *DownloadISOImageParam) GetFileDestination() string {
 	return p.FileDestination
+}
+
+// FtpOpenISOImageParam is input parameters for the sacloud API
+type FtpOpenISOImageParam struct {
+	Id int64
+}
+
+// NewFtpOpenISOImageParam return new FtpOpenISOImageParam
+func NewFtpOpenISOImageParam() *FtpOpenISOImageParam {
+	return &FtpOpenISOImageParam{}
+}
+
+// Validate checks current values in model
+func (p *FtpOpenISOImageParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ISOImage"].Commands["ftp-open"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *FtpOpenISOImageParam) getResourceDef() *schema.Resource {
+	return define.Resources["ISOImage"]
+}
+
+func (p *FtpOpenISOImageParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["ftp-open"]
+}
+
+func (p *FtpOpenISOImageParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *FtpOpenISOImageParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *FtpOpenISOImageParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *FtpOpenISOImageParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *FtpOpenISOImageParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *FtpOpenISOImageParam) GetId() int64 {
+	return p.Id
 }

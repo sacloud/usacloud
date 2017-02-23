@@ -29,13 +29,13 @@ func ISOImageList(ctx Context, params *ListISOImageParam) error {
 			setSortBy(finder, v)
 		}
 	}
+	if !isEmpty(params.Scope) {
+		finder.SetFilterBy("Scope", params.Scope)
+	}
 	if !isEmpty(params.Name) {
 		for _, v := range params.Name {
 			finder.SetFilterBy("Name", v)
 		}
-	}
-	if !isEmpty(params.Scope) {
-		finder.SetFilterBy("Scope", params.Scope)
 	}
 
 	// call Find()
