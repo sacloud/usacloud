@@ -1,0 +1,10 @@
+FROM golang:1.8.0-alpine
+MAINTAINER Kazumichi Yamamoto <yamamoto.febc@gmail.com>
+
+RUN set -x && apk add --no-cache bash git make zip
+RUN go get -u github.com/kardianos/govendor
+
+ADD . /go/src/github.com/sacloud/usacloud
+
+WORKDIR /go/src/github.com/sacloud/usacloud
+CMD ["make"]

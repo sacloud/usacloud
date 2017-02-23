@@ -1,0 +1,19 @@
+_usacloud() {
+     local cur opts base;
+     COMPREPLY=();
+     cur="${COMP_WORDS[COMP_CWORD]}";
+
+     if [ "$cur" == "--" -a $COMP_CWORD -gt 1 ]; then
+             opts=$( ${COMP_WORDS[@]:0:$COMP_CWORD-1} --generate-completion $cur $COMP_CWORD );
+     else
+         prev="${COMP_WORDS[COMP_CWORD-1]}";
+         if [ "${prev:0:2}" = "--" ]; then
+             opts=$( ${COMP_WORDS[@]:0:$COMP_CWORD-1} --generate-completion $cur $COMP_CWORD );
+         else
+             opts=$( ${COMP_WORDS[@]:0:$COMP_CWORD} --generate-completion $cur $COMP_CWORD );
+         fi
+     fi
+     COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) );
+     return 0;
+};
+complete -F _usacloud -o default -o bashdefault usacloud
