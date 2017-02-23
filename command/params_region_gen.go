@@ -8,76 +8,13 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ReadRegionParam is input parameters for the sacloud API
-type ReadRegionParam struct {
-	Id int64
-}
-
-// NewReadRegionParam return new ReadRegionParam
-func NewReadRegionParam() *ReadRegionParam {
-	return &ReadRegionParam{}
-}
-
-// Validate checks current values in model
-func (p *ReadRegionParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Region"].Commands["read"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ReadRegionParam) getResourceDef() *schema.Resource {
-	return define.Resources["Region"]
-}
-
-func (p *ReadRegionParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["read"]
-}
-
-func (p *ReadRegionParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ReadRegionParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ReadRegionParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ReadRegionParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ReadRegionParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ReadRegionParam) GetId() int64 {
-	return p.Id
-}
-
 // ListRegionParam is input parameters for the sacloud API
 type ListRegionParam struct {
-	Max  int
 	Sort []string
 	Name []string
 	Id   []int64
 	From int
+	Max  int
 }
 
 // NewListRegionParam return new ListRegionParam
@@ -141,13 +78,6 @@ func (p *ListRegionParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListRegionParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListRegionParam) GetMax() int {
-	return p.Max
-}
 func (p *ListRegionParam) SetSort(v []string) {
 	p.Sort = v
 }
@@ -175,4 +105,74 @@ func (p *ListRegionParam) SetFrom(v int) {
 
 func (p *ListRegionParam) GetFrom() int {
 	return p.From
+}
+func (p *ListRegionParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListRegionParam) GetMax() int {
+	return p.Max
+}
+
+// ReadRegionParam is input parameters for the sacloud API
+type ReadRegionParam struct {
+	Id int64
+}
+
+// NewReadRegionParam return new ReadRegionParam
+func NewReadRegionParam() *ReadRegionParam {
+	return &ReadRegionParam{}
+}
+
+// Validate checks current values in model
+func (p *ReadRegionParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Region"].Commands["read"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ReadRegionParam) getResourceDef() *schema.Resource {
+	return define.Resources["Region"]
+}
+
+func (p *ReadRegionParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["read"]
+}
+
+func (p *ReadRegionParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ReadRegionParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ReadRegionParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ReadRegionParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ReadRegionParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ReadRegionParam) GetId() int64 {
+	return p.Id
 }

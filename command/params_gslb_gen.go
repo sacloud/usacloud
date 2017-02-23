@@ -10,19 +10,19 @@ import (
 
 // UpdateGSLBParam is input parameters for the sacloud API
 type UpdateGSLBParam struct {
-	ResponseCode int
-	Port         int
-	DelayLoop    int
-	Weighted     bool
-	Id           int64
 	Description  string
+	Protocol     string
 	SorryServer  string
+	Id           int64
 	Name         string
 	Tags         []string
-	Path         string
-	IconId       int64
-	Protocol     string
+	Weighted     bool
 	HostHeader   string
+	Port         int
+	DelayLoop    int
+	IconId       int64
+	Path         string
+	ResponseCode int
 }
 
 // NewUpdateGSLBParam return new UpdateGSLBParam
@@ -34,15 +34,15 @@ func NewUpdateGSLBParam() *UpdateGSLBParam {
 func (p *UpdateGSLBParam) Validate() []error {
 	errors := []error{}
 	{
-		validator := define.Resources["GSLB"].Commands["update"].Params["port"].ValidateFunc
-		errs := validator("--port", p.Port)
+		validator := define.Resources["GSLB"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["GSLB"].Commands["update"].Params["delay-loop"].ValidateFunc
-		errs := validator("--delay-loop", p.DelayLoop)
+		validator := define.Resources["GSLB"].Commands["update"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -62,13 +62,6 @@ func (p *UpdateGSLBParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["GSLB"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := define.Resources["GSLB"].Commands["update"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
 		if errs != nil {
@@ -83,15 +76,22 @@ func (p *UpdateGSLBParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["GSLB"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
+		validator := define.Resources["GSLB"].Commands["update"].Params["port"].ValidateFunc
+		errs := validator("--port", p.Port)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["GSLB"].Commands["update"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
+		validator := define.Resources["GSLB"].Commands["update"].Params["delay-loop"].ValidateFunc
+		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["GSLB"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -124,41 +124,6 @@ func (p *UpdateGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *UpdateGSLBParam) SetResponseCode(v int) {
-	p.ResponseCode = v
-}
-
-func (p *UpdateGSLBParam) GetResponseCode() int {
-	return p.ResponseCode
-}
-func (p *UpdateGSLBParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *UpdateGSLBParam) GetPort() int {
-	return p.Port
-}
-func (p *UpdateGSLBParam) SetDelayLoop(v int) {
-	p.DelayLoop = v
-}
-
-func (p *UpdateGSLBParam) GetDelayLoop() int {
-	return p.DelayLoop
-}
-func (p *UpdateGSLBParam) SetWeighted(v bool) {
-	p.Weighted = v
-}
-
-func (p *UpdateGSLBParam) GetWeighted() bool {
-	return p.Weighted
-}
-func (p *UpdateGSLBParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *UpdateGSLBParam) GetId() int64 {
-	return p.Id
-}
 func (p *UpdateGSLBParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -166,12 +131,26 @@ func (p *UpdateGSLBParam) SetDescription(v string) {
 func (p *UpdateGSLBParam) GetDescription() string {
 	return p.Description
 }
+func (p *UpdateGSLBParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *UpdateGSLBParam) GetProtocol() string {
+	return p.Protocol
+}
 func (p *UpdateGSLBParam) SetSorryServer(v string) {
 	p.SorryServer = v
 }
 
 func (p *UpdateGSLBParam) GetSorryServer() string {
 	return p.SorryServer
+}
+func (p *UpdateGSLBParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *UpdateGSLBParam) GetId() int64 {
+	return p.Id
 }
 func (p *UpdateGSLBParam) SetName(v string) {
 	p.Name = v
@@ -187,12 +166,33 @@ func (p *UpdateGSLBParam) SetTags(v []string) {
 func (p *UpdateGSLBParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateGSLBParam) SetPath(v string) {
-	p.Path = v
+func (p *UpdateGSLBParam) SetWeighted(v bool) {
+	p.Weighted = v
 }
 
-func (p *UpdateGSLBParam) GetPath() string {
-	return p.Path
+func (p *UpdateGSLBParam) GetWeighted() bool {
+	return p.Weighted
+}
+func (p *UpdateGSLBParam) SetHostHeader(v string) {
+	p.HostHeader = v
+}
+
+func (p *UpdateGSLBParam) GetHostHeader() string {
+	return p.HostHeader
+}
+func (p *UpdateGSLBParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *UpdateGSLBParam) GetPort() int {
+	return p.Port
+}
+func (p *UpdateGSLBParam) SetDelayLoop(v int) {
+	p.DelayLoop = v
+}
+
+func (p *UpdateGSLBParam) GetDelayLoop() int {
+	return p.DelayLoop
 }
 func (p *UpdateGSLBParam) SetIconId(v int64) {
 	p.IconId = v
@@ -201,19 +201,363 @@ func (p *UpdateGSLBParam) SetIconId(v int64) {
 func (p *UpdateGSLBParam) GetIconId() int64 {
 	return p.IconId
 }
-func (p *UpdateGSLBParam) SetProtocol(v string) {
-	p.Protocol = v
+func (p *UpdateGSLBParam) SetPath(v string) {
+	p.Path = v
 }
 
-func (p *UpdateGSLBParam) GetProtocol() string {
-	return p.Protocol
+func (p *UpdateGSLBParam) GetPath() string {
+	return p.Path
 }
-func (p *UpdateGSLBParam) SetHostHeader(v string) {
+func (p *UpdateGSLBParam) SetResponseCode(v int) {
+	p.ResponseCode = v
+}
+
+func (p *UpdateGSLBParam) GetResponseCode() int {
+	return p.ResponseCode
+}
+
+// ServerListGSLBParam is input parameters for the sacloud API
+type ServerListGSLBParam struct {
+	Id int64
+}
+
+// NewServerListGSLBParam return new ServerListGSLBParam
+func NewServerListGSLBParam() *ServerListGSLBParam {
+	return &ServerListGSLBParam{}
+}
+
+// Validate checks current values in model
+func (p *ServerListGSLBParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["GSLB"].Commands["server-list"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ServerListGSLBParam) getResourceDef() *schema.Resource {
+	return define.Resources["GSLB"]
+}
+
+func (p *ServerListGSLBParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["server-list"]
+}
+
+func (p *ServerListGSLBParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ServerListGSLBParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ServerListGSLBParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ServerListGSLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ServerListGSLBParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ServerListGSLBParam) GetId() int64 {
+	return p.Id
+}
+
+// ReadGSLBParam is input parameters for the sacloud API
+type ReadGSLBParam struct {
+	Id int64
+}
+
+// NewReadGSLBParam return new ReadGSLBParam
+func NewReadGSLBParam() *ReadGSLBParam {
+	return &ReadGSLBParam{}
+}
+
+// Validate checks current values in model
+func (p *ReadGSLBParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["GSLB"].Commands["read"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ReadGSLBParam) getResourceDef() *schema.Resource {
+	return define.Resources["GSLB"]
+}
+
+func (p *ReadGSLBParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["read"]
+}
+
+func (p *ReadGSLBParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ReadGSLBParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ReadGSLBParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ReadGSLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ReadGSLBParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ReadGSLBParam) GetId() int64 {
+	return p.Id
+}
+
+// CreateGSLBParam is input parameters for the sacloud API
+type CreateGSLBParam struct {
+	Tags         []string
+	HostHeader   string
+	ResponseCode int
+	Port         int
+	DelayLoop    int
+	Weighted     bool
+	SorryServer  string
+	Name         string
+	IconId       int64
+	Protocol     string
+	Path         string
+	Description  string
+}
+
+// NewCreateGSLBParam return new CreateGSLBParam
+func NewCreateGSLBParam() *CreateGSLBParam {
+	return &CreateGSLBParam{
+
+		ResponseCode: 200,
+
+		DelayLoop: 10,
+
+		Weighted: true,
+
+		Protocol: "ping",
+
+		Path: "/",
+	}
+}
+
+// Validate checks current values in model
+func (p *CreateGSLBParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["GSLB"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["GSLB"].Commands["create"].Params["port"].ValidateFunc
+		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["GSLB"].Commands["create"].Params["delay-loop"].ValidateFunc
+		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["GSLB"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["GSLB"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["GSLB"].Commands["create"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["GSLB"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *CreateGSLBParam) getResourceDef() *schema.Resource {
+	return define.Resources["GSLB"]
+}
+
+func (p *CreateGSLBParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["create"]
+}
+
+func (p *CreateGSLBParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *CreateGSLBParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *CreateGSLBParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *CreateGSLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateGSLBParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateGSLBParam) GetTags() []string {
+	return p.Tags
+}
+func (p *CreateGSLBParam) SetHostHeader(v string) {
 	p.HostHeader = v
 }
 
-func (p *UpdateGSLBParam) GetHostHeader() string {
+func (p *CreateGSLBParam) GetHostHeader() string {
 	return p.HostHeader
+}
+func (p *CreateGSLBParam) SetResponseCode(v int) {
+	p.ResponseCode = v
+}
+
+func (p *CreateGSLBParam) GetResponseCode() int {
+	return p.ResponseCode
+}
+func (p *CreateGSLBParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *CreateGSLBParam) GetPort() int {
+	return p.Port
+}
+func (p *CreateGSLBParam) SetDelayLoop(v int) {
+	p.DelayLoop = v
+}
+
+func (p *CreateGSLBParam) GetDelayLoop() int {
+	return p.DelayLoop
+}
+func (p *CreateGSLBParam) SetWeighted(v bool) {
+	p.Weighted = v
+}
+
+func (p *CreateGSLBParam) GetWeighted() bool {
+	return p.Weighted
+}
+func (p *CreateGSLBParam) SetSorryServer(v string) {
+	p.SorryServer = v
+}
+
+func (p *CreateGSLBParam) GetSorryServer() string {
+	return p.SorryServer
+}
+func (p *CreateGSLBParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateGSLBParam) GetName() string {
+	return p.Name
+}
+func (p *CreateGSLBParam) SetIconId(v int64) {
+	p.IconId = v
+}
+
+func (p *CreateGSLBParam) GetIconId() int64 {
+	return p.IconId
+}
+func (p *CreateGSLBParam) SetProtocol(v string) {
+	p.Protocol = v
+}
+
+func (p *CreateGSLBParam) GetProtocol() string {
+	return p.Protocol
+}
+func (p *CreateGSLBParam) SetPath(v string) {
+	p.Path = v
+}
+
+func (p *CreateGSLBParam) GetPath() string {
+	return p.Path
+}
+func (p *CreateGSLBParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateGSLBParam) GetDescription() string {
+	return p.Description
 }
 
 // DeleteGSLBParam is input parameters for the sacloud API
@@ -279,18 +623,24 @@ func (p *DeleteGSLBParam) GetId() int64 {
 	return p.Id
 }
 
-// ServerListGSLBParam is input parameters for the sacloud API
-type ServerListGSLBParam struct {
-	Id int64
+// ServerAddGSLBParam is input parameters for the sacloud API
+type ServerAddGSLBParam struct {
+	Id        int64
+	Ipaddress string
+	Enabled   bool
+	Weight    int
 }
 
-// NewServerListGSLBParam return new ServerListGSLBParam
-func NewServerListGSLBParam() *ServerListGSLBParam {
-	return &ServerListGSLBParam{}
+// NewServerAddGSLBParam return new ServerAddGSLBParam
+func NewServerAddGSLBParam() *ServerAddGSLBParam {
+	return &ServerAddGSLBParam{
+
+		Enabled: true,
+	}
 }
 
 // Validate checks current values in model
-func (p *ServerListGSLBParam) Validate() []error {
+func (p *ServerAddGSLBParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -300,8 +650,22 @@ func (p *ServerListGSLBParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["GSLB"].Commands["server-list"].Params["id"].ValidateFunc
+		validator := define.Resources["GSLB"].Commands["server-add"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["GSLB"].Commands["server-add"].Params["ipaddress"].ValidateFunc
+		errs := validator("--ipaddress", p.Ipaddress)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["GSLB"].Commands["server-add"].Params["weight"].ValidateFunc
+		errs := validator("--weight", p.Weight)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -310,36 +674,57 @@ func (p *ServerListGSLBParam) Validate() []error {
 	return errors
 }
 
-func (p *ServerListGSLBParam) getResourceDef() *schema.Resource {
+func (p *ServerAddGSLBParam) getResourceDef() *schema.Resource {
 	return define.Resources["GSLB"]
 }
 
-func (p *ServerListGSLBParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["server-list"]
+func (p *ServerAddGSLBParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["server-add"]
 }
 
-func (p *ServerListGSLBParam) GetIncludeFields() []string {
+func (p *ServerAddGSLBParam) GetIncludeFields() []string {
 	return p.getCommandDef().IncludeFields
 }
 
-func (p *ServerListGSLBParam) GetExcludeFields() []string {
+func (p *ServerAddGSLBParam) GetExcludeFields() []string {
 	return p.getCommandDef().ExcludeFields
 }
 
-func (p *ServerListGSLBParam) GetTableType() output.OutputTableType {
+func (p *ServerAddGSLBParam) GetTableType() output.OutputTableType {
 	return p.getCommandDef().TableType
 }
 
-func (p *ServerListGSLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ServerAddGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ServerListGSLBParam) SetId(v int64) {
+func (p *ServerAddGSLBParam) SetId(v int64) {
 	p.Id = v
 }
 
-func (p *ServerListGSLBParam) GetId() int64 {
+func (p *ServerAddGSLBParam) GetId() int64 {
 	return p.Id
+}
+func (p *ServerAddGSLBParam) SetIpaddress(v string) {
+	p.Ipaddress = v
+}
+
+func (p *ServerAddGSLBParam) GetIpaddress() string {
+	return p.Ipaddress
+}
+func (p *ServerAddGSLBParam) SetEnabled(v bool) {
+	p.Enabled = v
+}
+
+func (p *ServerAddGSLBParam) GetEnabled() bool {
+	return p.Enabled
+}
+func (p *ServerAddGSLBParam) SetWeight(v int) {
+	p.Weight = v
+}
+
+func (p *ServerAddGSLBParam) GetWeight() int {
+	return p.Weight
 }
 
 // ServerUpdateGSLBParam is input parameters for the sacloud API
@@ -458,279 +843,6 @@ func (p *ServerUpdateGSLBParam) GetWeight() int {
 	return p.Weight
 }
 
-// ListGSLBParam is input parameters for the sacloud API
-type ListGSLBParam struct {
-	Sort []string
-	Name []string
-	Id   []int64
-	From int
-	Max  int
-}
-
-// NewListGSLBParam return new ListGSLBParam
-func NewListGSLBParam() *ListGSLBParam {
-	return &ListGSLBParam{}
-}
-
-// Validate checks current values in model
-func (p *ListGSLBParam) Validate() []error {
-	errors := []error{}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["GSLB"].Commands["list"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--id", p.Id, map[string]interface{}{
-
-			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ListGSLBParam) getResourceDef() *schema.Resource {
-	return define.Resources["GSLB"]
-}
-
-func (p *ListGSLBParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["list"]
-}
-
-func (p *ListGSLBParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ListGSLBParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ListGSLBParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ListGSLBParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ListGSLBParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListGSLBParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListGSLBParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListGSLBParam) GetName() []string {
-	return p.Name
-}
-func (p *ListGSLBParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListGSLBParam) GetId() []int64 {
-	return p.Id
-}
-func (p *ListGSLBParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListGSLBParam) GetFrom() int {
-	return p.From
-}
-func (p *ListGSLBParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListGSLBParam) GetMax() int {
-	return p.Max
-}
-
-// ReadGSLBParam is input parameters for the sacloud API
-type ReadGSLBParam struct {
-	Id int64
-}
-
-// NewReadGSLBParam return new ReadGSLBParam
-func NewReadGSLBParam() *ReadGSLBParam {
-	return &ReadGSLBParam{}
-}
-
-// Validate checks current values in model
-func (p *ReadGSLBParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["GSLB"].Commands["read"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ReadGSLBParam) getResourceDef() *schema.Resource {
-	return define.Resources["GSLB"]
-}
-
-func (p *ReadGSLBParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["read"]
-}
-
-func (p *ReadGSLBParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ReadGSLBParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ReadGSLBParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ReadGSLBParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ReadGSLBParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ReadGSLBParam) GetId() int64 {
-	return p.Id
-}
-
-// ServerAddGSLBParam is input parameters for the sacloud API
-type ServerAddGSLBParam struct {
-	Id        int64
-	Ipaddress string
-	Enabled   bool
-	Weight    int
-}
-
-// NewServerAddGSLBParam return new ServerAddGSLBParam
-func NewServerAddGSLBParam() *ServerAddGSLBParam {
-	return &ServerAddGSLBParam{
-
-		Enabled: true,
-	}
-}
-
-// Validate checks current values in model
-func (p *ServerAddGSLBParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["GSLB"].Commands["server-add"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["GSLB"].Commands["server-add"].Params["ipaddress"].ValidateFunc
-		errs := validator("--ipaddress", p.Ipaddress)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["GSLB"].Commands["server-add"].Params["weight"].ValidateFunc
-		errs := validator("--weight", p.Weight)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ServerAddGSLBParam) getResourceDef() *schema.Resource {
-	return define.Resources["GSLB"]
-}
-
-func (p *ServerAddGSLBParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["server-add"]
-}
-
-func (p *ServerAddGSLBParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ServerAddGSLBParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ServerAddGSLBParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ServerAddGSLBParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ServerAddGSLBParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ServerAddGSLBParam) GetId() int64 {
-	return p.Id
-}
-func (p *ServerAddGSLBParam) SetIpaddress(v string) {
-	p.Ipaddress = v
-}
-
-func (p *ServerAddGSLBParam) GetIpaddress() string {
-	return p.Ipaddress
-}
-func (p *ServerAddGSLBParam) SetEnabled(v bool) {
-	p.Enabled = v
-}
-
-func (p *ServerAddGSLBParam) GetEnabled() bool {
-	return p.Enabled
-}
-func (p *ServerAddGSLBParam) SetWeight(v int) {
-	p.Weight = v
-}
-
-func (p *ServerAddGSLBParam) GetWeight() int {
-	return p.Weight
-}
-
 // ServerDeleteGSLBParam is input parameters for the sacloud API
 type ServerDeleteGSLBParam struct {
 	Id    int64
@@ -809,107 +921,44 @@ func (p *ServerDeleteGSLBParam) GetIndex() int {
 	return p.Index
 }
 
-// CreateGSLBParam is input parameters for the sacloud API
-type CreateGSLBParam struct {
-	Path         string
-	ResponseCode int
-	DelayLoop    int
-	Protocol     string
-	HostHeader   string
-	Port         int
-	Weighted     bool
-	Name         string
-	Description  string
-	Tags         []string
-	IconId       int64
-	SorryServer  string
+// ListGSLBParam is input parameters for the sacloud API
+type ListGSLBParam struct {
+	Name []string
+	Id   []int64
+	From int
+	Max  int
+	Sort []string
 }
 
-// NewCreateGSLBParam return new CreateGSLBParam
-func NewCreateGSLBParam() *CreateGSLBParam {
-	return &CreateGSLBParam{
-
-		Path: "/",
-
-		ResponseCode: 200,
-
-		DelayLoop: 10,
-
-		Protocol: "ping",
-
-		Weighted: true,
-	}
+// NewListGSLBParam return new ListGSLBParam
+func NewListGSLBParam() *ListGSLBParam {
+	return &ListGSLBParam{}
 }
 
 // Validate checks current values in model
-func (p *CreateGSLBParam) Validate() []error {
+func (p *ListGSLBParam) Validate() []error {
 	errors := []error{}
 	{
-		validator := validateRequired
-		errs := validator("--delay-loop", p.DelayLoop)
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["GSLB"].Commands["create"].Params["delay-loop"].ValidateFunc
-		errs := validator("--delay-loop", p.DelayLoop)
+		validator := define.Resources["GSLB"].Commands["list"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := validateRequired
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["GSLB"].Commands["create"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["GSLB"].Commands["create"].Params["port"].ValidateFunc
-		errs := validator("--port", p.Port)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["GSLB"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["GSLB"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["GSLB"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["GSLB"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
+		errs := validateConflicts("--id", p.Id, map[string]interface{}{
+
+			"--name": p.Name,
+		})
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -918,111 +967,62 @@ func (p *CreateGSLBParam) Validate() []error {
 	return errors
 }
 
-func (p *CreateGSLBParam) getResourceDef() *schema.Resource {
+func (p *ListGSLBParam) getResourceDef() *schema.Resource {
 	return define.Resources["GSLB"]
 }
 
-func (p *CreateGSLBParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["create"]
+func (p *ListGSLBParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["list"]
 }
 
-func (p *CreateGSLBParam) GetIncludeFields() []string {
+func (p *ListGSLBParam) GetIncludeFields() []string {
 	return p.getCommandDef().IncludeFields
 }
 
-func (p *CreateGSLBParam) GetExcludeFields() []string {
+func (p *ListGSLBParam) GetExcludeFields() []string {
 	return p.getCommandDef().ExcludeFields
 }
 
-func (p *CreateGSLBParam) GetTableType() output.OutputTableType {
+func (p *ListGSLBParam) GetTableType() output.OutputTableType {
 	return p.getCommandDef().TableType
 }
 
-func (p *CreateGSLBParam) GetColumnDefs() []output.ColumnDef {
+func (p *ListGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *CreateGSLBParam) SetPath(v string) {
-	p.Path = v
-}
-
-func (p *CreateGSLBParam) GetPath() string {
-	return p.Path
-}
-func (p *CreateGSLBParam) SetResponseCode(v int) {
-	p.ResponseCode = v
-}
-
-func (p *CreateGSLBParam) GetResponseCode() int {
-	return p.ResponseCode
-}
-func (p *CreateGSLBParam) SetDelayLoop(v int) {
-	p.DelayLoop = v
-}
-
-func (p *CreateGSLBParam) GetDelayLoop() int {
-	return p.DelayLoop
-}
-func (p *CreateGSLBParam) SetProtocol(v string) {
-	p.Protocol = v
-}
-
-func (p *CreateGSLBParam) GetProtocol() string {
-	return p.Protocol
-}
-func (p *CreateGSLBParam) SetHostHeader(v string) {
-	p.HostHeader = v
-}
-
-func (p *CreateGSLBParam) GetHostHeader() string {
-	return p.HostHeader
-}
-func (p *CreateGSLBParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *CreateGSLBParam) GetPort() int {
-	return p.Port
-}
-func (p *CreateGSLBParam) SetWeighted(v bool) {
-	p.Weighted = v
-}
-
-func (p *CreateGSLBParam) GetWeighted() bool {
-	return p.Weighted
-}
-func (p *CreateGSLBParam) SetName(v string) {
+func (p *ListGSLBParam) SetName(v []string) {
 	p.Name = v
 }
 
-func (p *CreateGSLBParam) GetName() string {
+func (p *ListGSLBParam) GetName() []string {
 	return p.Name
 }
-func (p *CreateGSLBParam) SetDescription(v string) {
-	p.Description = v
+func (p *ListGSLBParam) SetId(v []int64) {
+	p.Id = v
 }
 
-func (p *CreateGSLBParam) GetDescription() string {
-	return p.Description
+func (p *ListGSLBParam) GetId() []int64 {
+	return p.Id
 }
-func (p *CreateGSLBParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateGSLBParam) GetTags() []string {
-	return p.Tags
-}
-func (p *CreateGSLBParam) SetIconId(v int64) {
-	p.IconId = v
+func (p *ListGSLBParam) SetFrom(v int) {
+	p.From = v
 }
 
-func (p *CreateGSLBParam) GetIconId() int64 {
-	return p.IconId
+func (p *ListGSLBParam) GetFrom() int {
+	return p.From
 }
-func (p *CreateGSLBParam) SetSorryServer(v string) {
-	p.SorryServer = v
+func (p *ListGSLBParam) SetMax(v int) {
+	p.Max = v
 }
 
-func (p *CreateGSLBParam) GetSorryServer() string {
-	return p.SorryServer
+func (p *ListGSLBParam) GetMax() int {
+	return p.Max
+}
+func (p *ListGSLBParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListGSLBParam) GetSort() []string {
+	return p.Sort
 }

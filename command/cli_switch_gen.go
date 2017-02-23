@@ -7,60 +7,34 @@ import (
 )
 
 func init() {
-	readParam := NewReadSwitchParam()
 	updateParam := NewUpdateSwitchParam()
 	deleteParam := NewDeleteSwitchParam()
 	bridgeConnectParam := NewBridgeConnectSwitchParam()
 	bridgeDisconnectParam := NewBridgeDisconnectSwitchParam()
 	listParam := NewListSwitchParam()
 	createParam := NewCreateSwitchParam()
+	readParam := NewReadSwitchParam()
 
 	cliCommand := &cli.Command{
 		Name:  "switch",
 		Usage: "A manage commands of Switch",
 		Subcommands: []*cli.Command{
 			{
-				Name:      "read",
-				Aliases:   []string{"r"},
-				Usage:     "Read Switch",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &readParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), readParam)
-
-					// Run command with params
-					return SwitchRead(ctx, readParam)
-				},
-			},
-			{
 				Name:      "update",
 				Aliases:   []string{"u"},
 				Usage:     "Update Switch",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "set resource display name",
+						Destination: &updateParam.Name,
+					},
 					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
@@ -75,16 +49,6 @@ func init() {
 						Name:        "icon-id",
 						Usage:       "set Icon ID",
 						Destination: &updateParam.IconId,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set resource display name",
-						Destination: &updateParam.Name,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -230,6 +194,10 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List Switch",
 				Flags: []cli.Flag{
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
 					&cli.IntFlag{
 						Name:        "from",
 						Usage:       "set offset",
@@ -248,17 +216,13 @@ func init() {
 						Name:  "name",
 						Usage: "set filter by name(s)",
 					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -283,11 +247,6 @@ func init() {
 				Usage:   "Create Switch",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
-					},
-					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
@@ -301,6 +260,11 @@ func init() {
 						Name:        "icon-id",
 						Usage:       "set Icon ID",
 						Destination: &createParam.IconId,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -323,6 +287,42 @@ func init() {
 
 					// Run command with params
 					return SwitchCreate(ctx, createParam)
+				},
+			},
+			{
+				Name:      "read",
+				Aliases:   []string{"r"},
+				Usage:     "Read Switch",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &readParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() == 1 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := readParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), readParam)
+
+					// Run command with params
+					return SwitchRead(ctx, readParam)
 				},
 			},
 		},

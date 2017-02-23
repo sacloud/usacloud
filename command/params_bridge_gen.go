@@ -10,11 +10,11 @@ import (
 
 // ListBridgeParam is input parameters for the sacloud API
 type ListBridgeParam struct {
-	Name []string
-	Id   []int64
 	From int
 	Max  int
 	Sort []string
+	Name []string
+	Id   []int64
 }
 
 // NewListBridgeParam return new ListBridgeParam
@@ -78,20 +78,6 @@ func (p *ListBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListBridgeParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListBridgeParam) GetName() []string {
-	return p.Name
-}
-func (p *ListBridgeParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListBridgeParam) GetId() []int64 {
-	return p.Id
-}
 func (p *ListBridgeParam) SetFrom(v int) {
 	p.From = v
 }
@@ -113,11 +99,25 @@ func (p *ListBridgeParam) SetSort(v []string) {
 func (p *ListBridgeParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListBridgeParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListBridgeParam) GetName() []string {
+	return p.Name
+}
+func (p *ListBridgeParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListBridgeParam) GetId() []int64 {
+	return p.Id
+}
 
 // CreateBridgeParam is input parameters for the sacloud API
 type CreateBridgeParam struct {
-	Description string
 	Name        string
+	Description string
 }
 
 // NewCreateBridgeParam return new CreateBridgeParam
@@ -129,13 +129,6 @@ func NewCreateBridgeParam() *CreateBridgeParam {
 func (p *CreateBridgeParam) Validate() []error {
 	errors := []error{}
 	{
-		validator := define.Resources["Bridge"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := validateRequired
 		errs := validator("--name", p.Name)
 		if errs != nil {
@@ -145,6 +138,13 @@ func (p *CreateBridgeParam) Validate() []error {
 	{
 		validator := define.Resources["Bridge"].Commands["create"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Bridge"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -177,19 +177,19 @@ func (p *CreateBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *CreateBridgeParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *CreateBridgeParam) GetDescription() string {
-	return p.Description
-}
 func (p *CreateBridgeParam) SetName(v string) {
 	p.Name = v
 }
 
 func (p *CreateBridgeParam) GetName() string {
 	return p.Name
+}
+func (p *CreateBridgeParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateBridgeParam) GetDescription() string {
+	return p.Description
 }
 
 // ReadBridgeParam is input parameters for the sacloud API
@@ -257,9 +257,9 @@ func (p *ReadBridgeParam) GetId() int64 {
 
 // UpdateBridgeParam is input parameters for the sacloud API
 type UpdateBridgeParam struct {
-	Name        string
 	Description string
 	Id          int64
+	Name        string
 }
 
 // NewUpdateBridgeParam return new UpdateBridgeParam
@@ -270,13 +270,6 @@ func NewUpdateBridgeParam() *UpdateBridgeParam {
 // Validate checks current values in model
 func (p *UpdateBridgeParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := define.Resources["Bridge"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := define.Resources["Bridge"].Commands["update"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
@@ -294,6 +287,13 @@ func (p *UpdateBridgeParam) Validate() []error {
 	{
 		validator := define.Resources["Bridge"].Commands["update"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Bridge"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -326,13 +326,6 @@ func (p *UpdateBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *UpdateBridgeParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateBridgeParam) GetName() string {
-	return p.Name
-}
 func (p *UpdateBridgeParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -346,6 +339,13 @@ func (p *UpdateBridgeParam) SetId(v int64) {
 
 func (p *UpdateBridgeParam) GetId() int64 {
 	return p.Id
+}
+func (p *UpdateBridgeParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateBridgeParam) GetName() string {
+	return p.Name
 }
 
 // DeleteBridgeParam is input parameters for the sacloud API

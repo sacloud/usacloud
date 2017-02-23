@@ -14,9 +14,9 @@ func LicenseCreate(ctx Context, params *CreateLicenseParam) error {
 
 	// set params
 
-	p.SetLicenseInfoByID(params.LicenseInfoId)
-
 	p.SetName(params.Name)
+
+	p.SetLicenseInfoByID(params.LicenseInfoId)
 
 	// call Create(id)
 	res, err := api.Create(p)

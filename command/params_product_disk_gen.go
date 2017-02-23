@@ -10,11 +10,11 @@ import (
 
 // ListProductDiskParam is input parameters for the sacloud API
 type ListProductDiskParam struct {
+	Name []string
 	Id   []int64
 	From int
 	Max  int
 	Sort []string
-	Name []string
 }
 
 // NewListProductDiskParam return new ListProductDiskParam
@@ -26,6 +26,15 @@ func NewListProductDiskParam() *ListProductDiskParam {
 func (p *ListProductDiskParam) Validate() []error {
 	errors := []error{}
 	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		validator := define.Resources["ProductDisk"].Commands["list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -36,15 +45,6 @@ func (p *ListProductDiskParam) Validate() []error {
 		errs := validateConflicts("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -78,6 +78,13 @@ func (p *ListProductDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListProductDiskParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListProductDiskParam) GetName() []string {
+	return p.Name
+}
 func (p *ListProductDiskParam) SetId(v []int64) {
 	p.Id = v
 }
@@ -105,13 +112,6 @@ func (p *ListProductDiskParam) SetSort(v []string) {
 
 func (p *ListProductDiskParam) GetSort() []string {
 	return p.Sort
-}
-func (p *ListProductDiskParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListProductDiskParam) GetName() []string {
-	return p.Name
 }
 
 // ReadProductDiskParam is input parameters for the sacloud API
