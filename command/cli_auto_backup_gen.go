@@ -48,9 +48,9 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					listParam.Id = c.Int64Slice("id")
 					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
+					listParam.Id = c.Int64Slice("id")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -75,24 +75,15 @@ func init() {
 				Usage:   "Create AutoBackup",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
+					},
+					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
 						Destination: &createParam.Description,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &createParam.IconId,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
 					},
 					&cli.IntFlag{
 						Name:        "generation",
@@ -110,6 +101,15 @@ func init() {
 						Name:  "weekdays",
 						Usage: "[Required] set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
 						Value: cli.NewStringSlice("all"),
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &createParam.IconId,
 					},
 					&cli.Int64Flag{
 						Name:        "disk-id",
@@ -182,15 +182,6 @@ func init() {
 				Usage:     "Update AutoBackup",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.IntFlag{
-						Name:        "generation",
-						Usage:       "set backup generation[1-10]",
-						Destination: &updateParam.Generation,
-					},
 					&cli.IntFlag{
 						Name:        "start-hour",
 						Usage:       "set backup start hour[0/6/12/18]",
@@ -208,6 +199,20 @@ func init() {
 						Destination: &updateParam.Description,
 					},
 					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
+					},
+					&cli.IntFlag{
+						Name:        "generation",
+						Usage:       "set backup generation[1-10]",
+						Destination: &updateParam.Generation,
+					},
+					&cli.StringSliceFlag{
 						Name:  "weekdays",
 						Usage: "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
 					},
@@ -216,17 +221,12 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &updateParam.Id,
 					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
-					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					updateParam.Weekdays = c.StringSlice("weekdays")
 					updateParam.Tags = c.StringSlice("tags")
+					updateParam.Weekdays = c.StringSlice("weekdays")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {

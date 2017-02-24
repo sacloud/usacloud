@@ -7,21 +7,66 @@ import (
 )
 
 func init() {
+	deleteParam := NewDeleteSimpleMonitorParam()
 	listParam := NewListSimpleMonitorParam()
 	createParam := NewCreateSimpleMonitorParam()
 	readParam := NewReadSimpleMonitorParam()
 	updateParam := NewUpdateSimpleMonitorParam()
-	deleteParam := NewDeleteSimpleMonitorParam()
 
 	cliCommand := &cli.Command{
 		Name:  "simple-monitor",
 		Usage: "A manage commands of SimpleMonitor",
 		Subcommands: []*cli.Command{
 			{
+				Name:      "delete",
+				Aliases:   []string{"d", "rm"},
+				Usage:     "Delete SimpleMonitor",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &deleteParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := deleteParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// Run command with params
+					return SimpleMonitorDelete(ctx, deleteParam)
+				},
+			},
+			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List SimpleMonitor",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
 					&cli.StringSliceFlag{
 						Name:  "name",
 						Usage: "set filter by name(s)",
@@ -35,22 +80,13 @@ func init() {
 						Usage:       "set offset",
 						Destination: &listParam.From,
 					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
+					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -74,30 +110,15 @@ func init() {
 				Aliases: []string{"c"},
 				Usage:   "Create SimpleMonitor",
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "host-header",
-						Usage:       "set host header of http/https monitoring request",
-						Destination: &createParam.HostHeader,
-					},
 					&cli.IntFlag{
-						Name:        "response-code",
-						Usage:       "set response-code of http/https monitoring request",
-						Destination: &createParam.ResponseCode,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
+						Name:        "port",
+						Usage:       "set port of tcp monitoring",
+						Destination: &createParam.Port,
 					},
 					&cli.StringFlag{
-						Name:        "path",
-						Usage:       "set path of http/https monitoring request",
-						Destination: &createParam.Path,
-					},
-					&cli.IntFlag{
-						Name:        "delay-loop",
-						Usage:       "[Required] set delay-loop of monitoring(minute)",
-						Value:       1,
-						Destination: &createParam.DelayLoop,
+						Name:        "dns-qname",
+						Usage:       "set DNS query target name",
+						Destination: &createParam.DnsQname,
 					},
 					&cli.BoolFlag{
 						Name:        "notify-email",
@@ -105,26 +126,21 @@ func init() {
 						Value:       true,
 						Destination: &createParam.NotifyEmail,
 					},
+					&cli.StringFlag{
+						Name:        "email-type",
+						Usage:       "set e-mail type",
+						Destination: &createParam.EmailType,
+					},
+					&cli.StringFlag{
+						Name:        "target",
+						Usage:       "[Required] set monitoring target IP or Hostname",
+						Destination: &createParam.Target,
+					},
 					&cli.IntFlag{
-						Name:        "port",
-						Usage:       "set port of tcp monitoring",
-						Destination: &createParam.Port,
-					},
-					&cli.BoolFlag{
-						Name:        "enabled",
-						Usage:       "[Required] set monitoring enable/disable",
-						Value:       true,
-						Destination: &createParam.Enabled,
-					},
-					&cli.StringFlag{
-						Name:        "dns-qname",
-						Usage:       "set DNS query target name",
-						Destination: &createParam.DnsQname,
-					},
-					&cli.StringFlag{
-						Name:        "dns-excepted",
-						Usage:       "set DNS query excepted value",
-						Destination: &createParam.DnsExcepted,
+						Name:        "delay-loop",
+						Usage:       "[Required] set delay-loop of monitoring(minute)",
+						Value:       1,
+						Destination: &createParam.DelayLoop,
 					},
 					&cli.StringFlag{
 						Name:        "description",
@@ -137,10 +153,21 @@ func init() {
 						Usage:       "set Icon ID",
 						Destination: &createParam.IconId,
 					},
+					&cli.BoolFlag{
+						Name:        "enabled",
+						Usage:       "[Required] set monitoring enable/disable",
+						Value:       true,
+						Destination: &createParam.Enabled,
+					},
 					&cli.StringFlag{
-						Name:        "target",
-						Usage:       "[Required] set monitoring target IP or Hostname",
-						Destination: &createParam.Target,
+						Name:        "dns-excepted",
+						Usage:       "set DNS query excepted value",
+						Destination: &createParam.DnsExcepted,
+					},
+					&cli.StringFlag{
+						Name:        "slack-webhook",
+						Usage:       "set slack-webhook URL",
+						Destination: &createParam.SlackWebhook,
 					},
 					&cli.StringFlag{
 						Name:        "protocol",
@@ -149,14 +176,23 @@ func init() {
 						Destination: &createParam.Protocol,
 					},
 					&cli.StringFlag{
-						Name:        "email-type",
-						Usage:       "set e-mail type",
-						Destination: &createParam.EmailType,
+						Name:        "host-header",
+						Usage:       "set host header of http/https monitoring request",
+						Destination: &createParam.HostHeader,
 					},
 					&cli.StringFlag{
-						Name:        "slack-webhook",
-						Usage:       "set slack-webhook URL",
-						Destination: &createParam.SlackWebhook,
+						Name:        "path",
+						Usage:       "set path of http/https monitoring request",
+						Destination: &createParam.Path,
+					},
+					&cli.IntFlag{
+						Name:        "response-code",
+						Usage:       "set response-code of http/https monitoring request",
+						Destination: &createParam.ResponseCode,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -223,30 +259,14 @@ func init() {
 				Usage:     "Update SimpleMonitor",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "response-code",
-						Usage:       "set response-code of http/https monitoring request",
-						Destination: &updateParam.ResponseCode,
-					},
-					&cli.IntFlag{
-						Name:        "port",
-						Usage:       "set port of tcp monitoring",
-						Destination: &updateParam.Port,
-					},
-					&cli.StringFlag{
-						Name:        "protocol",
-						Usage:       "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
-						Destination: &updateParam.Protocol,
-					},
-					&cli.BoolFlag{
-						Name:        "notify-email",
-						Usage:       "enable e-mail notification",
-						Destination: &updateParam.NotifyEmail,
-					},
 					&cli.StringFlag{
 						Name:        "slack-webhook",
 						Usage:       "set slack-webhook URL",
 						Destination: &updateParam.SlackWebhook,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
 					},
 					&cli.StringFlag{
 						Name:        "path",
@@ -254,24 +274,9 @@ func init() {
 						Destination: &updateParam.Path,
 					},
 					&cli.IntFlag{
-						Name:        "delay-loop",
-						Usage:       "set delay-loop of monitoring(minute)",
-						Destination: &updateParam.DelayLoop,
-					},
-					&cli.StringFlag{
-						Name:        "email-type",
-						Usage:       "set e-mail type",
-						Destination: &updateParam.EmailType,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
-					&cli.BoolFlag{
-						Name:        "enabled",
-						Usage:       "set monitoring enable/disable",
-						Destination: &updateParam.Enabled,
+						Name:        "port",
+						Usage:       "set port of tcp monitoring",
+						Destination: &updateParam.Port,
 					},
 					&cli.StringFlag{
 						Name:        "dns-qname",
@@ -284,24 +289,55 @@ func init() {
 						Destination: &updateParam.DnsExcepted,
 					},
 					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
+						Name:        "email-type",
+						Usage:       "set e-mail type",
+						Destination: &updateParam.EmailType,
 					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
+					&cli.StringFlag{
+						Name:        "protocol",
+						Usage:       "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
+						Destination: &updateParam.Protocol,
 					},
 					&cli.StringFlag{
 						Name:        "host-header",
 						Usage:       "set host header of http/https monitoring request",
 						Destination: &updateParam.HostHeader,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &updateParam.Description,
+					},
+					&cli.BoolFlag{
+						Name:        "enabled",
+						Usage:       "set monitoring enable/disable",
+						Destination: &updateParam.Enabled,
+					},
+					&cli.BoolFlag{
+						Name:        "notify-email",
+						Usage:       "enable e-mail notification",
+						Destination: &updateParam.NotifyEmail,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
+					&cli.IntFlag{
+						Name:        "response-code",
+						Usage:       "set response-code of http/https monitoring request",
+						Destination: &updateParam.ResponseCode,
+					},
+					&cli.IntFlag{
+						Name:        "delay-loop",
+						Usage:       "set delay-loop of monitoring(minute)",
+						Destination: &updateParam.DelayLoop,
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -329,42 +365,6 @@ func init() {
 
 					// Run command with params
 					return SimpleMonitorUpdate(ctx, updateParam)
-				},
-			},
-			{
-				Name:      "delete",
-				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete SimpleMonitor",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &deleteParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() > 0 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), deleteParam)
-
-					// Run command with params
-					return SimpleMonitorDelete(ctx, deleteParam)
 				},
 			},
 		},

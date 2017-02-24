@@ -46,9 +46,9 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
 					listParam.Sort = c.StringSlice("sort")
+					listParam.Name = c.StringSlice("name")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {

@@ -7,59 +7,13 @@ import (
 )
 
 func init() {
-	csvParam := NewCsvBillParam()
 	listParam := NewListBillParam()
+	csvParam := NewCsvBillParam()
 
 	cliCommand := &cli.Command{
 		Name:  "bill",
 		Usage: "A manage commands of Bill",
 		Subcommands: []*cli.Command{
-			{
-				Name:      "csv",
-				Usage:     "Csv Bill",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set bill ID",
-						Destination: &csvParam.Id,
-					},
-					&cli.BoolFlag{
-						Name:        "no-header",
-						Usage:       "set output header flag",
-						Destination: &csvParam.NoHeader,
-					},
-					&cli.StringFlag{
-						Name:        "bill-output",
-						Aliases:     []string{"file"},
-						Usage:       "set bill-detail output path",
-						Destination: &csvParam.BillOutput,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() > 0 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := csvParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), csvParam)
-
-					// Run command with params
-					return BillCsv(ctx, csvParam)
-				},
-			},
 			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
@@ -93,6 +47,52 @@ func init() {
 
 					// Run command with params
 					return BillList(ctx, listParam)
+				},
+			},
+			{
+				Name:      "csv",
+				Usage:     "Csv Bill",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:        "no-header",
+						Usage:       "set output header flag",
+						Destination: &csvParam.NoHeader,
+					},
+					&cli.StringFlag{
+						Name:        "bill-output",
+						Aliases:     []string{"file"},
+						Usage:       "set bill-detail output path",
+						Destination: &csvParam.BillOutput,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set bill ID",
+						Destination: &csvParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := csvParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), csvParam)
+
+					// Run command with params
+					return BillCsv(ctx, csvParam)
 				},
 			},
 		},

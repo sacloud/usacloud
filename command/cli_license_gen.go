@@ -7,52 +7,16 @@ import (
 )
 
 func init() {
-	deleteParam := NewDeleteLicenseParam()
 	listParam := NewListLicenseParam()
 	createParam := NewCreateLicenseParam()
 	readParam := NewReadLicenseParam()
 	updateParam := NewUpdateLicenseParam()
+	deleteParam := NewDeleteLicenseParam()
 
 	cliCommand := &cli.Command{
 		Name:  "license",
 		Usage: "A manage commands of License",
 		Subcommands: []*cli.Command{
-			{
-				Name:      "delete",
-				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete License",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &deleteParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() > 0 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), deleteParam)
-
-					// Run command with params
-					return LicenseDelete(ctx, deleteParam)
-				},
-			},
 			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
@@ -84,9 +48,9 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
+					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -110,15 +74,15 @@ func init() {
 				Aliases: []string{"c"},
 				Usage:   "Create License",
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
-					},
 					&cli.Int64Flag{
 						Name:        "license-info-id",
 						Usage:       "set LicenseInfo ID",
 						Destination: &createParam.LicenseInfoId,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -215,6 +179,42 @@ func init() {
 
 					// Run command with params
 					return LicenseUpdate(ctx, updateParam)
+				},
+			},
+			{
+				Name:      "delete",
+				Aliases:   []string{"d", "rm"},
+				Usage:     "Delete License",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &deleteParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := deleteParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// Run command with params
+					return LicenseDelete(ctx, deleteParam)
 				},
 			},
 		},

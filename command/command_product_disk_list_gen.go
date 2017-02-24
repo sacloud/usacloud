@@ -13,6 +13,9 @@ func ProductDiskList(ctx Context, params *ListProductDiskParam) error {
 
 	finder.SetEmpty()
 
+	if !isEmpty(params.From) {
+		finder.SetOffset(params.From)
+	}
 	if !isEmpty(params.Max) {
 		finder.SetLimit(params.Max)
 	}
@@ -30,9 +33,6 @@ func ProductDiskList(ctx Context, params *ListProductDiskParam) error {
 		for _, v := range params.Id {
 			finder.SetFilterMultiBy("ID", v)
 		}
-	}
-	if !isEmpty(params.From) {
-		finder.SetOffset(params.From)
 	}
 
 	// call Find()

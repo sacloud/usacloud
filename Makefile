@@ -46,7 +46,7 @@ build: clean gen vet
 	go build -ldflags "-s -w -X `go list ./version`.Revision=`git rev-parse --short HEAD 2>/dev/null`" -o $(CURDIR)/bin/$(BIN_NAME) $(CURDIR)/main.go
 
 .PHONY: build-x
-build-x: clean vet
+build-x: clean gen vet
 	sh -c "'$(CURDIR)/scripts/build.sh' '$(BIN_NAME)'"
 
 .PHONY: test

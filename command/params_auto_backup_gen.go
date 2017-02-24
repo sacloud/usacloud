@@ -8,237 +8,6 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// UpdateAutoBackupParam is input parameters for the sacloud API
-type UpdateAutoBackupParam struct {
-	Id          int64
-	Name        string
-	Description string
-	IconId      int64
-	Generation  int
-	Tags        []string
-	StartHour   int
-	Weekdays    []string
-}
-
-// NewUpdateAutoBackupParam return new UpdateAutoBackupParam
-func NewUpdateAutoBackupParam() *UpdateAutoBackupParam {
-	return &UpdateAutoBackupParam{}
-}
-
-// Validate checks current values in model
-func (p *UpdateAutoBackupParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["AutoBackup"].Commands["update"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["AutoBackup"].Commands["update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["AutoBackup"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["AutoBackup"].Commands["update"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["AutoBackup"].Commands["update"].Params["generation"].ValidateFunc
-		errs := validator("--generation", p.Generation)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["AutoBackup"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["AutoBackup"].Commands["update"].Params["start-hour"].ValidateFunc
-		errs := validator("--start-hour", p.StartHour)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["AutoBackup"].Commands["update"].Params["weekdays"].ValidateFunc
-		errs := validator("--weekdays", p.Weekdays)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *UpdateAutoBackupParam) getResourceDef() *schema.Resource {
-	return define.Resources["AutoBackup"]
-}
-
-func (p *UpdateAutoBackupParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["update"]
-}
-
-func (p *UpdateAutoBackupParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *UpdateAutoBackupParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *UpdateAutoBackupParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *UpdateAutoBackupParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *UpdateAutoBackupParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *UpdateAutoBackupParam) GetId() int64 {
-	return p.Id
-}
-func (p *UpdateAutoBackupParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *UpdateAutoBackupParam) GetName() string {
-	return p.Name
-}
-func (p *UpdateAutoBackupParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *UpdateAutoBackupParam) GetDescription() string {
-	return p.Description
-}
-func (p *UpdateAutoBackupParam) SetIconId(v int64) {
-	p.IconId = v
-}
-
-func (p *UpdateAutoBackupParam) GetIconId() int64 {
-	return p.IconId
-}
-func (p *UpdateAutoBackupParam) SetGeneration(v int) {
-	p.Generation = v
-}
-
-func (p *UpdateAutoBackupParam) GetGeneration() int {
-	return p.Generation
-}
-func (p *UpdateAutoBackupParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *UpdateAutoBackupParam) GetTags() []string {
-	return p.Tags
-}
-func (p *UpdateAutoBackupParam) SetStartHour(v int) {
-	p.StartHour = v
-}
-
-func (p *UpdateAutoBackupParam) GetStartHour() int {
-	return p.StartHour
-}
-func (p *UpdateAutoBackupParam) SetWeekdays(v []string) {
-	p.Weekdays = v
-}
-
-func (p *UpdateAutoBackupParam) GetWeekdays() []string {
-	return p.Weekdays
-}
-
-// DeleteAutoBackupParam is input parameters for the sacloud API
-type DeleteAutoBackupParam struct {
-	Id int64
-}
-
-// NewDeleteAutoBackupParam return new DeleteAutoBackupParam
-func NewDeleteAutoBackupParam() *DeleteAutoBackupParam {
-	return &DeleteAutoBackupParam{}
-}
-
-// Validate checks current values in model
-func (p *DeleteAutoBackupParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["AutoBackup"].Commands["delete"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *DeleteAutoBackupParam) getResourceDef() *schema.Resource {
-	return define.Resources["AutoBackup"]
-}
-
-func (p *DeleteAutoBackupParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["delete"]
-}
-
-func (p *DeleteAutoBackupParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *DeleteAutoBackupParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *DeleteAutoBackupParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *DeleteAutoBackupParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DeleteAutoBackupParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *DeleteAutoBackupParam) GetId() int64 {
-	return p.Id
-}
-
 // ListAutoBackupParam is input parameters for the sacloud API
 type ListAutoBackupParam struct {
 	Name []string
@@ -347,13 +116,13 @@ func (p *ListAutoBackupParam) GetSort() []string {
 
 // CreateAutoBackupParam is input parameters for the sacloud API
 type CreateAutoBackupParam struct {
-	Weekdays    []string
+	Name        string
 	Description string
-	Tags        []string
 	IconId      int64
+	Tags        []string
 	Generation  int
 	StartHour   int
-	Name        string
+	Weekdays    []string
 	DiskId      int64
 }
 
@@ -361,9 +130,9 @@ type CreateAutoBackupParam struct {
 func NewCreateAutoBackupParam() *CreateAutoBackupParam {
 	return &CreateAutoBackupParam{
 
-		Weekdays: []string{"all"},
-
 		Generation: 1,
+
+		Weekdays: []string{"all"},
 	}
 }
 
@@ -372,14 +141,14 @@ func (p *CreateAutoBackupParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--weekdays", p.Weekdays)
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["AutoBackup"].Commands["create"].Params["weekdays"].ValidateFunc
-		errs := validator("--weekdays", p.Weekdays)
+		validator := define.Resources["AutoBackup"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -392,15 +161,15 @@ func (p *CreateAutoBackupParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["AutoBackup"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
+		validator := define.Resources["AutoBackup"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["AutoBackup"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
+		validator := define.Resources["AutoBackup"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -435,14 +204,14 @@ func (p *CreateAutoBackupParam) Validate() []error {
 	}
 	{
 		validator := validateRequired
-		errs := validator("--name", p.Name)
+		errs := validator("--weekdays", p.Weekdays)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["AutoBackup"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
+		validator := define.Resources["AutoBackup"].Commands["create"].Params["weekdays"].ValidateFunc
+		errs := validator("--weekdays", p.Weekdays)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -489,12 +258,12 @@ func (p *CreateAutoBackupParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *CreateAutoBackupParam) SetWeekdays(v []string) {
-	p.Weekdays = v
+func (p *CreateAutoBackupParam) SetName(v string) {
+	p.Name = v
 }
 
-func (p *CreateAutoBackupParam) GetWeekdays() []string {
-	return p.Weekdays
+func (p *CreateAutoBackupParam) GetName() string {
+	return p.Name
 }
 func (p *CreateAutoBackupParam) SetDescription(v string) {
 	p.Description = v
@@ -503,19 +272,19 @@ func (p *CreateAutoBackupParam) SetDescription(v string) {
 func (p *CreateAutoBackupParam) GetDescription() string {
 	return p.Description
 }
-func (p *CreateAutoBackupParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateAutoBackupParam) GetTags() []string {
-	return p.Tags
-}
 func (p *CreateAutoBackupParam) SetIconId(v int64) {
 	p.IconId = v
 }
 
 func (p *CreateAutoBackupParam) GetIconId() int64 {
 	return p.IconId
+}
+func (p *CreateAutoBackupParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateAutoBackupParam) GetTags() []string {
+	return p.Tags
 }
 func (p *CreateAutoBackupParam) SetGeneration(v int) {
 	p.Generation = v
@@ -531,12 +300,12 @@ func (p *CreateAutoBackupParam) SetStartHour(v int) {
 func (p *CreateAutoBackupParam) GetStartHour() int {
 	return p.StartHour
 }
-func (p *CreateAutoBackupParam) SetName(v string) {
-	p.Name = v
+func (p *CreateAutoBackupParam) SetWeekdays(v []string) {
+	p.Weekdays = v
 }
 
-func (p *CreateAutoBackupParam) GetName() string {
-	return p.Name
+func (p *CreateAutoBackupParam) GetWeekdays() []string {
+	return p.Weekdays
 }
 func (p *CreateAutoBackupParam) SetDiskId(v int64) {
 	p.DiskId = v
@@ -606,5 +375,236 @@ func (p *ReadAutoBackupParam) SetId(v int64) {
 }
 
 func (p *ReadAutoBackupParam) GetId() int64 {
+	return p.Id
+}
+
+// UpdateAutoBackupParam is input parameters for the sacloud API
+type UpdateAutoBackupParam struct {
+	Tags        []string
+	StartHour   int
+	Weekdays    []string
+	Id          int64
+	Name        string
+	Description string
+	IconId      int64
+	Generation  int
+}
+
+// NewUpdateAutoBackupParam return new UpdateAutoBackupParam
+func NewUpdateAutoBackupParam() *UpdateAutoBackupParam {
+	return &UpdateAutoBackupParam{}
+}
+
+// Validate checks current values in model
+func (p *UpdateAutoBackupParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["AutoBackup"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["AutoBackup"].Commands["update"].Params["start-hour"].ValidateFunc
+		errs := validator("--start-hour", p.StartHour)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["AutoBackup"].Commands["update"].Params["weekdays"].ValidateFunc
+		errs := validator("--weekdays", p.Weekdays)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["AutoBackup"].Commands["update"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["AutoBackup"].Commands["update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["AutoBackup"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["AutoBackup"].Commands["update"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["AutoBackup"].Commands["update"].Params["generation"].ValidateFunc
+		errs := validator("--generation", p.Generation)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *UpdateAutoBackupParam) getResourceDef() *schema.Resource {
+	return define.Resources["AutoBackup"]
+}
+
+func (p *UpdateAutoBackupParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["update"]
+}
+
+func (p *UpdateAutoBackupParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *UpdateAutoBackupParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *UpdateAutoBackupParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *UpdateAutoBackupParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateAutoBackupParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *UpdateAutoBackupParam) GetTags() []string {
+	return p.Tags
+}
+func (p *UpdateAutoBackupParam) SetStartHour(v int) {
+	p.StartHour = v
+}
+
+func (p *UpdateAutoBackupParam) GetStartHour() int {
+	return p.StartHour
+}
+func (p *UpdateAutoBackupParam) SetWeekdays(v []string) {
+	p.Weekdays = v
+}
+
+func (p *UpdateAutoBackupParam) GetWeekdays() []string {
+	return p.Weekdays
+}
+func (p *UpdateAutoBackupParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *UpdateAutoBackupParam) GetId() int64 {
+	return p.Id
+}
+func (p *UpdateAutoBackupParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *UpdateAutoBackupParam) GetName() string {
+	return p.Name
+}
+func (p *UpdateAutoBackupParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdateAutoBackupParam) GetDescription() string {
+	return p.Description
+}
+func (p *UpdateAutoBackupParam) SetIconId(v int64) {
+	p.IconId = v
+}
+
+func (p *UpdateAutoBackupParam) GetIconId() int64 {
+	return p.IconId
+}
+func (p *UpdateAutoBackupParam) SetGeneration(v int) {
+	p.Generation = v
+}
+
+func (p *UpdateAutoBackupParam) GetGeneration() int {
+	return p.Generation
+}
+
+// DeleteAutoBackupParam is input parameters for the sacloud API
+type DeleteAutoBackupParam struct {
+	Id int64
+}
+
+// NewDeleteAutoBackupParam return new DeleteAutoBackupParam
+func NewDeleteAutoBackupParam() *DeleteAutoBackupParam {
+	return &DeleteAutoBackupParam{}
+}
+
+// Validate checks current values in model
+func (p *DeleteAutoBackupParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["AutoBackup"].Commands["delete"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DeleteAutoBackupParam) getResourceDef() *schema.Resource {
+	return define.Resources["AutoBackup"]
+}
+
+func (p *DeleteAutoBackupParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["delete"]
+}
+
+func (p *DeleteAutoBackupParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *DeleteAutoBackupParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *DeleteAutoBackupParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *DeleteAutoBackupParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DeleteAutoBackupParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *DeleteAutoBackupParam) GetId() int64 {
 	return p.Id
 }

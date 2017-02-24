@@ -60,6 +60,12 @@ func init() {
 				Usage:     "Update StartupScript",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "script",
+						Aliases:     []string{"note"},
+						Usage:       "set script from file",
+						Destination: &updateParam.Script,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
@@ -84,12 +90,6 @@ func init() {
 						Aliases:     []string{"note-content"},
 						Usage:       "set script content",
 						Destination: &updateParam.ScriptContent,
-					},
-					&cli.StringFlag{
-						Name:        "script",
-						Aliases:     []string{"note"},
-						Usage:       "set script from file",
-						Destination: &updateParam.Script,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -161,15 +161,6 @@ func init() {
 				Usage:   "List StartupScript",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
-					&cli.StringFlag{
-						Name:        "scope",
-						Usage:       "set filter by scope('user' or 'shared')",
-						Destination: &listParam.Scope,
-					},
-					&cli.StringSliceFlag{
 						Name:  "name",
 						Usage: "set filter by name(s)",
 					},
@@ -187,13 +178,22 @@ func init() {
 						Usage:       "set limit",
 						Destination: &listParam.Max,
 					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
+					&cli.StringFlag{
+						Name:        "scope",
+						Usage:       "set filter by scope('user' or 'shared')",
+						Destination: &listParam.Scope,
+					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {

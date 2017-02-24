@@ -8,6 +8,69 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// ReadDNSParam is input parameters for the sacloud API
+type ReadDNSParam struct {
+	Id int64
+}
+
+// NewReadDNSParam return new ReadDNSParam
+func NewReadDNSParam() *ReadDNSParam {
+	return &ReadDNSParam{}
+}
+
+// Validate checks current values in model
+func (p *ReadDNSParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["read"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ReadDNSParam) getResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *ReadDNSParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["read"]
+}
+
+func (p *ReadDNSParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ReadDNSParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ReadDNSParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ReadDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ReadDNSParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ReadDNSParam) GetId() int64 {
+	return p.Id
+}
+
 // UpdateDNSParam is input parameters for the sacloud API
 type UpdateDNSParam struct {
 	Id          int64
@@ -114,275 +177,6 @@ func (p *UpdateDNSParam) SetIconId(v int64) {
 
 func (p *UpdateDNSParam) GetIconId() int64 {
 	return p.IconId
-}
-
-// RecordUpdateDNSParam is input parameters for the sacloud API
-type RecordUpdateDNSParam struct {
-	Name        string
-	Type        string
-	Value       string
-	Ttl         int
-	MxPriority  int
-	SrvPort     int
-	SrvTarget   string
-	Id          int64
-	SrvPriority int
-	SrvWeight   int
-	Index       int
-}
-
-// NewRecordUpdateDNSParam return new RecordUpdateDNSParam
-func NewRecordUpdateDNSParam() *RecordUpdateDNSParam {
-	return &RecordUpdateDNSParam{}
-}
-
-// Validate checks current values in model
-func (p *RecordUpdateDNSParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["type"].ValidateFunc
-		errs := validator("--type", p.Type)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["ttl"].ValidateFunc
-		errs := validator("--ttl", p.Ttl)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["mx-priority"].ValidateFunc
-		errs := validator("--mx-priority", p.MxPriority)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-port"].ValidateFunc
-		errs := validator("--srv-port", p.SrvPort)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-target"].ValidateFunc
-		errs := validator("--srv-target", p.SrvTarget)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-priority"].ValidateFunc
-		errs := validator("--srv-priority", p.SrvPriority)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-weight"].ValidateFunc
-		errs := validator("--srv-weight", p.SrvWeight)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--index", p.Index)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *RecordUpdateDNSParam) getResourceDef() *schema.Resource {
-	return define.Resources["DNS"]
-}
-
-func (p *RecordUpdateDNSParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["record-update"]
-}
-
-func (p *RecordUpdateDNSParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *RecordUpdateDNSParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *RecordUpdateDNSParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *RecordUpdateDNSParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *RecordUpdateDNSParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *RecordUpdateDNSParam) GetName() string {
-	return p.Name
-}
-func (p *RecordUpdateDNSParam) SetType(v string) {
-	p.Type = v
-}
-
-func (p *RecordUpdateDNSParam) GetType() string {
-	return p.Type
-}
-func (p *RecordUpdateDNSParam) SetValue(v string) {
-	p.Value = v
-}
-
-func (p *RecordUpdateDNSParam) GetValue() string {
-	return p.Value
-}
-func (p *RecordUpdateDNSParam) SetTtl(v int) {
-	p.Ttl = v
-}
-
-func (p *RecordUpdateDNSParam) GetTtl() int {
-	return p.Ttl
-}
-func (p *RecordUpdateDNSParam) SetMxPriority(v int) {
-	p.MxPriority = v
-}
-
-func (p *RecordUpdateDNSParam) GetMxPriority() int {
-	return p.MxPriority
-}
-func (p *RecordUpdateDNSParam) SetSrvPort(v int) {
-	p.SrvPort = v
-}
-
-func (p *RecordUpdateDNSParam) GetSrvPort() int {
-	return p.SrvPort
-}
-func (p *RecordUpdateDNSParam) SetSrvTarget(v string) {
-	p.SrvTarget = v
-}
-
-func (p *RecordUpdateDNSParam) GetSrvTarget() string {
-	return p.SrvTarget
-}
-func (p *RecordUpdateDNSParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *RecordUpdateDNSParam) GetId() int64 {
-	return p.Id
-}
-func (p *RecordUpdateDNSParam) SetSrvPriority(v int) {
-	p.SrvPriority = v
-}
-
-func (p *RecordUpdateDNSParam) GetSrvPriority() int {
-	return p.SrvPriority
-}
-func (p *RecordUpdateDNSParam) SetSrvWeight(v int) {
-	p.SrvWeight = v
-}
-
-func (p *RecordUpdateDNSParam) GetSrvWeight() int {
-	return p.SrvWeight
-}
-func (p *RecordUpdateDNSParam) SetIndex(v int) {
-	p.Index = v
-}
-
-func (p *RecordUpdateDNSParam) GetIndex() int {
-	return p.Index
-}
-
-// ReadDNSParam is input parameters for the sacloud API
-type ReadDNSParam struct {
-	Id int64
-}
-
-// NewReadDNSParam return new ReadDNSParam
-func NewReadDNSParam() *ReadDNSParam {
-	return &ReadDNSParam{}
-}
-
-// Validate checks current values in model
-func (p *ReadDNSParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["read"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ReadDNSParam) getResourceDef() *schema.Resource {
-	return define.Resources["DNS"]
-}
-
-func (p *ReadDNSParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["read"]
-}
-
-func (p *ReadDNSParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ReadDNSParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ReadDNSParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ReadDNSParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ReadDNSParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ReadDNSParam) GetId() int64 {
-	return p.Id
 }
 
 // DeleteDNSParam is input parameters for the sacloud API
@@ -511,229 +305,28 @@ func (p *RecordListDNSParam) GetId() int64 {
 	return p.Id
 }
 
-// RecordAddDNSParam is input parameters for the sacloud API
-type RecordAddDNSParam struct {
-	Type        string
-	MxPriority  int
-	SrvPort     int
-	SrvTarget   string
-	Id          int64
+// RecordUpdateDNSParam is input parameters for the sacloud API
+type RecordUpdateDNSParam struct {
+	Index       int
 	Value       string
 	Ttl         int
+	MxPriority  int
 	SrvPriority int
 	SrvWeight   int
+	Id          int64
 	Name        string
+	Type        string
+	SrvPort     int
+	SrvTarget   string
 }
 
-// NewRecordAddDNSParam return new RecordAddDNSParam
-func NewRecordAddDNSParam() *RecordAddDNSParam {
-	return &RecordAddDNSParam{
-
-		MxPriority: 10,
-
-		Ttl: 3600,
-	}
+// NewRecordUpdateDNSParam return new RecordUpdateDNSParam
+func NewRecordUpdateDNSParam() *RecordUpdateDNSParam {
+	return &RecordUpdateDNSParam{}
 }
 
 // Validate checks current values in model
-func (p *RecordAddDNSParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--type", p.Type)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["type"].ValidateFunc
-		errs := validator("--type", p.Type)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["mx-priority"].ValidateFunc
-		errs := validator("--mx-priority", p.MxPriority)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-port"].ValidateFunc
-		errs := validator("--srv-port", p.SrvPort)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-target"].ValidateFunc
-		errs := validator("--srv-target", p.SrvTarget)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["ttl"].ValidateFunc
-		errs := validator("--ttl", p.Ttl)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-priority"].ValidateFunc
-		errs := validator("--srv-priority", p.SrvPriority)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-weight"].ValidateFunc
-		errs := validator("--srv-weight", p.SrvWeight)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["DNS"].Commands["record-add"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *RecordAddDNSParam) getResourceDef() *schema.Resource {
-	return define.Resources["DNS"]
-}
-
-func (p *RecordAddDNSParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["record-add"]
-}
-
-func (p *RecordAddDNSParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *RecordAddDNSParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *RecordAddDNSParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *RecordAddDNSParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *RecordAddDNSParam) SetType(v string) {
-	p.Type = v
-}
-
-func (p *RecordAddDNSParam) GetType() string {
-	return p.Type
-}
-func (p *RecordAddDNSParam) SetMxPriority(v int) {
-	p.MxPriority = v
-}
-
-func (p *RecordAddDNSParam) GetMxPriority() int {
-	return p.MxPriority
-}
-func (p *RecordAddDNSParam) SetSrvPort(v int) {
-	p.SrvPort = v
-}
-
-func (p *RecordAddDNSParam) GetSrvPort() int {
-	return p.SrvPort
-}
-func (p *RecordAddDNSParam) SetSrvTarget(v string) {
-	p.SrvTarget = v
-}
-
-func (p *RecordAddDNSParam) GetSrvTarget() string {
-	return p.SrvTarget
-}
-func (p *RecordAddDNSParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *RecordAddDNSParam) GetId() int64 {
-	return p.Id
-}
-func (p *RecordAddDNSParam) SetValue(v string) {
-	p.Value = v
-}
-
-func (p *RecordAddDNSParam) GetValue() string {
-	return p.Value
-}
-func (p *RecordAddDNSParam) SetTtl(v int) {
-	p.Ttl = v
-}
-
-func (p *RecordAddDNSParam) GetTtl() int {
-	return p.Ttl
-}
-func (p *RecordAddDNSParam) SetSrvPriority(v int) {
-	p.SrvPriority = v
-}
-
-func (p *RecordAddDNSParam) GetSrvPriority() int {
-	return p.SrvPriority
-}
-func (p *RecordAddDNSParam) SetSrvWeight(v int) {
-	p.SrvWeight = v
-}
-
-func (p *RecordAddDNSParam) GetSrvWeight() int {
-	return p.SrvWeight
-}
-func (p *RecordAddDNSParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *RecordAddDNSParam) GetName() string {
-	return p.Name
-}
-
-// RecordDeleteDNSParam is input parameters for the sacloud API
-type RecordDeleteDNSParam struct {
-	Index int
-	Id    int64
-}
-
-// NewRecordDeleteDNSParam return new RecordDeleteDNSParam
-func NewRecordDeleteDNSParam() *RecordDeleteDNSParam {
-	return &RecordDeleteDNSParam{}
-}
-
-// Validate checks current values in model
-func (p *RecordDeleteDNSParam) Validate() []error {
+func (p *RecordUpdateDNSParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -743,6 +336,34 @@ func (p *RecordDeleteDNSParam) Validate() []error {
 		}
 	}
 	{
+		validator := define.Resources["DNS"].Commands["record-update"].Params["ttl"].ValidateFunc
+		errs := validator("--ttl", p.Ttl)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-update"].Params["mx-priority"].ValidateFunc
+		errs := validator("--mx-priority", p.MxPriority)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-priority"].ValidateFunc
+		errs := validator("--srv-priority", p.SrvPriority)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-weight"].ValidateFunc
+		errs := validator("--srv-weight", p.SrvWeight)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		validator := validateRequired
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -750,8 +371,36 @@ func (p *RecordDeleteDNSParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["DNS"].Commands["record-delete"].Params["id"].ValidateFunc
+		validator := define.Resources["DNS"].Commands["record-update"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-update"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-update"].Params["type"].ValidateFunc
+		errs := validator("--type", p.Type)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-port"].ValidateFunc
+		errs := validator("--srv-port", p.SrvPort)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-update"].Params["srv-target"].ValidateFunc
+		errs := validator("--srv-target", p.SrvTarget)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -760,52 +409,115 @@ func (p *RecordDeleteDNSParam) Validate() []error {
 	return errors
 }
 
-func (p *RecordDeleteDNSParam) getResourceDef() *schema.Resource {
+func (p *RecordUpdateDNSParam) getResourceDef() *schema.Resource {
 	return define.Resources["DNS"]
 }
 
-func (p *RecordDeleteDNSParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["record-delete"]
+func (p *RecordUpdateDNSParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["record-update"]
 }
 
-func (p *RecordDeleteDNSParam) GetIncludeFields() []string {
+func (p *RecordUpdateDNSParam) GetIncludeFields() []string {
 	return p.getCommandDef().IncludeFields
 }
 
-func (p *RecordDeleteDNSParam) GetExcludeFields() []string {
+func (p *RecordUpdateDNSParam) GetExcludeFields() []string {
 	return p.getCommandDef().ExcludeFields
 }
 
-func (p *RecordDeleteDNSParam) GetTableType() output.OutputTableType {
+func (p *RecordUpdateDNSParam) GetTableType() output.OutputTableType {
 	return p.getCommandDef().TableType
 }
 
-func (p *RecordDeleteDNSParam) GetColumnDefs() []output.ColumnDef {
+func (p *RecordUpdateDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *RecordDeleteDNSParam) SetIndex(v int) {
+func (p *RecordUpdateDNSParam) SetIndex(v int) {
 	p.Index = v
 }
 
-func (p *RecordDeleteDNSParam) GetIndex() int {
+func (p *RecordUpdateDNSParam) GetIndex() int {
 	return p.Index
 }
-func (p *RecordDeleteDNSParam) SetId(v int64) {
+func (p *RecordUpdateDNSParam) SetValue(v string) {
+	p.Value = v
+}
+
+func (p *RecordUpdateDNSParam) GetValue() string {
+	return p.Value
+}
+func (p *RecordUpdateDNSParam) SetTtl(v int) {
+	p.Ttl = v
+}
+
+func (p *RecordUpdateDNSParam) GetTtl() int {
+	return p.Ttl
+}
+func (p *RecordUpdateDNSParam) SetMxPriority(v int) {
+	p.MxPriority = v
+}
+
+func (p *RecordUpdateDNSParam) GetMxPriority() int {
+	return p.MxPriority
+}
+func (p *RecordUpdateDNSParam) SetSrvPriority(v int) {
+	p.SrvPriority = v
+}
+
+func (p *RecordUpdateDNSParam) GetSrvPriority() int {
+	return p.SrvPriority
+}
+func (p *RecordUpdateDNSParam) SetSrvWeight(v int) {
+	p.SrvWeight = v
+}
+
+func (p *RecordUpdateDNSParam) GetSrvWeight() int {
+	return p.SrvWeight
+}
+func (p *RecordUpdateDNSParam) SetId(v int64) {
 	p.Id = v
 }
 
-func (p *RecordDeleteDNSParam) GetId() int64 {
+func (p *RecordUpdateDNSParam) GetId() int64 {
 	return p.Id
+}
+func (p *RecordUpdateDNSParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *RecordUpdateDNSParam) GetName() string {
+	return p.Name
+}
+func (p *RecordUpdateDNSParam) SetType(v string) {
+	p.Type = v
+}
+
+func (p *RecordUpdateDNSParam) GetType() string {
+	return p.Type
+}
+func (p *RecordUpdateDNSParam) SetSrvPort(v int) {
+	p.SrvPort = v
+}
+
+func (p *RecordUpdateDNSParam) GetSrvPort() int {
+	return p.SrvPort
+}
+func (p *RecordUpdateDNSParam) SetSrvTarget(v string) {
+	p.SrvTarget = v
+}
+
+func (p *RecordUpdateDNSParam) GetSrvTarget() string {
+	return p.SrvTarget
 }
 
 // ListDNSParam is input parameters for the sacloud API
 type ListDNSParam struct {
+	Name []string
 	Id   []int64
 	From int
 	Max  int
 	Sort []string
-	Name []string
 }
 
 // NewListDNSParam return new ListDNSParam
@@ -817,6 +529,15 @@ func NewListDNSParam() *ListDNSParam {
 func (p *ListDNSParam) Validate() []error {
 	errors := []error{}
 	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		validator := define.Resources["DNS"].Commands["list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -827,15 +548,6 @@ func (p *ListDNSParam) Validate() []error {
 		errs := validateConflicts("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -869,6 +581,13 @@ func (p *ListDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListDNSParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListDNSParam) GetName() []string {
+	return p.Name
+}
 func (p *ListDNSParam) SetId(v []int64) {
 	p.Id = v
 }
@@ -896,13 +615,6 @@ func (p *ListDNSParam) SetSort(v []string) {
 
 func (p *ListDNSParam) GetSort() []string {
 	return p.Sort
-}
-func (p *ListDNSParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListDNSParam) GetName() []string {
-	return p.Name
 }
 
 // CreateDNSParam is input parameters for the sacloud API
@@ -1011,4 +723,292 @@ func (p *CreateDNSParam) SetIconId(v int64) {
 
 func (p *CreateDNSParam) GetIconId() int64 {
 	return p.IconId
+}
+
+// RecordAddDNSParam is input parameters for the sacloud API
+type RecordAddDNSParam struct {
+	Value       string
+	MxPriority  int
+	SrvPriority int
+	SrvPort     int
+	SrvTarget   string
+	Id          int64
+	Name        string
+	Type        string
+	Ttl         int
+	SrvWeight   int
+}
+
+// NewRecordAddDNSParam return new RecordAddDNSParam
+func NewRecordAddDNSParam() *RecordAddDNSParam {
+	return &RecordAddDNSParam{
+
+		MxPriority: 10,
+
+		Ttl: 3600,
+	}
+}
+
+// Validate checks current values in model
+func (p *RecordAddDNSParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["DNS"].Commands["record-add"].Params["mx-priority"].ValidateFunc
+		errs := validator("--mx-priority", p.MxPriority)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-priority"].ValidateFunc
+		errs := validator("--srv-priority", p.SrvPriority)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-port"].ValidateFunc
+		errs := validator("--srv-port", p.SrvPort)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-target"].ValidateFunc
+		errs := validator("--srv-target", p.SrvTarget)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-add"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-add"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--type", p.Type)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-add"].Params["type"].ValidateFunc
+		errs := validator("--type", p.Type)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-add"].Params["ttl"].ValidateFunc
+		errs := validator("--ttl", p.Ttl)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-add"].Params["srv-weight"].ValidateFunc
+		errs := validator("--srv-weight", p.SrvWeight)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *RecordAddDNSParam) getResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *RecordAddDNSParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["record-add"]
+}
+
+func (p *RecordAddDNSParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *RecordAddDNSParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *RecordAddDNSParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *RecordAddDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *RecordAddDNSParam) SetValue(v string) {
+	p.Value = v
+}
+
+func (p *RecordAddDNSParam) GetValue() string {
+	return p.Value
+}
+func (p *RecordAddDNSParam) SetMxPriority(v int) {
+	p.MxPriority = v
+}
+
+func (p *RecordAddDNSParam) GetMxPriority() int {
+	return p.MxPriority
+}
+func (p *RecordAddDNSParam) SetSrvPriority(v int) {
+	p.SrvPriority = v
+}
+
+func (p *RecordAddDNSParam) GetSrvPriority() int {
+	return p.SrvPriority
+}
+func (p *RecordAddDNSParam) SetSrvPort(v int) {
+	p.SrvPort = v
+}
+
+func (p *RecordAddDNSParam) GetSrvPort() int {
+	return p.SrvPort
+}
+func (p *RecordAddDNSParam) SetSrvTarget(v string) {
+	p.SrvTarget = v
+}
+
+func (p *RecordAddDNSParam) GetSrvTarget() string {
+	return p.SrvTarget
+}
+func (p *RecordAddDNSParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *RecordAddDNSParam) GetId() int64 {
+	return p.Id
+}
+func (p *RecordAddDNSParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *RecordAddDNSParam) GetName() string {
+	return p.Name
+}
+func (p *RecordAddDNSParam) SetType(v string) {
+	p.Type = v
+}
+
+func (p *RecordAddDNSParam) GetType() string {
+	return p.Type
+}
+func (p *RecordAddDNSParam) SetTtl(v int) {
+	p.Ttl = v
+}
+
+func (p *RecordAddDNSParam) GetTtl() int {
+	return p.Ttl
+}
+func (p *RecordAddDNSParam) SetSrvWeight(v int) {
+	p.SrvWeight = v
+}
+
+func (p *RecordAddDNSParam) GetSrvWeight() int {
+	return p.SrvWeight
+}
+
+// RecordDeleteDNSParam is input parameters for the sacloud API
+type RecordDeleteDNSParam struct {
+	Id    int64
+	Index int
+}
+
+// NewRecordDeleteDNSParam return new RecordDeleteDNSParam
+func NewRecordDeleteDNSParam() *RecordDeleteDNSParam {
+	return &RecordDeleteDNSParam{}
+}
+
+// Validate checks current values in model
+func (p *RecordDeleteDNSParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-delete"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *RecordDeleteDNSParam) getResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *RecordDeleteDNSParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["record-delete"]
+}
+
+func (p *RecordDeleteDNSParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *RecordDeleteDNSParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *RecordDeleteDNSParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *RecordDeleteDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *RecordDeleteDNSParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *RecordDeleteDNSParam) GetId() int64 {
+	return p.Id
+}
+func (p *RecordDeleteDNSParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *RecordDeleteDNSParam) GetIndex() int {
+	return p.Index
 }

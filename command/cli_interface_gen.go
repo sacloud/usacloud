@@ -7,18 +7,59 @@ import (
 )
 
 func init() {
+	updateParam := NewUpdateInterfaceParam()
 	deleteParam := NewDeleteInterfaceParam()
 	packetFilterConnectParam := NewPacketFilterConnectInterfaceParam()
 	packetFilterDisconnectParam := NewPacketFilterDisconnectInterfaceParam()
 	listParam := NewListInterfaceParam()
 	createParam := NewCreateInterfaceParam()
 	readParam := NewReadInterfaceParam()
-	updateParam := NewUpdateInterfaceParam()
 
 	cliCommand := &cli.Command{
 		Name:  "interface",
 		Usage: "A manage commands of Interface",
 		Subcommands: []*cli.Command{
+			{
+				Name:      "update",
+				Aliases:   []string{"u"},
+				Usage:     "Update Interface",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "user-ipaddress",
+						Usage:       "set user-ipaddress",
+						Destination: &updateParam.UserIpaddress,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := updateParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), updateParam)
+
+					// Run command with params
+					return InterfaceUpdate(ctx, updateParam)
+				},
+			},
 			{
 				Name:      "delete",
 				Aliases:   []string{"d", "rm"},
@@ -140,6 +181,14 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List Interface",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
 					&cli.IntFlag{
 						Name:        "from",
 						Usage:       "set offset",
@@ -154,21 +203,13 @@ func init() {
 						Name:  "sort",
 						Usage: "set field(s) for sort",
 					},
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
 					listParam.Sort = c.StringSlice("sort")
-					listParam.Name = c.StringSlice("name")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -251,47 +292,6 @@ func init() {
 
 					// Run command with params
 					return InterfaceRead(ctx, readParam)
-				},
-			},
-			{
-				Name:      "update",
-				Aliases:   []string{"u"},
-				Usage:     "Update Interface",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
-					&cli.StringFlag{
-						Name:        "user-ipaddress",
-						Usage:       "set user-ipaddress",
-						Destination: &updateParam.UserIpaddress,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() > 0 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), updateParam)
-
-					// Run command with params
-					return InterfaceUpdate(ctx, updateParam)
 				},
 			},
 		},

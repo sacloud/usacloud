@@ -73,11 +73,11 @@ func (p *DeleteLicenseParam) GetId() int64 {
 
 // ListLicenseParam is input parameters for the sacloud API
 type ListLicenseParam struct {
-	Name []string
-	Id   []int64
 	From int
 	Max  int
 	Sort []string
+	Name []string
+	Id   []int64
 }
 
 // NewListLicenseParam return new ListLicenseParam
@@ -141,20 +141,6 @@ func (p *ListLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListLicenseParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListLicenseParam) GetName() []string {
-	return p.Name
-}
-func (p *ListLicenseParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListLicenseParam) GetId() []int64 {
-	return p.Id
-}
 func (p *ListLicenseParam) SetFrom(v int) {
 	p.From = v
 }
@@ -175,6 +161,20 @@ func (p *ListLicenseParam) SetSort(v []string) {
 
 func (p *ListLicenseParam) GetSort() []string {
 	return p.Sort
+}
+func (p *ListLicenseParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListLicenseParam) GetName() []string {
+	return p.Name
+}
+func (p *ListLicenseParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListLicenseParam) GetId() []int64 {
+	return p.Id
 }
 
 // CreateLicenseParam is input parameters for the sacloud API

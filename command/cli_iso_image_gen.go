@@ -7,60 +7,35 @@ import (
 )
 
 func init() {
-	ftpCloseParam := NewFtpCloseISOImageParam()
 	listParam := NewListISOImageParam()
-	updateParam := NewUpdateISOImageParam()
+	readParam := NewReadISOImageParam()
 	deleteParam := NewDeleteISOImageParam()
 	uploadParam := NewUploadISOImageParam()
 	createParam := NewCreateISOImageParam()
-	readParam := NewReadISOImageParam()
+	updateParam := NewUpdateISOImageParam()
 	downloadParam := NewDownloadISOImageParam()
 	ftpOpenParam := NewFtpOpenISOImageParam()
+	ftpCloseParam := NewFtpCloseISOImageParam()
 
 	cliCommand := &cli.Command{
 		Name:  "iso-image",
 		Usage: "A manage commands of ISOImage",
 		Subcommands: []*cli.Command{
 			{
-				Name:      "ftp-close",
-				Usage:     "FtpClose ISOImage",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &ftpCloseParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() > 0 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := ftpCloseParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), ftpCloseParam)
-
-					// Run command with params
-					return ISOImageFtpClose(ctx, ftpCloseParam)
-				},
-			},
-			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List ISOImage",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
+					},
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
 					&cli.StringSliceFlag{
 						Name:  "sort",
 						Usage: "set field(s) for sort",
@@ -78,23 +53,13 @@ func init() {
 						Name:  "id",
 						Usage: "set filter by id(s)",
 					},
-					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -114,41 +79,18 @@ func init() {
 				},
 			},
 			{
-				Name:      "update",
-				Aliases:   []string{"u"},
-				Usage:     "Update ISOImage",
+				Name:      "read",
+				Aliases:   []string{"r"},
+				Usage:     "Read ISOImage",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
-					},
-					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set resource display name",
-						Destination: &updateParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
+						Destination: &readParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					updateParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -161,15 +103,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := updateParam.Validate(); len(errors) > 0 {
+					if errors := readParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), updateParam)
+					ctx := NewContext(c, c.Args().Slice(), readParam)
 
 					// Run command with params
-					return ISOImageUpdate(ctx, updateParam)
+					return ISOImageRead(ctx, readParam)
 				},
 			},
 			{
@@ -213,15 +155,15 @@ func init() {
 				Usage:     "Upload ISOImage",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "iso-file",
-						Usage:       "[Required] set iso image file",
-						Destination: &uploadParam.IsoFile,
-					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
 						Destination: &uploadParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "iso-file",
+						Usage:       "[Required] set iso image file",
+						Destination: &uploadParam.IsoFile,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -253,21 +195,6 @@ func init() {
 				Aliases: []string{"c"},
 				Usage:   "Create ISOImage",
 				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &createParam.IconId,
-					},
-					&cli.IntFlag{
-						Name:        "size",
-						Usage:       "[Required] set iso size(GB)",
-						Value:       5,
-						Destination: &createParam.Size,
-					},
 					&cli.StringFlag{
 						Name:        "iso-file",
 						Usage:       "[Required] set iso image file",
@@ -283,6 +210,21 @@ func init() {
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
 						Destination: &createParam.Description,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &createParam.IconId,
+					},
+					&cli.IntFlag{
+						Name:        "size",
+						Usage:       "[Required] set iso size(GB)",
+						Value:       5,
+						Destination: &createParam.Size,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -308,18 +250,41 @@ func init() {
 				},
 			},
 			{
-				Name:      "read",
-				Aliases:   []string{"r"},
-				Usage:     "Read ISOImage",
+				Name:      "update",
+				Aliases:   []string{"u"},
+				Usage:     "Update ISOImage",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
-						Destination: &readParam.Id,
+						Destination: &updateParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "set resource display name",
+						Destination: &updateParam.Name,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &updateParam.Description,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
 					},
 				},
 				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					updateParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -332,15 +297,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
+					if errors := updateParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), readParam)
+					ctx := NewContext(c, c.Args().Slice(), updateParam)
 
 					// Run command with params
-					return ISOImageRead(ctx, readParam)
+					return ISOImageUpdate(ctx, updateParam)
 				},
 			},
 			{
@@ -416,6 +381,41 @@ func init() {
 
 					// Run command with params
 					return ISOImageFtpOpen(ctx, ftpOpenParam)
+				},
+			},
+			{
+				Name:      "ftp-close",
+				Usage:     "FtpClose ISOImage",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &ftpCloseParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := ftpCloseParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), ftpCloseParam)
+
+					// Run command with params
+					return ISOImageFtpClose(ctx, ftpCloseParam)
 				},
 			},
 		},

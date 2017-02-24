@@ -10,11 +10,11 @@ import (
 
 // ListBridgeParam is input parameters for the sacloud API
 type ListBridgeParam struct {
+	Id   []int64
 	From int
 	Max  int
 	Sort []string
 	Name []string
-	Id   []int64
 }
 
 // NewListBridgeParam return new ListBridgeParam
@@ -26,15 +26,6 @@ func NewListBridgeParam() *ListBridgeParam {
 func (p *ListBridgeParam) Validate() []error {
 	errors := []error{}
 	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := define.Resources["Bridge"].Commands["list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -45,6 +36,15 @@ func (p *ListBridgeParam) Validate() []error {
 		errs := validateConflicts("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -78,6 +78,13 @@ func (p *ListBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListBridgeParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListBridgeParam) GetId() []int64 {
+	return p.Id
+}
 func (p *ListBridgeParam) SetFrom(v int) {
 	p.From = v
 }
@@ -105,13 +112,6 @@ func (p *ListBridgeParam) SetName(v []string) {
 
 func (p *ListBridgeParam) GetName() []string {
 	return p.Name
-}
-func (p *ListBridgeParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListBridgeParam) GetId() []int64 {
-	return p.Id
 }
 
 // CreateBridgeParam is input parameters for the sacloud API

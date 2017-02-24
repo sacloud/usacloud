@@ -8,13 +8,76 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// ReadProductDiskParam is input parameters for the sacloud API
+type ReadProductDiskParam struct {
+	Id int64
+}
+
+// NewReadProductDiskParam return new ReadProductDiskParam
+func NewReadProductDiskParam() *ReadProductDiskParam {
+	return &ReadProductDiskParam{}
+}
+
+// Validate checks current values in model
+func (p *ReadProductDiskParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ProductDisk"].Commands["read"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ReadProductDiskParam) getResourceDef() *schema.Resource {
+	return define.Resources["ProductDisk"]
+}
+
+func (p *ReadProductDiskParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["read"]
+}
+
+func (p *ReadProductDiskParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ReadProductDiskParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ReadProductDiskParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ReadProductDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ReadProductDiskParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ReadProductDiskParam) GetId() int64 {
+	return p.Id
+}
+
 // ListProductDiskParam is input parameters for the sacloud API
 type ListProductDiskParam struct {
+	Sort []string
 	Name []string
 	Id   []int64
 	From int
 	Max  int
-	Sort []string
 }
 
 // NewListProductDiskParam return new ListProductDiskParam
@@ -78,6 +141,13 @@ func (p *ListProductDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListProductDiskParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListProductDiskParam) GetSort() []string {
+	return p.Sort
+}
 func (p *ListProductDiskParam) SetName(v []string) {
 	p.Name = v
 }
@@ -105,74 +175,4 @@ func (p *ListProductDiskParam) SetMax(v int) {
 
 func (p *ListProductDiskParam) GetMax() int {
 	return p.Max
-}
-func (p *ListProductDiskParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListProductDiskParam) GetSort() []string {
-	return p.Sort
-}
-
-// ReadProductDiskParam is input parameters for the sacloud API
-type ReadProductDiskParam struct {
-	Id int64
-}
-
-// NewReadProductDiskParam return new ReadProductDiskParam
-func NewReadProductDiskParam() *ReadProductDiskParam {
-	return &ReadProductDiskParam{}
-}
-
-// Validate checks current values in model
-func (p *ReadProductDiskParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ProductDisk"].Commands["read"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ReadProductDiskParam) getResourceDef() *schema.Resource {
-	return define.Resources["ProductDisk"]
-}
-
-func (p *ReadProductDiskParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["read"]
-}
-
-func (p *ReadProductDiskParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ReadProductDiskParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ReadProductDiskParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ReadProductDiskParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ReadProductDiskParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ReadProductDiskParam) GetId() int64 {
-	return p.Id
 }

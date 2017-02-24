@@ -14,13 +14,13 @@ func SwitchCreate(ctx Context, params *CreateSwitchParam) error {
 
 	// set params
 
+	p.SetName(params.Name)
+
 	p.SetDescription(params.Description)
 
 	p.SetTags(params.Tags)
 
 	p.SetIconByID(params.IconId)
-
-	p.SetName(params.Name)
 
 	// call Create(id)
 	res, err := api.Create(p)
