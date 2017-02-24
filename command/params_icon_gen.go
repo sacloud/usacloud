@@ -166,12 +166,12 @@ func (p *DeleteIconParam) GetId() int64 {
 
 // ListIconParam is input parameters for the sacloud API
 type ListIconParam struct {
-	Max   int
-	Sort  []string
-	Scope string
 	Name  []string
 	Id    []int64
 	From  int
+	Max   int
+	Scope string
+	Sort  []string
 }
 
 // NewListIconParam return new ListIconParam
@@ -182,13 +182,6 @@ func NewListIconParam() *ListIconParam {
 // Validate checks current values in model
 func (p *ListIconParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := define.Resources["Icon"].Commands["list"].Params["scope"].ValidateFunc
-		errs := validator("--scope", p.Scope)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		errs := validateConflicts("--name", p.Name, map[string]interface{}{
 
@@ -210,6 +203,13 @@ func (p *ListIconParam) Validate() []error {
 
 			"--name": p.Name,
 		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Icon"].Commands["list"].Params["scope"].ValidateFunc
+		errs := validator("--scope", p.Scope)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -242,27 +242,6 @@ func (p *ListIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListIconParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListIconParam) GetMax() int {
-	return p.Max
-}
-func (p *ListIconParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListIconParam) GetSort() []string {
-	return p.Sort
-}
-func (p *ListIconParam) SetScope(v string) {
-	p.Scope = v
-}
-
-func (p *ListIconParam) GetScope() string {
-	return p.Scope
-}
 func (p *ListIconParam) SetName(v []string) {
 	p.Name = v
 }
@@ -283,6 +262,27 @@ func (p *ListIconParam) SetFrom(v int) {
 
 func (p *ListIconParam) GetFrom() int {
 	return p.From
+}
+func (p *ListIconParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListIconParam) GetMax() int {
+	return p.Max
+}
+func (p *ListIconParam) SetScope(v string) {
+	p.Scope = v
+}
+
+func (p *ListIconParam) GetScope() string {
+	return p.Scope
+}
+func (p *ListIconParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListIconParam) GetSort() []string {
+	return p.Sort
 }
 
 // CreateIconParam is input parameters for the sacloud API

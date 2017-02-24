@@ -317,7 +317,7 @@ func init() {
 
 					{{ if .NeedAsignFromArgs }}
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}{{ end }}
 

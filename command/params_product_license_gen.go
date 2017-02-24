@@ -8,6 +8,69 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// ReadProductLicenseParam is input parameters for the sacloud API
+type ReadProductLicenseParam struct {
+	Id int64
+}
+
+// NewReadProductLicenseParam return new ReadProductLicenseParam
+func NewReadProductLicenseParam() *ReadProductLicenseParam {
+	return &ReadProductLicenseParam{}
+}
+
+// Validate checks current values in model
+func (p *ReadProductLicenseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ProductLicense"].Commands["read"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ReadProductLicenseParam) getResourceDef() *schema.Resource {
+	return define.Resources["ProductLicense"]
+}
+
+func (p *ReadProductLicenseParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["read"]
+}
+
+func (p *ReadProductLicenseParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ReadProductLicenseParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ReadProductLicenseParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ReadProductLicenseParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ReadProductLicenseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ReadProductLicenseParam) GetId() int64 {
+	return p.Id
+}
+
 // ListProductLicenseParam is input parameters for the sacloud API
 type ListProductLicenseParam struct {
 	Sort []string
@@ -112,67 +175,4 @@ func (p *ListProductLicenseParam) SetMax(v int) {
 
 func (p *ListProductLicenseParam) GetMax() int {
 	return p.Max
-}
-
-// ReadProductLicenseParam is input parameters for the sacloud API
-type ReadProductLicenseParam struct {
-	Id int64
-}
-
-// NewReadProductLicenseParam return new ReadProductLicenseParam
-func NewReadProductLicenseParam() *ReadProductLicenseParam {
-	return &ReadProductLicenseParam{}
-}
-
-// Validate checks current values in model
-func (p *ReadProductLicenseParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["ProductLicense"].Commands["read"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ReadProductLicenseParam) getResourceDef() *schema.Resource {
-	return define.Resources["ProductLicense"]
-}
-
-func (p *ReadProductLicenseParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["read"]
-}
-
-func (p *ReadProductLicenseParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ReadProductLicenseParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ReadProductLicenseParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ReadProductLicenseParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ReadProductLicenseParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *ReadProductLicenseParam) GetId() int64 {
-	return p.Id
 }

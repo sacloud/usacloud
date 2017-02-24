@@ -7,16 +7,52 @@ import (
 )
 
 func init() {
+	deleteParam := NewDeleteIconParam()
 	listParam := NewListIconParam()
 	createParam := NewCreateIconParam()
 	readParam := NewReadIconParam()
 	updateParam := NewUpdateIconParam()
-	deleteParam := NewDeleteIconParam()
 
 	cliCommand := &cli.Command{
 		Name:  "icon",
 		Usage: "A manage commands of Icon",
 		Subcommands: []*cli.Command{
+			{
+				Name:      "delete",
+				Aliases:   []string{"d", "rm"},
+				Usage:     "Delete Icon",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &deleteParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := deleteParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// Run command with params
+					return IconDelete(ctx, deleteParam)
+				},
+			},
 			{
 				Name:    "list",
 				Aliases: []string{"l", "ls", "find"},
@@ -53,9 +89,9 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					listParam.Id = c.Int64Slice("id")
 					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
+					listParam.Id = c.Int64Slice("id")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -80,11 +116,6 @@ func init() {
 				Usage:   "Create Icon",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "image",
-						Usage:       "[Required] set icon image",
-						Destination: &createParam.Image,
-					},
-					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "[Required] set resource display name",
 						Destination: &createParam.Name,
@@ -92,6 +123,11 @@ func init() {
 					&cli.StringSliceFlag{
 						Name:  "tags",
 						Usage: "set resource tags",
+					},
+					&cli.StringFlag{
+						Name:        "image",
+						Usage:       "[Required] set icon image",
+						Destination: &createParam.Image,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -136,7 +172,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 
@@ -184,7 +220,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 
@@ -198,42 +234,6 @@ func init() {
 
 					// Run command with params
 					return IconUpdate(ctx, updateParam)
-				},
-			},
-			{
-				Name:      "delete",
-				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete Icon",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &deleteParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), deleteParam)
-
-					// Run command with params
-					return IconDelete(ctx, deleteParam)
 				},
 			},
 		},

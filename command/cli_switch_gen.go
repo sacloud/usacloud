@@ -76,6 +76,11 @@ func init() {
 				Aliases: []string{"c"},
 				Usage:   "Create Switch",
 				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &createParam.IconId,
+					},
 					&cli.StringFlag{
 						Name:        "name",
 						Usage:       "[Required] set resource display name",
@@ -90,11 +95,6 @@ func init() {
 					&cli.StringSliceFlag{
 						Name:  "tags",
 						Usage: "set resource tags",
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &createParam.IconId,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -139,7 +139,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 
@@ -161,16 +161,6 @@ func init() {
 				Usage:     "Update Switch",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set resource display name",
-						Destination: &updateParam.Name,
-					},
 					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
@@ -186,6 +176,16 @@ func init() {
 						Usage:       "set Icon ID",
 						Destination: &updateParam.IconId,
 					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "set resource display name",
+						Destination: &updateParam.Name,
+					},
 				},
 				Action: func(c *cli.Context) error {
 
@@ -198,7 +198,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 
@@ -234,7 +234,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 
@@ -274,7 +274,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 
@@ -309,7 +309,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 

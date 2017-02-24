@@ -48,9 +48,9 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
+					listParam.Sort = c.StringSlice("sort")
 					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -75,15 +75,15 @@ func init() {
 				Usage:   "Create Bridge",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
+					},
+					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
 						Destination: &createParam.Description,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -125,7 +125,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 
@@ -172,7 +172,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 
@@ -208,7 +208,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 

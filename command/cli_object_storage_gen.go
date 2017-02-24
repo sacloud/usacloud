@@ -67,18 +67,6 @@ func init() {
 				ArgsUsage: "[FILE] [PATH]",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "access-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
-						Destination: &putParam.AccessKey,
-					},
-					&cli.StringFlag{
-						Name:        "secret-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
-						Destination: &putParam.SecretKey,
-					},
-					&cli.StringFlag{
 						Name:        "bucket",
 						Usage:       "set bucket",
 						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
@@ -89,6 +77,18 @@ func init() {
 						Usage:       "set content-type",
 						Value:       "application/octet-stream",
 						Destination: &putParam.ContentType,
+					},
+					&cli.StringFlag{
+						Name:        "access-key",
+						Usage:       "[Required] set access-key",
+						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
+						Destination: &putParam.AccessKey,
+					},
+					&cli.StringFlag{
+						Name:        "secret-key",
+						Usage:       "[Required] set access-key",
+						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
+						Destination: &putParam.SecretKey,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -160,6 +160,12 @@ func init() {
 				ArgsUsage: "[PATH]",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
+						Name:        "bucket",
+						Usage:       "set bucket",
+						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
+						Destination: &deleteParam.Bucket,
+					},
+					&cli.StringFlag{
 						Name:        "access-key",
 						Usage:       "[Required] set access-key",
 						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
@@ -170,12 +176,6 @@ func init() {
 						Usage:       "[Required] set access-key",
 						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
 						Destination: &deleteParam.SecretKey,
-					},
-					&cli.StringFlag{
-						Name:        "bucket",
-						Usage:       "set bucket",
-						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
-						Destination: &deleteParam.Bucket,
 					},
 				},
 				Action: func(c *cli.Context) error {

@@ -10,11 +10,11 @@ import (
 
 // ListProductServerParam is input parameters for the sacloud API
 type ListProductServerParam struct {
-	Sort []string
 	Name []string
 	Id   []int64
 	From int
 	Max  int
+	Sort []string
 }
 
 // NewListProductServerParam return new ListProductServerParam
@@ -78,13 +78,6 @@ func (p *ListProductServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListProductServerParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListProductServerParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListProductServerParam) SetName(v []string) {
 	p.Name = v
 }
@@ -112,6 +105,13 @@ func (p *ListProductServerParam) SetMax(v int) {
 
 func (p *ListProductServerParam) GetMax() int {
 	return p.Max
+}
+func (p *ListProductServerParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListProductServerParam) GetSort() []string {
+	return p.Sort
 }
 
 // ReadProductServerParam is input parameters for the sacloud API

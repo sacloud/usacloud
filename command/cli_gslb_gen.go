@@ -7,58 +7,111 @@ import (
 )
 
 func init() {
-	serverDeleteParam := NewServerDeleteGSLBParam()
-	updateParam := NewUpdateGSLBParam()
-	deleteParam := NewDeleteGSLBParam()
-	readParam := NewReadGSLBParam()
-	serverListParam := NewServerListGSLBParam()
-	serverAddParam := NewServerAddGSLBParam()
-	serverUpdateParam := NewServerUpdateGSLBParam()
-	listParam := NewListGSLBParam()
 	createParam := NewCreateGSLBParam()
+	updateParam := NewUpdateGSLBParam()
+	serverAddParam := NewServerAddGSLBParam()
+	listParam := NewListGSLBParam()
+	deleteParam := NewDeleteGSLBParam()
+	serverListParam := NewServerListGSLBParam()
+	serverUpdateParam := NewServerUpdateGSLBParam()
+	serverDeleteParam := NewServerDeleteGSLBParam()
+	readParam := NewReadGSLBParam()
 
 	cliCommand := &cli.Command{
 		Name:  "gslb",
 		Usage: "A manage commands of GSLB",
 		Subcommands: []*cli.Command{
 			{
-				Name:      "server-delete",
-				Usage:     "ServerDelete GSLB",
-				ArgsUsage: "[ResourceID]",
+				Name:    "create",
+				Aliases: []string{"c"},
+				Usage:   "Create GSLB",
 				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &serverDeleteParam.Id,
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &createParam.Description,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.StringFlag{
+						Name:        "path",
+						Usage:       "set path of http/https healthcheck request",
+						Value:       "/",
+						Destination: &createParam.Path,
+					},
+					&cli.BoolFlag{
+						Name:        "weighted",
+						Usage:       "enable weighted",
+						Value:       true,
+						Destination: &createParam.Weighted,
 					},
 					&cli.IntFlag{
-						Name:        "index",
-						Usage:       "[Required] index of target server",
-						Destination: &serverDeleteParam.Index,
+						Name:        "port",
+						Usage:       "set port of tcp healthcheck",
+						Destination: &createParam.Port,
+					},
+					&cli.IntFlag{
+						Name:        "delay-loop",
+						Usage:       "[Required] set delay-loop of healthcheck",
+						Value:       10,
+						Destination: &createParam.DelayLoop,
+					},
+					&cli.StringFlag{
+						Name:        "sorry-server",
+						Usage:       "set sorry-server hostname/ipaddress",
+						Destination: &createParam.SorryServer,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &createParam.IconId,
+					},
+					&cli.StringFlag{
+						Name:        "protocol",
+						Usage:       "[Required] set healthcheck protocol[http/https/ping/tcp]",
+						Value:       "ping",
+						Destination: &createParam.Protocol,
+					},
+					&cli.StringFlag{
+						Name:        "host-header",
+						Usage:       "set host header of http/https healthcheck request",
+						Destination: &createParam.HostHeader,
+					},
+					&cli.IntFlag{
+						Name:        "response-code",
+						Usage:       "set response-code of http/https healthcheck request",
+						Value:       200,
+						Destination: &createParam.ResponseCode,
 					},
 				},
 				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					createParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
 					// Validate specific for each command params
-					if errors := serverDeleteParam.Validate(); len(errors) > 0 {
+					if errors := createParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), serverDeleteParam)
+					ctx := NewContext(c, c.Args().Slice(), createParam)
 
 					// Run command with params
-					return GSLBServerDelete(ctx, serverDeleteParam)
+					return GSLBCreate(ctx, createParam)
 				},
 			},
 			{
@@ -67,11 +120,44 @@ func init() {
 				Usage:     "Update GSLB",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.IntFlag{
+						Name:        "response-code",
+						Usage:       "set response-code of http/https healthcheck request",
+						Destination: &updateParam.ResponseCode,
+					},
 					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
+						Name:        "name",
+						Usage:       "set resource display name",
+						Destination: &updateParam.Name,
+					},
+					&cli.IntFlag{
+						Name:        "delay-loop",
+						Usage:       "set delay-loop of healthcheck",
+						Destination: &updateParam.DelayLoop,
+					},
+					&cli.BoolFlag{
+						Name:        "weighted",
+						Usage:       "enable weighted",
+						Destination: &updateParam.Weighted,
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
+					},
+					&cli.StringFlag{
+						Name:        "host-header",
+						Usage:       "set host header of http/https healthcheck request",
+						Destination: &updateParam.HostHeader,
+					},
+					&cli.StringFlag{
+						Name:        "path",
+						Usage:       "set path of http/https healthcheck request",
+						Destination: &updateParam.Path,
 					},
 					&cli.IntFlag{
 						Name:        "port",
@@ -84,53 +170,20 @@ func init() {
 						Destination: &updateParam.Id,
 					},
 					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set resource display name",
-						Destination: &updateParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "host-header",
-						Usage:       "set host header of http/https healthcheck request",
-						Destination: &updateParam.HostHeader,
-					},
-					&cli.StringFlag{
-						Name:        "path",
-						Usage:       "set path of http/https healthcheck request",
-						Destination: &updateParam.Path,
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
-					},
-					&cli.IntFlag{
-						Name:        "delay-loop",
-						Usage:       "set delay-loop of healthcheck",
-						Destination: &updateParam.DelayLoop,
-					},
-					&cli.BoolFlag{
-						Name:        "weighted",
-						Usage:       "enable weighted",
-						Destination: &updateParam.Weighted,
-					},
-					&cli.StringFlag{
-						Name:        "sorry-server",
-						Usage:       "set sorry-server hostname/ipaddress",
-						Destination: &updateParam.SorryServer,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &updateParam.Description,
 					},
 					&cli.StringFlag{
 						Name:        "protocol",
 						Usage:       "set healthcheck protocol[http/https/ping/tcp]",
 						Destination: &updateParam.Protocol,
 					},
-					&cli.IntFlag{
-						Name:        "response-code",
-						Usage:       "set response-code of http/https healthcheck request",
-						Destination: &updateParam.ResponseCode,
+					&cli.StringFlag{
+						Name:        "sorry-server",
+						Usage:       "set sorry-server hostname/ipaddress",
+						Destination: &updateParam.SorryServer,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -144,7 +197,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 
@@ -158,6 +211,109 @@ func init() {
 
 					// Run command with params
 					return GSLBUpdate(ctx, updateParam)
+				},
+			},
+			{
+				Name:      "server-add",
+				Usage:     "ServerAdd GSLB",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &serverAddParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "ipaddress",
+						Usage:       "set target ipaddress",
+						Destination: &serverAddParam.Ipaddress,
+					},
+					&cli.BoolFlag{
+						Name:        "enabled",
+						Usage:       "set enabled",
+						Value:       true,
+						Destination: &serverAddParam.Enabled,
+					},
+					&cli.IntFlag{
+						Name:        "weight",
+						Usage:       "set weight",
+						Destination: &serverAddParam.Weight,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := serverAddParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), serverAddParam)
+
+					// Run command with params
+					return GSLBServerAdd(ctx, serverAddParam)
+				},
+			},
+			{
+				Name:    "list",
+				Aliases: []string{"l", "ls", "find"},
+				Usage:   "List GSLB",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
+					},
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					listParam.Name = c.StringSlice("name")
+					listParam.Id = c.Int64Slice("id")
+					listParam.Sort = c.StringSlice("sort")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := listParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), listParam)
+
+					// Run command with params
+					return GSLBList(ctx, listParam)
 				},
 			},
 			{
@@ -180,7 +336,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 
@@ -194,42 +350,6 @@ func init() {
 
 					// Run command with params
 					return GSLBDelete(ctx, deleteParam)
-				},
-			},
-			{
-				Name:      "read",
-				Aliases:   []string{"r"},
-				Usage:     "Read GSLB",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &readParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := readParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), readParam)
-
-					// Run command with params
-					return GSLBRead(ctx, readParam)
 				},
 			},
 			{
@@ -251,7 +371,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 
@@ -265,57 +385,6 @@ func init() {
 
 					// Run command with params
 					return GSLBServerList(ctx, serverListParam)
-				},
-			},
-			{
-				Name:      "server-add",
-				Usage:     "ServerAdd GSLB",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "weight",
-						Usage:       "set weight",
-						Destination: &serverAddParam.Weight,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &serverAddParam.Id,
-					},
-					&cli.StringFlag{
-						Name:        "ipaddress",
-						Usage:       "set target ipaddress",
-						Destination: &serverAddParam.Ipaddress,
-					},
-					&cli.BoolFlag{
-						Name:        "enabled",
-						Usage:       "set enabled",
-						Value:       true,
-						Destination: &serverAddParam.Enabled,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() == 1 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := serverAddParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), serverAddParam)
-
-					// Run command with params
-					return GSLBServerAdd(ctx, serverAddParam)
 				},
 			},
 			{
@@ -357,7 +426,7 @@ func init() {
 					}
 
 					// id is can set from option or args(first)
-					if c.NArg() == 1 {
+					if c.NArg() > 0 {
 						c.Set("id", c.Args().First())
 					}
 
@@ -374,148 +443,79 @@ func init() {
 				},
 			},
 			{
-				Name:    "list",
-				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List GSLB",
+				Name:      "server-delete",
+				Usage:     "ServerDelete GSLB",
+				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &serverDeleteParam.Id,
 					},
 					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
+						Name:        "index",
+						Usage:       "[Required] index of target server",
+						Destination: &serverDeleteParam.Index,
 					},
 				},
 				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					listParam.Sort = c.StringSlice("sort")
-					listParam.Name = c.StringSlice("name")
-					listParam.Id = c.Int64Slice("id")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := serverDeleteParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), listParam)
+					ctx := NewContext(c, c.Args().Slice(), serverDeleteParam)
 
 					// Run command with params
-					return GSLBList(ctx, listParam)
+					return GSLBServerDelete(ctx, serverDeleteParam)
 				},
 			},
 			{
-				Name:    "create",
-				Aliases: []string{"c"},
-				Usage:   "Create GSLB",
+				Name:      "read",
+				Aliases:   []string{"r"},
+				Usage:     "Read GSLB",
+				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "response-code",
-						Usage:       "set response-code of http/https healthcheck request",
-						Value:       200,
-						Destination: &createParam.ResponseCode,
-					},
-					&cli.IntFlag{
-						Name:        "port",
-						Usage:       "set port of tcp healthcheck",
-						Destination: &createParam.Port,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &createParam.Description,
-					},
 					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &createParam.IconId,
-					},
-					&cli.StringFlag{
-						Name:        "protocol",
-						Usage:       "[Required] set healthcheck protocol[http/https/ping/tcp]",
-						Value:       "ping",
-						Destination: &createParam.Protocol,
-					},
-					&cli.StringFlag{
-						Name:        "host-header",
-						Usage:       "set host header of http/https healthcheck request",
-						Destination: &createParam.HostHeader,
-					},
-					&cli.StringFlag{
-						Name:        "path",
-						Usage:       "set path of http/https healthcheck request",
-						Value:       "/",
-						Destination: &createParam.Path,
-					},
-					&cli.BoolFlag{
-						Name:        "weighted",
-						Usage:       "enable weighted",
-						Value:       true,
-						Destination: &createParam.Weighted,
-					},
-					&cli.StringFlag{
-						Name:        "sorry-server",
-						Usage:       "set sorry-server hostname/ipaddress",
-						Destination: &createParam.SorryServer,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-					&cli.IntFlag{
-						Name:        "delay-loop",
-						Usage:       "[Required] set delay-loop of healthcheck",
-						Value:       10,
-						Destination: &createParam.DelayLoop,
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &readParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					createParam.Tags = c.StringSlice("tags")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
 					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
+					if errors := readParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), createParam)
+					ctx := NewContext(c, c.Args().Slice(), readParam)
 
 					// Run command with params
-					return GSLBCreate(ctx, createParam)
+					return GSLBRead(ctx, readParam)
 				},
 			},
 		},

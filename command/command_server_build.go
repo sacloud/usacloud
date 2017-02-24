@@ -8,13 +8,18 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 func ServerBuild(ctx Context, params *BuildServerParam) error {
 
 	client := ctx.GetAPIClient()
 
-	// TODO validation
+	// validate --- for disk mode params
+	errs := validateServerDiskModeParams(ctx, params)
+	if len(errs) > 0 {
+		return fmt.Errorf("%s", flattenErrors(errs))
+	}
 
 	// select builder
 	var sb interface{}
@@ -37,6 +42,12 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 		sb = builder.ServerFromExistsDisk(client, params.Name, params.DiskId)
 	case "diskless":
 		sb = builder.ServerDiskless(client, params.Name)
+	}
+
+	// validate --- for network params
+	errs = validateServerNetworkParams(sb, ctx, params)
+	if len(errs) > 0 {
+		return fmt.Errorf("%s", flattenErrors(errs))
 	}
 
 	// set network params
@@ -68,7 +79,15 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 		}
 
 		sb.SetUseVirtIONetPCI(params.UseNicVirtio)
-		sb.SetPacketFilterIDs([]int64{params.PacketFilterId})
+		if params.PacketFilterId != sacloud.EmptyID {
+			sb.SetPacketFilterIDs([]int64{params.PacketFilterId})
+		}
+	}
+
+	// validate --- for disk params
+	errs = validateServerDiskEditParams(sb, ctx, params)
+	if len(errs) > 0 {
+		return fmt.Errorf("%s", flattenErrors(errs))
 	}
 
 	// set disk edit params
@@ -92,7 +111,11 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 				sb.AddSSHKeyID(v)
 			}
 		case "generate":
-			sb.SetGenerateSSHKeyName(params.SshKeyName)
+			keyName := params.SshKeyName
+			if params.SshKeyEphemeral && keyName == "" {
+				keyName = fmt.Sprintf("generated-%d", time.Now().UnixNano())
+			}
+			sb.SetGenerateSSHKeyName(keyName)
 			sb.SetGenerateSSHKeyPassPhrase(params.SshKeyPassPhrase)
 			sb.SetGenerateSSHKeyDescription(params.SshKeyDescription)
 		case "upload":
@@ -102,7 +125,11 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 			}
 			// pubkey(from file)
 			for _, v := range params.SshKeyPublicKeyFiles {
-				sb.AddSSHKey(v)
+				b, err := ioutil.ReadFile(v)
+				if err != nil {
+					return fmt.Errorf("ServerCreate is failed: %s", err)
+				}
+				sb.AddSSHKey(string(b))
 
 			}
 			sb.SetSSHKeysEphemeral(params.SshKeyEphemeral)
@@ -116,8 +143,6 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 		sb.SetDiskConnection(sacloud.EDiskConnection(params.DiskConnection))
 		sb.SetDiskSize(params.DiskSize)
 		sb.SetDistantFrom(params.DistantFrom)
-	} else {
-		panic(fmt.Errorf("ServerCreate is failed: %s", "ServerBuilder not implements disk property."))
 	}
 
 	// set common params
@@ -169,6 +194,210 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 	}
 
 	return ctx.GetOutput().Print(res)
+}
+
+func validateServerDiskModeParams(ctx Context, params *BuildServerParam) []error {
+
+	var errs []error
+	var appendErrors = func(e []error) {
+		errs = append(errs, e...)
+	}
+	var validateIfCtxIsSet = func(baseParamName string, baseParamValue interface{}, targetParamName string, targetValue interface{}) {
+		if ctx.IsSet(targetParamName) {
+			appendErrors(validateConflictValues(baseParamName, baseParamValue, map[string]interface{}{
+				targetParamName: targetValue,
+			}))
+		}
+	}
+
+	switch params.DiskMode {
+	case "create":
+		// check required values
+		appendErrors(validateRequired("disk-plan", params.DiskPlan))
+		appendErrors(validateRequired("disk-connection", params.DiskConnection))
+		appendErrors(validateRequired("disk-size", params.DiskSize))
+
+		if params.SourceDiskId == 0 && params.SourceArchiveId == 0 {
+
+			appendErrors(validateRequired("os-type", params.OsType))
+			// Windows?
+			if !isWindows(params.OsType) {
+				appendErrors(validateRequired("password", params.Password))
+			}
+
+		} else {
+			validateIfCtxIsSet("source-archive-id", params.SourceArchiveId, "os-type", params.OsType)
+			validateIfCtxIsSet("source-disk-id", params.SourceArchiveId, "os-type", params.OsType)
+		}
+
+		validateIfCtxIsSet("disk-mode", params.DiskMode, "disk-id", params.DiskId)
+
+	case "connect":
+		appendErrors(validateRequired("disk-id", params.DiskId))
+		validateIfCtxIsSet("disk-mode", params.DiskMode, "disk-plan", params.DiskPlan)
+		validateIfCtxIsSet("disk-mode", params.DiskMode, "disk-connection", params.DiskConnection)
+		validateIfCtxIsSet("disk-size", params.DiskMode, "disk-size", params.DiskSize)
+		validateIfCtxIsSet("disk-size", params.DiskMode, "os-type", params.OsType)
+
+	case "diskless":
+		validateIfCtxIsSet("disk-mode", params.DiskMode, "disk-id", params.DiskId)
+		validateIfCtxIsSet("disk-mode", params.DiskMode, "disk-plan", params.DiskPlan)
+		validateIfCtxIsSet("disk-mode", params.DiskMode, "disk-connection", params.DiskConnection)
+		validateIfCtxIsSet("disk-size", params.DiskMode, "disk-size", params.DiskSize)
+		validateIfCtxIsSet("disk-size", params.DiskMode, "os-type", params.OsType)
+	}
+
+	return errs
+}
+
+func validateServerNetworkParams(sb interface{}, ctx Context, params *BuildServerParam) []error {
+	var errs []error
+	var appendErrors = func(e []error) {
+		errs = append(errs, e...)
+	}
+	var validateIfCtxIsSet = func(baseParamName string, baseParamValue interface{}, targetParamName string, targetValue interface{}) {
+		if ctx.IsSet(targetParamName) {
+			appendErrors(validateConflictValues(baseParamName, baseParamValue, map[string]interface{}{
+				targetParamName: targetValue,
+			}))
+		}
+	}
+	var validateProhibitedIfCtxIsSet = func(paramName string, paramValue interface{}) {
+		if ctx.IsSet(paramName) {
+			appendErrors(validateSetProhibited(paramName, paramValue))
+		}
+	}
+
+	if sb, ok := sb.(serverNetworkParams); ok {
+		switch params.NetworkMode {
+		case "shared", "disconnect", "none":
+			validateIfCtxIsSet("network-mode", params.NetworkMode, "switch-id", params.SwitchId)
+			validateIfCtxIsSet("network-mode", params.NetworkMode, "ipaddress", params.Ipaddress)
+			validateIfCtxIsSet("network-mode", params.NetworkMode, "nw-masklen", params.NwMasklen)
+			validateIfCtxIsSet("network-mode", params.NetworkMode, "default-route", params.DefaultRoute)
+
+			if params.NetworkMode == "none" {
+				validateIfCtxIsSet("network-mode", params.NetworkMode, "use-nic-virtio", params.UseNicVirtio)
+				validateIfCtxIsSet("network-mode", params.NetworkMode, "packet-filter-id", params.PacketFilterId)
+			}
+
+		case "switch":
+			switch sb.(type) {
+			case serverConnectSwitchParam:
+				appendErrors(validateRequired("switch-id", params.SwitchId))
+
+				validateProhibitedIfCtxIsSet("ipaddress", params.Ipaddress)
+				validateProhibitedIfCtxIsSet("nw-masklen", params.NwMasklen)
+				validateProhibitedIfCtxIsSet("default-route", params.DefaultRoute)
+
+			case serverConnectSwitchParamWithEditableDisk:
+
+				appendErrors(validateRequired("switch-id", params.SwitchId))
+			}
+		}
+
+	} else {
+		validateProhibitedIfCtxIsSet("network-mode", params.NetworkMode)
+		validateProhibitedIfCtxIsSet("switch-id", params.SwitchId)
+		validateProhibitedIfCtxIsSet("ipaddress", params.Ipaddress)
+		validateProhibitedIfCtxIsSet("nw-masklen", params.NwMasklen)
+		validateProhibitedIfCtxIsSet("default-route", params.DefaultRoute)
+		validateProhibitedIfCtxIsSet("use-nic-virtio", params.UseNicVirtio)
+		validateProhibitedIfCtxIsSet("packet-filter-id", params.PacketFilterId)
+	}
+
+	return errs
+}
+
+func validateServerDiskEditParams(sb interface{}, ctx Context, params *BuildServerParam) []error {
+	var errs []error
+	var appendErrors = func(e []error) {
+		errs = append(errs, e...)
+	}
+	var validateIfCtxIsSet = func(baseParamName string, baseParamValue interface{}, targetParamName string, targetValue interface{}) {
+		if ctx.IsSet(targetParamName) {
+			appendErrors(validateConflictValues(baseParamName, baseParamValue, map[string]interface{}{
+				targetParamName: targetValue,
+			}))
+		}
+	}
+	var validateProhibitedIfCtxIsSet = func(paramName string, paramValue interface{}) {
+		if ctx.IsSet(paramName) {
+			appendErrors(validateSetProhibited(paramName, paramValue))
+		}
+	}
+
+	if sb, ok := sb.(serverEditDiskParam); ok {
+
+		// SSH Key generate params
+		switch params.SshKeyMode {
+		case "id":
+			for _, v := range params.SshKeyIds {
+				sb.AddSSHKeyID(v)
+			}
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-name", params.SshKeyName)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-pass-phrase", params.SshKeyPassPhrase)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-description", params.SshKeyDescription)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-private-key-output", params.SshKeyPrivateKeyOutput)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-public-keys", params.SshKeyPublicKeys)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-public-key-files", params.SshKeyPublicKeyFiles)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-ephemeral", params.SshKeyEphemeral)
+		case "generate":
+			if !params.SshKeyEphemeral {
+				appendErrors(validateRequired("ssh-key-name", params.SshKeyName))
+			}
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-ids", params.SshKeyIds)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-private-key-output", params.SshKeyPrivateKeyOutput)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-public-keys", params.SshKeyPublicKeys)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-public-key-files", params.SshKeyPublicKeyFiles)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-ephemeral", params.SshKeyEphemeral)
+		case "upload":
+
+			if len(params.SshKeyPublicKeys) == 0 && len(params.SshKeyPublicKeyFiles) == 0 {
+				errs = append(errs,
+					fmt.Errorf("%q or %q is required when %q is %q",
+						"ssh-key-public-keys",
+						"ssh-key-public-key-files",
+						"ssh-key-mode",
+						"upload",
+					))
+			}
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-ids", params.SshKeyIds)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-name", params.SshKeyName)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-pass-phrase", params.SshKeyPassPhrase)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-description", params.SshKeyDescription)
+			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-private-key-output", params.SshKeyPrivateKeyOutput)
+		case "none":
+			validateProhibitedIfCtxIsSet("ssh-key-mode", params.SshKeyMode)
+			validateProhibitedIfCtxIsSet("ssh-key-ids", params.SshKeyIds)
+			validateProhibitedIfCtxIsSet("ssh-key-name", params.SshKeyName)
+			validateProhibitedIfCtxIsSet("ssh-key-pass-phrase", params.SshKeyPassPhrase)
+			validateProhibitedIfCtxIsSet("ssh-key-description", params.SshKeyDescription)
+			validateProhibitedIfCtxIsSet("ssh-key-private-key-output", params.SshKeyPrivateKeyOutput)
+			validateProhibitedIfCtxIsSet("ssh-key-public-keys", params.SshKeyPublicKeys)
+			validateProhibitedIfCtxIsSet("ssh-key-public-key-files", params.SshKeyPublicKeyFiles)
+			validateProhibitedIfCtxIsSet("ssh-key-ephemeral", params.SshKeyEphemeral)
+		}
+
+	} else {
+		validateProhibitedIfCtxIsSet("hostname", params.Hostname)
+		validateProhibitedIfCtxIsSet("password", params.Password)
+		validateProhibitedIfCtxIsSet("disable-password-auth", params.DisablePasswordAuth)
+		validateProhibitedIfCtxIsSet("startup-script-ids", params.StartupScriptIds)
+		validateProhibitedIfCtxIsSet("startup-scripts", params.StartupScripts)
+		validateProhibitedIfCtxIsSet("startup-scripts-ephemeral", params.StartupScriptsEphemeral)
+		validateProhibitedIfCtxIsSet("ssh-key-mode", params.SshKeyMode)
+		validateProhibitedIfCtxIsSet("ssh-key-ids", params.SshKeyIds)
+		validateProhibitedIfCtxIsSet("ssh-key-name", params.SshKeyName)
+		validateProhibitedIfCtxIsSet("ssh-key-pass-phrase", params.SshKeyPassPhrase)
+		validateProhibitedIfCtxIsSet("ssh-key-description", params.SshKeyDescription)
+		validateProhibitedIfCtxIsSet("ssh-key-private-key-output", params.SshKeyPrivateKeyOutput)
+		validateProhibitedIfCtxIsSet("ssh-key-public-keys", params.SshKeyPublicKeys)
+		validateProhibitedIfCtxIsSet("ssh-key-public-key-files", params.SshKeyPublicKeyFiles)
+		validateProhibitedIfCtxIsSet("ssh-key-ephemeral", params.SshKeyEphemeral)
+	}
+
+	return errs
 }
 
 func isWindows(osType string) bool {

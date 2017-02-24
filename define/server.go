@@ -21,7 +21,7 @@ func ServerResource() *schema.Resource {
 			Aliases:          []string{"b"},
 			Params:           serverBuildParam(),
 			IncludeFields:    serverDetailIncludes(),
-			ExcludeFields:    serverDetailExcludes(),
+			ExcludeFields:    serverBuildResultExcludes(),
 			UseCustomCommand: true,
 		},
 		"read": {
@@ -39,13 +39,19 @@ func ServerResource() *schema.Resource {
 			ExcludeFields: serverDetailExcludes(),
 		},
 		"delete": {
-			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
-			Params:        serverDeleteParam(),
-			IncludeFields: serverDetailIncludes(),
-			ExcludeFields: serverDetailExcludes(),
+			Type:             schema.CommandDelete,
+			Aliases:          []string{"d", "rm"},
+			Params:           serverDeleteParam(),
+			IncludeFields:    serverDetailIncludes(),
+			ExcludeFields:    serverDetailExcludes(),
+			UseCustomCommand: true,
 		},
 		"ssh": {
+			Type:             schema.CommandManipulate,
+			Params:           serverSSHParam(),
+			UseCustomCommand: true,
+		},
+		"ssh-exec": {
 			Type:             schema.CommandManipulate,
 			Params:           serverSSHParam(),
 			UseCustomCommand: true,
@@ -242,6 +248,26 @@ func serverDetailExcludes() []string {
 		"ServerPlan.Description",
 		"ServerPlan.ServiceClass",
 		"Zone.FTPServer",
+		"Disks.0.Storage",
+		"Disks.1.Storage",
+		"Disks.2.Storage",
+		"Disks.3.Storage",
+	}
+}
+
+func serverBuildResultExcludes() []string {
+	return []string{
+		"Disks",
+		"Server.Instance.CDROMStorage",
+		"Server.Instance.CDROM.Storage",
+		"Server.ServerPlan.ID",
+		"Server.ServerPlan.Description",
+		"Server.ServerPlan.ServiceClass",
+		"Server.Zone.FTPServer",
+		"Server.Disks.0.Storage",
+		"Server.Disks.1.Storage",
+		"Server.Disks.2.Storage",
+		"Server.Disks.3.Storage",
 	}
 }
 
@@ -297,25 +323,22 @@ func serverBuildParam() map[string]*schema.Schema {
 			ValidateFunc: validateInIntValues(20, 40, 60, 80, 100, 250, 500, 750, 1000, 2000, 4000),
 		},
 		"os-type": {
-			Type:          schema.TypeString,
-			HandlerType:   schema.HandlerNoop,
-			Description:   "set source OS type",
-			ValidateFunc:  validateInStrValues(osTypeValues...),
-			ConflictsWith: []string{"source-archive-id", "source-disk-id"},
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set source OS type",
+			ValidateFunc: validateInStrValues(osTypeValues...),
 		},
 		"source-archive-id": {
-			Type:          schema.TypeInt64,
-			HandlerType:   schema.HandlerNoop,
-			Description:   "set source disk ID",
-			ValidateFunc:  validateSakuraID(),
-			ConflictsWith: []string{"source-disk-id", "os-type"},
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set source disk ID",
+			ValidateFunc: validateSakuraID(),
 		},
 		"source-disk-id": {
-			Type:          schema.TypeInt64,
-			HandlerType:   schema.HandlerNoop,
-			Description:   "set source disk ID",
-			ValidateFunc:  validateSakuraID(),
-			ConflictsWith: []string{"source-archive-id", "os-type"},
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set source disk ID",
+			ValidateFunc: validateSakuraID(),
 		},
 		"distant-from": {
 			Type:         schema.TypeIntList,
@@ -324,11 +347,10 @@ func serverBuildParam() map[string]*schema.Schema {
 			ValidateFunc: validateIntSlice(validateSakuraID()),
 		},
 		"disk-id": {
-			Type:          schema.TypeInt64,
-			HandlerType:   schema.HandlerNoop,
-			Description:   "set connect disk ID",
-			ValidateFunc:  validateSakuraID(),
-			ConflictsWith: []string{"os-type"},
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set connect disk ID",
+			ValidateFunc: validateSakuraID(),
 		},
 		/*
 		  === network ===
@@ -420,9 +442,10 @@ func serverBuildParam() map[string]*schema.Schema {
 			ValidateFunc: validateIntRange(8, 29),
 		},
 		"ssh-key-mode": {
-			Type:        schema.TypeString,
-			HandlerType: schema.HandlerNoop,
-			Description: "ssh-key mode[none/id/generate/upload]",
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "ssh-key mode[none/id/generate/upload]",
+			ValidateFunc: validateInStrValues("none", "id", "generate", "upload"),
 		},
 		"ssh-key-ids": {
 			Type:         schema.TypeIntList,
@@ -461,7 +484,6 @@ func serverBuildParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set ssh-key public key file",
 			ValidateFunc: validateStringSlice(validateFileExists()),
-			// TODO read file
 		},
 		"ssh-key-ephemeral": {
 			Type:         schema.TypeBool,
@@ -526,6 +548,18 @@ func serverUpdateParam() map[string]*schema.Schema {
 func serverDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
+		"force": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"f"},
+			Description: "force-shutdown flag if server is running",
+		},
+		"with-disk": {
+			Type:         schema.TypeBool,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "delete connected disks with server",
+			DefaultValue: true,
+		},
 	}
 }
 
@@ -535,17 +569,20 @@ func serverSSHParam() map[string]*schema.Schema {
 		"key": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
+			Aliases:      []string{"i"},
 			Description:  "private-key file path",
 			ValidateFunc: validateFileExists(),
 		},
 		"user": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"l"},
 			Description: "user name",
 		},
 		"port": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
+			Aliases:      []string{"p"},
 			Description:  "port",
 			Required:     true,
 			DefaultValue: 22,
@@ -560,12 +597,6 @@ func serverSSHParam() map[string]*schema.Schema {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "proxy server",
-		},
-		"open-pty": {
-			Type:         schema.TypeBool,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "open pty",
-			DefaultValue: true,
 		},
 	}
 }

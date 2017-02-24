@@ -108,7 +108,7 @@ COPYRIGHT:
     # list switches order by Name(asc) and ID(desc)
     $ usacloud switch ls --sort Name --sort -ID
     
-    # list switches with limit=5,offset=2
+    # list switches with limit=5 and offset=2
     $ usacloud switch ls --max 5 --from 2
     
 ```   
@@ -139,7 +139,7 @@ COPYRIGHT:
              --os-type centos \              # OSType(use PublicArchive)
              --hostname server01 \           # for DiskEdit parameter
              --password "$YOUR_PASSWORD" \   # for DiskEdit parameter
-             --ssh-key-mode generatea \      # generate ssh-key
+             --ssh-key-mode generate \       # generate ssh-key
              --ssh-key-name key01 \          # generate ssh-key name
              --disable-pw-auth               # disable password auth
 
