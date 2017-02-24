@@ -152,8 +152,8 @@ COPYRIGHT:
     # connect to server by ssh using generated private-key(Not supported on Windows)
     $ usacloud server ssh [ServerID]
     
-    # [not implemented yet]exec command by SSH
-    $ usacloud server ssh-exec cat /etc/passwd
+    # exec command on SSH(no-pty)
+    $ usacloud server ssh-exec cat /etc/passwd
     
     # [not implemented yet] upload/download by SSH(like scp)
     $ usacloud server scp local-file.txt [ServerID]:/home/ubuntu/remote-file.txt # local to remote
