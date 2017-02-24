@@ -10,11 +10,11 @@ import (
 
 // ListRegionParam is input parameters for the sacloud API
 type ListRegionParam struct {
-	Name []string
 	Id   []int64
 	From int
 	Max  int
 	Sort []string
+	Name []string
 }
 
 // NewListRegionParam return new ListRegionParam
@@ -26,15 +26,6 @@ func NewListRegionParam() *ListRegionParam {
 func (p *ListRegionParam) Validate() []error {
 	errors := []error{}
 	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := define.Resources["Region"].Commands["list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -45,6 +36,15 @@ func (p *ListRegionParam) Validate() []error {
 		errs := validateConflicts("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -78,13 +78,6 @@ func (p *ListRegionParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListRegionParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListRegionParam) GetName() []string {
-	return p.Name
-}
 func (p *ListRegionParam) SetId(v []int64) {
 	p.Id = v
 }
@@ -112,6 +105,13 @@ func (p *ListRegionParam) SetSort(v []string) {
 
 func (p *ListRegionParam) GetSort() []string {
 	return p.Sort
+}
+func (p *ListRegionParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListRegionParam) GetName() []string {
+	return p.Name
 }
 
 // ReadRegionParam is input parameters for the sacloud API

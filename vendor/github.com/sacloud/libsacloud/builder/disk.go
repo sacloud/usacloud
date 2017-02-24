@@ -692,11 +692,20 @@ func (b *DiskBuilder) Build() (*DiskBuildResult, error) {
 		b.callEventHandlerIfExists(DiskBuildOnEditDiskAfter)
 	}
 	// cleanup
-	if b.isSSHKeysEphemeral && len(b.currentDiskBuildResult.SSHKeys) > 0 {
+	if b.isSSHKeysEphemeral && (len(b.currentDiskBuildResult.SSHKeys) > 0 || b.currentDiskBuildResult.GeneratedSSHKey != nil) {
 		b.callEventHandlerIfExists(DiskBuildOnCleanupSSHKeyBefore)
 
+		// created keys
 		for _, key := range b.currentDiskBuildResult.SSHKeys {
 			_, err := b.client.SSHKey.Delete(key.ID)
+			if err != nil {
+				return b.currentDiskBuildResult, err
+			}
+		}
+
+		// generated key
+		if b.currentDiskBuildResult.GeneratedSSHKey != nil {
+			_, err := b.client.SSHKey.Delete(b.currentDiskBuildResult.GeneratedSSHKey.ID)
 			if err != nil {
 				return b.currentDiskBuildResult, err
 			}

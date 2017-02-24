@@ -76,6 +76,13 @@ func validateRequired(fieldName string, object interface{}) []error {
 	return []error{}
 }
 
+func validateSetProhibited(fieldName string, object interface{}) []error {
+	if !isEmpty(object) {
+		return []error{fmt.Errorf("%q: can't set on current context", fieldName)}
+	}
+	return []error{}
+}
+
 func validateConflicts(fieldName string, object interface{}, values map[string]interface{}) []error {
 
 	if !isEmpty(object) {
@@ -85,7 +92,24 @@ func validateConflicts(fieldName string, object interface{}, values map[string]i
 				for k := range values {
 					keys = append(keys, fmt.Sprintf("%q", k))
 				}
-				return []error{fmt.Errorf("%q: is conflicts with %s", fieldName, strings.Join(keys, " or "))}
+				return []error{fmt.Errorf("%q: is conflict with %s", fieldName, strings.Join(keys, " or "))}
+			}
+		}
+	}
+	return []error{}
+
+}
+
+func validateConflictValues(fieldName string, object interface{}, values map[string]interface{}) []error {
+
+	if !isEmpty(object) {
+		for _, v := range values {
+			if !isEmpty(v) {
+				keys := []string{}
+				for k := range values {
+					keys = append(keys, fmt.Sprintf("%q", k))
+				}
+				return []error{fmt.Errorf("%q(%#v): is conflict with %s", fieldName, object, strings.Join(keys, " or "))}
 			}
 		}
 	}

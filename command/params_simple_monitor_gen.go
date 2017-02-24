@@ -8,37 +8,143 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// ListSimpleMonitorParam is input parameters for the sacloud API
+type ListSimpleMonitorParam struct {
+	Sort []string
+	Name []string
+	Id   []int64
+	From int
+	Max  int
+}
+
+// NewListSimpleMonitorParam return new ListSimpleMonitorParam
+func NewListSimpleMonitorParam() *ListSimpleMonitorParam {
+	return &ListSimpleMonitorParam{}
+}
+
+// Validate checks current values in model
+func (p *ListSimpleMonitorParam) Validate() []error {
+	errors := []error{}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["list"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--id", p.Id, map[string]interface{}{
+
+			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ListSimpleMonitorParam) getResourceDef() *schema.Resource {
+	return define.Resources["SimpleMonitor"]
+}
+
+func (p *ListSimpleMonitorParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["list"]
+}
+
+func (p *ListSimpleMonitorParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ListSimpleMonitorParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ListSimpleMonitorParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ListSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListSimpleMonitorParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListSimpleMonitorParam) GetSort() []string {
+	return p.Sort
+}
+func (p *ListSimpleMonitorParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListSimpleMonitorParam) GetName() []string {
+	return p.Name
+}
+func (p *ListSimpleMonitorParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListSimpleMonitorParam) GetId() []int64 {
+	return p.Id
+}
+func (p *ListSimpleMonitorParam) SetFrom(v int) {
+	p.From = v
+}
+
+func (p *ListSimpleMonitorParam) GetFrom() int {
+	return p.From
+}
+func (p *ListSimpleMonitorParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListSimpleMonitorParam) GetMax() int {
+	return p.Max
+}
+
 // CreateSimpleMonitorParam is input parameters for the sacloud API
 type CreateSimpleMonitorParam struct {
-	DnsQname     string
-	EmailType    string
-	IconId       int64
-	Port         int
-	DelayLoop    int
-	NotifyEmail  bool
-	Tags         []string
-	SlackWebhook string
-	Enabled      bool
-	DnsExcepted  string
-	HostHeader   string
-	Path         string
+	Protocol     string
 	ResponseCode int
+	DnsExcepted  string
+	EmailType    string
 	Description  string
 	Target       string
-	Protocol     string
+	Port         int
+	DnsQname     string
+	SlackWebhook string
+	HostHeader   string
+	IconId       int64
+	Path         string
+	DelayLoop    int
+	Enabled      bool
+	NotifyEmail  bool
+	Tags         []string
 }
 
 // NewCreateSimpleMonitorParam return new CreateSimpleMonitorParam
 func NewCreateSimpleMonitorParam() *CreateSimpleMonitorParam {
 	return &CreateSimpleMonitorParam{
 
-		DelayLoop: 1,
+		Protocol: "ping",
 
-		NotifyEmail: true,
+		DelayLoop: 1,
 
 		Enabled: true,
 
-		Protocol: "ping",
+		NotifyEmail: true,
 	}
 }
 
@@ -46,50 +152,22 @@ func NewCreateSimpleMonitorParam() *CreateSimpleMonitorParam {
 func (p *CreateSimpleMonitorParam) Validate() []error {
 	errors := []error{}
 	{
+		validator := validateRequired
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["protocol"].ValidateFunc
+		errs := validator("--protocol", p.Protocol)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["email-type"].ValidateFunc
 		errs := validator("--email-type", p.EmailType)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["icon-id"].ValidateFunc
-		errs := validator("--icon-id", p.IconId)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["port"].ValidateFunc
-		errs := validator("--port", p.Port)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--delay-loop", p.DelayLoop)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["delay-loop"].ValidateFunc
-		errs := validator("--delay-loop", p.DelayLoop)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--enabled", p.Enabled)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -109,15 +187,43 @@ func (p *CreateSimpleMonitorParam) Validate() []error {
 		}
 	}
 	{
-		validator := validateRequired
-		errs := validator("--protocol", p.Protocol)
+		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["port"].ValidateFunc
+		errs := validator("--port", p.Port)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["protocol"].ValidateFunc
-		errs := validator("--protocol", p.Protocol)
+		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["icon-id"].ValidateFunc
+		errs := validator("--icon-id", p.IconId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["delay-loop"].ValidateFunc
+		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--enabled", p.Enabled)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -150,68 +256,19 @@ func (p *CreateSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *CreateSimpleMonitorParam) SetDnsQname(v string) {
-	p.DnsQname = v
+func (p *CreateSimpleMonitorParam) SetProtocol(v string) {
+	p.Protocol = v
 }
 
-func (p *CreateSimpleMonitorParam) GetDnsQname() string {
-	return p.DnsQname
+func (p *CreateSimpleMonitorParam) GetProtocol() string {
+	return p.Protocol
 }
-func (p *CreateSimpleMonitorParam) SetEmailType(v string) {
-	p.EmailType = v
-}
-
-func (p *CreateSimpleMonitorParam) GetEmailType() string {
-	return p.EmailType
-}
-func (p *CreateSimpleMonitorParam) SetIconId(v int64) {
-	p.IconId = v
+func (p *CreateSimpleMonitorParam) SetResponseCode(v int) {
+	p.ResponseCode = v
 }
 
-func (p *CreateSimpleMonitorParam) GetIconId() int64 {
-	return p.IconId
-}
-func (p *CreateSimpleMonitorParam) SetPort(v int) {
-	p.Port = v
-}
-
-func (p *CreateSimpleMonitorParam) GetPort() int {
-	return p.Port
-}
-func (p *CreateSimpleMonitorParam) SetDelayLoop(v int) {
-	p.DelayLoop = v
-}
-
-func (p *CreateSimpleMonitorParam) GetDelayLoop() int {
-	return p.DelayLoop
-}
-func (p *CreateSimpleMonitorParam) SetNotifyEmail(v bool) {
-	p.NotifyEmail = v
-}
-
-func (p *CreateSimpleMonitorParam) GetNotifyEmail() bool {
-	return p.NotifyEmail
-}
-func (p *CreateSimpleMonitorParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *CreateSimpleMonitorParam) GetTags() []string {
-	return p.Tags
-}
-func (p *CreateSimpleMonitorParam) SetSlackWebhook(v string) {
-	p.SlackWebhook = v
-}
-
-func (p *CreateSimpleMonitorParam) GetSlackWebhook() string {
-	return p.SlackWebhook
-}
-func (p *CreateSimpleMonitorParam) SetEnabled(v bool) {
-	p.Enabled = v
-}
-
-func (p *CreateSimpleMonitorParam) GetEnabled() bool {
-	return p.Enabled
+func (p *CreateSimpleMonitorParam) GetResponseCode() int {
+	return p.ResponseCode
 }
 func (p *CreateSimpleMonitorParam) SetDnsExcepted(v string) {
 	p.DnsExcepted = v
@@ -220,26 +277,12 @@ func (p *CreateSimpleMonitorParam) SetDnsExcepted(v string) {
 func (p *CreateSimpleMonitorParam) GetDnsExcepted() string {
 	return p.DnsExcepted
 }
-func (p *CreateSimpleMonitorParam) SetHostHeader(v string) {
-	p.HostHeader = v
+func (p *CreateSimpleMonitorParam) SetEmailType(v string) {
+	p.EmailType = v
 }
 
-func (p *CreateSimpleMonitorParam) GetHostHeader() string {
-	return p.HostHeader
-}
-func (p *CreateSimpleMonitorParam) SetPath(v string) {
-	p.Path = v
-}
-
-func (p *CreateSimpleMonitorParam) GetPath() string {
-	return p.Path
-}
-func (p *CreateSimpleMonitorParam) SetResponseCode(v int) {
-	p.ResponseCode = v
-}
-
-func (p *CreateSimpleMonitorParam) GetResponseCode() int {
-	return p.ResponseCode
+func (p *CreateSimpleMonitorParam) GetEmailType() string {
+	return p.EmailType
 }
 func (p *CreateSimpleMonitorParam) SetDescription(v string) {
 	p.Description = v
@@ -255,12 +298,75 @@ func (p *CreateSimpleMonitorParam) SetTarget(v string) {
 func (p *CreateSimpleMonitorParam) GetTarget() string {
 	return p.Target
 }
-func (p *CreateSimpleMonitorParam) SetProtocol(v string) {
-	p.Protocol = v
+func (p *CreateSimpleMonitorParam) SetPort(v int) {
+	p.Port = v
 }
 
-func (p *CreateSimpleMonitorParam) GetProtocol() string {
-	return p.Protocol
+func (p *CreateSimpleMonitorParam) GetPort() int {
+	return p.Port
+}
+func (p *CreateSimpleMonitorParam) SetDnsQname(v string) {
+	p.DnsQname = v
+}
+
+func (p *CreateSimpleMonitorParam) GetDnsQname() string {
+	return p.DnsQname
+}
+func (p *CreateSimpleMonitorParam) SetSlackWebhook(v string) {
+	p.SlackWebhook = v
+}
+
+func (p *CreateSimpleMonitorParam) GetSlackWebhook() string {
+	return p.SlackWebhook
+}
+func (p *CreateSimpleMonitorParam) SetHostHeader(v string) {
+	p.HostHeader = v
+}
+
+func (p *CreateSimpleMonitorParam) GetHostHeader() string {
+	return p.HostHeader
+}
+func (p *CreateSimpleMonitorParam) SetIconId(v int64) {
+	p.IconId = v
+}
+
+func (p *CreateSimpleMonitorParam) GetIconId() int64 {
+	return p.IconId
+}
+func (p *CreateSimpleMonitorParam) SetPath(v string) {
+	p.Path = v
+}
+
+func (p *CreateSimpleMonitorParam) GetPath() string {
+	return p.Path
+}
+func (p *CreateSimpleMonitorParam) SetDelayLoop(v int) {
+	p.DelayLoop = v
+}
+
+func (p *CreateSimpleMonitorParam) GetDelayLoop() int {
+	return p.DelayLoop
+}
+func (p *CreateSimpleMonitorParam) SetEnabled(v bool) {
+	p.Enabled = v
+}
+
+func (p *CreateSimpleMonitorParam) GetEnabled() bool {
+	return p.Enabled
+}
+func (p *CreateSimpleMonitorParam) SetNotifyEmail(v bool) {
+	p.NotifyEmail = v
+}
+
+func (p *CreateSimpleMonitorParam) GetNotifyEmail() bool {
+	return p.NotifyEmail
+}
+func (p *CreateSimpleMonitorParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *CreateSimpleMonitorParam) GetTags() []string {
+	return p.Tags
 }
 
 // ReadSimpleMonitorParam is input parameters for the sacloud API
@@ -328,22 +434,22 @@ func (p *ReadSimpleMonitorParam) GetId() int64 {
 
 // UpdateSimpleMonitorParam is input parameters for the sacloud API
 type UpdateSimpleMonitorParam struct {
-	Path         string
-	DnsExcepted  string
-	Description  string
-	IconId       int64
-	Id           int64
-	Protocol     string
 	HostHeader   string
-	EmailType    string
-	Tags         []string
-	ResponseCode int
-	Enabled      bool
-	NotifyEmail  bool
-	SlackWebhook string
 	Port         int
 	DelayLoop    int
 	DnsQname     string
+	DnsExcepted  string
+	EmailType    string
+	Tags         []string
+	Path         string
+	ResponseCode int
+	IconId       int64
+	Id           int64
+	Protocol     string
+	Enabled      bool
+	NotifyEmail  bool
+	SlackWebhook string
+	Description  string
 }
 
 // NewUpdateSimpleMonitorParam return new UpdateSimpleMonitorParam
@@ -355,8 +461,29 @@ func NewUpdateSimpleMonitorParam() *UpdateSimpleMonitorParam {
 func (p *UpdateSimpleMonitorParam) Validate() []error {
 	errors := []error{}
 	{
-		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["port"].ValidateFunc
+		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["delay-loop"].ValidateFunc
+		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["email-type"].ValidateFunc
+		errs := validator("--email-type", p.EmailType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["tags"].ValidateFunc
+		errs := validator("--tags", p.Tags)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -390,29 +517,8 @@ func (p *UpdateSimpleMonitorParam) Validate() []error {
 		}
 	}
 	{
-		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["email-type"].ValidateFunc
-		errs := validator("--email-type", p.EmailType)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["tags"].ValidateFunc
-		errs := validator("--tags", p.Tags)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["port"].ValidateFunc
-		errs := validator("--port", p.Port)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["delay-loop"].ValidateFunc
-		errs := validator("--delay-loop", p.DelayLoop)
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -445,12 +551,33 @@ func (p *UpdateSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *UpdateSimpleMonitorParam) SetPath(v string) {
-	p.Path = v
+func (p *UpdateSimpleMonitorParam) SetHostHeader(v string) {
+	p.HostHeader = v
 }
 
-func (p *UpdateSimpleMonitorParam) GetPath() string {
-	return p.Path
+func (p *UpdateSimpleMonitorParam) GetHostHeader() string {
+	return p.HostHeader
+}
+func (p *UpdateSimpleMonitorParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetPort() int {
+	return p.Port
+}
+func (p *UpdateSimpleMonitorParam) SetDelayLoop(v int) {
+	p.DelayLoop = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetDelayLoop() int {
+	return p.DelayLoop
+}
+func (p *UpdateSimpleMonitorParam) SetDnsQname(v string) {
+	p.DnsQname = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetDnsQname() string {
+	return p.DnsQname
 }
 func (p *UpdateSimpleMonitorParam) SetDnsExcepted(v string) {
 	p.DnsExcepted = v
@@ -459,12 +586,33 @@ func (p *UpdateSimpleMonitorParam) SetDnsExcepted(v string) {
 func (p *UpdateSimpleMonitorParam) GetDnsExcepted() string {
 	return p.DnsExcepted
 }
-func (p *UpdateSimpleMonitorParam) SetDescription(v string) {
-	p.Description = v
+func (p *UpdateSimpleMonitorParam) SetEmailType(v string) {
+	p.EmailType = v
 }
 
-func (p *UpdateSimpleMonitorParam) GetDescription() string {
-	return p.Description
+func (p *UpdateSimpleMonitorParam) GetEmailType() string {
+	return p.EmailType
+}
+func (p *UpdateSimpleMonitorParam) SetTags(v []string) {
+	p.Tags = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetTags() []string {
+	return p.Tags
+}
+func (p *UpdateSimpleMonitorParam) SetPath(v string) {
+	p.Path = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetPath() string {
+	return p.Path
+}
+func (p *UpdateSimpleMonitorParam) SetResponseCode(v int) {
+	p.ResponseCode = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetResponseCode() int {
+	return p.ResponseCode
 }
 func (p *UpdateSimpleMonitorParam) SetIconId(v int64) {
 	p.IconId = v
@@ -487,34 +635,6 @@ func (p *UpdateSimpleMonitorParam) SetProtocol(v string) {
 func (p *UpdateSimpleMonitorParam) GetProtocol() string {
 	return p.Protocol
 }
-func (p *UpdateSimpleMonitorParam) SetHostHeader(v string) {
-	p.HostHeader = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetHostHeader() string {
-	return p.HostHeader
-}
-func (p *UpdateSimpleMonitorParam) SetEmailType(v string) {
-	p.EmailType = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetEmailType() string {
-	return p.EmailType
-}
-func (p *UpdateSimpleMonitorParam) SetTags(v []string) {
-	p.Tags = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetTags() []string {
-	return p.Tags
-}
-func (p *UpdateSimpleMonitorParam) SetResponseCode(v int) {
-	p.ResponseCode = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetResponseCode() int {
-	return p.ResponseCode
-}
 func (p *UpdateSimpleMonitorParam) SetEnabled(v bool) {
 	p.Enabled = v
 }
@@ -536,26 +656,12 @@ func (p *UpdateSimpleMonitorParam) SetSlackWebhook(v string) {
 func (p *UpdateSimpleMonitorParam) GetSlackWebhook() string {
 	return p.SlackWebhook
 }
-func (p *UpdateSimpleMonitorParam) SetPort(v int) {
-	p.Port = v
+func (p *UpdateSimpleMonitorParam) SetDescription(v string) {
+	p.Description = v
 }
 
-func (p *UpdateSimpleMonitorParam) GetPort() int {
-	return p.Port
-}
-func (p *UpdateSimpleMonitorParam) SetDelayLoop(v int) {
-	p.DelayLoop = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetDelayLoop() int {
-	return p.DelayLoop
-}
-func (p *UpdateSimpleMonitorParam) SetDnsQname(v string) {
-	p.DnsQname = v
-}
-
-func (p *UpdateSimpleMonitorParam) GetDnsQname() string {
-	return p.DnsQname
+func (p *UpdateSimpleMonitorParam) GetDescription() string {
+	return p.Description
 }
 
 // DeleteSimpleMonitorParam is input parameters for the sacloud API
@@ -619,110 +725,4 @@ func (p *DeleteSimpleMonitorParam) SetId(v int64) {
 
 func (p *DeleteSimpleMonitorParam) GetId() int64 {
 	return p.Id
-}
-
-// ListSimpleMonitorParam is input parameters for the sacloud API
-type ListSimpleMonitorParam struct {
-	Name []string
-	Id   []int64
-	From int
-	Max  int
-	Sort []string
-}
-
-// NewListSimpleMonitorParam return new ListSimpleMonitorParam
-func NewListSimpleMonitorParam() *ListSimpleMonitorParam {
-	return &ListSimpleMonitorParam{}
-}
-
-// Validate checks current values in model
-func (p *ListSimpleMonitorParam) Validate() []error {
-	errors := []error{}
-	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["SimpleMonitor"].Commands["list"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateConflicts("--id", p.Id, map[string]interface{}{
-
-			"--name": p.Name,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ListSimpleMonitorParam) getResourceDef() *schema.Resource {
-	return define.Resources["SimpleMonitor"]
-}
-
-func (p *ListSimpleMonitorParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["list"]
-}
-
-func (p *ListSimpleMonitorParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ListSimpleMonitorParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ListSimpleMonitorParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ListSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ListSimpleMonitorParam) SetName(v []string) {
-	p.Name = v
-}
-
-func (p *ListSimpleMonitorParam) GetName() []string {
-	return p.Name
-}
-func (p *ListSimpleMonitorParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListSimpleMonitorParam) GetId() []int64 {
-	return p.Id
-}
-func (p *ListSimpleMonitorParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListSimpleMonitorParam) GetFrom() int {
-	return p.From
-}
-func (p *ListSimpleMonitorParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListSimpleMonitorParam) GetMax() int {
-	return p.Max
-}
-func (p *ListSimpleMonitorParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListSimpleMonitorParam) GetSort() []string {
-	return p.Sort
 }

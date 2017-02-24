@@ -73,11 +73,11 @@ func (p *ReadProductInternetParam) GetId() int64 {
 
 // ListProductInternetParam is input parameters for the sacloud API
 type ListProductInternetParam struct {
-	Max  int
-	Sort []string
 	Name []string
 	Id   []int64
 	From int
+	Max  int
+	Sort []string
 }
 
 // NewListProductInternetParam return new ListProductInternetParam
@@ -141,20 +141,6 @@ func (p *ListProductInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListProductInternetParam) SetMax(v int) {
-	p.Max = v
-}
-
-func (p *ListProductInternetParam) GetMax() int {
-	return p.Max
-}
-func (p *ListProductInternetParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListProductInternetParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListProductInternetParam) SetName(v []string) {
 	p.Name = v
 }
@@ -175,4 +161,18 @@ func (p *ListProductInternetParam) SetFrom(v int) {
 
 func (p *ListProductInternetParam) GetFrom() int {
 	return p.From
+}
+func (p *ListProductInternetParam) SetMax(v int) {
+	p.Max = v
+}
+
+func (p *ListProductInternetParam) GetMax() int {
+	return p.Max
+}
+func (p *ListProductInternetParam) SetSort(v []string) {
+	p.Sort = v
+}
+
+func (p *ListProductInternetParam) GetSort() []string {
+	return p.Sort
 }

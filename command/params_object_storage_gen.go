@@ -10,9 +10,9 @@ import (
 
 // ListObjectStorageParam is input parameters for the sacloud API
 type ListObjectStorageParam struct {
+	Bucket    string
 	AccessKey string
 	SecretKey string
-	Bucket    string
 }
 
 // NewListObjectStorageParam return new ListObjectStorageParam
@@ -65,6 +65,13 @@ func (p *ListObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListObjectStorageParam) SetBucket(v string) {
+	p.Bucket = v
+}
+
+func (p *ListObjectStorageParam) GetBucket() string {
+	return p.Bucket
+}
 func (p *ListObjectStorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
@@ -78,13 +85,6 @@ func (p *ListObjectStorageParam) SetSecretKey(v string) {
 
 func (p *ListObjectStorageParam) GetSecretKey() string {
 	return p.SecretKey
-}
-func (p *ListObjectStorageParam) SetBucket(v string) {
-	p.Bucket = v
-}
-
-func (p *ListObjectStorageParam) GetBucket() string {
-	return p.Bucket
 }
 
 // PutObjectStorageParam is input parameters for the sacloud API
@@ -258,9 +258,9 @@ func (p *GetObjectStorageParam) GetBucket() string {
 
 // DeleteObjectStorageParam is input parameters for the sacloud API
 type DeleteObjectStorageParam struct {
-	AccessKey string
 	SecretKey string
 	Bucket    string
+	AccessKey string
 }
 
 // NewDeleteObjectStorageParam return new DeleteObjectStorageParam
@@ -273,14 +273,14 @@ func (p *DeleteObjectStorageParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--access-key", p.AccessKey)
+		errs := validator("--secret-key", p.SecretKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
 		validator := validateRequired
-		errs := validator("--secret-key", p.SecretKey)
+		errs := validator("--access-key", p.AccessKey)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -313,13 +313,6 @@ func (p *DeleteObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *DeleteObjectStorageParam) SetAccessKey(v string) {
-	p.AccessKey = v
-}
-
-func (p *DeleteObjectStorageParam) GetAccessKey() string {
-	return p.AccessKey
-}
 func (p *DeleteObjectStorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
 }
@@ -333,4 +326,11 @@ func (p *DeleteObjectStorageParam) SetBucket(v string) {
 
 func (p *DeleteObjectStorageParam) GetBucket() string {
 	return p.Bucket
+}
+func (p *DeleteObjectStorageParam) SetAccessKey(v string) {
+	p.AccessKey = v
+}
+
+func (p *DeleteObjectStorageParam) GetAccessKey() string {
+	return p.AccessKey
 }
