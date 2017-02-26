@@ -17,11 +17,11 @@ func SSHKeyUpdate(ctx Context, params *UpdateSSHKeyParam) error {
 
 	// set params
 
-	if ctx.IsSet("name") {
-		p.SetName(params.Name)
-	}
 	if ctx.IsSet("description") {
 		p.SetDescription(params.Description)
+	}
+	if ctx.IsSet("name") {
+		p.SetName(params.Name)
 	}
 
 	// call Update(id)

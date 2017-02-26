@@ -77,7 +77,8 @@ func DNSResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands: commands,
+		Commands:         commands,
+		ResourceCategory: CategoryCommonServiceItem,
 	}
 }
 

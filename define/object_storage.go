@@ -39,8 +39,9 @@ func ObjectStorageResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands: commands,
-		Aliases:  []string{"ojs"},
+		Commands:         commands,
+		Aliases:          []string{"ojs"},
+		ResourceCategory: CategoryOther,
 	}
 }
 

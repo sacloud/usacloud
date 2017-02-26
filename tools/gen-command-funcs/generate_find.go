@@ -52,7 +52,10 @@ func generateFindSetParamActions(command *schema.Command) (string, error) {
 
 	b := bytes.NewBufferString("")
 
-	for k, p := range command.Params {
+	for _, param := range command.SortedParams() {
+		k := param.ParamKey
+		p := param.Param
+
 		ctx.P = k
 
 		t := template.New("c")

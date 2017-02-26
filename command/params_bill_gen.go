@@ -8,82 +8,11 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// ListBillParam is input parameters for the sacloud API
-type ListBillParam struct {
-	Year  int
-	Month int
-}
-
-// NewListBillParam return new ListBillParam
-func NewListBillParam() *ListBillParam {
-	return &ListBillParam{}
-}
-
-// Validate checks current values in model
-func (p *ListBillParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := define.Resources["Bill"].Commands["list"].Params["year"].ValidateFunc
-		errs := validator("--year", p.Year)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Bill"].Commands["list"].Params["month"].ValidateFunc
-		errs := validator("--month", p.Month)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *ListBillParam) getResourceDef() *schema.Resource {
-	return define.Resources["Bill"]
-}
-
-func (p *ListBillParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["list"]
-}
-
-func (p *ListBillParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *ListBillParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *ListBillParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *ListBillParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *ListBillParam) SetYear(v int) {
-	p.Year = v
-}
-
-func (p *ListBillParam) GetYear() int {
-	return p.Year
-}
-func (p *ListBillParam) SetMonth(v int) {
-	p.Month = v
-}
-
-func (p *ListBillParam) GetMonth() int {
-	return p.Month
-}
-
 // CsvBillParam is input parameters for the sacloud API
 type CsvBillParam struct {
+	BillOutput string
 	Id         int64
 	NoHeader   bool
-	BillOutput string
 }
 
 // NewCsvBillParam return new CsvBillParam
@@ -136,6 +65,13 @@ func (p *CsvBillParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CsvBillParam) SetBillOutput(v string) {
+	p.BillOutput = v
+}
+
+func (p *CsvBillParam) GetBillOutput() string {
+	return p.BillOutput
+}
 func (p *CsvBillParam) SetId(v int64) {
 	p.Id = v
 }
@@ -150,10 +86,74 @@ func (p *CsvBillParam) SetNoHeader(v bool) {
 func (p *CsvBillParam) GetNoHeader() bool {
 	return p.NoHeader
 }
-func (p *CsvBillParam) SetBillOutput(v string) {
-	p.BillOutput = v
+
+// ListBillParam is input parameters for the sacloud API
+type ListBillParam struct {
+	Month int
+	Year  int
 }
 
-func (p *CsvBillParam) GetBillOutput() string {
-	return p.BillOutput
+// NewListBillParam return new ListBillParam
+func NewListBillParam() *ListBillParam {
+	return &ListBillParam{}
+}
+
+// Validate checks current values in model
+func (p *ListBillParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Bill"].Commands["list"].Params["month"].ValidateFunc
+		errs := validator("--month", p.Month)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Bill"].Commands["list"].Params["year"].ValidateFunc
+		errs := validator("--year", p.Year)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ListBillParam) getResourceDef() *schema.Resource {
+	return define.Resources["Bill"]
+}
+
+func (p *ListBillParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["list"]
+}
+
+func (p *ListBillParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ListBillParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ListBillParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ListBillParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListBillParam) SetMonth(v int) {
+	p.Month = v
+}
+
+func (p *ListBillParam) GetMonth() int {
+	return p.Month
+}
+func (p *ListBillParam) SetYear(v int) {
+	p.Year = v
+}
+
+func (p *ListBillParam) GetYear() int {
+	return p.Year
 }

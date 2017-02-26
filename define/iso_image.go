@@ -76,8 +76,9 @@ func ISOImageResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		AltResource: "CDROM",
-		Commands:    commands,
+		AltResource:      "CDROM",
+		Commands:         commands,
+		ResourceCategory: CategoryStorage,
 	}
 }
 

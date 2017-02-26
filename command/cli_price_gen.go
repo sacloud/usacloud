@@ -3,6 +3,7 @@
 package command
 
 import (
+	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
 )
 
@@ -19,23 +20,23 @@ func init() {
 				Aliases: []string{"l", "ls", "find"},
 				Usage:   "List Price",
 				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
 					},
 					&cli.Int64SliceFlag{
 						Name:  "id",
 						Usage: "set filter by id(s)",
 					},
 					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
-					&cli.IntFlag{
 						Name:        "max",
 						Usage:       "set limit",
 						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
 					},
 					&cli.StringSliceFlag{
 						Name:  "sort",
@@ -45,8 +46,8 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
+					listParam.Name = c.StringSlice("name")
 					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
@@ -69,5 +70,49 @@ func init() {
 		},
 	}
 
+	// build Category-Resource mapping
+	appendResourceCategoryMap("price", &schema.Category{
+		Key:         "information",
+		DisplayName: "Service/Product informations",
+		Order:       90,
+	})
+
+	// build Category-Command mapping
+
+	appendCommandCategoryMap("price", "list", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+
+	// build Category-Param mapping
+
+	appendFlagCategoryMap("price", "list", "from", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("price", "list", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("price", "list", "max", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("price", "list", "name", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("price", "list", "sort", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+
+	// append command to GlobalContext
 	Commands = append(Commands, cliCommand)
 }

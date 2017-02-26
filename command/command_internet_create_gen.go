@@ -14,13 +14,13 @@ func InternetCreate(ctx Context, params *CreateInternetParam) error {
 
 	// set params
 
-	p.SetIconByID(params.IconId)
+	p.SetDescription(params.Description)
 
-	p.SetNetworkMaskLen(params.NwMasklen)
+	p.SetIconByID(params.IconId)
 
 	p.SetName(params.Name)
 
-	p.SetDescription(params.Description)
+	p.SetNetworkMaskLen(params.NwMasklen)
 
 	p.SetTags(params.Tags)
 

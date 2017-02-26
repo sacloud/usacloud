@@ -1,6 +1,8 @@
 package schema
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Schema struct {
 	Type ValueType
@@ -11,6 +13,9 @@ type Schema struct {
 	InputDefault interface{}
 	Aliases      []string
 	Description  string // Usage -> cli
+
+	Category string
+	Order    int
 
 	Required      bool
 	ConflictsWith []string

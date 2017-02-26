@@ -3,16 +3,17 @@
 package command
 
 import (
+	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
 )
 
 func init() {
 	createParam := NewCreateSSHKeyParam()
-	readParam := NewReadSSHKeyParam()
-	updateParam := NewUpdateSSHKeyParam()
 	deleteParam := NewDeleteSSHKeyParam()
 	generateParam := NewGenerateSSHKeyParam()
 	listParam := NewListSSHKeyParam()
+	readParam := NewReadSSHKeyParam()
+	updateParam := NewUpdateSSHKeyParam()
 
 	cliCommand := &cli.Command{
 		Name:  "ssh-key",
@@ -24,25 +25,25 @@ func init() {
 				Usage:   "Create SSHKey",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
-					},
-					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
 						Destination: &createParam.Description,
 					},
 					&cli.StringFlag{
-						Name:        "public-key-content",
-						Usage:       "set public-key",
-						Destination: &createParam.PublicKeyContent,
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
 					},
 					&cli.StringFlag{
 						Name:        "public-key",
 						Usage:       "set public-key from file",
 						Destination: &createParam.PublicKey,
+					},
+					&cli.StringFlag{
+						Name:        "public-key-content",
+						Usage:       "set public-key",
+						Destination: &createParam.PublicKeyContent,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -62,6 +63,147 @@ func init() {
 
 					// Run command with params
 					return SSHKeyCreate(ctx, createParam)
+				},
+			},
+			{
+				Name:      "delete",
+				Aliases:   []string{"d", "rm"},
+				Usage:     "Delete SSHKey",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &deleteParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := deleteParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// Run command with params
+					return SSHKeyDelete(ctx, deleteParam)
+				},
+			},
+			{
+				Name:      "generate",
+				Aliases:   []string{"g", "gen"},
+				Usage:     "Generate SSHKey",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &generateParam.Description,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &generateParam.Name,
+					},
+					&cli.StringFlag{
+						Name:        "pass-phrase",
+						Usage:       "set ssh-key pass phrase",
+						Destination: &generateParam.PassPhrase,
+					},
+					&cli.StringFlag{
+						Name:        "private-key-output",
+						Aliases:     []string{"file"},
+						Usage:       "set ssh-key privatekey output path",
+						Destination: &generateParam.PrivateKeyOutput,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := generateParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), generateParam)
+
+					// Run command with params
+					return SSHKeyGenerate(ctx, generateParam)
+				},
+			},
+			{
+				Name:    "list",
+				Aliases: []string{"l", "ls", "find"},
+				Usage:   "List SSHKey",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					listParam.Id = c.Int64Slice("id")
+					listParam.Name = c.StringSlice("name")
+					listParam.Sort = c.StringSlice("sort")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := listParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), listParam)
+
+					// Run command with params
+					return SSHKeyList(ctx, listParam)
 				},
 			},
 			{
@@ -147,149 +289,142 @@ func init() {
 					return SSHKeyUpdate(ctx, updateParam)
 				},
 			},
-			{
-				Name:      "delete",
-				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete SSHKey",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &deleteParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() > 0 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), deleteParam)
-
-					// Run command with params
-					return SSHKeyDelete(ctx, deleteParam)
-				},
-			},
-			{
-				Name:      "generate",
-				Aliases:   []string{"g", "gen"},
-				Usage:     "Generate SSHKey",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &generateParam.Name,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &generateParam.Description,
-					},
-					&cli.StringFlag{
-						Name:        "pass-phrase",
-						Usage:       "set ssh-key pass phrase",
-						Destination: &generateParam.PassPhrase,
-					},
-					&cli.StringFlag{
-						Name:        "private-key-output",
-						Aliases:     []string{"file"},
-						Usage:       "set ssh-key privatekey output path",
-						Destination: &generateParam.PrivateKeyOutput,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() > 0 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := generateParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), generateParam)
-
-					// Run command with params
-					return SSHKeyGenerate(ctx, generateParam)
-				},
-			},
-			{
-				Name:    "list",
-				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List SSHKey",
-				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
-					},
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					listParam.Sort = c.StringSlice("sort")
-					listParam.Name = c.StringSlice("name")
-					listParam.Id = c.Int64Slice("id")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), listParam)
-
-					// Run command with params
-					return SSHKeyList(ctx, listParam)
-				},
-			},
 		},
 	}
 
+	// build Category-Resource mapping
+	appendResourceCategoryMap("ssh-key", &schema.Category{
+		Key:         "commonitem",
+		DisplayName: "Common items",
+		Order:       60,
+	})
+
+	// build Category-Command mapping
+
+	appendCommandCategoryMap("ssh-key", "create", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("ssh-key", "delete", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("ssh-key", "generate", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("ssh-key", "list", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("ssh-key", "read", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("ssh-key", "update", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+
+	// build Category-Param mapping
+
+	appendFlagCategoryMap("ssh-key", "create", "description", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "create", "name", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "create", "public-key", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "create", "public-key-content", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "delete", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "generate", "description", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "generate", "name", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "generate", "pass-phrase", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "generate", "private-key-output", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "list", "from", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "list", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "list", "max", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "list", "name", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "list", "sort", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "read", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "update", "description", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "update", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("ssh-key", "update", "name", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+
+	// append command to GlobalContext
 	Commands = append(Commands, cliCommand)
 }

@@ -3,62 +3,23 @@
 package command
 
 import (
+	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
 )
 
 func init() {
-	listParam := NewListBillParam()
 	csvParam := NewCsvBillParam()
+	listParam := NewListBillParam()
 
 	cliCommand := &cli.Command{
 		Name:  "bill",
 		Usage: "A manage commands of Bill",
 		Subcommands: []*cli.Command{
 			{
-				Name:    "list",
-				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List Bill",
-				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "year",
-						Usage:       "set year",
-						Destination: &listParam.Year,
-					},
-					&cli.IntFlag{
-						Name:        "month",
-						Usage:       "set month",
-						Destination: &listParam.Month,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), listParam)
-
-					// Run command with params
-					return BillList(ctx, listParam)
-				},
-			},
-			{
 				Name:      "csv",
 				Usage:     "Csv Bill",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.BoolFlag{
-						Name:        "no-header",
-						Usage:       "set output header flag",
-						Destination: &csvParam.NoHeader,
-					},
 					&cli.StringFlag{
 						Name:        "bill-output",
 						Aliases:     []string{"file"},
@@ -69,6 +30,11 @@ func init() {
 						Name:        "id",
 						Usage:       "[Required] set bill ID",
 						Destination: &csvParam.Id,
+					},
+					&cli.BoolFlag{
+						Name:        "no-header",
+						Usage:       "set output header flag",
+						Destination: &csvParam.NoHeader,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -95,8 +61,92 @@ func init() {
 					return BillCsv(ctx, csvParam)
 				},
 			},
+			{
+				Name:    "list",
+				Aliases: []string{"l", "ls", "find"},
+				Usage:   "List Bill",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "month",
+						Usage:       "set month",
+						Destination: &listParam.Month,
+					},
+					&cli.IntFlag{
+						Name:        "year",
+						Usage:       "set year",
+						Destination: &listParam.Year,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := listParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), listParam)
+
+					// Run command with params
+					return BillList(ctx, listParam)
+				},
+			},
 		},
 	}
 
+	// build Category-Resource mapping
+	appendResourceCategoryMap("bill", &schema.Category{
+		Key:         "billing",
+		DisplayName: "Billing",
+		Order:       70,
+	})
+
+	// build Category-Command mapping
+
+	appendCommandCategoryMap("bill", "csv", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("bill", "list", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+
+	// build Category-Param mapping
+
+	appendFlagCategoryMap("bill", "csv", "bill-output", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("bill", "csv", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("bill", "csv", "no-header", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("bill", "list", "month", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("bill", "list", "year", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+
+	// append command to GlobalContext
 	Commands = append(Commands, cliCommand)
 }

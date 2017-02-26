@@ -36,10 +36,10 @@ gen: tools command/*_gen.go
 
 .PHONY: gen-force
 gen-force: clean-all tools
-	go generate $(GOGEN_FILES)
+	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
 
 command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-funcs/*.go tools/gen-input-models/*.go
-	go generate $(GOGEN_FILES)
+	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
 
 .PHONY: build
 build: clean gen vet

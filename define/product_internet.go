@@ -26,8 +26,9 @@ func ProductInternetResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands: commands,
-		Aliases:  []string{"internet-plan"},
+		Commands:         commands,
+		Aliases:          []string{"internet-plan"},
+		ResourceCategory: CategoryInformation,
 	}
 }
 

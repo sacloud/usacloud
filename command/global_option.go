@@ -25,7 +25,6 @@ var GlobalOption = &Option{
 var GlobalFlags = []cli.Flag{
 	&cli.StringFlag{
 		Name:        "token",
-		Aliases:     []string{"sakuracloud-access-token"},
 		Usage:       "API Token of SakuraCloud",
 		EnvVars:     []string{"SAKURACLOUD_ACCESS_TOKEN"},
 		DefaultText: "none",
@@ -33,7 +32,6 @@ var GlobalFlags = []cli.Flag{
 	},
 	&cli.StringFlag{
 		Name:        "secret",
-		Aliases:     []string{"sakuracloud-access-token-secret"},
 		Usage:       "API Secret of SakuraCloud",
 		EnvVars:     []string{"SAKURACLOUD_ACCESS_TOKEN_SECRET"},
 		DefaultText: "none",
@@ -42,7 +40,6 @@ var GlobalFlags = []cli.Flag{
 	&cli.StringFlag{
 		// TODO 複数ゾーンへの対応
 		Name:        "zone",
-		Aliases:     []string{"sakuracloud-default-zone"},
 		Usage:       "Target zone of SakuraCloud",
 		EnvVars:     []string{"SAKURACLOUD_ZONE"},
 		Value:       "tk1a",
@@ -51,19 +48,19 @@ var GlobalFlags = []cli.Flag{
 	},
 	&cli.BoolFlag{
 		Name:        "trace",
-		Aliases:     []string{"sakuracloud-trace-mode"},
 		Usage:       "Flag of SakuraCloud debug-mode",
 		EnvVars:     []string{"SAKURACLOUD_TRACE_MODE"},
 		Destination: &GlobalOption.TraceMode,
 		Value:       false,
+		Hidden:      true,
 	},
 	&cli.StringFlag{ // TODO 移動、schema.commandで指定するように
 		Name:        "format",
-		Aliases:     []string{"output-format"},
 		Usage:       "Output format",
 		Value:       "table",
 		DefaultText: "table",
 		Destination: &GlobalOption.Format,
+		Hidden:      true,
 	},
 }
 

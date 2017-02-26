@@ -19,9 +19,10 @@ func PriceResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands:    commands,
-		Aliases:     []string{"public-price"},
-		AltResource: "PublicPrice",
+		Commands:         commands,
+		Aliases:          []string{"public-price"},
+		AltResource:      "PublicPrice",
+		ResourceCategory: CategoryInformation,
 	}
 }
 

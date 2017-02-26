@@ -3,14 +3,15 @@
 package command
 
 import (
+	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
 )
 
 func init() {
+	deleteParam := NewDeleteObjectStorageParam()
+	getParam := NewGetObjectStorageParam()
 	listParam := NewListObjectStorageParam()
 	putParam := NewPutObjectStorageParam()
-	getParam := NewGetObjectStorageParam()
-	deleteParam := NewDeleteObjectStorageParam()
 
 	cliCommand := &cli.Command{
 		Name:    "object-storage",
@@ -18,28 +19,28 @@ func init() {
 		Usage:   "A manage commands of ObjectStorage",
 		Subcommands: []*cli.Command{
 			{
-				Name:      "list",
-				Aliases:   []string{"l", "ls"},
-				Usage:     "List ObjectStorage",
+				Name:      "delete",
+				Aliases:   []string{"rm", "del"},
+				Usage:     "Delete ObjectStorage",
 				ArgsUsage: "[PATH]",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:        "access-key",
 						Usage:       "[Required] set access-key",
 						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
-						Destination: &listParam.AccessKey,
-					},
-					&cli.StringFlag{
-						Name:        "secret-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
-						Destination: &listParam.SecretKey,
+						Destination: &deleteParam.AccessKey,
 					},
 					&cli.StringFlag{
 						Name:        "bucket",
 						Usage:       "set bucket",
 						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
-						Destination: &listParam.Bucket,
+						Destination: &deleteParam.Bucket,
+					},
+					&cli.StringFlag{
+						Name:        "secret-key",
+						Usage:       "[Required] set access-key",
+						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
+						Destination: &deleteParam.SecretKey,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -50,64 +51,15 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := deleteParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), listParam)
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
 
 					// Run command with params
-					return ObjectStorageList(ctx, listParam)
-				},
-			},
-			{
-				Name:      "put",
-				Usage:     "Put ObjectStorage",
-				ArgsUsage: "[FILE] [PATH]",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "content-type",
-						Usage:       "set content-type",
-						Value:       "application/octet-stream",
-						Destination: &putParam.ContentType,
-					},
-					&cli.StringFlag{
-						Name:        "access-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
-						Destination: &putParam.AccessKey,
-					},
-					&cli.StringFlag{
-						Name:        "secret-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
-						Destination: &putParam.SecretKey,
-					},
-					&cli.StringFlag{
-						Name:        "bucket",
-						Usage:       "set bucket",
-						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
-						Destination: &putParam.Bucket,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := putParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), putParam)
-
-					// Run command with params
-					return ObjectStoragePut(ctx, putParam)
+					return ObjectStorageDelete(ctx, deleteParam)
 				},
 			},
 			{
@@ -116,16 +68,16 @@ func init() {
 				ArgsUsage: "[PATH] [FILE]",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "bucket",
-						Usage:       "set bucket",
-						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
-						Destination: &getParam.Bucket,
-					},
-					&cli.StringFlag{
 						Name:        "access-key",
 						Usage:       "[Required] set access-key",
 						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
 						Destination: &getParam.AccessKey,
+					},
+					&cli.StringFlag{
+						Name:        "bucket",
+						Usage:       "set bucket",
+						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
+						Destination: &getParam.Bucket,
 					},
 					&cli.StringFlag{
 						Name:        "secret-key",
@@ -154,28 +106,28 @@ func init() {
 				},
 			},
 			{
-				Name:      "delete",
-				Aliases:   []string{"rm", "del"},
-				Usage:     "Delete ObjectStorage",
+				Name:      "list",
+				Aliases:   []string{"l", "ls"},
+				Usage:     "List ObjectStorage",
 				ArgsUsage: "[PATH]",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:        "access-key",
 						Usage:       "[Required] set access-key",
 						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
-						Destination: &deleteParam.AccessKey,
-					},
-					&cli.StringFlag{
-						Name:        "secret-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
-						Destination: &deleteParam.SecretKey,
+						Destination: &listParam.AccessKey,
 					},
 					&cli.StringFlag{
 						Name:        "bucket",
 						Usage:       "set bucket",
 						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
-						Destination: &deleteParam.Bucket,
+						Destination: &listParam.Bucket,
+					},
+					&cli.StringFlag{
+						Name:        "secret-key",
+						Usage:       "[Required] set access-key",
+						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
+						Destination: &listParam.SecretKey,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -186,19 +138,167 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
+					if errors := listParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+					ctx := NewContext(c, c.Args().Slice(), listParam)
 
 					// Run command with params
-					return ObjectStorageDelete(ctx, deleteParam)
+					return ObjectStorageList(ctx, listParam)
+				},
+			},
+			{
+				Name:      "put",
+				Usage:     "Put ObjectStorage",
+				ArgsUsage: "[FILE] [PATH]",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "access-key",
+						Usage:       "[Required] set access-key",
+						EnvVars:     []string{"AWS_ACCESS_KEY_ID", "SACLOUD_OJS_ACCESS_KEY_ID"},
+						Destination: &putParam.AccessKey,
+					},
+					&cli.StringFlag{
+						Name:        "bucket",
+						Usage:       "set bucket",
+						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
+						Destination: &putParam.Bucket,
+					},
+					&cli.StringFlag{
+						Name:        "content-type",
+						Usage:       "set content-type",
+						Value:       "application/octet-stream",
+						Destination: &putParam.ContentType,
+					},
+					&cli.StringFlag{
+						Name:        "secret-key",
+						Usage:       "[Required] set access-key",
+						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
+						Destination: &putParam.SecretKey,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := putParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), putParam)
+
+					// Run command with params
+					return ObjectStoragePut(ctx, putParam)
 				},
 			},
 		},
 	}
 
+	// build Category-Resource mapping
+	appendResourceCategoryMap("object-storage", &schema.Category{
+		Key:         "saas",
+		DisplayName: "Other services",
+		Order:       80,
+	})
+
+	// build Category-Command mapping
+
+	appendCommandCategoryMap("object-storage", "delete", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("object-storage", "get", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("object-storage", "list", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("object-storage", "put", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+
+	// build Category-Param mapping
+
+	appendFlagCategoryMap("object-storage", "delete", "access-key", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "delete", "bucket", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "delete", "secret-key", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "get", "access-key", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "get", "bucket", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "get", "secret-key", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "list", "access-key", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "list", "bucket", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "list", "secret-key", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "put", "access-key", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "put", "bucket", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "put", "content-type", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "put", "secret-key", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+
+	// append command to GlobalContext
 	Commands = append(Commands, cliCommand)
 }

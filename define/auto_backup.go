@@ -50,7 +50,8 @@ func AutoBackupResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands: commands,
+		Commands:         commands,
+		ResourceCategory: CategoryStorage,
 	}
 }
 

@@ -35,7 +35,8 @@ func main() {
 
 		// schema validation
 		errors := []error{}
-		for _, c := range resource.Commands {
+		for _, comm := range resource.SortedCommands() {
+			c := comm.Command
 			errs := c.Validate()
 			errors = append(errors, errs...)
 		}
@@ -73,7 +74,10 @@ func generateResource(resource *schema.Resource) (string, error) {
 	template.Must(t.Parse(srcTemplate))
 
 	// build commands
-	for k, c := range resource.Commands {
+	for _, comm := range resource.SortedCommands() {
+		c := comm.Command
+		k := comm.CommandKey
+
 		ctx.C = k
 
 		params, err := buildCommandParams(c)
@@ -98,7 +102,7 @@ func buildCommandParams(command *schema.Command) (map[string]interface{}, error)
 
 	var res map[string]interface{}
 
-	fields, initializers, validators, err := buildFieldsParams(command.Params)
+	fields, initializers, validators, err := buildFieldsParams(command.SortedParams())
 	if err != nil {
 		return res, err
 	}
@@ -115,7 +119,7 @@ func buildCommandParams(command *schema.Command) (map[string]interface{}, error)
 	return res, err
 }
 
-func buildFieldsParams(params map[string]*schema.Schema) ([]map[string]interface{}, []map[string]interface{}, string, error) {
+func buildFieldsParams(params schema.SortableParams) ([]map[string]interface{}, []map[string]interface{}, string, error) {
 
 	var fieldsRes []map[string]interface{}
 	var initializerRes []map[string]interface{}
@@ -134,7 +138,11 @@ func buildFieldsParams(params map[string]*schema.Schema) ([]map[string]interface
 
 	validatorBuf := bytes.NewBufferString("")
 
-	for k, s := range params {
+	for _, param := range params {
+
+		s := param.Param
+		k := param.ParamKey
+
 		ctx.P = k
 
 		// to field

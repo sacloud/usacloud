@@ -14,9 +14,9 @@ func PacketFilterCreate(ctx Context, params *CreatePacketFilterParam) error {
 
 	// set params
 
-	p.SetName(params.Name)
-
 	p.SetDescription(params.Description)
+
+	p.SetName(params.Name)
 
 	// call Create(id)
 	res, err := api.Create(p)
