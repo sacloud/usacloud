@@ -40,7 +40,10 @@ func main() {
 func generateResource(resource *schema.Resource) error {
 
 	// build commands
-	for k, c := range resource.Commands {
+	for _, comm := range resource.SortedCommands() {
+		c := comm.Command
+		k := comm.CommandKey
+
 		ctx.C = k
 		src, err := generateCommands(c)
 

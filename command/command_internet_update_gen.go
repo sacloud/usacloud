@@ -17,20 +17,20 @@ func InternetUpdate(ctx Context, params *UpdateInternetParam) error {
 
 	// set params
 
-	if ctx.IsSet("tags") {
-		p.SetTags(params.Tags)
+	if ctx.IsSet("band-width") {
+		p.SetBandWidthMbps(params.BandWidth)
+	}
+	if ctx.IsSet("description") {
+		p.SetDescription(params.Description)
 	}
 	if ctx.IsSet("icon-id") {
 		p.SetIconByID(params.IconId)
 	}
-	if ctx.IsSet("band-width") {
-		p.SetBandWidthMbps(params.BandWidth)
-	}
 	if ctx.IsSet("name") {
 		p.SetName(params.Name)
 	}
-	if ctx.IsSet("description") {
-		p.SetDescription(params.Description)
+	if ctx.IsSet("tags") {
+		p.SetTags(params.Tags)
 	}
 
 	// call Update(id)

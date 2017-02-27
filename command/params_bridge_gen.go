@@ -8,13 +8,154 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
+// CreateBridgeParam is input parameters for the sacloud API
+type CreateBridgeParam struct {
+	Description string
+	Name        string
+}
+
+// NewCreateBridgeParam return new CreateBridgeParam
+func NewCreateBridgeParam() *CreateBridgeParam {
+	return &CreateBridgeParam{}
+}
+
+// Validate checks current values in model
+func (p *CreateBridgeParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Bridge"].Commands["create"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Bridge"].Commands["create"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *CreateBridgeParam) getResourceDef() *schema.Resource {
+	return define.Resources["Bridge"]
+}
+
+func (p *CreateBridgeParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["create"]
+}
+
+func (p *CreateBridgeParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *CreateBridgeParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *CreateBridgeParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *CreateBridgeParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateBridgeParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *CreateBridgeParam) GetDescription() string {
+	return p.Description
+}
+func (p *CreateBridgeParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *CreateBridgeParam) GetName() string {
+	return p.Name
+}
+
+// DeleteBridgeParam is input parameters for the sacloud API
+type DeleteBridgeParam struct {
+	Id int64
+}
+
+// NewDeleteBridgeParam return new DeleteBridgeParam
+func NewDeleteBridgeParam() *DeleteBridgeParam {
+	return &DeleteBridgeParam{}
+}
+
+// Validate checks current values in model
+func (p *DeleteBridgeParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Bridge"].Commands["delete"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DeleteBridgeParam) getResourceDef() *schema.Resource {
+	return define.Resources["Bridge"]
+}
+
+func (p *DeleteBridgeParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["delete"]
+}
+
+func (p *DeleteBridgeParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *DeleteBridgeParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *DeleteBridgeParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *DeleteBridgeParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DeleteBridgeParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *DeleteBridgeParam) GetId() int64 {
+	return p.Id
+}
+
 // ListBridgeParam is input parameters for the sacloud API
 type ListBridgeParam struct {
-	Id   []int64
 	From int
+	Id   []int64
 	Max  int
-	Sort []string
 	Name []string
+	Sort []string
 }
 
 // NewListBridgeParam return new ListBridgeParam
@@ -78,19 +219,19 @@ func (p *ListBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListBridgeParam) SetId(v []int64) {
-	p.Id = v
-}
-
-func (p *ListBridgeParam) GetId() []int64 {
-	return p.Id
-}
 func (p *ListBridgeParam) SetFrom(v int) {
 	p.From = v
 }
 
 func (p *ListBridgeParam) GetFrom() int {
 	return p.From
+}
+func (p *ListBridgeParam) SetId(v []int64) {
+	p.Id = v
+}
+
+func (p *ListBridgeParam) GetId() []int64 {
+	return p.Id
 }
 func (p *ListBridgeParam) SetMax(v int) {
 	p.Max = v
@@ -99,13 +240,6 @@ func (p *ListBridgeParam) SetMax(v int) {
 func (p *ListBridgeParam) GetMax() int {
 	return p.Max
 }
-func (p *ListBridgeParam) SetSort(v []string) {
-	p.Sort = v
-}
-
-func (p *ListBridgeParam) GetSort() []string {
-	return p.Sort
-}
 func (p *ListBridgeParam) SetName(v []string) {
 	p.Name = v
 }
@@ -113,83 +247,12 @@ func (p *ListBridgeParam) SetName(v []string) {
 func (p *ListBridgeParam) GetName() []string {
 	return p.Name
 }
-
-// CreateBridgeParam is input parameters for the sacloud API
-type CreateBridgeParam struct {
-	Name        string
-	Description string
+func (p *ListBridgeParam) SetSort(v []string) {
+	p.Sort = v
 }
 
-// NewCreateBridgeParam return new CreateBridgeParam
-func NewCreateBridgeParam() *CreateBridgeParam {
-	return &CreateBridgeParam{}
-}
-
-// Validate checks current values in model
-func (p *CreateBridgeParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Bridge"].Commands["create"].Params["name"].ValidateFunc
-		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Bridge"].Commands["create"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *CreateBridgeParam) getResourceDef() *schema.Resource {
-	return define.Resources["Bridge"]
-}
-
-func (p *CreateBridgeParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["create"]
-}
-
-func (p *CreateBridgeParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *CreateBridgeParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *CreateBridgeParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *CreateBridgeParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *CreateBridgeParam) SetName(v string) {
-	p.Name = v
-}
-
-func (p *CreateBridgeParam) GetName() string {
-	return p.Name
-}
-func (p *CreateBridgeParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *CreateBridgeParam) GetDescription() string {
-	return p.Description
+func (p *ListBridgeParam) GetSort() []string {
+	return p.Sort
 }
 
 // ReadBridgeParam is input parameters for the sacloud API
@@ -257,9 +320,9 @@ func (p *ReadBridgeParam) GetId() int64 {
 
 // UpdateBridgeParam is input parameters for the sacloud API
 type UpdateBridgeParam struct {
+	Description string
 	Id          int64
 	Name        string
-	Description string
 }
 
 // NewUpdateBridgeParam return new UpdateBridgeParam
@@ -270,6 +333,13 @@ func NewUpdateBridgeParam() *UpdateBridgeParam {
 // Validate checks current values in model
 func (p *UpdateBridgeParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["Bridge"].Commands["update"].Params["description"].ValidateFunc
+		errs := validator("--description", p.Description)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := validateRequired
 		errs := validator("--id", p.Id)
@@ -287,13 +357,6 @@ func (p *UpdateBridgeParam) Validate() []error {
 	{
 		validator := define.Resources["Bridge"].Commands["update"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Bridge"].Commands["update"].Params["description"].ValidateFunc
-		errs := validator("--description", p.Description)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -326,6 +389,13 @@ func (p *UpdateBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdateBridgeParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *UpdateBridgeParam) GetDescription() string {
+	return p.Description
+}
 func (p *UpdateBridgeParam) SetId(v int64) {
 	p.Id = v
 }
@@ -339,74 +409,4 @@ func (p *UpdateBridgeParam) SetName(v string) {
 
 func (p *UpdateBridgeParam) GetName() string {
 	return p.Name
-}
-func (p *UpdateBridgeParam) SetDescription(v string) {
-	p.Description = v
-}
-
-func (p *UpdateBridgeParam) GetDescription() string {
-	return p.Description
-}
-
-// DeleteBridgeParam is input parameters for the sacloud API
-type DeleteBridgeParam struct {
-	Id int64
-}
-
-// NewDeleteBridgeParam return new DeleteBridgeParam
-func NewDeleteBridgeParam() *DeleteBridgeParam {
-	return &DeleteBridgeParam{}
-}
-
-// Validate checks current values in model
-func (p *DeleteBridgeParam) Validate() []error {
-	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Bridge"].Commands["delete"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	return errors
-}
-
-func (p *DeleteBridgeParam) getResourceDef() *schema.Resource {
-	return define.Resources["Bridge"]
-}
-
-func (p *DeleteBridgeParam) getCommandDef() *schema.Command {
-	return p.getResourceDef().Commands["delete"]
-}
-
-func (p *DeleteBridgeParam) GetIncludeFields() []string {
-	return p.getCommandDef().IncludeFields
-}
-
-func (p *DeleteBridgeParam) GetExcludeFields() []string {
-	return p.getCommandDef().ExcludeFields
-}
-
-func (p *DeleteBridgeParam) GetTableType() output.OutputTableType {
-	return p.getCommandDef().TableType
-}
-
-func (p *DeleteBridgeParam) GetColumnDefs() []output.ColumnDef {
-	return p.getCommandDef().TableColumnDefines
-}
-
-func (p *DeleteBridgeParam) SetId(v int64) {
-	p.Id = v
-}
-
-func (p *DeleteBridgeParam) GetId() int64 {
-	return p.Id
 }

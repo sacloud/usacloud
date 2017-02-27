@@ -3,19 +3,20 @@
 package command
 
 import (
+	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
 )
 
 func init() {
 	createParam := NewCreateGSLBParam()
-	readParam := NewReadGSLBParam()
-	serverListParam := NewServerListGSLBParam()
-	serverAddParam := NewServerAddGSLBParam()
-	serverUpdateParam := NewServerUpdateGSLBParam()
-	serverDeleteParam := NewServerDeleteGSLBParam()
-	listParam := NewListGSLBParam()
-	updateParam := NewUpdateGSLBParam()
 	deleteParam := NewDeleteGSLBParam()
+	listParam := NewListGSLBParam()
+	readParam := NewReadGSLBParam()
+	serverAddParam := NewServerAddGSLBParam()
+	serverDeleteParam := NewServerDeleteGSLBParam()
+	serverListParam := NewServerListGSLBParam()
+	serverUpdateParam := NewServerUpdateGSLBParam()
+	updateParam := NewUpdateGSLBParam()
 
 	cliCommand := &cli.Command{
 		Name:  "gslb",
@@ -26,20 +27,32 @@ func init() {
 				Aliases: []string{"c"},
 				Usage:   "Create GSLB",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "delay-loop",
+						Usage:       "[Required] set delay-loop of healthcheck",
+						Value:       10,
+						Destination: &createParam.DelayLoop,
+					},
 					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
 						Usage:       "set resource description",
 						Destination: &createParam.Description,
 					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
 					&cli.StringFlag{
 						Name:        "host-header",
 						Usage:       "set host header of http/https healthcheck request",
 						Destination: &createParam.HostHeader,
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &createParam.IconId,
+					},
+					&cli.StringFlag{
+						Name:        "name",
+						Usage:       "[Required] set resource display name",
+						Destination: &createParam.Name,
 					},
 					&cli.StringFlag{
 						Name:        "path",
@@ -48,26 +61,9 @@ func init() {
 						Destination: &createParam.Path,
 					},
 					&cli.IntFlag{
-						Name:        "response-code",
-						Usage:       "set response-code of http/https healthcheck request",
-						Value:       200,
-						Destination: &createParam.ResponseCode,
-					},
-					&cli.IntFlag{
 						Name:        "port",
 						Usage:       "set port of tcp healthcheck",
 						Destination: &createParam.Port,
-					},
-					&cli.IntFlag{
-						Name:        "delay-loop",
-						Usage:       "[Required] set delay-loop of healthcheck",
-						Value:       10,
-						Destination: &createParam.DelayLoop,
-					},
-					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
 					},
 					&cli.StringFlag{
 						Name:        "protocol",
@@ -75,21 +71,26 @@ func init() {
 						Value:       "ping",
 						Destination: &createParam.Protocol,
 					},
-					&cli.BoolFlag{
-						Name:        "weighted",
-						Usage:       "enable weighted",
-						Value:       true,
-						Destination: &createParam.Weighted,
+					&cli.IntFlag{
+						Name:        "response-code",
+						Usage:       "set response-code of http/https healthcheck request",
+						Value:       200,
+						Destination: &createParam.ResponseCode,
 					},
 					&cli.StringFlag{
 						Name:        "sorry-server",
 						Usage:       "set sorry-server hostname/ipaddress",
 						Destination: &createParam.SorryServer,
 					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &createParam.IconId,
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.BoolFlag{
+						Name:        "weighted",
+						Usage:       "enable weighted",
+						Value:       true,
+						Destination: &createParam.Weighted,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -112,6 +113,94 @@ func init() {
 
 					// Run command with params
 					return GSLBCreate(ctx, createParam)
+				},
+			},
+			{
+				Name:      "delete",
+				Aliases:   []string{"d", "rm"},
+				Usage:     "Delete GSLB",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &deleteParam.Id,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := deleteParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// Run command with params
+					return GSLBDelete(ctx, deleteParam)
+				},
+			},
+			{
+				Name:    "list",
+				Aliases: []string{"l", "ls", "find"},
+				Usage:   "List GSLB",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
+					},
+					&cli.Int64SliceFlag{
+						Name:  "id",
+						Usage: "set filter by id(s)",
+					},
+					&cli.IntFlag{
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					listParam.Id = c.Int64Slice("id")
+					listParam.Name = c.StringSlice("name")
+					listParam.Sort = c.StringSlice("sort")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := listParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), listParam)
+
+					// Run command with params
+					return GSLBList(ctx, listParam)
 				},
 			},
 			{
@@ -151,41 +240,6 @@ func init() {
 				},
 			},
 			{
-				Name:      "server-list",
-				Usage:     "ServerList GSLB",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &serverListParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() > 0 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := serverListParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), serverListParam)
-
-					// Run command with params
-					return GSLBServerList(ctx, serverListParam)
-				},
-			},
-			{
 				Name:      "server-add",
 				Usage:     "ServerAdd GSLB",
 				ArgsUsage: "[ResourceID]",
@@ -196,11 +250,6 @@ func init() {
 						Value:       true,
 						Destination: &serverAddParam.Enabled,
 					},
-					&cli.IntFlag{
-						Name:        "weight",
-						Usage:       "set weight",
-						Destination: &serverAddParam.Weight,
-					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
@@ -210,6 +259,11 @@ func init() {
 						Name:        "ipaddress",
 						Usage:       "set target ipaddress",
 						Destination: &serverAddParam.Ipaddress,
+					},
+					&cli.IntFlag{
+						Name:        "weight",
+						Usage:       "set weight",
+						Destination: &serverAddParam.Weight,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -234,61 +288,6 @@ func init() {
 
 					// Run command with params
 					return GSLBServerAdd(ctx, serverAddParam)
-				},
-			},
-			{
-				Name:      "server-update",
-				Usage:     "ServerUpdate GSLB",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "index",
-						Usage:       "[Required] index of target server",
-						Destination: &serverUpdateParam.Index,
-					},
-					&cli.StringFlag{
-						Name:        "ipaddress",
-						Usage:       "set target ipaddress",
-						Destination: &serverUpdateParam.Ipaddress,
-					},
-					&cli.BoolFlag{
-						Name:        "enabled",
-						Usage:       "set enabled",
-						Destination: &serverUpdateParam.Enabled,
-					},
-					&cli.IntFlag{
-						Name:        "weight",
-						Usage:       "set weight",
-						Destination: &serverUpdateParam.Weight,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &serverUpdateParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() > 0 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := serverUpdateParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), serverUpdateParam)
-
-					// Run command with params
-					return GSLBServerUpdate(ctx, serverUpdateParam)
 				},
 			},
 			{
@@ -332,55 +331,93 @@ func init() {
 				},
 			},
 			{
-				Name:    "list",
-				Aliases: []string{"l", "ls", "find"},
-				Usage:   "List GSLB",
+				Name:      "server-list",
+				Usage:     "ServerList GSLB",
+				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.Int64SliceFlag{
-						Name:  "id",
-						Usage: "set filter by id(s)",
-					},
-					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
-					},
-					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &serverListParam.Id,
 					},
 				},
 				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
-					listParam.Name = c.StringSlice("name")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
 					// Validate specific for each command params
-					if errors := listParam.Validate(); len(errors) > 0 {
+					if errors := serverListParam.Validate(); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := NewContext(c, c.Args().Slice(), listParam)
+					ctx := NewContext(c, c.Args().Slice(), serverListParam)
 
 					// Run command with params
-					return GSLBList(ctx, listParam)
+					return GSLBServerList(ctx, serverListParam)
+				},
+			},
+			{
+				Name:      "server-update",
+				Usage:     "ServerUpdate GSLB",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:        "enabled",
+						Usage:       "set enabled",
+						Destination: &serverUpdateParam.Enabled,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &serverUpdateParam.Id,
+					},
+					&cli.IntFlag{
+						Name:        "index",
+						Usage:       "[Required] index of target server",
+						Destination: &serverUpdateParam.Index,
+					},
+					&cli.StringFlag{
+						Name:        "ipaddress",
+						Usage:       "set target ipaddress",
+						Destination: &serverUpdateParam.Ipaddress,
+					},
+					&cli.IntFlag{
+						Name:        "weight",
+						Usage:       "set weight",
+						Destination: &serverUpdateParam.Weight,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := serverUpdateParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), serverUpdateParam)
+
+					// Run command with params
+					return GSLBServerUpdate(ctx, serverUpdateParam)
 				},
 			},
 			{
@@ -389,15 +426,10 @@ func init() {
 				Usage:     "Update GSLB",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "protocol",
-						Usage:       "set healthcheck protocol[http/https/ping/tcp]",
-						Destination: &updateParam.Protocol,
-					},
-					&cli.BoolFlag{
-						Name:        "weighted",
-						Usage:       "enable weighted",
-						Destination: &updateParam.Weighted,
+					&cli.IntFlag{
+						Name:        "delay-loop",
+						Usage:       "set delay-loop of healthcheck",
+						Destination: &updateParam.DelayLoop,
 					},
 					&cli.StringFlag{
 						Name:        "description",
@@ -405,44 +437,20 @@ func init() {
 						Usage:       "set resource description",
 						Destination: &updateParam.Description,
 					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
 					&cli.StringFlag{
 						Name:        "host-header",
 						Usage:       "set host header of http/https healthcheck request",
 						Destination: &updateParam.HostHeader,
-					},
-					&cli.IntFlag{
-						Name:        "response-code",
-						Usage:       "set response-code of http/https healthcheck request",
-						Destination: &updateParam.ResponseCode,
-					},
-					&cli.IntFlag{
-						Name:        "port",
-						Usage:       "set port of tcp healthcheck",
-						Destination: &updateParam.Port,
-					},
-					&cli.IntFlag{
-						Name:        "delay-loop",
-						Usage:       "set delay-loop of healthcheck",
-						Destination: &updateParam.DelayLoop,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
 					},
 					&cli.Int64Flag{
 						Name:        "icon-id",
 						Usage:       "set Icon ID",
 						Destination: &updateParam.IconId,
 					},
-					&cli.StringFlag{
-						Name:        "sorry-server",
-						Usage:       "set sorry-server hostname/ipaddress",
-						Destination: &updateParam.SorryServer,
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
 					},
 					&cli.StringFlag{
 						Name:        "name",
@@ -453,6 +461,35 @@ func init() {
 						Name:        "path",
 						Usage:       "set path of http/https healthcheck request",
 						Destination: &updateParam.Path,
+					},
+					&cli.IntFlag{
+						Name:        "port",
+						Usage:       "set port of tcp healthcheck",
+						Destination: &updateParam.Port,
+					},
+					&cli.StringFlag{
+						Name:        "protocol",
+						Usage:       "set healthcheck protocol[http/https/ping/tcp]",
+						Destination: &updateParam.Protocol,
+					},
+					&cli.IntFlag{
+						Name:        "response-code",
+						Usage:       "set response-code of http/https healthcheck request",
+						Destination: &updateParam.ResponseCode,
+					},
+					&cli.StringFlag{
+						Name:        "sorry-server",
+						Usage:       "set sorry-server hostname/ipaddress",
+						Destination: &updateParam.SorryServer,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.BoolFlag{
+						Name:        "weighted",
+						Usage:       "enable weighted",
+						Destination: &updateParam.Weighted,
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -482,44 +519,287 @@ func init() {
 					return GSLBUpdate(ctx, updateParam)
 				},
 			},
-			{
-				Name:      "delete",
-				Aliases:   []string{"d", "rm"},
-				Usage:     "Delete GSLB",
-				ArgsUsage: "[ResourceID]",
-				Flags: []cli.Flag{
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &deleteParam.Id,
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() > 0 {
-						c.Set("id", c.Args().First())
-					}
-
-					// Validate specific for each command params
-					if errors := deleteParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), deleteParam)
-
-					// Run command with params
-					return GSLBDelete(ctx, deleteParam)
-				},
-			},
 		},
 	}
 
+	// build Category-Resource mapping
+	appendResourceCategoryMap("gslb", &schema.Category{
+		Key:         "commonserviceitem",
+		DisplayName: "Common service items",
+		Order:       50,
+	})
+
+	// build Category-Command mapping
+
+	appendCommandCategoryMap("gslb", "create", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("gslb", "delete", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("gslb", "list", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("gslb", "read", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("gslb", "server-add", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("gslb", "server-delete", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("gslb", "server-list", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("gslb", "server-update", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("gslb", "update", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+
+	// build Category-Param mapping
+
+	appendFlagCategoryMap("gslb", "create", "delay-loop", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "create", "description", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "create", "host-header", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "create", "icon-id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "create", "name", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "create", "path", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "create", "port", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "create", "protocol", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "create", "response-code", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "create", "sorry-server", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "create", "tags", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "create", "weighted", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "delete", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "list", "from", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "list", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "list", "max", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "list", "name", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "list", "sort", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "read", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "server-add", "enabled", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "server-add", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "server-add", "ipaddress", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "server-add", "weight", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "server-delete", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "server-delete", "index", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "server-list", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "server-update", "enabled", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "server-update", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "server-update", "index", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "server-update", "ipaddress", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "server-update", "weight", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "update", "delay-loop", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "update", "description", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "update", "host-header", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "update", "icon-id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "update", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "update", "name", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "update", "path", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "update", "port", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "update", "protocol", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "update", "response-code", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "update", "sorry-server", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "update", "tags", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "update", "weighted", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+
+	// append command to GlobalContext
 	Commands = append(Commands, cliCommand)
 }

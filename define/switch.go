@@ -61,7 +61,8 @@ func SwitchResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands: commands,
+		Commands:         commands,
+		ResourceCategory: CategoryNetworking,
 	}
 }
 

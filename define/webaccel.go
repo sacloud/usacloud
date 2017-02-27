@@ -20,7 +20,8 @@ func WebAccelResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands: commands,
+		Commands:         commands,
+		ResourceCategory: CategoryOther,
 	}
 }
 func webAccelListColumns() []output.ColumnDef {

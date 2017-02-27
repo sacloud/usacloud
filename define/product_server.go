@@ -26,8 +26,9 @@ func ProductServerResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands: commands,
-		Aliases:  []string{"server-plan"},
+		Commands:         commands,
+		Aliases:          []string{"server-plan"},
+		ResourceCategory: CategoryInformation,
 	}
 }
 

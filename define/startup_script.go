@@ -49,9 +49,10 @@ func StartupScriptResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands:    commands,
-		Aliases:     []string{"note"},
-		AltResource: "Note",
+		Commands:         commands,
+		Aliases:          []string{"note"},
+		AltResource:      "Note",
+		ResourceCategory: CategoryCommonItem,
 	}
 }
 

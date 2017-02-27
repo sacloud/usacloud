@@ -26,8 +26,9 @@ func ProductLicenseResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands: commands,
-		Aliases:  []string{"license-info"},
+		Commands:         commands,
+		Aliases:          []string{"license-info"},
+		ResourceCategory: CategoryInformation,
 	}
 }
 

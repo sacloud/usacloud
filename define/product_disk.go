@@ -26,8 +26,9 @@ func ProductDiskResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands: commands,
-		Aliases:  []string{"disk-plan"},
+		Commands:         commands,
+		Aliases:          []string{"disk-plan"},
+		ResourceCategory: CategoryInformation,
 	}
 }
 

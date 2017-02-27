@@ -78,7 +78,8 @@ func GSLBResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands: commands,
+		Commands:         commands,
+		ResourceCategory: CategoryCommonServiceItem,
 	}
 }
 

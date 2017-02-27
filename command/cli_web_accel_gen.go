@@ -3,6 +3,7 @@
 package command
 
 import (
+	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
 )
 
@@ -17,7 +18,7 @@ func init() {
 				Name:      "delete-cache",
 				Aliases:   []string{"purge"},
 				Usage:     "DeleteCache WebAccel",
-				ArgsUsage: "[ResourceID]",
+				ArgsUsage: "[URLs]...",
 				Action: func(c *cli.Context) error {
 
 					// Validate global params
@@ -45,5 +46,23 @@ func init() {
 		},
 	}
 
+	// build Category-Resource mapping
+	appendResourceCategoryMap("web-accel", &schema.Category{
+		Key:         "saas",
+		DisplayName: "Other services",
+		Order:       80,
+	})
+
+	// build Category-Command mapping
+
+	appendCommandCategoryMap("web-accel", "delete-cache", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+
+	// build Category-Param mapping
+
+	// append command to GlobalContext
 	Commands = append(Commands, cliCommand)
 }

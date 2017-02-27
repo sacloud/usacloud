@@ -10,10 +10,10 @@ import (
 
 // ListProductServerParam is input parameters for the sacloud API
 type ListProductServerParam struct {
-	Name []string
-	Id   []int64
 	From int
+	Id   []int64
 	Max  int
+	Name []string
 	Sort []string
 }
 
@@ -26,15 +26,6 @@ func NewListProductServerParam() *ListProductServerParam {
 func (p *ListProductServerParam) Validate() []error {
 	errors := []error{}
 	{
-		errs := validateConflicts("--name", p.Name, map[string]interface{}{
-
-			"--id": p.Id,
-		})
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := define.Resources["ProductServer"].Commands["list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -45,6 +36,15 @@ func (p *ListProductServerParam) Validate() []error {
 		errs := validateConflicts("--id", p.Id, map[string]interface{}{
 
 			"--name": p.Name,
+		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateConflicts("--name", p.Name, map[string]interface{}{
+
+			"--id": p.Id,
 		})
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -78,12 +78,12 @@ func (p *ListProductServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
-func (p *ListProductServerParam) SetName(v []string) {
-	p.Name = v
+func (p *ListProductServerParam) SetFrom(v int) {
+	p.From = v
 }
 
-func (p *ListProductServerParam) GetName() []string {
-	return p.Name
+func (p *ListProductServerParam) GetFrom() int {
+	return p.From
 }
 func (p *ListProductServerParam) SetId(v []int64) {
 	p.Id = v
@@ -92,19 +92,19 @@ func (p *ListProductServerParam) SetId(v []int64) {
 func (p *ListProductServerParam) GetId() []int64 {
 	return p.Id
 }
-func (p *ListProductServerParam) SetFrom(v int) {
-	p.From = v
-}
-
-func (p *ListProductServerParam) GetFrom() int {
-	return p.From
-}
 func (p *ListProductServerParam) SetMax(v int) {
 	p.Max = v
 }
 
 func (p *ListProductServerParam) GetMax() int {
 	return p.Max
+}
+func (p *ListProductServerParam) SetName(v []string) {
+	p.Name = v
+}
+
+func (p *ListProductServerParam) GetName() []string {
+	return p.Name
 }
 func (p *ListProductServerParam) SetSort(v []string) {
 	p.Sort = v

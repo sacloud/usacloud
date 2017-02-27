@@ -3,13 +3,14 @@
 package command
 
 import (
+	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
 )
 
 func init() {
+	createParam := NewCreateSimpleMonitorParam()
 	deleteParam := NewDeleteSimpleMonitorParam()
 	listParam := NewListSimpleMonitorParam()
-	createParam := NewCreateSimpleMonitorParam()
 	readParam := NewReadSimpleMonitorParam()
 	updateParam := NewUpdateSimpleMonitorParam()
 
@@ -17,6 +18,118 @@ func init() {
 		Name:  "simple-monitor",
 		Usage: "A manage commands of SimpleMonitor",
 		Subcommands: []*cli.Command{
+			{
+				Name:    "create",
+				Aliases: []string{"c"},
+				Usage:   "Create SimpleMonitor",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "delay-loop",
+						Usage:       "[Required] set delay-loop of monitoring(minute)",
+						Value:       1,
+						Destination: &createParam.DelayLoop,
+					},
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &createParam.Description,
+					},
+					&cli.StringFlag{
+						Name:        "dns-excepted",
+						Usage:       "set DNS query excepted value",
+						Destination: &createParam.DnsExcepted,
+					},
+					&cli.StringFlag{
+						Name:        "dns-qname",
+						Usage:       "set DNS query target name",
+						Destination: &createParam.DnsQname,
+					},
+					&cli.StringFlag{
+						Name:        "email-type",
+						Usage:       "set e-mail type",
+						Destination: &createParam.EmailType,
+					},
+					&cli.BoolFlag{
+						Name:        "enabled",
+						Usage:       "[Required] set monitoring enable/disable",
+						Value:       true,
+						Destination: &createParam.Enabled,
+					},
+					&cli.StringFlag{
+						Name:        "host-header",
+						Usage:       "set host header of http/https monitoring request",
+						Destination: &createParam.HostHeader,
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &createParam.IconId,
+					},
+					&cli.BoolFlag{
+						Name:        "notify-email",
+						Usage:       "enable e-mail notification",
+						Value:       true,
+						Destination: &createParam.NotifyEmail,
+					},
+					&cli.StringFlag{
+						Name:        "path",
+						Usage:       "set path of http/https monitoring request",
+						Destination: &createParam.Path,
+					},
+					&cli.IntFlag{
+						Name:        "port",
+						Usage:       "set port of tcp monitoring",
+						Destination: &createParam.Port,
+					},
+					&cli.StringFlag{
+						Name:        "protocol",
+						Usage:       "[Required] set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
+						Value:       "ping",
+						Destination: &createParam.Protocol,
+					},
+					&cli.IntFlag{
+						Name:        "response-code",
+						Usage:       "set response-code of http/https monitoring request",
+						Destination: &createParam.ResponseCode,
+					},
+					&cli.StringFlag{
+						Name:        "slack-webhook",
+						Usage:       "set slack-webhook URL",
+						Destination: &createParam.SlackWebhook,
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.StringFlag{
+						Name:        "target",
+						Usage:       "[Required] set monitoring target IP or Hostname",
+						Destination: &createParam.Target,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					createParam.Tags = c.StringSlice("tags")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Validate specific for each command params
+					if errors := createParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), createParam)
+
+					// Run command with params
+					return SimpleMonitorCreate(ctx, createParam)
+				},
+			},
 			{
 				Name:      "delete",
 				Aliases:   []string{"d", "rm"},
@@ -59,33 +172,33 @@ func init() {
 				Usage:   "List SimpleMonitor",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
-						Name:        "max",
-						Usage:       "set limit",
-						Destination: &listParam.Max,
-					},
-					&cli.StringSliceFlag{
-						Name:  "sort",
-						Usage: "set field(s) for sort",
-					},
-					&cli.StringSliceFlag{
-						Name:  "name",
-						Usage: "set filter by name(s)",
+						Name:        "from",
+						Usage:       "set offset",
+						Destination: &listParam.From,
 					},
 					&cli.Int64SliceFlag{
 						Name:  "id",
 						Usage: "set filter by id(s)",
 					},
 					&cli.IntFlag{
-						Name:        "from",
-						Usage:       "set offset",
-						Destination: &listParam.From,
+						Name:        "max",
+						Usage:       "set limit",
+						Destination: &listParam.Max,
+					},
+					&cli.StringSliceFlag{
+						Name:  "name",
+						Usage: "set filter by name(s)",
+					},
+					&cli.StringSliceFlag{
+						Name:  "sort",
+						Usage: "set field(s) for sort",
 					},
 				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
-					listParam.Name = c.StringSlice("name")
 					listParam.Id = c.Int64Slice("id")
+					listParam.Name = c.StringSlice("name")
 					listParam.Sort = c.StringSlice("sort")
 
 					// Validate global params
@@ -103,118 +216,6 @@ func init() {
 
 					// Run command with params
 					return SimpleMonitorList(ctx, listParam)
-				},
-			},
-			{
-				Name:    "create",
-				Aliases: []string{"c"},
-				Usage:   "Create SimpleMonitor",
-				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:        "port",
-						Usage:       "set port of tcp monitoring",
-						Destination: &createParam.Port,
-					},
-					&cli.StringFlag{
-						Name:        "dns-qname",
-						Usage:       "set DNS query target name",
-						Destination: &createParam.DnsQname,
-					},
-					&cli.BoolFlag{
-						Name:        "notify-email",
-						Usage:       "enable e-mail notification",
-						Value:       true,
-						Destination: &createParam.NotifyEmail,
-					},
-					&cli.StringFlag{
-						Name:        "email-type",
-						Usage:       "set e-mail type",
-						Destination: &createParam.EmailType,
-					},
-					&cli.StringFlag{
-						Name:        "target",
-						Usage:       "[Required] set monitoring target IP or Hostname",
-						Destination: &createParam.Target,
-					},
-					&cli.IntFlag{
-						Name:        "delay-loop",
-						Usage:       "[Required] set delay-loop of monitoring(minute)",
-						Value:       1,
-						Destination: &createParam.DelayLoop,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &createParam.Description,
-					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &createParam.IconId,
-					},
-					&cli.BoolFlag{
-						Name:        "enabled",
-						Usage:       "[Required] set monitoring enable/disable",
-						Value:       true,
-						Destination: &createParam.Enabled,
-					},
-					&cli.StringFlag{
-						Name:        "dns-excepted",
-						Usage:       "set DNS query excepted value",
-						Destination: &createParam.DnsExcepted,
-					},
-					&cli.StringFlag{
-						Name:        "slack-webhook",
-						Usage:       "set slack-webhook URL",
-						Destination: &createParam.SlackWebhook,
-					},
-					&cli.StringFlag{
-						Name:        "protocol",
-						Usage:       "[Required] set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
-						Value:       "ping",
-						Destination: &createParam.Protocol,
-					},
-					&cli.StringFlag{
-						Name:        "host-header",
-						Usage:       "set host header of http/https monitoring request",
-						Destination: &createParam.HostHeader,
-					},
-					&cli.StringFlag{
-						Name:        "path",
-						Usage:       "set path of http/https monitoring request",
-						Destination: &createParam.Path,
-					},
-					&cli.IntFlag{
-						Name:        "response-code",
-						Usage:       "set response-code of http/https monitoring request",
-						Destination: &createParam.ResponseCode,
-					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
-					},
-				},
-				Action: func(c *cli.Context) error {
-
-					// Set option values for slice
-					createParam.Tags = c.StringSlice("tags")
-
-					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Validate specific for each command params
-					if errors := createParam.Validate(); len(errors) > 0 {
-						return flattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := NewContext(c, c.Args().Slice(), createParam)
-
-					// Run command with params
-					return SimpleMonitorCreate(ctx, createParam)
 				},
 			},
 			{
@@ -259,14 +260,56 @@ func init() {
 				Usage:     "Update SimpleMonitor",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:        "slack-webhook",
-						Usage:       "set slack-webhook URL",
-						Destination: &updateParam.SlackWebhook,
+					&cli.IntFlag{
+						Name:        "delay-loop",
+						Usage:       "set delay-loop of monitoring(minute)",
+						Destination: &updateParam.DelayLoop,
 					},
-					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set resource tags",
+					&cli.StringFlag{
+						Name:        "description",
+						Aliases:     []string{"desc"},
+						Usage:       "set resource description",
+						Destination: &updateParam.Description,
+					},
+					&cli.StringFlag{
+						Name:        "dns-excepted",
+						Usage:       "set DNS query excepted value",
+						Destination: &updateParam.DnsExcepted,
+					},
+					&cli.StringFlag{
+						Name:        "dns-qname",
+						Usage:       "set DNS query target name",
+						Destination: &updateParam.DnsQname,
+					},
+					&cli.StringFlag{
+						Name:        "email-type",
+						Usage:       "set e-mail type",
+						Destination: &updateParam.EmailType,
+					},
+					&cli.BoolFlag{
+						Name:        "enabled",
+						Usage:       "set monitoring enable/disable",
+						Destination: &updateParam.Enabled,
+					},
+					&cli.StringFlag{
+						Name:        "host-header",
+						Usage:       "set host header of http/https monitoring request",
+						Destination: &updateParam.HostHeader,
+					},
+					&cli.Int64Flag{
+						Name:        "icon-id",
+						Usage:       "set Icon ID",
+						Destination: &updateParam.IconId,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &updateParam.Id,
+					},
+					&cli.BoolFlag{
+						Name:        "notify-email",
+						Usage:       "enable e-mail notification",
+						Destination: &updateParam.NotifyEmail,
 					},
 					&cli.StringFlag{
 						Name:        "path",
@@ -279,65 +322,23 @@ func init() {
 						Destination: &updateParam.Port,
 					},
 					&cli.StringFlag{
-						Name:        "dns-qname",
-						Usage:       "set DNS query target name",
-						Destination: &updateParam.DnsQname,
-					},
-					&cli.StringFlag{
-						Name:        "dns-excepted",
-						Usage:       "set DNS query excepted value",
-						Destination: &updateParam.DnsExcepted,
-					},
-					&cli.StringFlag{
-						Name:        "email-type",
-						Usage:       "set e-mail type",
-						Destination: &updateParam.EmailType,
-					},
-					&cli.StringFlag{
 						Name:        "protocol",
 						Usage:       "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
 						Destination: &updateParam.Protocol,
-					},
-					&cli.StringFlag{
-						Name:        "host-header",
-						Usage:       "set host header of http/https monitoring request",
-						Destination: &updateParam.HostHeader,
-					},
-					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
-					},
-					&cli.BoolFlag{
-						Name:        "enabled",
-						Usage:       "set monitoring enable/disable",
-						Destination: &updateParam.Enabled,
-					},
-					&cli.BoolFlag{
-						Name:        "notify-email",
-						Usage:       "enable e-mail notification",
-						Destination: &updateParam.NotifyEmail,
-					},
-					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set resource ID",
-						Destination: &updateParam.Id,
 					},
 					&cli.IntFlag{
 						Name:        "response-code",
 						Usage:       "set response-code of http/https monitoring request",
 						Destination: &updateParam.ResponseCode,
 					},
-					&cli.IntFlag{
-						Name:        "delay-loop",
-						Usage:       "set delay-loop of monitoring(minute)",
-						Destination: &updateParam.DelayLoop,
+					&cli.StringFlag{
+						Name:        "slack-webhook",
+						Usage:       "set slack-webhook URL",
+						Destination: &updateParam.SlackWebhook,
 					},
-					&cli.Int64Flag{
-						Name:        "icon-id",
-						Usage:       "set Icon ID",
-						Destination: &updateParam.IconId,
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
 					},
 				},
 				Action: func(c *cli.Context) error {
@@ -370,5 +371,239 @@ func init() {
 		},
 	}
 
+	// build Category-Resource mapping
+	appendResourceCategoryMap("simple-monitor", &schema.Category{
+		Key:         "commonserviceitem",
+		DisplayName: "Common service items",
+		Order:       50,
+	})
+
+	// build Category-Command mapping
+
+	appendCommandCategoryMap("simple-monitor", "create", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("simple-monitor", "delete", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("simple-monitor", "list", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("simple-monitor", "read", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+	appendCommandCategoryMap("simple-monitor", "update", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
+
+	// build Category-Param mapping
+
+	appendFlagCategoryMap("simple-monitor", "create", "delay-loop", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "description", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "dns-excepted", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "dns-qname", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "email-type", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "enabled", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "host-header", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "icon-id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "notify-email", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "path", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "port", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "protocol", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "response-code", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "slack-webhook", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "tags", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "create", "target", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "delete", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "list", "from", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "list", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "list", "max", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "list", "name", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "list", "sort", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "read", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "delay-loop", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "description", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "dns_excepted", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "dns_qname", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "email-type", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "enabled", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "host-header", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "icon-id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "notify-email", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "path", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "port", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "protocol", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "response-code", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "slack-webhook", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("simple-monitor", "update", "tags", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+
+	// append command to GlobalContext
 	Commands = append(Commands, cliCommand)
 }

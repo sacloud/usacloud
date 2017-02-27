@@ -53,7 +53,10 @@ func generateSource(resource *schema.Resource) (string, error) {
 	// build commands
 	var commands []map[string]interface{}
 	var parameters string
-	for k, c := range resource.Commands {
+	for _, comm := range resource.SortedCommands() {
+		c := comm.Command
+		k := comm.CommandKey
+
 		ctx.C = k
 
 		params, err := buildCommandsParams(c)
@@ -74,15 +77,68 @@ func generateSource(resource *schema.Resource) (string, error) {
 		usage = fmt.Sprintf("A manage commands of %s", ctx.R)
 	}
 
+	// build category resource map
+	type categoryResourceMapValue struct {
+		*schema.Category
+		ResourceKey string
+	}
+	categoryResourceMap := categoryResourceMapValue{
+		ResourceKey: ctx.DashR(),
+		Category:    &resource.ResourceCategory,
+	}
+
+	// build category command map
+	type categoryCommandMapValue struct {
+		*schema.Category
+		ResourceKey string
+		CommandKey  string
+	}
+	categoryCommandMap := map[string]interface{}{}
+	for _, comm := range resource.SortedCommands() {
+		k := comm.CommandKey
+		category := comm.Category
+		if category == nil {
+			category = schema.DefaultCommandCategory
+		}
+		categoryCommandMap[k] = categoryCommandMapValue{
+			ResourceKey: ctx.DashR(),
+			CommandKey:  k,
+			Category:    category,
+		}
+	}
+
+	// build category param map
+	type categoryMapValue struct {
+		*schema.Category
+		CommandKey  string
+		ResourceKey string
+	}
+	categoryParamMap := map[string]map[string]interface{}{}
+	for _, comm := range resource.SortedCommands() {
+		c := comm.Command
+		k := comm.CommandKey
+		categoryParamMap[k] = map[string]interface{}{}
+		for _, param := range c.SortedParams() {
+			categoryParamMap[k][param.ParamKey] = &categoryMapValue{
+				Category:    param.Category,
+				CommandKey:  k,
+				ResourceKey: ctx.DashR(),
+			}
+		}
+	}
+
 	buf := bytes.NewBufferString("")
 	t := template.New("t")
 	template.Must(t.Parse(srcTemplate))
 	err := t.Execute(buf, map[string]interface{}{
-		"Name":       ctx.DashR(),
-		"Aliases":    tools.FlattenStringList(resource.Aliases),
-		"Usage":      usage,
-		"Commands":   commands,
-		"Parameters": parameters,
+		"Name":                ctx.DashR(),
+		"Aliases":             tools.FlattenStringList(resource.Aliases),
+		"Usage":               usage,
+		"Commands":            commands,
+		"Parameters":          parameters,
+		"CategoryResourceMap": categoryResourceMap,
+		"CategoryCommandMap":  categoryCommandMap,
+		"CategoryParamMap":    categoryParamMap,
 	})
 	return buf.String(), err
 }
@@ -91,7 +147,7 @@ func buildCommandsParams(command *schema.Command) (map[string]interface{}, error
 
 	var res map[string]interface{}
 
-	flags, err := buildFlagsParams(command.Params)
+	flags, err := buildFlagsParams(command.SortedParams())
 	if err != nil {
 		return res, err
 	}
@@ -101,7 +157,7 @@ func buildCommandsParams(command *schema.Command) (map[string]interface{}, error
 		usage = fmt.Sprintf("%s %s", ctx.CamelC(), ctx.CamelR())
 	}
 	argsUsage := command.ArgsUsage
-	if command.Type.IsRequiredIDType() {
+	if command.ArgsUsage == "" && command.Type.IsRequiredIDType() {
 		argsUsage = "[ResourceID]"
 	}
 
@@ -124,7 +180,7 @@ func buildCommandsParams(command *schema.Command) (map[string]interface{}, error
 	return res, err
 }
 
-func buildFlagsParams(params map[string]*schema.Schema) ([]map[string]interface{}, error) {
+func buildFlagsParams(params schema.SortableParams) ([]map[string]interface{}, error) {
 
 	var res []map[string]interface{}
 
@@ -132,7 +188,11 @@ func buildFlagsParams(params map[string]*schema.Schema) ([]map[string]interface{
 		return res, nil
 	}
 
-	for k, s := range params {
+	for _, param := range params {
+
+		s := param.Param
+		k := param.ParamKey
+
 		ctx.P = k
 
 		d := ""
@@ -197,7 +257,9 @@ func buildActionParams(command *schema.Command) (map[string]interface{}, error) 
 	// build params
 	paramName := ctx.InputParamVariableName()
 	setDefault := ""
-	for k, p := range command.Params {
+	for _, param := range command.SortedParams() {
+		k := param.ParamKey
+		p := param.Param
 		ctx.P = k
 
 		propName := ctx.InputParamFieldName()
@@ -264,6 +326,7 @@ package command
 
 import (
     "gopkg.in/urfave/cli.v2"
+    "github.com/sacloud/usacloud/schema"
 )
 
 func init() {
@@ -337,5 +400,29 @@ func init() {
 		},
 	}
 
+	// build Category-Resource mapping
+	appendResourceCategoryMap("{{.CategoryResourceMap.ResourceKey}}" , &schema.Category{
+		Key:		"{{.CategoryResourceMap.Key}}",
+		DisplayName:	"{{.CategoryResourceMap.DisplayName}}",
+		Order:		{{.CategoryResourceMap.Order}},
+	})
+
+	// build Category-Command mapping
+	{{ range .CategoryCommandMap}}
+	appendCommandCategoryMap("{{.ResourceKey}}", "{{.CommandKey}}", &schema.Category{
+		Key:		"{{.Key}}",
+		DisplayName:	"{{.DisplayName}}",
+		Order:		{{.Order}},
+	}){{end}}
+
+	// build Category-Param mapping
+	{{ range .CategoryParamMap}}{{ range $paramKey , $category := . }}
+	appendFlagCategoryMap("{{.ResourceKey}}", "{{.CommandKey}}", "{{$paramKey}}", &schema.Category{
+		Key:		"{{$category.Key}}",
+		DisplayName:	"{{$category.DisplayName}}",
+		Order:		{{$category.Order}},
+	}){{end}}{{end}}
+
+	// append command to GlobalContext
 	Commands = append(Commands, cliCommand)
 }`
