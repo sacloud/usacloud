@@ -122,6 +122,15 @@ func ServerResource() *schema.Resource {
 			Category:         "ssh",
 			Order:            20,
 		},
+		"scp": {
+			Type:             schema.CommandManipulate,
+			Params:           serverSCPParam(),
+			Usage:            "Copy files/directories by SSH",
+			ArgsUsage:        "[ServerID:]<FROM> [ServerID:]<TO>",
+			UseCustomCommand: true,
+			Category:         "ssh",
+			Order:            30,
+		},
 		"disk-info": {
 			Type:               schema.CommandManipulate,
 			Params:             serverDiskInfoParam(),
@@ -856,10 +865,55 @@ func serverSSHParam() map[string]*schema.Schema {
 			Description: "password(or private-key pass phrase)",
 			EnvVars:     []string{"SAKURACLOUD_SSH_PASSWORD"},
 		},
-		"proxy": {
+		"quiet": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"q"},
+			Description: "disable information messages",
+		},
+	}
+}
+
+func serverSCPParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"key": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Aliases:      []string{"i"},
+			Description:  "private-key file path",
+			ValidateFunc: validateFileExists(),
+		},
+		"user": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
-			Description: "proxy server",
+			Aliases:     []string{"l"},
+			Description: "user name",
+		},
+		"port": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Aliases:      []string{"p"},
+			Description:  "port",
+			Required:     true,
+			DefaultValue: 22,
+		},
+		"password": {
+			Type:        schema.TypeString,
+			HandlerType: schema.HandlerNoop,
+			Description: "password(or private-key pass phrase)",
+			EnvVars:     []string{"SAKURACLOUD_SSH_PASSWORD"},
+		},
+		"recursive": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"r"},
+			Description: "set recursive copy flag",
+		},
+		"quiet": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"q"},
+			Description: "disable information messages",
 		},
 	}
 }

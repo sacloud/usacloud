@@ -21,6 +21,7 @@ func init() {
 	waitForDownParam := NewWaitForDownServerParam()
 	sshParam := NewSshServerParam()
 	sshExecParam := NewSshExecServerParam()
+	scpParam := NewScpServerParam()
 	diskInfoParam := NewDiskInfoServerParam()
 	diskConnectParam := NewDiskConnectServerParam()
 	diskDisconnectParam := NewDiskDisconnectServerParam()
@@ -749,10 +750,11 @@ func init() {
 						Value:       22,
 						Destination: &sshParam.Port,
 					},
-					&cli.StringFlag{
-						Name:        "proxy",
-						Usage:       "proxy server",
-						Destination: &sshParam.Proxy,
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "disable information messages",
+						Destination: &sshParam.Quiet,
 					},
 					&cli.StringFlag{
 						Name:        "user",
@@ -814,10 +816,11 @@ func init() {
 						Value:       22,
 						Destination: &sshExecParam.Port,
 					},
-					&cli.StringFlag{
-						Name:        "proxy",
-						Usage:       "proxy server",
-						Destination: &sshExecParam.Proxy,
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "disable information messages",
+						Destination: &sshExecParam.Quiet,
 					},
 					&cli.StringFlag{
 						Name:        "user",
@@ -848,6 +851,73 @@ func init() {
 
 					// Run command with params
 					return ServerSshExec(ctx, sshExecParam)
+				},
+			},
+			{
+				Name:      "scp",
+				Usage:     "Copy files/directories by SSH",
+				ArgsUsage: "[ServerID:]<FROM> [ServerID:]<TO>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "key",
+						Aliases:     []string{"i"},
+						Usage:       "private-key file path",
+						Destination: &scpParam.Key,
+					},
+					&cli.StringFlag{
+						Name:        "password",
+						Usage:       "password(or private-key pass phrase)",
+						EnvVars:     []string{"SAKURACLOUD_SSH_PASSWORD"},
+						Destination: &scpParam.Password,
+					},
+					&cli.IntFlag{
+						Name:        "port",
+						Aliases:     []string{"p"},
+						Usage:       "[Required] port",
+						Value:       22,
+						Destination: &scpParam.Port,
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "disable information messages",
+						Destination: &scpParam.Quiet,
+					},
+					&cli.BoolFlag{
+						Name:        "recursive",
+						Aliases:     []string{"r"},
+						Usage:       "set recursive copy flag",
+						Destination: &scpParam.Recursive,
+					},
+					&cli.StringFlag{
+						Name:        "user",
+						Aliases:     []string{"l"},
+						Usage:       "user name",
+						Destination: &scpParam.User,
+					},
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := scpParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), scpParam)
+
+					// Run command with params
+					return ServerScp(ctx, scpParam)
 				},
 			},
 			{
@@ -1449,6 +1519,11 @@ func init() {
 		DisplayName: "Power Management",
 		Order:       20,
 	})
+	appendCommandCategoryMap("server", "scp", &schema.Category{
+		Key:         "ssh",
+		DisplayName: "SSH/SCP",
+		Order:       30,
+	})
 	appendCommandCategoryMap("server", "shutdown", &schema.Category{
 		Key:         "power",
 		DisplayName: "Power Management",
@@ -1917,6 +1992,36 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
+	appendFlagCategoryMap("server", "scp", "key", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "scp", "password", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "scp", "port", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "scp", "quiet", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "scp", "recursive", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "scp", "user", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
 	appendFlagCategoryMap("server", "shutdown", "async", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -1952,7 +2057,7 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
-	appendFlagCategoryMap("server", "ssh", "proxy", &schema.Category{
+	appendFlagCategoryMap("server", "ssh", "quiet", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,
@@ -1982,7 +2087,7 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
-	appendFlagCategoryMap("server", "ssh-exec", "proxy", &schema.Category{
+	appendFlagCategoryMap("server", "ssh-exec", "quiet", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,

@@ -1415,7 +1415,7 @@ type SshServerParam struct {
 	Key      string
 	Password string
 	Port     int
-	Proxy    string
+	Quiet    bool
 	User     string
 }
 
@@ -1514,12 +1514,12 @@ func (p *SshServerParam) SetPort(v int) {
 func (p *SshServerParam) GetPort() int {
 	return p.Port
 }
-func (p *SshServerParam) SetProxy(v string) {
-	p.Proxy = v
+func (p *SshServerParam) SetQuiet(v bool) {
+	p.Quiet = v
 }
 
-func (p *SshServerParam) GetProxy() string {
-	return p.Proxy
+func (p *SshServerParam) GetQuiet() bool {
+	return p.Quiet
 }
 func (p *SshServerParam) SetUser(v string) {
 	p.User = v
@@ -1535,7 +1535,7 @@ type SshExecServerParam struct {
 	Key      string
 	Password string
 	Port     int
-	Proxy    string
+	Quiet    bool
 	User     string
 }
 
@@ -1634,18 +1634,124 @@ func (p *SshExecServerParam) SetPort(v int) {
 func (p *SshExecServerParam) GetPort() int {
 	return p.Port
 }
-func (p *SshExecServerParam) SetProxy(v string) {
-	p.Proxy = v
+func (p *SshExecServerParam) SetQuiet(v bool) {
+	p.Quiet = v
 }
 
-func (p *SshExecServerParam) GetProxy() string {
-	return p.Proxy
+func (p *SshExecServerParam) GetQuiet() bool {
+	return p.Quiet
 }
 func (p *SshExecServerParam) SetUser(v string) {
 	p.User = v
 }
 
 func (p *SshExecServerParam) GetUser() string {
+	return p.User
+}
+
+// ScpServerParam is input parameters for the sacloud API
+type ScpServerParam struct {
+	Key       string
+	Password  string
+	Port      int
+	Quiet     bool
+	Recursive bool
+	User      string
+}
+
+// NewScpServerParam return new ScpServerParam
+func NewScpServerParam() *ScpServerParam {
+	return &ScpServerParam{
+
+		Port: 22,
+	}
+}
+
+// Validate checks current values in model
+func (p *ScpServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Server"].Commands["scp"].Params["key"].ValidateFunc
+		errs := validator("--key", p.Key)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ScpServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *ScpServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["scp"]
+}
+
+func (p *ScpServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *ScpServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *ScpServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *ScpServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ScpServerParam) SetKey(v string) {
+	p.Key = v
+}
+
+func (p *ScpServerParam) GetKey() string {
+	return p.Key
+}
+func (p *ScpServerParam) SetPassword(v string) {
+	p.Password = v
+}
+
+func (p *ScpServerParam) GetPassword() string {
+	return p.Password
+}
+func (p *ScpServerParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *ScpServerParam) GetPort() int {
+	return p.Port
+}
+func (p *ScpServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ScpServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ScpServerParam) SetRecursive(v bool) {
+	p.Recursive = v
+}
+
+func (p *ScpServerParam) GetRecursive() bool {
+	return p.Recursive
+}
+func (p *ScpServerParam) SetUser(v string) {
+	p.User = v
+}
+
+func (p *ScpServerParam) GetUser() string {
 	return p.User
 }
 
