@@ -21,6 +21,12 @@
 			"revisionTime": "2016-10-29T20:57:26Z"
 		},
 		{
+			"checksumSHA1": "YBtpfrpjYqiZegMYJEQqlpneQAk=",
+			"path": "github.com/hnakamur/go-scp",
+			"revision": "62da9ce7ef065469325e72bc76b00deadd3503df",
+			"revisionTime": "2017-01-04T09:20:34Z"
+		},
+		{
 			"checksumSHA1": "0MZ+LgAY36oK73IE9297Vf4NTXU=",
 			"path": "github.com/huandu/xstrings",
 			"revision": "3959339b333561bf62a38b424fd41517c2c90f40",
