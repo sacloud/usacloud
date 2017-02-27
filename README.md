@@ -152,12 +152,13 @@ COPYRIGHT:
     # connect to server by ssh using generated private-key(Not supported on Windows)
     $ usacloud server ssh [ServerID]
     
-    # exec command on SSH(no-pty)
+    # exec command on SSH(no-pty, support Windows)
     $ usacloud server ssh-exec cat /etc/passwd
     
-    # [not implemented yet] upload/download by SSH(like scp)
+    # upload/download by SSH(like scp)
     $ usacloud server scp local-file.txt [ServerID]:/home/ubuntu/remote-file.txt # local to remote
     $ usacloud server scp [ServerID]:/home/ubuntu/remote-file.txt local-file.txt # remote to local
+    $ usacloud server scp -r local-dir [ServerID]:/home/ubuntu/remote-dir        # recursive
 ```
 
 #### Examples: Upload/Download iso-image or archive by FTPS
