@@ -16,6 +16,7 @@ import (
 // scp.FileInfo, and you can get the access time with fileInfo.(*scp.FileInfo).AccessTime().
 func (s *SCP) Receive(srcFile string, dest io.Writer) (os.FileInfo, error) {
 	var info os.FileInfo
+	srcFile = realPath(filepath.Clean(srcFile))
 	err := runSinkSession(s.client, srcFile, false, "", false, true, func(s *sinkSession) error {
 		var timeHeader timeMsgHeader
 		h, err := s.ReadHeaderOrReply()
@@ -51,7 +52,7 @@ func (s *SCP) Receive(srcFile string, dest io.Writer) (os.FileInfo, error) {
 // the specified name. The time and permission will be set to the same value
 // of the source file.
 func (s *SCP) ReceiveFile(srcFile, destFile string) error {
-	srcFile = filepath.Clean(srcFile)
+	srcFile = realPath(filepath.Clean(srcFile))
 	destFile = filepath.Clean(destFile)
 	fiDest, err := os.Stat(destFile)
 	if err != nil && !os.IsNotExist(err) {
@@ -116,7 +117,7 @@ func copyFileBodyFromRemote(s *sinkSession, localFilename string, timeHeader tim
 // be copied. The time and permission will be set to the same value of the source
 // file or directory.
 func (s *SCP) ReceiveDir(srcDir, destDir string, acceptFn AcceptFunc) error {
-	srcDir = filepath.Clean(srcDir)
+	srcDir = realPath(filepath.Clean(srcDir))
 	destDir = filepath.Clean(destDir)
 	_, err := os.Stat(destDir)
 	if err != nil && !os.IsNotExist(err) {

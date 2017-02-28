@@ -2,13 +2,14 @@ package command
 
 import (
 	"fmt"
-	"github.com/hnakamur/go-scp"
-	"github.com/sacloud/usacloud/remote"
 	"os"
 	"path/filepath"
 	"runtime"
 	"strconv"
 	"strings"
+
+	"github.com/hnakamur/go-scp"
+	"github.com/sacloud/usacloud/remote"
 )
 
 func ServerScp(ctx Context, params *ScpServerParam) error {
@@ -103,13 +104,13 @@ func ServerScp(ctx Context, params *ScpServerParam) error {
 	if localToRemote {
 
 		// is local path is directory?
-		localPath := srcTokens[0]
-		remotePath := destTokens[1] // 000000000000:/path/to/remote/location
+		localPath := strings.Join(srcTokens[0:], ":")
+		remotePath := strings.Join(destTokens[1:], ":") // 000000000000:/path/to/remote/location
 
 		// check local file stat
 		stat, err := os.Stat(localPath)
 		if err != nil {
-			return fmt.Errorf("ServerScp is failed: %s", e)
+			return fmt.Errorf("ServerScp is failed: %s", err)
 		}
 		if stat.IsDir() {
 
@@ -124,7 +125,7 @@ func ServerScp(ctx Context, params *ScpServerParam) error {
 
 			})
 			if err != nil {
-				return fmt.Errorf("ServerScp is failed: %s", e)
+				return fmt.Errorf("ServerScp is failed: %s", err)
 			}
 		} else {
 			if strings.HasSuffix(remotePath, "/") {
@@ -132,19 +133,19 @@ func ServerScp(ctx Context, params *ScpServerParam) error {
 			}
 			err := scpClient.SendFile(localPath, remotePath)
 			if err != nil {
-				return fmt.Errorf("ServerScp is failed: %s", e)
+				return fmt.Errorf("ServerScp is failed: %s", err)
 			}
 		}
 
 	} else {
 		// is local path is directory?
-		localPath := destTokens[0]
-		remotePath := srcTokens[1] // 000000000000:/path/to/remote/location
+		localPath := strings.Join(destTokens[0:], ":")
+		remotePath := strings.Join(srcTokens[1:], ":") // 000000000000:/path/to/remote/location
 
 		// create dir
 		err := os.MkdirAll(filepath.Dir(localPath), 0755)
 		if err != nil {
-			return fmt.Errorf("ServerScp is failed: %s", e)
+			return fmt.Errorf("ServerScp is failed: %s", err)
 		}
 		// first, try copy file
 		err = scpClient.ReceiveFile(remotePath, localPath)
@@ -161,7 +162,7 @@ func ServerScp(ctx Context, params *ScpServerParam) error {
 
 			})
 			if err != nil {
-				return fmt.Errorf("ServerScp is failed: %s", e)
+				return fmt.Errorf("ServerScp is failed: %s", err)
 			}
 		}
 	}
@@ -173,12 +174,12 @@ func parseScpArgs(arg string) (int64, []string, error) {
 
 	tokens := strings.Split(arg, ":")
 
-	if len(tokens) == 2 {
+	if len(tokens) > 1 {
 
 		strID := tokens[0]
 		id, err := strconv.ParseInt(strID, 10, 64)
 		if err != nil {
-			return -1, []string{}, fmt.Errorf("ID is invalid: %s", err)
+			return -1, tokens, nil // for windows like path (C://...)
 		}
 		if len(fmt.Sprintf("%d", id)) != 12 {
 			return -1, []string{}, fmt.Errorf("ID is invalid: %s", err)

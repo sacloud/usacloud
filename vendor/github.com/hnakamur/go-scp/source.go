@@ -17,7 +17,7 @@ import (
 // closed, you can pass the result of ioutil.NopCloser(r).
 func (s *SCP) Send(info *FileInfo, r io.ReadCloser, destFile string) error {
 	destFile = filepath.Clean(destFile)
-	destFile = filepath.Dir(destFile)
+	destFile = realPath(filepath.Dir(destFile))
 
 	return runSourceSession(s.client, destFile, false, "", false, true, func(s *sourceSession) error {
 		err := s.WriteFile(info, r)
@@ -32,7 +32,7 @@ func (s *SCP) Send(info *FileInfo, r io.ReadCloser, destFile string) error {
 // The time and permission will be set with the value of the source file.
 func (s *SCP) SendFile(srcFile, destFile string) error {
 	srcFile = filepath.Clean(srcFile)
-	destFile = filepath.Clean(destFile)
+	destFile = realPath(filepath.Clean(destFile))
 
 	return runSourceSession(s.client, destFile, false, "", false, true, func(s *sourceSession) error {
 		osFileInfo, err := os.Stat(srcFile)
@@ -73,7 +73,7 @@ func acceptAny(parentDir string, info os.FileInfo) (bool, error) {
 // The time and permission will be set to the same value of the source file or directory.
 func (s *SCP) SendDir(srcDir, destDir string, acceptFn AcceptFunc) error {
 	srcDir = filepath.Clean(srcDir)
-	destDir = filepath.Clean(destDir)
+	destDir = realPath(filepath.Clean(destDir))
 	if acceptFn == nil {
 		acceptFn = acceptAny
 	}

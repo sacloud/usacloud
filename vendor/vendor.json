@@ -21,10 +21,12 @@
 			"revisionTime": "2016-10-29T20:57:26Z"
 		},
 		{
-			"checksumSHA1": "W04g0c8T5dkvPkfUWht4rI+nha4=",
+			"checksumSHA1": "hkWKWLkTmD3ZuwrTxCV8eHqClbw=",
+			"origin": "github.com/yamamoto-febc/go-scp",
 			"path": "github.com/hnakamur/go-scp",
-			"revision": "f44a7b57833f21f651675bffb167fc99299ba925",
-			"revisionTime": "2017-02-27T11:18:58Z"
+			"revision": "c159b514d5a0774fdf7eeca824ab525153dd517b",
+			"revisionTime": "2017-02-27T12:13:27Z",
+			"tree": true
 		},
 		{
 			"checksumSHA1": "0MZ+LgAY36oK73IE9297Vf4NTXU=",
