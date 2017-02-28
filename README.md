@@ -195,13 +195,18 @@ COPYRIGHT:
     $ usacloud object-storage ls dir1/dir2
 
     # download object to local(download remote.txt)
-    $ usacloud get remote.txt           # output to os.StdOut
-    $ usacloud get remote.txt local.txt # save as local file
+    $ usacloud object-storage get remote.txt           # output to os.StdOut
+    $ usacloud object-storage get remote.txt local.txt # save as local file
+    $ usacloud object-storage get -r remote/ local/    # download recursive
 
     # upload object
-    $ usacloud put local.txt remote.txt
-    $ usacloud put local.txt dir1/dir2/remote.txt
+    $ usacloud object-storage put local.txt remote.txt
+    $ usacloud object-storage put local.txt dir1/dir2/remote.txt
+    $ usacloud object-storage put -r local/ remote/    # upload recursive
     
+    # delete object
+    $ usacloud object-storage del remote.txt
+    $ usacloud object-storage del -r remote/           # delete recursive
 
 ```   
 
