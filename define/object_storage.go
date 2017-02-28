@@ -15,26 +15,26 @@ func ObjectStorageResource() *schema.Resource {
 			TableType:          output.TableSimple,
 			TableColumnDefines: objectStorageListColumns(),
 			UseCustomCommand:   true,
-			ArgsUsage:          "[PATH]",
+			ArgsUsage:          "<remote path>",
 		},
 		"put": {
 			Type:             schema.CommandCustom,
 			Params:           objectStoragePutParam(),
 			UseCustomCommand: true,
-			ArgsUsage:        "[FILE] [PATH]",
+			ArgsUsage:        "<local file/directory> <remote path>",
 		},
 		"get": {
 			Type:             schema.CommandCustom,
 			Params:           objectStorageGetParam(),
 			UseCustomCommand: true,
-			ArgsUsage:        "[PATH] [FILE]",
+			ArgsUsage:        "<remote path> <local file/directory>",
 		},
 		"delete": {
 			Type:             schema.CommandCustom,
 			Aliases:          []string{"rm", "del"},
 			Params:           objectStorageDelParam(),
 			UseCustomCommand: true,
-			ArgsUsage:        "[PATH]",
+			ArgsUsage:        "<remote path>",
 		},
 	}
 
@@ -83,11 +83,6 @@ func objectStorageListParam() map[string]*schema.Schema {
 			Description: "set bucket",
 			EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
 		},
-		//"path": {
-		//	Type:        schema.TypeString,
-		//	HandlerType: schema.HandlerNoop,
-		//	Description: "set path",
-		//},
 	}
 }
 
@@ -119,12 +114,12 @@ func objectStoragePutParam() map[string]*schema.Schema {
 			Description:  "set content-type",
 			DefaultValue: "application/octet-stream",
 		},
-		//TODO add recursive flag
-		//"path": {
-		//	Type:        schema.TypeString,
-		//	HandlerType: schema.HandlerNoop,
-		//	Description: "set path",
-		//},
+		"recursive": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"r"},
+			Description: "put objects recursive",
+		},
 	}
 }
 
@@ -150,12 +145,12 @@ func objectStorageGetParam() map[string]*schema.Schema {
 			Description: "set bucket",
 			EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
 		},
-		//TODO add recursive flag
-		//"path": {
-		//	Type:        schema.TypeString,
-		//	HandlerType: schema.HandlerNoop,
-		//	Description: "set path",
-		//},
+		"recursive": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"r"},
+			Description: "get objects recursive",
+		},
 	}
 }
 
@@ -181,11 +176,11 @@ func objectStorageDelParam() map[string]*schema.Schema {
 			Description: "set bucket",
 			EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
 		},
-		//TODO add recursive flag
-		//"path": {
-		//	Type:        schema.TypeString,
-		//	HandlerType: schema.HandlerNoop,
-		//	Description: "set path",
-		//},
+		"recursive": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"r"},
+			Description: "delete objects recursive",
+		},
 	}
 }

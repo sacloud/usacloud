@@ -12,6 +12,7 @@ import (
 type DeleteObjectStorageParam struct {
 	AccessKey string
 	Bucket    string
+	Recursive bool
 	SecretKey string
 }
 
@@ -79,6 +80,13 @@ func (p *DeleteObjectStorageParam) SetBucket(v string) {
 func (p *DeleteObjectStorageParam) GetBucket() string {
 	return p.Bucket
 }
+func (p *DeleteObjectStorageParam) SetRecursive(v bool) {
+	p.Recursive = v
+}
+
+func (p *DeleteObjectStorageParam) GetRecursive() bool {
+	return p.Recursive
+}
 func (p *DeleteObjectStorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
 }
@@ -91,6 +99,7 @@ func (p *DeleteObjectStorageParam) GetSecretKey() string {
 type GetObjectStorageParam struct {
 	AccessKey string
 	Bucket    string
+	Recursive bool
 	SecretKey string
 }
 
@@ -157,6 +166,13 @@ func (p *GetObjectStorageParam) SetBucket(v string) {
 
 func (p *GetObjectStorageParam) GetBucket() string {
 	return p.Bucket
+}
+func (p *GetObjectStorageParam) SetRecursive(v bool) {
+	p.Recursive = v
+}
+
+func (p *GetObjectStorageParam) GetRecursive() bool {
+	return p.Recursive
 }
 func (p *GetObjectStorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
@@ -250,6 +266,7 @@ type PutObjectStorageParam struct {
 	AccessKey   string
 	Bucket      string
 	ContentType string
+	Recursive   bool
 	SecretKey   string
 }
 
@@ -326,6 +343,13 @@ func (p *PutObjectStorageParam) SetContentType(v string) {
 
 func (p *PutObjectStorageParam) GetContentType() string {
 	return p.ContentType
+}
+func (p *PutObjectStorageParam) SetRecursive(v bool) {
+	p.Recursive = v
+}
+
+func (p *PutObjectStorageParam) GetRecursive() bool {
+	return p.Recursive
 }
 func (p *PutObjectStorageParam) SetSecretKey(v string) {
 	p.SecretKey = v
