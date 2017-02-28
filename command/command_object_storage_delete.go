@@ -35,11 +35,55 @@ func ObjectStorageDelete(ctx Context, params *DeleteObjectStorageParam) error {
 
 	bucket := client.Bucket(params.Bucket)
 
-	// Del
-	err = bucket.Del(path)
-	if err != nil {
-		return fmt.Errorf("ObjectStorageDelete is failed: %s", err)
+	// is directory?
+	key, _ := bucket.GetKey(path) // if path is directory , GetKey(path) returns nil(with 404 err)
+	if key == nil {
+		if !params.Recursive {
+			return fmt.Errorf("%q is directory. Use -r or --recursive flag", path)
+		}
+
+		// path is directory
+		if path != "" && !strings.HasSuffix(path, "/") {
+			path = path + "/"
+		}
+		return objectStorageDelRecursive(path, bucket)
+	} else {
+		// path is file
+		err = objectStorageDel(path, bucket)
+		if err != nil {
+			return fmt.Errorf("ObjectStorageDelete is failed: %s", err)
+		}
 	}
 
 	return nil
+}
+
+func objectStorageDelRecursive(path string, bucket *s3.Bucket) error {
+
+	res, err := bucket.List(path, "/", "", 0)
+	if err != nil {
+		return err
+	}
+
+	// first, delete each files
+	for _, content := range res.Contents {
+		err := objectStorageDel(content.Key, bucket)
+		if err != nil {
+			return err
+		}
+	}
+
+	// next, delete each dir
+	for _, pref := range res.CommonPrefixes {
+		err := objectStorageDelRecursive(pref, bucket)
+		if err != nil {
+			return nil
+		}
+	}
+
+	return nil
+}
+
+func objectStorageDel(path string, bucket *s3.Bucket) error {
+	return bucket.Del(path)
 }

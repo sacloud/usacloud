@@ -36,6 +36,12 @@ func init() {
 						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
 						Destination: &deleteParam.Bucket,
 					},
+					&cli.BoolFlag{
+						Name:        "recursive",
+						Aliases:     []string{"r"},
+						Usage:       "delete objects recursive",
+						Destination: &deleteParam.Recursive,
+					},
 					&cli.StringFlag{
 						Name:        "secret-key",
 						Usage:       "[Required] set access-key",
@@ -78,6 +84,12 @@ func init() {
 						Usage:       "set bucket",
 						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
 						Destination: &getParam.Bucket,
+					},
+					&cli.BoolFlag{
+						Name:        "recursive",
+						Aliases:     []string{"r"},
+						Usage:       "get objects recursive",
+						Destination: &getParam.Recursive,
 					},
 					&cli.StringFlag{
 						Name:        "secret-key",
@@ -172,6 +184,12 @@ func init() {
 						Value:       "application/octet-stream",
 						Destination: &putParam.ContentType,
 					},
+					&cli.BoolFlag{
+						Name:        "recursive",
+						Aliases:     []string{"r"},
+						Usage:       "put objects recursive",
+						Destination: &putParam.Recursive,
+					},
 					&cli.StringFlag{
 						Name:        "secret-key",
 						Usage:       "[Required] set access-key",
@@ -243,6 +261,11 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
+	appendFlagCategoryMap("object-storage", "delete", "recursive", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
 	appendFlagCategoryMap("object-storage", "delete", "secret-key", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -254,6 +277,11 @@ func init() {
 		Order:       2147483647,
 	})
 	appendFlagCategoryMap("object-storage", "get", "bucket", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "get", "recursive", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,
@@ -289,6 +317,11 @@ func init() {
 		Order:       2147483647,
 	})
 	appendFlagCategoryMap("object-storage", "put", "content-type", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "put", "recursive", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,

@@ -48,7 +48,6 @@ func ObjectStorageList(ctx Context, params *ListObjectStorageParam) error {
 	}
 
 	list := []interface{}{}
-
 	for i := range res.Contents {
 		list = append(list, &res.Contents[i])
 	}
