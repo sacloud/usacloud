@@ -9,12 +9,11 @@ func SSHKeyResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "SSHKeys",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              sshKeyListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  sshKeyListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             sshKeyListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: sshKeyListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
@@ -56,8 +55,9 @@ func SSHKeyResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		ResourceCategory: CategoryCommonItem,
+		Commands:            commands,
+		ResourceCategory:    CategoryCommonItem,
+		ListResultFieldName: "SSHKeys",
 	}
 }
 

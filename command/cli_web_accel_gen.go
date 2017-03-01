@@ -5,6 +5,7 @@ package command
 import (
 	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
+	"strings"
 )
 
 func init() {
@@ -19,16 +20,91 @@ func init() {
 				Aliases:   []string{"purge"},
 				Usage:     "DeleteCache WebAccel",
 				ArgsUsage: "[URLs]...",
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, deleteCacheParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								WebAccelDeleteCacheCompleteArgs(ctx, deleteCacheParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										WebAccelDeleteCacheCompleteArgs(ctx, deleteCacheParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									WebAccelDeleteCacheCompleteFlags(ctx, deleteCacheParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							WebAccelDeleteCacheCompleteArgs(ctx, deleteCacheParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// id is can set from option or args(first)
-					if c.NArg() > 0 {
-						c.Set("id", c.Args().First())
 					}
 
 					// Validate specific for each command params

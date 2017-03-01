@@ -9,12 +9,11 @@ func ArchiveResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "Archives",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              archiveListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  archiveListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             archiveListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: archiveListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
@@ -111,18 +110,21 @@ func archiveDetailExcludes() []string {
 	}
 }
 
+var allowSizes = []int{20, 40, 60, 80, 100, 250, 500, 750, 1024}
+
 func archiveCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 		"size": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
 			Description:     "set archive size(GB)",
 			DestinationProp: "SetSizeGB",
-			ValidateFunc:    validateInIntValues(20, 40, 60, 80, 100, 250, 500, 750, 1000),
+			ValidateFunc:    validateInIntValues(allowSizes...),
+			CompleteFunc:    completeInIntValues(allowSizes...),
 			ConflictsWith:   []string{"source-archive-id", "source-disk-id"},
 		},
 		"archive-file": {
@@ -138,6 +140,7 @@ func archiveCreateParam() map[string]*schema.Schema {
 			DestinationProp: "SetSourceDisk",
 			Description:     "set source disk ID",
 			ValidateFunc:    validateSakuraID(),
+			CompleteFunc:    completeDiskID(),
 			ConflictsWith:   []string{"archive-file", "source-archive-id", "size"},
 		},
 		"source-archive-id": {
@@ -146,6 +149,7 @@ func archiveCreateParam() map[string]*schema.Schema {
 			DestinationProp: "SetSourceArchive",
 			Description:     "set source archive ID",
 			ValidateFunc:    validateSakuraID(),
+			CompleteFunc:    completeArchiveID(),
 			ConflictsWith:   []string{"archive-file", "source-disk-id", "size"},
 		},
 	}
@@ -163,7 +167,7 @@ func archiveUpdateParam() map[string]*schema.Schema {
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 	}
 }
 

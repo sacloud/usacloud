@@ -39,7 +39,11 @@ func ToCamelWithFirstLower(name string) string {
 }
 
 func ToCLIFlagName(name string) string {
-	return fmt.Sprintf("--%s", ToDashedName(name))
+	format := "--%s"
+	if len(name) == 1 {
+		format = "-%s"
+	}
+	return fmt.Sprintf(format, ToDashedName(name))
 }
 
 func FlattenStringList(list []string) string {

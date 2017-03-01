@@ -1,19 +1,50 @@
-_usacloud() {
-     local cur opts base;
-     COMPREPLY=();
-     cur="${COMP_WORDS[COMP_CWORD]}";
 
-     if [ "$cur" == "--" -a $COMP_CWORD -gt 1 ]; then
-             opts=$( ${COMP_WORDS[@]:0:$COMP_CWORD-1} --generate-completion $cur $COMP_CWORD );
-     else
-         prev="${COMP_WORDS[COMP_CWORD-1]}";
-         if [ "${prev:0:2}" = "--" ]; then
-             opts=$( ${COMP_WORDS[@]:0:$COMP_CWORD-1} --generate-completion $cur $COMP_CWORD );
-         else
-             opts=$( ${COMP_WORDS[@]:0:$COMP_CWORD} --generate-completion $cur $COMP_CWORD );
-         fi
-     fi
-     COMPREPLY=( $(compgen -W "${opts}" -- ${cur}) );
-     return 0;
+_usacloud() {
+    COMPREPLY=();
+    local commands=(archive auto-backup bill bridge dns disk gslb iso-image icon interface internet license object-storage ojs packet-filter price public-price product-disk disk-plan product-internet internet-plan product-license license-info product-server server-plan region ssh-key server simple-monitor startup-script note switch web-accel zone )
+
+    local flags=(--trace --help --version)
+    local wants_value=(--token --secret --zone --format )
+
+    local cur prev words cword
+    _get_comp_words_by_ref -n : cur prev words cword
+    local i
+    local command=usacloud
+
+    for (( i=1; i < ${cword}; ++i)); do
+        local word=${words[i]}
+        if [[ " ${wants_value[*]}  " =~ " ${word} " ]]; then
+            # skip the next option
+            (( ++i ))
+        elif [[ " ${commands[*]} " =~ " ${word} " ]]; then
+            command=${word}
+            break
+        fi
+    done
+
+    if [ "$command" == "usacloud" ]; then
+        if [[ "$cur" == -* ]]; then
+            COMPREPLY=($(compgen -W "${flags[*]} ${wants_value[*]}" -- "${cur}"))
+        else
+            if [[ " ${wants_value[*]}  " =~ " ${prev} " ]]; then
+                # noop
+                :
+            else
+                COMPREPLY=($(compgen -W "${commands[*]}" -- "${cur}"))
+            fi
+        fi
+    else
+        if [ "$cur" = "${words[$i+1]}" ]; then
+            opts=$( ${words[@]:0:$cword} --generate-completion );
+            COMPREPLY=($(compgen -W "${opts}" -- "${cur}"))
+        else
+            opts=$( ${words[@]:0:$i+2} --generate-completion ${words[@]:$i+3} -- "${cur}" "${prev}" "${words[$i+1]}" );
+            COMPREPLY=($(compgen -W "${opts}" -- "${cur}"))
+        fi
+    fi
+
+    return 0
 };
-complete -F _usacloud -o default -o bashdefault usacloud
+
+
+complete -F _usacloud -o default usacloud usacloud.exe

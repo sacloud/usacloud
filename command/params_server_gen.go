@@ -330,6 +330,13 @@ func (p *BuildServerParam) Validate() []error {
 		}
 	}
 	{
+		validator := define.Resources["Server"].Commands["build"].Params["startup-script-ids"].ValidateFunc
+		errs := validator("--startup-script-ids", p.StartupScriptIds)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		validator := define.Resources["Server"].Commands["build"].Params["ssh-key-mode"].ValidateFunc
 		errs := validator("--ssh-key-mode", p.SshKeyMode)
 		if errs != nil {
@@ -2591,6 +2598,13 @@ func (p *IsoInsertServerParam) Validate() []error {
 	{
 		validator := define.Resources["Server"].Commands["iso-insert"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["iso-insert"].Params["size"].ValidateFunc
+		errs := validator("--size", p.Size)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}

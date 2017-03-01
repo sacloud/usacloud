@@ -5,6 +5,7 @@ package command
 import (
 	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
+	"strings"
 )
 
 func init() {
@@ -24,6 +25,12 @@ func init() {
 				Aliases: []string{"c"},
 				Usage:   "Create Internet",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "band-width",
+						Usage:       "[Required] set band-width(Mbpm)",
+						Value:       100,
+						Destination: &createParam.BandWidth,
+					},
 					&cli.StringFlag{
 						Name:        "description",
 						Aliases:     []string{"desc"},
@@ -51,6 +58,89 @@ func init() {
 						Name:  "tags",
 						Usage: "set resource tags",
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, createParam)
+
+					// Set option values for slice
+					createParam.Tags = c.StringSlice("tags")
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								InternetCreateCompleteArgs(ctx, createParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										InternetCreateCompleteArgs(ctx, createParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									InternetCreateCompleteFlags(ctx, createParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							InternetCreateCompleteArgs(ctx, createParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 
@@ -85,6 +175,86 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &deleteParam.Id,
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, deleteParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								InternetDeleteCompleteArgs(ctx, deleteParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										InternetDeleteCompleteArgs(ctx, deleteParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									InternetDeleteCompleteFlags(ctx, deleteParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							InternetDeleteCompleteArgs(ctx, deleteParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 
@@ -138,6 +308,91 @@ func init() {
 						Usage: "set field(s) for sort",
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, listParam)
+
+					// Set option values for slice
+					listParam.Id = c.Int64Slice("id")
+					listParam.Name = c.StringSlice("name")
+					listParam.Sort = c.StringSlice("sort")
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								InternetListCompleteArgs(ctx, listParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										InternetListCompleteArgs(ctx, listParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									InternetListCompleteFlags(ctx, listParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							InternetListCompleteArgs(ctx, listParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
@@ -174,6 +429,86 @@ func init() {
 						Destination: &readParam.Id,
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, readParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								InternetReadCompleteArgs(ctx, readParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										InternetReadCompleteArgs(ctx, readParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									InternetReadCompleteFlags(ctx, readParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							InternetReadCompleteArgs(ctx, readParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Validate global params
@@ -206,8 +541,7 @@ func init() {
 				Flags: []cli.Flag{
 					&cli.IntFlag{
 						Name:        "band-width",
-						Usage:       "[Required] set band-width(Mbpm)",
-						Value:       100,
+						Usage:       "set band-width(Mbpm)",
 						Destination: &updateParam.BandWidth,
 					},
 					&cli.StringFlag{
@@ -235,6 +569,89 @@ func init() {
 						Name:  "tags",
 						Usage: "set resource tags",
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, updateParam)
+
+					// Set option values for slice
+					updateParam.Tags = c.StringSlice("tags")
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								InternetUpdateCompleteArgs(ctx, updateParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										InternetUpdateCompleteArgs(ctx, updateParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									InternetUpdateCompleteFlags(ctx, updateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							InternetUpdateCompleteArgs(ctx, updateParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 
@@ -279,6 +696,86 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &updateBandwidthParam.Id,
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, updateBandwidthParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									InternetUpdateBandwidthCompleteFlags(ctx, updateBandwidthParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 
@@ -349,6 +846,11 @@ func init() {
 
 	// build Category-Param mapping
 
+	appendFlagCategoryMap("internet", "create", "band-width", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
 	appendFlagCategoryMap("internet", "create", "description", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",

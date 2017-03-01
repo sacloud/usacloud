@@ -5,6 +5,7 @@ package command
 import (
 	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
+	"strings"
 )
 
 func init() {
@@ -41,6 +42,86 @@ func init() {
 						Destination: &createParam.Name,
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, createParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								PacketFilterCreateCompleteArgs(ctx, createParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										PacketFilterCreateCompleteArgs(ctx, createParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									PacketFilterCreateCompleteFlags(ctx, createParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							PacketFilterCreateCompleteArgs(ctx, createParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Validate global params
@@ -71,6 +152,86 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &deleteParam.Id,
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, deleteParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								PacketFilterDeleteCompleteArgs(ctx, deleteParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										PacketFilterDeleteCompleteArgs(ctx, deleteParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									PacketFilterDeleteCompleteFlags(ctx, deleteParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							PacketFilterDeleteCompleteArgs(ctx, deleteParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 
@@ -112,6 +273,86 @@ func init() {
 						Destination: &interfaceConnectParam.InterfaceId,
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, interfaceConnectParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								PacketFilterInterfaceConnectCompleteArgs(ctx, interfaceConnectParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										PacketFilterInterfaceConnectCompleteArgs(ctx, interfaceConnectParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									PacketFilterInterfaceConnectCompleteFlags(ctx, interfaceConnectParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							PacketFilterInterfaceConnectCompleteArgs(ctx, interfaceConnectParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Validate global params
@@ -151,6 +392,86 @@ func init() {
 						Usage:       "[Required] set interface ID",
 						Destination: &interfaceDisconnectParam.InterfaceId,
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, interfaceDisconnectParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								PacketFilterInterfaceDisconnectCompleteArgs(ctx, interfaceDisconnectParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										PacketFilterInterfaceDisconnectCompleteArgs(ctx, interfaceDisconnectParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									PacketFilterInterfaceDisconnectCompleteFlags(ctx, interfaceDisconnectParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							PacketFilterInterfaceDisconnectCompleteArgs(ctx, interfaceDisconnectParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 
@@ -204,6 +525,91 @@ func init() {
 						Usage: "set field(s) for sort",
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, listParam)
+
+					// Set option values for slice
+					listParam.Id = c.Int64Slice("id")
+					listParam.Name = c.StringSlice("name")
+					listParam.Sort = c.StringSlice("sort")
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								PacketFilterListCompleteArgs(ctx, listParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										PacketFilterListCompleteArgs(ctx, listParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									PacketFilterListCompleteFlags(ctx, listParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							PacketFilterListCompleteArgs(ctx, listParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
@@ -239,6 +645,86 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &readParam.Id,
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, readParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								PacketFilterReadCompleteArgs(ctx, readParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										PacketFilterReadCompleteArgs(ctx, readParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									PacketFilterReadCompleteFlags(ctx, readParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							PacketFilterReadCompleteArgs(ctx, readParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 
@@ -313,6 +799,86 @@ func init() {
 						Destination: &ruleAddParam.SourcePort,
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, ruleAddParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								PacketFilterRuleAddCompleteArgs(ctx, ruleAddParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										PacketFilterRuleAddCompleteArgs(ctx, ruleAddParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									PacketFilterRuleAddCompleteFlags(ctx, ruleAddParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							PacketFilterRuleAddCompleteArgs(ctx, ruleAddParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Validate global params
@@ -353,6 +919,86 @@ func init() {
 						Destination: &ruleDeleteParam.Index,
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, ruleDeleteParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								PacketFilterRuleDeleteCompleteArgs(ctx, ruleDeleteParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										PacketFilterRuleDeleteCompleteArgs(ctx, ruleDeleteParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									PacketFilterRuleDeleteCompleteFlags(ctx, ruleDeleteParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							PacketFilterRuleDeleteCompleteArgs(ctx, ruleDeleteParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Validate global params
@@ -388,6 +1034,86 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &ruleListParam.Id,
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, ruleListParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								PacketFilterRuleListCompleteArgs(ctx, ruleListParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										PacketFilterRuleListCompleteArgs(ctx, ruleListParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									PacketFilterRuleListCompleteFlags(ctx, ruleListParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							PacketFilterRuleListCompleteArgs(ctx, ruleListParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 
@@ -461,6 +1187,86 @@ func init() {
 						Destination: &ruleUpdateParam.SourcePort,
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, ruleUpdateParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								PacketFilterRuleUpdateCompleteArgs(ctx, ruleUpdateParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										PacketFilterRuleUpdateCompleteArgs(ctx, ruleUpdateParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									PacketFilterRuleUpdateCompleteFlags(ctx, ruleUpdateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							PacketFilterRuleUpdateCompleteArgs(ctx, ruleUpdateParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Validate global params
@@ -507,6 +1313,86 @@ func init() {
 						Usage:       "set resource display name",
 						Destination: &updateParam.Name,
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, updateParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								PacketFilterUpdateCompleteArgs(ctx, updateParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										PacketFilterUpdateCompleteArgs(ctx, updateParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									PacketFilterUpdateCompleteFlags(ctx, updateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							PacketFilterUpdateCompleteArgs(ctx, updateParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 

@@ -6,6 +6,7 @@ import (
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/version"
+	"gopkg.in/urfave/cli.v2"
 	"path/filepath"
 	"strings"
 )
@@ -72,4 +73,20 @@ func getSSHPrivateKeyStorePath(serverID int64) (string, error) {
 		return "", fmt.Errorf("ServerCreate is failed: getting HomeDir is failed:%s", err)
 	}
 	return filepath.Join(homeDir, ".ssh", fmt.Sprintf("sacloud_pkey_%d", serverID)), nil
+}
+
+func completionFlagNames(c *cli.Context, commandName string) {
+	comm := c.App.Command(commandName)
+	if comm == nil {
+		return
+	}
+	for _, f := range comm.VisibleFlags() {
+		for _, n := range f.Names() {
+			format := "--%s\n"
+			if len(n) == 1 {
+				format = "-%s\n"
+			}
+			fmt.Printf(format, n)
+		}
+	}
 }

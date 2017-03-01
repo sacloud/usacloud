@@ -5,6 +5,7 @@ package command
 import (
 	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
+	"strings"
 )
 
 func init() {
@@ -88,6 +89,90 @@ func init() {
 						Usage: "set resource tags",
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, createParam)
+
+					// Set option values for slice
+					createParam.DistantFrom = c.Int64Slice("distant-from")
+					createParam.Tags = c.StringSlice("tags")
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								DiskCreateCompleteArgs(ctx, createParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										DiskCreateCompleteArgs(ctx, createParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									DiskCreateCompleteFlags(ctx, createParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							DiskCreateCompleteArgs(ctx, createParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
@@ -122,6 +207,86 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &deleteParam.Id,
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, deleteParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								DiskDeleteCompleteArgs(ctx, deleteParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										DiskDeleteCompleteArgs(ctx, deleteParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									DiskDeleteCompleteFlags(ctx, deleteParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							DiskDeleteCompleteArgs(ctx, deleteParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 
@@ -203,6 +368,90 @@ func init() {
 						Usage:   "set startup-script ID(s)",
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, editParam)
+
+					// Set option values for slice
+					editParam.SshKeyIds = c.Int64Slice("ssh-key-ids")
+					editParam.StartupScriptIds = c.Int64Slice("startup-script-ids")
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								DiskEditCompleteArgs(ctx, editParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										DiskEditCompleteArgs(ctx, editParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									DiskEditCompleteFlags(ctx, editParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							DiskEditCompleteArgs(ctx, editParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
@@ -264,6 +513,91 @@ func init() {
 						Usage: "set field(s) for sort",
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, listParam)
+
+					// Set option values for slice
+					listParam.Id = c.Int64Slice("id")
+					listParam.Name = c.StringSlice("name")
+					listParam.Sort = c.StringSlice("sort")
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								DiskListCompleteArgs(ctx, listParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										DiskListCompleteArgs(ctx, listParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									DiskListCompleteFlags(ctx, listParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							DiskListCompleteArgs(ctx, listParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
@@ -299,6 +633,86 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &readParam.Id,
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, readParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								DiskReadCompleteArgs(ctx, readParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										DiskReadCompleteArgs(ctx, readParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									DiskReadCompleteFlags(ctx, readParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							DiskReadCompleteArgs(ctx, readParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 
@@ -345,9 +759,92 @@ func init() {
 					},
 					&cli.Int64Flag{
 						Name:        "source-archive-id",
-						Usage:       "[Required] set source disk ID",
+						Usage:       "[Required] set source archive ID",
 						Destination: &reinstallFromArchiveParam.SourceArchiveId,
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, reinstallFromArchiveParam)
+
+					// Set option values for slice
+					reinstallFromArchiveParam.DistantFrom = c.Int64Slice("distant-from")
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								DiskReinstallFromArchiveCompleteArgs(ctx, reinstallFromArchiveParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										DiskReinstallFromArchiveCompleteArgs(ctx, reinstallFromArchiveParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									DiskReinstallFromArchiveCompleteFlags(ctx, reinstallFromArchiveParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							DiskReinstallFromArchiveCompleteArgs(ctx, reinstallFromArchiveParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 
@@ -401,6 +898,89 @@ func init() {
 						Destination: &reinstallFromDiskParam.SourceDiskId,
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, reinstallFromDiskParam)
+
+					// Set option values for slice
+					reinstallFromDiskParam.DistantFrom = c.Int64Slice("distant-from")
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								DiskReinstallFromDiskCompleteArgs(ctx, reinstallFromDiskParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										DiskReinstallFromDiskCompleteArgs(ctx, reinstallFromDiskParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									DiskReinstallFromDiskCompleteFlags(ctx, reinstallFromDiskParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							DiskReinstallFromDiskCompleteArgs(ctx, reinstallFromDiskParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
@@ -448,6 +1028,89 @@ func init() {
 						Destination: &reinstallToBlankParam.Id,
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, reinstallToBlankParam)
+
+					// Set option values for slice
+					reinstallToBlankParam.DistantFrom = c.Int64Slice("distant-from")
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								DiskReinstallToBlankCompleteArgs(ctx, reinstallToBlankParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										DiskReinstallToBlankCompleteArgs(ctx, reinstallToBlankParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									DiskReinstallToBlankCompleteFlags(ctx, reinstallToBlankParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							DiskReinstallToBlankCompleteArgs(ctx, reinstallToBlankParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
@@ -491,6 +1154,86 @@ func init() {
 						Destination: &serverConnectParam.ServerId,
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, serverConnectParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								DiskServerConnectCompleteArgs(ctx, serverConnectParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										DiskServerConnectCompleteArgs(ctx, serverConnectParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									DiskServerConnectCompleteFlags(ctx, serverConnectParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							DiskServerConnectCompleteArgs(ctx, serverConnectParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Validate global params
@@ -525,6 +1268,86 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &serverDisconnectParam.Id,
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, serverDisconnectParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								DiskServerDisconnectCompleteArgs(ctx, serverDisconnectParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										DiskServerDisconnectCompleteArgs(ctx, serverDisconnectParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									DiskServerDisconnectCompleteFlags(ctx, serverDisconnectParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							DiskServerDisconnectCompleteArgs(ctx, serverDisconnectParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 
@@ -587,6 +1410,89 @@ func init() {
 						Usage: "set resource tags",
 					},
 				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, updateParam)
+
+					// Set option values for slice
+					updateParam.Tags = c.StringSlice("tags")
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								DiskUpdateCompleteArgs(ctx, updateParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										DiskUpdateCompleteArgs(ctx, updateParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									DiskUpdateCompleteFlags(ctx, updateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							DiskUpdateCompleteArgs(ctx, updateParam)
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					// Set option values for slice
@@ -625,6 +1531,86 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &waitForCopyParam.Id,
 					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, waitForCopyParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								DiskWaitForCopyCompleteArgs(ctx, waitForCopyParam)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										DiskWaitForCopyCompleteArgs(ctx, waitForCopyParam)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									DiskWaitForCopyCompleteFlags(ctx, waitForCopyParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							DiskWaitForCopyCompleteArgs(ctx, waitForCopyParam)
+							return
+						}
+					}
 				},
 				Action: func(c *cli.Context) error {
 

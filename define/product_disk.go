@@ -9,12 +9,11 @@ func ProductDiskResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "DiskPlans",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              productDiskListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  productDiskListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             productDiskListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: productDiskListColumns(),
 		},
 		"read": {
 			Type:          schema.CommandRead,
@@ -26,9 +25,10 @@ func ProductDiskResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		Aliases:          []string{"disk-plan"},
-		ResourceCategory: CategoryInformation,
+		Commands:            commands,
+		Aliases:             []string{"disk-plan"},
+		ResourceCategory:    CategoryInformation,
+		ListResultFieldName: "DiskPlans",
 	}
 }
 

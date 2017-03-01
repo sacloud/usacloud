@@ -12,12 +12,11 @@ func PacketFilterResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "PacketFilters",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              packetFilterListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  packetFilterListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             packetFilterListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: packetFilterListColumns(),
 		},
 		"create": {
 			Type:          schema.CommandCreate,
@@ -167,6 +166,8 @@ func packetFilterRuleListParam() map[string]*schema.Schema {
 	}
 }
 
+var allowPacketFilterProtocol = []string{"tcp", "udp", "icmp", "fragment", "ip"}
+
 func packetFilterRuleAddParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
@@ -180,7 +181,8 @@ func packetFilterRuleAddParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set target protocol[tcp/udp/icmp/fragment/ip]",
-			ValidateFunc: validateInStrValues("tcp", "udp", "icmp", "fragment", "ip"),
+			ValidateFunc: validateInStrValues(allowPacketFilterProtocol...),
+			CompleteFunc: completeInStrValues(allowPacketFilterProtocol...),
 		},
 		"source-network": {
 			Type:         schema.TypeString,
@@ -206,6 +208,7 @@ func packetFilterRuleAddParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set action[allow/deny]",
 			ValidateFunc: validateInStrValues("allow", "deny"),
+			CompleteFunc: completeInStrValues("allow", "deny"),
 		},
 		"description": paramDescription,
 	}
@@ -224,7 +227,8 @@ func packetFilterRuleUpdateParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set target protocol[tcp/udp/icmp/fragment/ip]",
-			ValidateFunc: validateInStrValues("tcp", "udp", "icmp", "fragment", "ip"),
+			ValidateFunc: validateInStrValues(allowPacketFilterProtocol...),
+			CompleteFunc: completeInStrValues(allowPacketFilterProtocol...),
 		},
 		"source-network": {
 			Type:         schema.TypeString,
@@ -250,6 +254,7 @@ func packetFilterRuleUpdateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set action[allow/deny]",
 			ValidateFunc: validateInStrValues("allow", "deny"),
+			CompleteFunc: completeInStrValues("allow", "deny"),
 		},
 		"description": paramDescription,
 	}
@@ -276,6 +281,7 @@ func packetFilterInterfaceConnectParam() map[string]*schema.Schema {
 			Description:  "set interface ID",
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
+			CompleteFunc: completeInterfaceID(),
 		},
 	}
 }
@@ -289,6 +295,7 @@ func packetFilterInterfaceDisconnectParam() map[string]*schema.Schema {
 			Description:  "set interface ID",
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
+			CompleteFunc: completeInterfaceID(),
 		},
 	}
 }

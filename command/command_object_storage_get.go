@@ -22,6 +22,11 @@ func ObjectStorageGet(ctx Context, params *GetObjectStorageParam) error {
 		filePath = filepath.Clean(ctx.Args()[1])
 	}
 
+	// validate remote path
+	if ctx.NArgs() == 0 {
+		return fmt.Errorf("<remote path> arg is required")
+	}
+
 	// remote path
 	path := ""
 	path = ctx.Args()[0]

@@ -9,12 +9,11 @@ func SimpleMonitorResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "SimpleMonitors",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              simpleMonitorListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  simpleMonitorListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             simpleMonitorListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: simpleMonitorListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
@@ -88,6 +87,8 @@ func simpleMonitorDetailExcludes() []string {
 	return []string{}
 }
 
+var allowSimpleMonitorProtocol = []string{"http", "https", "ping", "tcp", "dns", "ssh", "smtp", "pop3"}
+
 func simpleMonitorCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"target": {
@@ -101,7 +102,8 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
 			// TODO SNMP is not supported on current version.
-			ValidateFunc: validateInStrValues("http", "https", "ping", "tcp", "dns", "ssh", "smtp", "pop3"),
+			ValidateFunc: validateInStrValues(allowSimpleMonitorProtocol...),
+			CompleteFunc: completeInStrValues(allowSimpleMonitorProtocol...),
 			Required:     true,
 			DefaultValue: "ping",
 		},
@@ -162,6 +164,7 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set e-mail type",
 			ValidateFunc: validateInStrValues("text", "html"),
+			CompleteFunc: completeInStrValues("text", "html"),
 		},
 		"slack-webhook": {
 			Type:        schema.TypeString,
@@ -170,7 +173,7 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 		},
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 	}
 }
 
@@ -188,7 +191,8 @@ func simpleMonitorUpdateParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
 			// TODO SNMP is not supported on current version.
-			ValidateFunc: validateInStrValues("http", "https", "ping", "tcp", "dns", "ssh", "smtp", "pop3"),
+			ValidateFunc: validateInStrValues(allowSimpleMonitorProtocol...),
+			CompleteFunc: completeInStrValues(allowSimpleMonitorProtocol...),
 		},
 		"host-header": {
 			Type:        schema.TypeString,
@@ -242,6 +246,7 @@ func simpleMonitorUpdateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set e-mail type",
 			ValidateFunc: validateInStrValues("text", "html"),
+			CompleteFunc: completeInStrValues("text", "html"),
 		},
 		"slack-webhook": {
 			Type:        schema.TypeString,
@@ -250,7 +255,7 @@ func simpleMonitorUpdateParam() map[string]*schema.Schema {
 		},
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 	}
 }
 

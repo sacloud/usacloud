@@ -3,12 +3,13 @@ package schema
 import "sort"
 
 type Resource struct {
-	Aliases           []string
-	Usage             string
-	Commands          map[string]*Command
-	AltResource       string // 空の場合はResourceのキーをCamelizeしてsacloud.XXXを対象とする。
-	CommandCategories []Category
-	ResourceCategory  Category
+	Aliases             []string
+	Usage               string
+	Commands            map[string]*Command
+	AltResource         string // 空の場合はResourceのキーをCamelizeしてsacloud.XXXを対象とする。
+	ListResultFieldName string
+	CommandCategories   []Category
+	ResourceCategory    Category
 }
 
 func (r *Resource) CommandCategory(key string) *Category {

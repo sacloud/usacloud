@@ -30,6 +30,8 @@ var (
 	archiveLatestStableWindows2012RDSTags       = []string{"os-windows", "distro-ver-2012.2", "windows-rds"}
 	archiveLatestStableWindows2012RDSOfficeTags = []string{"os-windows", "distro-ver-2012.2", "windows-rds", "with-office"}
 	archiveLatestStableWindows2016Tags          = []string{"os-windows", "distro-ver-2016"}
+	archiveLatestStableWindows2016RDSTags       = []string{"os-windows", "distro-ver-2016", "windows-rds"}
+	archiveLatestStableWindows2016RDSOfficeTags = []string{"os-windows", "distro-ver-2016", "windows-rds", "with-office"}
 )
 
 // NewArchiveAPI アーカイブAPI作成
@@ -59,6 +61,8 @@ func NewArchiveAPI(client *Client) *ArchiveAPI {
 		ostype.Windows2012RDS:       api.FindLatestStableWindows2012RDS,
 		ostype.Windows2012RDSOffice: api.FindLatestStableWindows2012RDSOffice,
 		ostype.Windows2016:          api.FindLatestStableWindows2016,
+		ostype.Windows2016RDS:       api.FindLatestStableWindows2016RDS,
+		ostype.Windows2016RDSOffice: api.FindLatestStableWindows2016RDSOffice,
 	}
 
 	return api
@@ -272,6 +276,20 @@ func (api *ArchiveAPI) FindLatestStableWindows2012RDSOffice() (*sacloud.Archive,
 func (api *ArchiveAPI) FindLatestStableWindows2016() (*sacloud.Archive, error) {
 	return api.findByOSTags(archiveLatestStableWindows2016Tags, map[string]interface{}{
 		"Name": "Windows Server 2016 Datacenter Edition",
+	})
+}
+
+// FindLatestStableWindows2016RDS 安定版最新のWindows2016RDSパブリックアーカイブを取得
+func (api *ArchiveAPI) FindLatestStableWindows2016RDS() (*sacloud.Archive, error) {
+	return api.findByOSTags(archiveLatestStableWindows2016Tags, map[string]interface{}{
+		"Name": "Windows Server 2016 for RDS",
+	})
+}
+
+// FindLatestStableWindows2016RDSOffice 安定版最新のWindows2016RDS(Office)パブリックアーカイブを取得
+func (api *ArchiveAPI) FindLatestStableWindows2016RDSOffice() (*sacloud.Archive, error) {
+	return api.findByOSTags(archiveLatestStableWindows2016Tags, map[string]interface{}{
+		"Name": " Windows Server 2016 for RDS(MS Office付)",
 	})
 }
 

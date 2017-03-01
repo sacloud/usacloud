@@ -9,12 +9,11 @@ func RegionResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "Regions",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              regionListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  regionListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             regionListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: regionListColumns(),
 		},
 		"read": {
 			Type:          schema.CommandRead,

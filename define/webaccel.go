@@ -9,7 +9,7 @@ func WebAccelResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"delete-cache": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandCustom,
 			Aliases:            []string{"purge"},
 			Params:             webAccelDeleteCacheParam(),
 			TableType:          output.TableSimple,

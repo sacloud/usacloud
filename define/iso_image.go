@@ -9,12 +9,11 @@ func ISOImageResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "CDROMs",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              isoImageListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  isoImageListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             isoImageListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: isoImageListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
@@ -76,9 +75,10 @@ func ISOImageResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		AltResource:      "CDROM",
-		Commands:         commands,
-		ResourceCategory: CategoryStorage,
+		AltResource:         "CDROM",
+		ListResultFieldName: "CDROMs",
+		Commands:            commands,
+		ResourceCategory:    CategoryStorage,
 	}
 }
 
@@ -109,7 +109,7 @@ func isoImageCreateParam() map[string]*schema.Schema {
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 		"size": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -117,6 +117,7 @@ func isoImageCreateParam() map[string]*schema.Schema {
 			Required:     true,
 			DefaultValue: 5,
 			ValidateFunc: validateInIntValues(5, 10),
+			CompleteFunc: completeInIntValues(5, 10),
 		},
 		"iso-file": {
 			Type:         schema.TypeString,
@@ -140,7 +141,7 @@ func isoImageUpdateParam() map[string]*schema.Schema {
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 	}
 }
 

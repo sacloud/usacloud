@@ -9,12 +9,11 @@ func LicenseResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "Licenses",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              licenseListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  licenseListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             licenseListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: licenseListColumns(),
 		},
 		"create": {
 			Type:          schema.CommandCreate,
@@ -47,8 +46,9 @@ func LicenseResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		ResourceCategory: CategoryCommonItem,
+		Commands:            commands,
+		ResourceCategory:    CategoryCommonItem,
+		ListResultFieldName: "Licenses",
 	}
 }
 
@@ -87,6 +87,7 @@ func licenseCreateParam() map[string]*schema.Schema {
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetLicenseInfoByID",
 			Description:     "set LicenseInfo ID",
+			CompleteFunc:    completeLicenseInfoID(),
 		},
 	}
 }
