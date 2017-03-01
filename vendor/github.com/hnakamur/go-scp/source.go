@@ -79,6 +79,8 @@ func (s *SCP) SendDir(srcDir, destDir string, acceptFn AcceptFunc) error {
 	}
 
 	return runSourceSession(s.client, destDir, false, "", true, true, func(s *sourceSession) error {
+		prevDirSkipped := false
+
 		endDirectories := func(prevDir, dir string) error {
 			rel, err := filepath.Rel(prevDir, dir)
 			if err != nil {
@@ -86,9 +88,13 @@ func (s *SCP) SendDir(srcDir, destDir string, acceptFn AcceptFunc) error {
 			}
 			for _, comp := range strings.Split(rel, string([]rune{filepath.Separator})) {
 				if comp == ".." {
-					err := s.EndDirectory()
-					if err != nil {
-						return err
+					if prevDirSkipped {
+						prevDirSkipped = false
+					} else {
+						err := s.EndDirectory()
+						if err != nil {
+							return err
+						}
 					}
 				}
 			}
@@ -121,6 +127,7 @@ func (s *SCP) SendDir(srcDir, destDir string, acceptFn AcceptFunc) error {
 
 			if isDir {
 				if !accepted {
+					prevDirSkipped = true
 					return filepath.SkipDir
 				}
 
