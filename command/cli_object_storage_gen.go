@@ -22,7 +22,7 @@ func init() {
 				Name:      "delete",
 				Aliases:   []string{"rm", "del"},
 				Usage:     "Delete ObjectStorage",
-				ArgsUsage: "[PATH]",
+				ArgsUsage: "<remote path>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:        "access-key",
@@ -71,7 +71,7 @@ func init() {
 			{
 				Name:      "get",
 				Usage:     "Get ObjectStorage",
-				ArgsUsage: "[PATH] [FILE]",
+				ArgsUsage: "<remote path> <local file/directory>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:        "access-key",
@@ -121,7 +121,7 @@ func init() {
 				Name:      "list",
 				Aliases:   []string{"l", "ls"},
 				Usage:     "List ObjectStorage",
-				ArgsUsage: "[PATH]",
+				ArgsUsage: "<remote path>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:        "access-key",
@@ -164,7 +164,7 @@ func init() {
 			{
 				Name:      "put",
 				Usage:     "Put ObjectStorage",
-				ArgsUsage: "[FILE] [PATH]",
+				ArgsUsage: "<local file/directory> <remote path>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:        "access-key",
