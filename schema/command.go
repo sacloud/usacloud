@@ -15,12 +15,14 @@ type Command struct {
 	Category string
 	Order    int
 
-	Params              map[string]*Schema
-	ParamCategories     []Category
-	AltResource         string // 空の場合はResourceのキーをCamelizeしてsacloud.XXXを対象とする。
-	ListResultFieldName string
-	SkipAuth            bool
-	UseCustomCommand    bool
+	Params                   map[string]*Schema
+	ParamCategories          []Category
+	AltResource              string // 空の場合はResourceのキーをCamelizeしてsacloud.XXXを対象とする。
+	ListResultFieldName      string
+	SkipAuth                 bool
+	UseCustomCommand         bool
+	UseCustomArgCompletion   bool
+	UseCustomFlagsCompletion bool
 
 	TableType          output.OutputTableType
 	IncludeFields      []string           // for output.TableDetail
@@ -63,12 +65,6 @@ func (c *Command) Validate() []error {
 
 	if c.Type == CommandInvalid {
 		errors = append(errors, fmt.Errorf("command#Type: command type is invalid: (%#v)", c))
-	}
-
-	if c.Type == CommandList && c.ListResultFieldName == "" {
-		errors = append(errors, fmt.Errorf("command#ListResultFieldName: required when Command#Type is CommandList"))
-	} else if c.Type != CommandList && c.ListResultFieldName != "" {
-		errors = append(errors, fmt.Errorf("command#ListResultFieldName: can set only when Command#Type is CommandList"))
 	}
 
 	if c.Type == CommandList && c.TableType != output.TableSimple {

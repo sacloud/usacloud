@@ -9,13 +9,12 @@ func InterfaceResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "Interfaces",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              interfaceListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  interfaceListColumns(),
-			UseCustomCommand:    true, // to ignore appliance(system servers)
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             interfaceListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: interfaceListColumns(),
+			UseCustomCommand:   true, // to ignore appliance(system servers)
 		},
 		"create": {
 			Type:          schema.CommandCreate,
@@ -123,6 +122,7 @@ func interfaceCreateParam() map[string]*schema.Schema {
 			Description:     "set server ID",
 			Required:        true,
 			ValidateFunc:    validateSakuraID(),
+			CompleteFunc:    completeServerID(),
 		},
 	}
 }
@@ -161,6 +161,7 @@ func interfacePacketFilterConnectParam() map[string]*schema.Schema {
 			Description:  "set packet filter ID",
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
+			CompleteFunc: completePacketFilterID(),
 		},
 	}
 }
@@ -174,6 +175,7 @@ func interfacePacketFilterDisconnectParam() map[string]*schema.Schema {
 			Description:  "set packet filter ID",
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
+			CompleteFunc: completePacketFilterID(),
 		},
 	}
 }

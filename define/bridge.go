@@ -9,12 +9,11 @@ func BridgeResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "Bridges",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              bridgeListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  bridgeListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             bridgeListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: bridgeListColumns(),
 		},
 		"create": {
 			Type:          schema.CommandCreate,

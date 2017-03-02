@@ -2,6 +2,7 @@ package schema
 
 import (
 	"fmt"
+	"github.com/sacloud/libsacloud/api"
 )
 
 type Schema struct {
@@ -27,7 +28,16 @@ type Schema struct {
 	HandlerType     HandlerType
 	DestinationProp string
 	CustomHandler   SchemaValueHandlerFunc
+
+	CompleteFunc SchemaCompletionFunc
 }
+
+type CompletionContext interface {
+	GetAPIClient() *api.Client
+	Args() []string
+}
+
+type SchemaCompletionFunc func(ctx CompletionContext, currentValue string) []string
 
 type SchemaValueHandlerFunc func(name string, src interface{}, dest interface{})
 

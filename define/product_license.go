@@ -9,12 +9,11 @@ func ProductLicenseResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "LicenseInfo",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              productLicenseListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  productLicenseListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             productLicenseListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: productLicenseListColumns(),
 		},
 		"read": {
 			Type:          schema.CommandRead,
@@ -26,9 +25,10 @@ func ProductLicenseResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		Aliases:          []string{"license-info"},
-		ResourceCategory: CategoryInformation,
+		Commands:            commands,
+		Aliases:             []string{"license-info"},
+		ResourceCategory:    CategoryInformation,
+		ListResultFieldName: "LicenseInfo",
 	}
 }
 

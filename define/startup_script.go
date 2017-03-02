@@ -9,12 +9,11 @@ func StartupScriptResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "Notes",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              startupScriptListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  startupScriptListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             startupScriptListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: startupScriptListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
@@ -49,10 +48,11 @@ func StartupScriptResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		Aliases:          []string{"note"},
-		AltResource:      "Note",
-		ResourceCategory: CategoryCommonItem,
+		Commands:            commands,
+		Aliases:             []string{"note"},
+		AltResource:         "Note",
+		ListResultFieldName: "Notes",
+		ResourceCategory:    CategoryCommonItem,
 	}
 }
 
@@ -80,7 +80,7 @@ func startupScriptCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"name":    paramRequiredName,
 		"tags":    paramTags,
-		"icon-id": getParamSubResourceID("Icon"),
+		"icon-id": paramIconResourceID,
 		"script-content": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,
@@ -109,7 +109,7 @@ func startupScriptUpdateParam() map[string]*schema.Schema {
 		"id":      paramID,
 		"name":    paramRequiredName,
 		"tags":    paramTags,
-		"icon-id": getParamSubResourceID("Icon"),
+		"icon-id": paramIconResourceID,
 		"script-content": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,

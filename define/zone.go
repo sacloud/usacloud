@@ -9,12 +9,11 @@ func ZoneResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "Zones",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              zoneListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  zoneListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             zoneListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: zoneListColumns(),
 		},
 		"read": {
 			Type:          schema.CommandRead,

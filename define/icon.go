@@ -11,12 +11,11 @@ func IconResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "Icons",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              iconListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  iconListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             iconListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: iconListColumns(),
 		},
 		"create": {
 			Type:          schema.CommandCreate,

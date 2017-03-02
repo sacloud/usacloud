@@ -9,12 +9,11 @@ func DiskResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "Disks",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              diskListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  diskListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             diskListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: diskListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
@@ -147,12 +146,16 @@ func diskDetailExcludes() []string {
 	}
 }
 
+var allowDiskPlans = []string{"ssd", "hdd"}
+var allowDiskConnections = []string{"virtio", "ide"}
+var allowDiskSizes = []int{20, 40, 60, 80, 100, 250, 500, 750, 1024, 2048, 4096}
+
 func diskCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 		"plan": {
 			Type:            schema.TypeString,
 			HandlerType:     schema.HandlerPathThrough,
@@ -160,7 +163,8 @@ func diskCreateParam() map[string]*schema.Schema {
 			Required:        true,
 			DefaultValue:    "ssd",
 			Description:     "set disk plan('hdd' or 'ssd')",
-			ValidateFunc:    validateInStrValues("ssd", "hdd"),
+			ValidateFunc:    validateInStrValues(allowDiskPlans...),
+			CompleteFunc:    completeInStrValues(allowDiskPlans...),
 		},
 		"connection": {
 			Type:            schema.TypeString,
@@ -169,7 +173,8 @@ func diskCreateParam() map[string]*schema.Schema {
 			Required:        true,
 			DefaultValue:    "virtio",
 			Description:     "set disk connection('virtio' or 'ide')",
-			ValidateFunc:    validateInStrValues("virtio", "ide"),
+			ValidateFunc:    validateInStrValues(allowDiskConnections...),
+			CompleteFunc:    completeInStrValues(allowDiskConnections...),
 		},
 		"size": {
 			Type:            schema.TypeInt,
@@ -178,7 +183,8 @@ func diskCreateParam() map[string]*schema.Schema {
 			DestinationProp: "SetSizeGB",
 			DefaultValue:    20,
 			Required:        true,
-			ValidateFunc:    validateInIntValues(20, 40, 60, 80, 100, 250, 500, 750, 1000, 2000, 4000),
+			ValidateFunc:    validateInIntValues(allowDiskSizes...),
+			CompleteFunc:    completeInIntValues(allowDiskSizes...),
 		},
 		"source-archive-id": {
 			Type:            schema.TypeInt64,
@@ -186,6 +192,7 @@ func diskCreateParam() map[string]*schema.Schema {
 			DestinationProp: "SetSourceArchive",
 			Description:     "set source disk ID",
 			ValidateFunc:    validateSakuraID(),
+			CompleteFunc:    completeArchiveID(),
 			ConflictsWith:   []string{"source-disk-id"},
 		},
 		"source-disk-id": {
@@ -194,6 +201,7 @@ func diskCreateParam() map[string]*schema.Schema {
 			DestinationProp: "SetSourceDisk",
 			Description:     "set source disk ID",
 			ValidateFunc:    validateSakuraID(),
+			CompleteFunc:    completeDiskID(),
 			ConflictsWith:   []string{"source-archive-id"},
 		},
 		"distant-from": {
@@ -201,6 +209,7 @@ func diskCreateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerPathThrough,
 			Description:  "set distant from disk IDs",
 			ValidateFunc: validateIntSlice(validateSakuraID()),
+			CompleteFunc: completeDiskID(),
 		},
 		"async": {
 			Type:        schema.TypeBool,
@@ -222,13 +231,14 @@ func diskUpdateParam() map[string]*schema.Schema {
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 		"connection": {
 			Type:            schema.TypeString,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetDiskConnectionByStr",
 			Description:     "set disk connection('virtio' or 'ide')",
-			ValidateFunc:    validateInStrValues("virtio", "ide"),
+			ValidateFunc:    validateInStrValues(allowDiskConnections...),
+			CompleteFunc:    completeInStrValues(allowDiskConnections...),
 		},
 	}
 }
@@ -259,6 +269,7 @@ func diskConfigParam() map[string]*schema.Schema {
 			DestinationProp: "SetSSHKeys",
 			Description:     "set ssh-key ID(s)",
 			ValidateFunc:    validateIntSlice(validateSakuraID()),
+			CompleteFunc:    completeSSHKeyID(),
 		},
 		"disable-password-auth": {
 			Type:            schema.TypeBool,
@@ -274,6 +285,7 @@ func diskConfigParam() map[string]*schema.Schema {
 			DestinationProp: "SetNotes",
 			Description:     "set startup-script ID(s)",
 			ValidateFunc:    validateIntSlice(validateSakuraID()),
+			CompleteFunc:    completeNoteID(),
 		},
 		"ipaddress": {
 			Type:            schema.TypeString,
@@ -313,15 +325,17 @@ func diskReinstallFromArchiveParam() map[string]*schema.Schema {
 		"source-archive-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
-			Description:  "set source disk ID",
+			Description:  "set source archive ID",
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
+			CompleteFunc: completeArchiveID(),
 		},
 		"distant-from": {
 			Type:         schema.TypeIntList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set distant from disk IDs",
 			ValidateFunc: validateIntSlice(validateSakuraID()),
+			CompleteFunc: completeDiskID(),
 		},
 		"async": {
 			Type:        schema.TypeBool,
@@ -340,12 +354,14 @@ func diskReinstallFromDiskParam() map[string]*schema.Schema {
 			Description:  "set source disk ID",
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
+			CompleteFunc: completeDiskID(),
 		},
 		"distant-from": {
 			Type:         schema.TypeIntList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set distant from disk IDs",
 			ValidateFunc: validateIntSlice(validateSakuraID()),
+			CompleteFunc: completeDiskID(),
 		},
 		"async": {
 			Type:        schema.TypeBool,
@@ -363,6 +379,7 @@ func diskReinstallToBlankParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set distant from disk IDs",
 			ValidateFunc: validateIntSlice(validateSakuraID()),
+			CompleteFunc: completeDiskID(),
 		},
 		"async": {
 			Type:        schema.TypeBool,
@@ -381,6 +398,7 @@ func diskServerConnectParam() map[string]*schema.Schema {
 			Description:  "set target server ID",
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
+			CompleteFunc: completeServerID(),
 		},
 	}
 }

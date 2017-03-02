@@ -14,6 +14,8 @@ func InternetCreate(ctx Context, params *CreateInternetParam) error {
 
 	// set params
 
+	p.SetBandWidthMbps(params.BandWidth)
+
 	p.SetDescription(params.Description)
 
 	p.SetIconByID(params.IconId)

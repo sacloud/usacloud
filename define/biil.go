@@ -17,9 +17,10 @@ func BillResource() *schema.Resource {
 			UseCustomCommand:   true,
 		},
 		"csv": {
-			Type:             schema.CommandRead,
-			Params:           billReadParam(),
-			UseCustomCommand: true,
+			Type:                   schema.CommandRead,
+			Params:                 billReadParam(),
+			UseCustomCommand:       true,
+			UseCustomArgCompletion: true,
 		},
 	}
 

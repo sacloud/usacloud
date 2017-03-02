@@ -9,12 +9,11 @@ func ProductServerResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "ServerPlans",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              productServerListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  productServerListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             productServerListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: productServerListColumns(),
 		},
 		"read": {
 			Type:          schema.CommandRead,
@@ -26,9 +25,10 @@ func ProductServerResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		Aliases:          []string{"server-plan"},
-		ResourceCategory: CategoryInformation,
+		Commands:            commands,
+		Aliases:             []string{"server-plan"},
+		ResourceCategory:    CategoryInformation,
+		ListResultFieldName: "ServerPlans",
 	}
 }
 

@@ -10,12 +10,11 @@ func AutoBackupResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "CommonServiceAutoBackupItems",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              autoBackupListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  autoBackupListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             autoBackupListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: autoBackupListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
@@ -50,8 +49,9 @@ func AutoBackupResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		ResourceCategory: CategoryStorage,
+		Commands:            commands,
+		ResourceCategory:    CategoryStorage,
+		ListResultFieldName: "CommonServiceAutoBackupItems",
 	}
 }
 
@@ -104,7 +104,7 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 		"generation": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
@@ -120,6 +120,7 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 			Description:     "set backup start hour[0/6/12/18]",
 			DestinationProp: "SetBackupHour",
 			ValidateFunc:    validateInIntValues(sacloud.AllowAutoBackupHour()...),
+			CompleteFunc:    completeInIntValues(sacloud.AllowAutoBackupHour()...),
 			DefaultValue:    0,
 			Required:        true,
 		},
@@ -131,6 +132,7 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 			ValidateFunc: validateStringSlice(
 				validateInStrValues(append(sacloud.AllowAutoBackupWeekdays(), "all")...),
 			),
+			CompleteFunc: completeInStrValues(append(sacloud.AllowAutoBackupWeekdays(), "all")...),
 			DefaultValue: []string{"all"},
 			Required:     true,
 		},
@@ -140,6 +142,7 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 			Description:  "set target diskID ",
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
+			CompleteFunc: completeDiskID(),
 		},
 	}
 }
@@ -156,7 +159,7 @@ func autoBackupUpdateParam() map[string]*schema.Schema {
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 		"generation": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
@@ -170,6 +173,7 @@ func autoBackupUpdateParam() map[string]*schema.Schema {
 			Description:     "set backup start hour[0/6/12/18]",
 			DestinationProp: "SetBackupHour",
 			ValidateFunc:    validateInIntValues(sacloud.AllowAutoBackupHour()...),
+			CompleteFunc:    completeInIntValues(sacloud.AllowAutoBackupHour()...),
 		},
 		"weekdays": {
 			Type:            schema.TypeStringList,
@@ -179,6 +183,7 @@ func autoBackupUpdateParam() map[string]*schema.Schema {
 			ValidateFunc: validateStringSlice(
 				validateInStrValues(append(sacloud.AllowAutoBackupWeekdays(), "all")...),
 			),
+			CompleteFunc: completeInStrValues(append(sacloud.AllowAutoBackupWeekdays(), "all")...),
 		},
 	}
 }

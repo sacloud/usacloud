@@ -9,12 +9,11 @@ func SwitchResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "Switches",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              switchListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  switchListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             switchListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: switchListColumns(),
 		},
 		"create": {
 			Type:          schema.CommandCreate,
@@ -61,8 +60,9 @@ func SwitchResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		ResourceCategory: CategoryNetworking,
+		Commands:            commands,
+		ResourceCategory:    CategoryNetworking,
+		ListResultFieldName: "Switches",
 	}
 }
 
@@ -122,7 +122,7 @@ func switchCreateParam() map[string]*schema.Schema {
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 	}
 }
 
@@ -138,7 +138,7 @@ func switchUpdateParam() map[string]*schema.Schema {
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 	}
 }
 
@@ -150,8 +150,15 @@ func switchDeleteParam() map[string]*schema.Schema {
 
 func switchConnectBridgeParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":        paramID,
-		"bridge-id": getParamResourceID("bridge ID"),
+		"id": paramID,
+		"bridge-id": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerPathThrough,
+			Description:  "set Bridge ID",
+			Required:     true,
+			ValidateFunc: validateSakuraID(),
+			CompleteFunc: completeBridgeID(),
+		},
 	}
 }
 

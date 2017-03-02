@@ -20,7 +20,7 @@ clean-all:
 	rm -Rf bin/* ; rm -Rf tools/bin/* ; rm -f command/*_gen.go
 
 .PHONY: tools
-tools: tools/bin/gen-command-funcs tools/bin/gen-input-models tools/bin/gen-cli-commands
+tools: tools/bin/gen-command-funcs tools/bin/gen-input-models tools/bin/gen-cli-commands tools/bin/gen-command-completion
 
 tools/bin/gen-cli-commands: tools/gen-cli-commands/*.go
 	go build -o $(CURDIR)/tools/bin/gen-cli-commands $(CURDIR)/tools/gen-cli-commands/*.go
@@ -30,6 +30,17 @@ tools/bin/gen-command-funcs: tools/gen-command-funcs/*.go
 
 tools/bin/gen-input-models: tools/gen-input-models/*.go
 	go build -o $(CURDIR)/tools/bin/gen-input-models $(CURDIR)/tools/gen-input-models/*.go
+
+tools/bin/gen-command-completion: tools/gen-command-completion/*.go
+	go build -o $(CURDIR)/tools/bin/gen-command-completion $(CURDIR)/tools/gen-command-completion/*.go
+
+
+.PHONY: gen-bash-completion
+gen-bash-completion: gen tools/bin/gen-bash-completion
+	tools/bin/gen-bash-completion
+
+tools/bin/gen-bash-completion: tools/gen-bash-completion/*.go
+	go build -o $(CURDIR)/tools/bin/gen-bash-completion $(CURDIR)/tools/gen-bash-completion/*.go
 
 .PHONY: gen
 gen: tools command/*_gen.go
@@ -42,7 +53,7 @@ command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-func
 	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
 
 .PHONY: build
-build: clean gen vet
+build: clean gen gen-bash-completion vet
 	go build -ldflags "-s -w -X `go list ./version`.Revision=`git rev-parse --short HEAD 2>/dev/null`" -o $(CURDIR)/bin/$(BIN_NAME) $(CURDIR)/main.go
 
 .PHONY: build-x

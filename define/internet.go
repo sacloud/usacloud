@@ -10,12 +10,11 @@ func InternetResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "Internet",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              internetListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  internetListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             internetListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: internetListColumns(),
 		},
 		"create": {
 			Type:          schema.CommandCreate,
@@ -55,8 +54,9 @@ func InternetResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		ResourceCategory: CategoryNetworking,
+		Commands:            commands,
+		ResourceCategory:    CategoryNetworking,
+		ListResultFieldName: "Internet",
 	}
 }
 
@@ -111,7 +111,7 @@ func internetCreateParam() map[string]*schema.Schema {
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 		"nw-masklen": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
@@ -121,6 +121,16 @@ func internetCreateParam() map[string]*schema.Schema {
 			Required:        true,
 			DefaultValue:    28,
 			ValidateFunc:    validateInIntValues(sacloud.AllowInternetNetworkMaskLen()...),
+		},
+		"band-width": {
+			Type:            schema.TypeInt,
+			HandlerType:     schema.HandlerPathThrough,
+			Description:     "set band-width(Mbpm)",
+			DestinationProp: "SetBandWidthMbps",
+			Required:        true,
+			DefaultValue:    100,
+			ValidateFunc:    validateInIntValues(sacloud.AllowInternetBandWidth()...),
+			CompleteFunc:    completeInIntValues(sacloud.AllowInternetBandWidth()...),
 		},
 	}
 }
@@ -137,15 +147,14 @@ func internetUpdateParam() map[string]*schema.Schema {
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 		"band-width": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
 			Description:     "set band-width(Mbpm)",
 			DestinationProp: "SetBandWidthMbps",
-			Required:        true,
-			DefaultValue:    100,
 			ValidateFunc:    validateInIntValues(sacloud.AllowInternetBandWidth()...),
+			CompleteFunc:    completeInIntValues(sacloud.AllowInternetBandWidth()...),
 		},
 	}
 }
@@ -167,6 +176,7 @@ func internetUpdateBandWidthParam() map[string]*schema.Schema {
 			Required:        true,
 			DefaultValue:    100,
 			ValidateFunc:    validateInIntValues(sacloud.AllowInternetBandWidth()...),
+			CompleteFunc:    completeInIntValues(sacloud.AllowInternetBandWidth()...),
 		},
 	}
 }

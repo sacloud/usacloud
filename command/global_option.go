@@ -15,6 +15,9 @@ type Option struct {
 	Format            string
 	Out               io.Writer
 	Err               io.Writer
+	Validated         bool
+	Valid             bool
+	ValidationResults []error
 }
 
 var GlobalOption = &Option{
@@ -86,6 +89,10 @@ func (o *Option) Validate(skipAuth bool) []error {
 	if !isValidFormat {
 		errs = append(errs, fmt.Errorf("%q: is invalid. Either [table/json/tsv/csv] is required", "format"))
 	}
+
+	o.Validated = true
+	o.Valid = len(errs) == 0
+	o.ValidationResults = errs
 
 	return errs
 }

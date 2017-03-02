@@ -10,12 +10,11 @@ func GSLBResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "CommonServiceGSLBItems",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              gslbListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  gslbListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             gslbListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: gslbListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
@@ -78,8 +77,9 @@ func GSLBResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		ResourceCategory: CategoryCommonServiceItem,
+		Commands:            commands,
+		ResourceCategory:    CategoryCommonServiceItem,
+		ListResultFieldName: "CommonServiceGSLBItems",
 	}
 }
 
@@ -128,7 +128,7 @@ func gslbCreateParam() map[string]*schema.Schema {
 		"name":        paramRequiredName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 		"protocol": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -136,6 +136,7 @@ func gslbCreateParam() map[string]*schema.Schema {
 			DefaultValue: "ping",
 			Required:     true,
 			ValidateFunc: validateInStrValues(sacloud.AllowGSLBHealthCheckProtocol()...),
+			CompleteFunc: completeInStrValues(sacloud.AllowGSLBHealthCheckProtocol()...),
 		},
 		"host-header": {
 			Type:        schema.TypeString,
@@ -194,12 +195,13 @@ func gslbUpdateParam() map[string]*schema.Schema {
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
-		"icon-id":     getParamSubResourceID("Icon"),
+		"icon-id":     paramIconResourceID,
 		"protocol": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set healthcheck protocol[http/https/ping/tcp]",
 			ValidateFunc: validateInStrValues(sacloud.AllowGSLBHealthCheckProtocol()...),
+			CompleteFunc: completeInStrValues(sacloud.AllowGSLBHealthCheckProtocol()...),
 		},
 		"host-header": {
 			Type:        schema.TypeString,

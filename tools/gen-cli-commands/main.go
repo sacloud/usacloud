@@ -276,11 +276,13 @@ func buildActionParams(command *schema.Command) (map[string]interface{}, error) 
 	action := fmt.Sprintf("return %s(ctx , %s)", ctx.CommandFuncName(), paramName)
 
 	res = map[string]interface{}{
-		"ParamName":         paramName,
-		"SkipAuth":          ctx.CurrentCommand().SkipAuth,
-		"NeedAsignFromArgs": ctx.CurrentCommand().Type.IsRequiredIDType(),
-		"SetDefault":        setDefault,
-		"Action":            action,
+		"ParamName":             paramName,
+		"SkipAuth":              ctx.CurrentCommand().SkipAuth,
+		"NeedAsignFromArgs":     ctx.CurrentCommand().Type.IsRequiredIDType(),
+		"SetDefault":            setDefault,
+		"Action":                action,
+		"CompleteArgsFuncName":  ctx.CompleteArgsFuncName(),
+		"CompleteFlagsFuncName": ctx.CompleteFlagsFuncName(),
 	}
 
 	return res, nil
@@ -327,6 +329,7 @@ package command
 import (
     "gopkg.in/urfave/cli.v2"
     "github.com/sacloud/usacloud/schema"
+    "strings"
 )
 
 func init() {
@@ -367,6 +370,90 @@ func init() {
 					},
 					{{ end }}
 				},{{ end }}
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, {{.ParamName}})
+					{{ if .SetDefault }}
+					// Set option values for slice
+					{{.SetDefault}}{{ end }}
+
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								{{.CompleteArgsFuncName}}(ctx , {{.ParamName}})
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										{{.CompleteArgsFuncName}}(ctx , {{.ParamName}})
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									{{.CompleteFlagsFuncName}}(ctx, {{.ParamName}}, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							{{.CompleteArgsFuncName}}(ctx , {{.ParamName}})
+							return
+						}
+					}
+				},
 				Action: func(c *cli.Context) error {
 
 					{{ if .SetDefault }}

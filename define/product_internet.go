@@ -9,12 +9,11 @@ func ProductInternetResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "InternetPlans",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              productInternetListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  productInternetListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             productInternetListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: productInternetListColumns(),
 		},
 		"read": {
 			Type:          schema.CommandRead,
@@ -26,9 +25,10 @@ func ProductInternetResource() *schema.Resource {
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		Aliases:          []string{"internet-plan"},
-		ResourceCategory: CategoryInformation,
+		Commands:            commands,
+		Aliases:             []string{"internet-plan"},
+		ResourceCategory:    CategoryInformation,
+		ListResultFieldName: "InternetPlans",
 	}
 }
 

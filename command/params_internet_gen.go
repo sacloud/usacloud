@@ -10,6 +10,7 @@ import (
 
 // CreateInternetParam is input parameters for the sacloud API
 type CreateInternetParam struct {
+	BandWidth   int
 	Description string
 	IconId      int64
 	Name        string
@@ -21,6 +22,8 @@ type CreateInternetParam struct {
 func NewCreateInternetParam() *CreateInternetParam {
 	return &CreateInternetParam{
 
+		BandWidth: 100,
+
 		NwMasklen: 28,
 	}
 }
@@ -28,6 +31,20 @@ func NewCreateInternetParam() *CreateInternetParam {
 // Validate checks current values in model
 func (p *CreateInternetParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--band-width", p.BandWidth)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Internet"].Commands["create"].Params["band-width"].ValidateFunc
+		errs := validator("--band-width", p.BandWidth)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := define.Resources["Internet"].Commands["create"].Params["description"].ValidateFunc
 		errs := validator("--description", p.Description)
@@ -105,6 +122,13 @@ func (p *CreateInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CreateInternetParam) SetBandWidth(v int) {
+	p.BandWidth = v
+}
+
+func (p *CreateInternetParam) GetBandWidth() int {
+	return p.BandWidth
+}
 func (p *CreateInternetParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -385,22 +409,12 @@ type UpdateInternetParam struct {
 
 // NewUpdateInternetParam return new UpdateInternetParam
 func NewUpdateInternetParam() *UpdateInternetParam {
-	return &UpdateInternetParam{
-
-		BandWidth: 100,
-	}
+	return &UpdateInternetParam{}
 }
 
 // Validate checks current values in model
 func (p *UpdateInternetParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--band-width", p.BandWidth)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := define.Resources["Internet"].Commands["update"].Params["band-width"].ValidateFunc
 		errs := validator("--band-width", p.BandWidth)

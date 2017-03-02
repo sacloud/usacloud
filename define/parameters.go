@@ -55,14 +55,13 @@ func getParamResourceShortID(resourceName string, digit int) *schema.Schema {
 	}
 }
 
-func getParamSubResourceID(resourceName string) *schema.Schema {
-	return &schema.Schema{
-		Type:            schema.TypeInt64,
-		HandlerType:     schema.HandlerPathThrough,
-		DestinationProp: fmt.Sprintf("Set%sByID", resourceName),
-		Description:     fmt.Sprintf("set %s ID", resourceName),
-		ValidateFunc:    validateSakuraID(),
-	}
+var paramIconResourceID = &schema.Schema{
+	Type:            schema.TypeInt64,
+	HandlerType:     schema.HandlerPathThrough,
+	DestinationProp: "SetIconByID",
+	Description:     "set Icon ID",
+	ValidateFunc:    validateSakuraID(),
+	CompleteFunc:    completeIconID(),
 }
 
 var CommonListParam map[string]*schema.Schema = map[string]*schema.Schema{
@@ -110,11 +109,13 @@ var CommonListParam map[string]*schema.Schema = map[string]*schema.Schema{
 	},
 }
 
+var scopeCondStrings = []string{"user", "shared"}
 var paramScopeCond = map[string]*schema.Schema{
 	"scope": {
 		Type:         schema.TypeString,
 		HandlerType:  schema.HandlerFilterBy,
 		Description:  "set filter by scope('user' or 'shared')",
-		ValidateFunc: validateInStrValues("user", "shared"),
+		ValidateFunc: validateInStrValues(scopeCondStrings...),
+		CompleteFunc: completeInStrValues(scopeCondStrings...),
 	},
 }

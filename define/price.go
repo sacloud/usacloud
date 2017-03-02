@@ -9,20 +9,20 @@ func PriceResource() *schema.Resource {
 
 	commands := map[string]*schema.Command{
 		"list": {
-			Type:                schema.CommandList,
-			ListResultFieldName: "ServiceClasses",
-			Aliases:             []string{"l", "ls", "find"},
-			Params:              priceListParam(),
-			TableType:           output.TableSimple,
-			TableColumnDefines:  priceListColumns(),
+			Type:               schema.CommandList,
+			Aliases:            []string{"l", "ls", "find"},
+			Params:             priceListParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: priceListColumns(),
 		},
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		Aliases:          []string{"public-price"},
-		AltResource:      "PublicPrice",
-		ResourceCategory: CategoryInformation,
+		Commands:            commands,
+		Aliases:             []string{"public-price"},
+		AltResource:         "PublicPrice",
+		ListResultFieldName: "ServiceClasses",
+		ResourceCategory:    CategoryInformation,
 	}
 }
 
