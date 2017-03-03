@@ -114,16 +114,12 @@ func ServerScp(ctx Context, params *ScpServerParam) error {
 		}
 		if stat.IsDir() {
 
+			if !params.Recursive {
+				return fmt.Errorf("%q is directory. Use -r or --recursive flag", localPath)
+			}
+
 			localPath = filepath.Clean(localPath)
-			err := scpClient.SendDir(localPath, remotePath, func(parentDir string, info os.FileInfo) (bool, error) {
-				if params.Recursive {
-					return true, nil
-				}
-
-				current := filepath.Join(parentDir, info.Name())
-				return localPath == current || (localPath == parentDir && !info.IsDir()), nil
-
-			})
+			err := scpClient.SendDir(localPath, remotePath, nil)
 			if err != nil {
 				return fmt.Errorf("ServerScp is failed: %s", err)
 			}
@@ -150,17 +146,12 @@ func ServerScp(ctx Context, params *ScpServerParam) error {
 		// first, try copy file
 		err = scpClient.ReceiveFile(remotePath, localPath)
 		if err != nil {
+			if !params.Recursive {
+				return fmt.Errorf("%q isn't readable file or is a directory. try use -r or --recursive flag", remotePath)
+			}
+
 			// next , try copy directory
-			err := scpClient.ReceiveDir(remotePath, localPath, func(parentDir string, info os.FileInfo) (bool, error) {
-
-				if params.Recursive {
-					return true, nil
-				}
-
-				current := filepath.Join(parentDir, info.Name())
-				return localPath == current || (localPath == parentDir && !info.IsDir()), nil
-
-			})
+			err := scpClient.ReceiveDir(remotePath, localPath, nil)
 			if err != nil {
 				return fmt.Errorf("ServerScp is failed: %s", err)
 			}

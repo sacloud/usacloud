@@ -53,6 +53,9 @@ func ObjectStoragePut(ctx Context, params *PutObjectStorageParam) error {
 	bucket := client.Bucket(params.Bucket)
 
 	if info.IsDir() {
+		if !params.Recursive {
+			return fmt.Errorf("%q is directory. Use -r or --recursive flag", filePath)
+		}
 		params.ContentType = "" // when directory mode, set empty to content-type
 		err := objectStoragePutRecursive(path, filePath, filePath, params.Recursive, bucket, params.ContentType)
 		if err != nil {

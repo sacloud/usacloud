@@ -52,6 +52,10 @@ func ObjectStorageGet(ctx Context, params *GetObjectStorageParam) error {
 
 	key, _ := bucket.GetKey(path) // if path is directory , GetKey(path) returns nil(with 404 err)
 	if key == nil {
+		if !params.Recursive {
+			return fmt.Errorf("%q is directory. Use -r or --recursive flag", path)
+		}
+
 		// path is directory
 		if path != "" && !strings.HasSuffix(path, "/") {
 			path = path + "/"
