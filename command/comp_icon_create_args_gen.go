@@ -2,6 +2,6 @@
 
 package command
 
-func IconCreateCompleteArgs(ctx Context, params *CreateIconParam) {
+func IconCreateCompleteArgs(ctx Context, params *CreateIconParam, cur, prev, commandName string) {
 
 }

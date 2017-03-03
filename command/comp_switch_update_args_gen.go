@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func SwitchUpdateCompleteArgs(ctx Context, params *UpdateSwitchParam) {
+func SwitchUpdateCompleteArgs(ctx Context, params *UpdateSwitchParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

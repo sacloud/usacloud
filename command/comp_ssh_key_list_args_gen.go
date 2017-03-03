@@ -2,6 +2,6 @@
 
 package command
 
-func SSHKeyListCompleteArgs(ctx Context, params *ListSSHKeyParam) {
+func SSHKeyListCompleteArgs(ctx Context, params *ListSSHKeyParam, cur, prev, commandName string) {
 
 }

@@ -2,6 +2,6 @@
 
 package command
 
-func ZoneListCompleteArgs(ctx Context, params *ListZoneParam) {
+func ZoneListCompleteArgs(ctx Context, params *ListZoneParam, cur, prev, commandName string) {
 
 }

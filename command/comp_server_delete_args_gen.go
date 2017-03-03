@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerDeleteCompleteArgs(ctx Context, params *DeleteServerParam) {
+func ServerDeleteCompleteArgs(ctx Context, params *DeleteServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

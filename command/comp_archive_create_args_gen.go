@@ -2,6 +2,6 @@
 
 package command
 
-func ArchiveCreateCompleteArgs(ctx Context, params *CreateArchiveParam) {
+func ArchiveCreateCompleteArgs(ctx Context, params *CreateArchiveParam, cur, prev, commandName string) {
 
 }

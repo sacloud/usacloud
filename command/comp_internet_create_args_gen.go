@@ -2,6 +2,6 @@
 
 package command
 
-func InternetCreateCompleteArgs(ctx Context, params *CreateInternetParam) {
+func InternetCreateCompleteArgs(ctx Context, params *CreateInternetParam, cur, prev, commandName string) {
 
 }

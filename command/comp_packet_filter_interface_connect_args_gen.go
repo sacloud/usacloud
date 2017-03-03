@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func PacketFilterInterfaceConnectCompleteArgs(ctx Context, params *InterfaceConnectPacketFilterParam) {
+func PacketFilterInterfaceConnectCompleteArgs(ctx Context, params *InterfaceConnectPacketFilterParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

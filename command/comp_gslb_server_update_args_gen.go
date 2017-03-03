@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func GSLBServerUpdateCompleteArgs(ctx Context, params *ServerUpdateGSLBParam) {
+func GSLBServerUpdateCompleteArgs(ctx Context, params *ServerUpdateGSLBParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

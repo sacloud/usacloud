@@ -78,7 +78,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ObjectStorageDeleteCompleteArgs(ctx, deleteParam)
+								ObjectStorageDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -109,7 +109,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ObjectStorageDeleteCompleteArgs(ctx, deleteParam)
+										ObjectStorageDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -125,7 +125,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ObjectStorageDeleteCompleteArgs(ctx, deleteParam)
+							ObjectStorageDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -207,7 +207,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ObjectStorageGetCompleteArgs(ctx, getParam)
+								ObjectStorageGetCompleteArgs(ctx, getParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -238,7 +238,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ObjectStorageGetCompleteArgs(ctx, getParam)
+										ObjectStorageGetCompleteArgs(ctx, getParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -254,7 +254,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ObjectStorageGetCompleteArgs(ctx, getParam)
+							ObjectStorageGetCompleteArgs(ctx, getParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -331,7 +331,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ObjectStorageListCompleteArgs(ctx, listParam)
+								ObjectStorageListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -362,7 +362,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ObjectStorageListCompleteArgs(ctx, listParam)
+										ObjectStorageListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -378,7 +378,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ObjectStorageListCompleteArgs(ctx, listParam)
+							ObjectStorageListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -466,7 +466,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ObjectStoragePutCompleteArgs(ctx, putParam)
+								ObjectStoragePutCompleteArgs(ctx, putParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -497,7 +497,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ObjectStoragePutCompleteArgs(ctx, putParam)
+										ObjectStoragePutCompleteArgs(ctx, putParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -513,7 +513,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ObjectStoragePutCompleteArgs(ctx, putParam)
+							ObjectStoragePutCompleteArgs(ctx, putParam, cur, prev, commandName)
 							return
 						}
 					}

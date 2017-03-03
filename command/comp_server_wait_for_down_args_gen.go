@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerWaitForDownCompleteArgs(ctx Context, params *WaitForDownServerParam) {
+func ServerWaitForDownCompleteArgs(ctx Context, params *WaitForDownServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

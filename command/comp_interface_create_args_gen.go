@@ -2,6 +2,6 @@
 
 package command
 
-func InterfaceCreateCompleteArgs(ctx Context, params *CreateInterfaceParam) {
+func InterfaceCreateCompleteArgs(ctx Context, params *CreateInterfaceParam, cur, prev, commandName string) {
 
 }

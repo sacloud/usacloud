@@ -2,6 +2,6 @@
 
 package command
 
-func RegionListCompleteArgs(ctx Context, params *ListRegionParam) {
+func RegionListCompleteArgs(ctx Context, params *ListRegionParam, cur, prev, commandName string) {
 
 }

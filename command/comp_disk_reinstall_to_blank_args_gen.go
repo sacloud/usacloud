@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func DiskReinstallToBlankCompleteArgs(ctx Context, params *ReinstallToBlankDiskParam) {
+func DiskReinstallToBlankCompleteArgs(ctx Context, params *ReinstallToBlankDiskParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

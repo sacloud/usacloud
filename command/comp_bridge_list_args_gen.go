@@ -2,6 +2,6 @@
 
 package command
 
-func BridgeListCompleteArgs(ctx Context, params *ListBridgeParam) {
+func BridgeListCompleteArgs(ctx Context, params *ListBridgeParam, cur, prev, commandName string) {
 
 }

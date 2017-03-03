@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func DiskEditCompleteArgs(ctx Context, params *EditDiskParam) {
+func DiskEditCompleteArgs(ctx Context, params *EditDiskParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

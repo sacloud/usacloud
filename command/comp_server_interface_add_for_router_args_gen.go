@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerInterfaceAddForRouterCompleteArgs(ctx Context, params *InterfaceAddForRouterServerParam) {
+func ServerInterfaceAddForRouterCompleteArgs(ctx Context, params *InterfaceAddForRouterServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

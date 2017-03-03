@@ -48,7 +48,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								WebAccelDeleteCacheCompleteArgs(ctx, deleteCacheParam)
+								WebAccelDeleteCacheCompleteArgs(ctx, deleteCacheParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -79,7 +79,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										WebAccelDeleteCacheCompleteArgs(ctx, deleteCacheParam)
+										WebAccelDeleteCacheCompleteArgs(ctx, deleteCacheParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -95,7 +95,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							WebAccelDeleteCacheCompleteArgs(ctx, deleteCacheParam)
+							WebAccelDeleteCacheCompleteArgs(ctx, deleteCacheParam, cur, prev, commandName)
 							return
 						}
 					}

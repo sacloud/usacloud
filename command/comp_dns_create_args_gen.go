@@ -2,6 +2,6 @@
 
 package command
 
-func DNSCreateCompleteArgs(ctx Context, params *CreateDNSParam) {
+func DNSCreateCompleteArgs(ctx Context, params *CreateDNSParam, cur, prev, commandName string) {
 
 }

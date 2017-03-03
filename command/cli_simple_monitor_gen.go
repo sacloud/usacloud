@@ -140,7 +140,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SimpleMonitorCreateCompleteArgs(ctx, createParam)
+								SimpleMonitorCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -171,7 +171,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SimpleMonitorCreateCompleteArgs(ctx, createParam)
+										SimpleMonitorCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -187,7 +187,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SimpleMonitorCreateCompleteArgs(ctx, createParam)
+							SimpleMonitorCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -254,7 +254,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SimpleMonitorDeleteCompleteArgs(ctx, deleteParam)
+								SimpleMonitorDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -285,7 +285,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SimpleMonitorDeleteCompleteArgs(ctx, deleteParam)
+										SimpleMonitorDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -301,7 +301,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SimpleMonitorDeleteCompleteArgs(ctx, deleteParam)
+							SimpleMonitorDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -391,7 +391,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SimpleMonitorListCompleteArgs(ctx, listParam)
+								SimpleMonitorListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -422,7 +422,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SimpleMonitorListCompleteArgs(ctx, listParam)
+										SimpleMonitorListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -438,7 +438,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SimpleMonitorListCompleteArgs(ctx, listParam)
+							SimpleMonitorListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -507,7 +507,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SimpleMonitorReadCompleteArgs(ctx, readParam)
+								SimpleMonitorReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -538,7 +538,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SimpleMonitorReadCompleteArgs(ctx, readParam)
+										SimpleMonitorReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -554,7 +554,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SimpleMonitorReadCompleteArgs(ctx, readParam)
+							SimpleMonitorReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -701,7 +701,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SimpleMonitorUpdateCompleteArgs(ctx, updateParam)
+								SimpleMonitorUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -732,7 +732,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SimpleMonitorUpdateCompleteArgs(ctx, updateParam)
+										SimpleMonitorUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -748,7 +748,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SimpleMonitorUpdateCompleteArgs(ctx, updateParam)
+							SimpleMonitorUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}

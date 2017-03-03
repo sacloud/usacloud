@@ -2,6 +2,6 @@
 
 package command
 
-func SwitchCreateCompleteArgs(ctx Context, params *CreateSwitchParam) {
+func SwitchCreateCompleteArgs(ctx Context, params *CreateSwitchParam, cur, prev, commandName string) {
 
 }

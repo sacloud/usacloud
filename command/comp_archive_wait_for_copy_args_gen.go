@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ArchiveWaitForCopyCompleteArgs(ctx Context, params *WaitForCopyArchiveParam) {
+func ArchiveWaitForCopyCompleteArgs(ctx Context, params *WaitForCopyArchiveParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

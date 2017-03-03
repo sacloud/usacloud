@@ -63,7 +63,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								LicenseCreateCompleteArgs(ctx, createParam)
+								LicenseCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -94,7 +94,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										LicenseCreateCompleteArgs(ctx, createParam)
+										LicenseCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -110,7 +110,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							LicenseCreateCompleteArgs(ctx, createParam)
+							LicenseCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -174,7 +174,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								LicenseDeleteCompleteArgs(ctx, deleteParam)
+								LicenseDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -205,7 +205,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										LicenseDeleteCompleteArgs(ctx, deleteParam)
+										LicenseDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -221,7 +221,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							LicenseDeleteCompleteArgs(ctx, deleteParam)
+							LicenseDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -311,7 +311,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								LicenseListCompleteArgs(ctx, listParam)
+								LicenseListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -342,7 +342,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										LicenseListCompleteArgs(ctx, listParam)
+										LicenseListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -358,7 +358,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							LicenseListCompleteArgs(ctx, listParam)
+							LicenseListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -427,7 +427,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								LicenseReadCompleteArgs(ctx, readParam)
+								LicenseReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -458,7 +458,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										LicenseReadCompleteArgs(ctx, readParam)
+										LicenseReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -474,7 +474,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							LicenseReadCompleteArgs(ctx, readParam)
+							LicenseReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -548,7 +548,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								LicenseUpdateCompleteArgs(ctx, updateParam)
+								LicenseUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -579,7 +579,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										LicenseUpdateCompleteArgs(ctx, updateParam)
+										LicenseUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -595,7 +595,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							LicenseUpdateCompleteArgs(ctx, updateParam)
+							LicenseUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}

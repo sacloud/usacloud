@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func DNSRecordUpdateCompleteArgs(ctx Context, params *RecordUpdateDNSParam) {
+func DNSRecordUpdateCompleteArgs(ctx Context, params *RecordUpdateDNSParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

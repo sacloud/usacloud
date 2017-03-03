@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ProductDiskReadCompleteArgs(ctx Context, params *ReadProductDiskParam) {
+func ProductDiskReadCompleteArgs(ctx Context, params *ReadProductDiskParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

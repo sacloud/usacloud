@@ -2,6 +2,6 @@
 
 package command
 
-func LicenseListCompleteArgs(ctx Context, params *ListLicenseParam) {
+func LicenseListCompleteArgs(ctx Context, params *ListLicenseParam, cur, prev, commandName string) {
 
 }

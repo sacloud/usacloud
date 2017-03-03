@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ArchiveFtpCloseCompleteArgs(ctx Context, params *FtpCloseArchiveParam) {
+func ArchiveFtpCloseCompleteArgs(ctx Context, params *FtpCloseArchiveParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

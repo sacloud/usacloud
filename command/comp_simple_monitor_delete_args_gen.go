@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func SimpleMonitorDeleteCompleteArgs(ctx Context, params *DeleteSimpleMonitorParam) {
+func SimpleMonitorDeleteCompleteArgs(ctx Context, params *DeleteSimpleMonitorParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func BillCsvCompleteArgs(ctx Context, params *CsvBillParam) {
+func BillCsvCompleteArgs(ctx Context, params *CsvBillParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

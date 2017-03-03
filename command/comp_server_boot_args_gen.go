@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerBootCompleteArgs(ctx Context, params *BootServerParam) {
+func ServerBootCompleteArgs(ctx Context, params *BootServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

@@ -2,6 +2,6 @@
 
 package command
 
-func DiskCreateCompleteArgs(ctx Context, params *CreateDiskParam) {
+func DiskCreateCompleteArgs(ctx Context, params *CreateDiskParam, cur, prev, commandName string) {
 
 }

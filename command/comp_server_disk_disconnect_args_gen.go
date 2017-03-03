@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerDiskDisconnectCompleteArgs(ctx Context, params *DiskDisconnectServerParam) {
+func ServerDiskDisconnectCompleteArgs(ctx Context, params *DiskDisconnectServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

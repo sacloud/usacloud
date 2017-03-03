@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func PacketFilterReadCompleteArgs(ctx Context, params *ReadPacketFilterParam) {
+func PacketFilterReadCompleteArgs(ctx Context, params *ReadPacketFilterParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

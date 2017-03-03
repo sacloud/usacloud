@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func InternetReadCompleteArgs(ctx Context, params *ReadInternetParam) {
+func InternetReadCompleteArgs(ctx Context, params *ReadInternetParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

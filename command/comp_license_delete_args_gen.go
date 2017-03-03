@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func LicenseDeleteCompleteArgs(ctx Context, params *DeleteLicenseParam) {
+func LicenseDeleteCompleteArgs(ctx Context, params *DeleteLicenseParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func BridgeUpdateCompleteArgs(ctx Context, params *UpdateBridgeParam) {
+func BridgeUpdateCompleteArgs(ctx Context, params *UpdateBridgeParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

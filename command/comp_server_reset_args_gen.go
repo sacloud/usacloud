@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerResetCompleteArgs(ctx Context, params *ResetServerParam) {
+func ServerResetCompleteArgs(ctx Context, params *ResetServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ArchiveDownloadCompleteArgs(ctx Context, params *DownloadArchiveParam) {
+func ArchiveDownloadCompleteArgs(ctx Context, params *DownloadArchiveParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

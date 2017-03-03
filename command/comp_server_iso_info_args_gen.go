@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerIsoInfoCompleteArgs(ctx Context, params *IsoInfoServerParam) {
+func ServerIsoInfoCompleteArgs(ctx Context, params *IsoInfoServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

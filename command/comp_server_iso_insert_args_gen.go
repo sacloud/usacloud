@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerIsoInsertCompleteArgs(ctx Context, params *IsoInsertServerParam) {
+func ServerIsoInsertCompleteArgs(ctx Context, params *IsoInsertServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

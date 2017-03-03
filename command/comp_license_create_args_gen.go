@@ -2,6 +2,6 @@
 
 package command
 
-func LicenseCreateCompleteArgs(ctx Context, params *CreateLicenseParam) {
+func LicenseCreateCompleteArgs(ctx Context, params *CreateLicenseParam, cur, prev, commandName string) {
 
 }

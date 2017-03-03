@@ -2,6 +2,6 @@
 
 package command
 
-func StartupScriptListCompleteArgs(ctx Context, params *ListStartupScriptParam) {
+func StartupScriptListCompleteArgs(ctx Context, params *ListStartupScriptParam, cur, prev, commandName string) {
 
 }

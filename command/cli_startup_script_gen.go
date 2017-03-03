@@ -83,7 +83,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								StartupScriptCreateCompleteArgs(ctx, createParam)
+								StartupScriptCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -114,7 +114,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										StartupScriptCreateCompleteArgs(ctx, createParam)
+										StartupScriptCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -130,7 +130,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							StartupScriptCreateCompleteArgs(ctx, createParam)
+							StartupScriptCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -197,7 +197,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								StartupScriptDeleteCompleteArgs(ctx, deleteParam)
+								StartupScriptDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -228,7 +228,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										StartupScriptDeleteCompleteArgs(ctx, deleteParam)
+										StartupScriptDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -244,7 +244,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							StartupScriptDeleteCompleteArgs(ctx, deleteParam)
+							StartupScriptDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -339,7 +339,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								StartupScriptListCompleteArgs(ctx, listParam)
+								StartupScriptListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -370,7 +370,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										StartupScriptListCompleteArgs(ctx, listParam)
+										StartupScriptListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -386,7 +386,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							StartupScriptListCompleteArgs(ctx, listParam)
+							StartupScriptListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -455,7 +455,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								StartupScriptReadCompleteArgs(ctx, readParam)
+								StartupScriptReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -486,7 +486,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										StartupScriptReadCompleteArgs(ctx, readParam)
+										StartupScriptReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -502,7 +502,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							StartupScriptReadCompleteArgs(ctx, readParam)
+							StartupScriptReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -600,7 +600,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								StartupScriptUpdateCompleteArgs(ctx, updateParam)
+								StartupScriptUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -631,7 +631,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										StartupScriptUpdateCompleteArgs(ctx, updateParam)
+										StartupScriptUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -647,7 +647,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							StartupScriptUpdateCompleteArgs(ctx, updateParam)
+							StartupScriptUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}

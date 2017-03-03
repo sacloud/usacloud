@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ISOImageUploadCompleteArgs(ctx Context, params *UploadISOImageParam) {
+func ISOImageUploadCompleteArgs(ctx Context, params *UploadISOImageParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

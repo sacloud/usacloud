@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func InterfaceDeleteCompleteArgs(ctx Context, params *DeleteInterfaceParam) {
+func InterfaceDeleteCompleteArgs(ctx Context, params *DeleteInterfaceParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

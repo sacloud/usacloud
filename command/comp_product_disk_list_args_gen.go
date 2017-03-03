@@ -2,6 +2,6 @@
 
 package command
 
-func ProductDiskListCompleteArgs(ctx Context, params *ListProductDiskParam) {
+func ProductDiskListCompleteArgs(ctx Context, params *ListProductDiskParam, cur, prev, commandName string) {
 
 }

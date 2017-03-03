@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func DiskDeleteCompleteArgs(ctx Context, params *DeleteDiskParam) {
+func DiskDeleteCompleteArgs(ctx Context, params *DeleteDiskParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

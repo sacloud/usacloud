@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func DiskUpdateCompleteArgs(ctx Context, params *UpdateDiskParam) {
+func DiskUpdateCompleteArgs(ctx Context, params *UpdateDiskParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

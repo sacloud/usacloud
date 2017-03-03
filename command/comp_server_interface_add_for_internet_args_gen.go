@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerInterfaceAddForInternetCompleteArgs(ctx Context, params *InterfaceAddForInternetServerParam) {
+func ServerInterfaceAddForInternetCompleteArgs(ctx Context, params *InterfaceAddForInternetServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

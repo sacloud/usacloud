@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerShutdownCompleteArgs(ctx Context, params *ShutdownServerParam) {
+func ServerShutdownCompleteArgs(ctx Context, params *ShutdownServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

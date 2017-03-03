@@ -2,6 +2,6 @@
 
 package command
 
-func ProductInternetListCompleteArgs(ctx Context, params *ListProductInternetParam) {
+func ProductInternetListCompleteArgs(ctx Context, params *ListProductInternetParam, cur, prev, commandName string) {
 
 }

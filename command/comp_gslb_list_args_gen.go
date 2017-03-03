@@ -2,6 +2,6 @@
 
 package command
 
-func GSLBListCompleteArgs(ctx Context, params *ListGSLBParam) {
+func GSLBListCompleteArgs(ctx Context, params *ListGSLBParam, cur, prev, commandName string) {
 
 }

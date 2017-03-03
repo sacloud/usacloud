@@ -125,7 +125,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								GSLBCreateCompleteArgs(ctx, createParam)
+								GSLBCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -156,7 +156,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										GSLBCreateCompleteArgs(ctx, createParam)
+										GSLBCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -172,7 +172,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							GSLBCreateCompleteArgs(ctx, createParam)
+							GSLBCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -239,7 +239,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								GSLBDeleteCompleteArgs(ctx, deleteParam)
+								GSLBDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -270,7 +270,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										GSLBDeleteCompleteArgs(ctx, deleteParam)
+										GSLBDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -286,7 +286,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							GSLBDeleteCompleteArgs(ctx, deleteParam)
+							GSLBDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -376,7 +376,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								GSLBListCompleteArgs(ctx, listParam)
+								GSLBListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -407,7 +407,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										GSLBListCompleteArgs(ctx, listParam)
+										GSLBListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -423,7 +423,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							GSLBListCompleteArgs(ctx, listParam)
+							GSLBListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -492,7 +492,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								GSLBReadCompleteArgs(ctx, readParam)
+								GSLBReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -523,7 +523,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										GSLBReadCompleteArgs(ctx, readParam)
+										GSLBReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -539,7 +539,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							GSLBReadCompleteArgs(ctx, readParam)
+							GSLBReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -623,7 +623,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								GSLBServerAddCompleteArgs(ctx, serverAddParam)
+								GSLBServerAddCompleteArgs(ctx, serverAddParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -654,7 +654,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										GSLBServerAddCompleteArgs(ctx, serverAddParam)
+										GSLBServerAddCompleteArgs(ctx, serverAddParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -670,7 +670,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							GSLBServerAddCompleteArgs(ctx, serverAddParam)
+							GSLBServerAddCompleteArgs(ctx, serverAddParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -743,7 +743,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								GSLBServerDeleteCompleteArgs(ctx, serverDeleteParam)
+								GSLBServerDeleteCompleteArgs(ctx, serverDeleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -774,7 +774,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										GSLBServerDeleteCompleteArgs(ctx, serverDeleteParam)
+										GSLBServerDeleteCompleteArgs(ctx, serverDeleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -790,7 +790,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							GSLBServerDeleteCompleteArgs(ctx, serverDeleteParam)
+							GSLBServerDeleteCompleteArgs(ctx, serverDeleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -858,7 +858,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								GSLBServerListCompleteArgs(ctx, serverListParam)
+								GSLBServerListCompleteArgs(ctx, serverListParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -889,7 +889,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										GSLBServerListCompleteArgs(ctx, serverListParam)
+										GSLBServerListCompleteArgs(ctx, serverListParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -905,7 +905,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							GSLBServerListCompleteArgs(ctx, serverListParam)
+							GSLBServerListCompleteArgs(ctx, serverListParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -993,7 +993,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								GSLBServerUpdateCompleteArgs(ctx, serverUpdateParam)
+								GSLBServerUpdateCompleteArgs(ctx, serverUpdateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1024,7 +1024,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										GSLBServerUpdateCompleteArgs(ctx, serverUpdateParam)
+										GSLBServerUpdateCompleteArgs(ctx, serverUpdateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1040,7 +1040,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							GSLBServerUpdateCompleteArgs(ctx, serverUpdateParam)
+							GSLBServerUpdateCompleteArgs(ctx, serverUpdateParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1172,7 +1172,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								GSLBUpdateCompleteArgs(ctx, updateParam)
+								GSLBUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1203,7 +1203,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										GSLBUpdateCompleteArgs(ctx, updateParam)
+										GSLBUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1219,7 +1219,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							GSLBUpdateCompleteArgs(ctx, updateParam)
+							GSLBUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}

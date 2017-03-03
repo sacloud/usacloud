@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ArchiveUploadCompleteArgs(ctx Context, params *UploadArchiveParam) {
+func ArchiveUploadCompleteArgs(ctx Context, params *UploadArchiveParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

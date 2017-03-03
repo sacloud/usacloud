@@ -2,6 +2,6 @@
 
 package command
 
-func IconListCompleteArgs(ctx Context, params *ListIconParam) {
+func IconListCompleteArgs(ctx Context, params *ListIconParam, cur, prev, commandName string) {
 
 }

@@ -77,7 +77,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								RegionListCompleteArgs(ctx, listParam)
+								RegionListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -108,7 +108,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										RegionListCompleteArgs(ctx, listParam)
+										RegionListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -124,7 +124,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							RegionListCompleteArgs(ctx, listParam)
+							RegionListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -193,7 +193,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								RegionReadCompleteArgs(ctx, readParam)
+								RegionReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -224,7 +224,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										RegionReadCompleteArgs(ctx, readParam)
+										RegionReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -240,7 +240,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							RegionReadCompleteArgs(ctx, readParam)
+							RegionReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}

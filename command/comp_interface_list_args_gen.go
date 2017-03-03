@@ -2,6 +2,6 @@
 
 package command
 
-func InterfaceListCompleteArgs(ctx Context, params *ListInterfaceParam) {
+func InterfaceListCompleteArgs(ctx Context, params *ListInterfaceParam, cur, prev, commandName string) {
 
 }

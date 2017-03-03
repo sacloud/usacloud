@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerUpdateCompleteArgs(ctx Context, params *UpdateServerParam) {
+func ServerUpdateCompleteArgs(ctx Context, params *UpdateServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

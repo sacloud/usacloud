@@ -402,7 +402,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								{{.CompleteArgsFuncName}}(ctx , {{.ParamName}})
+								{{.CompleteArgsFuncName}}(ctx , {{.ParamName}}, cur, prev, commandName)
 								return
 							}
 						}
@@ -433,7 +433,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										{{.CompleteArgsFuncName}}(ctx , {{.ParamName}})
+										{{.CompleteArgsFuncName}}(ctx , {{.ParamName}}, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -449,7 +449,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							{{.CompleteArgsFuncName}}(ctx , {{.ParamName}})
+							{{.CompleteArgsFuncName}}(ctx , {{.ParamName}}, cur, prev, commandName)
 							return
 						}
 					}

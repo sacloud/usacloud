@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func SSHKeyUpdateCompleteArgs(ctx Context, params *UpdateSSHKeyParam) {
+func SSHKeyUpdateCompleteArgs(ctx Context, params *UpdateSSHKeyParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

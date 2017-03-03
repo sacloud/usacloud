@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerInterfaceAddForSwitchCompleteArgs(ctx Context, params *InterfaceAddForSwitchServerParam) {
+func ServerInterfaceAddForSwitchCompleteArgs(ctx Context, params *InterfaceAddForSwitchServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ISOImageDeleteCompleteArgs(ctx Context, params *DeleteISOImageParam) {
+func ISOImageDeleteCompleteArgs(ctx Context, params *DeleteISOImageParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return
