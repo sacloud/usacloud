@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strconv"
 	"strings"
 
@@ -78,11 +77,14 @@ func ServerScp(ctx Context, params *ScpServerParam) error {
 	// collect username
 	user := params.User
 	if user == "" {
-		if runtime.GOOS == "windows" {
-			user = os.Getenv("USERNAME")
-		} else {
-			user = os.Getenv("USER")
+		sshUser, err := getSSHDefaultUserName(client, p.ID)
+		if err != nil {
+			return fmt.Errorf("ServerScp is failed: get default ssh username is failed: %s", err)
 		}
+		if sshUser == "" {
+			sshUser = "root"
+		}
+		user = sshUser
 	}
 
 	sshParam := &remote.SSHParams{
