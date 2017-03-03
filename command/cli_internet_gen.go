@@ -90,7 +90,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								InternetCreateCompleteArgs(ctx, createParam)
+								InternetCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -121,7 +121,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										InternetCreateCompleteArgs(ctx, createParam)
+										InternetCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -137,7 +137,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							InternetCreateCompleteArgs(ctx, createParam)
+							InternetCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -204,7 +204,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								InternetDeleteCompleteArgs(ctx, deleteParam)
+								InternetDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -235,7 +235,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										InternetDeleteCompleteArgs(ctx, deleteParam)
+										InternetDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -251,7 +251,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							InternetDeleteCompleteArgs(ctx, deleteParam)
+							InternetDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -341,7 +341,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								InternetListCompleteArgs(ctx, listParam)
+								InternetListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -372,7 +372,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										InternetListCompleteArgs(ctx, listParam)
+										InternetListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -388,7 +388,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							InternetListCompleteArgs(ctx, listParam)
+							InternetListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -457,7 +457,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								InternetReadCompleteArgs(ctx, readParam)
+								InternetReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -488,7 +488,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										InternetReadCompleteArgs(ctx, readParam)
+										InternetReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -504,7 +504,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							InternetReadCompleteArgs(ctx, readParam)
+							InternetReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -601,7 +601,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								InternetUpdateCompleteArgs(ctx, updateParam)
+								InternetUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -632,7 +632,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										InternetUpdateCompleteArgs(ctx, updateParam)
+										InternetUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -648,7 +648,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							InternetUpdateCompleteArgs(ctx, updateParam)
+							InternetUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -725,7 +725,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam)
+								InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -756,7 +756,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam)
+										InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -772,7 +772,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam)
+							InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam, cur, prev, commandName)
 							return
 						}
 					}

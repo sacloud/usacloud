@@ -66,7 +66,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								BillCsvCompleteArgs(ctx, csvParam)
+								BillCsvCompleteArgs(ctx, csvParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -97,7 +97,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										BillCsvCompleteArgs(ctx, csvParam)
+										BillCsvCompleteArgs(ctx, csvParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -113,7 +113,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							BillCsvCompleteArgs(ctx, csvParam)
+							BillCsvCompleteArgs(ctx, csvParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -186,7 +186,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								BillListCompleteArgs(ctx, listParam)
+								BillListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -217,7 +217,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										BillListCompleteArgs(ctx, listParam)
+										BillListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -233,7 +233,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							BillListCompleteArgs(ctx, listParam)
+							BillListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}

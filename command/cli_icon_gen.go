@@ -70,7 +70,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								IconCreateCompleteArgs(ctx, createParam)
+								IconCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -101,7 +101,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										IconCreateCompleteArgs(ctx, createParam)
+										IconCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -117,7 +117,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							IconCreateCompleteArgs(ctx, createParam)
+							IconCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -184,7 +184,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								IconDeleteCompleteArgs(ctx, deleteParam)
+								IconDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -215,7 +215,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										IconDeleteCompleteArgs(ctx, deleteParam)
+										IconDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -231,7 +231,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							IconDeleteCompleteArgs(ctx, deleteParam)
+							IconDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -326,7 +326,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								IconListCompleteArgs(ctx, listParam)
+								IconListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -357,7 +357,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										IconListCompleteArgs(ctx, listParam)
+										IconListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -373,7 +373,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							IconListCompleteArgs(ctx, listParam)
+							IconListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -442,7 +442,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								IconReadCompleteArgs(ctx, readParam)
+								IconReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -473,7 +473,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										IconReadCompleteArgs(ctx, readParam)
+										IconReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -489,7 +489,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							IconReadCompleteArgs(ctx, readParam)
+							IconReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -570,7 +570,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								IconUpdateCompleteArgs(ctx, updateParam)
+								IconUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -601,7 +601,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										IconUpdateCompleteArgs(ctx, updateParam)
+										IconUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -617,7 +617,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							IconUpdateCompleteArgs(ctx, updateParam)
+							IconUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}

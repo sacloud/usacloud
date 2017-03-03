@@ -2,6 +2,6 @@
 
 package command
 
-func ArchiveListCompleteArgs(ctx Context, params *ListArchiveParam) {
+func ArchiveListCompleteArgs(ctx Context, params *ListArchiveParam, cur, prev, commandName string) {
 
 }

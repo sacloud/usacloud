@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func DiskServerConnectCompleteArgs(ctx Context, params *ServerConnectDiskParam) {
+func DiskServerConnectCompleteArgs(ctx Context, params *ServerConnectDiskParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

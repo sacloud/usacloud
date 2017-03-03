@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func SimpleMonitorUpdateCompleteArgs(ctx Context, params *UpdateSimpleMonitorParam) {
+func SimpleMonitorUpdateCompleteArgs(ctx Context, params *UpdateSimpleMonitorParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

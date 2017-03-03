@@ -2,6 +2,6 @@
 
 package command
 
-func StartupScriptCreateCompleteArgs(ctx Context, params *CreateStartupScriptParam) {
+func StartupScriptCreateCompleteArgs(ctx Context, params *CreateStartupScriptParam, cur, prev, commandName string) {
 
 }

@@ -2,6 +2,6 @@
 
 package command
 
-func AutoBackupCreateCompleteArgs(ctx Context, params *CreateAutoBackupParam) {
+func AutoBackupCreateCompleteArgs(ctx Context, params *CreateAutoBackupParam, cur, prev, commandName string) {
 
 }

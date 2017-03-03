@@ -77,7 +77,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ZoneListCompleteArgs(ctx, listParam)
+								ZoneListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -108,7 +108,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ZoneListCompleteArgs(ctx, listParam)
+										ZoneListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -124,7 +124,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ZoneListCompleteArgs(ctx, listParam)
+							ZoneListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -193,7 +193,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ZoneReadCompleteArgs(ctx, readParam)
+								ZoneReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -224,7 +224,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ZoneReadCompleteArgs(ctx, readParam)
+										ZoneReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -240,7 +240,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ZoneReadCompleteArgs(ctx, readParam)
+							ZoneReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}

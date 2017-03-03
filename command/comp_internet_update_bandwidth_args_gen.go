@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func InternetUpdateBandwidthCompleteArgs(ctx Context, params *UpdateBandwidthInternetParam) {
+func InternetUpdateBandwidthCompleteArgs(ctx Context, params *UpdateBandwidthInternetParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

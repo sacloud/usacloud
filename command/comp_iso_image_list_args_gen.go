@@ -2,6 +2,6 @@
 
 package command
 
-func ISOImageListCompleteArgs(ctx Context, params *ListISOImageParam) {
+func ISOImageListCompleteArgs(ctx Context, params *ListISOImageParam, cur, prev, commandName string) {
 
 }

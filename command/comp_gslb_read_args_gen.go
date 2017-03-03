@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func GSLBReadCompleteArgs(ctx Context, params *ReadGSLBParam) {
+func GSLBReadCompleteArgs(ctx Context, params *ReadGSLBParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

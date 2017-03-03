@@ -2,6 +2,6 @@
 
 package command
 
-func SimpleMonitorCreateCompleteArgs(ctx Context, params *CreateSimpleMonitorParam) {
+func SimpleMonitorCreateCompleteArgs(ctx Context, params *CreateSimpleMonitorParam, cur, prev, commandName string) {
 
 }

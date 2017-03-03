@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func InterfaceUpdateCompleteArgs(ctx Context, params *UpdateInterfaceParam) {
+func InterfaceUpdateCompleteArgs(ctx Context, params *UpdateInterfaceParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

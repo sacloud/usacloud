@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func DNSReadCompleteArgs(ctx Context, params *ReadDNSParam) {
+func DNSReadCompleteArgs(ctx Context, params *ReadDNSParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

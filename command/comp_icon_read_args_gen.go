@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func IconReadCompleteArgs(ctx Context, params *ReadIconParam) {
+func IconReadCompleteArgs(ctx Context, params *ReadIconParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

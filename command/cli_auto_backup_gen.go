@@ -99,7 +99,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								AutoBackupCreateCompleteArgs(ctx, createParam)
+								AutoBackupCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -130,7 +130,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										AutoBackupCreateCompleteArgs(ctx, createParam)
+										AutoBackupCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -146,7 +146,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							AutoBackupCreateCompleteArgs(ctx, createParam)
+							AutoBackupCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -214,7 +214,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								AutoBackupDeleteCompleteArgs(ctx, deleteParam)
+								AutoBackupDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -245,7 +245,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										AutoBackupDeleteCompleteArgs(ctx, deleteParam)
+										AutoBackupDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -261,7 +261,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							AutoBackupDeleteCompleteArgs(ctx, deleteParam)
+							AutoBackupDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -351,7 +351,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								AutoBackupListCompleteArgs(ctx, listParam)
+								AutoBackupListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -382,7 +382,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										AutoBackupListCompleteArgs(ctx, listParam)
+										AutoBackupListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -398,7 +398,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							AutoBackupListCompleteArgs(ctx, listParam)
+							AutoBackupListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -467,7 +467,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								AutoBackupReadCompleteArgs(ctx, readParam)
+								AutoBackupReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -498,7 +498,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										AutoBackupReadCompleteArgs(ctx, readParam)
+										AutoBackupReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -514,7 +514,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							AutoBackupReadCompleteArgs(ctx, readParam)
+							AutoBackupReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -621,7 +621,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								AutoBackupUpdateCompleteArgs(ctx, updateParam)
+								AutoBackupUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -652,7 +652,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										AutoBackupUpdateCompleteArgs(ctx, updateParam)
+										AutoBackupUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -668,7 +668,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							AutoBackupUpdateCompleteArgs(ctx, updateParam)
+							AutoBackupUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}

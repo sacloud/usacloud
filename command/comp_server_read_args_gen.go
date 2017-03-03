@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerReadCompleteArgs(ctx Context, params *ReadServerParam) {
+func ServerReadCompleteArgs(ctx Context, params *ReadServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

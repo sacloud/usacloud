@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func PacketFilterDeleteCompleteArgs(ctx Context, params *DeletePacketFilterParam) {
+func PacketFilterDeleteCompleteArgs(ctx Context, params *DeletePacketFilterParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

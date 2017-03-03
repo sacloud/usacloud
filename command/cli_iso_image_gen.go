@@ -91,7 +91,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ISOImageCreateCompleteArgs(ctx, createParam)
+								ISOImageCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -122,7 +122,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ISOImageCreateCompleteArgs(ctx, createParam)
+										ISOImageCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -138,7 +138,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ISOImageCreateCompleteArgs(ctx, createParam)
+							ISOImageCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -205,7 +205,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ISOImageDeleteCompleteArgs(ctx, deleteParam)
+								ISOImageDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -236,7 +236,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ISOImageDeleteCompleteArgs(ctx, deleteParam)
+										ISOImageDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -252,7 +252,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ISOImageDeleteCompleteArgs(ctx, deleteParam)
+							ISOImageDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -325,7 +325,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ISOImageDownloadCompleteArgs(ctx, downloadParam)
+								ISOImageDownloadCompleteArgs(ctx, downloadParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -356,7 +356,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ISOImageDownloadCompleteArgs(ctx, downloadParam)
+										ISOImageDownloadCompleteArgs(ctx, downloadParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -372,7 +372,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ISOImageDownloadCompleteArgs(ctx, downloadParam)
+							ISOImageDownloadCompleteArgs(ctx, downloadParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -440,7 +440,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ISOImageFtpCloseCompleteArgs(ctx, ftpCloseParam)
+								ISOImageFtpCloseCompleteArgs(ctx, ftpCloseParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -471,7 +471,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ISOImageFtpCloseCompleteArgs(ctx, ftpCloseParam)
+										ISOImageFtpCloseCompleteArgs(ctx, ftpCloseParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -487,7 +487,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ISOImageFtpCloseCompleteArgs(ctx, ftpCloseParam)
+							ISOImageFtpCloseCompleteArgs(ctx, ftpCloseParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -555,7 +555,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ISOImageFtpOpenCompleteArgs(ctx, ftpOpenParam)
+								ISOImageFtpOpenCompleteArgs(ctx, ftpOpenParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -586,7 +586,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ISOImageFtpOpenCompleteArgs(ctx, ftpOpenParam)
+										ISOImageFtpOpenCompleteArgs(ctx, ftpOpenParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -602,7 +602,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ISOImageFtpOpenCompleteArgs(ctx, ftpOpenParam)
+							ISOImageFtpOpenCompleteArgs(ctx, ftpOpenParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -697,7 +697,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ISOImageListCompleteArgs(ctx, listParam)
+								ISOImageListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -728,7 +728,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ISOImageListCompleteArgs(ctx, listParam)
+										ISOImageListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -744,7 +744,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ISOImageListCompleteArgs(ctx, listParam)
+							ISOImageListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -813,7 +813,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ISOImageReadCompleteArgs(ctx, readParam)
+								ISOImageReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -844,7 +844,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ISOImageReadCompleteArgs(ctx, readParam)
+										ISOImageReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -860,7 +860,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ISOImageReadCompleteArgs(ctx, readParam)
+							ISOImageReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -952,7 +952,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ISOImageUpdateCompleteArgs(ctx, updateParam)
+								ISOImageUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -983,7 +983,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ISOImageUpdateCompleteArgs(ctx, updateParam)
+										ISOImageUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -999,7 +999,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ISOImageUpdateCompleteArgs(ctx, updateParam)
+							ISOImageUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1075,7 +1075,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ISOImageUploadCompleteArgs(ctx, uploadParam)
+								ISOImageUploadCompleteArgs(ctx, uploadParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1106,7 +1106,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ISOImageUploadCompleteArgs(ctx, uploadParam)
+										ISOImageUploadCompleteArgs(ctx, uploadParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1122,7 +1122,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ISOImageUploadCompleteArgs(ctx, uploadParam)
+							ISOImageUploadCompleteArgs(ctx, uploadParam, cur, prev, commandName)
 							return
 						}
 					}

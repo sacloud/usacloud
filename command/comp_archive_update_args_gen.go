@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ArchiveUpdateCompleteArgs(ctx Context, params *UpdateArchiveParam) {
+func ArchiveUpdateCompleteArgs(ctx Context, params *UpdateArchiveParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func LicenseReadCompleteArgs(ctx Context, params *ReadLicenseParam) {
+func LicenseReadCompleteArgs(ctx Context, params *ReadLicenseParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

@@ -2,6 +2,6 @@
 
 package command
 
-func DiskListCompleteArgs(ctx Context, params *ListDiskParam) {
+func DiskListCompleteArgs(ctx Context, params *ListDiskParam, cur, prev, commandName string) {
 
 }

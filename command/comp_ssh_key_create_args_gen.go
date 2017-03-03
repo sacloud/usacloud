@@ -2,6 +2,6 @@
 
 package command
 
-func SSHKeyCreateCompleteArgs(ctx Context, params *CreateSSHKeyParam) {
+func SSHKeyCreateCompleteArgs(ctx Context, params *CreateSSHKeyParam, cur, prev, commandName string) {
 
 }

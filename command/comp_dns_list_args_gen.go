@@ -2,6 +2,6 @@
 
 package command
 
-func DNSListCompleteArgs(ctx Context, params *ListDNSParam) {
+func DNSListCompleteArgs(ctx Context, params *ListDNSParam, cur, prev, commandName string) {
 
 }

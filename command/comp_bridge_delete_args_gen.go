@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func BridgeDeleteCompleteArgs(ctx Context, params *DeleteBridgeParam) {
+func BridgeDeleteCompleteArgs(ctx Context, params *DeleteBridgeParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

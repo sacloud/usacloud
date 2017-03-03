@@ -2,6 +2,6 @@
 
 package command
 
-func PacketFilterListCompleteArgs(ctx Context, params *ListPacketFilterParam) {
+func PacketFilterListCompleteArgs(ctx Context, params *ListPacketFilterParam, cur, prev, commandName string) {
 
 }

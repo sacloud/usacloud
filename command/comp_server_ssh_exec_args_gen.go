@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerSshExecCompleteArgs(ctx Context, params *SshExecServerParam) {
+func ServerSshExecCompleteArgs(ctx Context, params *SshExecServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

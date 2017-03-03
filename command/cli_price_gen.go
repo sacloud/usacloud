@@ -77,7 +77,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								PriceListCompleteArgs(ctx, listParam)
+								PriceListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -108,7 +108,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										PriceListCompleteArgs(ctx, listParam)
+										PriceListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -124,7 +124,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							PriceListCompleteArgs(ctx, listParam)
+							PriceListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}

@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func RegionReadCompleteArgs(ctx Context, params *ReadRegionParam) {
+func RegionReadCompleteArgs(ctx Context, params *ReadRegionParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

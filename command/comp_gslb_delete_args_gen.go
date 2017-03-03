@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func GSLBDeleteCompleteArgs(ctx Context, params *DeleteGSLBParam) {
+func GSLBDeleteCompleteArgs(ctx Context, params *DeleteGSLBParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

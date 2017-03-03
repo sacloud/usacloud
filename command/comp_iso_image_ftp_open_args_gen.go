@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ISOImageFtpOpenCompleteArgs(ctx Context, params *FtpOpenISOImageParam) {
+func ISOImageFtpOpenCompleteArgs(ctx Context, params *FtpOpenISOImageParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

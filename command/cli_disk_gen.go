@@ -121,7 +121,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DiskCreateCompleteArgs(ctx, createParam)
+								DiskCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -152,7 +152,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DiskCreateCompleteArgs(ctx, createParam)
+										DiskCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -168,7 +168,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DiskCreateCompleteArgs(ctx, createParam)
+							DiskCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -236,7 +236,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DiskDeleteCompleteArgs(ctx, deleteParam)
+								DiskDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -267,7 +267,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DiskDeleteCompleteArgs(ctx, deleteParam)
+										DiskDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -283,7 +283,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DiskDeleteCompleteArgs(ctx, deleteParam)
+							DiskDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -400,7 +400,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DiskEditCompleteArgs(ctx, editParam)
+								DiskEditCompleteArgs(ctx, editParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -431,7 +431,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DiskEditCompleteArgs(ctx, editParam)
+										DiskEditCompleteArgs(ctx, editParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -447,7 +447,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DiskEditCompleteArgs(ctx, editParam)
+							DiskEditCompleteArgs(ctx, editParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -546,7 +546,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DiskListCompleteArgs(ctx, listParam)
+								DiskListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -577,7 +577,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DiskListCompleteArgs(ctx, listParam)
+										DiskListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -593,7 +593,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DiskListCompleteArgs(ctx, listParam)
+							DiskListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -662,7 +662,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DiskReadCompleteArgs(ctx, readParam)
+								DiskReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -693,7 +693,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DiskReadCompleteArgs(ctx, readParam)
+										DiskReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -709,7 +709,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DiskReadCompleteArgs(ctx, readParam)
+							DiskReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -794,7 +794,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DiskReinstallFromArchiveCompleteArgs(ctx, reinstallFromArchiveParam)
+								DiskReinstallFromArchiveCompleteArgs(ctx, reinstallFromArchiveParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -825,7 +825,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DiskReinstallFromArchiveCompleteArgs(ctx, reinstallFromArchiveParam)
+										DiskReinstallFromArchiveCompleteArgs(ctx, reinstallFromArchiveParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -841,7 +841,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DiskReinstallFromArchiveCompleteArgs(ctx, reinstallFromArchiveParam)
+							DiskReinstallFromArchiveCompleteArgs(ctx, reinstallFromArchiveParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -929,7 +929,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DiskReinstallFromDiskCompleteArgs(ctx, reinstallFromDiskParam)
+								DiskReinstallFromDiskCompleteArgs(ctx, reinstallFromDiskParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -960,7 +960,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DiskReinstallFromDiskCompleteArgs(ctx, reinstallFromDiskParam)
+										DiskReinstallFromDiskCompleteArgs(ctx, reinstallFromDiskParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -976,7 +976,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DiskReinstallFromDiskCompleteArgs(ctx, reinstallFromDiskParam)
+							DiskReinstallFromDiskCompleteArgs(ctx, reinstallFromDiskParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1059,7 +1059,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DiskReinstallToBlankCompleteArgs(ctx, reinstallToBlankParam)
+								DiskReinstallToBlankCompleteArgs(ctx, reinstallToBlankParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1090,7 +1090,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DiskReinstallToBlankCompleteArgs(ctx, reinstallToBlankParam)
+										DiskReinstallToBlankCompleteArgs(ctx, reinstallToBlankParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1106,7 +1106,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DiskReinstallToBlankCompleteArgs(ctx, reinstallToBlankParam)
+							DiskReinstallToBlankCompleteArgs(ctx, reinstallToBlankParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1182,7 +1182,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DiskServerConnectCompleteArgs(ctx, serverConnectParam)
+								DiskServerConnectCompleteArgs(ctx, serverConnectParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1213,7 +1213,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DiskServerConnectCompleteArgs(ctx, serverConnectParam)
+										DiskServerConnectCompleteArgs(ctx, serverConnectParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1229,7 +1229,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DiskServerConnectCompleteArgs(ctx, serverConnectParam)
+							DiskServerConnectCompleteArgs(ctx, serverConnectParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1297,7 +1297,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DiskServerDisconnectCompleteArgs(ctx, serverDisconnectParam)
+								DiskServerDisconnectCompleteArgs(ctx, serverDisconnectParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1328,7 +1328,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DiskServerDisconnectCompleteArgs(ctx, serverDisconnectParam)
+										DiskServerDisconnectCompleteArgs(ctx, serverDisconnectParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1344,7 +1344,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DiskServerDisconnectCompleteArgs(ctx, serverDisconnectParam)
+							DiskServerDisconnectCompleteArgs(ctx, serverDisconnectParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1441,7 +1441,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DiskUpdateCompleteArgs(ctx, updateParam)
+								DiskUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1472,7 +1472,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DiskUpdateCompleteArgs(ctx, updateParam)
+										DiskUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1488,7 +1488,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DiskUpdateCompleteArgs(ctx, updateParam)
+							DiskUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1560,7 +1560,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DiskWaitForCopyCompleteArgs(ctx, waitForCopyParam)
+								DiskWaitForCopyCompleteArgs(ctx, waitForCopyParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1591,7 +1591,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DiskWaitForCopyCompleteArgs(ctx, waitForCopyParam)
+										DiskWaitForCopyCompleteArgs(ctx, waitForCopyParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1607,7 +1607,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DiskWaitForCopyCompleteArgs(ctx, waitForCopyParam)
+							DiskWaitForCopyCompleteArgs(ctx, waitForCopyParam, cur, prev, commandName)
 							return
 						}
 					}

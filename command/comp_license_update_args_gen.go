@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func LicenseUpdateCompleteArgs(ctx Context, params *UpdateLicenseParam) {
+func LicenseUpdateCompleteArgs(ctx Context, params *UpdateLicenseParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

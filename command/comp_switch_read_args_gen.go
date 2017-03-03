@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func SwitchReadCompleteArgs(ctx Context, params *ReadSwitchParam) {
+func SwitchReadCompleteArgs(ctx Context, params *ReadSwitchParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

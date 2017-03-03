@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func IconUpdateCompleteArgs(ctx Context, params *UpdateIconParam) {
+func IconUpdateCompleteArgs(ctx Context, params *UpdateIconParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

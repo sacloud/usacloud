@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ArchiveReadCompleteArgs(ctx Context, params *ReadArchiveParam) {
+func ArchiveReadCompleteArgs(ctx Context, params *ReadArchiveParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

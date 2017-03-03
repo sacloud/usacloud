@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func DNSDeleteCompleteArgs(ctx Context, params *DeleteDNSParam) {
+func DNSDeleteCompleteArgs(ctx Context, params *DeleteDNSParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

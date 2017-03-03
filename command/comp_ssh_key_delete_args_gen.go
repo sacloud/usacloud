@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func SSHKeyDeleteCompleteArgs(ctx Context, params *DeleteSSHKeyParam) {
+func SSHKeyDeleteCompleteArgs(ctx Context, params *DeleteSSHKeyParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

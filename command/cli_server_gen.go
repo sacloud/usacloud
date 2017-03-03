@@ -100,7 +100,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerListCompleteArgs(ctx, listParam)
+								ServerListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -131,7 +131,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerListCompleteArgs(ctx, listParam)
+										ServerListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -147,7 +147,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerListCompleteArgs(ctx, listParam)
+							ServerListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -431,7 +431,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerBuildCompleteArgs(ctx, buildParam)
+								ServerBuildCompleteArgs(ctx, buildParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -462,7 +462,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerBuildCompleteArgs(ctx, buildParam)
+										ServerBuildCompleteArgs(ctx, buildParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -478,7 +478,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerBuildCompleteArgs(ctx, buildParam)
+							ServerBuildCompleteArgs(ctx, buildParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -551,7 +551,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerReadCompleteArgs(ctx, readParam)
+								ServerReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -582,7 +582,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerReadCompleteArgs(ctx, readParam)
+										ServerReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -598,7 +598,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerReadCompleteArgs(ctx, readParam)
+							ServerReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -690,7 +690,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerUpdateCompleteArgs(ctx, updateParam)
+								ServerUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -721,7 +721,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerUpdateCompleteArgs(ctx, updateParam)
+										ServerUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -737,7 +737,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerUpdateCompleteArgs(ctx, updateParam)
+							ServerUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -821,7 +821,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerDeleteCompleteArgs(ctx, deleteParam)
+								ServerDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -852,7 +852,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerDeleteCompleteArgs(ctx, deleteParam)
+										ServerDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -868,7 +868,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerDeleteCompleteArgs(ctx, deleteParam)
+							ServerDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -946,7 +946,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerPlanChangeCompleteArgs(ctx, planChangeParam)
+								ServerPlanChangeCompleteArgs(ctx, planChangeParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -977,7 +977,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerPlanChangeCompleteArgs(ctx, planChangeParam)
+										ServerPlanChangeCompleteArgs(ctx, planChangeParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -993,7 +993,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerPlanChangeCompleteArgs(ctx, planChangeParam)
+							ServerPlanChangeCompleteArgs(ctx, planChangeParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1067,7 +1067,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerBootCompleteArgs(ctx, bootParam)
+								ServerBootCompleteArgs(ctx, bootParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1098,7 +1098,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerBootCompleteArgs(ctx, bootParam)
+										ServerBootCompleteArgs(ctx, bootParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1114,7 +1114,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerBootCompleteArgs(ctx, bootParam)
+							ServerBootCompleteArgs(ctx, bootParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1193,7 +1193,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerShutdownCompleteArgs(ctx, shutdownParam)
+								ServerShutdownCompleteArgs(ctx, shutdownParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1224,7 +1224,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerShutdownCompleteArgs(ctx, shutdownParam)
+										ServerShutdownCompleteArgs(ctx, shutdownParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1240,7 +1240,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerShutdownCompleteArgs(ctx, shutdownParam)
+							ServerShutdownCompleteArgs(ctx, shutdownParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1313,7 +1313,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerResetCompleteArgs(ctx, resetParam)
+								ServerResetCompleteArgs(ctx, resetParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1344,7 +1344,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerResetCompleteArgs(ctx, resetParam)
+										ServerResetCompleteArgs(ctx, resetParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1360,7 +1360,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerResetCompleteArgs(ctx, resetParam)
+							ServerResetCompleteArgs(ctx, resetParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1428,7 +1428,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerWaitForBootCompleteArgs(ctx, waitForBootParam)
+								ServerWaitForBootCompleteArgs(ctx, waitForBootParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1459,7 +1459,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerWaitForBootCompleteArgs(ctx, waitForBootParam)
+										ServerWaitForBootCompleteArgs(ctx, waitForBootParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1475,7 +1475,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerWaitForBootCompleteArgs(ctx, waitForBootParam)
+							ServerWaitForBootCompleteArgs(ctx, waitForBootParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1543,7 +1543,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerWaitForDownCompleteArgs(ctx, waitForDownParam)
+								ServerWaitForDownCompleteArgs(ctx, waitForDownParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1574,7 +1574,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerWaitForDownCompleteArgs(ctx, waitForDownParam)
+										ServerWaitForDownCompleteArgs(ctx, waitForDownParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1590,7 +1590,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerWaitForDownCompleteArgs(ctx, waitForDownParam)
+							ServerWaitForDownCompleteArgs(ctx, waitForDownParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1689,7 +1689,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerSshCompleteArgs(ctx, sshParam)
+								ServerSshCompleteArgs(ctx, sshParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1720,7 +1720,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerSshCompleteArgs(ctx, sshParam)
+										ServerSshCompleteArgs(ctx, sshParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1736,7 +1736,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerSshCompleteArgs(ctx, sshParam)
+							ServerSshCompleteArgs(ctx, sshParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1835,7 +1835,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerSshExecCompleteArgs(ctx, sshExecParam)
+								ServerSshExecCompleteArgs(ctx, sshExecParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1866,7 +1866,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerSshExecCompleteArgs(ctx, sshExecParam)
+										ServerSshExecCompleteArgs(ctx, sshExecParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1882,7 +1882,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerSshExecCompleteArgs(ctx, sshExecParam)
+							ServerSshExecCompleteArgs(ctx, sshExecParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1982,7 +1982,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerScpCompleteArgs(ctx, scpParam)
+								ServerScpCompleteArgs(ctx, scpParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -2013,7 +2013,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerScpCompleteArgs(ctx, scpParam)
+										ServerScpCompleteArgs(ctx, scpParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -2029,7 +2029,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerScpCompleteArgs(ctx, scpParam)
+							ServerScpCompleteArgs(ctx, scpParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -2097,7 +2097,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerDiskInfoCompleteArgs(ctx, diskInfoParam)
+								ServerDiskInfoCompleteArgs(ctx, diskInfoParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -2128,7 +2128,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerDiskInfoCompleteArgs(ctx, diskInfoParam)
+										ServerDiskInfoCompleteArgs(ctx, diskInfoParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -2144,7 +2144,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerDiskInfoCompleteArgs(ctx, diskInfoParam)
+							ServerDiskInfoCompleteArgs(ctx, diskInfoParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -2217,7 +2217,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerDiskConnectCompleteArgs(ctx, diskConnectParam)
+								ServerDiskConnectCompleteArgs(ctx, diskConnectParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -2248,7 +2248,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerDiskConnectCompleteArgs(ctx, diskConnectParam)
+										ServerDiskConnectCompleteArgs(ctx, diskConnectParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -2264,7 +2264,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerDiskConnectCompleteArgs(ctx, diskConnectParam)
+							ServerDiskConnectCompleteArgs(ctx, diskConnectParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -2337,7 +2337,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerDiskDisconnectCompleteArgs(ctx, diskDisconnectParam)
+								ServerDiskDisconnectCompleteArgs(ctx, diskDisconnectParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -2368,7 +2368,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerDiskDisconnectCompleteArgs(ctx, diskDisconnectParam)
+										ServerDiskDisconnectCompleteArgs(ctx, diskDisconnectParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -2384,7 +2384,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerDiskDisconnectCompleteArgs(ctx, diskDisconnectParam)
+							ServerDiskDisconnectCompleteArgs(ctx, diskDisconnectParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -2452,7 +2452,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerInterfaceInfoCompleteArgs(ctx, interfaceInfoParam)
+								ServerInterfaceInfoCompleteArgs(ctx, interfaceInfoParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -2483,7 +2483,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerInterfaceInfoCompleteArgs(ctx, interfaceInfoParam)
+										ServerInterfaceInfoCompleteArgs(ctx, interfaceInfoParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -2499,7 +2499,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerInterfaceInfoCompleteArgs(ctx, interfaceInfoParam)
+							ServerInterfaceInfoCompleteArgs(ctx, interfaceInfoParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -2572,7 +2572,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerInterfaceAddForInternetCompleteArgs(ctx, interfaceAddForInternetParam)
+								ServerInterfaceAddForInternetCompleteArgs(ctx, interfaceAddForInternetParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -2603,7 +2603,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerInterfaceAddForInternetCompleteArgs(ctx, interfaceAddForInternetParam)
+										ServerInterfaceAddForInternetCompleteArgs(ctx, interfaceAddForInternetParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -2619,7 +2619,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerInterfaceAddForInternetCompleteArgs(ctx, interfaceAddForInternetParam)
+							ServerInterfaceAddForInternetCompleteArgs(ctx, interfaceAddForInternetParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -2716,7 +2716,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerInterfaceAddForRouterCompleteArgs(ctx, interfaceAddForRouterParam)
+								ServerInterfaceAddForRouterCompleteArgs(ctx, interfaceAddForRouterParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -2747,7 +2747,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerInterfaceAddForRouterCompleteArgs(ctx, interfaceAddForRouterParam)
+										ServerInterfaceAddForRouterCompleteArgs(ctx, interfaceAddForRouterParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -2763,7 +2763,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerInterfaceAddForRouterCompleteArgs(ctx, interfaceAddForRouterParam)
+							ServerInterfaceAddForRouterCompleteArgs(ctx, interfaceAddForRouterParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -2860,7 +2860,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerInterfaceAddForSwitchCompleteArgs(ctx, interfaceAddForSwitchParam)
+								ServerInterfaceAddForSwitchCompleteArgs(ctx, interfaceAddForSwitchParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -2891,7 +2891,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerInterfaceAddForSwitchCompleteArgs(ctx, interfaceAddForSwitchParam)
+										ServerInterfaceAddForSwitchCompleteArgs(ctx, interfaceAddForSwitchParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -2907,7 +2907,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerInterfaceAddForSwitchCompleteArgs(ctx, interfaceAddForSwitchParam)
+							ServerInterfaceAddForSwitchCompleteArgs(ctx, interfaceAddForSwitchParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -2975,7 +2975,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerInterfaceAddDisconnectedCompleteArgs(ctx, interfaceAddDisconnectedParam)
+								ServerInterfaceAddDisconnectedCompleteArgs(ctx, interfaceAddDisconnectedParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -3006,7 +3006,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerInterfaceAddDisconnectedCompleteArgs(ctx, interfaceAddDisconnectedParam)
+										ServerInterfaceAddDisconnectedCompleteArgs(ctx, interfaceAddDisconnectedParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -3022,7 +3022,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerInterfaceAddDisconnectedCompleteArgs(ctx, interfaceAddDisconnectedParam)
+							ServerInterfaceAddDisconnectedCompleteArgs(ctx, interfaceAddDisconnectedParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -3090,7 +3090,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerIsoInfoCompleteArgs(ctx, isoInfoParam)
+								ServerIsoInfoCompleteArgs(ctx, isoInfoParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -3121,7 +3121,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerIsoInfoCompleteArgs(ctx, isoInfoParam)
+										ServerIsoInfoCompleteArgs(ctx, isoInfoParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -3137,7 +3137,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerIsoInfoCompleteArgs(ctx, isoInfoParam)
+							ServerIsoInfoCompleteArgs(ctx, isoInfoParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -3244,7 +3244,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerIsoInsertCompleteArgs(ctx, isoInsertParam)
+								ServerIsoInsertCompleteArgs(ctx, isoInsertParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -3275,7 +3275,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerIsoInsertCompleteArgs(ctx, isoInsertParam)
+										ServerIsoInsertCompleteArgs(ctx, isoInsertParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -3291,7 +3291,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerIsoInsertCompleteArgs(ctx, isoInsertParam)
+							ServerIsoInsertCompleteArgs(ctx, isoInsertParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -3362,7 +3362,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ServerIsoEjectCompleteArgs(ctx, isoEjectParam)
+								ServerIsoEjectCompleteArgs(ctx, isoEjectParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -3393,7 +3393,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ServerIsoEjectCompleteArgs(ctx, isoEjectParam)
+										ServerIsoEjectCompleteArgs(ctx, isoEjectParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -3409,7 +3409,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ServerIsoEjectCompleteArgs(ctx, isoEjectParam)
+							ServerIsoEjectCompleteArgs(ctx, isoEjectParam, cur, prev, commandName)
 							return
 						}
 					}

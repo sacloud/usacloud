@@ -64,7 +64,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								BridgeCreateCompleteArgs(ctx, createParam)
+								BridgeCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -95,7 +95,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										BridgeCreateCompleteArgs(ctx, createParam)
+										BridgeCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -111,7 +111,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							BridgeCreateCompleteArgs(ctx, createParam)
+							BridgeCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -175,7 +175,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								BridgeDeleteCompleteArgs(ctx, deleteParam)
+								BridgeDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -206,7 +206,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										BridgeDeleteCompleteArgs(ctx, deleteParam)
+										BridgeDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -222,7 +222,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							BridgeDeleteCompleteArgs(ctx, deleteParam)
+							BridgeDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -312,7 +312,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								BridgeListCompleteArgs(ctx, listParam)
+								BridgeListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -343,7 +343,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										BridgeListCompleteArgs(ctx, listParam)
+										BridgeListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -359,7 +359,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							BridgeListCompleteArgs(ctx, listParam)
+							BridgeListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -428,7 +428,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								BridgeReadCompleteArgs(ctx, readParam)
+								BridgeReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -459,7 +459,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										BridgeReadCompleteArgs(ctx, readParam)
+										BridgeReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -475,7 +475,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							BridgeReadCompleteArgs(ctx, readParam)
+							BridgeReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -555,7 +555,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								BridgeUpdateCompleteArgs(ctx, updateParam)
+								BridgeUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -586,7 +586,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										BridgeUpdateCompleteArgs(ctx, updateParam)
+										BridgeUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -602,7 +602,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							BridgeUpdateCompleteArgs(ctx, updateParam)
+							BridgeUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}

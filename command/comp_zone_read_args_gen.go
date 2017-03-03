@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ZoneReadCompleteArgs(ctx Context, params *ReadZoneParam) {
+func ZoneReadCompleteArgs(ctx Context, params *ReadZoneParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

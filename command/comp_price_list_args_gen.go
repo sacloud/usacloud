@@ -2,6 +2,6 @@
 
 package command
 
-func PriceListCompleteArgs(ctx Context, params *ListPriceParam) {
+func PriceListCompleteArgs(ctx Context, params *ListPriceParam, cur, prev, commandName string) {
 
 }

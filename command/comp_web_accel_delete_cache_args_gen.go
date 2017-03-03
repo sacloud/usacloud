@@ -2,6 +2,6 @@
 
 package command
 
-func WebAccelDeleteCacheCompleteArgs(ctx Context, params *DeleteCacheWebAccelParam) {
+func WebAccelDeleteCacheCompleteArgs(ctx Context, params *DeleteCacheWebAccelParam, cur, prev, commandName string) {
 
 }

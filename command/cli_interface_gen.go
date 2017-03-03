@@ -60,7 +60,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								InterfaceCreateCompleteArgs(ctx, createParam)
+								InterfaceCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -91,7 +91,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										InterfaceCreateCompleteArgs(ctx, createParam)
+										InterfaceCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -107,7 +107,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							InterfaceCreateCompleteArgs(ctx, createParam)
+							InterfaceCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -171,7 +171,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								InterfaceDeleteCompleteArgs(ctx, deleteParam)
+								InterfaceDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -202,7 +202,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										InterfaceDeleteCompleteArgs(ctx, deleteParam)
+										InterfaceDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -218,7 +218,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							InterfaceDeleteCompleteArgs(ctx, deleteParam)
+							InterfaceDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -308,7 +308,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								InterfaceListCompleteArgs(ctx, listParam)
+								InterfaceListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -339,7 +339,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										InterfaceListCompleteArgs(ctx, listParam)
+										InterfaceListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -355,7 +355,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							InterfaceListCompleteArgs(ctx, listParam)
+							InterfaceListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -428,7 +428,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								InterfacePacketFilterConnectCompleteArgs(ctx, packetFilterConnectParam)
+								InterfacePacketFilterConnectCompleteArgs(ctx, packetFilterConnectParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -459,7 +459,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										InterfacePacketFilterConnectCompleteArgs(ctx, packetFilterConnectParam)
+										InterfacePacketFilterConnectCompleteArgs(ctx, packetFilterConnectParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -475,7 +475,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							InterfacePacketFilterConnectCompleteArgs(ctx, packetFilterConnectParam)
+							InterfacePacketFilterConnectCompleteArgs(ctx, packetFilterConnectParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -548,7 +548,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								InterfacePacketFilterDisconnectCompleteArgs(ctx, packetFilterDisconnectParam)
+								InterfacePacketFilterDisconnectCompleteArgs(ctx, packetFilterDisconnectParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -579,7 +579,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										InterfacePacketFilterDisconnectCompleteArgs(ctx, packetFilterDisconnectParam)
+										InterfacePacketFilterDisconnectCompleteArgs(ctx, packetFilterDisconnectParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -595,7 +595,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							InterfacePacketFilterDisconnectCompleteArgs(ctx, packetFilterDisconnectParam)
+							InterfacePacketFilterDisconnectCompleteArgs(ctx, packetFilterDisconnectParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -664,7 +664,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								InterfaceReadCompleteArgs(ctx, readParam)
+								InterfaceReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -695,7 +695,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										InterfaceReadCompleteArgs(ctx, readParam)
+										InterfaceReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -711,7 +711,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							InterfaceReadCompleteArgs(ctx, readParam)
+							InterfaceReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -785,7 +785,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								InterfaceUpdateCompleteArgs(ctx, updateParam)
+								InterfaceUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -816,7 +816,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										InterfaceUpdateCompleteArgs(ctx, updateParam)
+										InterfaceUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -832,7 +832,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							InterfaceUpdateCompleteArgs(ctx, updateParam)
+							InterfaceUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}

@@ -101,7 +101,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ArchiveCreateCompleteArgs(ctx, createParam)
+								ArchiveCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -132,7 +132,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ArchiveCreateCompleteArgs(ctx, createParam)
+										ArchiveCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -148,7 +148,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ArchiveCreateCompleteArgs(ctx, createParam)
+							ArchiveCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -215,7 +215,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ArchiveDeleteCompleteArgs(ctx, deleteParam)
+								ArchiveDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -246,7 +246,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ArchiveDeleteCompleteArgs(ctx, deleteParam)
+										ArchiveDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -262,7 +262,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ArchiveDeleteCompleteArgs(ctx, deleteParam)
+							ArchiveDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -335,7 +335,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ArchiveDownloadCompleteArgs(ctx, downloadParam)
+								ArchiveDownloadCompleteArgs(ctx, downloadParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -366,7 +366,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ArchiveDownloadCompleteArgs(ctx, downloadParam)
+										ArchiveDownloadCompleteArgs(ctx, downloadParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -382,7 +382,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ArchiveDownloadCompleteArgs(ctx, downloadParam)
+							ArchiveDownloadCompleteArgs(ctx, downloadParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -450,7 +450,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ArchiveFtpCloseCompleteArgs(ctx, ftpCloseParam)
+								ArchiveFtpCloseCompleteArgs(ctx, ftpCloseParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -481,7 +481,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ArchiveFtpCloseCompleteArgs(ctx, ftpCloseParam)
+										ArchiveFtpCloseCompleteArgs(ctx, ftpCloseParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -497,7 +497,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ArchiveFtpCloseCompleteArgs(ctx, ftpCloseParam)
+							ArchiveFtpCloseCompleteArgs(ctx, ftpCloseParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -565,7 +565,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ArchiveFtpOpenCompleteArgs(ctx, ftpOpenParam)
+								ArchiveFtpOpenCompleteArgs(ctx, ftpOpenParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -596,7 +596,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ArchiveFtpOpenCompleteArgs(ctx, ftpOpenParam)
+										ArchiveFtpOpenCompleteArgs(ctx, ftpOpenParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -612,7 +612,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ArchiveFtpOpenCompleteArgs(ctx, ftpOpenParam)
+							ArchiveFtpOpenCompleteArgs(ctx, ftpOpenParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -707,7 +707,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ArchiveListCompleteArgs(ctx, listParam)
+								ArchiveListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -738,7 +738,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ArchiveListCompleteArgs(ctx, listParam)
+										ArchiveListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -754,7 +754,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ArchiveListCompleteArgs(ctx, listParam)
+							ArchiveListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -823,7 +823,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ArchiveReadCompleteArgs(ctx, readParam)
+								ArchiveReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -854,7 +854,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ArchiveReadCompleteArgs(ctx, readParam)
+										ArchiveReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -870,7 +870,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ArchiveReadCompleteArgs(ctx, readParam)
+							ArchiveReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -962,7 +962,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ArchiveUpdateCompleteArgs(ctx, updateParam)
+								ArchiveUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -993,7 +993,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ArchiveUpdateCompleteArgs(ctx, updateParam)
+										ArchiveUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1009,7 +1009,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ArchiveUpdateCompleteArgs(ctx, updateParam)
+							ArchiveUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1085,7 +1085,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ArchiveUploadCompleteArgs(ctx, uploadParam)
+								ArchiveUploadCompleteArgs(ctx, uploadParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1116,7 +1116,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ArchiveUploadCompleteArgs(ctx, uploadParam)
+										ArchiveUploadCompleteArgs(ctx, uploadParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1132,7 +1132,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ArchiveUploadCompleteArgs(ctx, uploadParam)
+							ArchiveUploadCompleteArgs(ctx, uploadParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1200,7 +1200,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ArchiveWaitForCopyCompleteArgs(ctx, waitForCopyParam)
+								ArchiveWaitForCopyCompleteArgs(ctx, waitForCopyParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1231,7 +1231,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ArchiveWaitForCopyCompleteArgs(ctx, waitForCopyParam)
+										ArchiveWaitForCopyCompleteArgs(ctx, waitForCopyParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1247,7 +1247,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ArchiveWaitForCopyCompleteArgs(ctx, waitForCopyParam)
+							ArchiveWaitForCopyCompleteArgs(ctx, waitForCopyParam, cur, prev, commandName)
 							return
 						}
 					}

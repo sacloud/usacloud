@@ -186,7 +186,7 @@ package command
     "fmt"
 ){{end}}
 
-func {{.FuncName}}(ctx Context, params *{{.ParamName}}) {
+func {{.FuncName}}(ctx Context, params *{{.ParamName}}, cur, prev, commandName string) {
     {{.Action}}
 }
 `

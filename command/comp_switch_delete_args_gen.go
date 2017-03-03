@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func SwitchDeleteCompleteArgs(ctx Context, params *DeleteSwitchParam) {
+func SwitchDeleteCompleteArgs(ctx Context, params *DeleteSwitchParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

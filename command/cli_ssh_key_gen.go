@@ -75,7 +75,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SSHKeyCreateCompleteArgs(ctx, createParam)
+								SSHKeyCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -106,7 +106,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SSHKeyCreateCompleteArgs(ctx, createParam)
+										SSHKeyCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -122,7 +122,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SSHKeyCreateCompleteArgs(ctx, createParam)
+							SSHKeyCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -186,7 +186,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SSHKeyDeleteCompleteArgs(ctx, deleteParam)
+								SSHKeyDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -217,7 +217,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SSHKeyDeleteCompleteArgs(ctx, deleteParam)
+										SSHKeyDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -233,7 +233,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SSHKeyDeleteCompleteArgs(ctx, deleteParam)
+							SSHKeyDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -319,7 +319,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SSHKeyGenerateCompleteArgs(ctx, generateParam)
+								SSHKeyGenerateCompleteArgs(ctx, generateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -350,7 +350,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SSHKeyGenerateCompleteArgs(ctx, generateParam)
+										SSHKeyGenerateCompleteArgs(ctx, generateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -366,7 +366,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SSHKeyGenerateCompleteArgs(ctx, generateParam)
+							SSHKeyGenerateCompleteArgs(ctx, generateParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -456,7 +456,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SSHKeyListCompleteArgs(ctx, listParam)
+								SSHKeyListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -487,7 +487,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SSHKeyListCompleteArgs(ctx, listParam)
+										SSHKeyListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -503,7 +503,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SSHKeyListCompleteArgs(ctx, listParam)
+							SSHKeyListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -572,7 +572,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SSHKeyReadCompleteArgs(ctx, readParam)
+								SSHKeyReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -603,7 +603,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SSHKeyReadCompleteArgs(ctx, readParam)
+										SSHKeyReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -619,7 +619,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SSHKeyReadCompleteArgs(ctx, readParam)
+							SSHKeyReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -699,7 +699,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SSHKeyUpdateCompleteArgs(ctx, updateParam)
+								SSHKeyUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -730,7 +730,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SSHKeyUpdateCompleteArgs(ctx, updateParam)
+										SSHKeyUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -746,7 +746,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SSHKeyUpdateCompleteArgs(ctx, updateParam)
+							SSHKeyUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}

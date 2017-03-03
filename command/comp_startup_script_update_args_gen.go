@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func StartupScriptUpdateCompleteArgs(ctx Context, params *UpdateStartupScriptParam) {
+func StartupScriptUpdateCompleteArgs(ctx Context, params *UpdateStartupScriptParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

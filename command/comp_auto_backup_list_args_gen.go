@@ -2,6 +2,6 @@
 
 package command
 
-func AutoBackupListCompleteArgs(ctx Context, params *ListAutoBackupParam) {
+func AutoBackupListCompleteArgs(ctx Context, params *ListAutoBackupParam, cur, prev, commandName string) {
 
 }

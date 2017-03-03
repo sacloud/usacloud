@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerInterfaceAddDisconnectedCompleteArgs(ctx Context, params *InterfaceAddDisconnectedServerParam) {
+func ServerInterfaceAddDisconnectedCompleteArgs(ctx Context, params *InterfaceAddDisconnectedServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

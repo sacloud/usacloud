@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func IconDeleteCompleteArgs(ctx Context, params *DeleteIconParam) {
+func IconDeleteCompleteArgs(ctx Context, params *DeleteIconParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

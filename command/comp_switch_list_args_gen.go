@@ -2,6 +2,6 @@
 
 package command
 
-func SwitchListCompleteArgs(ctx Context, params *ListSwitchParam) {
+func SwitchListCompleteArgs(ctx Context, params *ListSwitchParam, cur, prev, commandName string) {
 
 }

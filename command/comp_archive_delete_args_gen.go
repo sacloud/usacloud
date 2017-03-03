@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ArchiveDeleteCompleteArgs(ctx Context, params *DeleteArchiveParam) {
+func ArchiveDeleteCompleteArgs(ctx Context, params *DeleteArchiveParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

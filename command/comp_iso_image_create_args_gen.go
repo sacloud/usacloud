@@ -2,6 +2,6 @@
 
 package command
 
-func ISOImageCreateCompleteArgs(ctx Context, params *CreateISOImageParam) {
+func ISOImageCreateCompleteArgs(ctx Context, params *CreateISOImageParam, cur, prev, commandName string) {
 
 }

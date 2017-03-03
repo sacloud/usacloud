@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func PacketFilterRuleListCompleteArgs(ctx Context, params *RuleListPacketFilterParam) {
+func PacketFilterRuleListCompleteArgs(ctx Context, params *RuleListPacketFilterParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

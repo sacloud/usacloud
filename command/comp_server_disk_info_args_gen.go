@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerDiskInfoCompleteArgs(ctx Context, params *DiskInfoServerParam) {
+func ServerDiskInfoCompleteArgs(ctx Context, params *DiskInfoServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

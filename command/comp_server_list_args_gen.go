@@ -2,6 +2,6 @@
 
 package command
 
-func ServerListCompleteArgs(ctx Context, params *ListServerParam) {
+func ServerListCompleteArgs(ctx Context, params *ListServerParam, cur, prev, commandName string) {
 
 }

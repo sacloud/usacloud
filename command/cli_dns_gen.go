@@ -80,7 +80,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DNSCreateCompleteArgs(ctx, createParam)
+								DNSCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -111,7 +111,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DNSCreateCompleteArgs(ctx, createParam)
+										DNSCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -127,7 +127,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DNSCreateCompleteArgs(ctx, createParam)
+							DNSCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -194,7 +194,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DNSDeleteCompleteArgs(ctx, deleteParam)
+								DNSDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -225,7 +225,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DNSDeleteCompleteArgs(ctx, deleteParam)
+										DNSDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -241,7 +241,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DNSDeleteCompleteArgs(ctx, deleteParam)
+							DNSDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -331,7 +331,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DNSListCompleteArgs(ctx, listParam)
+								DNSListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -362,7 +362,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DNSListCompleteArgs(ctx, listParam)
+										DNSListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -378,7 +378,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DNSListCompleteArgs(ctx, listParam)
+							DNSListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -447,7 +447,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DNSReadCompleteArgs(ctx, readParam)
+								DNSReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -478,7 +478,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DNSReadCompleteArgs(ctx, readParam)
+										DNSReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -494,7 +494,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DNSReadCompleteArgs(ctx, readParam)
+							DNSReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -612,7 +612,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DNSRecordAddCompleteArgs(ctx, recordAddParam)
+								DNSRecordAddCompleteArgs(ctx, recordAddParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -643,7 +643,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DNSRecordAddCompleteArgs(ctx, recordAddParam)
+										DNSRecordAddCompleteArgs(ctx, recordAddParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -659,7 +659,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DNSRecordAddCompleteArgs(ctx, recordAddParam)
+							DNSRecordAddCompleteArgs(ctx, recordAddParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -732,7 +732,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DNSRecordDeleteCompleteArgs(ctx, recordDeleteParam)
+								DNSRecordDeleteCompleteArgs(ctx, recordDeleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -763,7 +763,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DNSRecordDeleteCompleteArgs(ctx, recordDeleteParam)
+										DNSRecordDeleteCompleteArgs(ctx, recordDeleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -779,7 +779,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DNSRecordDeleteCompleteArgs(ctx, recordDeleteParam)
+							DNSRecordDeleteCompleteArgs(ctx, recordDeleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -847,7 +847,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DNSRecordListCompleteArgs(ctx, recordListParam)
+								DNSRecordListCompleteArgs(ctx, recordListParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -878,7 +878,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DNSRecordListCompleteArgs(ctx, recordListParam)
+										DNSRecordListCompleteArgs(ctx, recordListParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -894,7 +894,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DNSRecordListCompleteArgs(ctx, recordListParam)
+							DNSRecordListCompleteArgs(ctx, recordListParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1012,7 +1012,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DNSRecordUpdateCompleteArgs(ctx, recordUpdateParam)
+								DNSRecordUpdateCompleteArgs(ctx, recordUpdateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1043,7 +1043,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DNSRecordUpdateCompleteArgs(ctx, recordUpdateParam)
+										DNSRecordUpdateCompleteArgs(ctx, recordUpdateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1059,7 +1059,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DNSRecordUpdateCompleteArgs(ctx, recordUpdateParam)
+							DNSRecordUpdateCompleteArgs(ctx, recordUpdateParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1146,7 +1146,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								DNSUpdateCompleteArgs(ctx, updateParam)
+								DNSUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1177,7 +1177,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										DNSUpdateCompleteArgs(ctx, updateParam)
+										DNSUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1193,7 +1193,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							DNSUpdateCompleteArgs(ctx, updateParam)
+							DNSUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}

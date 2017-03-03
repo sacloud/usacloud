@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func SwitchBridgeConnectCompleteArgs(ctx Context, params *BridgeConnectSwitchParam) {
+func SwitchBridgeConnectCompleteArgs(ctx Context, params *BridgeConnectSwitchParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func StartupScriptDeleteCompleteArgs(ctx Context, params *DeleteStartupScriptParam) {
+func StartupScriptDeleteCompleteArgs(ctx Context, params *DeleteStartupScriptParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func BridgeReadCompleteArgs(ctx Context, params *ReadBridgeParam) {
+func BridgeReadCompleteArgs(ctx Context, params *ReadBridgeParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerIsoEjectCompleteArgs(ctx Context, params *IsoEjectServerParam) {
+func ServerIsoEjectCompleteArgs(ctx Context, params *IsoEjectServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

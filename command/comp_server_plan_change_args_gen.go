@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerPlanChangeCompleteArgs(ctx Context, params *PlanChangeServerParam) {
+func ServerPlanChangeCompleteArgs(ctx Context, params *PlanChangeServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

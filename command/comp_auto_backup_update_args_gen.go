@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func AutoBackupUpdateCompleteArgs(ctx Context, params *UpdateAutoBackupParam) {
+func AutoBackupUpdateCompleteArgs(ctx Context, params *UpdateAutoBackupParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

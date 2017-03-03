@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func PacketFilterRuleDeleteCompleteArgs(ctx Context, params *RuleDeletePacketFilterParam) {
+func PacketFilterRuleDeleteCompleteArgs(ctx Context, params *RuleDeletePacketFilterParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

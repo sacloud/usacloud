@@ -2,6 +2,6 @@
 
 package command
 
-func ServerBuildCompleteArgs(ctx Context, params *BuildServerParam) {
+func ServerBuildCompleteArgs(ctx Context, params *BuildServerParam, cur, prev, commandName string) {
 
 }

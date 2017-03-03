@@ -2,6 +2,6 @@
 
 package command
 
-func BridgeCreateCompleteArgs(ctx Context, params *CreateBridgeParam) {
+func BridgeCreateCompleteArgs(ctx Context, params *CreateBridgeParam, cur, prev, commandName string) {
 
 }

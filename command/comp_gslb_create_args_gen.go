@@ -2,6 +2,6 @@
 
 package command
 
-func GSLBCreateCompleteArgs(ctx Context, params *CreateGSLBParam) {
+func GSLBCreateCompleteArgs(ctx Context, params *CreateGSLBParam, cur, prev, commandName string) {
 
 }

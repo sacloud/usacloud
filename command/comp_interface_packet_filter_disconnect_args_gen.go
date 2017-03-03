@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func InterfacePacketFilterDisconnectCompleteArgs(ctx Context, params *PacketFilterDisconnectInterfaceParam) {
+func InterfacePacketFilterDisconnectCompleteArgs(ctx Context, params *PacketFilterDisconnectInterfaceParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

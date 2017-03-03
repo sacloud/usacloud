@@ -65,7 +65,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SwitchBridgeConnectCompleteArgs(ctx, bridgeConnectParam)
+								SwitchBridgeConnectCompleteArgs(ctx, bridgeConnectParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -96,7 +96,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SwitchBridgeConnectCompleteArgs(ctx, bridgeConnectParam)
+										SwitchBridgeConnectCompleteArgs(ctx, bridgeConnectParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -112,7 +112,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SwitchBridgeConnectCompleteArgs(ctx, bridgeConnectParam)
+							SwitchBridgeConnectCompleteArgs(ctx, bridgeConnectParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -180,7 +180,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SwitchBridgeDisconnectCompleteArgs(ctx, bridgeDisconnectParam)
+								SwitchBridgeDisconnectCompleteArgs(ctx, bridgeDisconnectParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -211,7 +211,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SwitchBridgeDisconnectCompleteArgs(ctx, bridgeDisconnectParam)
+										SwitchBridgeDisconnectCompleteArgs(ctx, bridgeDisconnectParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -227,7 +227,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SwitchBridgeDisconnectCompleteArgs(ctx, bridgeDisconnectParam)
+							SwitchBridgeDisconnectCompleteArgs(ctx, bridgeDisconnectParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -313,7 +313,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SwitchCreateCompleteArgs(ctx, createParam)
+								SwitchCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -344,7 +344,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SwitchCreateCompleteArgs(ctx, createParam)
+										SwitchCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -360,7 +360,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SwitchCreateCompleteArgs(ctx, createParam)
+							SwitchCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -427,7 +427,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SwitchDeleteCompleteArgs(ctx, deleteParam)
+								SwitchDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -458,7 +458,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SwitchDeleteCompleteArgs(ctx, deleteParam)
+										SwitchDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -474,7 +474,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SwitchDeleteCompleteArgs(ctx, deleteParam)
+							SwitchDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -564,7 +564,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SwitchListCompleteArgs(ctx, listParam)
+								SwitchListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -595,7 +595,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SwitchListCompleteArgs(ctx, listParam)
+										SwitchListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -611,7 +611,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SwitchListCompleteArgs(ctx, listParam)
+							SwitchListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -680,7 +680,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SwitchReadCompleteArgs(ctx, readParam)
+								SwitchReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -711,7 +711,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SwitchReadCompleteArgs(ctx, readParam)
+										SwitchReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -727,7 +727,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SwitchReadCompleteArgs(ctx, readParam)
+							SwitchReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -819,7 +819,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								SwitchUpdateCompleteArgs(ctx, updateParam)
+								SwitchUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -850,7 +850,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										SwitchUpdateCompleteArgs(ctx, updateParam)
+										SwitchUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -866,7 +866,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							SwitchUpdateCompleteArgs(ctx, updateParam)
+							SwitchUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}

@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func DiskWaitForCopyCompleteArgs(ctx Context, params *WaitForCopyDiskParam) {
+func DiskWaitForCopyCompleteArgs(ctx Context, params *WaitForCopyDiskParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

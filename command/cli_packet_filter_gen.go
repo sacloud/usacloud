@@ -70,7 +70,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								PacketFilterCreateCompleteArgs(ctx, createParam)
+								PacketFilterCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -101,7 +101,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										PacketFilterCreateCompleteArgs(ctx, createParam)
+										PacketFilterCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -117,7 +117,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							PacketFilterCreateCompleteArgs(ctx, createParam)
+							PacketFilterCreateCompleteArgs(ctx, createParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -181,7 +181,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								PacketFilterDeleteCompleteArgs(ctx, deleteParam)
+								PacketFilterDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -212,7 +212,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										PacketFilterDeleteCompleteArgs(ctx, deleteParam)
+										PacketFilterDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -228,7 +228,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							PacketFilterDeleteCompleteArgs(ctx, deleteParam)
+							PacketFilterDeleteCompleteArgs(ctx, deleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -301,7 +301,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								PacketFilterInterfaceConnectCompleteArgs(ctx, interfaceConnectParam)
+								PacketFilterInterfaceConnectCompleteArgs(ctx, interfaceConnectParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -332,7 +332,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										PacketFilterInterfaceConnectCompleteArgs(ctx, interfaceConnectParam)
+										PacketFilterInterfaceConnectCompleteArgs(ctx, interfaceConnectParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -348,7 +348,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							PacketFilterInterfaceConnectCompleteArgs(ctx, interfaceConnectParam)
+							PacketFilterInterfaceConnectCompleteArgs(ctx, interfaceConnectParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -421,7 +421,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								PacketFilterInterfaceDisconnectCompleteArgs(ctx, interfaceDisconnectParam)
+								PacketFilterInterfaceDisconnectCompleteArgs(ctx, interfaceDisconnectParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -452,7 +452,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										PacketFilterInterfaceDisconnectCompleteArgs(ctx, interfaceDisconnectParam)
+										PacketFilterInterfaceDisconnectCompleteArgs(ctx, interfaceDisconnectParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -468,7 +468,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							PacketFilterInterfaceDisconnectCompleteArgs(ctx, interfaceDisconnectParam)
+							PacketFilterInterfaceDisconnectCompleteArgs(ctx, interfaceDisconnectParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -558,7 +558,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								PacketFilterListCompleteArgs(ctx, listParam)
+								PacketFilterListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -589,7 +589,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										PacketFilterListCompleteArgs(ctx, listParam)
+										PacketFilterListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -605,7 +605,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							PacketFilterListCompleteArgs(ctx, listParam)
+							PacketFilterListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -674,7 +674,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								PacketFilterReadCompleteArgs(ctx, readParam)
+								PacketFilterReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -705,7 +705,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										PacketFilterReadCompleteArgs(ctx, readParam)
+										PacketFilterReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -721,7 +721,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							PacketFilterReadCompleteArgs(ctx, readParam)
+							PacketFilterReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -827,7 +827,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								PacketFilterRuleAddCompleteArgs(ctx, ruleAddParam)
+								PacketFilterRuleAddCompleteArgs(ctx, ruleAddParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -858,7 +858,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										PacketFilterRuleAddCompleteArgs(ctx, ruleAddParam)
+										PacketFilterRuleAddCompleteArgs(ctx, ruleAddParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -874,7 +874,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							PacketFilterRuleAddCompleteArgs(ctx, ruleAddParam)
+							PacketFilterRuleAddCompleteArgs(ctx, ruleAddParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -947,7 +947,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								PacketFilterRuleDeleteCompleteArgs(ctx, ruleDeleteParam)
+								PacketFilterRuleDeleteCompleteArgs(ctx, ruleDeleteParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -978,7 +978,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										PacketFilterRuleDeleteCompleteArgs(ctx, ruleDeleteParam)
+										PacketFilterRuleDeleteCompleteArgs(ctx, ruleDeleteParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -994,7 +994,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							PacketFilterRuleDeleteCompleteArgs(ctx, ruleDeleteParam)
+							PacketFilterRuleDeleteCompleteArgs(ctx, ruleDeleteParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1063,7 +1063,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								PacketFilterRuleListCompleteArgs(ctx, ruleListParam)
+								PacketFilterRuleListCompleteArgs(ctx, ruleListParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1094,7 +1094,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										PacketFilterRuleListCompleteArgs(ctx, ruleListParam)
+										PacketFilterRuleListCompleteArgs(ctx, ruleListParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1110,7 +1110,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							PacketFilterRuleListCompleteArgs(ctx, ruleListParam)
+							PacketFilterRuleListCompleteArgs(ctx, ruleListParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1215,7 +1215,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								PacketFilterRuleUpdateCompleteArgs(ctx, ruleUpdateParam)
+								PacketFilterRuleUpdateCompleteArgs(ctx, ruleUpdateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1246,7 +1246,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										PacketFilterRuleUpdateCompleteArgs(ctx, ruleUpdateParam)
+										PacketFilterRuleUpdateCompleteArgs(ctx, ruleUpdateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1262,7 +1262,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							PacketFilterRuleUpdateCompleteArgs(ctx, ruleUpdateParam)
+							PacketFilterRuleUpdateCompleteArgs(ctx, ruleUpdateParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -1342,7 +1342,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								PacketFilterUpdateCompleteArgs(ctx, updateParam)
+								PacketFilterUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -1373,7 +1373,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										PacketFilterUpdateCompleteArgs(ctx, updateParam)
+										PacketFilterUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -1389,7 +1389,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							PacketFilterUpdateCompleteArgs(ctx, updateParam)
+							PacketFilterUpdateCompleteArgs(ctx, updateParam, cur, prev, commandName)
 							return
 						}
 					}

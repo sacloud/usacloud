@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func GSLBServerListCompleteArgs(ctx Context, params *ServerListGSLBParam) {
+func GSLBServerListCompleteArgs(ctx Context, params *ServerListGSLBParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func ServerScpCompleteArgs(ctx Context, params *ScpServerParam) {
+func ServerScpCompleteArgs(ctx Context, params *ScpServerParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

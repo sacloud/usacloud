@@ -2,6 +2,6 @@
 
 package command
 
-func BillListCompleteArgs(ctx Context, params *ListBillParam) {
+func BillListCompleteArgs(ctx Context, params *ListBillParam, cur, prev, commandName string) {
 
 }

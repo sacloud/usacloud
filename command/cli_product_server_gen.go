@@ -78,7 +78,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ProductServerListCompleteArgs(ctx, listParam)
+								ProductServerListCompleteArgs(ctx, listParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -109,7 +109,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ProductServerListCompleteArgs(ctx, listParam)
+										ProductServerListCompleteArgs(ctx, listParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -125,7 +125,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ProductServerListCompleteArgs(ctx, listParam)
+							ProductServerListCompleteArgs(ctx, listParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -194,7 +194,7 @@ func init() {
 								completionFlagNames(c, commandName)
 								return
 							} else {
-								ProductServerReadCompleteArgs(ctx, readParam)
+								ProductServerReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -225,7 +225,7 @@ func init() {
 										completionFlagNames(c, commandName)
 										return
 									} else {
-										ProductServerReadCompleteArgs(ctx, readParam)
+										ProductServerReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 										return
 									}
 								} else {
@@ -241,7 +241,7 @@ func init() {
 							completionFlagNames(c, commandName)
 							return
 						} else {
-							ProductServerReadCompleteArgs(ctx, readParam)
+							ProductServerReadCompleteArgs(ctx, readParam, cur, prev, commandName)
 							return
 						}
 					}

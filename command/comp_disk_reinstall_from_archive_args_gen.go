@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func DiskReinstallFromArchiveCompleteArgs(ctx Context, params *ReinstallFromArchiveDiskParam) {
+func DiskReinstallFromArchiveCompleteArgs(ctx Context, params *ReinstallFromArchiveDiskParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

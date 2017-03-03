@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func AutoBackupDeleteCompleteArgs(ctx Context, params *DeleteAutoBackupParam) {
+func AutoBackupDeleteCompleteArgs(ctx Context, params *DeleteAutoBackupParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

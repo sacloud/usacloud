@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func InternetDeleteCompleteArgs(ctx Context, params *DeleteInternetParam) {
+func InternetDeleteCompleteArgs(ctx Context, params *DeleteInternetParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return

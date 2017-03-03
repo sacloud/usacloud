@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func DNSRecordListCompleteArgs(ctx Context, params *RecordListDNSParam) {
+func DNSRecordListCompleteArgs(ctx Context, params *RecordListDNSParam, cur, prev, commandName string) {
 
 	if !GlobalOption.Valid {
 		return
