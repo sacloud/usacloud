@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/sacloud/usacloud/remote"
 	"os"
-	"runtime"
 	"strings"
 )
 
@@ -44,10 +43,15 @@ func ServerSshExec(ctx Context, params *SshExecServerParam) error {
 	// collect username
 	user := params.User
 	if user == "" {
-		if runtime.GOOS == "windows" {
-			user = os.Getenv("USERNAME")
-		} else {
-			user = os.Getenv("USER")
+		if user == "" {
+			sshUser, err := getSSHDefaultUserName(client, p.ID)
+			if err != nil {
+				return fmt.Errorf("ServerSshExec is failed: get default ssh username is failed: %s", err)
+			}
+			if sshUser == "" {
+				sshUser = "root"
+			}
+			user = sshUser
 		}
 	}
 

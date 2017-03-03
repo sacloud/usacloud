@@ -4,15 +4,10 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"runtime"
 	"strings"
 )
 
 func ServerSsh(ctx Context, params *SshServerParam) error {
-
-	if runtime.GOOS == "windows" {
-		return fmt.Errorf("This command can't be executed on Windows. Please use ssh-exec command.")
-	}
 
 	client := ctx.GetAPIClient()
 	api := client.GetServerAPI()
@@ -50,7 +45,16 @@ func ServerSsh(ctx Context, params *SshServerParam) error {
 	// collect username
 	user := params.User
 	if user == "" {
-		user = os.Getenv("USER")
+		if user == "" {
+			sshUser, err := getSSHDefaultUserName(client, p.ID)
+			if err != nil {
+				return fmt.Errorf("ServerSsh is failed: get default ssh username is failed: %s", err)
+			}
+			if sshUser == "" {
+				sshUser = "root"
+			}
+			user = sshUser
+		}
 	}
 
 	// exec/spawn a ssh session
