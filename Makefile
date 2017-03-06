@@ -30,7 +30,7 @@ deps:
 
 
 .PHONY: tools
-tools: tools/bin/*
+tools: tools/bin/gen-cli-commands tools/bin/gen-command-funcs tools/bin/gen-input-models tools/bin/gen-command-completion
 
 tools/bin/gen-cli-commands: tools/gen-cli-commands/*.go
 	go build -o $(CURDIR)/tools/bin/gen-cli-commands $(CURDIR)/tools/gen-cli-commands/*.go
