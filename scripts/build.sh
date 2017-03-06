@@ -1,12 +1,9 @@
 #!/bin/bash
 
 set -e
+#set -x
 
-OS="darwin linux windows"
-ARCH="amd64 386"
-
-rm -Rf bin/
-mkdir bin/
+mkdir -p bin/ 2>/dev/null
 
 for GOOS in $OS; do
     for GOARCH in $ARCH; do
@@ -18,10 +15,12 @@ for GOOS in $OS; do
         echo "Building $binary $arch"
         GOOS=$GOOS GOARCH=$GOARCH CGO_ENABLED=0 \
             go build \
-                -ldflags "-s -w  -X `go list ./version`.Revision=`git rev-parse --short HEAD 2>/dev/null`" \
-                -o $binary \
+                -ldflags "$BUILD_LDFLAGS" \
+                -o bin/$binary \
                 main.go
-        zip -r "bin/usacloud_$arch" $binary
-        rm -f $binary
+        if [ -n "$ARCHIVE" ]; then
+            (cd bin/; zip -r "usacloud_$arch" $binary)
+            rm -f bin/$binary
+        fi
     done
 done

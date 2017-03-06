@@ -19,9 +19,21 @@ Written by Go(golang) from scratch.
 
 ## Install
 
-   Download binary file from [Release page](https://github.com/sacloud/usacloud/releases/latest). 
+### RHEL / CentOS
 
-#### Enable bash-completion
+    curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-yum.sh | sh
+
+### Ubuntu / debian / bash on Windows
+
+    curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-apt.sh | sh
+
+### Others
+
+#### Manual install
+
+Download binary file from [Release page](https://github.com/sacloud/usacloud/releases/latest). 
+
+**[OPTION]** Enable bash-completion
 
     $ eval "`curl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud`"
     # or
