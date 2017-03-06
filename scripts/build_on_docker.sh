@@ -21,4 +21,7 @@ docker run --name $DOCKER_CONTAINER_NAME \
 if [[ "$@" == *"build"* ]]; then
   docker cp $DOCKER_CONTAINER_NAME:/go/src/github.com/sacloud/usacloud/bin ./
 fi
+if [[ "$@" == *"rpm"* ]]; then
+  docker cp $DOCKER_CONTAINER_NAME:/go/src/github.com/sacloud/usacloud/rpmbuild ./
+fi
 docker rm -f $DOCKER_CONTAINER_NAME 2>/dev/null

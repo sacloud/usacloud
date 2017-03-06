@@ -4,9 +4,9 @@ import "fmt"
 
 var (
 	// Version app version
-	Version = "0.0.1"
+	Version = "NN.NN.NN" // set on build time
 	// Revision git commit short commithash
-	Revision = "xxxxxx" // set on build
+	Revision = "xxxxxx" // set on build time
 )
 
 // FullVersion return sackerel full version text

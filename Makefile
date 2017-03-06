@@ -1,8 +1,13 @@
+CURRENT_VERSION?=0.0.1alpha.11
 TEST?=$$(go list ./... | grep -v vendor)
 VETARGS?=-all
 GOFMT_FILES?=$$(find . -name '*.go' | grep -v vendor)
 GOGEN_FILES?=$$(go list ./... | grep -v vendor)
 BIN_NAME?=usacloud
+
+BUILD_LDFLAGS = "-s -w \
+	  -X github.com/sacloud/usacloud/version.Revision=`git rev-parse --short HEAD` \
+	  -X github.com/sacloud/usacloud/version.Version=$(CURRENT_VERSION)"
 
 .PHONY: default
 default: test vet
@@ -19,8 +24,13 @@ clean:
 clean-all:
 	rm -Rf bin/* ; rm -Rf tools/bin/* ; rm -f command/*_gen.go
 
+.PHONY: deps
+deps:
+	go get -u github.com/kardianos/govendor
+
+
 .PHONY: tools
-tools: tools/bin/gen-command-funcs tools/bin/gen-input-models tools/bin/gen-cli-commands tools/bin/gen-command-completion
+tools: tools/bin/*
 
 tools/bin/gen-cli-commands: tools/gen-cli-commands/*.go
 	go build -o $(CURDIR)/tools/bin/gen-cli-commands $(CURDIR)/tools/gen-cli-commands/*.go
@@ -42,6 +52,8 @@ gen-bash-completion: gen tools/bin/gen-bash-completion
 tools/bin/gen-bash-completion: tools/gen-bash-completion/*.go
 	go build -o $(CURDIR)/tools/bin/gen-bash-completion $(CURDIR)/tools/gen-bash-completion/*.go
 
+contrib/completion/bash/usacloud: define/*.go gen-bash-completion
+
 .PHONY: gen
 gen: tools command/*_gen.go
 
@@ -52,13 +64,29 @@ gen-force: clean-all tools
 command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-funcs/*.go tools/gen-input-models/*.go
 	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
 
-.PHONY: build
-build: clean gen gen-bash-completion vet
-	go build -ldflags "-s -w -X `go list ./version`.Revision=`git rev-parse --short HEAD 2>/dev/null`" -o $(CURDIR)/bin/$(BIN_NAME) $(CURDIR)/main.go
+.PHONY: build build-x build-darwin build-windows build-linux
 
-.PHONY: build-x
-build-x: clean gen vet
-	sh -c "'$(CURDIR)/scripts/build.sh' '$(BIN_NAME)'"
+build: clean gen vet contrib/completion/bash/usacloud
+	OS="`go env GOOS`" ARCH="`go env GOARCH`" ARCHIVE= BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
+
+build-x: build-darwin build-windows build-linux
+
+build-darwin: clean gen vet contrib/completion/bash/usacloud
+	OS="darwin"  ARCH="amd64"     ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
+
+build-windows: clean gen vet contrib/completion/bash/usacloud
+	OS="windows" ARCH="386 amd64"     ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
+
+build-linux: clean gen vet contrib/completion/bash/usacloud
+	OS="linux"   ARCH="amd64 arm" ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
+
+.PHONY: rpm deb
+rpm: build-linux
+	CURRENT_VERSION="$(CURRENT_VERSION)" sh -c "'$(CURDIR)/scripts/build_rpm.sh'"
+
+deb: rpm
+	CURRENT_VERSION="$(CURRENT_VERSION)" sh -c "'$(CURDIR)/scripts/build_apt.sh'"
+
 
 .PHONY: test
 test: vet
@@ -82,17 +110,17 @@ golint: fmt
 fmt:
 	gofmt -s -l -w $(GOFMT_FILES)
 
-.PHONY: docker-run
+.PHONY: docker-run docker-test docker-build docker-rpm
 docker-run:
 	sh -c "$(CURDIR)/scripts/build_docker_image.sh" ; \
 	sh -c "$(CURDIR)/scripts/run_on_docker.sh"
 
-.PHONY: docker-test
 docker-test:
 	sh -c "'$(CURDIR)/scripts/build_on_docker.sh' 'test'"
 
-.PHONY: docker-build
 docker-build: clean
 	sh -c "'$(CURDIR)/scripts/build_on_docker.sh' 'build-x'"
 
+docker-rpm: clean
+	sh -c "'$(CURDIR)/scripts/build_on_docker.sh' 'rpm'"
 
