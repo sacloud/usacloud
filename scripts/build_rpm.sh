@@ -15,8 +15,8 @@ DESTINATION_DIR="package/rpm-build"
 : "building x86_64...\n"
     unzip -oq bin/usacloud_linux-amd64.zip -d bin/
 	docker run --rm \
-	    -v "$(PWD)":/workdir \
-	    -v "$(PWD)/rpmbuild":/rpmbuild \
+	    -v "$PWD":/workdir \
+	    -v "$PWD/rpmbuild":/rpmbuild \
 	    sacloud/usacloud:rpm-build \
 	        --define "_sourcedir /workdir/package/rpm-build/src" \
 	        --define "_builddir /workdir/bin" \
@@ -27,7 +27,7 @@ DESTINATION_DIR="package/rpm-build"
 : "create yum repo...\n"
     cp rpmbuild/RPMS/x86_64/* repos/centos/x86_64/
 	docker run --rm \
-	    -v "$(PWD)/repos/centos/x86_64":/workdir \
+	    -v "$PWD/repos/centos/x86_64":/workdir \
 	    --entrypoint createrepo \
 	    sacloud/usacloud:rpm-build \
 	        -v /workdir

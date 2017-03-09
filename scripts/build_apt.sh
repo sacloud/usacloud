@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 set -x
 
@@ -8,7 +8,7 @@ set -x
     cp rpmbuild/RPMS/x86_64/* package/deb-build/
 
 : "building deb...\n"
-	docker run --rm -v "$(PWD)/package/deb-build":/workdir sacloud/usacloud:deb-build
+	docker run --rm -v "$PWD/package/deb-build":/workdir sacloud/usacloud:deb-build
 
 : "create apt repo...\n"
     cp package/deb-build/Release repos/debian/

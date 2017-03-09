@@ -1,9 +1,9 @@
-CURRENT_VERSION?=0.0.1alpha.11
 TEST?=$$(go list ./... | grep -v vendor)
 VETARGS?=-all
 GOFMT_FILES?=$$(find . -name '*.go' | grep -v vendor)
 GOGEN_FILES?=$$(go list ./... | grep -v vendor)
 BIN_NAME?=usacloud
+CURRENT_VERSION = $(shell git log --merges --oneline | perl -ne 'if(m/^.+Merge pull request \#[0-9]+ from .+\/bump-version-([0-9\.]+)/){print $$1;exit}')
 
 BUILD_LDFLAGS = "-s -w \
 	  -X github.com/sacloud/usacloud/version.Revision=`git rev-parse --short HEAD` \
@@ -65,20 +65,31 @@ command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-func
 	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
 
 .PHONY: build build-x build-darwin build-windows build-linux
-
 build: clean gen vet contrib/completion/bash/usacloud
 	OS="`go env GOOS`" ARCH="`go env GOARCH`" ARCHIVE= BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
 build-x: build-darwin build-windows build-linux
 
-build-darwin: clean gen vet contrib/completion/bash/usacloud
+build-darwin: bin/usacloud_darwin-amd64.zip
+
+build-windows: bin/usacloud_windows-386.zip bin/usacloud_windows-amd64.zip
+
+build-linux: bin/usacloud_linux-amd64.zip bin/usacloud_linux-arm.zip
+
+bin/usacloud_darwin-amd64.zip:
 	OS="darwin"  ARCH="amd64"     ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
-build-windows: clean gen vet contrib/completion/bash/usacloud
-	OS="windows" ARCH="386 amd64"     ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
+bin/usacloud_windows-386.zip:
+	OS="windows" ARCH="386"     ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
-build-linux: clean gen vet contrib/completion/bash/usacloud
-	OS="linux"   ARCH="amd64 arm" ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
+bin/usacloud_windows-amd64.zip:
+	OS="windows" ARCH="amd64"     ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
+
+bin/usacloud_linux-amd64.zip:
+	OS="linux"   ARCH="amd64" ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
+
+bin/usacloud_linux-arm.zip:
+	OS="linux"   ARCH="arm" ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
 .PHONY: rpm deb
 rpm: build-linux
