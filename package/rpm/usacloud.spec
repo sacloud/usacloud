@@ -40,5 +40,5 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
-* Fri Mar 3 2017 <yamamoto.febc@gmail.com> - 0.0.1-alpha.10
+* Fri Mar 3 2017 <yamamoto.febc@gmail.com> - 0.0.1
 - Initial commit

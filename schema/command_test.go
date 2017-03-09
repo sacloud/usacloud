@@ -93,7 +93,7 @@ func TestCommand_Categories_Params(t *testing.T) {
 
 	c := &Command{
 		Type: CommandCustom,
-		ParamCategory: []Category{
+		ParamCategories: []Category{
 			{
 				Key:         "test-category",
 				DisplayName: "Test",
