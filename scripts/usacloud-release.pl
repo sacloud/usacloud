@@ -444,8 +444,8 @@ sub upload_to_github_release {
     github_release @args;
 
     # upload to ojs
-    usacloud qw/object-storage put -r repos repos unless $erase_if_exist;
-    usacloud qw/object-storage put -r contrib contrib unless $erase_if_exist;
+    usacloud qw/object-storage put -r repos repos/ unless $erase_if_exist;
+    usacloud qw/object-storage put -r repos repos/ unless $erase_if_exist;
 }
 
 sub create_pull_request {
