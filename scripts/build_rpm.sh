@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 set -x
 
@@ -42,8 +42,8 @@ DESTINATION_DIR="package/rpm-build"
 	        -bb package/rpm-build/usacloud.spec
 
 : "create yum repo..."
-    cp -r rpmbuild/RPMS/noarch/* repos/centos/noarch/
-    cp -r rpmbuild/RPMS/x86_64/* repos/centos/x86_64/
+    cp -rf rpmbuild/RPMS/noarch/* repos/centos/noarch/
+    cp -rf rpmbuild/RPMS/x86_64/* repos/centos/x86_64/
 	docker run --rm \
 	    -v "$PWD/repos/centos/noarch":/workdir \
 	    --entrypoint createrepo \
