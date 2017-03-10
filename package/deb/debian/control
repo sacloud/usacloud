@@ -1,0 +1,15 @@
+Source: usacloud
+Section: admin
+Priority: extra
+Maintainer: Kazumichi Yamamoto <yamamoto.febc@gmail.com>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.6
+Vcs-Browser: https://github.com/sacloud/usacloud
+Vcs-Git: https://github.com/sacloud/usacloud.git
+Homepage: https://github.com/sacloud/usacloud
+
+Package: usacloud
+Architecture: all
+Depends: ${misc:Depends}
+Description: usacloud
+ CLI client of the SakuraCloud
