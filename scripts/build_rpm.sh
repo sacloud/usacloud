@@ -37,8 +37,8 @@ DESTINATION_DIR="package/rpm-build"
 	        -bb package/rpm-build/usacloud.spec
 
 : "create yum repo...\n"
-    cp -r rpmbuild/RPMS/noarch/* repos/centos/noarch/
-    cp -r rpmbuild/RPMS/x86_64/* repos/centos/x86_64/
+    cp rpmbuild/RPMS/noarch/* repos/centos/noarch/
+    cp rpmbuild/RPMS/x86_64/* repos/centos/x86_64/
 	docker run --rm \
 	    -v "$PWD/repos/centos/noarch":/workdir \
 	    --entrypoint createrepo \
