@@ -5,14 +5,17 @@ set -x
 SOURCE_DIR="package/rpm"
 DESTINATION_DIR="package/rpm-build"
 
-: "prepare rpm build...\n"
-    rm -rf rpmbuild/; mkdir -p rpmbuild/RPMS/{x86_64,noarch}
-    rm -rf repos/centos; mkdir -p repos/centos/{x86_64,noarch}
-    rm -rf "${DESTINATION_DIR}" ; mkdir -p "${DESTINATION_DIR}/src"
+: "prepare rpm build..."
+    rm -rf rpmbuild/
+    mkdir -p rpmbuild/RPMS/{x86_64,noarch}
+    rm -rf repos/centos
+    mkdir -p repos/centos/{x86_64,noarch}
+    rm -rf "${DESTINATION_DIR}"
+    mkdir -p "${DESTINATION_DIR}/src"
     cp contrib/completion/bash/usacloud "${DESTINATION_DIR}/src/usacloud_bash_completion"
     cp "${SOURCE_DIR}/usacloud.spec" "${DESTINATION_DIR}/usacloud.spec"
 
-: "building i386...\n"
+: "building i386..."
     unzip -oq bin/usacloud_linux-386.zip -d bin/
 	docker run --rm \
 	    -v "$PWD":/workdir \
@@ -22,9 +25,10 @@ DESTINATION_DIR="package/rpm-build"
 	        --define "_builddir /workdir/bin" \
 	        --define "_version ${CURRENT_VERSION}" \
 	        --define "buildarch noarch" \
+	        --target noarch \
 	        -bb package/rpm-build/usacloud.spec
 
-: "building x86_64...\n"
+: "building x86_64..."
     unzip -oq bin/usacloud_linux-amd64.zip -d bin/
 	docker run --rm \
 	    -v "$PWD":/workdir \
@@ -34,11 +38,12 @@ DESTINATION_DIR="package/rpm-build"
 	        --define "_builddir /workdir/bin" \
 	        --define "_version ${CURRENT_VERSION}" \
 	        --define "buildarch x86_64" \
+	        --target x86_64 \
 	        -bb package/rpm-build/usacloud.spec
 
-: "create yum repo...\n"
-    cp rpmbuild/RPMS/noarch/* repos/centos/noarch/
-    cp rpmbuild/RPMS/x86_64/* repos/centos/x86_64/
+: "create yum repo..."
+    cp -r rpmbuild/RPMS/noarch/* repos/centos/noarch/
+    cp -r rpmbuild/RPMS/x86_64/* repos/centos/x86_64/
 	docker run --rm \
 	    -v "$PWD/repos/centos/noarch":/workdir \
 	    --entrypoint createrepo \
@@ -49,6 +54,4 @@ DESTINATION_DIR="package/rpm-build"
 	    --entrypoint createrepo \
 	    sacloud/usacloud:rpm-build \
 	        -v /workdir
-
-
 
