@@ -1,7 +1,8 @@
-FROM golang:1.8.0-alpine
+FROM golang:1.8.0
 MAINTAINER Kazumichi Yamamoto <yamamoto.febc@gmail.com>
 
-RUN set -x && apk add --no-cache bash git make zip
+# RUN set -x && apk add --no-cache bash git make zip
+RUN  apt-get update && apt-get -y install bash git make zip && apt-get clean && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 RUN go get -u github.com/kardianos/govendor
 
 ADD . /go/src/github.com/sacloud/usacloud
