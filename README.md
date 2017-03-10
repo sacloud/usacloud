@@ -1,5 +1,7 @@
 # Usacloud
 
+[![Build Status](https://travis-ci.org/sacloud/usacloud.svg?branch=master)](https://travis-ci.org/sacloud/usacloud)
+
 This project is work in progress!!
 
 ## Overview
