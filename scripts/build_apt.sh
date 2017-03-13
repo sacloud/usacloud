@@ -1,8 +1,11 @@
 #!/bin/bash
+
+GPG_PRIVATE_KEY="`cat usacloud_gpg_key`"
+USACLOUD_VERSION=$(grep -o -e "[0-9]\+.[0-9]\+.[0-9]\+-[0-9]" package/deb/debian/changelog | head -1 | sed 's/-.*$//')
+
 set -e
 set -x
 
-USACLOUD_VERSION=$(grep -o -e "[0-9]\+.[0-9]\+.[0-9]\+-[0-9]" package/deb/debian/changelog | head -1 | sed 's/-.*$//')
 
 : "prepare deb build..."
     rm -rf repos/debian
