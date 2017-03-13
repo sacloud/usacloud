@@ -19,8 +19,18 @@ USACLOUD_VERSION=$(grep -o -e "[0-9]\+.[0-9]\+.[0-9]\+-[0-9]" package/deb/debian
 
 : "building deb..."
 	docker run --rm -v "$PWD/package/deb-build":/workdir sacloud/usacloud:deb-build
+    # sign to Release file
+	docker run --rm \
+	    -v "$PWD/package/deb-build":/workdir \
+	    -e GPG_PRIVATE_KEY \
+	    -e GPG_PASSPHRASE \
+	    -e GPG_FINGERPRINT \
+	    -e GPG_NAME \
+	    --entrypoint /sign_to_deb.sh \
+	    sacloud/usacloud:rpm-build
 
 : "create apt repo..."
     cp package/deb-build/Release repos/debian/
+    cp package/deb-build/Release.gpg repos/debian/
     cp package/deb-build/Packages repos/debian/
     cp package/deb-build/*.deb repos/debian/
