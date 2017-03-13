@@ -2,7 +2,7 @@
 
 SOURCE_DIR="package/rpm"
 DESTINATION_DIR="package/rpm-build"
-GPG_PRIVATE_KEY="`cat usacloud_gpg_key`"
+export GPG_PRIVATE_KEY="`cat usacloud_gpg_key`"
 
 set -e
 set -x
