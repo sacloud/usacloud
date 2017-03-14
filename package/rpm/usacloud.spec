@@ -40,5 +40,10 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Mar 14 2017 <yamamoto.febc@gmail.com> - 0.0.1-1
+- Set SkipAuth flag to object-storage commands (by yamamoto-febc)
+- Add confirmation to dangerous operations (by yamamoto-febc)
+- Build the Deploy pipeline (by yamamoto-febc)
+
 * Fri Mar 3 2017 <yamamoto.febc@gmail.com> - 0.0.0
 - Initial commit
