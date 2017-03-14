@@ -45,6 +45,7 @@ func AutoBackupResource() *schema.Resource {
 			Params:        autoBackupDeleteParam(),
 			IncludeFields: autoBackupDetailIncludes(),
 			ExcludeFields: autoBackupDetailExcludes(),
+			NeedConfirm:   true,
 		},
 	}
 

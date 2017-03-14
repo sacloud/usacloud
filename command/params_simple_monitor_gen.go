@@ -265,7 +265,8 @@ func (p *CreateSimpleMonitorParam) GetTarget() string {
 
 // DeleteSimpleMonitorParam is input parameters for the sacloud API
 type DeleteSimpleMonitorParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteSimpleMonitorParam return new DeleteSimpleMonitorParam
@@ -318,6 +319,13 @@ func (p *DeleteSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteSimpleMonitorParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteSimpleMonitorParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteSimpleMonitorParam) SetId(v int64) {
 	p.Id = v
 }

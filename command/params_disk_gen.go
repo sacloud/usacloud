@@ -262,7 +262,8 @@ func (p *CreateDiskParam) GetTags() []string {
 
 // DeleteDiskParam is input parameters for the sacloud API
 type DeleteDiskParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteDiskParam return new DeleteDiskParam
@@ -315,6 +316,13 @@ func (p *DeleteDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteDiskParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteDiskParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -662,6 +670,7 @@ func (p *ReadDiskParam) GetId() int64 {
 type ReinstallFromArchiveDiskParam struct {
 	Async           bool
 	DistantFrom     []int64
+	Force           bool
 	Id              int64
 	SourceArchiveId int64
 }
@@ -751,6 +760,13 @@ func (p *ReinstallFromArchiveDiskParam) SetDistantFrom(v []int64) {
 func (p *ReinstallFromArchiveDiskParam) GetDistantFrom() []int64 {
 	return p.DistantFrom
 }
+func (p *ReinstallFromArchiveDiskParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetForce() bool {
+	return p.Force
+}
 func (p *ReinstallFromArchiveDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -770,6 +786,7 @@ func (p *ReinstallFromArchiveDiskParam) GetSourceArchiveId() int64 {
 type ReinstallFromDiskDiskParam struct {
 	Async        bool
 	DistantFrom  []int64
+	Force        bool
 	Id           int64
 	SourceDiskId int64
 }
@@ -859,6 +876,13 @@ func (p *ReinstallFromDiskDiskParam) SetDistantFrom(v []int64) {
 func (p *ReinstallFromDiskDiskParam) GetDistantFrom() []int64 {
 	return p.DistantFrom
 }
+func (p *ReinstallFromDiskDiskParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetForce() bool {
+	return p.Force
+}
 func (p *ReinstallFromDiskDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -878,6 +902,7 @@ func (p *ReinstallFromDiskDiskParam) GetSourceDiskId() int64 {
 type ReinstallToBlankDiskParam struct {
 	Async       bool
 	DistantFrom []int64
+	Force       bool
 	Id          int64
 }
 
@@ -951,6 +976,13 @@ func (p *ReinstallToBlankDiskParam) SetDistantFrom(v []int64) {
 
 func (p *ReinstallToBlankDiskParam) GetDistantFrom() []int64 {
 	return p.DistantFrom
+}
+func (p *ReinstallToBlankDiskParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetForce() bool {
+	return p.Force
 }
 func (p *ReinstallToBlankDiskParam) SetId(v int64) {
 	p.Id = v

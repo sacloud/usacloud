@@ -43,6 +43,7 @@ func InterfaceResource() *schema.Resource {
 			Params:        interfaceDeleteParam(),
 			IncludeFields: interfaceDetailIncludes(),
 			ExcludeFields: interfaceDetailExcludes(),
+			NeedConfirm:   true,
 		},
 		"packet-filter-connect": {
 			Type:             schema.CommandManipulate,

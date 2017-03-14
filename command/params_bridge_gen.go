@@ -88,7 +88,8 @@ func (p *CreateBridgeParam) GetName() string {
 
 // DeleteBridgeParam is input parameters for the sacloud API
 type DeleteBridgeParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteBridgeParam return new DeleteBridgeParam
@@ -141,6 +142,13 @@ func (p *DeleteBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteBridgeParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteBridgeParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteBridgeParam) SetId(v int64) {
 	p.Id = v
 }

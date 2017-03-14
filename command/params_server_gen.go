@@ -1222,6 +1222,7 @@ func (p *ShutdownServerParam) GetId() int64 {
 // ResetServerParam is input parameters for the sacloud API
 type ResetServerParam struct {
 	Async bool
+	Force bool
 	Id    int64
 }
 
@@ -1281,6 +1282,13 @@ func (p *ResetServerParam) SetAsync(v bool) {
 
 func (p *ResetServerParam) GetAsync() bool {
 	return p.Async
+}
+func (p *ResetServerParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *ResetServerParam) GetForce() bool {
+	return p.Force
 }
 func (p *ResetServerParam) SetId(v int64) {
 	p.Id = v

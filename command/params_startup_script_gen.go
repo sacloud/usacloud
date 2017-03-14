@@ -135,7 +135,8 @@ func (p *CreateStartupScriptParam) GetTags() []string {
 
 // DeleteStartupScriptParam is input parameters for the sacloud API
 type DeleteStartupScriptParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteStartupScriptParam return new DeleteStartupScriptParam
@@ -188,6 +189,13 @@ func (p *DeleteStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteStartupScriptParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteStartupScriptParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteStartupScriptParam) SetId(v int64) {
 	p.Id = v
 }

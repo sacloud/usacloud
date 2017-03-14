@@ -55,6 +55,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand: true,
 			Category:         "basic",
 			Order:            50,
+			NeedConfirm:      true,
 		},
 		"plan-change": {
 			Type:             schema.CommandManipulate,
@@ -81,6 +82,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand: true,
 			Category:         "power",
 			Order:            20,
+			NeedConfirm:      true,
 		},
 		"reset": {
 			Type:             schema.CommandManipulate,
@@ -88,6 +90,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand: true,
 			Category:         "power",
 			Order:            30,
+			NeedConfirm:      true,
 		},
 		"wait-for-boot": {
 			Type:             schema.CommandManipulate,

@@ -165,7 +165,8 @@ func (p *CreateISOImageParam) GetTags() []string {
 
 // DeleteISOImageParam is input parameters for the sacloud API
 type DeleteISOImageParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteISOImageParam return new DeleteISOImageParam
@@ -218,6 +219,13 @@ func (p *DeleteISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteISOImageParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteISOImageParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteISOImageParam) SetId(v int64) {
 	p.Id = v
 }

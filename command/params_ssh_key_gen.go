@@ -120,7 +120,8 @@ func (p *CreateSSHKeyParam) GetPublicKeyContent() string {
 
 // DeleteSSHKeyParam is input parameters for the sacloud API
 type DeleteSSHKeyParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteSSHKeyParam return new DeleteSSHKeyParam
@@ -173,6 +174,13 @@ func (p *DeleteSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteSSHKeyParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteSSHKeyParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteSSHKeyParam) SetId(v int64) {
 	p.Id = v
 }

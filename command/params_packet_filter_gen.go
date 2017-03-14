@@ -88,7 +88,8 @@ func (p *CreatePacketFilterParam) GetName() string {
 
 // DeletePacketFilterParam is input parameters for the sacloud API
 type DeletePacketFilterParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeletePacketFilterParam return new DeletePacketFilterParam
@@ -141,6 +142,13 @@ func (p *DeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeletePacketFilterParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeletePacketFilterParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeletePacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -654,6 +662,7 @@ func (p *RuleAddPacketFilterParam) GetSourcePort() string {
 
 // RuleDeletePacketFilterParam is input parameters for the sacloud API
 type RuleDeletePacketFilterParam struct {
+	Force bool
 	Id    int64
 	Index int
 }
@@ -715,6 +724,13 @@ func (p *RuleDeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *RuleDeletePacketFilterParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *RuleDeletePacketFilterParam) GetForce() bool {
+	return p.Force
+}
 func (p *RuleDeletePacketFilterParam) SetId(v int64) {
 	p.Id = v
 }

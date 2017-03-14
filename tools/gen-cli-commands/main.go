@@ -145,6 +145,18 @@ func generateSource(resource *schema.Resource) (string, error) {
 
 func buildCommandsParams(command *schema.Command) (map[string]interface{}, error) {
 
+	// add force flag if need
+	if command.NeedConfirm {
+		// has "force" param?
+		if _, ok := command.Params["force"]; !ok {
+			command.Params["force"] = &schema.Schema{
+				Type:        schema.TypeBool,
+				HandlerType: schema.HandlerNoop,
+				Aliases:     []string{"f"},
+			}
+		}
+	}
+
 	var res map[string]interface{}
 
 	flags, err := buildFlagsParams(command.SortedParams())
@@ -275,6 +287,15 @@ func buildActionParams(command *schema.Command) (map[string]interface{}, error) 
 	}
 	action := fmt.Sprintf("return %s(ctx , %s)", ctx.CommandFuncName(), paramName)
 
+	needConfirm := false
+	confirmMsg := command.ConfirmMessage
+	if command.NeedConfirm {
+		needConfirm = true
+		if confirmMsg == "" {
+			confirmMsg = fmt.Sprintf("%s this", ctx.DashC())
+		}
+	}
+
 	res = map[string]interface{}{
 		"ParamName":             paramName,
 		"SkipAuth":              ctx.CurrentCommand().SkipAuth,
@@ -283,6 +304,8 @@ func buildActionParams(command *schema.Command) (map[string]interface{}, error) 
 		"Action":                action,
 		"CompleteArgsFuncName":  ctx.CompleteArgsFuncName(),
 		"CompleteFlagsFuncName": ctx.CompleteFlagsFuncName(),
+		"NeedConfirm":           needConfirm,
+		"ConfirmMsg":            confirmMsg,
 	}
 
 	return res, nil
@@ -479,6 +502,12 @@ func init() {
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), {{.ParamName}})
 
+					{{ if .NeedConfirm }}
+					// confirm
+					if !{{.ParamName}}.Force && !confirmContinue("{{.ConfirmMsg}}") {
+						return nil
+					}
+					{{ end }}
 					// Run command with params
 					{{.Action}}
 				},

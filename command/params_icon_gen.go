@@ -110,7 +110,8 @@ func (p *CreateIconParam) GetTags() []string {
 
 // DeleteIconParam is input parameters for the sacloud API
 type DeleteIconParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteIconParam return new DeleteIconParam
@@ -163,6 +164,13 @@ func (p *DeleteIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteIconParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteIconParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteIconParam) SetId(v int64) {
 	p.Id = v
 }

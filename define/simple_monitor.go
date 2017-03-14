@@ -44,6 +44,7 @@ func SimpleMonitorResource() *schema.Resource {
 			Params:        simpleMonitorDeleteParam(),
 			IncludeFields: simpleMonitorDetailIncludes(),
 			ExcludeFields: simpleMonitorDetailExcludes(),
+			NeedConfirm:   true,
 		},
 	}
 

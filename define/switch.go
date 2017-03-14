@@ -42,6 +42,7 @@ func SwitchResource() *schema.Resource {
 			Params:        switchDeleteParam(),
 			IncludeFields: switchDetailIncludes(),
 			ExcludeFields: switchDetailExcludes(),
+			NeedConfirm:   true,
 		},
 		"bridge-connect": {
 			Type:             schema.CommandManipulate,

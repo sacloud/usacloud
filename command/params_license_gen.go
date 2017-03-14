@@ -81,7 +81,8 @@ func (p *CreateLicenseParam) GetName() string {
 
 // DeleteLicenseParam is input parameters for the sacloud API
 type DeleteLicenseParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteLicenseParam return new DeleteLicenseParam
@@ -134,6 +135,13 @@ func (p *DeleteLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteLicenseParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteLicenseParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteLicenseParam) SetId(v int64) {
 	p.Id = v
 }

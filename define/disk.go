@@ -43,6 +43,7 @@ func DiskResource() *schema.Resource {
 			Params:        diskDeleteParam(),
 			IncludeFields: diskDetailIncludes(),
 			ExcludeFields: diskDetailExcludes(),
+			NeedConfirm:   true,
 		},
 		"edit": {
 			Type:             schema.CommandManipulate,
@@ -66,6 +67,8 @@ func DiskResource() *schema.Resource {
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),
 			UseCustomCommand: true,
+			NeedConfirm:      true,
+			ConfirmMessage:   "re-install from archive",
 		},
 		"reinstall-from-disk": {
 			Type:             schema.CommandManipulate,
@@ -73,6 +76,8 @@ func DiskResource() *schema.Resource {
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),
 			UseCustomCommand: true,
+			NeedConfirm:      true,
+			ConfirmMessage:   "re-install from disk",
 		},
 		"reinstall-to-blank": {
 			Type:             schema.CommandManipulate,
@@ -80,6 +85,8 @@ func DiskResource() *schema.Resource {
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),
 			UseCustomCommand: true,
+			NeedConfirm:      true,
+			ConfirmMessage:   "re-install to blank",
 		},
 		"server-connect": {
 			Type:             schema.CommandManipulate,

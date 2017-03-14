@@ -43,6 +43,7 @@ func ObjectStorageResource() *schema.Resource {
 			UseCustomArgCompletion: true,
 			ArgsUsage:              "<remote path>",
 			SkipAuth:               true,
+			NeedConfirm:            true,
 		},
 	}
 

@@ -13,6 +13,7 @@ type Option struct {
 	Zone              string
 	TraceMode         bool
 	Format            string
+	In                io.Reader
 	Out               io.Writer
 	Err               io.Writer
 	Validated         bool
@@ -21,6 +22,7 @@ type Option struct {
 }
 
 var GlobalOption = &Option{
+	In:  os.Stdin,
 	Out: os.Stdout,
 	Err: os.Stderr,
 }

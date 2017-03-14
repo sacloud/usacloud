@@ -43,6 +43,7 @@ func ArchiveResource() *schema.Resource {
 			Params:        archiveDeleteParam(),
 			IncludeFields: archiveDetailIncludes(),
 			ExcludeFields: archiveDetailExcludes(),
+			NeedConfirm:   true,
 		},
 		"upload": {
 			Type:             schema.CommandManipulate,

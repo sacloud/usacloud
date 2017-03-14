@@ -118,7 +118,8 @@ func (p *CreateDNSParam) GetTags() []string {
 
 // DeleteDNSParam is input parameters for the sacloud API
 type DeleteDNSParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteDNSParam return new DeleteDNSParam
@@ -171,6 +172,13 @@ func (p *DeleteDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteDNSParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteDNSParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteDNSParam) SetId(v int64) {
 	p.Id = v
 }
@@ -560,6 +568,7 @@ func (p *RecordAddDNSParam) GetValue() string {
 
 // RecordDeleteDNSParam is input parameters for the sacloud API
 type RecordDeleteDNSParam struct {
+	Force bool
 	Id    int64
 	Index int
 }
@@ -621,6 +630,13 @@ func (p *RecordDeleteDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *RecordDeleteDNSParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *RecordDeleteDNSParam) GetForce() bool {
+	return p.Force
+}
 func (p *RecordDeleteDNSParam) SetId(v int64) {
 	p.Id = v
 }

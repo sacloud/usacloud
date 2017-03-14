@@ -893,6 +893,11 @@ func init() {
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), deleteParam)
 
+					// confirm
+					if !deleteParam.Force && !confirmContinue("delete this") {
+						return nil
+					}
+
 					// Run command with params
 					return ServerDelete(ctx, deleteParam)
 				},
@@ -1265,6 +1270,11 @@ func init() {
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), shutdownParam)
 
+					// confirm
+					if !shutdownParam.Force && !confirmContinue("shutdown this") {
+						return nil
+					}
+
 					// Run command with params
 					return ServerShutdown(ctx, shutdownParam)
 				},
@@ -1278,6 +1288,11 @@ func init() {
 						Name:        "async",
 						Usage:       "set async flag(if true,return with non block)",
 						Destination: &resetParam.Async,
+					},
+					&cli.BoolFlag{
+						Name:        "force",
+						Aliases:     []string{"f"},
+						Destination: &resetParam.Force,
 					},
 					&cli.Int64Flag{
 						Name:        "id",
@@ -1384,6 +1399,11 @@ func init() {
 
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), resetParam)
+
+					// confirm
+					if !resetParam.Force && !confirmContinue("reset this") {
+						return nil
+					}
 
 					// Run command with params
 					return ServerReset(ctx, resetParam)
@@ -4004,6 +4024,11 @@ func init() {
 		Order:       2147483647,
 	})
 	appendFlagCategoryMap("server", "reset", "async", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "reset", "force", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,

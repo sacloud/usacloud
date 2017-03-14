@@ -43,6 +43,7 @@ func InternetResource() *schema.Resource {
 			Params:        internetDeleteParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),
+			NeedConfirm:   true,
 		},
 		"update-bandwidth": {
 			Type:             schema.CommandManipulate,

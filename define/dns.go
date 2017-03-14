@@ -44,6 +44,7 @@ func DNSResource() *schema.Resource {
 			Params:        dnsDeleteParam(),
 			IncludeFields: dnsDetailIncludes(),
 			ExcludeFields: dnsDetailExcludes(),
+			NeedConfirm:   true,
 		},
 		"record-list": {
 			Type:               schema.CommandManipulate,
@@ -72,6 +73,8 @@ func DNSResource() *schema.Resource {
 			TableType:          output.TableSimple,
 			TableColumnDefines: dnsRecordListColumns(),
 			UseCustomCommand:   true,
+			NeedConfirm:        true,
+			ConfirmMessage:     "delete record",
 		},
 	}
 

@@ -23,6 +23,8 @@ type Command struct {
 	UseCustomCommand         bool
 	UseCustomArgCompletion   bool
 	UseCustomFlagsCompletion bool
+	NeedConfirm              bool
+	ConfirmMessage           string
 
 	TableType          output.OutputTableType
 	IncludeFields      []string           // for output.TableDetail

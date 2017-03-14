@@ -160,3 +160,14 @@ func getSSHDefaultUserNameArchiveRec(client *api.Client, archiveID int64) (strin
 	return "", nil
 
 }
+
+func confirm(msg string) bool {
+	fmt.Printf("\n%s (Y/n)? [n]: ", msg)
+	var input string
+	fmt.Fscanln(GlobalOption.In, &input)
+	return input == "Y"
+}
+
+func confirmContinue(target string) bool {
+	return confirm(fmt.Sprintf("Are you sure you want to %s", target))
+}

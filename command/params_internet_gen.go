@@ -167,7 +167,8 @@ func (p *CreateInternetParam) GetTags() []string {
 
 // DeleteInternetParam is input parameters for the sacloud API
 type DeleteInternetParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteInternetParam return new DeleteInternetParam
@@ -220,6 +221,13 @@ func (p *DeleteInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteInternetParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteInternetParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteInternetParam) SetId(v int64) {
 	p.Id = v
 }
