@@ -170,6 +170,11 @@ func init() {
 				Usage:     "Delete Internet",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:        "force",
+						Aliases:     []string{"f"},
+						Destination: &deleteParam.Force,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
@@ -275,6 +280,11 @@ func init() {
 
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// confirm
+					if !deleteParam.Force && !confirmContinue("delete this") {
+						return nil
+					}
 
 					// Run command with params
 					return InternetDelete(ctx, deleteParam)
@@ -872,6 +882,11 @@ func init() {
 		Order:       2147483647,
 	})
 	appendFlagCategoryMap("internet", "create", "tags", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("internet", "delete", "force", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,

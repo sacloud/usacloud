@@ -44,6 +44,7 @@ func StartupScriptResource() *schema.Resource {
 			Params:        startupScriptDeleteParam(),
 			IncludeFields: startupScriptDetailIncludes(),
 			ExcludeFields: startupScriptDetailExcludes(),
+			NeedConfirm:   true,
 		},
 	}
 

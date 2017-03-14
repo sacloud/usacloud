@@ -202,6 +202,11 @@ func init() {
 				Usage:     "Delete Disk",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:        "force",
+						Aliases:     []string{"f"},
+						Destination: &deleteParam.Force,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
@@ -307,6 +312,11 @@ func init() {
 
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// confirm
+					if !deleteParam.Force && !confirmContinue("delete this") {
+						return nil
+					}
 
 					// Run command with params
 					return DiskDelete(ctx, deleteParam)
@@ -752,6 +762,11 @@ func init() {
 						Name:  "distant-from",
 						Usage: "set distant from disk IDs",
 					},
+					&cli.BoolFlag{
+						Name:        "force",
+						Aliases:     []string{"f"},
+						Destination: &reinstallFromArchiveParam.Force,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
@@ -869,6 +884,11 @@ func init() {
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), reinstallFromArchiveParam)
 
+					// confirm
+					if !reinstallFromArchiveParam.Force && !confirmContinue("re-install from archive") {
+						return nil
+					}
+
 					// Run command with params
 					return DiskReinstallFromArchive(ctx, reinstallFromArchiveParam)
 				},
@@ -886,6 +906,11 @@ func init() {
 					&cli.Int64SliceFlag{
 						Name:  "distant-from",
 						Usage: "set distant from disk IDs",
+					},
+					&cli.BoolFlag{
+						Name:        "force",
+						Aliases:     []string{"f"},
+						Destination: &reinstallFromDiskParam.Force,
 					},
 					&cli.Int64Flag{
 						Name:        "id",
@@ -1004,6 +1029,11 @@ func init() {
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), reinstallFromDiskParam)
 
+					// confirm
+					if !reinstallFromDiskParam.Force && !confirmContinue("re-install from disk") {
+						return nil
+					}
+
 					// Run command with params
 					return DiskReinstallFromDisk(ctx, reinstallFromDiskParam)
 				},
@@ -1021,6 +1051,11 @@ func init() {
 					&cli.Int64SliceFlag{
 						Name:  "distant-from",
 						Usage: "set distant from disk IDs",
+					},
+					&cli.BoolFlag{
+						Name:        "force",
+						Aliases:     []string{"f"},
+						Destination: &reinstallToBlankParam.Force,
 					},
 					&cli.Int64Flag{
 						Name:        "id",
@@ -1133,6 +1168,11 @@ func init() {
 
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), reinstallToBlankParam)
+
+					// confirm
+					if !reinstallToBlankParam.Force && !confirmContinue("re-install to blank") {
+						return nil
+					}
 
 					// Run command with params
 					return DiskReinstallToBlank(ctx, reinstallToBlankParam)
@@ -1766,6 +1806,11 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
+	appendFlagCategoryMap("disk", "delete", "force", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
 	appendFlagCategoryMap("disk", "delete", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -1861,6 +1906,11 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
+	appendFlagCategoryMap("disk", "reinstall-from-archive", "force", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
 	appendFlagCategoryMap("disk", "reinstall-from-archive", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -1881,6 +1931,11 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
+	appendFlagCategoryMap("disk", "reinstall-from-disk", "force", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
 	appendFlagCategoryMap("disk", "reinstall-from-disk", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -1897,6 +1952,11 @@ func init() {
 		Order:       2147483647,
 	})
 	appendFlagCategoryMap("disk", "reinstall-to-blank", "distant-from", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("disk", "reinstall-to-blank", "force", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,

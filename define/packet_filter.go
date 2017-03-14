@@ -45,6 +45,7 @@ func PacketFilterResource() *schema.Resource {
 			Params:        packetFilterDeleteParam(),
 			IncludeFields: packetFilterDetailIncludes(),
 			ExcludeFields: packetFilterDetailExcludes(),
+			NeedConfirm:   true,
 		},
 		"rule-list": {
 			Type:               schema.CommandManipulate,
@@ -74,6 +75,8 @@ func PacketFilterResource() *schema.Resource {
 			TableType:          output.TableSimple,
 			TableColumnDefines: packetFilterRuleListColumns(),
 			UseCustomCommand:   true,
+			NeedConfirm:        true,
+			ConfirmMessage:     "delete rule",
 		},
 		"interface-connect": {
 			Type:             schema.CommandManipulate,

@@ -44,6 +44,7 @@ func IconResource() *schema.Resource {
 			Params:        iconDeleteParam(),
 			IncludeFields: iconDetailIncludes(),
 			ExcludeFields: iconDetailExcludes(),
+			NeedConfirm:   true,
 		},
 	}
 

@@ -38,6 +38,11 @@ func init() {
 						Destination: &deleteParam.Bucket,
 					},
 					&cli.BoolFlag{
+						Name:        "force",
+						Aliases:     []string{"f"},
+						Destination: &deleteParam.Force,
+					},
+					&cli.BoolFlag{
 						Name:        "recursive",
 						Aliases:     []string{"r"},
 						Usage:       "delete objects recursive",
@@ -133,7 +138,7 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+					if errors := GlobalOption.Validate(true); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
@@ -144,6 +149,11 @@ func init() {
 
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// confirm
+					if !deleteParam.Force && !confirmContinue("delete this") {
+						return nil
+					}
 
 					// Run command with params
 					return ObjectStorageDelete(ctx, deleteParam)
@@ -262,7 +272,7 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+					if errors := GlobalOption.Validate(true); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
@@ -386,7 +396,7 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+					if errors := GlobalOption.Validate(true); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
@@ -521,7 +531,7 @@ func init() {
 				Action: func(c *cli.Context) error {
 
 					// Validate global params
-					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+					if errors := GlobalOption.Validate(true); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
@@ -578,6 +588,11 @@ func init() {
 		Order:       2147483647,
 	})
 	appendFlagCategoryMap("object-storage", "delete", "bucket", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("object-storage", "delete", "force", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,

@@ -45,6 +45,7 @@ func GSLBResource() *schema.Resource {
 			Params:        gslbDeleteParam(),
 			IncludeFields: gslbDetailIncludes(),
 			ExcludeFields: gslbDetailExcludes(),
+			NeedConfirm:   true,
 		},
 		"server-list": {
 			Type:               schema.CommandManipulate,
@@ -73,6 +74,8 @@ func GSLBResource() *schema.Resource {
 			TableType:          output.TableSimple,
 			TableColumnDefines: gslbServerListColumns(),
 			UseCustomCommand:   true,
+			NeedConfirm:        true,
+			ConfirmMessage:     "delete server",
 		},
 	}
 

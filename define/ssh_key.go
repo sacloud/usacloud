@@ -43,6 +43,7 @@ func SSHKeyResource() *schema.Resource {
 			Params:        sshKeyDeleteParam(),
 			IncludeFields: sshKeyDetailIncludes(),
 			ExcludeFields: sshKeyDetailExcludes(),
+			NeedConfirm:   true,
 		},
 		"generate": {
 			Type:             schema.CommandManipulate,

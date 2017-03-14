@@ -43,6 +43,7 @@ func ISOImageResource() *schema.Resource {
 			Params:        isoImageDeleteParam(),
 			IncludeFields: isoImageDetailIncludes(),
 			ExcludeFields: isoImageDetailExcludes(),
+			NeedConfirm:   true,
 		},
 		"upload": {
 			Type:             schema.CommandManipulate,

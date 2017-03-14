@@ -147,6 +147,11 @@ func init() {
 				Usage:     "Delete PacketFilter",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:        "force",
+						Aliases:     []string{"f"},
+						Destination: &deleteParam.Force,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
@@ -252,6 +257,11 @@ func init() {
 
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// confirm
+					if !deleteParam.Force && !confirmContinue("delete this") {
+						return nil
+					}
 
 					// Run command with params
 					return PacketFilterDelete(ctx, deleteParam)
@@ -908,6 +918,11 @@ func init() {
 				Usage:     "RuleDelete PacketFilter",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:        "force",
+						Aliases:     []string{"f"},
+						Destination: &ruleDeleteParam.Force,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
@@ -1018,6 +1033,11 @@ func init() {
 
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), ruleDeleteParam)
+
+					// confirm
+					if !ruleDeleteParam.Force && !confirmContinue("delete rule") {
+						return nil
+					}
 
 					// Run command with params
 					return PacketFilterRuleDelete(ctx, ruleDeleteParam)
@@ -1498,6 +1518,11 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
+	appendFlagCategoryMap("packet-filter", "delete", "force", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
 	appendFlagCategoryMap("packet-filter", "delete", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -1589,6 +1614,11 @@ func init() {
 		Order:       2147483647,
 	})
 	appendFlagCategoryMap("packet-filter", "rule-add", "source-port", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("packet-filter", "rule-delete", "force", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,

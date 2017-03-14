@@ -266,7 +266,8 @@ func (p *CreateSwitchParam) GetTags() []string {
 
 // DeleteSwitchParam is input parameters for the sacloud API
 type DeleteSwitchParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteSwitchParam return new DeleteSwitchParam
@@ -319,6 +320,13 @@ func (p *DeleteSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteSwitchParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteSwitchParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteSwitchParam) SetId(v int64) {
 	p.Id = v
 }

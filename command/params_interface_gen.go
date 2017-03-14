@@ -73,7 +73,8 @@ func (p *CreateInterfaceParam) GetServerId() int64 {
 
 // DeleteInterfaceParam is input parameters for the sacloud API
 type DeleteInterfaceParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteInterfaceParam return new DeleteInterfaceParam
@@ -126,6 +127,13 @@ func (p *DeleteInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteInterfaceParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteInterfaceParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteInterfaceParam) SetId(v int64) {
 	p.Id = v
 }

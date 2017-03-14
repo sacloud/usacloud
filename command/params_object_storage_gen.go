@@ -12,6 +12,7 @@ import (
 type DeleteObjectStorageParam struct {
 	AccessKey string
 	Bucket    string
+	Force     bool
 	Recursive bool
 	SecretKey string
 }
@@ -79,6 +80,13 @@ func (p *DeleteObjectStorageParam) SetBucket(v string) {
 
 func (p *DeleteObjectStorageParam) GetBucket() string {
 	return p.Bucket
+}
+func (p *DeleteObjectStorageParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteObjectStorageParam) GetForce() bool {
+	return p.Force
 }
 func (p *DeleteObjectStorageParam) SetRecursive(v bool) {
 	p.Recursive = v

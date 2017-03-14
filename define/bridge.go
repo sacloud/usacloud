@@ -42,6 +42,7 @@ func BridgeResource() *schema.Resource {
 			Params:        bridgeDeleteParam(),
 			IncludeFields: bridgeDetailIncludes(),
 			ExcludeFields: bridgeDetailExcludes(),
+			NeedConfirm:   true,
 		},
 	}
 

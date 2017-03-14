@@ -211,7 +211,8 @@ func (p *CreateAutoBackupParam) GetWeekdays() []string {
 
 // DeleteAutoBackupParam is input parameters for the sacloud API
 type DeleteAutoBackupParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteAutoBackupParam return new DeleteAutoBackupParam
@@ -264,6 +265,13 @@ func (p *DeleteAutoBackupParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteAutoBackupParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteAutoBackupParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteAutoBackupParam) SetId(v int64) {
 	p.Id = v
 }

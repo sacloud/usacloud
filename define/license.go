@@ -42,6 +42,7 @@ func LicenseResource() *schema.Resource {
 			Params:        licenseDeleteParam(),
 			IncludeFields: licenseDetailIncludes(),
 			ExcludeFields: licenseDetailExcludes(),
+			NeedConfirm:   true,
 		},
 	}
 

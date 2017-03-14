@@ -220,7 +220,8 @@ func (p *CreateArchiveParam) GetTags() []string {
 
 // DeleteArchiveParam is input parameters for the sacloud API
 type DeleteArchiveParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteArchiveParam return new DeleteArchiveParam
@@ -273,6 +274,13 @@ func (p *DeleteArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteArchiveParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteArchiveParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteArchiveParam) SetId(v int64) {
 	p.Id = v
 }

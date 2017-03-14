@@ -228,7 +228,8 @@ func (p *CreateGSLBParam) GetWeighted() bool {
 
 // DeleteGSLBParam is input parameters for the sacloud API
 type DeleteGSLBParam struct {
-	Id int64
+	Force bool
+	Id    int64
 }
 
 // NewDeleteGSLBParam return new DeleteGSLBParam
@@ -281,6 +282,13 @@ func (p *DeleteGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteGSLBParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteGSLBParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteGSLBParam) SetId(v int64) {
 	p.Id = v
 }
@@ -564,6 +572,7 @@ func (p *ServerAddGSLBParam) GetWeight() int {
 
 // ServerDeleteGSLBParam is input parameters for the sacloud API
 type ServerDeleteGSLBParam struct {
+	Force bool
 	Id    int64
 	Index int
 }
@@ -625,6 +634,13 @@ func (p *ServerDeleteGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ServerDeleteGSLBParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *ServerDeleteGSLBParam) GetForce() bool {
+	return p.Force
+}
 func (p *ServerDeleteGSLBParam) SetId(v int64) {
 	p.Id = v
 }

@@ -205,6 +205,11 @@ func init() {
 				Usage:     "Delete GSLB",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:        "force",
+						Aliases:     []string{"f"},
+						Destination: &deleteParam.Force,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
@@ -310,6 +315,11 @@ func init() {
 
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), deleteParam)
+
+					// confirm
+					if !deleteParam.Force && !confirmContinue("delete this") {
+						return nil
+					}
 
 					// Run command with params
 					return GSLBDelete(ctx, deleteParam)
@@ -704,6 +714,11 @@ func init() {
 				Usage:     "ServerDelete GSLB",
 				ArgsUsage: "[ResourceID]",
 				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:        "force",
+						Aliases:     []string{"f"},
+						Destination: &serverDeleteParam.Force,
+					},
 					&cli.Int64Flag{
 						Name:        "id",
 						Usage:       "[Required] set resource ID",
@@ -814,6 +829,11 @@ func init() {
 
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), serverDeleteParam)
+
+					// confirm
+					if !serverDeleteParam.Force && !confirmContinue("delete server") {
+						return nil
+					}
 
 					// Run command with params
 					return GSLBServerDelete(ctx, serverDeleteParam)
@@ -1371,6 +1391,11 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
+	appendFlagCategoryMap("gslb", "delete", "force", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
 	appendFlagCategoryMap("gslb", "delete", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -1422,6 +1447,11 @@ func init() {
 		Order:       2147483647,
 	})
 	appendFlagCategoryMap("gslb", "server-add", "weight", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("gslb", "server-delete", "force", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,

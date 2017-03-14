@@ -100,6 +100,18 @@ func generateResource(resource *schema.Resource) (string, error) {
 
 func buildCommandParams(command *schema.Command) (map[string]interface{}, error) {
 
+	// add force flag if need
+	if command.NeedConfirm {
+		// has "force" param?
+		if _, ok := command.Params["force"]; !ok {
+			command.Params["force"] = &schema.Schema{
+				Type:        schema.TypeBool,
+				HandlerType: schema.HandlerNoop,
+				Aliases:     []string{"f"},
+			}
+		}
+	}
+
 	var res map[string]interface{}
 
 	fields, initializers, validators, err := buildFieldsParams(command.SortedParams())
