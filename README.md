@@ -31,6 +31,13 @@ Written by Go(golang) from scratch.
 
 ### Others
 
+#### Using docker
+
+    alias usacloud="docker run -it --rm sacloud/usacloud" 
+
+#### Using docker with [`whalebrew`](https://github.com/bfirsh/whalebrew)
+    whalebrew install sacloud/usacloud
+
 #### Manual install
 
 Download binary file from [Release page](https://github.com/sacloud/usacloud/releases/latest). 
