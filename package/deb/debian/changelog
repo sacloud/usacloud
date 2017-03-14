@@ -1,3 +1,23 @@
+usacloud (0.0.1-1) stable; urgency=low
+  * Set SkipAuth flag to object-storage commands (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/41>
+  * Add confirmation to dangerous operations (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/44>
+  * Build the Deploy pipeline (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/30>
+    <https://github.com/sacloud/usacloud/pull/31>
+    <https://github.com/sacloud/usacloud/pull/32>
+    <https://github.com/sacloud/usacloud/pull/34>
+    <https://github.com/sacloud/usacloud/pull/36>
+    <https://github.com/sacloud/usacloud/pull/37>
+    <https://github.com/sacloud/usacloud/pull/38>
+    <https://github.com/sacloud/usacloud/pull/39>
+    <https://github.com/sacloud/usacloud/pull/40>
+    <https://github.com/sacloud/usacloud/pull/43>
+    <https://github.com/sacloud/usacloud/pull/45>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Tue, 14 Mar 2017 04:37:27 +0000
+
 usacloud (0.0.0-1) unstable; urgency=low
 
   * Initial release
