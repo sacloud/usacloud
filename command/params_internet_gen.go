@@ -342,6 +342,117 @@ func (p *ListInternetParam) GetSort() []string {
 	return p.Sort
 }
 
+// MonitorInternetParam is input parameters for the sacloud API
+type MonitorInternetParam struct {
+	End       string
+	Id        int64
+	KeyFormat string
+	Start     string
+}
+
+// NewMonitorInternetParam return new MonitorInternetParam
+func NewMonitorInternetParam() *MonitorInternetParam {
+	return &MonitorInternetParam{
+
+		KeyFormat: "sakuracloud.{{.ID}}.internet",
+	}
+}
+
+// Validate checks current values in model
+func (p *MonitorInternetParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Internet"].Commands["monitor"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Internet"].Commands["monitor"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Internet"].Commands["monitor"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *MonitorInternetParam) getResourceDef() *schema.Resource {
+	return define.Resources["Internet"]
+}
+
+func (p *MonitorInternetParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["monitor"]
+}
+
+func (p *MonitorInternetParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *MonitorInternetParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *MonitorInternetParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *MonitorInternetParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *MonitorInternetParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorInternetParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorInternetParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *MonitorInternetParam) GetId() int64 {
+	return p.Id
+}
+func (p *MonitorInternetParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorInternetParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorInternetParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorInternetParam) GetStart() string {
+	return p.Start
+}
+
 // ReadInternetParam is input parameters for the sacloud API
 type ReadInternetParam struct {
 	Id int64
