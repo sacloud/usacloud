@@ -34,6 +34,9 @@ func init() {
 	isoInfoParam := NewIsoInfoServerParam()
 	isoInsertParam := NewIsoInsertServerParam()
 	isoEjectParam := NewIsoEjectServerParam()
+	monitorCpuParam := NewMonitorCpuServerParam()
+	monitorNicParam := NewMonitorNicServerParam()
+	monitorDiskParam := NewMonitorDiskServerParam()
 
 	cliCommand := &cli.Command{
 		Name:  "server",
@@ -3458,6 +3461,419 @@ func init() {
 					return ServerIsoEject(ctx, isoEjectParam)
 				},
 			},
+			{
+				Name:      "monitor-cpu",
+				Usage:     "Collect CPU monitor values",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "end",
+						Usage:       "set end-time",
+						Destination: &monitorCpuParam.End,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &monitorCpuParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "key-format",
+						Usage:       "[Required] set monitoring value key-format",
+						Value:       "sakuracloud.{{.ID}}.cpu",
+						Destination: &monitorCpuParam.KeyFormat,
+					},
+					&cli.StringFlag{
+						Name:        "start",
+						Usage:       "set start-time",
+						Destination: &monitorCpuParam.Start,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, monitorCpuParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								ServerMonitorCpuCompleteArgs(ctx, monitorCpuParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										ServerMonitorCpuCompleteArgs(ctx, monitorCpuParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									ServerMonitorCpuCompleteFlags(ctx, monitorCpuParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							ServerMonitorCpuCompleteArgs(ctx, monitorCpuParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := monitorCpuParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), monitorCpuParam)
+
+					// Run command with params
+					return ServerMonitorCpu(ctx, monitorCpuParam)
+				},
+			},
+			{
+				Name:      "monitor-nic",
+				Usage:     "Collect NIC(s) monitor values",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "end",
+						Usage:       "set end-time",
+						Destination: &monitorNicParam.End,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &monitorNicParam.Id,
+					},
+					&cli.Int64SliceFlag{
+						Name:  "index",
+						Usage: "target index(es)",
+					},
+					&cli.StringFlag{
+						Name:        "key-format",
+						Usage:       "[Required] set monitoring value key-format",
+						Value:       "sakuracloud.{{.ID}}.nic.{{.Index}}",
+						Destination: &monitorNicParam.KeyFormat,
+					},
+					&cli.StringFlag{
+						Name:        "start",
+						Usage:       "set start-time",
+						Destination: &monitorNicParam.Start,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, monitorNicParam)
+
+					// Set option values for slice
+					monitorNicParam.Index = c.Int64Slice("index")
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								ServerMonitorNicCompleteArgs(ctx, monitorNicParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										ServerMonitorNicCompleteArgs(ctx, monitorNicParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									ServerMonitorNicCompleteFlags(ctx, monitorNicParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							ServerMonitorNicCompleteArgs(ctx, monitorNicParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					monitorNicParam.Index = c.Int64Slice("index")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := monitorNicParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), monitorNicParam)
+
+					// Run command with params
+					return ServerMonitorNic(ctx, monitorNicParam)
+				},
+			},
+			{
+				Name:      "monitor-disk",
+				Usage:     "Collect Disk(s) monitor values",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "end",
+						Usage:       "set end-time",
+						Destination: &monitorDiskParam.End,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &monitorDiskParam.Id,
+					},
+					&cli.Int64SliceFlag{
+						Name:  "index",
+						Usage: "target index(es)",
+					},
+					&cli.StringFlag{
+						Name:        "key-format",
+						Usage:       "[Required] set monitoring value key-format",
+						Value:       "sakuracloud.{{.ID}}.disk.{{.Index}}",
+						Destination: &monitorDiskParam.KeyFormat,
+					},
+					&cli.StringFlag{
+						Name:        "start",
+						Usage:       "set start-time",
+						Destination: &monitorDiskParam.Start,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, monitorDiskParam)
+
+					// Set option values for slice
+					monitorDiskParam.Index = c.Int64Slice("index")
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								ServerMonitorDiskCompleteArgs(ctx, monitorDiskParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										ServerMonitorDiskCompleteArgs(ctx, monitorDiskParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									ServerMonitorDiskCompleteFlags(ctx, monitorDiskParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							ServerMonitorDiskCompleteArgs(ctx, monitorDiskParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					monitorDiskParam.Index = c.Int64Slice("index")
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := monitorDiskParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), monitorDiskParam)
+
+					// Run command with params
+					return ServerMonitorDisk(ctx, monitorDiskParam)
+				},
+			},
 		},
 	}
 
@@ -3544,6 +3960,21 @@ func init() {
 		Key:         "basic",
 		DisplayName: "Basics",
 		Order:       10,
+	})
+	appendCommandCategoryMap("server", "monitor-cpu", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       70,
+	})
+	appendCommandCategoryMap("server", "monitor-disk", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       70,
+	})
+	appendCommandCategoryMap("server", "monitor-nic", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       70,
 	})
 	appendCommandCategoryMap("server", "plan-change", &schema.Category{
 		Key:         "basic",
@@ -3999,6 +4430,76 @@ func init() {
 		Order:       2147483647,
 	})
 	appendFlagCategoryMap("server", "list", "sort", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-cpu", "end", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-cpu", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-cpu", "key-format", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-cpu", "start", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-disk", "end", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-disk", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-disk", "index", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-disk", "key-format", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-disk", "start", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-nic", "end", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-nic", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-nic", "index", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-nic", "key-format", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("server", "monitor-nic", "start", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,

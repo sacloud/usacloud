@@ -12,6 +12,7 @@ func init() {
 	createParam := NewCreateInternetParam()
 	deleteParam := NewDeleteInternetParam()
 	listParam := NewListInternetParam()
+	monitorParam := NewMonitorInternetParam()
 	readParam := NewReadInternetParam()
 	updateParam := NewUpdateInternetParam()
 	updateBandwidthParam := NewUpdateBandwidthInternetParam()
@@ -428,6 +429,137 @@ func init() {
 				},
 			},
 			{
+				Name:      "monitor",
+				Usage:     "Monitor Internet",
+				ArgsUsage: "[ResourceID]",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "end",
+						Usage:       "set end-time",
+						Destination: &monitorParam.End,
+					},
+					&cli.Int64Flag{
+						Name:        "id",
+						Usage:       "[Required] set resource ID",
+						Destination: &monitorParam.Id,
+					},
+					&cli.StringFlag{
+						Name:        "key-format",
+						Usage:       "[Required] set monitoring value key-format",
+						Value:       "sakuracloud.{{.ID}}.internet",
+						Destination: &monitorParam.KeyFormat,
+					},
+					&cli.StringFlag{
+						Name:        "start",
+						Usage:       "set start-time",
+						Destination: &monitorParam.Start,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					GlobalOption.Validate(false)
+
+					// build command context
+					ctx := NewContext(c, realArgs, monitorParam)
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completionFlagNames(c, commandName)
+								return
+							} else {
+								InternetMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completionFlagNames(c, commandName)
+										return
+									} else {
+										InternetMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									InternetMonitorCompleteFlags(ctx, monitorParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completionFlagNames(c, commandName)
+							return
+						} else {
+							InternetMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					// Validate global params
+					if errors := GlobalOption.Validate(false); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// id is can set from option or args(first)
+					if c.NArg() > 0 {
+						c.Set("id", c.Args().First())
+					}
+
+					// Validate specific for each command params
+					if errors := monitorParam.Validate(); len(errors) > 0 {
+						return flattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := NewContext(c, c.Args().Slice(), monitorParam)
+
+					// Run command with params
+					return InternetMonitor(ctx, monitorParam)
+				},
+			},
+			{
 				Name:      "read",
 				Aliases:   []string{"r"},
 				Usage:     "Read Internet",
@@ -838,6 +970,11 @@ func init() {
 		DisplayName: "",
 		Order:       2147483647,
 	})
+	appendCommandCategoryMap("internet", "monitor", &schema.Category{
+		Key:         "default",
+		DisplayName: "",
+		Order:       2147483647,
+	})
 	appendCommandCategoryMap("internet", "read", &schema.Category{
 		Key:         "default",
 		DisplayName: "",
@@ -917,6 +1054,26 @@ func init() {
 		Order:       2147483647,
 	})
 	appendFlagCategoryMap("internet", "list", "sort", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("internet", "monitor", "end", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("internet", "monitor", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("internet", "monitor", "key-format", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	appendFlagCategoryMap("internet", "monitor", "start", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,

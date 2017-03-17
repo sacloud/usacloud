@@ -237,6 +237,36 @@ func ServerResource() *schema.Resource {
 			Category:         "iso",
 			Order:            30,
 		},
+		"monitor-cpu": {
+			Type:               schema.CommandManipulate,
+			Params:             serverMonitorCPUParam(),
+			Usage:              "Collect CPU monitor values",
+			TableType:          output.TableSimple,
+			TableColumnDefines: serverMonitorCPUColumns(),
+			UseCustomCommand:   true,
+			Category:           "monitor",
+			Order:              10,
+		},
+		"monitor-nic": {
+			Type:               schema.CommandManipulate,
+			Params:             serverMonitorNICParam(),
+			Usage:              "Collect NIC(s) monitor values",
+			TableType:          output.TableSimple,
+			TableColumnDefines: serverMonitorNICColumns(),
+			UseCustomCommand:   true,
+			Category:           "monitor",
+			Order:              20,
+		},
+		"monitor-disk": {
+			Type:               schema.CommandManipulate,
+			Params:             serverMonitorDiskParam(),
+			Usage:              "Collect Disk(s) monitor values",
+			TableType:          output.TableSimple,
+			TableColumnDefines: serverMonitorDiskColumns(),
+			UseCustomCommand:   true,
+			Category:           "monitor",
+			Order:              30,
+		},
 	}
 
 	return &schema.Resource{
@@ -381,9 +411,14 @@ var serverCommandCategories = []schema.Category{
 		Order:       60,
 	},
 	{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       70,
+	},
+	{
 		Key:         "other",
 		DisplayName: "Other",
-		Order:       70,
+		Order:       1000,
 	},
 }
 
@@ -1182,5 +1217,125 @@ func serverInterfaceAddForSwitchParam() map[string]*schema.Schema {
 func serverInterfaceAddDisconnectedParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
+	}
+}
+
+func serverMonitorCPUParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": paramID,
+		"start": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set start-time",
+			ValidateFunc: validateDateTimeString(),
+		},
+		"end": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set end-time",
+			ValidateFunc: validateDateTimeString(),
+		},
+		"key-format": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set monitoring value key-format",
+			DefaultValue: "sakuracloud.{{.ID}}.cpu",
+			Required:     true,
+		},
+	}
+}
+
+func serverMonitorCPUColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "Key"},
+		{Name: "TimeStamp"},
+		{Name: "UnixTime"},
+		{Name: "CPUTime"},
+	}
+}
+
+func serverMonitorNICParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": paramID,
+		"start": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set start-time",
+			ValidateFunc: validateDateTimeString(),
+		},
+		"end": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set end-time",
+			ValidateFunc: validateDateTimeString(),
+		},
+		"index": {
+			Type:        schema.TypeIntList,
+			HandlerType: schema.HandlerNoop,
+			Description: "target index(es)",
+		},
+		"key-format": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set monitoring value key-format",
+			DefaultValue: "sakuracloud.{{.ID}}.nic.{{.Index}}",
+			Required:     true,
+		},
+	}
+}
+
+func serverMonitorNICColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "Index"},
+		{Name: "Key"},
+		{
+			Name:    "NIC-ID",
+			Sources: []string{"NicID"},
+		},
+		{Name: "TimeStamp"},
+		{Name: "UnixTime"},
+		{Name: "Send"},
+		{Name: "Receive"},
+	}
+}
+func serverMonitorDiskParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": paramID,
+		"start": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set start-time",
+			ValidateFunc: validateDateTimeString(),
+		},
+		"end": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set end-time",
+			ValidateFunc: validateDateTimeString(),
+		},
+		"index": {
+			Type:        schema.TypeIntList,
+			HandlerType: schema.HandlerNoop,
+			Description: "target index(es)",
+		},
+		"key-format": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set monitoring value key-format",
+			DefaultValue: "sakuracloud.{{.ID}}.disk.{{.Index}}",
+			Required:     true,
+		},
+	}
+}
+
+func serverMonitorDiskColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "Index"},
+		{Name: "Key"},
+		{Name: "DiskID"},
+		{Name: "TimeStamp"},
+		{Name: "UnixTime"},
+		{Name: "Read"},
+		{Name: "Write"},
 	}
 }

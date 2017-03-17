@@ -603,6 +603,117 @@ func (p *ListDiskParam) GetSort() []string {
 	return p.Sort
 }
 
+// MonitorDiskParam is input parameters for the sacloud API
+type MonitorDiskParam struct {
+	End       string
+	Id        int64
+	KeyFormat string
+	Start     string
+}
+
+// NewMonitorDiskParam return new MonitorDiskParam
+func NewMonitorDiskParam() *MonitorDiskParam {
+	return &MonitorDiskParam{
+
+		KeyFormat: "sakuracloud.{{.ID}}.disk",
+	}
+}
+
+// Validate checks current values in model
+func (p *MonitorDiskParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Disk"].Commands["monitor"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["monitor"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Disk"].Commands["monitor"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *MonitorDiskParam) getResourceDef() *schema.Resource {
+	return define.Resources["Disk"]
+}
+
+func (p *MonitorDiskParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["monitor"]
+}
+
+func (p *MonitorDiskParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *MonitorDiskParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *MonitorDiskParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *MonitorDiskParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *MonitorDiskParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorDiskParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorDiskParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *MonitorDiskParam) GetId() int64 {
+	return p.Id
+}
+func (p *MonitorDiskParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorDiskParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorDiskParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorDiskParam) GetStart() string {
+	return p.Start
+}
+
 // ReadDiskParam is input parameters for the sacloud API
 type ReadDiskParam struct {
 	Id int64

@@ -52,6 +52,13 @@ func InternetResource() *schema.Resource {
 			ExcludeFields:    internetDetailExcludes(),
 			UseCustomCommand: true,
 		},
+		"monitor": {
+			Type:               schema.CommandManipulate,
+			Params:             internetMonitorParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: internetMonitorColumns(),
+			UseCustomCommand:   true,
+		},
 	}
 
 	return &schema.Resource{
@@ -179,5 +186,40 @@ func internetUpdateBandWidthParam() map[string]*schema.Schema {
 			ValidateFunc:    validateInIntValues(sacloud.AllowInternetBandWidth()...),
 			CompleteFunc:    completeInIntValues(sacloud.AllowInternetBandWidth()...),
 		},
+	}
+}
+
+func internetMonitorParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": paramID,
+		"start": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set start-time",
+			ValidateFunc: validateDateTimeString(),
+		},
+		"end": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set end-time",
+			ValidateFunc: validateDateTimeString(),
+		},
+		"key-format": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set monitoring value key-format",
+			DefaultValue: "sakuracloud.{{.ID}}.internet",
+			Required:     true,
+		},
+	}
+}
+
+func internetMonitorColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "Key"},
+		{Name: "TimeStamp"},
+		{Name: "UnixTime"},
+		{Name: "In"},
+		{Name: "Out"},
 	}
 }

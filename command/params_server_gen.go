@@ -2771,3 +2771,352 @@ func (p *IsoEjectServerParam) SetId(v int64) {
 func (p *IsoEjectServerParam) GetId() int64 {
 	return p.Id
 }
+
+// MonitorCpuServerParam is input parameters for the sacloud API
+type MonitorCpuServerParam struct {
+	End       string
+	Id        int64
+	KeyFormat string
+	Start     string
+}
+
+// NewMonitorCpuServerParam return new MonitorCpuServerParam
+func NewMonitorCpuServerParam() *MonitorCpuServerParam {
+	return &MonitorCpuServerParam{
+
+		KeyFormat: "sakuracloud.{{.ID}}.cpu",
+	}
+}
+
+// Validate checks current values in model
+func (p *MonitorCpuServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Server"].Commands["monitor-cpu"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["monitor-cpu"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["monitor-cpu"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *MonitorCpuServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *MonitorCpuServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["monitor-cpu"]
+}
+
+func (p *MonitorCpuServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *MonitorCpuServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *MonitorCpuServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *MonitorCpuServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *MonitorCpuServerParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorCpuServerParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorCpuServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *MonitorCpuServerParam) GetId() int64 {
+	return p.Id
+}
+func (p *MonitorCpuServerParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorCpuServerParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorCpuServerParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorCpuServerParam) GetStart() string {
+	return p.Start
+}
+
+// MonitorNicServerParam is input parameters for the sacloud API
+type MonitorNicServerParam struct {
+	End       string
+	Id        int64
+	Index     []int64
+	KeyFormat string
+	Start     string
+}
+
+// NewMonitorNicServerParam return new MonitorNicServerParam
+func NewMonitorNicServerParam() *MonitorNicServerParam {
+	return &MonitorNicServerParam{
+
+		KeyFormat: "sakuracloud.{{.ID}}.nic.{{.Index}}",
+	}
+}
+
+// Validate checks current values in model
+func (p *MonitorNicServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Server"].Commands["monitor-nic"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["monitor-nic"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["monitor-nic"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *MonitorNicServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *MonitorNicServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["monitor-nic"]
+}
+
+func (p *MonitorNicServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *MonitorNicServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *MonitorNicServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *MonitorNicServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *MonitorNicServerParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorNicServerParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorNicServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *MonitorNicServerParam) GetId() int64 {
+	return p.Id
+}
+func (p *MonitorNicServerParam) SetIndex(v []int64) {
+	p.Index = v
+}
+
+func (p *MonitorNicServerParam) GetIndex() []int64 {
+	return p.Index
+}
+func (p *MonitorNicServerParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorNicServerParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorNicServerParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorNicServerParam) GetStart() string {
+	return p.Start
+}
+
+// MonitorDiskServerParam is input parameters for the sacloud API
+type MonitorDiskServerParam struct {
+	End       string
+	Id        int64
+	Index     []int64
+	KeyFormat string
+	Start     string
+}
+
+// NewMonitorDiskServerParam return new MonitorDiskServerParam
+func NewMonitorDiskServerParam() *MonitorDiskServerParam {
+	return &MonitorDiskServerParam{
+
+		KeyFormat: "sakuracloud.{{.ID}}.disk.{{.Index}}",
+	}
+}
+
+// Validate checks current values in model
+func (p *MonitorDiskServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Server"].Commands["monitor-disk"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["monitor-disk"].Params["id"].ValidateFunc
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["monitor-disk"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *MonitorDiskServerParam) getResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *MonitorDiskServerParam) getCommandDef() *schema.Command {
+	return p.getResourceDef().Commands["monitor-disk"]
+}
+
+func (p *MonitorDiskServerParam) GetIncludeFields() []string {
+	return p.getCommandDef().IncludeFields
+}
+
+func (p *MonitorDiskServerParam) GetExcludeFields() []string {
+	return p.getCommandDef().ExcludeFields
+}
+
+func (p *MonitorDiskServerParam) GetTableType() output.OutputTableType {
+	return p.getCommandDef().TableType
+}
+
+func (p *MonitorDiskServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *MonitorDiskServerParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorDiskServerParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorDiskServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *MonitorDiskServerParam) GetId() int64 {
+	return p.Id
+}
+func (p *MonitorDiskServerParam) SetIndex(v []int64) {
+	p.Index = v
+}
+
+func (p *MonitorDiskServerParam) GetIndex() []int64 {
+	return p.Index
+}
+func (p *MonitorDiskServerParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorDiskServerParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorDiskServerParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorDiskServerParam) GetStart() string {
+	return p.Start
+}

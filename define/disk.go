@@ -102,6 +102,13 @@ func DiskResource() *schema.Resource {
 			ExcludeFields:    diskDetailExcludes(),
 			UseCustomCommand: true,
 		},
+		"monitor": {
+			Type:               schema.CommandManipulate,
+			Params:             diskMonitorParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: diskMonitorColumns(),
+			UseCustomCommand:   true,
+		},
 	}
 
 	return &schema.Resource{
@@ -413,5 +420,40 @@ func diskServerConnectParam() map[string]*schema.Schema {
 func diskServerDisconnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
+	}
+}
+
+func diskMonitorParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"id": paramID,
+		"start": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set start-time",
+			ValidateFunc: validateDateTimeString(),
+		},
+		"end": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set end-time",
+			ValidateFunc: validateDateTimeString(),
+		},
+		"key-format": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set monitoring value key-format",
+			DefaultValue: "sakuracloud.{{.ID}}.disk",
+			Required:     true,
+		},
+	}
+}
+
+func diskMonitorColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "Key"},
+		{Name: "TimeStamp"},
+		{Name: "UnixTime"},
+		{Name: "Read"},
+		{Name: "Write"},
 	}
 }

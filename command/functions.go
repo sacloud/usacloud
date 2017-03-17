@@ -10,6 +10,7 @@ import (
 	"gopkg.in/urfave/cli.v2"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 func flattenErrors(errors []error) error {
@@ -170,4 +171,22 @@ func confirm(msg string) bool {
 
 func confirmContinue(target string) bool {
 	return confirm(fmt.Sprintf("Are you sure you want to %s", target))
+}
+
+func parseDateTimeString(strDateTime string) time.Time {
+	allowDatetimeFormatList := []string{
+		time.RFC3339,
+	}
+
+	if strDateTime != "" {
+		for _, format := range allowDatetimeFormatList {
+			d, err := time.Parse(format, strDateTime)
+			if err == nil {
+				// success
+				return d
+			}
+		}
+	}
+
+	return time.Now()
 }

@@ -7,6 +7,7 @@ import (
 	"os"
 	"regexp"
 	"strings"
+	"time"
 	"unicode/utf8"
 )
 
@@ -323,6 +324,40 @@ func validateIPv4Address() schema.SchemaValidateFunc {
 			if ip == nil || ip.To4() == nil {
 				res = append(res, fmt.Errorf("%q: Invalid IPv4 address format", fieldName))
 			}
+		}
+
+		return res
+	}
+}
+
+func validateDateTimeString() schema.SchemaValidateFunc {
+	return func(fieldName string, object interface{}) []error {
+		res := []error{}
+
+		allowDatetimeFormatList := []string{
+			time.RFC3339,
+		}
+
+		// if target is nil , return OK(Use required attr if necessary)
+		if object == nil {
+			return res
+		}
+
+		if value, ok := object.(string); ok {
+			if value == "" {
+				return res
+			}
+
+			for _, format := range allowDatetimeFormatList {
+				_, err := time.Parse(format, value)
+				if err == nil {
+					// success
+					return res
+				}
+			}
+
+			res = append(res, fmt.Errorf("%q: Invalid Datetime format", fieldName))
+
 		}
 
 		return res
