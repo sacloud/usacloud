@@ -20,6 +20,8 @@ func SSHKeyCreateCompleteFlags(ctx Context, params *CreateSSHKeyParam, flagName 
 		comp = define.Resources["SSHKey"].Commands["create"].Params["public-key"].CompleteFunc
 	case "public-key-content":
 		comp = define.Resources["SSHKey"].Commands["create"].Params["public-key-content"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

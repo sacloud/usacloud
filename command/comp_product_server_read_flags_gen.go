@@ -14,6 +14,8 @@ func ProductServerReadCompleteFlags(ctx Context, params *ReadProductServerParam,
 	switch flagName {
 	case "id":
 		comp = define.Resources["ProductServer"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

@@ -18,6 +18,8 @@ func IconCreateCompleteFlags(ctx Context, params *CreateIconParam, flagName stri
 		comp = define.Resources["Icon"].Commands["create"].Params["name"].CompleteFunc
 	case "tags":
 		comp = define.Resources["Icon"].Commands["create"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

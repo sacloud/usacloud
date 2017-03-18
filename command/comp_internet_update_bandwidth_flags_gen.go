@@ -16,6 +16,8 @@ func InternetUpdateBandwidthCompleteFlags(ctx Context, params *UpdateBandwidthIn
 		comp = define.Resources["Internet"].Commands["update-bandwidth"].Params["band-width"].CompleteFunc
 	case "id":
 		comp = define.Resources["Internet"].Commands["update-bandwidth"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

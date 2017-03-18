@@ -24,6 +24,8 @@ func StartupScriptListCompleteFlags(ctx Context, params *ListStartupScriptParam,
 		comp = define.Resources["StartupScript"].Commands["list"].Params["scope"].CompleteFunc
 	case "sort":
 		comp = define.Resources["StartupScript"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

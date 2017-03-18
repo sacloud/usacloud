@@ -22,6 +22,8 @@ func ServerMonitorDiskCompleteFlags(ctx Context, params *MonitorDiskServerParam,
 		comp = define.Resources["Server"].Commands["monitor-disk"].Params["key-format"].CompleteFunc
 	case "start":
 		comp = define.Resources["Server"].Commands["monitor-disk"].Params["start"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

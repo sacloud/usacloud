@@ -14,6 +14,8 @@ func DiskReadCompleteFlags(ctx Context, params *ReadDiskParam, flagName string, 
 	switch flagName {
 	case "id":
 		comp = define.Resources["Disk"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

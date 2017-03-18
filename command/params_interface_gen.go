@@ -10,7 +10,11 @@ import (
 
 // CreateInterfaceParam is input parameters for the sacloud API
 type CreateInterfaceParam struct {
-	ServerId int64
+	ServerId   int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewCreateInterfaceParam return new CreateInterfaceParam
@@ -31,6 +35,20 @@ func (p *CreateInterfaceParam) Validate() []error {
 	{
 		validator := define.Resources["Interface"].Commands["create"].Params["server-id"].ValidateFunc
 		errs := validator("--server-id", p.ServerId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -63,6 +81,10 @@ func (p *CreateInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CreateInterfaceParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *CreateInterfaceParam) SetServerId(v int64) {
 	p.ServerId = v
 }
@@ -70,11 +92,43 @@ func (p *CreateInterfaceParam) SetServerId(v int64) {
 func (p *CreateInterfaceParam) GetServerId() int64 {
 	return p.ServerId
 }
+func (p *CreateInterfaceParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateInterfaceParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateInterfaceParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateInterfaceParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateInterfaceParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateInterfaceParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateInterfaceParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateInterfaceParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteInterfaceParam is input parameters for the sacloud API
 type DeleteInterfaceParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteInterfaceParam return new DeleteInterfaceParam
@@ -95,6 +149,20 @@ func (p *DeleteInterfaceParam) Validate() []error {
 	{
 		validator := define.Resources["Interface"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -127,6 +195,10 @@ func (p *DeleteInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteInterfaceParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteInterfaceParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -141,14 +213,46 @@ func (p *DeleteInterfaceParam) SetId(v int64) {
 func (p *DeleteInterfaceParam) GetId() int64 {
 	return p.Id
 }
+func (p *DeleteInterfaceParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteInterfaceParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteInterfaceParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteInterfaceParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteInterfaceParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteInterfaceParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteInterfaceParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteInterfaceParam) GetFormat() string {
+	return p.Format
+}
 
 // ListInterfaceParam is input parameters for the sacloud API
 type ListInterfaceParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListInterfaceParam return new ListInterfaceParam
@@ -185,6 +289,20 @@ func (p *ListInterfaceParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -210,6 +328,10 @@ func (p *ListInterfaceParam) GetTableType() output.OutputTableType {
 
 func (p *ListInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListInterfaceParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListInterfaceParam) SetFrom(v int) {
@@ -246,6 +368,34 @@ func (p *ListInterfaceParam) SetSort(v []string) {
 
 func (p *ListInterfaceParam) GetSort() []string {
 	return p.Sort
+}
+func (p *ListInterfaceParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListInterfaceParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListInterfaceParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListInterfaceParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListInterfaceParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListInterfaceParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListInterfaceParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListInterfaceParam) GetFormat() string {
+	return p.Format
 }
 
 // PacketFilterConnectInterfaceParam is input parameters for the sacloud API
@@ -316,6 +466,10 @@ func (p *PacketFilterConnectInterfaceParam) GetTableType() output.OutputTableTyp
 
 func (p *PacketFilterConnectInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *PacketFilterConnectInterfaceParam) SetId(v int64) {
@@ -403,6 +557,10 @@ func (p *PacketFilterDisconnectInterfaceParam) GetColumnDefs() []output.ColumnDe
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *PacketFilterDisconnectInterfaceParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *PacketFilterDisconnectInterfaceParam) SetId(v int64) {
 	p.Id = v
 }
@@ -420,7 +578,11 @@ func (p *PacketFilterDisconnectInterfaceParam) GetPacketFilterId() int64 {
 
 // ReadInterfaceParam is input parameters for the sacloud API
 type ReadInterfaceParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadInterfaceParam return new ReadInterfaceParam
@@ -441,6 +603,20 @@ func (p *ReadInterfaceParam) Validate() []error {
 	{
 		validator := define.Resources["Interface"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -473,6 +649,10 @@ func (p *ReadInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadInterfaceParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadInterfaceParam) SetId(v int64) {
 	p.Id = v
 }
@@ -480,11 +660,43 @@ func (p *ReadInterfaceParam) SetId(v int64) {
 func (p *ReadInterfaceParam) GetId() int64 {
 	return p.Id
 }
+func (p *ReadInterfaceParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadInterfaceParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadInterfaceParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadInterfaceParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadInterfaceParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadInterfaceParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadInterfaceParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadInterfaceParam) GetFormat() string {
+	return p.Format
+}
 
 // UpdateInterfaceParam is input parameters for the sacloud API
 type UpdateInterfaceParam struct {
 	Id            int64
 	UserIpaddress string
+	OutputType    string
+	Column        []string
+	Quiet         bool
+	Format        string
 }
 
 // NewUpdateInterfaceParam return new UpdateInterfaceParam
@@ -517,6 +729,20 @@ func (p *UpdateInterfaceParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -544,6 +770,10 @@ func (p *UpdateInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdateInterfaceParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *UpdateInterfaceParam) SetId(v int64) {
 	p.Id = v
 }
@@ -557,4 +787,32 @@ func (p *UpdateInterfaceParam) SetUserIpaddress(v string) {
 
 func (p *UpdateInterfaceParam) GetUserIpaddress() string {
 	return p.UserIpaddress
+}
+func (p *UpdateInterfaceParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateInterfaceParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateInterfaceParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateInterfaceParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateInterfaceParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateInterfaceParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateInterfaceParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateInterfaceParam) GetFormat() string {
+	return p.Format
 }

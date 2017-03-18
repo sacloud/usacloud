@@ -22,6 +22,8 @@ func ServerUpdateCompleteFlags(ctx Context, params *UpdateServerParam, flagName 
 		comp = define.Resources["Server"].Commands["update"].Params["name"].CompleteFunc
 	case "tags":
 		comp = define.Resources["Server"].Commands["update"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

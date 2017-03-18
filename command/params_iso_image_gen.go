@@ -16,6 +16,10 @@ type CreateISOImageParam struct {
 	Name        string
 	Size        int
 	Tags        []string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewCreateISOImageParam return new CreateISOImageParam
@@ -93,6 +97,20 @@ func (p *CreateISOImageParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -118,6 +136,10 @@ func (p *CreateISOImageParam) GetTableType() output.OutputTableType {
 
 func (p *CreateISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateISOImageParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *CreateISOImageParam) SetDescription(v string) {
@@ -162,11 +184,43 @@ func (p *CreateISOImageParam) SetTags(v []string) {
 func (p *CreateISOImageParam) GetTags() []string {
 	return p.Tags
 }
+func (p *CreateISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateISOImageParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteISOImageParam is input parameters for the sacloud API
 type DeleteISOImageParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteISOImageParam return new DeleteISOImageParam
@@ -187,6 +241,20 @@ func (p *DeleteISOImageParam) Validate() []error {
 	{
 		validator := define.Resources["ISOImage"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -219,6 +287,10 @@ func (p *DeleteISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteISOImageParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteISOImageParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -232,6 +304,34 @@ func (p *DeleteISOImageParam) SetId(v int64) {
 
 func (p *DeleteISOImageParam) GetId() int64 {
 	return p.Id
+}
+func (p *DeleteISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteISOImageParam) GetFormat() string {
+	return p.Format
 }
 
 // DownloadISOImageParam is input parameters for the sacloud API
@@ -295,6 +395,10 @@ func (p *DownloadISOImageParam) GetTableType() output.OutputTableType {
 
 func (p *DownloadISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DownloadISOImageParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *DownloadISOImageParam) SetFileDestination(v string) {
@@ -367,6 +471,10 @@ func (p *FtpCloseISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *FtpCloseISOImageParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *FtpCloseISOImageParam) SetId(v int64) {
 	p.Id = v
 }
@@ -377,7 +485,11 @@ func (p *FtpCloseISOImageParam) GetId() int64 {
 
 // FtpOpenISOImageParam is input parameters for the sacloud API
 type FtpOpenISOImageParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewFtpOpenISOImageParam return new FtpOpenISOImageParam
@@ -398,6 +510,20 @@ func (p *FtpOpenISOImageParam) Validate() []error {
 	{
 		validator := define.Resources["ISOImage"].Commands["ftp-open"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -430,6 +556,10 @@ func (p *FtpOpenISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *FtpOpenISOImageParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *FtpOpenISOImageParam) SetId(v int64) {
 	p.Id = v
 }
@@ -437,15 +567,47 @@ func (p *FtpOpenISOImageParam) SetId(v int64) {
 func (p *FtpOpenISOImageParam) GetId() int64 {
 	return p.Id
 }
+func (p *FtpOpenISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *FtpOpenISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *FtpOpenISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *FtpOpenISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *FtpOpenISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *FtpOpenISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *FtpOpenISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *FtpOpenISOImageParam) GetFormat() string {
+	return p.Format
+}
 
 // ListISOImageParam is input parameters for the sacloud API
 type ListISOImageParam struct {
-	From  int
-	Id    []int64
-	Max   int
-	Name  []string
-	Scope string
-	Sort  []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Scope      string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListISOImageParam return new ListISOImageParam
@@ -489,6 +651,20 @@ func (p *ListISOImageParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -514,6 +690,10 @@ func (p *ListISOImageParam) GetTableType() output.OutputTableType {
 
 func (p *ListISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListISOImageParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListISOImageParam) SetFrom(v int) {
@@ -558,10 +738,42 @@ func (p *ListISOImageParam) SetSort(v []string) {
 func (p *ListISOImageParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListISOImageParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadISOImageParam is input parameters for the sacloud API
 type ReadISOImageParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadISOImageParam return new ReadISOImageParam
@@ -582,6 +794,20 @@ func (p *ReadISOImageParam) Validate() []error {
 	{
 		validator := define.Resources["ISOImage"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -614,12 +840,44 @@ func (p *ReadISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadISOImageParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadISOImageParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadISOImageParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadISOImageParam) GetFormat() string {
+	return p.Format
 }
 
 // UpdateISOImageParam is input parameters for the sacloud API
@@ -629,6 +887,10 @@ type UpdateISOImageParam struct {
 	Id          int64
 	Name        string
 	Tags        []string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewUpdateISOImageParam return new UpdateISOImageParam
@@ -682,6 +944,20 @@ func (p *UpdateISOImageParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -707,6 +983,10 @@ func (p *UpdateISOImageParam) GetTableType() output.OutputTableType {
 
 func (p *UpdateISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateISOImageParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *UpdateISOImageParam) SetDescription(v string) {
@@ -744,11 +1024,43 @@ func (p *UpdateISOImageParam) SetTags(v []string) {
 func (p *UpdateISOImageParam) GetTags() []string {
 	return p.Tags
 }
+func (p *UpdateISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateISOImageParam) GetFormat() string {
+	return p.Format
+}
 
 // UploadISOImageParam is input parameters for the sacloud API
 type UploadISOImageParam struct {
-	Id      int64
-	IsoFile string
+	Id         int64
+	IsoFile    string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewUploadISOImageParam return new UploadISOImageParam
@@ -788,6 +1100,20 @@ func (p *UploadISOImageParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -815,6 +1141,10 @@ func (p *UploadISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UploadISOImageParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *UploadISOImageParam) SetId(v int64) {
 	p.Id = v
 }
@@ -828,4 +1158,32 @@ func (p *UploadISOImageParam) SetIsoFile(v string) {
 
 func (p *UploadISOImageParam) GetIsoFile() string {
 	return p.IsoFile
+}
+func (p *UploadISOImageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UploadISOImageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UploadISOImageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UploadISOImageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UploadISOImageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UploadISOImageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UploadISOImageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UploadISOImageParam) GetFormat() string {
+	return p.Format
 }

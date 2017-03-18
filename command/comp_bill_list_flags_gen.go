@@ -16,6 +16,8 @@ func BillListCompleteFlags(ctx Context, params *ListBillParam, flagName string, 
 		comp = define.Resources["Bill"].Commands["list"].Params["month"].CompleteFunc
 	case "year":
 		comp = define.Resources["Bill"].Commands["list"].Params["year"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

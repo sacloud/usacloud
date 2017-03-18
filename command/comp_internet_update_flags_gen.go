@@ -24,6 +24,8 @@ func InternetUpdateCompleteFlags(ctx Context, params *UpdateInternetParam, flagN
 		comp = define.Resources["Internet"].Commands["update"].Params["name"].CompleteFunc
 	case "tags":
 		comp = define.Resources["Internet"].Commands["update"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

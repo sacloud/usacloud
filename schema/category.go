@@ -22,6 +22,12 @@ var DefaultCommandCategory = &Category{
 
 var DefaultParamCategory = &Category{
 	Key:         "default",
-	DisplayName: "Other options",
-	Order:       math.MaxInt32,
+	DisplayName: "Common options",
+	Order:       math.MaxInt32 - 1,
+}
+
+var OutputParamCategory = &Category{
+	Key:         "output",
+	DisplayName: "Output options",
+	Order:       math.MaxInt32 - 1,
 }

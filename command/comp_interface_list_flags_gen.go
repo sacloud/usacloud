@@ -22,6 +22,8 @@ func InterfaceListCompleteFlags(ctx Context, params *ListInterfaceParam, flagNam
 		comp = define.Resources["Interface"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["Interface"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

@@ -14,6 +14,8 @@ func AutoBackupReadCompleteFlags(ctx Context, params *ReadAutoBackupParam, flagN
 	switch flagName {
 	case "id":
 		comp = define.Resources["AutoBackup"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

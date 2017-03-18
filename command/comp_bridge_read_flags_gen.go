@@ -14,6 +14,8 @@ func BridgeReadCompleteFlags(ctx Context, params *ReadBridgeParam, flagName stri
 	switch flagName {
 	case "id":
 		comp = define.Resources["Bridge"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

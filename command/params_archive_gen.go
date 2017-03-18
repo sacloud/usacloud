@@ -18,6 +18,10 @@ type CreateArchiveParam struct {
 	SourceArchiveId int64
 	SourceDiskId    int64
 	Tags            []string
+	OutputType      string
+	Column          []string
+	Quiet           bool
+	Format          string
 }
 
 // NewCreateArchiveParam return new CreateArchiveParam
@@ -134,6 +138,20 @@ func (p *CreateArchiveParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -159,6 +177,10 @@ func (p *CreateArchiveParam) GetTableType() output.OutputTableType {
 
 func (p *CreateArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateArchiveParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *CreateArchiveParam) SetArchiveFile(v string) {
@@ -217,11 +239,43 @@ func (p *CreateArchiveParam) SetTags(v []string) {
 func (p *CreateArchiveParam) GetTags() []string {
 	return p.Tags
 }
+func (p *CreateArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateArchiveParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteArchiveParam is input parameters for the sacloud API
 type DeleteArchiveParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteArchiveParam return new DeleteArchiveParam
@@ -242,6 +296,20 @@ func (p *DeleteArchiveParam) Validate() []error {
 	{
 		validator := define.Resources["Archive"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -274,6 +342,10 @@ func (p *DeleteArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteArchiveParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteArchiveParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -287,6 +359,34 @@ func (p *DeleteArchiveParam) SetId(v int64) {
 
 func (p *DeleteArchiveParam) GetId() int64 {
 	return p.Id
+}
+func (p *DeleteArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteArchiveParam) GetFormat() string {
+	return p.Format
 }
 
 // DownloadArchiveParam is input parameters for the sacloud API
@@ -350,6 +450,10 @@ func (p *DownloadArchiveParam) GetTableType() output.OutputTableType {
 
 func (p *DownloadArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DownloadArchiveParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *DownloadArchiveParam) SetFileDestination(v string) {
@@ -422,6 +526,10 @@ func (p *FtpCloseArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *FtpCloseArchiveParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *FtpCloseArchiveParam) SetId(v int64) {
 	p.Id = v
 }
@@ -432,7 +540,11 @@ func (p *FtpCloseArchiveParam) GetId() int64 {
 
 // FtpOpenArchiveParam is input parameters for the sacloud API
 type FtpOpenArchiveParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewFtpOpenArchiveParam return new FtpOpenArchiveParam
@@ -453,6 +565,20 @@ func (p *FtpOpenArchiveParam) Validate() []error {
 	{
 		validator := define.Resources["Archive"].Commands["ftp-open"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -485,6 +611,10 @@ func (p *FtpOpenArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *FtpOpenArchiveParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *FtpOpenArchiveParam) SetId(v int64) {
 	p.Id = v
 }
@@ -492,15 +622,47 @@ func (p *FtpOpenArchiveParam) SetId(v int64) {
 func (p *FtpOpenArchiveParam) GetId() int64 {
 	return p.Id
 }
+func (p *FtpOpenArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *FtpOpenArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *FtpOpenArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *FtpOpenArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *FtpOpenArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *FtpOpenArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *FtpOpenArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *FtpOpenArchiveParam) GetFormat() string {
+	return p.Format
+}
 
 // ListArchiveParam is input parameters for the sacloud API
 type ListArchiveParam struct {
-	From  int
-	Id    []int64
-	Max   int
-	Name  []string
-	Scope string
-	Sort  []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Scope      string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListArchiveParam return new ListArchiveParam
@@ -544,6 +706,20 @@ func (p *ListArchiveParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -569,6 +745,10 @@ func (p *ListArchiveParam) GetTableType() output.OutputTableType {
 
 func (p *ListArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListArchiveParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListArchiveParam) SetFrom(v int) {
@@ -613,10 +793,42 @@ func (p *ListArchiveParam) SetSort(v []string) {
 func (p *ListArchiveParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListArchiveParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadArchiveParam is input parameters for the sacloud API
 type ReadArchiveParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadArchiveParam return new ReadArchiveParam
@@ -637,6 +849,20 @@ func (p *ReadArchiveParam) Validate() []error {
 	{
 		validator := define.Resources["Archive"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -669,12 +895,44 @@ func (p *ReadArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadArchiveParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadArchiveParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadArchiveParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadArchiveParam) GetFormat() string {
+	return p.Format
 }
 
 // UpdateArchiveParam is input parameters for the sacloud API
@@ -684,6 +942,10 @@ type UpdateArchiveParam struct {
 	Id          int64
 	Name        string
 	Tags        []string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewUpdateArchiveParam return new UpdateArchiveParam
@@ -737,6 +999,20 @@ func (p *UpdateArchiveParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -762,6 +1038,10 @@ func (p *UpdateArchiveParam) GetTableType() output.OutputTableType {
 
 func (p *UpdateArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateArchiveParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *UpdateArchiveParam) SetDescription(v string) {
@@ -799,11 +1079,43 @@ func (p *UpdateArchiveParam) SetTags(v []string) {
 func (p *UpdateArchiveParam) GetTags() []string {
 	return p.Tags
 }
+func (p *UpdateArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateArchiveParam) GetFormat() string {
+	return p.Format
+}
 
 // UploadArchiveParam is input parameters for the sacloud API
 type UploadArchiveParam struct {
 	ArchiveFile string
 	Id          int64
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewUploadArchiveParam return new UploadArchiveParam
@@ -843,6 +1155,20 @@ func (p *UploadArchiveParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -870,6 +1196,10 @@ func (p *UploadArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UploadArchiveParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *UploadArchiveParam) SetArchiveFile(v string) {
 	p.ArchiveFile = v
 }
@@ -883,6 +1213,34 @@ func (p *UploadArchiveParam) SetId(v int64) {
 
 func (p *UploadArchiveParam) GetId() int64 {
 	return p.Id
+}
+func (p *UploadArchiveParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UploadArchiveParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UploadArchiveParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UploadArchiveParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UploadArchiveParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UploadArchiveParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UploadArchiveParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UploadArchiveParam) GetFormat() string {
+	return p.Format
 }
 
 // WaitForCopyArchiveParam is input parameters for the sacloud API
@@ -938,6 +1296,10 @@ func (p *WaitForCopyArchiveParam) GetTableType() output.OutputTableType {
 
 func (p *WaitForCopyArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *WaitForCopyArchiveParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *WaitForCopyArchiveParam) SetId(v int64) {

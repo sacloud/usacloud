@@ -11,7 +11,7 @@ func generateSetParamActions(command *schema.Command) (string, error) {
 
 	b := bytes.NewBufferString("")
 
-	for _, param := range command.SortedParams() {
+	for _, param := range command.BuildedParams() {
 		p := param.Param
 		k := param.ParamKey
 

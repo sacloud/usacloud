@@ -22,6 +22,8 @@ func PacketFilterListCompleteFlags(ctx Context, params *ListPacketFilterParam, f
 		comp = define.Resources["PacketFilter"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["PacketFilter"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

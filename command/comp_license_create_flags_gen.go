@@ -16,6 +16,8 @@ func LicenseCreateCompleteFlags(ctx Context, params *CreateLicenseParam, flagNam
 		comp = define.Resources["License"].Commands["create"].Params["license-info-id"].CompleteFunc
 	case "name":
 		comp = define.Resources["License"].Commands["create"].Params["name"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

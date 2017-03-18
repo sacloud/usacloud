@@ -22,6 +22,8 @@ func SSHKeyListCompleteFlags(ctx Context, params *ListSSHKeyParam, flagName stri
 		comp = define.Resources["SSHKey"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["SSHKey"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

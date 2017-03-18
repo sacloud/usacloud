@@ -22,6 +22,8 @@ func LicenseListCompleteFlags(ctx Context, params *ListLicenseParam, flagName st
 		comp = define.Resources["License"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["License"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

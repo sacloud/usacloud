@@ -14,6 +14,10 @@ type CreateDNSParam struct {
 	IconId      int64
 	Name        string
 	Tags        []string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewCreateDNSParam return new CreateDNSParam
@@ -60,6 +64,20 @@ func (p *CreateDNSParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -85,6 +103,10 @@ func (p *CreateDNSParam) GetTableType() output.OutputTableType {
 
 func (p *CreateDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateDNSParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *CreateDNSParam) SetDescription(v string) {
@@ -115,11 +137,43 @@ func (p *CreateDNSParam) SetTags(v []string) {
 func (p *CreateDNSParam) GetTags() []string {
 	return p.Tags
 }
+func (p *CreateDNSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateDNSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateDNSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateDNSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateDNSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateDNSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateDNSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateDNSParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteDNSParam is input parameters for the sacloud API
 type DeleteDNSParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteDNSParam return new DeleteDNSParam
@@ -140,6 +194,20 @@ func (p *DeleteDNSParam) Validate() []error {
 	{
 		validator := define.Resources["DNS"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -172,6 +240,10 @@ func (p *DeleteDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteDNSParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteDNSParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -186,14 +258,46 @@ func (p *DeleteDNSParam) SetId(v int64) {
 func (p *DeleteDNSParam) GetId() int64 {
 	return p.Id
 }
+func (p *DeleteDNSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteDNSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteDNSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteDNSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteDNSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteDNSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteDNSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteDNSParam) GetFormat() string {
+	return p.Format
+}
 
 // ListDNSParam is input parameters for the sacloud API
 type ListDNSParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListDNSParam return new ListDNSParam
@@ -230,6 +334,20 @@ func (p *ListDNSParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -255,6 +373,10 @@ func (p *ListDNSParam) GetTableType() output.OutputTableType {
 
 func (p *ListDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListDNSParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListDNSParam) SetFrom(v int) {
@@ -292,10 +414,42 @@ func (p *ListDNSParam) SetSort(v []string) {
 func (p *ListDNSParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListDNSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListDNSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListDNSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListDNSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListDNSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListDNSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListDNSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListDNSParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadDNSParam is input parameters for the sacloud API
 type ReadDNSParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadDNSParam return new ReadDNSParam
@@ -316,6 +470,20 @@ func (p *ReadDNSParam) Validate() []error {
 	{
 		validator := define.Resources["DNS"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -348,12 +516,44 @@ func (p *ReadDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadDNSParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadDNSParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadDNSParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadDNSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadDNSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadDNSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadDNSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadDNSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadDNSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadDNSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadDNSParam) GetFormat() string {
+	return p.Format
 }
 
 // RecordAddDNSParam is input parameters for the sacloud API
@@ -368,6 +568,10 @@ type RecordAddDNSParam struct {
 	Ttl         int
 	Type        string
 	Value       string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewRecordAddDNSParam return new RecordAddDNSParam
@@ -468,6 +672,20 @@ func (p *RecordAddDNSParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -493,6 +711,10 @@ func (p *RecordAddDNSParam) GetTableType() output.OutputTableType {
 
 func (p *RecordAddDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *RecordAddDNSParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *RecordAddDNSParam) SetId(v int64) {
@@ -565,12 +787,44 @@ func (p *RecordAddDNSParam) SetValue(v string) {
 func (p *RecordAddDNSParam) GetValue() string {
 	return p.Value
 }
+func (p *RecordAddDNSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *RecordAddDNSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *RecordAddDNSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *RecordAddDNSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *RecordAddDNSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *RecordAddDNSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *RecordAddDNSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *RecordAddDNSParam) GetFormat() string {
+	return p.Format
+}
 
 // RecordDeleteDNSParam is input parameters for the sacloud API
 type RecordDeleteDNSParam struct {
-	Force bool
-	Id    int64
-	Index int
+	Force      bool
+	Id         int64
+	Index      int
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewRecordDeleteDNSParam return new RecordDeleteDNSParam
@@ -603,6 +857,20 @@ func (p *RecordDeleteDNSParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -630,6 +898,10 @@ func (p *RecordDeleteDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *RecordDeleteDNSParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *RecordDeleteDNSParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -651,10 +923,42 @@ func (p *RecordDeleteDNSParam) SetIndex(v int) {
 func (p *RecordDeleteDNSParam) GetIndex() int {
 	return p.Index
 }
+func (p *RecordDeleteDNSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *RecordDeleteDNSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *RecordDeleteDNSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *RecordDeleteDNSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *RecordDeleteDNSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *RecordDeleteDNSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *RecordDeleteDNSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *RecordDeleteDNSParam) GetFormat() string {
+	return p.Format
+}
 
 // RecordListDNSParam is input parameters for the sacloud API
 type RecordListDNSParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewRecordListDNSParam return new RecordListDNSParam
@@ -675,6 +979,20 @@ func (p *RecordListDNSParam) Validate() []error {
 	{
 		validator := define.Resources["DNS"].Commands["record-list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -707,12 +1025,44 @@ func (p *RecordListDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *RecordListDNSParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *RecordListDNSParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *RecordListDNSParam) GetId() int64 {
 	return p.Id
+}
+func (p *RecordListDNSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *RecordListDNSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *RecordListDNSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *RecordListDNSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *RecordListDNSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *RecordListDNSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *RecordListDNSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *RecordListDNSParam) GetFormat() string {
+	return p.Format
 }
 
 // RecordUpdateDNSParam is input parameters for the sacloud API
@@ -728,6 +1078,10 @@ type RecordUpdateDNSParam struct {
 	Ttl         int
 	Type        string
 	Value       string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewRecordUpdateDNSParam return new RecordUpdateDNSParam
@@ -816,6 +1170,20 @@ func (p *RecordUpdateDNSParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -841,6 +1209,10 @@ func (p *RecordUpdateDNSParam) GetTableType() output.OutputTableType {
 
 func (p *RecordUpdateDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *RecordUpdateDNSParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *RecordUpdateDNSParam) SetId(v int64) {
@@ -920,6 +1292,34 @@ func (p *RecordUpdateDNSParam) SetValue(v string) {
 func (p *RecordUpdateDNSParam) GetValue() string {
 	return p.Value
 }
+func (p *RecordUpdateDNSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *RecordUpdateDNSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *RecordUpdateDNSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *RecordUpdateDNSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *RecordUpdateDNSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *RecordUpdateDNSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *RecordUpdateDNSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *RecordUpdateDNSParam) GetFormat() string {
+	return p.Format
+}
 
 // UpdateDNSParam is input parameters for the sacloud API
 type UpdateDNSParam struct {
@@ -927,6 +1327,10 @@ type UpdateDNSParam struct {
 	IconId      int64
 	Id          int64
 	Tags        []string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewUpdateDNSParam return new UpdateDNSParam
@@ -973,6 +1377,20 @@ func (p *UpdateDNSParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -998,6 +1416,10 @@ func (p *UpdateDNSParam) GetTableType() output.OutputTableType {
 
 func (p *UpdateDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateDNSParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *UpdateDNSParam) SetDescription(v string) {
@@ -1027,4 +1449,32 @@ func (p *UpdateDNSParam) SetTags(v []string) {
 
 func (p *UpdateDNSParam) GetTags() []string {
 	return p.Tags
+}
+func (p *UpdateDNSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateDNSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateDNSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateDNSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateDNSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateDNSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateDNSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateDNSParam) GetFormat() string {
+	return p.Format
 }

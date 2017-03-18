@@ -1,8 +1,7 @@
-package define
+package schema
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/schema"
 	"net"
 	"os"
 	"regexp"
@@ -11,7 +10,7 @@ import (
 	"unicode/utf8"
 )
 
-func validateMulti(validators ...schema.SchemaValidateFunc) schema.SchemaValidateFunc {
+func ValidateMulti(validators ...SchemaValidateFunc) SchemaValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		errors := []error{}
 
@@ -23,7 +22,7 @@ func validateMulti(validators ...schema.SchemaValidateFunc) schema.SchemaValidat
 	}
 }
 
-func validateStringSlice(validator schema.SchemaValidateFunc) schema.SchemaValidateFunc {
+func ValidateStringSlice(validator SchemaValidateFunc) SchemaValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -48,7 +47,7 @@ func validateStringSlice(validator schema.SchemaValidateFunc) schema.SchemaValid
 	}
 }
 
-func validateIntSlice(validator schema.SchemaValidateFunc) schema.SchemaValidateFunc {
+func ValidateIntSlice(validator SchemaValidateFunc) SchemaValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -74,8 +73,7 @@ func validateIntSlice(validator schema.SchemaValidateFunc) schema.SchemaValidate
 	}
 }
 
-// validateStrLen return function is implemented schema.SchemaValidateFunc
-func validateStrLen(min int, max int) schema.SchemaValidateFunc {
+func ValidateStrLen(min int, max int) SchemaValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -104,8 +102,7 @@ func validateStrLen(min int, max int) schema.SchemaValidateFunc {
 	}
 }
 
-// validateIntRange return function is implementd schema.SchemaValidateFunc
-func validateIntRange(min int, max int) schema.SchemaValidateFunc {
+func ValidateIntRange(min int, max int) SchemaValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -134,7 +131,7 @@ func validateIntRange(min int, max int) schema.SchemaValidateFunc {
 	}
 }
 
-func validateInStrValues(allows ...string) schema.SchemaValidateFunc {
+func ValidateInStrValues(allows ...string) SchemaValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -164,7 +161,7 @@ func validateInStrValues(allows ...string) schema.SchemaValidateFunc {
 	}
 }
 
-func validateInIntValues(allows ...int) schema.SchemaValidateFunc {
+func ValidateInIntValues(allows ...int) SchemaValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -198,7 +195,7 @@ func validateInIntValues(allows ...int) schema.SchemaValidateFunc {
 	}
 }
 
-func validateSakuraID() schema.SchemaValidateFunc {
+func ValidateSakuraID() SchemaValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 		idLen := 12
@@ -223,7 +220,7 @@ func validateSakuraID() schema.SchemaValidateFunc {
 	}
 }
 
-func validateSakuraShortID(digit int) schema.SchemaValidateFunc {
+func ValidateSakuraShortID(digit int) SchemaValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 		idLen := digit
@@ -248,7 +245,7 @@ func validateSakuraShortID(digit int) schema.SchemaValidateFunc {
 	}
 }
 
-func validateMemberCD() schema.SchemaValidateFunc {
+func ValidateMemberCD() SchemaValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -272,17 +269,7 @@ func validateMemberCD() schema.SchemaValidateFunc {
 	}
 }
 
-func mergeParameterMap(params ...map[string]*schema.Schema) map[string]*schema.Schema {
-	dest := map[string]*schema.Schema{}
-	for _, m := range params {
-		for k, v := range m {
-			dest[k] = v
-		}
-	}
-	return dest
-}
-
-func validateFileExists() schema.SchemaValidateFunc {
+func ValidateFileExists() SchemaValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -306,7 +293,7 @@ func validateFileExists() schema.SchemaValidateFunc {
 	}
 }
 
-func validateIPv4Address() schema.SchemaValidateFunc {
+func ValidateIPv4Address() SchemaValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -330,7 +317,7 @@ func validateIPv4Address() schema.SchemaValidateFunc {
 	}
 }
 
-func validateDateTimeString() schema.SchemaValidateFunc {
+func ValidateDateTimeString() SchemaValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 

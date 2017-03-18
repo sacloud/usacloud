@@ -34,6 +34,8 @@ func DiskCreateCompleteFlags(ctx Context, params *CreateDiskParam, flagName stri
 		comp = define.Resources["Disk"].Commands["create"].Params["source-disk-id"].CompleteFunc
 	case "tags":
 		comp = define.Resources["Disk"].Commands["create"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

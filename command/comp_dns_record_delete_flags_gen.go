@@ -12,10 +12,14 @@ func DNSRecordDeleteCompleteFlags(ctx Context, params *RecordDeleteDNSParam, fla
 	var comp schema.SchemaCompletionFunc
 
 	switch flagName {
+	case "force", "f":
+		comp = define.Resources["DNS"].Commands["record-delete"].Params["force"].CompleteFunc
 	case "id":
 		comp = define.Resources["DNS"].Commands["record-delete"].Params["id"].CompleteFunc
 	case "index":
 		comp = define.Resources["DNS"].Commands["record-delete"].Params["index"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

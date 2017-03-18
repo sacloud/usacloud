@@ -65,6 +65,10 @@ func (p *CsvBillParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CsvBillParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *CsvBillParam) SetBillOutput(v string) {
 	p.BillOutput = v
 }
@@ -89,8 +93,12 @@ func (p *CsvBillParam) GetNoHeader() bool {
 
 // ListBillParam is input parameters for the sacloud API
 type ListBillParam struct {
-	Month int
-	Year  int
+	Month      int
+	Year       int
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListBillParam return new ListBillParam
@@ -111,6 +119,20 @@ func (p *ListBillParam) Validate() []error {
 	{
 		validator := define.Resources["Bill"].Commands["list"].Params["year"].ValidateFunc
 		errs := validator("--year", p.Year)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -143,6 +165,10 @@ func (p *ListBillParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListBillParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ListBillParam) SetMonth(v int) {
 	p.Month = v
 }
@@ -156,4 +182,32 @@ func (p *ListBillParam) SetYear(v int) {
 
 func (p *ListBillParam) GetYear() int {
 	return p.Year
+}
+func (p *ListBillParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListBillParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListBillParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListBillParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListBillParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListBillParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListBillParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListBillParam) GetFormat() string {
+	return p.Format
 }

@@ -12,6 +12,10 @@ import (
 type CreatePacketFilterParam struct {
 	Description string
 	Name        string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewCreatePacketFilterParam return new CreatePacketFilterParam
@@ -44,6 +48,20 @@ func (p *CreatePacketFilterParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -71,6 +89,10 @@ func (p *CreatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CreatePacketFilterParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *CreatePacketFilterParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -85,11 +107,43 @@ func (p *CreatePacketFilterParam) SetName(v string) {
 func (p *CreatePacketFilterParam) GetName() string {
 	return p.Name
 }
+func (p *CreatePacketFilterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreatePacketFilterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreatePacketFilterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreatePacketFilterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreatePacketFilterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreatePacketFilterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreatePacketFilterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreatePacketFilterParam) GetFormat() string {
+	return p.Format
+}
 
 // DeletePacketFilterParam is input parameters for the sacloud API
 type DeletePacketFilterParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeletePacketFilterParam return new DeletePacketFilterParam
@@ -110,6 +164,20 @@ func (p *DeletePacketFilterParam) Validate() []error {
 	{
 		validator := define.Resources["PacketFilter"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -142,6 +210,10 @@ func (p *DeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeletePacketFilterParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeletePacketFilterParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -155,6 +227,34 @@ func (p *DeletePacketFilterParam) SetId(v int64) {
 
 func (p *DeletePacketFilterParam) GetId() int64 {
 	return p.Id
+}
+func (p *DeletePacketFilterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeletePacketFilterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeletePacketFilterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeletePacketFilterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeletePacketFilterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeletePacketFilterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeletePacketFilterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeletePacketFilterParam) GetFormat() string {
+	return p.Format
 }
 
 // InterfaceConnectPacketFilterParam is input parameters for the sacloud API
@@ -225,6 +325,10 @@ func (p *InterfaceConnectPacketFilterParam) GetTableType() output.OutputTableTyp
 
 func (p *InterfaceConnectPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *InterfaceConnectPacketFilterParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *InterfaceConnectPacketFilterParam) SetId(v int64) {
@@ -312,6 +416,10 @@ func (p *InterfaceDisconnectPacketFilterParam) GetColumnDefs() []output.ColumnDe
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *InterfaceDisconnectPacketFilterParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *InterfaceDisconnectPacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -329,11 +437,15 @@ func (p *InterfaceDisconnectPacketFilterParam) GetInterfaceId() int64 {
 
 // ListPacketFilterParam is input parameters for the sacloud API
 type ListPacketFilterParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListPacketFilterParam return new ListPacketFilterParam
@@ -370,6 +482,20 @@ func (p *ListPacketFilterParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -395,6 +521,10 @@ func (p *ListPacketFilterParam) GetTableType() output.OutputTableType {
 
 func (p *ListPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListPacketFilterParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListPacketFilterParam) SetFrom(v int) {
@@ -432,10 +562,42 @@ func (p *ListPacketFilterParam) SetSort(v []string) {
 func (p *ListPacketFilterParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListPacketFilterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListPacketFilterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListPacketFilterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListPacketFilterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListPacketFilterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListPacketFilterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListPacketFilterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListPacketFilterParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadPacketFilterParam is input parameters for the sacloud API
 type ReadPacketFilterParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadPacketFilterParam return new ReadPacketFilterParam
@@ -456,6 +618,20 @@ func (p *ReadPacketFilterParam) Validate() []error {
 	{
 		validator := define.Resources["PacketFilter"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -488,12 +664,44 @@ func (p *ReadPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadPacketFilterParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadPacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadPacketFilterParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadPacketFilterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadPacketFilterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadPacketFilterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadPacketFilterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadPacketFilterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadPacketFilterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadPacketFilterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadPacketFilterParam) GetFormat() string {
+	return p.Format
 }
 
 // RuleAddPacketFilterParam is input parameters for the sacloud API
@@ -506,6 +714,10 @@ type RuleAddPacketFilterParam struct {
 	Protocol        string
 	SourceNetwork   string
 	SourcePort      string
+	OutputType      string
+	Column          []string
+	Quiet           bool
+	Format          string
 }
 
 // NewRuleAddPacketFilterParam return new RuleAddPacketFilterParam
@@ -576,6 +788,20 @@ func (p *RuleAddPacketFilterParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -601,6 +827,10 @@ func (p *RuleAddPacketFilterParam) GetTableType() output.OutputTableType {
 
 func (p *RuleAddPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *RuleAddPacketFilterParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *RuleAddPacketFilterParam) SetAction(v string) {
@@ -659,12 +889,44 @@ func (p *RuleAddPacketFilterParam) SetSourcePort(v string) {
 func (p *RuleAddPacketFilterParam) GetSourcePort() string {
 	return p.SourcePort
 }
+func (p *RuleAddPacketFilterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *RuleAddPacketFilterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *RuleAddPacketFilterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *RuleAddPacketFilterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *RuleAddPacketFilterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *RuleAddPacketFilterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *RuleAddPacketFilterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *RuleAddPacketFilterParam) GetFormat() string {
+	return p.Format
+}
 
 // RuleDeletePacketFilterParam is input parameters for the sacloud API
 type RuleDeletePacketFilterParam struct {
-	Force bool
-	Id    int64
-	Index int
+	Force      bool
+	Id         int64
+	Index      int
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewRuleDeletePacketFilterParam return new RuleDeletePacketFilterParam
@@ -697,6 +959,20 @@ func (p *RuleDeletePacketFilterParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -724,6 +1000,10 @@ func (p *RuleDeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *RuleDeletePacketFilterParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *RuleDeletePacketFilterParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -745,10 +1025,42 @@ func (p *RuleDeletePacketFilterParam) SetIndex(v int) {
 func (p *RuleDeletePacketFilterParam) GetIndex() int {
 	return p.Index
 }
+func (p *RuleDeletePacketFilterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *RuleDeletePacketFilterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *RuleDeletePacketFilterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *RuleDeletePacketFilterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *RuleDeletePacketFilterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *RuleDeletePacketFilterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *RuleDeletePacketFilterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *RuleDeletePacketFilterParam) GetFormat() string {
+	return p.Format
+}
 
 // RuleListPacketFilterParam is input parameters for the sacloud API
 type RuleListPacketFilterParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewRuleListPacketFilterParam return new RuleListPacketFilterParam
@@ -769,6 +1081,20 @@ func (p *RuleListPacketFilterParam) Validate() []error {
 	{
 		validator := define.Resources["PacketFilter"].Commands["rule-list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -801,12 +1127,44 @@ func (p *RuleListPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *RuleListPacketFilterParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *RuleListPacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *RuleListPacketFilterParam) GetId() int64 {
 	return p.Id
+}
+func (p *RuleListPacketFilterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *RuleListPacketFilterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *RuleListPacketFilterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *RuleListPacketFilterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *RuleListPacketFilterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *RuleListPacketFilterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *RuleListPacketFilterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *RuleListPacketFilterParam) GetFormat() string {
+	return p.Format
 }
 
 // RuleUpdatePacketFilterParam is input parameters for the sacloud API
@@ -819,6 +1177,10 @@ type RuleUpdatePacketFilterParam struct {
 	Protocol        string
 	SourceNetwork   string
 	SourcePort      string
+	OutputType      string
+	Column          []string
+	Quiet           bool
+	Format          string
 }
 
 // NewRuleUpdatePacketFilterParam return new RuleUpdatePacketFilterParam
@@ -893,6 +1255,20 @@ func (p *RuleUpdatePacketFilterParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -918,6 +1294,10 @@ func (p *RuleUpdatePacketFilterParam) GetTableType() output.OutputTableType {
 
 func (p *RuleUpdatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *RuleUpdatePacketFilterParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *RuleUpdatePacketFilterParam) SetAction(v string) {
@@ -976,12 +1356,44 @@ func (p *RuleUpdatePacketFilterParam) SetSourcePort(v string) {
 func (p *RuleUpdatePacketFilterParam) GetSourcePort() string {
 	return p.SourcePort
 }
+func (p *RuleUpdatePacketFilterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *RuleUpdatePacketFilterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *RuleUpdatePacketFilterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *RuleUpdatePacketFilterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetFormat() string {
+	return p.Format
+}
 
 // UpdatePacketFilterParam is input parameters for the sacloud API
 type UpdatePacketFilterParam struct {
 	Description string
 	Id          int64
 	Name        string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewUpdatePacketFilterParam return new UpdatePacketFilterParam
@@ -1021,6 +1433,20 @@ func (p *UpdatePacketFilterParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -1048,6 +1474,10 @@ func (p *UpdatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdatePacketFilterParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *UpdatePacketFilterParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -1068,4 +1498,32 @@ func (p *UpdatePacketFilterParam) SetName(v string) {
 
 func (p *UpdatePacketFilterParam) GetName() string {
 	return p.Name
+}
+func (p *UpdatePacketFilterParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdatePacketFilterParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdatePacketFilterParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdatePacketFilterParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdatePacketFilterParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdatePacketFilterParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdatePacketFilterParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdatePacketFilterParam) GetFormat() string {
+	return p.Format
 }

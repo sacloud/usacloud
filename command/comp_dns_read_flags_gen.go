@@ -14,6 +14,8 @@ func DNSReadCompleteFlags(ctx Context, params *ReadDNSParam, flagName string, cu
 	switch flagName {
 	case "id":
 		comp = define.Resources["DNS"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

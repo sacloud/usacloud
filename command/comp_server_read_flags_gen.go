@@ -14,6 +14,8 @@ func ServerReadCompleteFlags(ctx Context, params *ReadServerParam, flagName stri
 	switch flagName {
 	case "id":
 		comp = define.Resources["Server"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

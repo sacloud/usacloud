@@ -21,6 +21,10 @@ type CreateDiskParam struct {
 	SourceArchiveId int64
 	SourceDiskId    int64
 	Tags            []string
+	OutputType      string
+	Column          []string
+	Quiet           bool
+	Format          string
 }
 
 // NewCreateDiskParam return new CreateDiskParam
@@ -155,6 +159,20 @@ func (p *CreateDiskParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -180,6 +198,10 @@ func (p *CreateDiskParam) GetTableType() output.OutputTableType {
 
 func (p *CreateDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateDiskParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *CreateDiskParam) SetAsync(v bool) {
@@ -259,11 +281,43 @@ func (p *CreateDiskParam) SetTags(v []string) {
 func (p *CreateDiskParam) GetTags() []string {
 	return p.Tags
 }
+func (p *CreateDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateDiskParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteDiskParam is input parameters for the sacloud API
 type DeleteDiskParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteDiskParam return new DeleteDiskParam
@@ -284,6 +338,20 @@ func (p *DeleteDiskParam) Validate() []error {
 	{
 		validator := define.Resources["Disk"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -316,6 +384,10 @@ func (p *DeleteDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteDiskParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteDiskParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -330,6 +402,34 @@ func (p *DeleteDiskParam) SetId(v int64) {
 func (p *DeleteDiskParam) GetId() int64 {
 	return p.Id
 }
+func (p *DeleteDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteDiskParam) GetFormat() string {
+	return p.Format
+}
 
 // EditDiskParam is input parameters for the sacloud API
 type EditDiskParam struct {
@@ -342,6 +442,10 @@ type EditDiskParam struct {
 	Password            string
 	SshKeyIds           []int64
 	StartupScriptIds    []int64
+	OutputType          string
+	Column              []string
+	Quiet               bool
+	Format              string
 }
 
 // NewEditDiskParam return new EditDiskParam
@@ -391,6 +495,20 @@ func (p *EditDiskParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -416,6 +534,10 @@ func (p *EditDiskParam) GetTableType() output.OutputTableType {
 
 func (p *EditDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *EditDiskParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *EditDiskParam) SetDefaultRoute(v string) {
@@ -481,15 +603,47 @@ func (p *EditDiskParam) SetStartupScriptIds(v []int64) {
 func (p *EditDiskParam) GetStartupScriptIds() []int64 {
 	return p.StartupScriptIds
 }
+func (p *EditDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *EditDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *EditDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *EditDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *EditDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *EditDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *EditDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *EditDiskParam) GetFormat() string {
+	return p.Format
+}
 
 // ListDiskParam is input parameters for the sacloud API
 type ListDiskParam struct {
-	From  int
-	Id    []int64
-	Max   int
-	Name  []string
-	Scope string
-	Sort  []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Scope      string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListDiskParam return new ListDiskParam
@@ -533,6 +687,20 @@ func (p *ListDiskParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -558,6 +726,10 @@ func (p *ListDiskParam) GetTableType() output.OutputTableType {
 
 func (p *ListDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListDiskParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListDiskParam) SetFrom(v int) {
@@ -602,13 +774,45 @@ func (p *ListDiskParam) SetSort(v []string) {
 func (p *ListDiskParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListDiskParam) GetFormat() string {
+	return p.Format
+}
 
 // MonitorDiskParam is input parameters for the sacloud API
 type MonitorDiskParam struct {
-	End       string
-	Id        int64
-	KeyFormat string
-	Start     string
+	End        string
+	Id         int64
+	KeyFormat  string
+	Start      string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewMonitorDiskParam return new MonitorDiskParam
@@ -658,6 +862,20 @@ func (p *MonitorDiskParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -683,6 +901,10 @@ func (p *MonitorDiskParam) GetTableType() output.OutputTableType {
 
 func (p *MonitorDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *MonitorDiskParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *MonitorDiskParam) SetEnd(v string) {
@@ -713,10 +935,42 @@ func (p *MonitorDiskParam) SetStart(v string) {
 func (p *MonitorDiskParam) GetStart() string {
 	return p.Start
 }
+func (p *MonitorDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorDiskParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadDiskParam is input parameters for the sacloud API
 type ReadDiskParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadDiskParam return new ReadDiskParam
@@ -737,6 +991,20 @@ func (p *ReadDiskParam) Validate() []error {
 	{
 		validator := define.Resources["Disk"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -769,12 +1037,44 @@ func (p *ReadDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadDiskParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadDiskParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadDiskParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadDiskParam) GetFormat() string {
+	return p.Format
 }
 
 // ReinstallFromArchiveDiskParam is input parameters for the sacloud API
@@ -855,6 +1155,10 @@ func (p *ReinstallFromArchiveDiskParam) GetTableType() output.OutputTableType {
 
 func (p *ReinstallFromArchiveDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ReinstallFromArchiveDiskParam) SetAsync(v bool) {
@@ -973,6 +1277,10 @@ func (p *ReinstallFromDiskDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReinstallFromDiskDiskParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReinstallFromDiskDiskParam) SetAsync(v bool) {
 	p.Async = v
 }
@@ -1074,6 +1382,10 @@ func (p *ReinstallToBlankDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReinstallToBlankDiskParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReinstallToBlankDiskParam) SetAsync(v bool) {
 	p.Async = v
 }
@@ -1173,6 +1485,10 @@ func (p *ServerConnectDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ServerConnectDiskParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ServerConnectDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1243,6 +1559,10 @@ func (p *ServerDisconnectDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ServerDisconnectDiskParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ServerDisconnectDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1259,6 +1579,10 @@ type UpdateDiskParam struct {
 	Id          int64
 	Name        string
 	Tags        []string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewUpdateDiskParam return new UpdateDiskParam
@@ -1319,6 +1643,20 @@ func (p *UpdateDiskParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -1344,6 +1682,10 @@ func (p *UpdateDiskParam) GetTableType() output.OutputTableType {
 
 func (p *UpdateDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateDiskParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *UpdateDiskParam) SetConnection(v string) {
@@ -1387,6 +1729,34 @@ func (p *UpdateDiskParam) SetTags(v []string) {
 
 func (p *UpdateDiskParam) GetTags() []string {
 	return p.Tags
+}
+func (p *UpdateDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateDiskParam) GetFormat() string {
+	return p.Format
 }
 
 // WaitForCopyDiskParam is input parameters for the sacloud API
@@ -1442,6 +1812,10 @@ func (p *WaitForCopyDiskParam) GetTableType() output.OutputTableType {
 
 func (p *WaitForCopyDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *WaitForCopyDiskParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *WaitForCopyDiskParam) SetId(v int64) {

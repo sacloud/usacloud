@@ -14,6 +14,8 @@ func RegionReadCompleteFlags(ctx Context, params *ReadRegionParam, flagName stri
 	switch flagName {
 	case "id":
 		comp = define.Resources["Region"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

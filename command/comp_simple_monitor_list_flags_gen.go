@@ -22,6 +22,8 @@ func SimpleMonitorListCompleteFlags(ctx Context, params *ListSimpleMonitorParam,
 		comp = define.Resources["SimpleMonitor"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["SimpleMonitor"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

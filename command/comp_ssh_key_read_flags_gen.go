@@ -14,6 +14,8 @@ func SSHKeyReadCompleteFlags(ctx Context, params *ReadSSHKeyParam, flagName stri
 	switch flagName {
 	case "id":
 		comp = define.Resources["SSHKey"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

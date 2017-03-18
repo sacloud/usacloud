@@ -16,6 +16,10 @@ type CreateInternetParam struct {
 	Name        string
 	NwMasklen   int
 	Tags        []string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewCreateInternetParam return new CreateInternetParam
@@ -95,6 +99,20 @@ func (p *CreateInternetParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -120,6 +138,10 @@ func (p *CreateInternetParam) GetTableType() output.OutputTableType {
 
 func (p *CreateInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateInternetParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *CreateInternetParam) SetBandWidth(v int) {
@@ -164,11 +186,43 @@ func (p *CreateInternetParam) SetTags(v []string) {
 func (p *CreateInternetParam) GetTags() []string {
 	return p.Tags
 }
+func (p *CreateInternetParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateInternetParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateInternetParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateInternetParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateInternetParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateInternetParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateInternetParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateInternetParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteInternetParam is input parameters for the sacloud API
 type DeleteInternetParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteInternetParam return new DeleteInternetParam
@@ -189,6 +243,20 @@ func (p *DeleteInternetParam) Validate() []error {
 	{
 		validator := define.Resources["Internet"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -221,6 +289,10 @@ func (p *DeleteInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteInternetParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteInternetParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -235,14 +307,46 @@ func (p *DeleteInternetParam) SetId(v int64) {
 func (p *DeleteInternetParam) GetId() int64 {
 	return p.Id
 }
+func (p *DeleteInternetParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteInternetParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteInternetParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteInternetParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteInternetParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteInternetParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteInternetParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteInternetParam) GetFormat() string {
+	return p.Format
+}
 
 // ListInternetParam is input parameters for the sacloud API
 type ListInternetParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListInternetParam return new ListInternetParam
@@ -279,6 +383,20 @@ func (p *ListInternetParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -304,6 +422,10 @@ func (p *ListInternetParam) GetTableType() output.OutputTableType {
 
 func (p *ListInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListInternetParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListInternetParam) SetFrom(v int) {
@@ -341,13 +463,45 @@ func (p *ListInternetParam) SetSort(v []string) {
 func (p *ListInternetParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListInternetParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListInternetParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListInternetParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListInternetParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListInternetParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListInternetParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListInternetParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListInternetParam) GetFormat() string {
+	return p.Format
+}
 
 // MonitorInternetParam is input parameters for the sacloud API
 type MonitorInternetParam struct {
-	End       string
-	Id        int64
-	KeyFormat string
-	Start     string
+	End        string
+	Id         int64
+	KeyFormat  string
+	Start      string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewMonitorInternetParam return new MonitorInternetParam
@@ -397,6 +551,20 @@ func (p *MonitorInternetParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -422,6 +590,10 @@ func (p *MonitorInternetParam) GetTableType() output.OutputTableType {
 
 func (p *MonitorInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *MonitorInternetParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *MonitorInternetParam) SetEnd(v string) {
@@ -452,10 +624,42 @@ func (p *MonitorInternetParam) SetStart(v string) {
 func (p *MonitorInternetParam) GetStart() string {
 	return p.Start
 }
+func (p *MonitorInternetParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorInternetParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorInternetParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorInternetParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorInternetParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorInternetParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorInternetParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorInternetParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadInternetParam is input parameters for the sacloud API
 type ReadInternetParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadInternetParam return new ReadInternetParam
@@ -476,6 +680,20 @@ func (p *ReadInternetParam) Validate() []error {
 	{
 		validator := define.Resources["Internet"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -508,12 +726,44 @@ func (p *ReadInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadInternetParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadInternetParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadInternetParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadInternetParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadInternetParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadInternetParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadInternetParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadInternetParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadInternetParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadInternetParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadInternetParam) GetFormat() string {
+	return p.Format
 }
 
 // UpdateInternetParam is input parameters for the sacloud API
@@ -524,6 +774,10 @@ type UpdateInternetParam struct {
 	Id          int64
 	Name        string
 	Tags        []string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewUpdateInternetParam return new UpdateInternetParam
@@ -584,6 +838,20 @@ func (p *UpdateInternetParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -609,6 +877,10 @@ func (p *UpdateInternetParam) GetTableType() output.OutputTableType {
 
 func (p *UpdateInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateInternetParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *UpdateInternetParam) SetBandWidth(v int) {
@@ -653,11 +925,43 @@ func (p *UpdateInternetParam) SetTags(v []string) {
 func (p *UpdateInternetParam) GetTags() []string {
 	return p.Tags
 }
+func (p *UpdateInternetParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateInternetParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateInternetParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateInternetParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateInternetParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateInternetParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateInternetParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateInternetParam) GetFormat() string {
+	return p.Format
+}
 
 // UpdateBandwidthInternetParam is input parameters for the sacloud API
 type UpdateBandwidthInternetParam struct {
-	BandWidth int
-	Id        int64
+	BandWidth  int
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewUpdateBandwidthInternetParam return new UpdateBandwidthInternetParam
@@ -700,6 +1004,20 @@ func (p *UpdateBandwidthInternetParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -727,6 +1045,10 @@ func (p *UpdateBandwidthInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdateBandwidthInternetParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *UpdateBandwidthInternetParam) SetBandWidth(v int) {
 	p.BandWidth = v
 }
@@ -740,4 +1062,32 @@ func (p *UpdateBandwidthInternetParam) SetId(v int64) {
 
 func (p *UpdateBandwidthInternetParam) GetId() int64 {
 	return p.Id
+}
+func (p *UpdateBandwidthInternetParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateBandwidthInternetParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateBandwidthInternetParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateBandwidthInternetParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateBandwidthInternetParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateBandwidthInternetParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateBandwidthInternetParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateBandwidthInternetParam) GetFormat() string {
+	return p.Format
 }

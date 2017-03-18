@@ -14,6 +14,8 @@ func PacketFilterReadCompleteFlags(ctx Context, params *ReadPacketFilterParam, f
 	switch flagName {
 	case "id":
 		comp = define.Resources["PacketFilter"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

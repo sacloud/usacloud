@@ -22,6 +22,8 @@ func ArchiveUpdateCompleteFlags(ctx Context, params *UpdateArchiveParam, flagNam
 		comp = define.Resources["Archive"].Commands["update"].Params["name"].CompleteFunc
 	case "tags":
 		comp = define.Resources["Archive"].Commands["update"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

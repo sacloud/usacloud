@@ -11,6 +11,8 @@ func WebAccelDeleteCacheCompleteFlags(ctx Context, params *DeleteCacheWebAccelPa
 	var comp schema.SchemaCompletionFunc
 
 	switch flagName {
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

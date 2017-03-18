@@ -10,11 +10,15 @@ import (
 
 // ListProductLicenseParam is input parameters for the sacloud API
 type ListProductLicenseParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListProductLicenseParam return new ListProductLicenseParam
@@ -51,6 +55,20 @@ func (p *ListProductLicenseParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -76,6 +94,10 @@ func (p *ListProductLicenseParam) GetTableType() output.OutputTableType {
 
 func (p *ListProductLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListProductLicenseParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListProductLicenseParam) SetFrom(v int) {
@@ -113,10 +135,42 @@ func (p *ListProductLicenseParam) SetSort(v []string) {
 func (p *ListProductLicenseParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListProductLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListProductLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListProductLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListProductLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListProductLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListProductLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListProductLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListProductLicenseParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadProductLicenseParam is input parameters for the sacloud API
 type ReadProductLicenseParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadProductLicenseParam return new ReadProductLicenseParam
@@ -137,6 +191,20 @@ func (p *ReadProductLicenseParam) Validate() []error {
 	{
 		validator := define.Resources["ProductLicense"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -169,10 +237,42 @@ func (p *ReadProductLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadProductLicenseParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadProductLicenseParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadProductLicenseParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadProductLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadProductLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadProductLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadProductLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadProductLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadProductLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadProductLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadProductLicenseParam) GetFormat() string {
+	return p.Format
 }

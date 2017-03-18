@@ -38,11 +38,5 @@ func ISOImageDownload(ctx Context, params *DownloadISOImageParam) error {
 		return fmt.Errorf("ISOImageDownload is failed: %s", err)
 	}
 
-	p, e = api.Read(p.ID)
-	if err != nil {
-		return fmt.Errorf("ISOImageDownload is failed: %s", err)
-	}
-
-	return ctx.GetOutput().Print()
-
+	return nil
 }

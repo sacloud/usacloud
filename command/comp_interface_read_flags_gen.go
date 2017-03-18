@@ -14,6 +14,8 @@ func InterfaceReadCompleteFlags(ctx Context, params *ReadInterfaceParam, flagNam
 	switch flagName {
 	case "id":
 		comp = define.Resources["Interface"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

@@ -1,7 +1,6 @@
 package command
 
 import (
-	"fmt"
 	"gopkg.in/urfave/cli.v2"
 	"io"
 	"os"
@@ -59,14 +58,6 @@ var GlobalFlags = []cli.Flag{
 		Value:       false,
 		Hidden:      true,
 	},
-	&cli.StringFlag{ // TODO 移動、schema.commandで指定するように
-		Name:        "format",
-		Usage:       "Output format",
-		Value:       "table",
-		DefaultText: "table",
-		Destination: &GlobalOption.Format,
-		Hidden:      true,
-	},
 }
 
 func (o *Option) Validate(skipAuth bool) []error {
@@ -78,18 +69,6 @@ func (o *Option) Validate(skipAuth bool) []error {
 		errs = append(errs, validateRequired("token", o.AccessToken)...)
 		errs = append(errs, validateRequired("secret", o.AccessTokenSecret)...)
 		errs = append(errs, validateRequired("zone", o.Zone)...)
-	}
-
-	// format
-	formatAllows := []string{"table", "json", "tsv", "csv"}
-	isValidFormat := false
-	for _, f := range formatAllows {
-		if f == o.Format {
-			isValidFormat = true
-		}
-	}
-	if !isValidFormat {
-		errs = append(errs, fmt.Errorf("%q: is invalid. Either [table/json/tsv/csv] is required", "format"))
 	}
 
 	o.Validated = true

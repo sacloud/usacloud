@@ -12,10 +12,14 @@ func PacketFilterRuleDeleteCompleteFlags(ctx Context, params *RuleDeletePacketFi
 	var comp schema.SchemaCompletionFunc
 
 	switch flagName {
+	case "force", "f":
+		comp = define.Resources["PacketFilter"].Commands["rule-delete"].Params["force"].CompleteFunc
 	case "id":
 		comp = define.Resources["PacketFilter"].Commands["rule-delete"].Params["id"].CompleteFunc
 	case "index":
 		comp = define.Resources["PacketFilter"].Commands["rule-delete"].Params["index"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

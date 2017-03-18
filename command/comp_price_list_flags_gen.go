@@ -22,6 +22,8 @@ func PriceListCompleteFlags(ctx Context, params *ListPriceParam, flagName string
 		comp = define.Resources["Price"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["Price"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

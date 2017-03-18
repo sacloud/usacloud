@@ -10,11 +10,15 @@ import (
 
 // ListProductDiskParam is input parameters for the sacloud API
 type ListProductDiskParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListProductDiskParam return new ListProductDiskParam
@@ -51,6 +55,20 @@ func (p *ListProductDiskParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -76,6 +94,10 @@ func (p *ListProductDiskParam) GetTableType() output.OutputTableType {
 
 func (p *ListProductDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListProductDiskParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListProductDiskParam) SetFrom(v int) {
@@ -113,10 +135,42 @@ func (p *ListProductDiskParam) SetSort(v []string) {
 func (p *ListProductDiskParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListProductDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListProductDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListProductDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListProductDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListProductDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListProductDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListProductDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListProductDiskParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadProductDiskParam is input parameters for the sacloud API
 type ReadProductDiskParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadProductDiskParam return new ReadProductDiskParam
@@ -137,6 +191,20 @@ func (p *ReadProductDiskParam) Validate() []error {
 	{
 		validator := define.Resources["ProductDisk"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -169,10 +237,42 @@ func (p *ReadProductDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadProductDiskParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadProductDiskParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadProductDiskParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadProductDiskParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadProductDiskParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadProductDiskParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadProductDiskParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadProductDiskParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadProductDiskParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadProductDiskParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadProductDiskParam) GetFormat() string {
+	return p.Format
 }

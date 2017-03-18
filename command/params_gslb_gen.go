@@ -22,6 +22,10 @@ type CreateGSLBParam struct {
 	SorryServer  string
 	Tags         []string
 	Weighted     bool
+	OutputType   string
+	Column       []string
+	Quiet        bool
+	Format       string
 }
 
 // NewCreateGSLBParam return new CreateGSLBParam
@@ -114,6 +118,20 @@ func (p *CreateGSLBParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -139,6 +157,10 @@ func (p *CreateGSLBParam) GetTableType() output.OutputTableType {
 
 func (p *CreateGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateGSLBParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *CreateGSLBParam) SetDelayLoop(v int) {
@@ -225,11 +247,43 @@ func (p *CreateGSLBParam) SetWeighted(v bool) {
 func (p *CreateGSLBParam) GetWeighted() bool {
 	return p.Weighted
 }
+func (p *CreateGSLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateGSLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateGSLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateGSLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateGSLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateGSLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateGSLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateGSLBParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteGSLBParam is input parameters for the sacloud API
 type DeleteGSLBParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteGSLBParam return new DeleteGSLBParam
@@ -250,6 +304,20 @@ func (p *DeleteGSLBParam) Validate() []error {
 	{
 		validator := define.Resources["GSLB"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -282,6 +350,10 @@ func (p *DeleteGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteGSLBParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteGSLBParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -296,14 +368,46 @@ func (p *DeleteGSLBParam) SetId(v int64) {
 func (p *DeleteGSLBParam) GetId() int64 {
 	return p.Id
 }
+func (p *DeleteGSLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteGSLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteGSLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteGSLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteGSLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteGSLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteGSLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteGSLBParam) GetFormat() string {
+	return p.Format
+}
 
 // ListGSLBParam is input parameters for the sacloud API
 type ListGSLBParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListGSLBParam return new ListGSLBParam
@@ -340,6 +444,20 @@ func (p *ListGSLBParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -365,6 +483,10 @@ func (p *ListGSLBParam) GetTableType() output.OutputTableType {
 
 func (p *ListGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListGSLBParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListGSLBParam) SetFrom(v int) {
@@ -402,10 +524,42 @@ func (p *ListGSLBParam) SetSort(v []string) {
 func (p *ListGSLBParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListGSLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListGSLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListGSLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListGSLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListGSLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListGSLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListGSLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListGSLBParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadGSLBParam is input parameters for the sacloud API
 type ReadGSLBParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadGSLBParam return new ReadGSLBParam
@@ -426,6 +580,20 @@ func (p *ReadGSLBParam) Validate() []error {
 	{
 		validator := define.Resources["GSLB"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -458,6 +626,10 @@ func (p *ReadGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadGSLBParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadGSLBParam) SetId(v int64) {
 	p.Id = v
 }
@@ -465,13 +637,45 @@ func (p *ReadGSLBParam) SetId(v int64) {
 func (p *ReadGSLBParam) GetId() int64 {
 	return p.Id
 }
+func (p *ReadGSLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadGSLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadGSLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadGSLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadGSLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadGSLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadGSLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadGSLBParam) GetFormat() string {
+	return p.Format
+}
 
 // ServerAddGSLBParam is input parameters for the sacloud API
 type ServerAddGSLBParam struct {
-	Enabled   bool
-	Id        int64
-	Ipaddress string
-	Weight    int
+	Enabled    bool
+	Id         int64
+	Ipaddress  string
+	Weight     int
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewServerAddGSLBParam return new ServerAddGSLBParam
@@ -514,6 +718,20 @@ func (p *ServerAddGSLBParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -539,6 +757,10 @@ func (p *ServerAddGSLBParam) GetTableType() output.OutputTableType {
 
 func (p *ServerAddGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ServerAddGSLBParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ServerAddGSLBParam) SetEnabled(v bool) {
@@ -569,12 +791,44 @@ func (p *ServerAddGSLBParam) SetWeight(v int) {
 func (p *ServerAddGSLBParam) GetWeight() int {
 	return p.Weight
 }
+func (p *ServerAddGSLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ServerAddGSLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ServerAddGSLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ServerAddGSLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ServerAddGSLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ServerAddGSLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ServerAddGSLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ServerAddGSLBParam) GetFormat() string {
+	return p.Format
+}
 
 // ServerDeleteGSLBParam is input parameters for the sacloud API
 type ServerDeleteGSLBParam struct {
-	Force bool
-	Id    int64
-	Index int
+	Force      bool
+	Id         int64
+	Index      int
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewServerDeleteGSLBParam return new ServerDeleteGSLBParam
@@ -607,6 +861,20 @@ func (p *ServerDeleteGSLBParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -634,6 +902,10 @@ func (p *ServerDeleteGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ServerDeleteGSLBParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ServerDeleteGSLBParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -655,10 +927,42 @@ func (p *ServerDeleteGSLBParam) SetIndex(v int) {
 func (p *ServerDeleteGSLBParam) GetIndex() int {
 	return p.Index
 }
+func (p *ServerDeleteGSLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ServerDeleteGSLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ServerDeleteGSLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ServerDeleteGSLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ServerDeleteGSLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ServerDeleteGSLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ServerDeleteGSLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ServerDeleteGSLBParam) GetFormat() string {
+	return p.Format
+}
 
 // ServerListGSLBParam is input parameters for the sacloud API
 type ServerListGSLBParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewServerListGSLBParam return new ServerListGSLBParam
@@ -679,6 +983,20 @@ func (p *ServerListGSLBParam) Validate() []error {
 	{
 		validator := define.Resources["GSLB"].Commands["server-list"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -711,6 +1029,10 @@ func (p *ServerListGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ServerListGSLBParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ServerListGSLBParam) SetId(v int64) {
 	p.Id = v
 }
@@ -718,14 +1040,46 @@ func (p *ServerListGSLBParam) SetId(v int64) {
 func (p *ServerListGSLBParam) GetId() int64 {
 	return p.Id
 }
+func (p *ServerListGSLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ServerListGSLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ServerListGSLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ServerListGSLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ServerListGSLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ServerListGSLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ServerListGSLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ServerListGSLBParam) GetFormat() string {
+	return p.Format
+}
 
 // ServerUpdateGSLBParam is input parameters for the sacloud API
 type ServerUpdateGSLBParam struct {
-	Enabled   bool
-	Id        int64
-	Index     int
-	Ipaddress string
-	Weight    int
+	Enabled    bool
+	Id         int64
+	Index      int
+	Ipaddress  string
+	Weight     int
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewServerUpdateGSLBParam return new ServerUpdateGSLBParam
@@ -772,6 +1126,20 @@ func (p *ServerUpdateGSLBParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -797,6 +1165,10 @@ func (p *ServerUpdateGSLBParam) GetTableType() output.OutputTableType {
 
 func (p *ServerUpdateGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ServerUpdateGSLBParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ServerUpdateGSLBParam) SetEnabled(v bool) {
@@ -834,6 +1206,34 @@ func (p *ServerUpdateGSLBParam) SetWeight(v int) {
 func (p *ServerUpdateGSLBParam) GetWeight() int {
 	return p.Weight
 }
+func (p *ServerUpdateGSLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ServerUpdateGSLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ServerUpdateGSLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ServerUpdateGSLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ServerUpdateGSLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ServerUpdateGSLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ServerUpdateGSLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ServerUpdateGSLBParam) GetFormat() string {
+	return p.Format
+}
 
 // UpdateGSLBParam is input parameters for the sacloud API
 type UpdateGSLBParam struct {
@@ -850,6 +1250,10 @@ type UpdateGSLBParam struct {
 	SorryServer  string
 	Tags         []string
 	Weighted     bool
+	OutputType   string
+	Column       []string
+	Quiet        bool
+	Format       string
 }
 
 // NewUpdateGSLBParam return new UpdateGSLBParam
@@ -924,6 +1328,20 @@ func (p *UpdateGSLBParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -949,6 +1367,10 @@ func (p *UpdateGSLBParam) GetTableType() output.OutputTableType {
 
 func (p *UpdateGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateGSLBParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *UpdateGSLBParam) SetDelayLoop(v int) {
@@ -1041,4 +1463,32 @@ func (p *UpdateGSLBParam) SetWeighted(v bool) {
 
 func (p *UpdateGSLBParam) GetWeighted() bool {
 	return p.Weighted
+}
+func (p *UpdateGSLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateGSLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateGSLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateGSLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateGSLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateGSLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateGSLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateGSLBParam) GetFormat() string {
+	return p.Format
 }

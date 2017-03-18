@@ -58,6 +58,7 @@ func ISOImageResource() *schema.Resource {
 			IncludeFields:    isoImageDetailIncludes(),
 			ExcludeFields:    isoImageDetailExcludes(),
 			UseCustomCommand: true,
+			NoOutput:         true,
 		},
 		"ftp-open": {
 			Type:             schema.CommandManipulate,
@@ -72,6 +73,7 @@ func ISOImageResource() *schema.Resource {
 			IncludeFields:    isoImageDetailIncludes(),
 			ExcludeFields:    isoImageDetailExcludes(),
 			UseCustomCommand: true,
+			NoOutput:         true,
 		},
 	}
 

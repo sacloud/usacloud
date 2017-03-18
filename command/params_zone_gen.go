@@ -10,11 +10,15 @@ import (
 
 // ListZoneParam is input parameters for the sacloud API
 type ListZoneParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListZoneParam return new ListZoneParam
@@ -51,6 +55,20 @@ func (p *ListZoneParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -76,6 +94,10 @@ func (p *ListZoneParam) GetTableType() output.OutputTableType {
 
 func (p *ListZoneParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListZoneParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListZoneParam) SetFrom(v int) {
@@ -113,10 +135,42 @@ func (p *ListZoneParam) SetSort(v []string) {
 func (p *ListZoneParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListZoneParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListZoneParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListZoneParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListZoneParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListZoneParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListZoneParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListZoneParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListZoneParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadZoneParam is input parameters for the sacloud API
 type ReadZoneParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadZoneParam return new ReadZoneParam
@@ -137,6 +191,20 @@ func (p *ReadZoneParam) Validate() []error {
 	{
 		validator := define.Resources["Zone"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -169,10 +237,42 @@ func (p *ReadZoneParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadZoneParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadZoneParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadZoneParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadZoneParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadZoneParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadZoneParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadZoneParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadZoneParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadZoneParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadZoneParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadZoneParam) GetFormat() string {
+	return p.Format
 }

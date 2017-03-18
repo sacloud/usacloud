@@ -14,6 +14,8 @@ func ProductDiskReadCompleteFlags(ctx Context, params *ReadProductDiskParam, fla
 	switch flagName {
 	case "id":
 		comp = define.Resources["ProductDisk"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

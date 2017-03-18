@@ -24,6 +24,8 @@ func IconListCompleteFlags(ctx Context, params *ListIconParam, flagName string, 
 		comp = define.Resources["Icon"].Commands["list"].Params["scope"].CompleteFunc
 	case "sort":
 		comp = define.Resources["Icon"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

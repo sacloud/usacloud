@@ -50,6 +50,7 @@ func SwitchResource() *schema.Resource {
 			Params:           switchConnectBridgeParam(),
 			IncludeFields:    switchDetailIncludes(),
 			ExcludeFields:    switchDetailExcludes(),
+			NoOutput:         true,
 		},
 		"bridge-disconnect": {
 			Type:             schema.CommandManipulate,
@@ -57,6 +58,7 @@ func SwitchResource() *schema.Resource {
 			Params:           switchDisconnectBridgeParam(),
 			IncludeFields:    switchDetailIncludes(),
 			ExcludeFields:    switchDetailExcludes(),
+			NoOutput:         true,
 		},
 	}
 

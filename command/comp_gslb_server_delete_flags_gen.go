@@ -12,10 +12,14 @@ func GSLBServerDeleteCompleteFlags(ctx Context, params *ServerDeleteGSLBParam, f
 	var comp schema.SchemaCompletionFunc
 
 	switch flagName {
+	case "force", "f":
+		comp = define.Resources["GSLB"].Commands["server-delete"].Params["force"].CompleteFunc
 	case "id":
 		comp = define.Resources["GSLB"].Commands["server-delete"].Params["id"].CompleteFunc
 	case "index":
 		comp = define.Resources["GSLB"].Commands["server-delete"].Params["index"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

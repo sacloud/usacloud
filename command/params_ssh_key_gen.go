@@ -14,6 +14,10 @@ type CreateSSHKeyParam struct {
 	Name             string
 	PublicKey        string
 	PublicKeyContent string
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
 }
 
 // NewCreateSSHKeyParam return new CreateSSHKeyParam
@@ -62,6 +66,20 @@ func (p *CreateSSHKeyParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -87,6 +105,10 @@ func (p *CreateSSHKeyParam) GetTableType() output.OutputTableType {
 
 func (p *CreateSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateSSHKeyParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *CreateSSHKeyParam) SetDescription(v string) {
@@ -117,11 +139,43 @@ func (p *CreateSSHKeyParam) SetPublicKeyContent(v string) {
 func (p *CreateSSHKeyParam) GetPublicKeyContent() string {
 	return p.PublicKeyContent
 }
+func (p *CreateSSHKeyParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateSSHKeyParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateSSHKeyParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateSSHKeyParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateSSHKeyParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateSSHKeyParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateSSHKeyParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateSSHKeyParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteSSHKeyParam is input parameters for the sacloud API
 type DeleteSSHKeyParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteSSHKeyParam return new DeleteSSHKeyParam
@@ -142,6 +196,20 @@ func (p *DeleteSSHKeyParam) Validate() []error {
 	{
 		validator := define.Resources["SSHKey"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -174,6 +242,10 @@ func (p *DeleteSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteSSHKeyParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteSSHKeyParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -188,6 +260,34 @@ func (p *DeleteSSHKeyParam) SetId(v int64) {
 func (p *DeleteSSHKeyParam) GetId() int64 {
 	return p.Id
 }
+func (p *DeleteSSHKeyParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteSSHKeyParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteSSHKeyParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteSSHKeyParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteSSHKeyParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteSSHKeyParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteSSHKeyParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteSSHKeyParam) GetFormat() string {
+	return p.Format
+}
 
 // GenerateSSHKeyParam is input parameters for the sacloud API
 type GenerateSSHKeyParam struct {
@@ -195,6 +295,10 @@ type GenerateSSHKeyParam struct {
 	Name             string
 	PassPhrase       string
 	PrivateKeyOutput string
+	OutputType       string
+	Column           []string
+	Quiet            bool
+	Format           string
 }
 
 // NewGenerateSSHKeyParam return new GenerateSSHKeyParam
@@ -234,6 +338,20 @@ func (p *GenerateSSHKeyParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -259,6 +377,10 @@ func (p *GenerateSSHKeyParam) GetTableType() output.OutputTableType {
 
 func (p *GenerateSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *GenerateSSHKeyParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *GenerateSSHKeyParam) SetDescription(v string) {
@@ -289,14 +411,46 @@ func (p *GenerateSSHKeyParam) SetPrivateKeyOutput(v string) {
 func (p *GenerateSSHKeyParam) GetPrivateKeyOutput() string {
 	return p.PrivateKeyOutput
 }
+func (p *GenerateSSHKeyParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *GenerateSSHKeyParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *GenerateSSHKeyParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *GenerateSSHKeyParam) GetColumn() []string {
+	return p.Column
+}
+func (p *GenerateSSHKeyParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *GenerateSSHKeyParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *GenerateSSHKeyParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *GenerateSSHKeyParam) GetFormat() string {
+	return p.Format
+}
 
 // ListSSHKeyParam is input parameters for the sacloud API
 type ListSSHKeyParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListSSHKeyParam return new ListSSHKeyParam
@@ -333,6 +487,20 @@ func (p *ListSSHKeyParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -358,6 +526,10 @@ func (p *ListSSHKeyParam) GetTableType() output.OutputTableType {
 
 func (p *ListSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListSSHKeyParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListSSHKeyParam) SetFrom(v int) {
@@ -395,10 +567,42 @@ func (p *ListSSHKeyParam) SetSort(v []string) {
 func (p *ListSSHKeyParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListSSHKeyParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListSSHKeyParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListSSHKeyParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListSSHKeyParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListSSHKeyParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListSSHKeyParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListSSHKeyParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListSSHKeyParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadSSHKeyParam is input parameters for the sacloud API
 type ReadSSHKeyParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadSSHKeyParam return new ReadSSHKeyParam
@@ -419,6 +623,20 @@ func (p *ReadSSHKeyParam) Validate() []error {
 	{
 		validator := define.Resources["SSHKey"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -451,6 +669,10 @@ func (p *ReadSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadSSHKeyParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadSSHKeyParam) SetId(v int64) {
 	p.Id = v
 }
@@ -458,12 +680,44 @@ func (p *ReadSSHKeyParam) SetId(v int64) {
 func (p *ReadSSHKeyParam) GetId() int64 {
 	return p.Id
 }
+func (p *ReadSSHKeyParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadSSHKeyParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadSSHKeyParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadSSHKeyParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadSSHKeyParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadSSHKeyParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadSSHKeyParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadSSHKeyParam) GetFormat() string {
+	return p.Format
+}
 
 // UpdateSSHKeyParam is input parameters for the sacloud API
 type UpdateSSHKeyParam struct {
 	Description string
 	Id          int64
 	Name        string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewUpdateSSHKeyParam return new UpdateSSHKeyParam
@@ -503,6 +757,20 @@ func (p *UpdateSSHKeyParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -530,6 +798,10 @@ func (p *UpdateSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdateSSHKeyParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *UpdateSSHKeyParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -550,4 +822,32 @@ func (p *UpdateSSHKeyParam) SetName(v string) {
 
 func (p *UpdateSSHKeyParam) GetName() string {
 	return p.Name
+}
+func (p *UpdateSSHKeyParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateSSHKeyParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateSSHKeyParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateSSHKeyParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateSSHKeyParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateSSHKeyParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateSSHKeyParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateSSHKeyParam) GetFormat() string {
+	return p.Format
 }

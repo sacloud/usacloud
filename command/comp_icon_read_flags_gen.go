@@ -14,6 +14,8 @@ func IconReadCompleteFlags(ctx Context, params *ReadIconParam, flagName string, 
 	switch flagName {
 	case "id":
 		comp = define.Resources["Icon"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

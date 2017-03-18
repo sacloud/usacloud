@@ -10,11 +10,15 @@ import (
 
 // ListServerParam is input parameters for the sacloud API
 type ListServerParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListServerParam return new ListServerParam
@@ -51,6 +55,20 @@ func (p *ListServerParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -76,6 +94,10 @@ func (p *ListServerParam) GetTableType() output.OutputTableType {
 
 func (p *ListServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListServerParam) SetFrom(v int) {
@@ -112,6 +134,34 @@ func (p *ListServerParam) SetSort(v []string) {
 
 func (p *ListServerParam) GetSort() []string {
 	return p.Sort
+}
+func (p *ListServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListServerParam) GetFormat() string {
+	return p.Format
 }
 
 // BuildServerParam is input parameters for the sacloud API
@@ -154,8 +204,12 @@ type BuildServerParam struct {
 	Description             string
 	Tags                    []string
 	IconId                  int64
+	OutputType              string
 	UsKeyboard              bool
+	Column                  []string
 	DisableBootAfterCreate  bool
+	Quiet                   bool
+	Format                  string
 }
 
 // NewBuildServerParam return new BuildServerParam
@@ -400,6 +454,20 @@ func (p *BuildServerParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -425,6 +493,10 @@ func (p *BuildServerParam) GetTableType() output.OutputTableType {
 
 func (p *BuildServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *BuildServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *BuildServerParam) SetCore(v int) {
@@ -693,12 +765,26 @@ func (p *BuildServerParam) SetIconId(v int64) {
 func (p *BuildServerParam) GetIconId() int64 {
 	return p.IconId
 }
+func (p *BuildServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *BuildServerParam) GetOutputType() string {
+	return p.OutputType
+}
 func (p *BuildServerParam) SetUsKeyboard(v bool) {
 	p.UsKeyboard = v
 }
 
 func (p *BuildServerParam) GetUsKeyboard() bool {
 	return p.UsKeyboard
+}
+func (p *BuildServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *BuildServerParam) GetColumn() []string {
+	return p.Column
 }
 func (p *BuildServerParam) SetDisableBootAfterCreate(v bool) {
 	p.DisableBootAfterCreate = v
@@ -707,10 +793,28 @@ func (p *BuildServerParam) SetDisableBootAfterCreate(v bool) {
 func (p *BuildServerParam) GetDisableBootAfterCreate() bool {
 	return p.DisableBootAfterCreate
 }
+func (p *BuildServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *BuildServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *BuildServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *BuildServerParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadServerParam is input parameters for the sacloud API
 type ReadServerParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadServerParam return new ReadServerParam
@@ -731,6 +835,20 @@ func (p *ReadServerParam) Validate() []error {
 	{
 		validator := define.Resources["Server"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -763,12 +881,44 @@ func (p *ReadServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadServerParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadServerParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadServerParam) GetFormat() string {
+	return p.Format
 }
 
 // UpdateServerParam is input parameters for the sacloud API
@@ -778,6 +928,10 @@ type UpdateServerParam struct {
 	Id          int64
 	Name        string
 	Tags        []string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewUpdateServerParam return new UpdateServerParam
@@ -831,6 +985,20 @@ func (p *UpdateServerParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -856,6 +1024,10 @@ func (p *UpdateServerParam) GetTableType() output.OutputTableType {
 
 func (p *UpdateServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *UpdateServerParam) SetDescription(v string) {
@@ -893,12 +1065,44 @@ func (p *UpdateServerParam) SetTags(v []string) {
 func (p *UpdateServerParam) GetTags() []string {
 	return p.Tags
 }
+func (p *UpdateServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateServerParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteServerParam is input parameters for the sacloud API
 type DeleteServerParam struct {
-	Force    bool
-	Id       int64
-	WithDisk bool
+	Force      bool
+	Id         int64
+	WithDisk   bool
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteServerParam return new DeleteServerParam
@@ -922,6 +1126,20 @@ func (p *DeleteServerParam) Validate() []error {
 	{
 		validator := define.Resources["Server"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -954,6 +1172,10 @@ func (p *DeleteServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteServerParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -975,12 +1197,44 @@ func (p *DeleteServerParam) SetWithDisk(v bool) {
 func (p *DeleteServerParam) GetWithDisk() bool {
 	return p.WithDisk
 }
+func (p *DeleteServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteServerParam) GetFormat() string {
+	return p.Format
+}
 
 // PlanChangeServerParam is input parameters for the sacloud API
 type PlanChangeServerParam struct {
-	Core   int
-	Id     int64
-	Memory int
+	Core       int
+	Id         int64
+	Memory     int
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewPlanChangeServerParam return new PlanChangeServerParam
@@ -1020,6 +1274,20 @@ func (p *PlanChangeServerParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -1047,6 +1315,10 @@ func (p *PlanChangeServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *PlanChangeServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *PlanChangeServerParam) SetCore(v int) {
 	p.Core = v
 }
@@ -1067,6 +1339,34 @@ func (p *PlanChangeServerParam) SetMemory(v int) {
 
 func (p *PlanChangeServerParam) GetMemory() int {
 	return p.Memory
+}
+func (p *PlanChangeServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *PlanChangeServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *PlanChangeServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *PlanChangeServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *PlanChangeServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *PlanChangeServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *PlanChangeServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *PlanChangeServerParam) GetFormat() string {
+	return p.Format
 }
 
 // BootServerParam is input parameters for the sacloud API
@@ -1123,6 +1423,10 @@ func (p *BootServerParam) GetTableType() output.OutputTableType {
 
 func (p *BootServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *BootServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *BootServerParam) SetAsync(v bool) {
@@ -1195,6 +1499,10 @@ func (p *ShutdownServerParam) GetTableType() output.OutputTableType {
 
 func (p *ShutdownServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ShutdownServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ShutdownServerParam) SetAsync(v bool) {
@@ -1276,6 +1584,10 @@ func (p *ResetServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ResetServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ResetServerParam) SetAsync(v bool) {
 	p.Async = v
 }
@@ -1353,6 +1665,10 @@ func (p *WaitForBootServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *WaitForBootServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *WaitForBootServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1414,6 +1730,10 @@ func (p *WaitForDownServerParam) GetTableType() output.OutputTableType {
 
 func (p *WaitForDownServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *WaitForDownServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *WaitForDownServerParam) SetId(v int64) {
@@ -1499,6 +1819,10 @@ func (p *SshServerParam) GetTableType() output.OutputTableType {
 
 func (p *SshServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *SshServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *SshServerParam) SetId(v int64) {
@@ -1621,6 +1945,10 @@ func (p *SshExecServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *SshExecServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *SshExecServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1727,6 +2055,10 @@ func (p *ScpServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ScpServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ScpServerParam) SetKey(v string) {
 	p.Key = v
 }
@@ -1772,7 +2104,11 @@ func (p *ScpServerParam) GetUser() string {
 
 // DiskInfoServerParam is input parameters for the sacloud API
 type DiskInfoServerParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDiskInfoServerParam return new DiskInfoServerParam
@@ -1793,6 +2129,20 @@ func (p *DiskInfoServerParam) Validate() []error {
 	{
 		validator := define.Resources["Server"].Commands["disk-info"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1825,12 +2175,44 @@ func (p *DiskInfoServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DiskInfoServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DiskInfoServerParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *DiskInfoServerParam) GetId() int64 {
 	return p.Id
+}
+func (p *DiskInfoServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DiskInfoServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DiskInfoServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DiskInfoServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DiskInfoServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DiskInfoServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DiskInfoServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DiskInfoServerParam) GetFormat() string {
+	return p.Format
 }
 
 // DiskConnectServerParam is input parameters for the sacloud API
@@ -1901,6 +2283,10 @@ func (p *DiskConnectServerParam) GetTableType() output.OutputTableType {
 
 func (p *DiskConnectServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DiskConnectServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *DiskConnectServerParam) SetDiskId(v int64) {
@@ -1988,6 +2374,10 @@ func (p *DiskDisconnectServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DiskDisconnectServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DiskDisconnectServerParam) SetDiskId(v int64) {
 	p.DiskId = v
 }
@@ -2005,7 +2395,11 @@ func (p *DiskDisconnectServerParam) GetId() int64 {
 
 // InterfaceInfoServerParam is input parameters for the sacloud API
 type InterfaceInfoServerParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewInterfaceInfoServerParam return new InterfaceInfoServerParam
@@ -2026,6 +2420,20 @@ func (p *InterfaceInfoServerParam) Validate() []error {
 	{
 		validator := define.Resources["Server"].Commands["interface-info"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2058,12 +2466,44 @@ func (p *InterfaceInfoServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *InterfaceInfoServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *InterfaceInfoServerParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *InterfaceInfoServerParam) GetId() int64 {
 	return p.Id
+}
+func (p *InterfaceInfoServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *InterfaceInfoServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *InterfaceInfoServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *InterfaceInfoServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *InterfaceInfoServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *InterfaceInfoServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *InterfaceInfoServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *InterfaceInfoServerParam) GetFormat() string {
+	return p.Format
 }
 
 // InterfaceAddForInternetServerParam is input parameters for the sacloud API
@@ -2120,6 +2560,10 @@ func (p *InterfaceAddForInternetServerParam) GetTableType() output.OutputTableTy
 
 func (p *InterfaceAddForInternetServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *InterfaceAddForInternetServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *InterfaceAddForInternetServerParam) SetId(v int64) {
@@ -2233,6 +2677,10 @@ func (p *InterfaceAddForRouterServerParam) GetTableType() output.OutputTableType
 
 func (p *InterfaceAddForRouterServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *InterfaceAddForRouterServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *InterfaceAddForRouterServerParam) SetDefaultRoute(v string) {
@@ -2376,6 +2824,10 @@ func (p *InterfaceAddForSwitchServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *InterfaceAddForSwitchServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *InterfaceAddForSwitchServerParam) SetDefaultRoute(v string) {
 	p.DefaultRoute = v
 }
@@ -2474,6 +2926,10 @@ func (p *InterfaceAddDisconnectedServerParam) GetColumnDefs() []output.ColumnDef
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *InterfaceAddDisconnectedServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *InterfaceAddDisconnectedServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2484,7 +2940,11 @@ func (p *InterfaceAddDisconnectedServerParam) GetId() int64 {
 
 // IsoInfoServerParam is input parameters for the sacloud API
 type IsoInfoServerParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewIsoInfoServerParam return new IsoInfoServerParam
@@ -2505,6 +2965,20 @@ func (p *IsoInfoServerParam) Validate() []error {
 	{
 		validator := define.Resources["Server"].Commands["iso-info"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2537,12 +3011,44 @@ func (p *IsoInfoServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *IsoInfoServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *IsoInfoServerParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *IsoInfoServerParam) GetId() int64 {
 	return p.Id
+}
+func (p *IsoInfoServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *IsoInfoServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *IsoInfoServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *IsoInfoServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *IsoInfoServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *IsoInfoServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *IsoInfoServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *IsoInfoServerParam) GetFormat() string {
+	return p.Format
 }
 
 // IsoInsertServerParam is input parameters for the sacloud API
@@ -2650,6 +3156,10 @@ func (p *IsoInsertServerParam) GetTableType() output.OutputTableType {
 
 func (p *IsoInsertServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *IsoInsertServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *IsoInsertServerParam) SetDescription(v string) {
@@ -2764,6 +3274,10 @@ func (p *IsoEjectServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *IsoEjectServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *IsoEjectServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2774,10 +3288,14 @@ func (p *IsoEjectServerParam) GetId() int64 {
 
 // MonitorCpuServerParam is input parameters for the sacloud API
 type MonitorCpuServerParam struct {
-	End       string
-	Id        int64
-	KeyFormat string
-	Start     string
+	End        string
+	Id         int64
+	KeyFormat  string
+	Start      string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewMonitorCpuServerParam return new MonitorCpuServerParam
@@ -2827,6 +3345,20 @@ func (p *MonitorCpuServerParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -2852,6 +3384,10 @@ func (p *MonitorCpuServerParam) GetTableType() output.OutputTableType {
 
 func (p *MonitorCpuServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *MonitorCpuServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *MonitorCpuServerParam) SetEnd(v string) {
@@ -2882,14 +3418,46 @@ func (p *MonitorCpuServerParam) SetStart(v string) {
 func (p *MonitorCpuServerParam) GetStart() string {
 	return p.Start
 }
+func (p *MonitorCpuServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorCpuServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorCpuServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorCpuServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorCpuServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorCpuServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorCpuServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorCpuServerParam) GetFormat() string {
+	return p.Format
+}
 
 // MonitorNicServerParam is input parameters for the sacloud API
 type MonitorNicServerParam struct {
-	End       string
-	Id        int64
-	Index     []int64
-	KeyFormat string
-	Start     string
+	End        string
+	Id         int64
+	Index      []int64
+	KeyFormat  string
+	Start      string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewMonitorNicServerParam return new MonitorNicServerParam
@@ -2939,6 +3507,20 @@ func (p *MonitorNicServerParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -2964,6 +3546,10 @@ func (p *MonitorNicServerParam) GetTableType() output.OutputTableType {
 
 func (p *MonitorNicServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *MonitorNicServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *MonitorNicServerParam) SetEnd(v string) {
@@ -3001,14 +3587,46 @@ func (p *MonitorNicServerParam) SetStart(v string) {
 func (p *MonitorNicServerParam) GetStart() string {
 	return p.Start
 }
+func (p *MonitorNicServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorNicServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorNicServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorNicServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorNicServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorNicServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorNicServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorNicServerParam) GetFormat() string {
+	return p.Format
+}
 
 // MonitorDiskServerParam is input parameters for the sacloud API
 type MonitorDiskServerParam struct {
-	End       string
-	Id        int64
-	Index     []int64
-	KeyFormat string
-	Start     string
+	End        string
+	Id         int64
+	Index      []int64
+	KeyFormat  string
+	Start      string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewMonitorDiskServerParam return new MonitorDiskServerParam
@@ -3058,6 +3676,20 @@ func (p *MonitorDiskServerParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -3083,6 +3715,10 @@ func (p *MonitorDiskServerParam) GetTableType() output.OutputTableType {
 
 func (p *MonitorDiskServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *MonitorDiskServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *MonitorDiskServerParam) SetEnd(v string) {
@@ -3119,4 +3755,32 @@ func (p *MonitorDiskServerParam) SetStart(v string) {
 
 func (p *MonitorDiskServerParam) GetStart() string {
 	return p.Start
+}
+func (p *MonitorDiskServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorDiskServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorDiskServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorDiskServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorDiskServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorDiskServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorDiskServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorDiskServerParam) GetFormat() string {
+	return p.Format
 }

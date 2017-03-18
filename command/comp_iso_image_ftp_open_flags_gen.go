@@ -14,6 +14,8 @@ func ISOImageFtpOpenCompleteFlags(ctx Context, params *FtpOpenISOImageParam, fla
 	switch flagName {
 	case "id":
 		comp = define.Resources["ISOImage"].Commands["ftp-open"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

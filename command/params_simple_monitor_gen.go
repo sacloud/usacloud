@@ -26,6 +26,10 @@ type CreateSimpleMonitorParam struct {
 	SlackWebhook string
 	Tags         []string
 	Target       string
+	OutputType   string
+	Column       []string
+	Quiet        bool
+	Format       string
 }
 
 // NewCreateSimpleMonitorParam return new CreateSimpleMonitorParam
@@ -123,6 +127,20 @@ func (p *CreateSimpleMonitorParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -148,6 +166,10 @@ func (p *CreateSimpleMonitorParam) GetTableType() output.OutputTableType {
 
 func (p *CreateSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateSimpleMonitorParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *CreateSimpleMonitorParam) SetDelayLoop(v int) {
@@ -262,11 +284,43 @@ func (p *CreateSimpleMonitorParam) SetTarget(v string) {
 func (p *CreateSimpleMonitorParam) GetTarget() string {
 	return p.Target
 }
+func (p *CreateSimpleMonitorParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateSimpleMonitorParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateSimpleMonitorParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateSimpleMonitorParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateSimpleMonitorParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateSimpleMonitorParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateSimpleMonitorParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateSimpleMonitorParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteSimpleMonitorParam is input parameters for the sacloud API
 type DeleteSimpleMonitorParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteSimpleMonitorParam return new DeleteSimpleMonitorParam
@@ -287,6 +341,20 @@ func (p *DeleteSimpleMonitorParam) Validate() []error {
 	{
 		validator := define.Resources["SimpleMonitor"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -319,6 +387,10 @@ func (p *DeleteSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteSimpleMonitorParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteSimpleMonitorParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -333,14 +405,46 @@ func (p *DeleteSimpleMonitorParam) SetId(v int64) {
 func (p *DeleteSimpleMonitorParam) GetId() int64 {
 	return p.Id
 }
+func (p *DeleteSimpleMonitorParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteSimpleMonitorParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteSimpleMonitorParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteSimpleMonitorParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteSimpleMonitorParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteSimpleMonitorParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteSimpleMonitorParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteSimpleMonitorParam) GetFormat() string {
+	return p.Format
+}
 
 // ListSimpleMonitorParam is input parameters for the sacloud API
 type ListSimpleMonitorParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListSimpleMonitorParam return new ListSimpleMonitorParam
@@ -377,6 +481,20 @@ func (p *ListSimpleMonitorParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -402,6 +520,10 @@ func (p *ListSimpleMonitorParam) GetTableType() output.OutputTableType {
 
 func (p *ListSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListSimpleMonitorParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListSimpleMonitorParam) SetFrom(v int) {
@@ -439,10 +561,42 @@ func (p *ListSimpleMonitorParam) SetSort(v []string) {
 func (p *ListSimpleMonitorParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListSimpleMonitorParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListSimpleMonitorParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListSimpleMonitorParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListSimpleMonitorParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListSimpleMonitorParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListSimpleMonitorParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListSimpleMonitorParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListSimpleMonitorParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadSimpleMonitorParam is input parameters for the sacloud API
 type ReadSimpleMonitorParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadSimpleMonitorParam return new ReadSimpleMonitorParam
@@ -463,6 +617,20 @@ func (p *ReadSimpleMonitorParam) Validate() []error {
 	{
 		validator := define.Resources["SimpleMonitor"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -495,12 +663,44 @@ func (p *ReadSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadSimpleMonitorParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadSimpleMonitorParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadSimpleMonitorParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadSimpleMonitorParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadSimpleMonitorParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadSimpleMonitorParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadSimpleMonitorParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadSimpleMonitorParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadSimpleMonitorParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadSimpleMonitorParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadSimpleMonitorParam) GetFormat() string {
+	return p.Format
 }
 
 // UpdateSimpleMonitorParam is input parameters for the sacloud API
@@ -521,6 +721,10 @@ type UpdateSimpleMonitorParam struct {
 	ResponseCode int
 	SlackWebhook string
 	Tags         []string
+	OutputType   string
+	Column       []string
+	Quiet        bool
+	Format       string
 }
 
 // NewUpdateSimpleMonitorParam return new UpdateSimpleMonitorParam
@@ -595,6 +799,20 @@ func (p *UpdateSimpleMonitorParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -620,6 +838,10 @@ func (p *UpdateSimpleMonitorParam) GetTableType() output.OutputTableType {
 
 func (p *UpdateSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateSimpleMonitorParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *UpdateSimpleMonitorParam) SetDelayLoop(v int) {
@@ -733,4 +955,32 @@ func (p *UpdateSimpleMonitorParam) SetTags(v []string) {
 
 func (p *UpdateSimpleMonitorParam) GetTags() []string {
 	return p.Tags
+}
+func (p *UpdateSimpleMonitorParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateSimpleMonitorParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateSimpleMonitorParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateSimpleMonitorParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetFormat() string {
+	return p.Format
 }

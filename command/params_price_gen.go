@@ -10,11 +10,15 @@ import (
 
 // ListPriceParam is input parameters for the sacloud API
 type ListPriceParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListPriceParam return new ListPriceParam
@@ -51,6 +55,20 @@ func (p *ListPriceParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -76,6 +94,10 @@ func (p *ListPriceParam) GetTableType() output.OutputTableType {
 
 func (p *ListPriceParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListPriceParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListPriceParam) SetFrom(v int) {
@@ -112,4 +134,32 @@ func (p *ListPriceParam) SetSort(v []string) {
 
 func (p *ListPriceParam) GetSort() []string {
 	return p.Sort
+}
+func (p *ListPriceParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListPriceParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListPriceParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListPriceParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListPriceParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListPriceParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListPriceParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListPriceParam) GetFormat() string {
+	return p.Format
 }

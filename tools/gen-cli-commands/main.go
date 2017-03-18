@@ -118,7 +118,7 @@ func generateSource(resource *schema.Resource) (string, error) {
 		c := comm.Command
 		k := comm.CommandKey
 		categoryParamMap[k] = map[string]interface{}{}
-		for _, param := range c.SortedParams() {
+		for _, param := range c.BuildedParams() {
 			categoryParamMap[k][param.ParamKey] = &categoryMapValue{
 				Category:    param.Category,
 				CommandKey:  k,
@@ -145,21 +145,9 @@ func generateSource(resource *schema.Resource) (string, error) {
 
 func buildCommandsParams(command *schema.Command) (map[string]interface{}, error) {
 
-	// add force flag if need
-	if command.NeedConfirm {
-		// has "force" param?
-		if _, ok := command.Params["force"]; !ok {
-			command.Params["force"] = &schema.Schema{
-				Type:        schema.TypeBool,
-				HandlerType: schema.HandlerNoop,
-				Aliases:     []string{"f"},
-			}
-		}
-	}
-
 	var res map[string]interface{}
 
-	flags, err := buildFlagsParams(command.SortedParams())
+	flags, err := buildFlagsParams(command.BuildedParams())
 	if err != nil {
 		return res, err
 	}
@@ -269,7 +257,7 @@ func buildActionParams(command *schema.Command) (map[string]interface{}, error) 
 	// build params
 	paramName := ctx.InputParamVariableName()
 	setDefault := ""
-	for _, param := range command.SortedParams() {
+	for _, param := range command.BuildedParams() {
 		k := param.ParamKey
 		p := param.Param
 		ctx.P = k

@@ -24,6 +24,8 @@ func ISOImageCreateCompleteFlags(ctx Context, params *CreateISOImageParam, flagN
 		comp = define.Resources["ISOImage"].Commands["create"].Params["size"].CompleteFunc
 	case "tags":
 		comp = define.Resources["ISOImage"].Commands["create"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

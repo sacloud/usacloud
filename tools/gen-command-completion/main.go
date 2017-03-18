@@ -149,7 +149,7 @@ func generateFlagsComplete(command *schema.Command) (string, error) {
 	template.Must(t.Parse(completeFlagsTemplate))
 
 	flags := []map[string]interface{}{}
-	for _, param := range command.SortedParams() {
+	for _, param := range command.BuildedParams() {
 		p := param.Param
 		ctx.P = param.ParamKey
 
@@ -164,15 +164,31 @@ func generateFlagsComplete(command *schema.Command) (string, error) {
 			"CommandKey":  ctx.C,
 			"ParamKey":    ctx.P,
 			"Names":       names,
+			"OutputFlag":  p.Category == "output",
 		})
 	}
 
+	useImport := false
+	for _, f := range flags {
+		if !f["OutputFlag"].(bool) {
+			useImport = true
+			break
+		}
+	}
+	hasOutputFlag := false
+	for _, f := range flags {
+		if f["OutputFlag"].(bool) {
+			hasOutputFlag = true
+			break
+		}
+	}
 	err := t.Execute(b, map[string]interface{}{
 		"FuncName":             ctx.CompleteFlagsFuncName(),
 		"ParamName":            ctx.InputModelTypeName(),
 		"Flags":                flags,
 		"NeedDonotEditComment": !command.UseCustomFlagsCompletion,
-		"UseImport":            len(flags) > 0,
+		"UseImport":            useImport,
+		"HasOutputFlag":        hasOutputFlag,
 	})
 
 	return b.String(), err
@@ -223,9 +239,12 @@ import (
 func {{.FuncName}}(ctx Context, params *{{.ParamName}} , flagName string , currentValue string) {
     	var comp schema.SchemaCompletionFunc
 
-	switch flagName { {{range .Flags}}
+	switch flagName { {{range .Flags}}{{ if not .OutputFlag }}
 	case {{join .Names ", "}}:
-		comp = define.Resources["{{.ResourceKey}}"].Commands["{{.CommandKey}}"].Params["{{.ParamKey}}"].CompleteFunc{{end}}
+		comp = define.Resources["{{.ResourceKey}}"].Commands["{{.CommandKey}}"].Params["{{.ParamKey}}"].CompleteFunc{{end}}{{end}}
+	{{ if .HasOutputFlag }}case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+{{ end -}}
 	}
 
 	if comp != nil {

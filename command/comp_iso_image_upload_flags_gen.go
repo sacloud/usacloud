@@ -16,6 +16,8 @@ func ISOImageUploadCompleteFlags(ctx Context, params *UploadISOImageParam, flagN
 		comp = define.Resources["ISOImage"].Commands["upload"].Params["id"].CompleteFunc
 	case "iso-file":
 		comp = define.Resources["ISOImage"].Commands["upload"].Params["iso-file"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

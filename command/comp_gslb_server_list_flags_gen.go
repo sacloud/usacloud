@@ -14,6 +14,8 @@ func GSLBServerListCompleteFlags(ctx Context, params *ServerListGSLBParam, flagN
 	switch flagName {
 	case "id":
 		comp = define.Resources["GSLB"].Commands["server-list"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

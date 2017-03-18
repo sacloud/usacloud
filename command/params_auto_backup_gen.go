@@ -18,6 +18,10 @@ type CreateAutoBackupParam struct {
 	StartHour   int
 	Tags        []string
 	Weekdays    []string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewCreateAutoBackupParam return new CreateAutoBackupParam
@@ -125,6 +129,20 @@ func (p *CreateAutoBackupParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -150,6 +168,10 @@ func (p *CreateAutoBackupParam) GetTableType() output.OutputTableType {
 
 func (p *CreateAutoBackupParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateAutoBackupParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *CreateAutoBackupParam) SetDescription(v string) {
@@ -208,11 +230,43 @@ func (p *CreateAutoBackupParam) SetWeekdays(v []string) {
 func (p *CreateAutoBackupParam) GetWeekdays() []string {
 	return p.Weekdays
 }
+func (p *CreateAutoBackupParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateAutoBackupParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateAutoBackupParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateAutoBackupParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateAutoBackupParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateAutoBackupParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateAutoBackupParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateAutoBackupParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteAutoBackupParam is input parameters for the sacloud API
 type DeleteAutoBackupParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteAutoBackupParam return new DeleteAutoBackupParam
@@ -233,6 +287,20 @@ func (p *DeleteAutoBackupParam) Validate() []error {
 	{
 		validator := define.Resources["AutoBackup"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -265,6 +333,10 @@ func (p *DeleteAutoBackupParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteAutoBackupParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteAutoBackupParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -279,14 +351,46 @@ func (p *DeleteAutoBackupParam) SetId(v int64) {
 func (p *DeleteAutoBackupParam) GetId() int64 {
 	return p.Id
 }
+func (p *DeleteAutoBackupParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteAutoBackupParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteAutoBackupParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteAutoBackupParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteAutoBackupParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteAutoBackupParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteAutoBackupParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteAutoBackupParam) GetFormat() string {
+	return p.Format
+}
 
 // ListAutoBackupParam is input parameters for the sacloud API
 type ListAutoBackupParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListAutoBackupParam return new ListAutoBackupParam
@@ -323,6 +427,20 @@ func (p *ListAutoBackupParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -348,6 +466,10 @@ func (p *ListAutoBackupParam) GetTableType() output.OutputTableType {
 
 func (p *ListAutoBackupParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListAutoBackupParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListAutoBackupParam) SetFrom(v int) {
@@ -385,10 +507,42 @@ func (p *ListAutoBackupParam) SetSort(v []string) {
 func (p *ListAutoBackupParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListAutoBackupParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListAutoBackupParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListAutoBackupParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListAutoBackupParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListAutoBackupParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListAutoBackupParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListAutoBackupParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListAutoBackupParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadAutoBackupParam is input parameters for the sacloud API
 type ReadAutoBackupParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadAutoBackupParam return new ReadAutoBackupParam
@@ -409,6 +563,20 @@ func (p *ReadAutoBackupParam) Validate() []error {
 	{
 		validator := define.Resources["AutoBackup"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -441,12 +609,44 @@ func (p *ReadAutoBackupParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadAutoBackupParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadAutoBackupParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadAutoBackupParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadAutoBackupParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadAutoBackupParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadAutoBackupParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadAutoBackupParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadAutoBackupParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadAutoBackupParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadAutoBackupParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadAutoBackupParam) GetFormat() string {
+	return p.Format
 }
 
 // UpdateAutoBackupParam is input parameters for the sacloud API
@@ -459,6 +659,10 @@ type UpdateAutoBackupParam struct {
 	StartHour   int
 	Tags        []string
 	Weekdays    []string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewUpdateAutoBackupParam return new UpdateAutoBackupParam
@@ -533,6 +737,20 @@ func (p *UpdateAutoBackupParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -558,6 +776,10 @@ func (p *UpdateAutoBackupParam) GetTableType() output.OutputTableType {
 
 func (p *UpdateAutoBackupParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateAutoBackupParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *UpdateAutoBackupParam) SetDescription(v string) {
@@ -615,4 +837,32 @@ func (p *UpdateAutoBackupParam) SetWeekdays(v []string) {
 
 func (p *UpdateAutoBackupParam) GetWeekdays() []string {
 	return p.Weekdays
+}
+func (p *UpdateAutoBackupParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateAutoBackupParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateAutoBackupParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateAutoBackupParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateAutoBackupParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateAutoBackupParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateAutoBackupParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateAutoBackupParam) GetFormat() string {
+	return p.Format
 }

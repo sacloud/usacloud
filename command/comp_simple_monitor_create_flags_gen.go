@@ -44,6 +44,8 @@ func SimpleMonitorCreateCompleteFlags(ctx Context, params *CreateSimpleMonitorPa
 		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["tags"].CompleteFunc
 	case "target":
 		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["target"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {
