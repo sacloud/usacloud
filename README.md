@@ -240,49 +240,31 @@ COPYRIGHT:
 #### Examples: Output format
 
 ```bash
+    # output table(default)
+    $ usacloud switch ls
+
     # output JSON
     $ usacloud switch ls --output-type json
-    [
-      {
-        "CreatedAt": "2017-01-01T00:00:00+09:00",
-        "Description": "desc",
-        "ID": 123456789012,
-        "Icon": null,
-        "Name": "example",
-        "Scope": "user",
-        "ServiceClass": "cloud/switch/default",
-        "Tags": []
-      }
-    ]
 
-    # output CSV
-    $ usacloud switch ls --output-type csv
-    RowNumber,ID,CreatedAt,Description,Icon,Name,Scope,ServiceClass
-    1,123456789012,2017-01-01T00:00:00+09:00,desc,,example,user,cloud/switch/default
-    
-    # output TSV
-    $ usacloud switch ls --output-type tsv
-    RowNumber	ID	CreatedAt	Description	Icon	Name	Scope	ServiceClass
-    1	123456789012	2017-01-01T00:00:00+09:00	desc		example	user	cloud/switch/default
-    
-    # output TSV + include columns
+    # output csv/tsv
+    $ usacloud switch ls --output-type csv # or tsv
+
+    # output csv/tsv + include columns
     $ usacloud switch ls --output-type tsv --col ID --col Name
-    ID	Name
-    123456789012	example
    
-    # output QuietMode(ID/Key columns only)
+    # output QuietMode(output ID/Key only)
     $ usacloud swtich ls -q # or --quiet
-    123456789012
     
     # output custom format(using text/template style template)
     $ usacloud switch ls --format "ID is '{{.ID}}', Name is '{{.Name}}'"
     ID is '123456789012', Name is 'example'
-    
-    # --- for monitoring example ---
-   
+```
+
+#### Examples: Output format for Monitoring
+
+```bash
     # for munin
     $ usacloud internet monitor --format "target.value {{.In}}" 123456789012
-    target.value 3.444000
     
     # for zabbix_sender(zabbix_hostname=router01 , item_key=packet.in)
     $ usacloud internet monitor --format "router01 packet.in {{.UnixTime}} {{.In}}" 123456789012 \
