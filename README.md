@@ -263,6 +263,9 @@ COPYRIGHT:
 #### Examples: Output format for Monitoring
 
 ```bash
+
+    # target resource ID = 123456789012
+
     # for munin
     $ usacloud internet monitor --format "target.value {{.In}}" 123456789012
     
@@ -270,6 +273,9 @@ COPYRIGHT:
     $ usacloud internet monitor --format "router01 packet.in {{.UnixTime}} {{.In}}" 123456789012 \
          | zabbix_sender -z your.zabbix.hostname -p 10051 -T -i -
     
+    # for sensu/mackerel
+    $ OUTPUT_FORMAT=`echo -e "{{.Key}}\t{{.In}}\t{{.UnixTime}}"`
+    $ usacloud internet monitor --format "$OUTPUT_FORMAT" 123456789012
 ```
 
 
