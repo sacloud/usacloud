@@ -23,11 +23,6 @@ func SwitchBridgeConnect(ctx Context, params *BridgeConnectSwitchParam) error {
 		return fmt.Errorf("SwitchBridgeConnect is failed: %s", err)
 	}
 
-	// read again
-	p, e = api.Read(params.Id)
-	if e != nil {
-		return fmt.Errorf("SwitchBridgeConnect is failed: %s", e)
-	}
-	return ctx.GetOutput().Print(p)
+	return nil
 
 }

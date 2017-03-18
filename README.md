@@ -74,43 +74,41 @@ VERSION:
    0.0.1, build xxxxxxx
 
 COMMANDS:
-     archive                          A manage commands of Archive
-     auto-backup                      A manage commands of AutoBackup
-     bill                             A manage commands of Bill
-     bridge                           A manage commands of Bridge
-     disk                             A manage commands of Disk
-     dns                              A manage commands of DNS
-     gslb                             A manage commands of GSLB
-     icon                             A manage commands of Icon
-     interface                        A manage commands of Interface
-     internet                         A manage commands of Internet
-     iso-image                        A manage commands of ISOImage
-     license                          A manage commands of License
-     object-storage, ojs              A manage commands of ObjectStorage
-     packet-filter                    A manage commands of PacketFilter
-     price, public-price              A manage commands of Price
-     product-disk, disk-plan          A manage commands of ProductDisk
-     product-internet, internet-plan  A manage commands of ProductInternet
-     product-license, license-info    A manage commands of ProductLicense
-     product-server, server-plan      A manage commands of ProductServer
-     region                           A manage commands of Region
-     server                           A manage commands of Server
-     simple-monitor                   A manage commands of SimpleMonitor
-     ssh-key                          A manage commands of SSHKey
-     startup-script, note             A manage commands of StartupScript
-     switch                           A manage commands of Switch
-     web-accel                        A manage commands of WebAccel
-     zone                             A manage commands of Zone
-     help, h                          Shows a list of commands or help for one command
+   server                           A manage commands of Server
+   archive                          A manage commands of Archive
+   auto-backup                      A manage commands of AutoBackup
+   disk                             A manage commands of Disk
+   iso-image                        A manage commands of ISOImage
+   bridge                           A manage commands of Bridge
+   interface                        A manage commands of Interface
+   internet                         A manage commands of Internet
+   packet-filter                    A manage commands of PacketFilter
+   switch                           A manage commands of Switch
+   dns                              A manage commands of DNS
+   gslb                             A manage commands of GSLB
+   simple-monitor                   A manage commands of SimpleMonitor
+   icon                             A manage commands of Icon
+   license                          A manage commands of License
+   ssh-key                          A manage commands of SSHKey
+   startup-script, note             A manage commands of StartupScript
+   bill                             A manage commands of Bill
+   object-storage, ojs              A manage commands of ObjectStorage
+   web-accel                        A manage commands of WebAccel
+   price, public-price              A manage commands of Price
+   product-disk, disk-plan          A manage commands of ProductDisk
+   product-internet, internet-plan  A manage commands of ProductInternet
+   product-license, license-info    A manage commands of ProductLicense
+   product-server, server-plan      A manage commands of ProductServer
+   region                           A manage commands of Region
+   zone                             A manage commands of Zone
+   help, h                          Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
-   --format value, --output-format value                    Output format[table/json/csv/tsv] (default: table)
-   --secret value, --sakuracloud-access-token-secret value  API Secret of SakuraCloud (default: none) [$SAKURACLOUD_ACCESS_TOKEN_SECRET]
-   --token value, --sakuracloud-access-token value          API Token of SakuraCloud (default: none) [$SAKURACLOUD_ACCESS_TOKEN]
-   --trace, --sakuracloud-trace-mode                        Flag of SakuraCloud debug-mode (default: false) [$SAKURACLOUD_TRACE_MODE]
-   --zone value, --sakuracloud-default-zone value           Target zone of SakuraCloud (default: tk1a) [$SAKURACLOUD_ZONE]
-   --help, -h                                               show help (default: false)
-   --version, -v                                            print the version (default: false)
+   --token value   API Token of SakuraCloud (default: none) [$SAKURACLOUD_ACCESS_TOKEN]
+   --secret value  API Secret of SakuraCloud (default: none) [$SAKURACLOUD_ACCESS_TOKEN_SECRET]
+   --zone value    Target zone of SakuraCloud (default: tk1a) [$SAKURACLOUD_ZONE]
+   --help, -h      show help (default: false)
+   --version, -v   print the version (default: false)
 
 COPYRIGHT:
    Copyright (C) 2017 Kazumichi Yamamoto.
@@ -238,6 +236,60 @@ COPYRIGHT:
     $ usacloud web-accel purge https://example.com https://foobar.com
 
 ```   
+
+#### Examples: Output format
+
+```bash
+    # output JSON
+    $ usacloud switch ls --output-type json
+    [
+      {
+        "CreatedAt": "2017-01-01T00:00:00+09:00",
+        "Description": "desc",
+        "ID": 123456789012,
+        "Icon": null,
+        "Name": "example",
+        "Scope": "user",
+        "ServiceClass": "cloud/switch/default",
+        "Tags": []
+      }
+    ]
+
+    # output CSV
+    $ usacloud switch ls --output-type csv
+    RowNumber,ID,CreatedAt,Description,Icon,Name,Scope,ServiceClass
+    1,123456789012,2017-01-01T00:00:00+09:00,desc,,example,user,cloud/switch/default
+    
+    # output TSV
+    $ usacloud switch ls --output-type tsv
+    RowNumber	ID	CreatedAt	Description	Icon	Name	Scope	ServiceClass
+    1	123456789012	2017-01-01T00:00:00+09:00	desc		example	user	cloud/switch/default
+    
+    # output TSV + include columns
+    $ usacloud switch ls --output-type tsv --col ID --col Name
+    ID	Name
+    123456789012	example
+   
+    # output QuietMode(ID/Key columns only)
+    $ usacloud swtich ls -q # or --quiet
+    123456789012
+    
+    # output custom format(using text/template style template)
+    $ usacloud switch ls --format "ID is '{{.ID}}', Name is '{{.Name}}'"
+    ID is '123456789012', Name is 'example'
+    
+    # --- for monitoring example ---
+   
+    # for munin
+    $ usacloud internet monitor --format "target.value {{.In}}" 123456789012
+    target.value 3.444000
+    
+    # for zabbix_sender(zabbix_hostname=router01 , item_key=packet.in)
+    $ usacloud internet monitor --format "router01 packet.in {{.UnixTime}} {{.In}}" 123456789012 \
+         | zabbix_sender -z your.zabbix.hostname -p 10051 -T -i -
+    
+```
+
 
 ## Development
 

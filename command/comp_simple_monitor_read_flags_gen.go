@@ -14,6 +14,8 @@ func SimpleMonitorReadCompleteFlags(ctx Context, params *ReadSimpleMonitorParam,
 	switch flagName {
 	case "id":
 		comp = define.Resources["SimpleMonitor"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

@@ -14,6 +14,8 @@ func InterfaceCreateCompleteFlags(ctx Context, params *CreateInterfaceParam, fla
 	switch flagName {
 	case "server-id":
 		comp = define.Resources["Interface"].Commands["create"].Params["server-id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

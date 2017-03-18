@@ -20,6 +20,31 @@ func init() {
 				Aliases:   []string{"purge"},
 				Usage:     "DeleteCache WebAccel",
 				ArgsUsage: "[URLs]...",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &deleteCacheParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &deleteCacheParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &deleteCacheParam.Format,
+					},
+				},
 				ShellComplete: func(c *cli.Context) {
 
 					if c.NArg() < 3 { // invalid args
@@ -40,6 +65,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, deleteCacheParam)
+
+					// Set option values for slice
+					deleteCacheParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -102,6 +130,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					// Set option values for slice
+					deleteCacheParam.Column = c.StringSlice("column")
+
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
@@ -138,6 +169,27 @@ func init() {
 	})
 
 	// build Category-Param mapping
+
+	appendFlagCategoryMap("web-accel", "delete-cache", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("web-accel", "delete-cache", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("web-accel", "delete-cache", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("web-accel", "delete-cache", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
 
 	// append command to GlobalContext
 	Commands = append(Commands, cliCommand)

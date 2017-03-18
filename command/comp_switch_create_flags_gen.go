@@ -20,6 +20,8 @@ func SwitchCreateCompleteFlags(ctx Context, params *CreateSwitchParam, flagName 
 		comp = define.Resources["Switch"].Commands["create"].Params["name"].CompleteFunc
 	case "tags":
 		comp = define.Resources["Switch"].Commands["create"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

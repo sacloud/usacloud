@@ -16,6 +16,8 @@ func LicenseUpdateCompleteFlags(ctx Context, params *UpdateLicenseParam, flagNam
 		comp = define.Resources["License"].Commands["update"].Params["id"].CompleteFunc
 	case "name":
 		comp = define.Resources["License"].Commands["update"].Params["name"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

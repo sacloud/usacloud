@@ -12,8 +12,12 @@ func SimpleMonitorDeleteCompleteFlags(ctx Context, params *DeleteSimpleMonitorPa
 	var comp schema.SchemaCompletionFunc
 
 	switch flagName {
+	case "force", "f":
+		comp = define.Resources["SimpleMonitor"].Commands["delete"].Params["force"].CompleteFunc
 	case "id":
 		comp = define.Resources["SimpleMonitor"].Commands["delete"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

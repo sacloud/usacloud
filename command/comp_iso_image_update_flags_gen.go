@@ -22,6 +22,8 @@ func ISOImageUpdateCompleteFlags(ctx Context, params *UpdateISOImageParam, flagN
 		comp = define.Resources["ISOImage"].Commands["update"].Params["name"].CompleteFunc
 	case "tags":
 		comp = define.Resources["ISOImage"].Commands["update"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

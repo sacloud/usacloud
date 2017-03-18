@@ -16,6 +16,8 @@ func BridgeCreateCompleteFlags(ctx Context, params *CreateBridgeParam, flagName 
 		comp = define.Resources["Bridge"].Commands["create"].Params["description"].CompleteFunc
 	case "name":
 		comp = define.Resources["Bridge"].Commands["create"].Params["name"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

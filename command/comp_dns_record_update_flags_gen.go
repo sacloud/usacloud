@@ -34,6 +34,8 @@ func DNSRecordUpdateCompleteFlags(ctx Context, params *RecordUpdateDNSParam, fla
 		comp = define.Resources["DNS"].Commands["record-update"].Params["type"].CompleteFunc
 	case "value":
 		comp = define.Resources["DNS"].Commands["record-update"].Params["value"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

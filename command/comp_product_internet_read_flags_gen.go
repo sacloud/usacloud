@@ -14,6 +14,8 @@ func ProductInternetReadCompleteFlags(ctx Context, params *ReadProductInternetPa
 	switch flagName {
 	case "id":
 		comp = define.Resources["ProductInternet"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

@@ -92,6 +92,8 @@ func ServerBuildCompleteFlags(ctx Context, params *BuildServerParam, flagName st
 		comp = define.Resources["Server"].Commands["build"].Params["us-keyboard"].CompleteFunc
 	case "disable-boot-after-create":
 		comp = define.Resources["Server"].Commands["build"].Params["disable-boot-after-create"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

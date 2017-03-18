@@ -18,6 +18,8 @@ func ServerPlanChangeCompleteFlags(ctx Context, params *PlanChangeServerParam, f
 		comp = define.Resources["Server"].Commands["plan-change"].Params["id"].CompleteFunc
 	case "memory":
 		comp = define.Resources["Server"].Commands["plan-change"].Params["memory"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

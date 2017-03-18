@@ -24,6 +24,8 @@ func DiskListCompleteFlags(ctx Context, params *ListDiskParam, flagName string, 
 		comp = define.Resources["Disk"].Commands["list"].Params["scope"].CompleteFunc
 	case "sort":
 		comp = define.Resources["Disk"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

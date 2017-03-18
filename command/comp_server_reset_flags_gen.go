@@ -14,6 +14,8 @@ func ServerResetCompleteFlags(ctx Context, params *ResetServerParam, flagName st
 	switch flagName {
 	case "async":
 		comp = define.Resources["Server"].Commands["reset"].Params["async"].CompleteFunc
+	case "force", "f":
+		comp = define.Resources["Server"].Commands["reset"].Params["force"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["reset"].Params["id"].CompleteFunc
 	}

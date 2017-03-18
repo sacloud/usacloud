@@ -14,6 +14,8 @@ func PacketFilterRuleListCompleteFlags(ctx Context, params *RuleListPacketFilter
 	switch flagName {
 	case "id":
 		comp = define.Resources["PacketFilter"].Commands["rule-list"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

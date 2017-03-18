@@ -22,6 +22,8 @@ func StartupScriptCreateCompleteFlags(ctx Context, params *CreateStartupScriptPa
 		comp = define.Resources["StartupScript"].Commands["create"].Params["script-content"].CompleteFunc
 	case "tags":
 		comp = define.Resources["StartupScript"].Commands["create"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

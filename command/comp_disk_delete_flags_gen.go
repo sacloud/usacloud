@@ -12,8 +12,12 @@ func DiskDeleteCompleteFlags(ctx Context, params *DeleteDiskParam, flagName stri
 	var comp schema.SchemaCompletionFunc
 
 	switch flagName {
+	case "force", "f":
+		comp = define.Resources["Disk"].Commands["delete"].Params["force"].CompleteFunc
 	case "id":
 		comp = define.Resources["Disk"].Commands["delete"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

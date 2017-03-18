@@ -14,6 +14,8 @@ func DNSRecordListCompleteFlags(ctx Context, params *RecordListDNSParam, flagNam
 	switch flagName {
 	case "id":
 		comp = define.Resources["DNS"].Commands["record-list"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

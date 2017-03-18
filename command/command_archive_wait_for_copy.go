@@ -18,11 +18,6 @@ func ArchiveWaitForCopy(ctx Context, params *WaitForCopyArchiveParam) error {
 		return fmt.Errorf("ArchiveWaitForCopy is failed: %s", err)
 	}
 
-	// read again
-	p, e = api.Read(params.Id)
-	if e != nil {
-		return fmt.Errorf("ArchiveWaitForCopy is failed: %s", e)
-	}
-	return ctx.GetOutput().Print(p)
+	return nil
 
 }

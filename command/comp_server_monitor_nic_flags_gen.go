@@ -22,6 +22,8 @@ func ServerMonitorNicCompleteFlags(ctx Context, params *MonitorNicServerParam, f
 		comp = define.Resources["Server"].Commands["monitor-nic"].Params["key-format"].CompleteFunc
 	case "start":
 		comp = define.Resources["Server"].Commands["monitor-nic"].Params["start"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

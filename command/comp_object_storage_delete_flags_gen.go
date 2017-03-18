@@ -16,6 +16,8 @@ func ObjectStorageDeleteCompleteFlags(ctx Context, params *DeleteObjectStoragePa
 		comp = define.Resources["ObjectStorage"].Commands["delete"].Params["access-key"].CompleteFunc
 	case "bucket":
 		comp = define.Resources["ObjectStorage"].Commands["delete"].Params["bucket"].CompleteFunc
+	case "force", "f":
+		comp = define.Resources["ObjectStorage"].Commands["delete"].Params["force"].CompleteFunc
 	case "recursive", "r":
 		comp = define.Resources["ObjectStorage"].Commands["delete"].Params["recursive"].CompleteFunc
 	case "secret-key":

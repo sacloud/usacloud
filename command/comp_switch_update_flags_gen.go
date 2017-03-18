@@ -22,6 +22,8 @@ func SwitchUpdateCompleteFlags(ctx Context, params *UpdateSwitchParam, flagName 
 		comp = define.Resources["Switch"].Commands["update"].Params["name"].CompleteFunc
 	case "tags":
 		comp = define.Resources["Switch"].Commands["update"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

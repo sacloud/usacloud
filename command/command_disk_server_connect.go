@@ -35,12 +35,5 @@ func DiskServerConnect(ctx Context, params *ServerConnectDiskParam) error {
 		return fmt.Errorf("DiskServerConnect is failed: %s", err)
 	}
 
-	// read again
-	p, e = api.Read(params.Id)
-	if e != nil {
-		return fmt.Errorf("DiskServerConnect is failed: %s", e)
-	}
-
-	return ctx.GetOutput().Print(p)
-
+	return nil
 }

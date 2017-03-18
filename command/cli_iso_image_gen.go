@@ -59,6 +59,29 @@ func init() {
 						Name:  "tags",
 						Usage: "set resource tags",
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &createParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &createParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &createParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -83,6 +106,7 @@ func init() {
 
 					// Set option values for slice
 					createParam.Tags = c.StringSlice("tags")
+					createParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -147,6 +171,7 @@ func init() {
 
 					// Set option values for slice
 					createParam.Tags = c.StringSlice("tags")
+					createParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -181,6 +206,29 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &deleteParam.Id,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &deleteParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &deleteParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &deleteParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -202,6 +250,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, deleteParam)
+
+					// Set option values for slice
+					deleteParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -263,6 +314,9 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					deleteParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -536,6 +590,29 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &ftpOpenParam.Id,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &ftpOpenParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &ftpOpenParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &ftpOpenParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -557,6 +634,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, ftpOpenParam)
+
+					// Set option values for slice
+					ftpOpenParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -619,6 +699,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					// Set option values for slice
+					ftpOpenParam.Column = c.StringSlice("column")
+
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
@@ -673,6 +756,29 @@ func init() {
 						Name:  "sort",
 						Usage: "set field(s) for sort",
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &listParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &listParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &listParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -699,6 +805,7 @@ func init() {
 					listParam.Id = c.Int64Slice("id")
 					listParam.Name = c.StringSlice("name")
 					listParam.Sort = c.StringSlice("sort")
+					listParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -765,6 +872,7 @@ func init() {
 					listParam.Id = c.Int64Slice("id")
 					listParam.Name = c.StringSlice("name")
 					listParam.Sort = c.StringSlice("sort")
+					listParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -794,6 +902,29 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &readParam.Id,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &readParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &readParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &readParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -815,6 +946,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, readParam)
+
+					// Set option values for slice
+					readParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -877,6 +1011,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					// Set option values for slice
+					readParam.Column = c.StringSlice("column")
+
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
@@ -930,6 +1067,29 @@ func init() {
 						Name:  "tags",
 						Usage: "set resource tags",
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &updateParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &updateParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &updateParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -954,6 +1114,7 @@ func init() {
 
 					// Set option values for slice
 					updateParam.Tags = c.StringSlice("tags")
+					updateParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -1018,6 +1179,7 @@ func init() {
 
 					// Set option values for slice
 					updateParam.Tags = c.StringSlice("tags")
+					updateParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -1056,6 +1218,29 @@ func init() {
 						Usage:       "[Required] set iso image file",
 						Destination: &uploadParam.IsoFile,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &uploadParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &uploadParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &uploadParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -1077,6 +1262,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, uploadParam)
+
+					// Set option values for slice
+					uploadParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -1138,6 +1326,9 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					uploadParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -1221,135 +1412,275 @@ func init() {
 
 	// build Category-Param mapping
 
+	appendFlagCategoryMap("iso-image", "create", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
 	appendFlagCategoryMap("iso-image", "create", "description", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "create", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "create", "icon-id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "create", "iso-file", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "create", "name", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "create", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "create", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "create", "size", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "create", "tags", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "delete", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "delete", "force", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "delete", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "delete", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "delete", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "delete", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "download", "file-destination", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "download", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "ftp-close", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "ftp-open", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "ftp-open", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "ftp-open", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "ftp-open", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "ftp-open", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "list", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "list", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "list", "from", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "list", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "list", "max", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "list", "name", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "list", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "list", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "list", "scope", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "list", "sort", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "read", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "read", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "read", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "read", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "read", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "update", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "update", "description", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "update", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "update", "icon-id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "update", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "update", "name", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "update", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "update", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "update", "tags", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "upload", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "upload", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "upload", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("iso-image", "upload", "iso-file", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "upload", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("iso-image", "upload", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 
 	// append command to GlobalContext

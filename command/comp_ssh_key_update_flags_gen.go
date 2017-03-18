@@ -18,6 +18,8 @@ func SSHKeyUpdateCompleteFlags(ctx Context, params *UpdateSSHKeyParam, flagName 
 		comp = define.Resources["SSHKey"].Commands["update"].Params["id"].CompleteFunc
 	case "name":
 		comp = define.Resources["SSHKey"].Commands["update"].Params["name"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

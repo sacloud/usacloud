@@ -20,6 +20,8 @@ func GSLBServerAddCompleteFlags(ctx Context, params *ServerAddGSLBParam, flagNam
 		comp = define.Resources["GSLB"].Commands["server-add"].Params["ipaddress"].CompleteFunc
 	case "weight":
 		comp = define.Resources["GSLB"].Commands["server-add"].Params["weight"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

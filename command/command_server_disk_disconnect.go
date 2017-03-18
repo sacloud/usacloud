@@ -37,35 +37,6 @@ func ServerDiskDisconnect(ctx Context, params *DiskDisconnectServerParam) error 
 		return fmt.Errorf("ServerDiskDisconnect is failed: %s", err)
 	}
 
-	// read again
-	p, e = api.Read(params.Id)
-	if e != nil {
-		return fmt.Errorf("ServerDiskDisconnect is failed: %s", e)
-	}
-
-	disks = p.GetDisks()
-	if len(disks) == 0 {
-		return nil
-	}
-
-	// collect disk info by DiskAPI
-	diskAPI := client.GetDiskAPI()
-	for _, disk := range disks {
-		diskAPI.FilterMultiBy("ID", disk.ID)
-	}
-	res, err := diskAPI.Find()
-	if err != nil {
-		if e != nil {
-			return fmt.Errorf("ServerDiskDisconnect is failed: %s", e)
-		}
-	}
-
-	// build parameters to display table
-	list := []interface{}{}
-	for i := range res.Disks {
-		list = append(list, &res.Disks[i])
-	}
-
-	return ctx.GetOutput().Print(list...)
+	return nil
 
 }

@@ -10,9 +10,13 @@ import (
 
 // CreateIconParam is input parameters for the sacloud API
 type CreateIconParam struct {
-	Image string
-	Name  string
-	Tags  []string
+	Image      string
+	Name       string
+	Tags       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewCreateIconParam return new CreateIconParam
@@ -59,6 +63,20 @@ func (p *CreateIconParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -86,6 +104,10 @@ func (p *CreateIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CreateIconParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *CreateIconParam) SetImage(v string) {
 	p.Image = v
 }
@@ -107,11 +129,43 @@ func (p *CreateIconParam) SetTags(v []string) {
 func (p *CreateIconParam) GetTags() []string {
 	return p.Tags
 }
+func (p *CreateIconParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateIconParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateIconParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateIconParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateIconParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateIconParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateIconParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateIconParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteIconParam is input parameters for the sacloud API
 type DeleteIconParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteIconParam return new DeleteIconParam
@@ -132,6 +186,20 @@ func (p *DeleteIconParam) Validate() []error {
 	{
 		validator := define.Resources["Icon"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -164,6 +232,10 @@ func (p *DeleteIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteIconParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteIconParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -178,15 +250,47 @@ func (p *DeleteIconParam) SetId(v int64) {
 func (p *DeleteIconParam) GetId() int64 {
 	return p.Id
 }
+func (p *DeleteIconParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteIconParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteIconParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteIconParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteIconParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteIconParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteIconParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteIconParam) GetFormat() string {
+	return p.Format
+}
 
 // ListIconParam is input parameters for the sacloud API
 type ListIconParam struct {
-	From  int
-	Id    []int64
-	Max   int
-	Name  []string
-	Scope string
-	Sort  []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Scope      string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListIconParam return new ListIconParam
@@ -230,6 +334,20 @@ func (p *ListIconParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -255,6 +373,10 @@ func (p *ListIconParam) GetTableType() output.OutputTableType {
 
 func (p *ListIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListIconParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListIconParam) SetFrom(v int) {
@@ -299,10 +421,42 @@ func (p *ListIconParam) SetSort(v []string) {
 func (p *ListIconParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListIconParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListIconParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListIconParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListIconParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListIconParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListIconParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListIconParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListIconParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadIconParam is input parameters for the sacloud API
 type ReadIconParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadIconParam return new ReadIconParam
@@ -323,6 +477,20 @@ func (p *ReadIconParam) Validate() []error {
 	{
 		validator := define.Resources["Icon"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -355,6 +523,10 @@ func (p *ReadIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadIconParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadIconParam) SetId(v int64) {
 	p.Id = v
 }
@@ -362,12 +534,44 @@ func (p *ReadIconParam) SetId(v int64) {
 func (p *ReadIconParam) GetId() int64 {
 	return p.Id
 }
+func (p *ReadIconParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadIconParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadIconParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadIconParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadIconParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadIconParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadIconParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadIconParam) GetFormat() string {
+	return p.Format
+}
 
 // UpdateIconParam is input parameters for the sacloud API
 type UpdateIconParam struct {
-	Id   int64
-	Name string
-	Tags []string
+	Id         int64
+	Name       string
+	Tags       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewUpdateIconParam return new UpdateIconParam
@@ -407,6 +611,20 @@ func (p *UpdateIconParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -434,6 +652,10 @@ func (p *UpdateIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdateIconParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *UpdateIconParam) SetId(v int64) {
 	p.Id = v
 }
@@ -454,4 +676,32 @@ func (p *UpdateIconParam) SetTags(v []string) {
 
 func (p *UpdateIconParam) GetTags() []string {
 	return p.Tags
+}
+func (p *UpdateIconParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateIconParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateIconParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateIconParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateIconParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateIconParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateIconParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateIconParam) GetFormat() string {
+	return p.Format
 }

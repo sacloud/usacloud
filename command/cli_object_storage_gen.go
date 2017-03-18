@@ -312,6 +312,29 @@ func init() {
 						EnvVars:     []string{"AWS_SECRET_ACCESS_KEY", "SACLOUD_OJS_SECRET_ACCESS_KEY"},
 						Destination: &listParam.SecretKey,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &listParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &listParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &listParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -333,6 +356,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, listParam)
+
+					// Set option values for slice
+					listParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -394,6 +420,9 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					listParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(true); len(errors) > 0 {
@@ -584,88 +613,108 @@ func init() {
 
 	appendFlagCategoryMap("object-storage", "delete", "access-key", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "delete", "bucket", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "delete", "force", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "delete", "recursive", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "delete", "secret-key", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "get", "access-key", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "get", "bucket", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "get", "recursive", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "get", "secret-key", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "list", "access-key", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "list", "bucket", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("object-storage", "list", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("object-storage", "list", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("object-storage", "list", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("object-storage", "list", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "list", "secret-key", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "put", "access-key", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "put", "bucket", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "put", "content-type", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "put", "recursive", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("object-storage", "put", "secret-key", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 
 	// append command to GlobalContext

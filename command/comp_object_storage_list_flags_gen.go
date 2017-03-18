@@ -18,6 +18,8 @@ func ObjectStorageListCompleteFlags(ctx Context, params *ListObjectStorageParam,
 		comp = define.Resources["ObjectStorage"].Commands["list"].Params["bucket"].CompleteFunc
 	case "secret-key":
 		comp = define.Resources["ObjectStorage"].Commands["list"].Params["secret-key"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

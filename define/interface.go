@@ -49,11 +49,13 @@ func InterfaceResource() *schema.Resource {
 			Type:             schema.CommandManipulate,
 			Params:           interfacePacketFilterConnectParam(),
 			UseCustomCommand: true,
+			NoOutput:         true,
 		},
 		"packet-filter-disconnect": {
 			Type:             schema.CommandManipulate,
 			Params:           interfacePacketFilterDisconnectParam(),
 			UseCustomCommand: true,
+			NoOutput:         true,
 		},
 	}
 

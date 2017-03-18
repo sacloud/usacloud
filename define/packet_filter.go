@@ -82,11 +82,13 @@ func PacketFilterResource() *schema.Resource {
 			Type:             schema.CommandManipulate,
 			Params:           packetFilterInterfaceConnectParam(),
 			UseCustomCommand: true,
+			NoOutput:         true,
 		},
 		"interface-disconnect": {
 			Type:             schema.CommandManipulate,
 			Params:           packetFilterInterfaceDisconnectParam(),
 			UseCustomCommand: true,
+			NoOutput:         true,
 		},
 	}
 

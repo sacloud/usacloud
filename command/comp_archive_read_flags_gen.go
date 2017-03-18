@@ -14,6 +14,8 @@ func ArchiveReadCompleteFlags(ctx Context, params *ReadArchiveParam, flagName st
 	switch flagName {
 	case "id":
 		comp = define.Resources["Archive"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

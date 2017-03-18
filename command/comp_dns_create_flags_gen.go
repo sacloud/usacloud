@@ -20,6 +20,8 @@ func DNSCreateCompleteFlags(ctx Context, params *CreateDNSParam, flagName string
 		comp = define.Resources["DNS"].Commands["create"].Params["name"].CompleteFunc
 	case "tags":
 		comp = define.Resources["DNS"].Commands["create"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

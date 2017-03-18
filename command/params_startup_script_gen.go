@@ -15,6 +15,10 @@ type CreateStartupScriptParam struct {
 	Script        string
 	ScriptContent string
 	Tags          []string
+	OutputType    string
+	Column        []string
+	Quiet         bool
+	Format        string
 }
 
 // NewCreateStartupScriptParam return new CreateStartupScriptParam
@@ -70,6 +74,20 @@ func (p *CreateStartupScriptParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -95,6 +113,10 @@ func (p *CreateStartupScriptParam) GetTableType() output.OutputTableType {
 
 func (p *CreateStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateStartupScriptParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *CreateStartupScriptParam) SetIconId(v int64) {
@@ -132,11 +154,43 @@ func (p *CreateStartupScriptParam) SetTags(v []string) {
 func (p *CreateStartupScriptParam) GetTags() []string {
 	return p.Tags
 }
+func (p *CreateStartupScriptParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateStartupScriptParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateStartupScriptParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateStartupScriptParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateStartupScriptParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateStartupScriptParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateStartupScriptParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateStartupScriptParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteStartupScriptParam is input parameters for the sacloud API
 type DeleteStartupScriptParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteStartupScriptParam return new DeleteStartupScriptParam
@@ -157,6 +211,20 @@ func (p *DeleteStartupScriptParam) Validate() []error {
 	{
 		validator := define.Resources["StartupScript"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -189,6 +257,10 @@ func (p *DeleteStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteStartupScriptParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteStartupScriptParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -203,15 +275,47 @@ func (p *DeleteStartupScriptParam) SetId(v int64) {
 func (p *DeleteStartupScriptParam) GetId() int64 {
 	return p.Id
 }
+func (p *DeleteStartupScriptParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteStartupScriptParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteStartupScriptParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteStartupScriptParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteStartupScriptParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteStartupScriptParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteStartupScriptParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteStartupScriptParam) GetFormat() string {
+	return p.Format
+}
 
 // ListStartupScriptParam is input parameters for the sacloud API
 type ListStartupScriptParam struct {
-	From  int
-	Id    []int64
-	Max   int
-	Name  []string
-	Scope string
-	Sort  []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Scope      string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListStartupScriptParam return new ListStartupScriptParam
@@ -255,6 +359,20 @@ func (p *ListStartupScriptParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -280,6 +398,10 @@ func (p *ListStartupScriptParam) GetTableType() output.OutputTableType {
 
 func (p *ListStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListStartupScriptParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListStartupScriptParam) SetFrom(v int) {
@@ -324,10 +446,42 @@ func (p *ListStartupScriptParam) SetSort(v []string) {
 func (p *ListStartupScriptParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListStartupScriptParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListStartupScriptParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListStartupScriptParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListStartupScriptParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListStartupScriptParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListStartupScriptParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListStartupScriptParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListStartupScriptParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadStartupScriptParam is input parameters for the sacloud API
 type ReadStartupScriptParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadStartupScriptParam return new ReadStartupScriptParam
@@ -348,6 +502,20 @@ func (p *ReadStartupScriptParam) Validate() []error {
 	{
 		validator := define.Resources["StartupScript"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -380,12 +548,44 @@ func (p *ReadStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadStartupScriptParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadStartupScriptParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadStartupScriptParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadStartupScriptParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadStartupScriptParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadStartupScriptParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadStartupScriptParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadStartupScriptParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadStartupScriptParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadStartupScriptParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadStartupScriptParam) GetFormat() string {
+	return p.Format
 }
 
 // UpdateStartupScriptParam is input parameters for the sacloud API
@@ -396,6 +596,10 @@ type UpdateStartupScriptParam struct {
 	Script        string
 	ScriptContent string
 	Tags          []string
+	OutputType    string
+	Column        []string
+	Quiet         bool
+	Format        string
 }
 
 // NewUpdateStartupScriptParam return new UpdateStartupScriptParam
@@ -465,6 +669,20 @@ func (p *UpdateStartupScriptParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -490,6 +708,10 @@ func (p *UpdateStartupScriptParam) GetTableType() output.OutputTableType {
 
 func (p *UpdateStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateStartupScriptParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *UpdateStartupScriptParam) SetIconId(v int64) {
@@ -533,4 +755,32 @@ func (p *UpdateStartupScriptParam) SetTags(v []string) {
 
 func (p *UpdateStartupScriptParam) GetTags() []string {
 	return p.Tags
+}
+func (p *UpdateStartupScriptParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateStartupScriptParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateStartupScriptParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateStartupScriptParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateStartupScriptParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateStartupScriptParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateStartupScriptParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateStartupScriptParam) GetFormat() string {
+	return p.Format
 }

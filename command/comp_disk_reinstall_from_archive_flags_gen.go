@@ -16,6 +16,8 @@ func DiskReinstallFromArchiveCompleteFlags(ctx Context, params *ReinstallFromArc
 		comp = define.Resources["Disk"].Commands["reinstall-from-archive"].Params["async"].CompleteFunc
 	case "distant-from":
 		comp = define.Resources["Disk"].Commands["reinstall-from-archive"].Params["distant-from"].CompleteFunc
+	case "force", "f":
+		comp = define.Resources["Disk"].Commands["reinstall-from-archive"].Params["force"].CompleteFunc
 	case "id":
 		comp = define.Resources["Disk"].Commands["reinstall-from-archive"].Params["id"].CompleteFunc
 	case "source-archive-id":

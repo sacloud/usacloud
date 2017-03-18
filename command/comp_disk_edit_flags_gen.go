@@ -30,6 +30,8 @@ func DiskEditCompleteFlags(ctx Context, params *EditDiskParam, flagName string, 
 		comp = define.Resources["Disk"].Commands["edit"].Params["ssh-key-ids"].CompleteFunc
 	case "startup-script-ids", "note-ids":
 		comp = define.Resources["Disk"].Commands["edit"].Params["startup-script-ids"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

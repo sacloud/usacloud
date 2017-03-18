@@ -43,6 +43,29 @@ func init() {
 						Name:  "sort",
 						Usage: "set field(s) for sort",
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &listParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &listParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &listParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -69,6 +92,7 @@ func init() {
 					listParam.Id = c.Int64Slice("id")
 					listParam.Name = c.StringSlice("name")
 					listParam.Sort = c.StringSlice("sort")
+					listParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -135,6 +159,7 @@ func init() {
 					listParam.Id = c.Int64Slice("id")
 					listParam.Name = c.StringSlice("name")
 					listParam.Sort = c.StringSlice("sort")
+					listParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -173,30 +198,50 @@ func init() {
 
 	// build Category-Param mapping
 
+	appendFlagCategoryMap("price", "list", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("price", "list", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
 	appendFlagCategoryMap("price", "list", "from", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("price", "list", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("price", "list", "max", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("price", "list", "name", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("price", "list", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("price", "list", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("price", "list", "sort", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 
 	// append command to GlobalContext

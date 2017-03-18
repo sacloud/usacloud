@@ -29,20 +29,6 @@ func ServerInterfaceAddDisconnected(ctx Context, params *InterfaceAddDisconnecte
 		return fmt.Errorf("ServerInterfaceAddDisconnected is failed: %s", err)
 	}
 
-	// read again
-	p, e = api.Read(params.Id)
-	if e != nil {
-		return fmt.Errorf("ServerInterfaceAddDisconnected is failed: %s", e)
-	}
-
-	interfaces := p.GetInterfaces()
-
-	// build parameters to display table
-	list := []interface{}{}
-	for i := range interfaces {
-		list = append(list, &interfaces[i])
-	}
-
-	return ctx.GetOutput().Print(list...)
+	return nil
 
 }

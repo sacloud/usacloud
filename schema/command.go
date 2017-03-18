@@ -26,6 +26,8 @@ type Command struct {
 	NeedConfirm              bool
 	ConfirmMessage           string
 
+	NoOutput bool
+
 	TableType          output.OutputTableType
 	IncludeFields      []string           // for output.TableDetail
 	ExcludeFields      []string           // for output.TableDetail
@@ -38,6 +40,10 @@ func (c *Command) ParamCategory(key string) *Category {
 		return DefaultParamCategory
 	}
 
+	if key == "output" {
+		return OutputParamCategory
+	}
+
 	for _, cat := range c.ParamCategories {
 		if cat.Key == key {
 			return &cat
@@ -47,7 +53,61 @@ func (c *Command) ParamCategory(key string) *Category {
 	return nil
 }
 
-func (c *Command) SortedParams() SortableParams {
+func (c *Command) BuildedParams() SortableParams {
+
+	// add force flag if need
+	if c.NeedConfirm {
+		// has "force" param?
+		if _, ok := c.Params["force"]; !ok {
+			c.Params["force"] = &Schema{
+				Type:        TypeBool,
+				HandlerType: HandlerNoop,
+				Aliases:     []string{"f"},
+			}
+		}
+	}
+	if !c.NoOutput {
+		if _, ok := c.Params["output-type"]; !ok {
+			c.Params["output-type"] = &Schema{
+				Type:        TypeString,
+				HandlerType: HandlerNoop,
+				Aliases:     []string{"out"},
+				Description: "Output type [json/csv/tsv]",
+				Category:    "output",
+				Order:       10,
+			}
+		}
+		if _, ok := c.Params["column"]; !ok {
+			c.Params["column"] = &Schema{
+				Type:        TypeStringList,
+				HandlerType: HandlerNoop,
+				Aliases:     []string{"col"},
+				Description: "Output columns(using when '--output-type' is in [csv/tsv] only)",
+				Category:    "output",
+				Order:       20,
+			}
+		}
+		if _, ok := c.Params["quiet"]; !ok {
+			c.Params["quiet"] = &Schema{
+				Type:        TypeBool,
+				HandlerType: HandlerNoop,
+				Aliases:     []string{"q"},
+				Description: "Only display IDs",
+				Category:    "output",
+				Order:       30,
+			}
+		}
+		if _, ok := c.Params["format"]; !ok {
+			c.Params["format"] = &Schema{
+				Type:        TypeString,
+				HandlerType: HandlerNoop,
+				Aliases:     []string{"fmt"},
+				Description: "Output format(see text/template package document for detail)",
+				Category:    "output",
+				Order:       40,
+			}
+		}
+	}
 
 	params := SortableParams{}
 	for k, v := range c.Params {
@@ -112,7 +172,7 @@ func (c *Command) Validate() []error {
 			errors = append(errors, err)
 		}
 
-		if v.Category != "" {
+		if v.Category != "" && v.Category != "output" {
 			exists := false
 			// category is defined on command?
 			for _, category := range c.ParamCategories {

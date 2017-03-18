@@ -16,6 +16,8 @@ func ArchiveUploadCompleteFlags(ctx Context, params *UploadArchiveParam, flagNam
 		comp = define.Resources["Archive"].Commands["upload"].Params["archive-file"].CompleteFunc
 	case "id":
 		comp = define.Resources["Archive"].Commands["upload"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

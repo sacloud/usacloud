@@ -24,6 +24,8 @@ func DiskUpdateCompleteFlags(ctx Context, params *UpdateDiskParam, flagName stri
 		comp = define.Resources["Disk"].Commands["update"].Params["name"].CompleteFunc
 	case "tags":
 		comp = define.Resources["Disk"].Commands["update"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

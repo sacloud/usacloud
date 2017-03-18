@@ -24,12 +24,19 @@ type FlagContext interface {
 	IsSet(name string) bool
 }
 
-func NewContext(flagContext FlagContext, args []string, formater output.OutputFormater) Context {
+func NewContext(flagContext FlagContext, args []string, formater interface{}) Context {
+
+	var out output.Output
+	if formater != nil {
+		if o, ok := formater.(output.OutputFormatter); ok {
+			out = getOutputWriter(o)
+		}
+	}
 
 	return &context{
 		flagContext: flagContext,
 		client:      createAPIClient(),
-		output:      getOutputWriter(formater),
+		output:      out,
 		args:        args,
 		nargs:       len(args),
 	}

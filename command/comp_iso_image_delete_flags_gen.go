@@ -12,8 +12,12 @@ func ISOImageDeleteCompleteFlags(ctx Context, params *DeleteISOImageParam, flagN
 	var comp schema.SchemaCompletionFunc
 
 	switch flagName {
+	case "force", "f":
+		comp = define.Resources["ISOImage"].Commands["delete"].Params["force"].CompleteFunc
 	case "id":
 		comp = define.Resources["ISOImage"].Commands["delete"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

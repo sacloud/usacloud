@@ -25,11 +25,6 @@ func ISOImageFtpClose(ctx Context, params *FtpCloseISOImageParam) error {
 		return fmt.Errorf("ISOImageFtpClose is failed: %s", err)
 	}
 
-	p, e = api.Read(p.ID)
-	if err != nil {
-		return fmt.Errorf("ISOImageFtpClose is failed: %s", err)
-	}
-
-	return ctx.GetOutput().Print()
+	return nil
 
 }

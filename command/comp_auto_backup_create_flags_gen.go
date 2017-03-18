@@ -28,6 +28,8 @@ func AutoBackupCreateCompleteFlags(ctx Context, params *CreateAutoBackupParam, f
 		comp = define.Resources["AutoBackup"].Commands["create"].Params["tags"].CompleteFunc
 	case "weekdays":
 		comp = define.Resources["AutoBackup"].Commands["create"].Params["weekdays"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

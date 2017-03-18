@@ -24,12 +24,8 @@ func DiskReinstallToBlank(ctx Context, params *ReinstallToBlankDiskParam) error 
 		if err != nil {
 			return fmt.Errorf("DiskReinstallToBlank is failed: %s", err)
 		}
-		p, err = api.Read(params.Id)
-		if err != nil {
-			return fmt.Errorf("DiskReinstallToBlank is failed: %s", err)
-		}
 	}
 
-	return ctx.GetOutput().Print(p)
+	return nil
 
 }

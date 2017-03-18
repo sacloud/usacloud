@@ -18,6 +18,8 @@ func ServerDeleteCompleteFlags(ctx Context, params *DeleteServerParam, flagName 
 		comp = define.Resources["Server"].Commands["delete"].Params["id"].CompleteFunc
 	case "with-disk":
 		comp = define.Resources["Server"].Commands["delete"].Params["with-disk"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

@@ -14,6 +14,8 @@ func ServerIsoInfoCompleteFlags(ctx Context, params *IsoInfoServerParam, flagNam
 	switch flagName {
 	case "id":
 		comp = define.Resources["Server"].Commands["iso-info"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

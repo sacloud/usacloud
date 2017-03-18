@@ -12,6 +12,10 @@ import (
 type CreateLicenseParam struct {
 	LicenseInfoId int64
 	Name          string
+	OutputType    string
+	Column        []string
+	Quiet         bool
+	Format        string
 }
 
 // NewCreateLicenseParam return new CreateLicenseParam
@@ -32,6 +36,20 @@ func (p *CreateLicenseParam) Validate() []error {
 	{
 		validator := define.Resources["License"].Commands["create"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -64,6 +82,10 @@ func (p *CreateLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CreateLicenseParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *CreateLicenseParam) SetLicenseInfoId(v int64) {
 	p.LicenseInfoId = v
 }
@@ -78,11 +100,43 @@ func (p *CreateLicenseParam) SetName(v string) {
 func (p *CreateLicenseParam) GetName() string {
 	return p.Name
 }
+func (p *CreateLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateLicenseParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteLicenseParam is input parameters for the sacloud API
 type DeleteLicenseParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteLicenseParam return new DeleteLicenseParam
@@ -103,6 +157,20 @@ func (p *DeleteLicenseParam) Validate() []error {
 	{
 		validator := define.Resources["License"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -135,6 +203,10 @@ func (p *DeleteLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteLicenseParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteLicenseParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -149,14 +221,46 @@ func (p *DeleteLicenseParam) SetId(v int64) {
 func (p *DeleteLicenseParam) GetId() int64 {
 	return p.Id
 }
+func (p *DeleteLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteLicenseParam) GetFormat() string {
+	return p.Format
+}
 
 // ListLicenseParam is input parameters for the sacloud API
 type ListLicenseParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListLicenseParam return new ListLicenseParam
@@ -193,6 +297,20 @@ func (p *ListLicenseParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -218,6 +336,10 @@ func (p *ListLicenseParam) GetTableType() output.OutputTableType {
 
 func (p *ListLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListLicenseParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListLicenseParam) SetFrom(v int) {
@@ -255,10 +377,42 @@ func (p *ListLicenseParam) SetSort(v []string) {
 func (p *ListLicenseParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListLicenseParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadLicenseParam is input parameters for the sacloud API
 type ReadLicenseParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadLicenseParam return new ReadLicenseParam
@@ -279,6 +433,20 @@ func (p *ReadLicenseParam) Validate() []error {
 	{
 		validator := define.Resources["License"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -311,6 +479,10 @@ func (p *ReadLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadLicenseParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadLicenseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -318,11 +490,43 @@ func (p *ReadLicenseParam) SetId(v int64) {
 func (p *ReadLicenseParam) GetId() int64 {
 	return p.Id
 }
+func (p *ReadLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadLicenseParam) GetFormat() string {
+	return p.Format
+}
 
 // UpdateLicenseParam is input parameters for the sacloud API
 type UpdateLicenseParam struct {
-	Id   int64
-	Name string
+	Id         int64
+	Name       string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewUpdateLicenseParam return new UpdateLicenseParam
@@ -355,6 +559,20 @@ func (p *UpdateLicenseParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -382,6 +600,10 @@ func (p *UpdateLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdateLicenseParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *UpdateLicenseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -395,4 +617,32 @@ func (p *UpdateLicenseParam) SetName(v string) {
 
 func (p *UpdateLicenseParam) GetName() string {
 	return p.Name
+}
+func (p *UpdateLicenseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateLicenseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateLicenseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateLicenseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateLicenseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateLicenseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateLicenseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateLicenseParam) GetFormat() string {
+	return p.Format
 }

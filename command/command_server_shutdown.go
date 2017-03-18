@@ -36,8 +36,6 @@ func ServerShutdown(ctx Context, params *ShutdownServerParam) error {
 		}
 	}
 
-	// TODO アウトプットの方針決める
 	return nil
-	// return ctx.GetOutput().Print(p)
 
 }

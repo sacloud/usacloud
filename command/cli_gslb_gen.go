@@ -93,6 +93,29 @@ func init() {
 						Value:       true,
 						Destination: &createParam.Weighted,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &createParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &createParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &createParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -117,6 +140,7 @@ func init() {
 
 					// Set option values for slice
 					createParam.Tags = c.StringSlice("tags")
+					createParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -181,6 +205,7 @@ func init() {
 
 					// Set option values for slice
 					createParam.Tags = c.StringSlice("tags")
+					createParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -215,6 +240,29 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &deleteParam.Id,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &deleteParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &deleteParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &deleteParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -236,6 +284,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, deleteParam)
+
+					// Set option values for slice
+					deleteParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -298,6 +349,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					// Set option values for slice
+					deleteParam.Column = c.StringSlice("column")
+
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
@@ -352,6 +406,29 @@ func init() {
 						Name:  "sort",
 						Usage: "set field(s) for sort",
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &listParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &listParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &listParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -378,6 +455,7 @@ func init() {
 					listParam.Id = c.Int64Slice("id")
 					listParam.Name = c.StringSlice("name")
 					listParam.Sort = c.StringSlice("sort")
+					listParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -444,6 +522,7 @@ func init() {
 					listParam.Id = c.Int64Slice("id")
 					listParam.Name = c.StringSlice("name")
 					listParam.Sort = c.StringSlice("sort")
+					listParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -473,6 +552,29 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &readParam.Id,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &readParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &readParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &readParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -494,6 +596,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, readParam)
+
+					// Set option values for slice
+					readParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -556,6 +661,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					// Set option values for slice
+					readParam.Column = c.StringSlice("column")
+
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
@@ -604,6 +712,29 @@ func init() {
 						Usage:       "set weight",
 						Destination: &serverAddParam.Weight,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &serverAddParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &serverAddParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &serverAddParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -625,6 +756,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, serverAddParam)
+
+					// Set option values for slice
+					serverAddParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -687,6 +821,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					// Set option values for slice
+					serverAddParam.Column = c.StringSlice("column")
+
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
@@ -729,6 +866,29 @@ func init() {
 						Usage:       "[Required] index of target server",
 						Destination: &serverDeleteParam.Index,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &serverDeleteParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &serverDeleteParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &serverDeleteParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -750,6 +910,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, serverDeleteParam)
+
+					// Set option values for slice
+					serverDeleteParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -812,6 +975,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					// Set option values for slice
+					serverDeleteParam.Column = c.StringSlice("column")
+
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
@@ -849,6 +1015,29 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &serverListParam.Id,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &serverListParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &serverListParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &serverListParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -870,6 +1059,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, serverListParam)
+
+					// Set option values for slice
+					serverListParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -932,6 +1124,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					// Set option values for slice
+					serverListParam.Column = c.StringSlice("column")
+
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
@@ -984,6 +1179,29 @@ func init() {
 						Usage:       "set weight",
 						Destination: &serverUpdateParam.Weight,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &serverUpdateParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &serverUpdateParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &serverUpdateParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -1005,6 +1223,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, serverUpdateParam)
+
+					// Set option values for slice
+					serverUpdateParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -1066,6 +1287,9 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					serverUpdateParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -1160,6 +1384,29 @@ func init() {
 						Usage:       "enable weighted",
 						Destination: &updateParam.Weighted,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &updateParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &updateParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &updateParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -1184,6 +1431,7 @@ func init() {
 
 					// Set option values for slice
 					updateParam.Tags = c.StringSlice("tags")
+					updateParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -1248,6 +1496,7 @@ func init() {
 
 					// Set option values for slice
 					updateParam.Tags = c.StringSlice("tags")
+					updateParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -1331,235 +1580,415 @@ func init() {
 
 	// build Category-Param mapping
 
+	appendFlagCategoryMap("gslb", "create", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
 	appendFlagCategoryMap("gslb", "create", "delay-loop", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "create", "description", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "create", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "create", "host-header", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "create", "icon-id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "create", "name", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "create", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "create", "path", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "create", "port", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "create", "protocol", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "create", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "create", "response-code", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "create", "sorry-server", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "create", "tags", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "create", "weighted", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "delete", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "delete", "force", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "delete", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "delete", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "delete", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "delete", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "list", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "list", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "list", "from", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "list", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "list", "max", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "list", "name", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "list", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "list", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "list", "sort", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "read", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "read", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "read", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "read", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "read", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-add", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "server-add", "enabled", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-add", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "server-add", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "server-add", "ipaddress", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-add", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-add", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "server-add", "weight", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-delete", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "server-delete", "force", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-delete", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "server-delete", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "server-delete", "index", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-delete", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-delete", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-list", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-list", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "server-list", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-list", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-list", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-update", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "server-update", "enabled", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-update", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "server-update", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "server-update", "index", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "server-update", "ipaddress", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-update", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "server-update", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "server-update", "weight", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "update", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "update", "delay-loop", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "update", "description", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "update", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "update", "host-header", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "update", "icon-id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "update", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "update", "name", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "update", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "update", "path", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "update", "port", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "update", "protocol", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("gslb", "update", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "update", "response-code", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "update", "sorry-server", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "update", "tags", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("gslb", "update", "weighted", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 
 	// append command to GlobalContext

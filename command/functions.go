@@ -47,13 +47,27 @@ func createAPIClient() *api.Client {
 	return c
 }
 
-func getOutputWriter(formater output.OutputFormater) output.Output {
+func getOutputWriter(formatter output.OutputFormatter) output.Output {
 	o := GlobalOption
-	switch o.Format { // TODO CSV/TSVサポート
+	switch formatter.GetOutputType() {
+	case "csv":
+		return output.NewRowOutput(o.Out, o.Err, ',', formatter)
+	case "tsv":
+		return output.NewRowOutput(o.Out, o.Err, '\t', formatter)
 	case "json":
 		return output.NewJSONOutput(o.Out, o.Err)
 	default:
-		return output.NewTableOutput(o.Out, o.Err, formater)
+
+		if formatter.GetQuiet() {
+			return output.NewIDOutput(o.Out, o.Err)
+		} else {
+			if formatter.GetFormat() == "" {
+				return output.NewTableOutput(o.Out, o.Err, formatter)
+			} else {
+				return output.NewFreeOutput(o.Out, o.Err, formatter)
+			}
+		}
+
 	}
 }
 

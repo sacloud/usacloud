@@ -10,11 +10,15 @@ import (
 
 // ListProductServerParam is input parameters for the sacloud API
 type ListProductServerParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListProductServerParam return new ListProductServerParam
@@ -51,6 +55,20 @@ func (p *ListProductServerParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -76,6 +94,10 @@ func (p *ListProductServerParam) GetTableType() output.OutputTableType {
 
 func (p *ListProductServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListProductServerParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListProductServerParam) SetFrom(v int) {
@@ -113,10 +135,42 @@ func (p *ListProductServerParam) SetSort(v []string) {
 func (p *ListProductServerParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListProductServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListProductServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListProductServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListProductServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListProductServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListProductServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListProductServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListProductServerParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadProductServerParam is input parameters for the sacloud API
 type ReadProductServerParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadProductServerParam return new ReadProductServerParam
@@ -137,6 +191,20 @@ func (p *ReadProductServerParam) Validate() []error {
 	{
 		validator := define.Resources["ProductServer"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -169,10 +237,42 @@ func (p *ReadProductServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadProductServerParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadProductServerParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadProductServerParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadProductServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadProductServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadProductServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadProductServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadProductServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadProductServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadProductServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadProductServerParam) GetFormat() string {
+	return p.Format
 }

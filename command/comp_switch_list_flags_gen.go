@@ -22,6 +22,8 @@ func SwitchListCompleteFlags(ctx Context, params *ListSwitchParam, flagName stri
 		comp = define.Resources["Switch"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["Switch"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

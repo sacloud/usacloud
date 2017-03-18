@@ -25,10 +25,5 @@ func ArchiveFtpClose(ctx Context, params *FtpCloseArchiveParam) error {
 		return fmt.Errorf("ArchiveFtpClose is failed: %s", err)
 	}
 
-	p, e = api.Read(p.ID)
-	if err != nil {
-		return fmt.Errorf("ArchiveFtpClose is failed: %s", err)
-	}
-
-	return ctx.GetOutput().Print()
+	return nil
 }

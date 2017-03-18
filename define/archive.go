@@ -58,6 +58,7 @@ func ArchiveResource() *schema.Resource {
 			IncludeFields:    archiveDetailIncludes(),
 			ExcludeFields:    archiveDetailExcludes(),
 			UseCustomCommand: true,
+			NoOutput:         true,
 		},
 		"wait-for-copy": {
 			Type:             schema.CommandManipulate,
@@ -65,6 +66,7 @@ func ArchiveResource() *schema.Resource {
 			IncludeFields:    archiveDetailIncludes(),
 			ExcludeFields:    archiveDetailExcludes(),
 			UseCustomCommand: true,
+			NoOutput:         true,
 		},
 		"ftp-open": {
 			Type:             schema.CommandManipulate,
@@ -79,6 +81,7 @@ func ArchiveResource() *schema.Resource {
 			IncludeFields:    archiveDetailIncludes(),
 			ExcludeFields:    archiveDetailExcludes(),
 			UseCustomCommand: true,
+			NoOutput:         true,
 		},
 	}
 

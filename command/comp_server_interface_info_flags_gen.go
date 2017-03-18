@@ -14,6 +14,8 @@ func ServerInterfaceInfoCompleteFlags(ctx Context, params *InterfaceInfoServerPa
 	switch flagName {
 	case "id":
 		comp = define.Resources["Server"].Commands["interface-info"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

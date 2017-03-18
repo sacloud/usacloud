@@ -24,6 +24,8 @@ func ArchiveListCompleteFlags(ctx Context, params *ListArchiveParam, flagName st
 		comp = define.Resources["Archive"].Commands["list"].Params["scope"].CompleteFunc
 	case "sort":
 		comp = define.Resources["Archive"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

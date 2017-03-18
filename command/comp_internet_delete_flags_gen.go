@@ -12,8 +12,12 @@ func InternetDeleteCompleteFlags(ctx Context, params *DeleteInternetParam, flagN
 	var comp schema.SchemaCompletionFunc
 
 	switch flagName {
+	case "force", "f":
+		comp = define.Resources["Internet"].Commands["delete"].Params["force"].CompleteFunc
 	case "id":
 		comp = define.Resources["Internet"].Commands["delete"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

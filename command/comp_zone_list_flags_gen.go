@@ -22,6 +22,8 @@ func ZoneListCompleteFlags(ctx Context, params *ListZoneParam, flagName string, 
 		comp = define.Resources["Zone"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["Zone"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

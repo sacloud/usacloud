@@ -22,6 +22,8 @@ func AutoBackupListCompleteFlags(ctx Context, params *ListAutoBackupParam, flagN
 		comp = define.Resources["AutoBackup"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["AutoBackup"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

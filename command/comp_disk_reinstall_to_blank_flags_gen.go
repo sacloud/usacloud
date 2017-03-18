@@ -16,6 +16,8 @@ func DiskReinstallToBlankCompleteFlags(ctx Context, params *ReinstallToBlankDisk
 		comp = define.Resources["Disk"].Commands["reinstall-to-blank"].Params["async"].CompleteFunc
 	case "distant-from":
 		comp = define.Resources["Disk"].Commands["reinstall-to-blank"].Params["distant-from"].CompleteFunc
+	case "force", "f":
+		comp = define.Resources["Disk"].Commands["reinstall-to-blank"].Params["force"].CompleteFunc
 	case "id":
 		comp = define.Resources["Disk"].Commands["reinstall-to-blank"].Params["id"].CompleteFunc
 	}

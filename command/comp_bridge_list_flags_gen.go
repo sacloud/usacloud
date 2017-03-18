@@ -22,6 +22,8 @@ func BridgeListCompleteFlags(ctx Context, params *ListBridgeParam, flagName stri
 		comp = define.Resources["Bridge"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["Bridge"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

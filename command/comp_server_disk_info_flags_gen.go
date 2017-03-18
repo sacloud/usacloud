@@ -14,6 +14,8 @@ func ServerDiskInfoCompleteFlags(ctx Context, params *DiskInfoServerParam, flagN
 	switch flagName {
 	case "id":
 		comp = define.Resources["Server"].Commands["disk-info"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

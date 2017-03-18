@@ -38,10 +38,5 @@ func ArchiveDownload(ctx Context, params *DownloadArchiveParam) error {
 		return fmt.Errorf("ArchiveDownload is failed: %s", err)
 	}
 
-	p, e = api.Read(p.ID)
-	if err != nil {
-		return fmt.Errorf("ArchiveDownload is failed: %s", err)
-	}
-
-	return ctx.GetOutput().Print()
+	return nil
 }

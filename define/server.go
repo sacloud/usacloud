@@ -74,6 +74,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand: true,
 			Category:         "power",
 			Order:            10,
+			NoOutput:         true,
 		},
 		"shutdown": {
 			Type:             schema.CommandManipulate,
@@ -83,6 +84,7 @@ func ServerResource() *schema.Resource {
 			Category:         "power",
 			Order:            20,
 			NeedConfirm:      true,
+			NoOutput:         true,
 		},
 		"reset": {
 			Type:             schema.CommandManipulate,
@@ -91,6 +93,7 @@ func ServerResource() *schema.Resource {
 			Category:         "power",
 			Order:            30,
 			NeedConfirm:      true,
+			NoOutput:         true,
 		},
 		"wait-for-boot": {
 			Type:             schema.CommandManipulate,
@@ -99,6 +102,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand: true,
 			Category:         "power",
 			Order:            40,
+			NoOutput:         true,
 		},
 		"wait-for-down": {
 			Type:             schema.CommandManipulate,
@@ -107,6 +111,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand: true,
 			Category:         "power",
 			Order:            50,
+			NoOutput:         true,
 		},
 		"ssh": {
 			Type:             schema.CommandManipulate,
@@ -115,6 +120,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand: true,
 			Category:         "ssh",
 			Order:            10,
+			NoOutput:         true,
 		},
 		"ssh-exec": {
 			Type:             schema.CommandManipulate,
@@ -123,6 +129,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand: true,
 			Category:         "ssh",
 			Order:            20,
+			NoOutput:         true,
 		},
 		"scp": {
 			Type:             schema.CommandManipulate,
@@ -132,6 +139,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand: true,
 			Category:         "ssh",
 			Order:            30,
+			NoOutput:         true,
 		},
 		"disk-info": {
 			Type:               schema.CommandManipulate,
@@ -152,6 +160,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand:   true,
 			Category:           "disks",
 			Order:              20,
+			NoOutput:           true,
 		},
 		"disk-disconnect": {
 			Type:               schema.CommandManipulate,
@@ -162,6 +171,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand:   true,
 			Category:           "disks",
 			Order:              30,
+			NoOutput:           true,
 		},
 		"interface-info": {
 			Type:               schema.CommandManipulate,
@@ -182,6 +192,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand:   true,
 			Category:           "network",
 			Order:              20,
+			NoOutput:           true,
 		},
 		"interface-add-for-router": {
 			Type:               schema.CommandManipulate,
@@ -192,6 +203,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand:   true,
 			Category:           "network",
 			Order:              30,
+			NoOutput:           true,
 		},
 		"interface-add-for-switch": {
 			Type:               schema.CommandManipulate,
@@ -202,6 +214,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand:   true,
 			Category:           "network",
 			Order:              40,
+			NoOutput:           true,
 		},
 		"interface-add-disconnected": {
 			Type:               schema.CommandManipulate,
@@ -212,6 +225,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand:   true,
 			Category:           "network",
 			Order:              50,
+			NoOutput:           true,
 		},
 		"iso-info": {
 			Type:             schema.CommandManipulate,
@@ -228,6 +242,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand: true,
 			Category:         "iso",
 			Order:            20,
+			NoOutput:         true,
 		},
 		"iso-eject": {
 			Type:             schema.CommandManipulate,
@@ -236,6 +251,7 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand: true,
 			Category:         "iso",
 			Order:            30,
+			NoOutput:         true,
 		},
 		"monitor-cpu": {
 			Type:               schema.CommandManipulate,

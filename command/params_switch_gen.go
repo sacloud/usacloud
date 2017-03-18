@@ -78,6 +78,10 @@ func (p *BridgeConnectSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *BridgeConnectSwitchParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *BridgeConnectSwitchParam) SetBridgeId(v int64) {
 	p.BridgeId = v
 }
@@ -148,6 +152,10 @@ func (p *BridgeDisconnectSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *BridgeDisconnectSwitchParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *BridgeDisconnectSwitchParam) SetId(v int64) {
 	p.Id = v
 }
@@ -162,6 +170,10 @@ type CreateSwitchParam struct {
 	IconId      int64
 	Name        string
 	Tags        []string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewCreateSwitchParam return new CreateSwitchParam
@@ -208,6 +220,20 @@ func (p *CreateSwitchParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -233,6 +259,10 @@ func (p *CreateSwitchParam) GetTableType() output.OutputTableType {
 
 func (p *CreateSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *CreateSwitchParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *CreateSwitchParam) SetDescription(v string) {
@@ -263,11 +293,43 @@ func (p *CreateSwitchParam) SetTags(v []string) {
 func (p *CreateSwitchParam) GetTags() []string {
 	return p.Tags
 }
+func (p *CreateSwitchParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateSwitchParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateSwitchParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateSwitchParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateSwitchParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateSwitchParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateSwitchParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateSwitchParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteSwitchParam is input parameters for the sacloud API
 type DeleteSwitchParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteSwitchParam return new DeleteSwitchParam
@@ -288,6 +350,20 @@ func (p *DeleteSwitchParam) Validate() []error {
 	{
 		validator := define.Resources["Switch"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -320,6 +396,10 @@ func (p *DeleteSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteSwitchParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteSwitchParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -334,14 +414,46 @@ func (p *DeleteSwitchParam) SetId(v int64) {
 func (p *DeleteSwitchParam) GetId() int64 {
 	return p.Id
 }
+func (p *DeleteSwitchParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteSwitchParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteSwitchParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteSwitchParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteSwitchParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteSwitchParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteSwitchParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteSwitchParam) GetFormat() string {
+	return p.Format
+}
 
 // ListSwitchParam is input parameters for the sacloud API
 type ListSwitchParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListSwitchParam return new ListSwitchParam
@@ -378,6 +490,20 @@ func (p *ListSwitchParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -403,6 +529,10 @@ func (p *ListSwitchParam) GetTableType() output.OutputTableType {
 
 func (p *ListSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListSwitchParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListSwitchParam) SetFrom(v int) {
@@ -440,10 +570,42 @@ func (p *ListSwitchParam) SetSort(v []string) {
 func (p *ListSwitchParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListSwitchParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListSwitchParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListSwitchParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListSwitchParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListSwitchParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListSwitchParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListSwitchParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListSwitchParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadSwitchParam is input parameters for the sacloud API
 type ReadSwitchParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadSwitchParam return new ReadSwitchParam
@@ -464,6 +626,20 @@ func (p *ReadSwitchParam) Validate() []error {
 	{
 		validator := define.Resources["Switch"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -496,12 +672,44 @@ func (p *ReadSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadSwitchParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadSwitchParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadSwitchParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadSwitchParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadSwitchParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadSwitchParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadSwitchParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadSwitchParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadSwitchParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadSwitchParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadSwitchParam) GetFormat() string {
+	return p.Format
 }
 
 // UpdateSwitchParam is input parameters for the sacloud API
@@ -511,6 +719,10 @@ type UpdateSwitchParam struct {
 	Id          int64
 	Name        string
 	Tags        []string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewUpdateSwitchParam return new UpdateSwitchParam
@@ -564,6 +776,20 @@ func (p *UpdateSwitchParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -589,6 +815,10 @@ func (p *UpdateSwitchParam) GetTableType() output.OutputTableType {
 
 func (p *UpdateSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *UpdateSwitchParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *UpdateSwitchParam) SetDescription(v string) {
@@ -625,4 +855,32 @@ func (p *UpdateSwitchParam) SetTags(v []string) {
 
 func (p *UpdateSwitchParam) GetTags() []string {
 	return p.Tags
+}
+func (p *UpdateSwitchParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateSwitchParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateSwitchParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateSwitchParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateSwitchParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateSwitchParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateSwitchParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateSwitchParam) GetFormat() string {
+	return p.Format
 }

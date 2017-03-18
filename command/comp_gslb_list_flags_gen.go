@@ -22,6 +22,8 @@ func GSLBListCompleteFlags(ctx Context, params *ListGSLBParam, flagName string, 
 		comp = define.Resources["GSLB"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["GSLB"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

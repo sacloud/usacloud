@@ -21,6 +21,7 @@ func BillResource() *schema.Resource {
 			Params:                 billReadParam(),
 			UseCustomCommand:       true,
 			UseCustomArgCompletion: true,
+			NoOutput:               true, // doing manual output to GlobalOption.Out
 		},
 	}
 

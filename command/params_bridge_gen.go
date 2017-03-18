@@ -12,6 +12,10 @@ import (
 type CreateBridgeParam struct {
 	Description string
 	Name        string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewCreateBridgeParam return new CreateBridgeParam
@@ -44,6 +48,20 @@ func (p *CreateBridgeParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -71,6 +89,10 @@ func (p *CreateBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *CreateBridgeParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *CreateBridgeParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -85,11 +107,43 @@ func (p *CreateBridgeParam) SetName(v string) {
 func (p *CreateBridgeParam) GetName() string {
 	return p.Name
 }
+func (p *CreateBridgeParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CreateBridgeParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CreateBridgeParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CreateBridgeParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CreateBridgeParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CreateBridgeParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CreateBridgeParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CreateBridgeParam) GetFormat() string {
+	return p.Format
+}
 
 // DeleteBridgeParam is input parameters for the sacloud API
 type DeleteBridgeParam struct {
-	Force bool
-	Id    int64
+	Force      bool
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteBridgeParam return new DeleteBridgeParam
@@ -110,6 +164,20 @@ func (p *DeleteBridgeParam) Validate() []error {
 	{
 		validator := define.Resources["Bridge"].Commands["delete"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -142,6 +210,10 @@ func (p *DeleteBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteBridgeParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteBridgeParam) SetForce(v bool) {
 	p.Force = v
 }
@@ -156,14 +228,46 @@ func (p *DeleteBridgeParam) SetId(v int64) {
 func (p *DeleteBridgeParam) GetId() int64 {
 	return p.Id
 }
+func (p *DeleteBridgeParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteBridgeParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteBridgeParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteBridgeParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteBridgeParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteBridgeParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteBridgeParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteBridgeParam) GetFormat() string {
+	return p.Format
+}
 
 // ListBridgeParam is input parameters for the sacloud API
 type ListBridgeParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListBridgeParam return new ListBridgeParam
@@ -200,6 +304,20 @@ func (p *ListBridgeParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -225,6 +343,10 @@ func (p *ListBridgeParam) GetTableType() output.OutputTableType {
 
 func (p *ListBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListBridgeParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListBridgeParam) SetFrom(v int) {
@@ -262,10 +384,42 @@ func (p *ListBridgeParam) SetSort(v []string) {
 func (p *ListBridgeParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListBridgeParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListBridgeParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListBridgeParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListBridgeParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListBridgeParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListBridgeParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListBridgeParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListBridgeParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadBridgeParam is input parameters for the sacloud API
 type ReadBridgeParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadBridgeParam return new ReadBridgeParam
@@ -286,6 +440,20 @@ func (p *ReadBridgeParam) Validate() []error {
 	{
 		validator := define.Resources["Bridge"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -318,6 +486,10 @@ func (p *ReadBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadBridgeParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadBridgeParam) SetId(v int64) {
 	p.Id = v
 }
@@ -325,12 +497,44 @@ func (p *ReadBridgeParam) SetId(v int64) {
 func (p *ReadBridgeParam) GetId() int64 {
 	return p.Id
 }
+func (p *ReadBridgeParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadBridgeParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadBridgeParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadBridgeParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadBridgeParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadBridgeParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadBridgeParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadBridgeParam) GetFormat() string {
+	return p.Format
+}
 
 // UpdateBridgeParam is input parameters for the sacloud API
 type UpdateBridgeParam struct {
 	Description string
 	Id          int64
 	Name        string
+	OutputType  string
+	Column      []string
+	Quiet       bool
+	Format      string
 }
 
 // NewUpdateBridgeParam return new UpdateBridgeParam
@@ -370,6 +574,20 @@ func (p *UpdateBridgeParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -397,6 +615,10 @@ func (p *UpdateBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *UpdateBridgeParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *UpdateBridgeParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -417,4 +639,32 @@ func (p *UpdateBridgeParam) SetName(v string) {
 
 func (p *UpdateBridgeParam) GetName() string {
 	return p.Name
+}
+func (p *UpdateBridgeParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *UpdateBridgeParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *UpdateBridgeParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *UpdateBridgeParam) GetColumn() []string {
+	return p.Column
+}
+func (p *UpdateBridgeParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *UpdateBridgeParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *UpdateBridgeParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *UpdateBridgeParam) GetFormat() string {
+	return p.Format
 }

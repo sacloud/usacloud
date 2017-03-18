@@ -28,6 +28,8 @@ func ArchiveCreateCompleteFlags(ctx Context, params *CreateArchiveParam, flagNam
 		comp = define.Resources["Archive"].Commands["create"].Params["source-disk-id"].CompleteFunc
 	case "tags":
 		comp = define.Resources["Archive"].Commands["create"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

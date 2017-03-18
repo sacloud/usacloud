@@ -44,6 +44,8 @@ func SimpleMonitorUpdateCompleteFlags(ctx Context, params *UpdateSimpleMonitorPa
 		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["slack-webhook"].CompleteFunc
 	case "tags":
 		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["tags"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

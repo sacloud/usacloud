@@ -20,6 +20,8 @@ func InternetMonitorCompleteFlags(ctx Context, params *MonitorInternetParam, fla
 		comp = define.Resources["Internet"].Commands["monitor"].Params["key-format"].CompleteFunc
 	case "start":
 		comp = define.Resources["Internet"].Commands["monitor"].Params["start"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

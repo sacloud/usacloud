@@ -16,6 +16,8 @@ func InterfaceUpdateCompleteFlags(ctx Context, params *UpdateInterfaceParam, fla
 		comp = define.Resources["Interface"].Commands["update"].Params["id"].CompleteFunc
 	case "user-ipaddress":
 		comp = define.Resources["Interface"].Commands["update"].Params["user-ipaddress"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

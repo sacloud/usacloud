@@ -14,6 +14,8 @@ func GSLBReadCompleteFlags(ctx Context, params *ReadGSLBParam, flagName string, 
 	switch flagName {
 	case "id":
 		comp = define.Resources["GSLB"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

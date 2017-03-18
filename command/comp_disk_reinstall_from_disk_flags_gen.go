@@ -16,6 +16,8 @@ func DiskReinstallFromDiskCompleteFlags(ctx Context, params *ReinstallFromDiskDi
 		comp = define.Resources["Disk"].Commands["reinstall-from-disk"].Params["async"].CompleteFunc
 	case "distant-from":
 		comp = define.Resources["Disk"].Commands["reinstall-from-disk"].Params["distant-from"].CompleteFunc
+	case "force", "f":
+		comp = define.Resources["Disk"].Commands["reinstall-from-disk"].Params["force"].CompleteFunc
 	case "id":
 		comp = define.Resources["Disk"].Commands["reinstall-from-disk"].Params["id"].CompleteFunc
 	case "source-disk-id":

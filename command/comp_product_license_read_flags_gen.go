@@ -14,6 +14,8 @@ func ProductLicenseReadCompleteFlags(ctx Context, params *ReadProductLicensePara
 	switch flagName {
 	case "id":
 		comp = define.Resources["ProductLicense"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

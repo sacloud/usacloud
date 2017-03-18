@@ -22,6 +22,8 @@ func ProductInternetListCompleteFlags(ctx Context, params *ListProductInternetPa
 		comp = define.Resources["ProductInternet"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["ProductInternet"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

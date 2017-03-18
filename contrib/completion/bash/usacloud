@@ -4,7 +4,7 @@ _usacloud() {
     local commands=(archive auto-backup bill bridge dns disk gslb iso-image icon interface internet license object-storage ojs packet-filter price public-price product-disk disk-plan product-internet internet-plan product-license license-info product-server server-plan region ssh-key server simple-monitor startup-script note switch web-accel zone )
 
     local flags=(--trace --help --version)
-    local wants_value=(--token --secret --zone --format )
+    local wants_value=(--token --secret --zone )
 
     local cur prev words cword
     _get_comp_words_by_ref -n : cur prev words cword

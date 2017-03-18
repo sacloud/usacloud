@@ -14,6 +14,8 @@ func ZoneReadCompleteFlags(ctx Context, params *ReadZoneParam, flagName string, 
 	switch flagName {
 	case "id":
 		comp = define.Resources["Zone"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

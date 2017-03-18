@@ -10,11 +10,15 @@ import (
 
 // ListProductInternetParam is input parameters for the sacloud API
 type ListProductInternetParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListProductInternetParam return new ListProductInternetParam
@@ -51,6 +55,20 @@ func (p *ListProductInternetParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -76,6 +94,10 @@ func (p *ListProductInternetParam) GetTableType() output.OutputTableType {
 
 func (p *ListProductInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListProductInternetParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListProductInternetParam) SetFrom(v int) {
@@ -113,10 +135,42 @@ func (p *ListProductInternetParam) SetSort(v []string) {
 func (p *ListProductInternetParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListProductInternetParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListProductInternetParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListProductInternetParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListProductInternetParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListProductInternetParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListProductInternetParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListProductInternetParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListProductInternetParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadProductInternetParam is input parameters for the sacloud API
 type ReadProductInternetParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadProductInternetParam return new ReadProductInternetParam
@@ -137,6 +191,20 @@ func (p *ReadProductInternetParam) Validate() []error {
 	{
 		validator := define.Resources["ProductInternet"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -169,10 +237,42 @@ func (p *ReadProductInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadProductInternetParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadProductInternetParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadProductInternetParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadProductInternetParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadProductInternetParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadProductInternetParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadProductInternetParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadProductInternetParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadProductInternetParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadProductInternetParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadProductInternetParam) GetFormat() string {
+	return p.Format
 }

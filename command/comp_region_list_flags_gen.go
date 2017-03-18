@@ -22,6 +22,8 @@ func RegionListCompleteFlags(ctx Context, params *ListRegionParam, flagName stri
 		comp = define.Resources["Region"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["Region"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

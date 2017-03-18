@@ -28,6 +28,8 @@ func PacketFilterRuleAddCompleteFlags(ctx Context, params *RuleAddPacketFilterPa
 		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["source-network"].CompleteFunc
 	case "source-port":
 		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["source-port"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

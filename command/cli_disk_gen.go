@@ -89,6 +89,29 @@ func init() {
 						Name:  "tags",
 						Usage: "set resource tags",
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &createParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &createParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &createParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -114,6 +137,7 @@ func init() {
 					// Set option values for slice
 					createParam.DistantFrom = c.Int64Slice("distant-from")
 					createParam.Tags = c.StringSlice("tags")
+					createParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -179,6 +203,7 @@ func init() {
 					// Set option values for slice
 					createParam.DistantFrom = c.Int64Slice("distant-from")
 					createParam.Tags = c.StringSlice("tags")
+					createParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -213,6 +238,29 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &deleteParam.Id,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &deleteParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &deleteParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &deleteParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -234,6 +282,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, deleteParam)
+
+					// Set option values for slice
+					deleteParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -295,6 +346,9 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					deleteParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -378,6 +432,29 @@ func init() {
 						Aliases: []string{"note-ids"},
 						Usage:   "set startup-script ID(s)",
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &editParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &editParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &editParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -403,6 +480,7 @@ func init() {
 					// Set option values for slice
 					editParam.SshKeyIds = c.Int64Slice("ssh-key-ids")
 					editParam.StartupScriptIds = c.Int64Slice("startup-script-ids")
+					editParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -468,6 +546,7 @@ func init() {
 					// Set option values for slice
 					editParam.SshKeyIds = c.Int64Slice("ssh-key-ids")
 					editParam.StartupScriptIds = c.Int64Slice("startup-script-ids")
+					editParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -523,6 +602,29 @@ func init() {
 						Name:  "sort",
 						Usage: "set field(s) for sort",
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &listParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &listParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &listParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -549,6 +651,7 @@ func init() {
 					listParam.Id = c.Int64Slice("id")
 					listParam.Name = c.StringSlice("name")
 					listParam.Sort = c.StringSlice("sort")
+					listParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -615,6 +718,7 @@ func init() {
 					listParam.Id = c.Int64Slice("id")
 					listParam.Name = c.StringSlice("name")
 					listParam.Sort = c.StringSlice("sort")
+					listParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -659,6 +763,29 @@ func init() {
 						Usage:       "set start-time",
 						Destination: &monitorParam.Start,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &monitorParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &monitorParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &monitorParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -680,6 +807,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, monitorParam)
+
+					// Set option values for slice
+					monitorParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -742,6 +872,9 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					// Set option values for slice
+					monitorParam.Column = c.StringSlice("column")
+
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
 						return flattenErrorsWithPrefix(errors, "GlobalOptions")
@@ -775,6 +908,29 @@ func init() {
 						Usage:       "[Required] set resource ID",
 						Destination: &readParam.Id,
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &readParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &readParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &readParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -796,6 +952,9 @@ func init() {
 
 					// build command context
 					ctx := NewContext(c, realArgs, readParam)
+
+					// Set option values for slice
+					readParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -857,6 +1016,9 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					// Set option values for slice
+					readParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -1581,6 +1743,29 @@ func init() {
 						Name:  "tags",
 						Usage: "set resource tags",
 					},
+					&cli.StringFlag{
+						Name:        "output-type",
+						Aliases:     []string{"out"},
+						Usage:       "Output type [json/csv/tsv]",
+						Destination: &updateParam.OutputType,
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:        "quiet",
+						Aliases:     []string{"q"},
+						Usage:       "Only display IDs",
+						Destination: &updateParam.Quiet,
+					},
+					&cli.StringFlag{
+						Name:        "format",
+						Aliases:     []string{"fmt"},
+						Usage:       "Output format(see text/template package document for detail)",
+						Destination: &updateParam.Format,
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -1605,6 +1790,7 @@ func init() {
 
 					// Set option values for slice
 					updateParam.Tags = c.StringSlice("tags")
+					updateParam.Column = c.StringSlice("column")
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -1669,6 +1855,7 @@ func init() {
 
 					// Set option values for slice
 					updateParam.Tags = c.StringSlice("tags")
+					updateParam.Column = c.StringSlice("column")
 
 					// Validate global params
 					if errors := GlobalOption.Validate(false); len(errors) > 0 {
@@ -1890,288 +2077,428 @@ func init() {
 
 	appendFlagCategoryMap("disk", "create", "async", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "create", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "create", "connection", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "create", "description", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "create", "distant-from", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "create", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "create", "icon-id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "create", "name", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "create", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "create", "plan", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "create", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "create", "size", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "create", "source-archive-id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "create", "source-disk-id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "create", "tags", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "delete", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "delete", "force", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "delete", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "delete", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "delete", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "delete", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "edit", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "edit", "default-route", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "edit", "disable-password-auth", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "edit", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "edit", "hostname", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "edit", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "edit", "ipaddress", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "edit", "nw-masklen", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "edit", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "edit", "password", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "edit", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "edit", "ssh-key-ids", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "edit", "startup-script-ids", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "list", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "list", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "list", "from", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "list", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "list", "max", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "list", "name", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "list", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "list", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "list", "scope", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "list", "sort", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "monitor", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "monitor", "end", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "monitor", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "monitor", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "monitor", "key-format", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "monitor", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "monitor", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "monitor", "start", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "read", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "read", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "read", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "read", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "read", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-from-archive", "async", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-from-archive", "distant-from", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-from-archive", "force", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-from-archive", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-from-archive", "source-archive-id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-from-disk", "async", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-from-disk", "distant-from", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-from-disk", "force", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-from-disk", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-from-disk", "source-disk-id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-to-blank", "async", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-to-blank", "distant-from", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-to-blank", "force", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "reinstall-to-blank", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "server-connect", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "server-connect", "server-id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "server-disconnect", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "update", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "update", "connection", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "update", "description", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "update", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "update", "icon-id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "update", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "update", "name", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "update", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
+	})
+	appendFlagCategoryMap("disk", "update", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "update", "tags", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 	appendFlagCategoryMap("disk", "wait-for-copy", "id", &schema.Category{
 		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
+		DisplayName: "Common options",
+		Order:       2147483646,
 	})
 
 	// append command to GlobalContext

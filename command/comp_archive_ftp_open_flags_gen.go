@@ -14,6 +14,8 @@ func ArchiveFtpOpenCompleteFlags(ctx Context, params *FtpOpenArchiveParam, flagN
 	switch flagName {
 	case "id":
 		comp = define.Resources["Archive"].Commands["ftp-open"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

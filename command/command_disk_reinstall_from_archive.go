@@ -8,7 +8,7 @@ func DiskReinstallFromArchive(ctx Context, params *ReinstallFromArchiveDiskParam
 
 	client := ctx.GetAPIClient()
 	api := client.GetDiskAPI()
-	p, e := api.Read(params.Id)
+	_, e := api.Read(params.Id)
 	if e != nil {
 		return fmt.Errorf("DiskReinstallFromArchive is failed: %s", e)
 	}
@@ -24,12 +24,8 @@ func DiskReinstallFromArchive(ctx Context, params *ReinstallFromArchiveDiskParam
 		if err != nil {
 			return fmt.Errorf("DiskReinstallFromArchive is failed: %s", err)
 		}
-		p, err = api.Read(params.Id)
-		if err != nil {
-			return fmt.Errorf("DiskReinstallFromArchive is failed: %s", err)
-		}
 	}
 
-	return ctx.GetOutput().Print(p)
+	return nil
 
 }

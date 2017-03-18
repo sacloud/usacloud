@@ -10,11 +10,15 @@ import (
 
 // ListRegionParam is input parameters for the sacloud API
 type ListRegionParam struct {
-	From int
-	Id   []int64
-	Max  int
-	Name []string
-	Sort []string
+	From       int
+	Id         []int64
+	Max        int
+	Name       []string
+	Sort       []string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListRegionParam return new ListRegionParam
@@ -51,6 +55,20 @@ func (p *ListRegionParam) Validate() []error {
 		}
 	}
 
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
 	return errors
 }
 
@@ -76,6 +94,10 @@ func (p *ListRegionParam) GetTableType() output.OutputTableType {
 
 func (p *ListRegionParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *ListRegionParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *ListRegionParam) SetFrom(v int) {
@@ -113,10 +135,42 @@ func (p *ListRegionParam) SetSort(v []string) {
 func (p *ListRegionParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListRegionParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListRegionParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListRegionParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListRegionParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListRegionParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListRegionParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListRegionParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListRegionParam) GetFormat() string {
+	return p.Format
+}
 
 // ReadRegionParam is input parameters for the sacloud API
 type ReadRegionParam struct {
-	Id int64
+	Id         int64
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewReadRegionParam return new ReadRegionParam
@@ -137,6 +191,20 @@ func (p *ReadRegionParam) Validate() []error {
 	{
 		validator := define.Resources["Region"].Commands["read"].Params["id"].ValidateFunc
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -169,10 +237,42 @@ func (p *ReadRegionParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ReadRegionParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ReadRegionParam) SetId(v int64) {
 	p.Id = v
 }
 
 func (p *ReadRegionParam) GetId() int64 {
 	return p.Id
+}
+func (p *ReadRegionParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ReadRegionParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ReadRegionParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ReadRegionParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ReadRegionParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ReadRegionParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ReadRegionParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ReadRegionParam) GetFormat() string {
+	return p.Format
 }

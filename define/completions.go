@@ -6,19 +6,11 @@ import (
 )
 
 func completeInStrValues(values ...string) schema.SchemaCompletionFunc {
-	return func(ctx schema.CompletionContext, currentValue string) []string {
-		return values
-	}
+	return schema.CompleteInStrValues(values...)
 }
 
 func completeInIntValues(values ...int) schema.SchemaCompletionFunc {
-	return func(ctx schema.CompletionContext, currentValue string) []string {
-		res := []string{}
-		for _, v := range values {
-			res = append(res, fmt.Sprintf("%d", v))
-		}
-		return res
-	}
+	return schema.CompleteInIntValues(values...)
 }
 
 func completeIconID() schema.SchemaCompletionFunc {

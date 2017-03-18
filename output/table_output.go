@@ -18,7 +18,7 @@ type tableOutput struct {
 	TableType     OutputTableType
 }
 
-func NewTableOutput(out io.Writer, err io.Writer, formater OutputFormater) Output {
+func NewTableOutput(out io.Writer, err io.Writer, formater OutputFormatter) Output {
 	return &tableOutput{
 		Out:           out,
 		Err:           err,

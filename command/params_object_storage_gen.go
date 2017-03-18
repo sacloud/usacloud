@@ -67,6 +67,10 @@ func (p *DeleteObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *DeleteObjectStorageParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *DeleteObjectStorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
@@ -161,6 +165,10 @@ func (p *GetObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *GetObjectStorageParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *GetObjectStorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
@@ -192,9 +200,13 @@ func (p *GetObjectStorageParam) GetSecretKey() string {
 
 // ListObjectStorageParam is input parameters for the sacloud API
 type ListObjectStorageParam struct {
-	AccessKey string
-	Bucket    string
-	SecretKey string
+	AccessKey  string
+	Bucket     string
+	SecretKey  string
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewListObjectStorageParam return new ListObjectStorageParam
@@ -215,6 +227,20 @@ func (p *ListObjectStorageParam) Validate() []error {
 	{
 		validator := validateRequired
 		errs := validator("--secret-key", p.SecretKey)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -247,6 +273,10 @@ func (p *ListObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
 }
 
+func (p *ListObjectStorageParam) GetOutputFormat() string {
+	return "table"
+}
+
 func (p *ListObjectStorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
@@ -267,6 +297,34 @@ func (p *ListObjectStorageParam) SetSecretKey(v string) {
 
 func (p *ListObjectStorageParam) GetSecretKey() string {
 	return p.SecretKey
+}
+func (p *ListObjectStorageParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ListObjectStorageParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ListObjectStorageParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ListObjectStorageParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ListObjectStorageParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ListObjectStorageParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ListObjectStorageParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ListObjectStorageParam) GetFormat() string {
+	return p.Format
 }
 
 // PutObjectStorageParam is input parameters for the sacloud API
@@ -329,6 +387,10 @@ func (p *PutObjectStorageParam) GetTableType() output.OutputTableType {
 
 func (p *PutObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *PutObjectStorageParam) GetOutputFormat() string {
+	return "table"
 }
 
 func (p *PutObjectStorageParam) SetAccessKey(v string) {

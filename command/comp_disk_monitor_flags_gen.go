@@ -20,6 +20,8 @@ func DiskMonitorCompleteFlags(ctx Context, params *MonitorDiskParam, flagName st
 		comp = define.Resources["Disk"].Commands["monitor"].Params["key-format"].CompleteFunc
 	case "start":
 		comp = define.Resources["Disk"].Commands["monitor"].Params["start"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

@@ -10,6 +10,10 @@ import (
 
 // DeleteCacheWebAccelParam is input parameters for the sacloud API
 type DeleteCacheWebAccelParam struct {
+	OutputType string
+	Column     []string
+	Quiet      bool
+	Format     string
 }
 
 // NewDeleteCacheWebAccelParam return new DeleteCacheWebAccelParam
@@ -20,6 +24,20 @@ func NewDeleteCacheWebAccelParam() *DeleteCacheWebAccelParam {
 // Validate checks current values in model
 func (p *DeleteCacheWebAccelParam) Validate() []error {
 	errors := []error{}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	return errors
 }
@@ -46,4 +64,37 @@ func (p *DeleteCacheWebAccelParam) GetTableType() output.OutputTableType {
 
 func (p *DeleteCacheWebAccelParam) GetColumnDefs() []output.ColumnDef {
 	return p.getCommandDef().TableColumnDefines
+}
+
+func (p *DeleteCacheWebAccelParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *DeleteCacheWebAccelParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *DeleteCacheWebAccelParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *DeleteCacheWebAccelParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *DeleteCacheWebAccelParam) GetColumn() []string {
+	return p.Column
+}
+func (p *DeleteCacheWebAccelParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *DeleteCacheWebAccelParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *DeleteCacheWebAccelParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *DeleteCacheWebAccelParam) GetFormat() string {
+	return p.Format
 }

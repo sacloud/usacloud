@@ -14,6 +14,8 @@ func ISOImageReadCompleteFlags(ctx Context, params *ReadISOImageParam, flagName 
 	switch flagName {
 	case "id":
 		comp = define.Resources["ISOImage"].Commands["read"].Params["id"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

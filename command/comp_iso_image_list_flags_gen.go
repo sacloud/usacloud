@@ -24,6 +24,8 @@ func ISOImageListCompleteFlags(ctx Context, params *ListISOImageParam, flagName 
 		comp = define.Resources["ISOImage"].Commands["list"].Params["scope"].CompleteFunc
 	case "sort":
 		comp = define.Resources["ISOImage"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

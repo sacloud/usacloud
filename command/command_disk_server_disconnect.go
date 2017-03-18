@@ -29,11 +29,5 @@ func DiskServerDisconnect(ctx Context, params *ServerDisconnectDiskParam) error 
 		return fmt.Errorf("DiskServerDisconnect is failed: %s", err)
 	}
 
-	// read again
-	p, e = api.Read(params.Id)
-	if e != nil {
-		return fmt.Errorf("DiskServerDisconnect is failed: %s", e)
-	}
-
-	return ctx.GetOutput().Print(p)
+	return nil
 }

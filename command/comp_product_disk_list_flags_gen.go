@@ -22,6 +22,8 @@ func ProductDiskListCompleteFlags(ctx Context, params *ListProductDiskParam, fla
 		comp = define.Resources["ProductDisk"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["ProductDisk"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

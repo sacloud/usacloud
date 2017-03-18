@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"github.com/sacloud/usacloud/output"
 	"reflect"
 	"strings"
 	"time"
@@ -152,4 +153,27 @@ func validateBetween(fieldName string, object interface{}, min int, max int) []e
 	}
 
 	return []error{}
+}
+
+func validateOutputOption(o output.FormatOption) []error {
+
+	outputType := o.GetOutputType()
+	columns := o.GetColumn()
+	format := o.GetFormat()
+	quiet := o.GetQuiet()
+
+	if outputType != "" && format != "" {
+		return []error{fmt.Errorf("%q: can't set with --output-format", "--format")}
+	}
+
+	if outputType != "" && quiet {
+		return []error{fmt.Errorf("%q: can't set with --output-format", "--quiet")}
+	}
+
+	if outputType != "tsv" && outputType != "csv" && len(columns) > 0 {
+		return []error{fmt.Errorf("%q: can't set when --output-format is csv/tsv", "column")}
+	}
+
+	return []error{}
+
 }

@@ -22,6 +22,8 @@ func DNSListCompleteFlags(ctx Context, params *ListDNSParam, flagName string, cu
 		comp = define.Resources["DNS"].Commands["list"].Params["name"].CompleteFunc
 	case "sort":
 		comp = define.Resources["DNS"].Commands["list"].Params["sort"].CompleteFunc
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {
