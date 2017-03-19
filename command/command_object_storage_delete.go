@@ -53,6 +53,7 @@ func ObjectStorageDelete(ctx Context, params *DeleteObjectStorageParam) error {
 		if err != nil {
 			return fmt.Errorf("ObjectStorageDelete is failed: %s", err)
 		}
+
 	}
 
 	return nil
@@ -85,5 +86,7 @@ func objectStorageDelRecursive(path string, bucket *s3.Bucket) error {
 }
 
 func objectStorageDel(path string, bucket *s3.Bucket) error {
-	return bucket.Del(path)
+	err := bucket.Del(path)
+	fmt.Fprintf(GlobalOption.Progress, "Deleted: %s\n", path)
+	return err
 }

@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/ftp"
 )
 
@@ -22,9 +23,31 @@ func ArchiveUpload(ctx Context, params *UploadArchiveParam) error {
 
 	// upload
 	ftpsClient := ftp.NewFTPClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
-	err = ftpsClient.Upload(params.ArchiveFile)
-	if err != nil {
-		return fmt.Errorf("ArchiveUpload is failed: %s", err)
+	compChan := make(chan bool)
+	errChan := make(chan error)
+
+	spinner := internal.NewSpinner(
+		"Uploading...",
+		"Upload archive is complete.\n",
+		internal.CharSetUpload,
+		GlobalOption.Progress)
+	go func() {
+		spinner.Start()
+		err = ftpsClient.Upload(params.GetArchiveFile())
+		if err != nil {
+			errChan <- err
+		}
+		compChan <- true
+	}()
+upload:
+	for {
+		select {
+		case <-compChan:
+			spinner.Stop()
+			break upload
+		case err := <-errChan:
+			return fmt.Errorf("ArchiveUpload is failed: %s", err)
+		}
 	}
 
 	// close FTP

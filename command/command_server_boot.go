@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"github.com/sacloud/usacloud/command/internal"
 )
 
 func ServerBoot(ctx Context, params *BootServerParam) error {
@@ -17,21 +18,41 @@ func ServerBoot(ctx Context, params *BootServerParam) error {
 		return nil // already booted.
 	}
 
-	// call manipurate functions
-	_, err := api.Boot(params.Id)
-	if err != nil {
-		return fmt.Errorf("ServerBoot is failed: %s", err)
-	}
+	compChan := make(chan bool)
+	errChan := make(chan error)
+	spinner := internal.NewSpinner(
+		"Booting...",
+		"Boot server is complete.\n",
+		internal.CharSetProgress,
+		GlobalOption.Progress)
 
-	// wait for boot
-	if !params.Async {
-		err := api.SleepUntilUp(params.Id, client.DefaultTimeoutDuration)
+	go func() {
+		spinner.Start()
+		// call manipurate functions
+		_, err := api.Boot(params.Id)
 		if err != nil {
+			errChan <- err
+			return
+		}
+		err = api.SleepUntilUp(params.Id, client.DefaultTimeoutDuration)
+		if err != nil {
+			errChan <- err
+			return
+		}
+		compChan <- true
+	}()
+
+boot:
+	for {
+		select {
+		case <-compChan:
+			spinner.Stop()
+			break boot
+		case err := <-errChan:
 			return fmt.Errorf("ServerBoot is failed: %s", err)
 		}
 	}
 
 	return nil
-	// return ctx.GetOutput().Print(p)
 
 }

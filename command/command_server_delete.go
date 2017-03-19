@@ -3,6 +3,7 @@ package command
 import (
 	"fmt"
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command/internal"
 	"os"
 )
 
@@ -18,14 +19,42 @@ func ServerDelete(ctx Context, params *DeleteServerParam) error {
 
 	if p.IsUp() {
 		if params.Force {
-			_, err = api.Stop(params.Id)
-			if err != nil {
-				return fmt.Errorf("ServerDelete is failed: %s", err)
-			}
 
-			err = api.SleepUntilDown(params.Id, client.DefaultTimeoutDuration)
-			if err != nil {
-				return fmt.Errorf("ServerDelete is failed: %s", err)
+			compChan := make(chan bool)
+			errChan := make(chan error)
+			spinner := internal.NewSpinner(
+				"Waiting for Shutdown...",
+				"Shutdown is complete.\n",
+				internal.CharSetProgress,
+				GlobalOption.Progress)
+
+			go func() {
+				spinner.Start()
+				// call manipurate functions
+				var err error
+				_, err = api.Stop(params.Id)
+				if err != nil {
+					errChan <- err
+					return
+				}
+
+				err = api.SleepUntilDown(params.Id, client.DefaultTimeoutDuration)
+				if err != nil {
+					errChan <- err
+					return
+				}
+				compChan <- true
+			}()
+
+		down:
+			for {
+				select {
+				case <-compChan:
+					spinner.Stop()
+					break down
+				case err := <-errChan:
+					return fmt.Errorf("ServerDelete is failed: %s", err)
+				}
 			}
 
 		} else {

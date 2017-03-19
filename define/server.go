@@ -994,11 +994,6 @@ func serverSCPParam() map[string]*schema.Schema {
 func serverPowerOnParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
-		"async": {
-			Type:        schema.TypeBool,
-			HandlerType: schema.HandlerNoop,
-			Description: "set async flag(if true,return with non block)",
-		},
 	}
 }
 
@@ -1008,12 +1003,8 @@ func serverPowerOffParam() map[string]*schema.Schema {
 		"force": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"f"},
 			Description: "force shutdown flag",
-		},
-		"async": {
-			Type:        schema.TypeBool,
-			HandlerType: schema.HandlerNoop,
-			Description: "set async flag(if true,return with non block)",
 		},
 	}
 }
@@ -1021,11 +1012,6 @@ func serverPowerOffParam() map[string]*schema.Schema {
 func serverResetParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"id": paramID,
-		"async": {
-			Type:        schema.TypeBool,
-			HandlerType: schema.HandlerNoop,
-			Description: "set async flag(if true,return with non block)",
-		},
 	}
 }
 

@@ -93,7 +93,7 @@ func ServerScp(ctx Context, params *ScpServerParam) error {
 		Host:           ip,
 		Port:           params.Port,
 		PrivateKeyPath: keyPath,
-		Out:            GlobalOption.Out,
+		Out:            GlobalOption.Progress,
 		Quiet:          params.Quiet,
 	}
 	conn, err := remote.CreateSSHClient(sshParam)
@@ -121,7 +121,12 @@ func ServerScp(ctx Context, params *ScpServerParam) error {
 			}
 
 			localPath = filepath.Clean(localPath)
-			err := scpClient.SendDir(localPath, remotePath, nil)
+			err := scpClient.SendDir(localPath, remotePath, func(parentDir string, info os.FileInfo) (bool, error) {
+				if !info.IsDir() {
+					fmt.Fprintf(GlobalOption.Progress, "copy: %s\n", filepath.Join(parentDir, info.Name()))
+				}
+				return true, nil
+			})
 			if err != nil {
 				return fmt.Errorf("ServerScp is failed: %s", err)
 			}
@@ -129,6 +134,7 @@ func ServerScp(ctx Context, params *ScpServerParam) error {
 			if strings.HasSuffix(remotePath, "/") {
 				remotePath = fmt.Sprintf("%s%s", remotePath, filepath.Base(localPath))
 			}
+			fmt.Fprintf(GlobalOption.Progress, "copy: %s\n", localPath)
 			err := scpClient.SendFile(localPath, remotePath)
 			if err != nil {
 				return fmt.Errorf("ServerScp is failed: %s", err)
@@ -147,13 +153,20 @@ func ServerScp(ctx Context, params *ScpServerParam) error {
 		}
 		// first, try copy file
 		err = scpClient.ReceiveFile(remotePath, localPath)
-		if err != nil {
+		if err == nil {
+			fmt.Fprintf(GlobalOption.Progress, "copy: %s\n", localPath)
+		} else {
 			if !params.Recursive {
 				return fmt.Errorf("%q isn't readable file or is a directory. try use -r or --recursive flag", remotePath)
 			}
 
 			// next , try copy directory
-			err := scpClient.ReceiveDir(remotePath, localPath, nil)
+			err := scpClient.ReceiveDir(remotePath, localPath, func(parentDir string, info os.FileInfo) (bool, error) {
+				if !info.IsDir() {
+					fmt.Fprintf(GlobalOption.Progress, "copy: %s\n", filepath.Join(parentDir, info.Name()))
+				}
+				return true, nil
+			})
 			if err != nil {
 				return fmt.Errorf("ServerScp is failed: %s", err)
 			}

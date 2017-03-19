@@ -1,8 +1,10 @@
 package command
 
 import (
+	"github.com/mattn/go-isatty"
 	"gopkg.in/urfave/cli.v2"
 	"io"
+	"io/ioutil"
 	"os"
 )
 
@@ -14,6 +16,7 @@ type Option struct {
 	Format            string
 	In                io.Reader
 	Out               io.Writer
+	Progress          io.Writer
 	Err               io.Writer
 	Validated         bool
 	Valid             bool
@@ -21,9 +24,16 @@ type Option struct {
 }
 
 var GlobalOption = &Option{
-	In:  os.Stdin,
-	Out: os.Stdout,
-	Err: os.Stderr,
+	In:       os.Stdin,
+	Out:      os.Stdout,
+	Progress: os.Stderr,
+	Err:      os.Stderr,
+}
+
+func init() {
+	if !(isatty.IsTerminal(os.Stderr.Fd()) || isatty.IsCygwinTerminal(os.Stderr.Fd())) {
+		GlobalOption.Progress = ioutil.Discard
+	}
 }
 
 var GlobalFlags = []cli.Flag{

@@ -3,6 +3,7 @@ package command
 import (
 	"fmt"
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command/internal"
 )
 
 func DiskCreate(ctx Context, params *CreateDiskParam) error {
@@ -24,19 +25,45 @@ func DiskCreate(ctx Context, params *CreateDiskParam) error {
 	p.SetSourceArchive(params.SourceArchiveId)
 	p.SetSourceDisk(params.SourceDiskId)
 
-	// call Create(id)
-	res, err := api.Create(p)
-	if err != nil {
-		return fmt.Errorf("DiskCreate is failed: %s", err)
-	}
+	// wait for copy with progress
+	var res *sacloud.Disk
+	var err error
+	compChan := make(chan bool)
+	errChan := make(chan error)
+	spinner := internal.NewSpinner(
+		"Creating...",
+		"Create disk is complete.\n",
+		internal.CharSetProgress,
+		GlobalOption.Progress)
+	spinner.Start()
 
-	if !params.Async {
+	// call Create(id)
+	go func() {
+		res, err = api.Create(p)
+		if err != nil {
+			errChan <- err
+			return
+		}
 		err = api.SleepWhileCopying(res.ID, client.DefaultTimeoutDuration)
 		if err != nil {
-			return fmt.Errorf("DiskCreate is failed: %s", err)
+			errChan <- err
+			return
 		}
 		res, err = api.Read(res.ID)
 		if err != nil {
+			errChan <- err
+			return
+		}
+		compChan <- true
+	}()
+
+copy:
+	for {
+		select {
+		case <-compChan:
+			spinner.Stop()
+			break copy
+		case err := <-errChan:
 			return fmt.Errorf("DiskCreate is failed: %s", err)
 		}
 	}
