@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/ftp"
 )
 
@@ -27,9 +28,33 @@ func ArchiveDownload(ctx Context, params *DownloadArchiveParam) error {
 
 	// download
 	ftpsClient := ftp.NewFTPClient(res.User, res.Password, res.HostName)
-	err = ftpsClient.Download(params.FileDestination)
-	if err != nil {
-		return fmt.Errorf("ArchiveDownload is failed: %s", err)
+	compChan := make(chan bool)
+	errChan := make(chan error)
+
+	spinner := internal.NewSpinner(
+		"Downloading...",
+		"Download archive is complete.\n",
+		internal.CharSetDownload,
+		GlobalOption.Progress)
+	go func() {
+		spinner.Start()
+		err = ftpsClient.Download(params.FileDestination)
+		if err != nil {
+			errChan <- err
+			return
+		}
+		compChan <- true
+	}()
+
+download:
+	for {
+		select {
+		case <-compChan:
+			spinner.Stop()
+			break download
+		case err := <-errChan:
+			return fmt.Errorf("ArchiveDownload is failed: %s", err)
+		}
 	}
 
 	// close

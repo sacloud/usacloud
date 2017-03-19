@@ -177,7 +177,7 @@ func getSSHDefaultUserNameArchiveRec(client *api.Client, archiveID int64) (strin
 }
 
 func confirm(msg string) bool {
-	fmt.Printf("\n%s (Y/n)? [n]: ", msg)
+	fmt.Printf("\n%s?(Y/n) [n]: ", msg)
 	var input string
 	fmt.Fscanln(GlobalOption.In, &input)
 	return input == "Y"

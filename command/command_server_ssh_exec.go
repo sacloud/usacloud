@@ -61,7 +61,7 @@ func ServerSshExec(ctx Context, params *SshExecServerParam) error {
 		Host:           ip,
 		Port:           params.Port,
 		PrivateKeyPath: keyPath,
-		Out:            GlobalOption.Out,
+		Out:            GlobalOption.Progress,
 		Quiet:          params.Quiet,
 	}
 	conn, err := remote.CreateSSHClient(sshParam)

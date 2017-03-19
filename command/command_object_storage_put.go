@@ -131,5 +131,6 @@ func objectStoragePut(destPath, srcPath string, bucket *s3.Bucket, contentType s
 	if err != nil {
 		return err
 	}
+	fmt.Fprintf(GlobalOption.Progress, "Uploaded: %s\n", destPath)
 	return nil
 }

@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"github.com/sacloud/usacloud/command/internal"
 )
 
 func DiskReinstallToBlank(ctx Context, params *ReinstallToBlankDiskParam) error {
@@ -13,15 +14,36 @@ func DiskReinstallToBlank(ctx Context, params *ReinstallToBlankDiskParam) error 
 		return fmt.Errorf("DiskReinstallToBlank is failed: %s", e)
 	}
 
-	// call manipurate functions
-	_, err := api.ReinstallFromBlank(params.Id, p.SizeMB)
-	if err != nil {
-		return fmt.Errorf("DiskReinstallToBlank is failed: %s", err)
-	}
+	compChan := make(chan bool)
+	errChan := make(chan error)
+	spinner := internal.NewSpinner(
+		"Installing...",
+		"Reinstall to blank is complete.\n",
+		internal.CharSetProgress,
+		GlobalOption.Progress)
+	spinner.Start()
 
-	if !params.Async {
+	go func() {
+		_, err := api.ReinstallFromBlank(params.Id, p.SizeMB)
+		if err != nil {
+			errChan <- err
+			return
+		}
 		err = api.SleepWhileCopying(params.Id, client.DefaultTimeoutDuration)
 		if err != nil {
+			errChan <- err
+			return
+		}
+		compChan <- true
+	}()
+
+copy:
+	for {
+		select {
+		case <-compChan:
+			spinner.Stop()
+			break copy
+		case err := <-errChan:
 			return fmt.Errorf("DiskReinstallToBlank is failed: %s", err)
 		}
 	}

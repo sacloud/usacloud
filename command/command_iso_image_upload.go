@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/ftp"
 )
 
@@ -14,10 +15,6 @@ func ISOImageUpload(ctx Context, params *UploadISOImageParam) error {
 		return fmt.Errorf("ISOImageUpload is failed: %s", e)
 	}
 
-	// set params
-
-	params.getCommandDef().Params["iso-file"].CustomHandler("IsoFile", params, p)
-
 	// open FTP
 	ftpServer, err := api.OpenFTP(p.ID, false)
 	if err != nil {
@@ -26,9 +23,31 @@ func ISOImageUpload(ctx Context, params *UploadISOImageParam) error {
 
 	// upload
 	ftpsClient := ftp.NewFTPClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
-	err = ftpsClient.Upload(params.GetIsoFile())
-	if err != nil {
-		return fmt.Errorf("ISOImageUpload is failed: %s", err)
+	compChan := make(chan bool)
+	errChan := make(chan error)
+
+	spinner := internal.NewSpinner(
+		"Uploading...",
+		"Upload ISOImage is complete.\n",
+		internal.CharSetUpload,
+		GlobalOption.Progress)
+	go func() {
+		spinner.Start()
+		err = ftpsClient.Upload(params.GetIsoFile())
+		if err != nil {
+			errChan <- err
+		}
+		compChan <- true
+	}()
+upload:
+	for {
+		select {
+		case <-compChan:
+			spinner.Stop()
+			break upload
+		case err := <-errChan:
+			return fmt.Errorf("ISOImageUpload is failed: %s", err)
+		}
 	}
 
 	// close FTP

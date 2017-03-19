@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"github.com/sacloud/usacloud/command/internal"
 )
 
 func DiskEdit(ctx Context, params *EditDiskParam) error {
@@ -36,10 +37,33 @@ func DiskEdit(ctx Context, params *EditDiskParam) error {
 		p.SetNetworkMaskLen(fmt.Sprintf("%d", params.NwMasklen))
 	}
 
-	// call manipurate functions
-	_, err := api.Config(params.Id, p)
-	if err != nil {
-		return fmt.Errorf("DiskEdit is failed: %s", err)
+	// wait for copy with progress
+	spinner := internal.NewSpinner(
+		"Editing...",
+		"Edit disk is complete.\n",
+		internal.CharSetProgress,
+		GlobalOption.Progress)
+	spinner.Start()
+	compChan := make(chan bool)
+	errChan := make(chan error)
+	go func() {
+		// call manipurate functions
+		_, err := api.Config(params.Id, p)
+		if err != nil {
+			errChan <- err
+			return
+		}
+		compChan <- true
+	}()
+edit:
+	for {
+		select {
+		case <-compChan:
+			spinner.Stop()
+			break edit
+		case err := <-errChan:
+			return fmt.Errorf("DiskEdit is failed: %s", err)
+		}
 	}
 
 	// read

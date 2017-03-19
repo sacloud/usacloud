@@ -231,11 +231,6 @@ func diskCreateParam() map[string]*schema.Schema {
 			ValidateFunc: validateIntSlice(validateSakuraID()),
 			CompleteFunc: completeDiskID(),
 		},
-		"async": {
-			Type:        schema.TypeBool,
-			HandlerType: schema.HandlerNoop,
-			Description: "set async flag(if true,return with non block)",
-		},
 	}
 }
 
@@ -357,11 +352,6 @@ func diskReinstallFromArchiveParam() map[string]*schema.Schema {
 			ValidateFunc: validateIntSlice(validateSakuraID()),
 			CompleteFunc: completeDiskID(),
 		},
-		"async": {
-			Type:        schema.TypeBool,
-			HandlerType: schema.HandlerNoop,
-			Description: "set async flag(if true,return with non block)",
-		},
 	}
 }
 
@@ -383,11 +373,6 @@ func diskReinstallFromDiskParam() map[string]*schema.Schema {
 			ValidateFunc: validateIntSlice(validateSakuraID()),
 			CompleteFunc: completeDiskID(),
 		},
-		"async": {
-			Type:        schema.TypeBool,
-			HandlerType: schema.HandlerNoop,
-			Description: "set async flag(if true,return with non block)",
-		},
 	}
 }
 
@@ -400,11 +385,6 @@ func diskReinstallToBlankParam() map[string]*schema.Schema {
 			Description:  "set distant from disk IDs",
 			ValidateFunc: validateIntSlice(validateSakuraID()),
 			CompleteFunc: completeDiskID(),
-		},
-		"async": {
-			Type:        schema.TypeBool,
-			HandlerType: schema.HandlerNoop,
-			Description: "set async flag(if true,return with non block)",
 		},
 	}
 }

@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/ftp"
 )
 
@@ -29,7 +30,7 @@ func ArchiveCreate(ctx Context, params *CreateArchiveParam) error {
 	// manual validation
 	if needUpload {
 		if params.ArchiveFile == "" || params.Size == 0 {
-			return fmt.Errorf("ArchiveCreate is required %q and %q if when source disk/archive is missing", "archive-file", "size")
+			return fmt.Errorf("ArchiveCreate is required both of %q and %q if when source disk/archive is missing", "--archive-file", "--size")
 		}
 	}
 
@@ -38,6 +39,7 @@ func ArchiveCreate(ctx Context, params *CreateArchiveParam) error {
 	if err != nil {
 		return fmt.Errorf("ArchiveCreate is failed: %s", err)
 	}
+
 	if needUpload {
 		ftpServer, err := api.OpenFTP(res.ID)
 		if err != nil {
@@ -46,9 +48,31 @@ func ArchiveCreate(ctx Context, params *CreateArchiveParam) error {
 
 		// upload
 		ftpsClient := ftp.NewFTPClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
-		err = ftpsClient.Upload(params.GetArchiveFile())
-		if err != nil {
-			return fmt.Errorf("ArchiveCreate is failed: %s", err)
+		compChan := make(chan bool)
+		errChan := make(chan error)
+
+		spinner := internal.NewSpinner(
+			"Uploading...",
+			"Upload archive is complete.\n",
+			internal.CharSetUpload,
+			GlobalOption.Progress)
+		go func() {
+			spinner.Start()
+			err = ftpsClient.Upload(params.GetArchiveFile())
+			if err != nil {
+				errChan <- err
+			}
+			compChan <- true
+		}()
+	upload:
+		for {
+			select {
+			case <-compChan:
+				spinner.Stop()
+				break upload
+			case err := <-errChan:
+				return fmt.Errorf("ArchiveCreate is failed: %s", err)
+			}
 		}
 
 		// close FTP
@@ -62,6 +86,29 @@ func ArchiveCreate(ctx Context, params *CreateArchiveParam) error {
 		if err != nil {
 			return fmt.Errorf("ArchiveCreate is failed: %s", err)
 		}
+	} else {
+		// wait for copy with progress
+		spinner := internal.NewSpinner(
+			"Coping...",
+			"Copy archive is complete.\n",
+			internal.CharSetProgress,
+			GlobalOption.Progress)
+		spinner.Start()
+		compChan, progChan, errChan := api.AsyncSleepWhileCopying(res.ID, client.DefaultTimeoutDuration)
+	copy:
+		for {
+			select {
+			case r := <-compChan:
+				res = r
+				spinner.Stop()
+				break copy
+			case <-progChan:
+			// noop
+			case err := <-errChan:
+				return fmt.Errorf("ArchiveCreate is failed: %s", err)
+			}
+		}
+
 	}
 
 	return ctx.GetOutput().Print(res)

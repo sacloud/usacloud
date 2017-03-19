@@ -5,6 +5,7 @@ import (
 	"github.com/sacloud/libsacloud/builder"
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/libsacloud/sacloud/ostype"
+	"github.com/sacloud/usacloud/command/internal"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -165,6 +166,90 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 	b.SetIconID(params.IconId)
 	b.SetBootAfterCreate(!params.DisableBootAfterCreate)
 	b.SetISOImageID(params.GetIsoImageId())
+
+	// set events
+	if diskEventBuilder, ok := sb.(serverDiskEventParam); ok {
+		// create disk
+		progCreate := internal.NewSpinner(
+			"Creating disk...",
+			"Create disk is complete.\n",
+			internal.CharSetProgress,
+			GlobalOption.Progress)
+		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCreateDiskBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+			progCreate.Start()
+		})
+		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCreateDiskAfter, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+			progCreate.Stop()
+		})
+
+		// edit disk
+		progEdit := internal.NewSpinner(
+			"Editing disk...",
+			"Edit disk is complete.\n",
+			internal.CharSetProgress,
+			GlobalOption.Progress)
+		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnEditDiskBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+			progEdit.Start()
+		})
+		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnEditDiskAfter, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+			progEdit.Stop()
+		})
+
+		// cleanup startup script
+		progCleanupNotes := internal.NewSpinner(
+			"Cleanup StartupScript...",
+			"Cleanup StartupScript is complete.\n",
+			internal.CharSetProgress,
+			GlobalOption.Progress)
+		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCleanupNoteBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+			progCleanupNotes.Start()
+		})
+		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCleanupNoteAfter, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+			progCleanupNotes.Stop()
+		})
+
+		// cleanup ssh key script
+		progCleanupSSHKey := internal.NewSpinner(
+			"Cleanup SSHKey...",
+			"Cleanup SSHKey is complete.\n",
+			internal.CharSetProgress,
+			GlobalOption.Progress)
+		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCleanupSSHKeyBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+			progCleanupSSHKey.Start()
+		})
+		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCleanupSSHKeyAfter, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+			progCleanupSSHKey.Stop()
+		})
+	}
+
+	if serverEventBuilder, ok := sb.(serverEventparam); ok {
+		progCreate := internal.NewSpinner(
+			"Creating server...",
+			"Create server is complete.\n",
+			internal.CharSetProgress,
+			GlobalOption.Progress)
+
+		serverEventBuilder.SetEventHandler(builder.ServerBuildOnCreateServerBefore, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
+			progCreate.Start()
+		})
+		serverEventBuilder.SetEventHandler(builder.ServerBuildOnCreateServerAfter, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
+			progCreate.Stop()
+		})
+
+		progBoot := internal.NewSpinner(
+			"Booting server...",
+			"Boot server is complete.\n",
+			internal.CharSetProgress,
+			GlobalOption.Progress)
+
+		serverEventBuilder.SetEventHandler(builder.ServerBuildOnBootBefore, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
+			progBoot.Start()
+		})
+		serverEventBuilder.SetEventHandler(builder.ServerBuildOnBootAfter, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
+			progBoot.Stop()
+		})
+
+	}
 
 	// call Create(id)
 	res, err := b.Build()
@@ -499,4 +584,12 @@ type serverEditDiskParam interface {
 	SetGenerateSSHKeyName(string)
 	SetGenerateSSHKeyPassPhrase(string)
 	SetGenerateSSHKeyDescription(string)
+}
+
+type serverDiskEventParam interface {
+	SetDiskEventHandler(event builder.DiskBuildEvents, handler builder.DiskBuildEventHandler)
+}
+
+type serverEventparam interface {
+	SetEventHandler(event builder.ServerBuildEvents, handler builder.ServerBuildEventHandler)
 }
