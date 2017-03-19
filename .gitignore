@@ -1,3 +1,5 @@
+command/*_gen.go
+
 .env
 
 bin/*
