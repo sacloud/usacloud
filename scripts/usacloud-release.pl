@@ -415,6 +415,7 @@ sub upload_to_github_release {
     my $tag = shift || "v" . next_version();
     my $name = shift || $REPO ."-" . next_version();
     my $erase_if_exist = shift || 0;
+    my $is_staging = $name eq "staging";
     my $cont = 0;
     do {
         $cont = 0;
@@ -445,6 +446,11 @@ sub upload_to_github_release {
     # upload files
     my $latest_release_pullrequest = find_latest_release_pullrequest();
     my $description = $latest_release_pullrequest->{body};
+    if ($is_staging){
+        infof "Delete staging tag\n";
+        git qw/push/, "https://$ENV{GITHUB_TOKEN}\@github.com/$REPO_NAME.git" , qw/:staging/;
+        $description = "This release includes latest commits with unreleased features";
+    }
     my @filepaths = glob("repos/centos/*/*.rpm repos/*/*.deb bin/*.zip");
     infof "uploading following files:\n" . join("\n", @filepaths). "\n";
     for my $path (@filepaths){
@@ -464,8 +470,8 @@ sub upload_to_github_release {
     github_release @args;
 
     # upload to ojs
-    usacloud qw/object-storage put -r repos repos/ unless $erase_if_exist;
-    usacloud qw/object-storage put -r contrib contrib/ unless $erase_if_exist;
+    usacloud qw/object-storage put -r repos repos/ unless $is_staging;
+    usacloud qw/object-storage put -r contrib contrib/ unless $is_staging;
 }
 
 sub create_pull_request {
