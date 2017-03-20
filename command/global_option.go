@@ -52,7 +52,6 @@ var GlobalFlags = []cli.Flag{
 		Destination: &GlobalOption.AccessTokenSecret,
 	},
 	&cli.StringFlag{
-		// TODO 複数ゾーンへの対応
 		Name:        "zone",
 		Usage:       "Target zone of SakuraCloud",
 		EnvVars:     []string{"SAKURACLOUD_ZONE"},
