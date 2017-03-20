@@ -44,7 +44,6 @@ func SimpleMonitorResource() *schema.Resource {
 			Params:        simpleMonitorDeleteParam(),
 			IncludeFields: simpleMonitorDetailIncludes(),
 			ExcludeFields: simpleMonitorDetailExcludes(),
-			NeedConfirm:   true,
 		},
 	}
 
@@ -179,14 +178,11 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 }
 
 func simpleMonitorReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func simpleMonitorUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"protocol": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -261,7 +257,5 @@ func simpleMonitorUpdateParam() map[string]*schema.Schema {
 }
 
 func simpleMonitorDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }

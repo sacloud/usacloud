@@ -42,7 +42,6 @@ func LicenseResource() *schema.Resource {
 			Params:        licenseDeleteParam(),
 			IncludeFields: licenseDetailIncludes(),
 			ExcludeFields: licenseDetailExcludes(),
-			NeedConfirm:   true,
 		},
 	}
 
@@ -94,20 +93,15 @@ func licenseCreateParam() map[string]*schema.Schema {
 }
 
 func licenseReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func licenseUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":   paramID,
 		"name": paramName,
 	}
 }
 
 func licenseDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }

@@ -42,10 +42,9 @@ func SwitchResource() *schema.Resource {
 			Params:        switchDeleteParam(),
 			IncludeFields: switchDetailIncludes(),
 			ExcludeFields: switchDetailExcludes(),
-			NeedConfirm:   true,
 		},
 		"bridge-connect": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			UseCustomCommand: true,
 			Params:           switchConnectBridgeParam(),
 			IncludeFields:    switchDetailIncludes(),
@@ -53,7 +52,7 @@ func SwitchResource() *schema.Resource {
 			NoOutput:         true,
 		},
 		"bridge-disconnect": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			UseCustomCommand: true,
 			Params:           switchDisconnectBridgeParam(),
 			IncludeFields:    switchDetailIncludes(),
@@ -130,14 +129,11 @@ func switchCreateParam() map[string]*schema.Schema {
 }
 
 func switchReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func switchUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":          paramID,
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -146,14 +142,11 @@ func switchUpdateParam() map[string]*schema.Schema {
 }
 
 func switchDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func switchConnectBridgeParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"bridge-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerPathThrough,
@@ -166,7 +159,5 @@ func switchConnectBridgeParam() map[string]*schema.Schema {
 }
 
 func switchDisconnectBridgeParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }

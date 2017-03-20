@@ -18,6 +18,7 @@ func ObjectStorageResource() *schema.Resource {
 			UseCustomArgCompletion: true,
 			ArgsUsage:              "<remote path>",
 			SkipAuth:               true,
+			NeedlessConfirm:        true,
 		},
 		"put": {
 			Type:                   schema.CommandCustom,
@@ -36,6 +37,7 @@ func ObjectStorageResource() *schema.Resource {
 			ArgsUsage:              "<remote path> <local file/directory>",
 			SkipAuth:               true,
 			NoOutput:               true,
+			NeedlessConfirm:        true,
 		},
 		"delete": {
 			Type:                   schema.CommandCustom,
@@ -45,7 +47,6 @@ func ObjectStorageResource() *schema.Resource {
 			UseCustomArgCompletion: true,
 			ArgsUsage:              "<remote path>",
 			SkipAuth:               true,
-			NeedConfirm:            true,
 			NoOutput:               true,
 		},
 	}

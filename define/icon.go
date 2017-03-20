@@ -44,7 +44,6 @@ func IconResource() *schema.Resource {
 			Params:        iconDeleteParam(),
 			IncludeFields: iconDetailIncludes(),
 			ExcludeFields: iconDetailExcludes(),
-			NeedConfirm:   true,
 		},
 	}
 
@@ -91,23 +90,18 @@ func iconCreateParam() map[string]*schema.Schema {
 }
 
 func iconReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func iconUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":   paramID,
 		"name": paramName,
 		"tags": paramTags,
 	}
 }
 
 func iconDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func iconSetImageContentUseBase64(name string, s interface{}, d interface{}) {

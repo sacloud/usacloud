@@ -16,10 +16,9 @@ func DiskReinstallFromArchive(ctx Context, params *ReinstallFromArchiveDiskParam
 
 	compChan := make(chan bool)
 	errChan := make(chan error)
-	spinner := internal.NewSpinner(
-		"Installing...",
-		"Reinstall disk from archive is complete.\n",
-		internal.CharSetProgress,
+	spinner := internal.NewProgress(
+		fmt.Sprintf("Still installing[ID:%d]...", params.Id),
+		fmt.Sprintf("Reinstall disk[ID:%d]", params.Id),
 		GlobalOption.Progress)
 	spinner.Start()
 

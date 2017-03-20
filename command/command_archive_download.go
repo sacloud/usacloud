@@ -31,10 +31,9 @@ func ArchiveDownload(ctx Context, params *DownloadArchiveParam) error {
 	compChan := make(chan bool)
 	errChan := make(chan error)
 
-	spinner := internal.NewSpinner(
-		"Downloading...",
-		"Download archive is complete.\n",
-		internal.CharSetDownload,
+	spinner := internal.NewProgress(
+		fmt.Sprintf("Still downloading[ID:%d]...", params.Id),
+		fmt.Sprintf("Download archive[ID:%d]", params.Id),
 		GlobalOption.Progress)
 	go func() {
 		spinner.Start()

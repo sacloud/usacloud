@@ -14,11 +14,13 @@ type Schema struct {
 	InputDefault interface{}
 	Aliases      []string
 	Description  string // Usage -> cli
+	Hidden       bool
 
 	Category string
 	Order    int
 
 	Required      bool
+	SakuraID      bool
 	ConflictsWith []string
 	ValidateFunc  SchemaValidateFunc
 

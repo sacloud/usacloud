@@ -139,13 +139,13 @@ COPYRIGHT:
     $ usacloud switch create --name "Example" --desc "description" --tags "Tag1" --tags "Tag2"
      
     # show switch detail
-    $ usacloud switch read [SwitchID]
+    $ usacloud switch read <ID or Name>
    
     # update switch
-    $ usacloud switch update --name "Example-update" [SwitchID]
+    $ usacloud switch update --name "Example-update" <ID or Name>
     
     # delete switch
-    $ usacloud switch delete [SwitchID]
+    $ usacloud switch delete <ID or Name>
     
 ```  
 
@@ -165,14 +165,31 @@ COPYRIGHT:
     # generated private-key is saved to ~/.ssh/sacloud_pkey_[ServerID]
 ```   
 
+#### Examples: Manipulate Server
+
+```bash
+    # boot
+    $ usacloud server boot <ID or Name>
+    
+    # shutdown(graceful)
+    $ usacloud server shutdown <ID or Name>
+    
+    # shutdown(force)
+    $ usacloud server shutdown-force <ID or Name>
+    
+    # reset(hard)
+    $ usacloud server reset <ID or Name>
+    
+```
+
 #### Examples: Connect to server by SSH
 
 ```bash
-    # connect to server by ssh using generated private-key(Not supported on Windows)
-    $ usacloud server ssh [ServerID]
+    # connect to server by ssh using generated private-key(Not supported on Windows)
+    $ usacloud server ssh <ID or Name>
     
-    # exec command on SSH(no-pty, support Windows)
-    $ usacloud server ssh-exec cat /etc/passwd
+    # exec command on SSH(no-pty, support Windows)
+    $ usacloud server ssh-exec <ID or Name> cat /etc/passwd
     
     # upload/download by SSH(like scp)
     $ usacloud server scp local-file.txt [ServerID]:/home/ubuntu/remote-file.txt # local to remote
@@ -187,7 +204,7 @@ COPYRIGHT:
     $ usacloud iso-image create --name example --iso-file example.iso
     
     # download archive(Only MyArchive can be downloaded)
-    $ usacloud archive download --file-destination example.img [MyArchiveID]
+    $ usacloud archive download --file-destination example.img <ID or Name>
     
 ```
 

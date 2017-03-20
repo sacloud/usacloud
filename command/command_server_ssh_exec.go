@@ -82,11 +82,7 @@ func ServerSshExec(ctx Context, params *SshExecServerParam) error {
 
 	var args []string
 	if ctx.NArgs() > 0 {
-		if ctx.Args()[0] == fmt.Sprintf("%d", params.Id) {
-			args = append(args, ctx.Args()[1:]...)
-		} else {
-			args = append(args, ctx.Args()...)
-		}
+		args = append(args, ctx.Args()[1:]...)
 	}
 
 	err = session.Run(strings.Join(args, " "))

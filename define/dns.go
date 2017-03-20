@@ -44,36 +44,35 @@ func DNSResource() *schema.Resource {
 			Params:        dnsDeleteParam(),
 			IncludeFields: dnsDetailIncludes(),
 			ExcludeFields: dnsDetailExcludes(),
-			NeedConfirm:   true,
 		},
 		"record-list": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             dnsRecordListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: dnsRecordListColumns(),
 			UseCustomCommand:   true,
+			NeedlessConfirm:    true,
 		},
 		"record-add": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             dnsRecordAddParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: dnsRecordListColumns(),
 			UseCustomCommand:   true,
 		},
 		"record-update": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             dnsRecordUpdateParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: dnsRecordListColumns(),
 			UseCustomCommand:   true,
 		},
 		"record-delete": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             dnsRecordDeleteParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: dnsRecordListColumns(),
 			UseCustomCommand:   true,
-			NeedConfirm:        true,
 			ConfirmMessage:     "delete record",
 		},
 	}
@@ -134,14 +133,11 @@ func dnsCreateParam() map[string]*schema.Schema {
 }
 
 func dnsReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func dnsUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":          paramID,
 		"description": paramDescription,
 		"tags":        paramTags,
 		"icon-id":     paramIconResourceID,
@@ -149,15 +145,11 @@ func dnsUpdateParam() map[string]*schema.Schema {
 }
 
 func dnsDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func dnsRecordListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 var allowDNSTypes = []string{
@@ -167,7 +159,6 @@ var allowDNSTypes = []string{
 
 func dnsRecordAddParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"name": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -235,7 +226,6 @@ func dnsRecordAddParam() map[string]*schema.Schema {
 }
 func dnsRecordUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -302,7 +292,6 @@ func dnsRecordUpdateParam() map[string]*schema.Schema {
 }
 func dnsRecordDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,

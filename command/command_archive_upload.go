@@ -26,10 +26,9 @@ func ArchiveUpload(ctx Context, params *UploadArchiveParam) error {
 	compChan := make(chan bool)
 	errChan := make(chan error)
 
-	spinner := internal.NewSpinner(
-		"Uploading...",
-		"Upload archive is complete.\n",
-		internal.CharSetUpload,
+	spinner := internal.NewProgress(
+		fmt.Sprintf("Still uploading[ID:%d]...", params.Id),
+		fmt.Sprintf("Upload archive[ID:%d]", params.Id),
 		GlobalOption.Progress)
 	go func() {
 		spinner.Start()

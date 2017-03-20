@@ -10,13 +10,32 @@ const (
 	CommandRead
 	CommandUpdate
 	CommandDelete
-	CommandManipulate // power-on/power-off
+	CommandManipulateMulti
+	CommandManipulateSingle
+	CommandManipulateIDOnly
 	CommandCustom
 )
 
 func (c CommandType) IsRequiredIDType() bool {
 	switch c {
-	case CommandRead, CommandUpdate, CommandDelete, CommandManipulate:
+	case CommandRead, CommandUpdate, CommandDelete, CommandManipulateMulti, CommandManipulateSingle, CommandManipulateIDOnly:
+		return true
+	default:
+		return false
+	}
+}
+
+func (c CommandType) IsNeedSingleIDType() bool {
+	return c == CommandManipulateSingle
+}
+
+func (c CommandType) IsNeedIDOnlyType() bool {
+	return c == CommandManipulateIDOnly
+}
+
+func (c CommandType) IsNeedConfirmType() bool {
+	switch c {
+	case CommandCreate, CommandUpdate, CommandDelete, CommandManipulateMulti, CommandManipulateSingle, CommandManipulateIDOnly, CommandCustom:
 		return true
 	default:
 		return false

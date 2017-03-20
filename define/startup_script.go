@@ -44,7 +44,6 @@ func StartupScriptResource() *schema.Resource {
 			Params:        startupScriptDeleteParam(),
 			IncludeFields: startupScriptDetailIncludes(),
 			ExcludeFields: startupScriptDetailExcludes(),
-			NeedConfirm:   true,
 		},
 	}
 
@@ -100,14 +99,11 @@ func startupScriptCreateParam() map[string]*schema.Schema {
 }
 
 func startupScriptReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func startupScriptUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":      paramID,
 		"name":    paramRequiredName,
 		"tags":    paramTags,
 		"icon-id": paramIconResourceID,
@@ -129,7 +125,5 @@ func startupScriptUpdateParam() map[string]*schema.Schema {
 }
 
 func startupScriptDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }

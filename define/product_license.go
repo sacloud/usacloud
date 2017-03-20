@@ -16,7 +16,7 @@ func ProductLicenseResource() *schema.Resource {
 			TableColumnDefines: productLicenseListColumns(),
 		},
 		"read": {
-			Type:          schema.CommandRead,
+			Type:          schema.CommandManipulateIDOnly,
 			Aliases:       []string{"r"},
 			Params:        productLicenseReadParam(),
 			IncludeFields: productLicenseDetailIncludes(),

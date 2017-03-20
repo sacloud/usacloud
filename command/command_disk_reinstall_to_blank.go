@@ -16,10 +16,9 @@ func DiskReinstallToBlank(ctx Context, params *ReinstallToBlankDiskParam) error 
 
 	compChan := make(chan bool)
 	errChan := make(chan error)
-	spinner := internal.NewSpinner(
-		"Installing...",
-		"Reinstall to blank is complete.\n",
-		internal.CharSetProgress,
+	spinner := internal.NewProgress(
+		fmt.Sprintf("Still installing[ID:%d]...", params.Id),
+		fmt.Sprintf("Reinstall disk[ID:%d]", params.Id),
 		GlobalOption.Progress)
 	spinner.Start()
 

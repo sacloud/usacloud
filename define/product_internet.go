@@ -16,7 +16,7 @@ func ProductInternetResource() *schema.Resource {
 			TableColumnDefines: productInternetListColumns(),
 		},
 		"read": {
-			Type:          schema.CommandRead,
+			Type:          schema.CommandManipulateIDOnly,
 			Aliases:       []string{"r"},
 			Params:        productInternetReadParam(),
 			IncludeFields: productInternetDetailIncludes(),

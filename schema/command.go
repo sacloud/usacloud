@@ -23,7 +23,7 @@ type Command struct {
 	UseCustomCommand         bool
 	UseCustomArgCompletion   bool
 	UseCustomFlagsCompletion bool
-	NeedConfirm              bool
+	NeedlessConfirm          bool
 	ConfirmMessage           string
 
 	NoOutput bool
@@ -55,14 +55,28 @@ func (c *Command) ParamCategory(key string) *Category {
 
 func (c *Command) BuildedParams() SortableParams {
 
-	// add force flag if need
-	if c.NeedConfirm {
+	// add ID param
+	if c.Type.IsRequiredIDType() {
 		// has "force" param?
-		if _, ok := c.Params["force"]; !ok {
-			c.Params["force"] = &Schema{
+		if _, ok := c.Params["id"]; !ok {
+			c.Params["id"] = &Schema{
+				Type:        TypeInt64,
+				HandlerType: HandlerPathThrough,
+				Description: "set target ID",
+				SakuraID:    true,
+				Hidden:      true,
+			}
+		}
+	}
+
+	if c.Type.IsNeedConfirmType() && !c.NeedlessConfirm {
+		// has "assumeyes" param?
+		if _, ok := c.Params["assumeyes"]; !ok {
+			c.Params["assumeyes"] = &Schema{
 				Type:        TypeBool,
 				HandlerType: HandlerNoop,
-				Aliases:     []string{"f"},
+				Description: "assume that the answer to any question which would be asked is yes",
+				Aliases:     []string{"y"},
 			}
 		}
 	}

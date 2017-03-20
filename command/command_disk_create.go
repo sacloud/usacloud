@@ -30,10 +30,9 @@ func DiskCreate(ctx Context, params *CreateDiskParam) error {
 	var err error
 	compChan := make(chan bool)
 	errChan := make(chan error)
-	spinner := internal.NewSpinner(
-		"Creating...",
-		"Create disk is complete.\n",
-		internal.CharSetProgress,
+	spinner := internal.NewProgress(
+		"Still creating...",
+		"Create disk",
 		GlobalOption.Progress)
 	spinner.Start()
 

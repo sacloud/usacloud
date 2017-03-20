@@ -5,13 +5,13 @@ import (
 	"github.com/sacloud/usacloud/command/internal"
 )
 
-func ServerShutdown(ctx Context, params *ShutdownServerParam) error {
+func ServerShutdownForce(ctx Context, params *ShutdownForceServerParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetServerAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("ServerShutdown is failed: %s", e)
+		return fmt.Errorf("ServerShutdownForce is failed: %s", e)
 	}
 
 	if p.IsDown() {
@@ -29,7 +29,7 @@ func ServerShutdown(ctx Context, params *ShutdownServerParam) error {
 		spinner.Start()
 		// call manipurate functions
 		var err error
-		_, err = api.Shutdown(params.Id)
+		_, err = api.Stop(params.Id)
 		if err != nil {
 			errChan <- err
 			return
@@ -50,7 +50,7 @@ down:
 			spinner.Stop()
 			break down
 		case err := <-errChan:
-			return fmt.Errorf("ServerShutdown is failed: %s", err)
+			return fmt.Errorf("ServerShutdownForce is failed: %s", err)
 		}
 	}
 

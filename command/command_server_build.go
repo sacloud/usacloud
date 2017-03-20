@@ -170,10 +170,9 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 	// set events
 	if diskEventBuilder, ok := sb.(serverDiskEventParam); ok {
 		// create disk
-		progCreate := internal.NewSpinner(
-			"Creating disk...",
-			"Create disk is complete.\n",
-			internal.CharSetProgress,
+		progCreate := internal.NewProgress(
+			"Still creating disk...",
+			"Create disk",
 			GlobalOption.Progress)
 		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCreateDiskBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCreate.Start()
@@ -183,10 +182,9 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 		})
 
 		// edit disk
-		progEdit := internal.NewSpinner(
-			"Editing disk...",
-			"Edit disk is complete.\n",
-			internal.CharSetProgress,
+		progEdit := internal.NewProgress(
+			"Still editing disk...",
+			"Edit disk",
 			GlobalOption.Progress)
 		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnEditDiskBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progEdit.Start()
@@ -196,10 +194,9 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 		})
 
 		// cleanup startup script
-		progCleanupNotes := internal.NewSpinner(
-			"Cleanup StartupScript...",
-			"Cleanup StartupScript is complete.\n",
-			internal.CharSetProgress,
+		progCleanupNotes := internal.NewProgress(
+			"Still cleaning StartupScript...",
+			"Cleanup StartupScript",
 			GlobalOption.Progress)
 		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCleanupNoteBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCleanupNotes.Start()
@@ -209,10 +206,9 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 		})
 
 		// cleanup ssh key script
-		progCleanupSSHKey := internal.NewSpinner(
-			"Cleanup SSHKey...",
-			"Cleanup SSHKey is complete.\n",
-			internal.CharSetProgress,
+		progCleanupSSHKey := internal.NewProgress(
+			"Still cleaning SSHKey...",
+			"Cleanup SSHKey",
 			GlobalOption.Progress)
 		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCleanupSSHKeyBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCleanupSSHKey.Start()
@@ -223,10 +219,9 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 	}
 
 	if serverEventBuilder, ok := sb.(serverEventparam); ok {
-		progCreate := internal.NewSpinner(
-			"Creating server...",
-			"Create server is complete.\n",
-			internal.CharSetProgress,
+		progCreate := internal.NewProgress(
+			"Still creating server...",
+			"Create server",
 			GlobalOption.Progress)
 
 		serverEventBuilder.SetEventHandler(builder.ServerBuildOnCreateServerBefore, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
@@ -236,10 +231,9 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 			progCreate.Stop()
 		})
 
-		progBoot := internal.NewSpinner(
-			"Booting server...",
-			"Boot server is complete.\n",
-			internal.CharSetProgress,
+		progBoot := internal.NewProgress(
+			"Still booting server...",
+			"Boot server",
 			GlobalOption.Progress)
 
 		serverEventBuilder.SetEventHandler(builder.ServerBuildOnBootBefore, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {

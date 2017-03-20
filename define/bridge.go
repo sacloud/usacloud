@@ -42,7 +42,6 @@ func BridgeResource() *schema.Resource {
 			Params:        bridgeDeleteParam(),
 			IncludeFields: bridgeDetailIncludes(),
 			ExcludeFields: bridgeDetailExcludes(),
-			NeedConfirm:   true,
 		},
 	}
 
@@ -87,21 +86,16 @@ func bridgeCreateParam() map[string]*schema.Schema {
 }
 
 func bridgeReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func bridgeUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":          paramID,
 		"name":        paramName,
 		"description": paramDescription,
 	}
 }
 
 func bridgeDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }

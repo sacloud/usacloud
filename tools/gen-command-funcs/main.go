@@ -123,7 +123,7 @@ func generateAction(command *schema.Command) (string, error) {
 	case schema.CommandDelete:
 		// delete
 		res, err = generateDeleteCommand(command)
-	case schema.CommandManipulate:
+	case schema.CommandManipulateMulti, schema.CommandManipulateSingle, schema.CommandManipulateIDOnly:
 		// power-on/off
 		res, err = generateManipulateCommand(command)
 	case schema.CommandCustom:

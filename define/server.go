@@ -55,10 +55,9 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand: true,
 			Category:         "basic",
 			Order:            50,
-			NeedConfirm:      true,
 		},
 		"plan-change": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           serverPlanChangeParam(),
 			Usage:            "Change server plan(core/memory)",
 			IncludeFields:    serverDetailIncludes(),
@@ -68,7 +67,7 @@ func ServerResource() *schema.Resource {
 			Order:            60,
 		},
 		"boot": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Aliases:          []string{"power-on"},
 			Params:           serverPowerOnParam(),
 			UseCustomCommand: true,
@@ -77,62 +76,73 @@ func ServerResource() *schema.Resource {
 			NoOutput:         true,
 		},
 		"shutdown": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Aliases:          []string{"power-off"},
 			Params:           serverPowerOffParam(),
 			UseCustomCommand: true,
 			Category:         "power",
 			Order:            20,
-			NeedConfirm:      true,
+			NoOutput:         true,
+		},
+		"shutdown-force": {
+			Type:             schema.CommandManipulateMulti,
+			Aliases:          []string{"stop"},
+			Params:           serverPowerOffParam(),
+			UseCustomCommand: true,
+			Category:         "power",
+			Order:            25,
 			NoOutput:         true,
 		},
 		"reset": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           serverResetParam(),
 			UseCustomCommand: true,
 			Category:         "power",
 			Order:            30,
-			NeedConfirm:      true,
 			NoOutput:         true,
 		},
 		"wait-for-boot": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           serverWaitForParams(),
 			Usage:            "Wait until boot is completed",
 			UseCustomCommand: true,
 			Category:         "power",
 			Order:            40,
 			NoOutput:         true,
+			NeedlessConfirm:  true,
 		},
 		"wait-for-down": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           serverWaitForParams(),
 			Usage:            "Wait until shutdown is completed",
 			UseCustomCommand: true,
 			Category:         "power",
 			Order:            50,
 			NoOutput:         true,
+			NeedlessConfirm:  true,
 		},
 		"ssh": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateSingle,
 			Params:           serverSSHParam(),
 			Usage:            "Connect to server by SSH",
 			UseCustomCommand: true,
 			Category:         "ssh",
 			Order:            10,
 			NoOutput:         true,
+			NeedlessConfirm:  true,
 		},
 		"ssh-exec": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateSingle,
 			Params:           serverSSHParam(),
 			Usage:            "Execute command on server connected by SSH",
 			UseCustomCommand: true,
 			Category:         "ssh",
 			Order:            20,
 			NoOutput:         true,
+			NeedlessConfirm:  true,
 		},
 		"scp": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandCustom,
 			Params:           serverSCPParam(),
 			Usage:            "Copy files/directories by SSH",
 			ArgsUsage:        "[ServerID:]<FROM> [ServerID:]<TO>",
@@ -142,7 +152,7 @@ func ServerResource() *schema.Resource {
 			NoOutput:         true,
 		},
 		"disk-info": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             serverDiskInfoParam(),
 			Usage:              "Show information of disk(s) connected to server",
 			TableType:          output.TableSimple,
@@ -150,9 +160,10 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand:   true,
 			Category:           "disks",
 			Order:              10,
+			NeedlessConfirm:    true,
 		},
 		"disk-connect": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             serverDiskConnectParam(),
 			Usage:              "Connect disk to server",
 			TableType:          output.TableSimple,
@@ -163,7 +174,7 @@ func ServerResource() *schema.Resource {
 			NoOutput:           true,
 		},
 		"disk-disconnect": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             serverDiskDisconnectParam(),
 			Usage:              "Disconnect disk from server",
 			TableType:          output.TableSimple,
@@ -174,7 +185,7 @@ func ServerResource() *schema.Resource {
 			NoOutput:           true,
 		},
 		"interface-info": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             serverInterfaceInfoParam(),
 			Usage:              "Show information of NIC(s) connected to server",
 			TableType:          output.TableSimple,
@@ -182,9 +193,10 @@ func ServerResource() *schema.Resource {
 			UseCustomCommand:   true,
 			Category:           "network",
 			Order:              10,
+			NeedlessConfirm:    true,
 		},
 		"interface-add-for-internet": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             serverInterfaceAddForInternetParam(),
 			Usage:              "Create and connect NIC connected to the internet",
 			TableType:          output.TableSimple,
@@ -195,7 +207,7 @@ func ServerResource() *schema.Resource {
 			NoOutput:           true,
 		},
 		"interface-add-for-router": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             serverInterfaceAddForRouterParam(),
 			Usage:              "Create and connect NIC connected to the router",
 			TableType:          output.TableSimple,
@@ -206,7 +218,7 @@ func ServerResource() *schema.Resource {
 			NoOutput:           true,
 		},
 		"interface-add-for-switch": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             serverInterfaceAddForSwitchParam(),
 			Usage:              "Create and connect NIC connected to the switch",
 			TableType:          output.TableSimple,
@@ -217,7 +229,7 @@ func ServerResource() *schema.Resource {
 			NoOutput:           true,
 		},
 		"interface-add-disconnected": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             serverInterfaceAddDisconnectedParam(),
 			Usage:              "Create and connect a disconnected NIC",
 			TableType:          output.TableSimple,
@@ -228,15 +240,16 @@ func ServerResource() *schema.Resource {
 			NoOutput:           true,
 		},
 		"iso-info": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateSingle,
 			Params:           serverISOImageInfoParam(),
 			Usage:            "Show information of ISO-Image inserted to server",
 			UseCustomCommand: true,
 			Category:         "iso",
 			Order:            10,
+			NeedlessConfirm:  true,
 		},
 		"iso-insert": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateSingle,
 			Params:           serverISOImageInsertParam(),
 			Usage:            "Insert ISO-Image to server",
 			UseCustomCommand: true,
@@ -245,7 +258,7 @@ func ServerResource() *schema.Resource {
 			NoOutput:         true,
 		},
 		"iso-eject": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateSingle,
 			Params:           serverISOImageEjectParam(),
 			Usage:            "Eject ISO-Image from server",
 			UseCustomCommand: true,
@@ -254,7 +267,7 @@ func ServerResource() *schema.Resource {
 			NoOutput:         true,
 		},
 		"monitor-cpu": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandRead,
 			Params:             serverMonitorCPUParam(),
 			Usage:              "Collect CPU monitor values",
 			TableType:          output.TableSimple,
@@ -264,7 +277,7 @@ func ServerResource() *schema.Resource {
 			Order:              10,
 		},
 		"monitor-nic": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandRead,
 			Params:             serverMonitorNICParam(),
 			Usage:              "Collect NIC(s) monitor values",
 			TableType:          output.TableSimple,
@@ -274,7 +287,7 @@ func ServerResource() *schema.Resource {
 			Order:              20,
 		},
 		"monitor-disk": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandRead,
 			Params:             serverMonitorDiskParam(),
 			Usage:              "Collect Disk(s) monitor values",
 			TableType:          output.TableSimple,
@@ -875,14 +888,11 @@ var osTypeValues = []string{
 }
 
 func serverReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func serverUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":          paramID,
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -892,12 +902,11 @@ func serverUpdateParam() map[string]*schema.Schema {
 
 func serverDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"force": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Aliases:     []string{"f"},
-			Description: "force-shutdown flag if server is running",
+			Description: "forced-shutdown flag if server is running",
 		},
 		"with-disk": {
 			Type:         schema.TypeBool,
@@ -910,7 +919,6 @@ func serverDeleteParam() map[string]*schema.Schema {
 
 func serverSSHParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"key": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -992,38 +1000,23 @@ func serverSCPParam() map[string]*schema.Schema {
 }
 
 func serverPowerOnParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func serverPowerOffParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-		"force": {
-			Type:        schema.TypeBool,
-			HandlerType: schema.HandlerNoop,
-			Aliases:     []string{"f"},
-			Description: "force shutdown flag",
-		},
-	}
+	return map[string]*schema.Schema{}
 }
 
 func serverResetParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func serverWaitForParams() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func serverPlanChangeParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		/*
 		 === server plan ===
 		*/
@@ -1045,14 +1038,11 @@ func serverPlanChangeParam() map[string]*schema.Schema {
 }
 
 func serverISOImageInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func serverISOImageInsertParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"iso-image-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
@@ -1081,20 +1071,15 @@ func serverISOImageInsertParam() map[string]*schema.Schema {
 }
 
 func serverISOImageEjectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func serverDiskInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func serverDiskConnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"disk-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
@@ -1108,7 +1093,6 @@ func serverDiskConnectParam() map[string]*schema.Schema {
 
 func serverDiskDisconnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"disk-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
@@ -1121,14 +1105,11 @@ func serverDiskDisconnectParam() map[string]*schema.Schema {
 }
 
 func serverInterfaceInfoParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func serverInterfaceAddForInternetParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"without-disk-edit": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -1138,7 +1119,6 @@ func serverInterfaceAddForInternetParam() map[string]*schema.Schema {
 }
 func serverInterfaceAddForRouterParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"without-disk-edit": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -1178,7 +1158,6 @@ func serverInterfaceAddForRouterParam() map[string]*schema.Schema {
 }
 func serverInterfaceAddForSwitchParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"without-disk-edit": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -1217,14 +1196,11 @@ func serverInterfaceAddForSwitchParam() map[string]*schema.Schema {
 	}
 }
 func serverInterfaceAddDisconnectedParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func serverMonitorCPUParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1258,7 +1234,6 @@ func serverMonitorCPUColumns() []output.ColumnDef {
 
 func serverMonitorNICParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1302,7 +1277,6 @@ func serverMonitorNICColumns() []output.ColumnDef {
 }
 func serverMonitorDiskParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,

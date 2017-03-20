@@ -31,10 +31,9 @@ func ISOImageDownload(ctx Context, params *DownloadISOImageParam) error {
 	compChan := make(chan bool)
 	errChan := make(chan error)
 
-	spinner := internal.NewSpinner(
-		"Downloading...",
-		"Download ISOImage is complete.\n",
-		internal.CharSetDownload,
+	spinner := internal.NewProgress(
+		fmt.Sprintf("Still downloading[ID:%d]...", params.Id),
+		fmt.Sprintf("Download ISOImage[ID:%d]", params.Id),
 		GlobalOption.Progress)
 	go func() {
 		spinner.Start()

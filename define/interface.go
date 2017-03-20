@@ -43,16 +43,15 @@ func InterfaceResource() *schema.Resource {
 			Params:        interfaceDeleteParam(),
 			IncludeFields: interfaceDetailIncludes(),
 			ExcludeFields: interfaceDetailExcludes(),
-			NeedConfirm:   true,
 		},
 		"packet-filter-connect": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           interfacePacketFilterConnectParam(),
 			UseCustomCommand: true,
 			NoOutput:         true,
 		},
 		"packet-filter-disconnect": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           interfacePacketFilterDisconnectParam(),
 			UseCustomCommand: true,
 			NoOutput:         true,
@@ -131,14 +130,11 @@ func interfaceCreateParam() map[string]*schema.Schema {
 }
 
 func interfaceReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func interfaceUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"user-ipaddress": {
 			Type:            schema.TypeString,
 			HandlerType:     schema.HandlerPathThrough,
@@ -150,14 +146,11 @@ func interfaceUpdateParam() map[string]*schema.Schema {
 }
 
 func interfaceDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func interfacePacketFilterConnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"packet-filter-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
@@ -171,7 +164,6 @@ func interfacePacketFilterConnectParam() map[string]*schema.Schema {
 
 func interfacePacketFilterDisconnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"packet-filter-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,

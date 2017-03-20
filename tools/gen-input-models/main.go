@@ -207,6 +207,19 @@ func buildFieldsParams(params schema.SortableParams) ([]map[string]interface{}, 
 			}
 		}
 
+		// sakuraID(number-only,12 digit) validator
+		if s.SakuraID {
+			validatorName := "validateSakuraID"
+			err = t3.Execute(validatorBuf, map[string]interface{}{
+				"FlagName":     ctx.InputParamCLIFlagName(),
+				"Name":         ctx.InputParamFieldName(),
+				"ValidateFunc": validatorName,
+			})
+			if err != nil {
+				return fieldsRes, initializerRes, validatorRes, err
+			}
+		}
+
 		// custom validator
 		if s.ValidateFunc != nil {
 			validatorName := fmt.Sprintf(`define.Resources["%s"].Commands["%s"].Params["%s"].ValidateFunc`,

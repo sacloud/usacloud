@@ -43,17 +43,16 @@ func ArchiveResource() *schema.Resource {
 			Params:        archiveDeleteParam(),
 			IncludeFields: archiveDetailIncludes(),
 			ExcludeFields: archiveDetailExcludes(),
-			NeedConfirm:   true,
 		},
 		"upload": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateSingle,
 			Params:           archiveUploadParam(),
 			IncludeFields:    archiveDetailIncludes(),
 			ExcludeFields:    archiveDetailExcludes(),
 			UseCustomCommand: true,
 		},
 		"download": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateSingle,
 			Params:           archiveDownloadParam(),
 			IncludeFields:    archiveDetailIncludes(),
 			ExcludeFields:    archiveDetailExcludes(),
@@ -61,22 +60,23 @@ func ArchiveResource() *schema.Resource {
 			NoOutput:         true,
 		},
 		"wait-for-copy": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           archiveWaitForCopyParam(),
 			IncludeFields:    archiveDetailIncludes(),
 			ExcludeFields:    archiveDetailExcludes(),
 			UseCustomCommand: true,
 			NoOutput:         true,
+			NeedlessConfirm:  true,
 		},
 		"ftp-open": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           archiveOpenFTPParam(),
 			IncludeFields:    archiveDetailIncludes(),
 			ExcludeFields:    archiveDetailExcludes(),
 			UseCustomCommand: true,
 		},
 		"ftp-close": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           archiveCloseFTPParam(),
 			IncludeFields:    archiveDetailIncludes(),
 			ExcludeFields:    archiveDetailExcludes(),
@@ -160,14 +160,11 @@ func archiveCreateParam() map[string]*schema.Schema {
 }
 
 func archiveReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func archiveUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":          paramID,
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -176,14 +173,11 @@ func archiveUpdateParam() map[string]*schema.Schema {
 }
 
 func archiveDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func archiveUploadParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"archive-file": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -196,7 +190,6 @@ func archiveUploadParam() map[string]*schema.Schema {
 
 func archiveDownloadParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"file-destination": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -207,19 +200,13 @@ func archiveDownloadParam() map[string]*schema.Schema {
 }
 
 func archiveWaitForCopyParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func archiveOpenFTPParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func archiveCloseFTPParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }

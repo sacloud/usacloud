@@ -38,10 +38,9 @@ func DiskEdit(ctx Context, params *EditDiskParam) error {
 	}
 
 	// wait for copy with progress
-	spinner := internal.NewSpinner(
-		"Editing...",
-		"Edit disk is complete.\n",
-		internal.CharSetProgress,
+	spinner := internal.NewProgress(
+		fmt.Sprintf("Still editing[ID:%d]...", params.Id),
+		fmt.Sprintf("Edit disk[ID:%d]", params.Id),
 		GlobalOption.Progress)
 	spinner.Start()
 	compChan := make(chan bool)

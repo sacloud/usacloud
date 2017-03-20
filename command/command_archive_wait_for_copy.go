@@ -15,10 +15,9 @@ func ArchiveWaitForCopy(ctx Context, params *WaitForCopyArchiveParam) error {
 	}
 
 	// wait for copy with progress
-	spinner := internal.NewSpinner(
-		"Coping...",
-		"Copy archive is complete.\n",
-		internal.CharSetProgress,
+	spinner := internal.NewProgress(
+		fmt.Sprintf("Still coping[ID:%d]...", params.Id),
+		fmt.Sprintf("Copy archive[ID:%d]", params.Id),
 		GlobalOption.Progress)
 	spinner.Start()
 	compChan, progChan, errChan := api.AsyncSleepWhileCopying(p.ID, client.DefaultTimeoutDuration)

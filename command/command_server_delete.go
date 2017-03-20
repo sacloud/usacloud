@@ -22,10 +22,9 @@ func ServerDelete(ctx Context, params *DeleteServerParam) error {
 
 			compChan := make(chan bool)
 			errChan := make(chan error)
-			spinner := internal.NewSpinner(
-				"Waiting for Shutdown...",
-				"Shutdown is complete.\n",
-				internal.CharSetProgress,
+			spinner := internal.NewProgress(
+				fmt.Sprintf("Still waiting for Shutdown[ID:%d]...", params.Id),
+				fmt.Sprintf("Shutdown server[ID:%d]", params.Id),
 				GlobalOption.Progress)
 
 			go func() {

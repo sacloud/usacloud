@@ -45,7 +45,6 @@ func AutoBackupResource() *schema.Resource {
 			Params:        autoBackupDeleteParam(),
 			IncludeFields: autoBackupDetailIncludes(),
 			ExcludeFields: autoBackupDetailExcludes(),
-			NeedConfirm:   true,
 		},
 	}
 
@@ -149,14 +148,11 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 }
 
 func autoBackupReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func autoBackupUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":          paramID,
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -190,7 +186,5 @@ func autoBackupUpdateParam() map[string]*schema.Schema {
 }
 
 func autoBackupDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }

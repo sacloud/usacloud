@@ -45,47 +45,46 @@ func PacketFilterResource() *schema.Resource {
 			Params:        packetFilterDeleteParam(),
 			IncludeFields: packetFilterDetailIncludes(),
 			ExcludeFields: packetFilterDetailExcludes(),
-			NeedConfirm:   true,
 		},
 		"rule-list": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateMulti,
 			Aliases:            []string{"rules"},
 			Params:             packetFilterRuleListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: packetFilterRuleListColumns(),
 			UseCustomCommand:   true,
+			NeedlessConfirm:    true,
 		},
 		"rule-add": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             packetFilterRuleAddParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: packetFilterRuleListColumns(),
 			UseCustomCommand:   true,
 		},
 		"rule-update": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             packetFilterRuleUpdateParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: packetFilterRuleListColumns(),
 			UseCustomCommand:   true,
 		},
 		"rule-delete": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             packetFilterRuleDeleteParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: packetFilterRuleListColumns(),
 			UseCustomCommand:   true,
-			NeedConfirm:        true,
 			ConfirmMessage:     "delete rule",
 		},
 		"interface-connect": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateSingle,
 			Params:           packetFilterInterfaceConnectParam(),
 			UseCustomCommand: true,
 			NoOutput:         true,
 		},
 		"interface-disconnect": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateSingle,
 			Params:           packetFilterInterfaceDisconnectParam(),
 			UseCustomCommand: true,
 			NoOutput:         true,
@@ -146,36 +145,28 @@ func packetFilterCreateParam() map[string]*schema.Schema {
 }
 
 func packetFilterReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func packetFilterUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":          paramID,
 		"name":        paramName,
 		"description": paramDescription,
 	}
 }
 
 func packetFilterDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func packetFilterRuleListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 var allowPacketFilterProtocol = []string{"tcp", "udp", "icmp", "fragment", "ip"}
 
 func packetFilterRuleAddParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"index": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -221,7 +212,6 @@ func packetFilterRuleAddParam() map[string]*schema.Schema {
 
 func packetFilterRuleUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -267,7 +257,6 @@ func packetFilterRuleUpdateParam() map[string]*schema.Schema {
 
 func packetFilterRuleDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -279,7 +268,6 @@ func packetFilterRuleDeleteParam() map[string]*schema.Schema {
 
 func packetFilterInterfaceConnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"interface-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
@@ -293,7 +281,6 @@ func packetFilterInterfaceConnectParam() map[string]*schema.Schema {
 
 func packetFilterInterfaceDisconnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"interface-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
