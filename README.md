@@ -182,7 +182,7 @@ COPYRIGHT:
     
 ```
 
-#### Examples: Connect to server by SSH
+#### Examples: Connect to server(SSH/SCP/VNC)
 
 ```bash
     # connect to server by ssh using generated private-key(Not supported on Windows)
@@ -195,6 +195,10 @@ COPYRIGHT:
     $ usacloud server scp local-file.txt [ServerID]:/home/ubuntu/remote-file.txt # local to remote
     $ usacloud server scp [ServerID]:/home/ubuntu/remote-file.txt local-file.txt # remote to local
     $ usacloud server scp -r local-dir [ServerID]:/home/ubuntu/remote-dir        # recursive
+    
+    # open VNC client using the OS's default application
+    # In Windows, it is need to associate vnc client with .vnc extension
+    $ usacloud server vnc <ID or Name>
 ```
 
 #### Examples: Upload/Download iso-image or archive by FTPS
