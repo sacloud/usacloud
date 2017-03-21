@@ -16,7 +16,7 @@ func RegionResource() *schema.Resource {
 			TableColumnDefines: regionListColumns(),
 		},
 		"read": {
-			Type:          schema.CommandRead,
+			Type:          schema.CommandManipulateIDOnly,
 			Aliases:       []string{"r"},
 			Params:        regionReadParam(),
 			IncludeFields: regionDetailIncludes(),

@@ -45,36 +45,35 @@ func GSLBResource() *schema.Resource {
 			Params:        gslbDeleteParam(),
 			IncludeFields: gslbDetailIncludes(),
 			ExcludeFields: gslbDetailExcludes(),
-			NeedConfirm:   true,
 		},
 		"server-list": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             gslbServerListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: gslbServerListColumns(),
 			UseCustomCommand:   true,
+			NeedlessConfirm:    true,
 		},
 		"server-add": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             gslbServerAddParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: gslbServerListColumns(),
 			UseCustomCommand:   true,
 		},
 		"server-update": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             gslbServerUpdateParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: gslbServerListColumns(),
 			UseCustomCommand:   true,
 		},
 		"server-delete": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandManipulateSingle,
 			Params:             gslbServerDeleteParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: gslbServerListColumns(),
 			UseCustomCommand:   true,
-			NeedConfirm:        true,
 			ConfirmMessage:     "delete server",
 		},
 	}
@@ -187,14 +186,11 @@ func gslbCreateParam() map[string]*schema.Schema {
 }
 
 func gslbReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func gslbUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":          paramID,
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -247,20 +243,15 @@ func gslbUpdateParam() map[string]*schema.Schema {
 }
 
 func gslbDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func gslbServerListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func gslbServerAddParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"ipaddress": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -283,7 +274,6 @@ func gslbServerAddParam() map[string]*schema.Schema {
 }
 func gslbServerUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
@@ -311,7 +301,6 @@ func gslbServerUpdateParam() map[string]*schema.Schema {
 }
 func gslbServerDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,

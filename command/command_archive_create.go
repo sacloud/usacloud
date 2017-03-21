@@ -51,10 +51,9 @@ func ArchiveCreate(ctx Context, params *CreateArchiveParam) error {
 		compChan := make(chan bool)
 		errChan := make(chan error)
 
-		spinner := internal.NewSpinner(
-			"Uploading...",
-			"Upload archive is complete.\n",
-			internal.CharSetUpload,
+		spinner := internal.NewProgress(
+			fmt.Sprintf("Still uploading[ID:%d]...", res.ID),
+			fmt.Sprintf("Upload archive[ID:%d]", res.ID),
 			GlobalOption.Progress)
 		go func() {
 			spinner.Start()
@@ -88,10 +87,9 @@ func ArchiveCreate(ctx Context, params *CreateArchiveParam) error {
 		}
 	} else {
 		// wait for copy with progress
-		spinner := internal.NewSpinner(
-			"Coping...",
-			"Copy archive is complete.\n",
-			internal.CharSetProgress,
+		spinner := internal.NewProgress(
+			fmt.Sprintf("Still coping[ID:%d]...", res.ID),
+			fmt.Sprintf("Copy archive[ID:%d]", res.ID),
 			GlobalOption.Progress)
 		spinner.Start()
 		compChan, progChan, errChan := api.AsyncSleepWhileCopying(res.ID, client.DefaultTimeoutDuration)

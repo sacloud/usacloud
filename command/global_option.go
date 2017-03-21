@@ -1,6 +1,7 @@
 package command
 
 import (
+	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-isatty"
 	"gopkg.in/urfave/cli.v2"
 	"io"
@@ -33,6 +34,8 @@ var GlobalOption = &Option{
 func init() {
 	if !(isatty.IsTerminal(os.Stderr.Fd()) || isatty.IsCygwinTerminal(os.Stderr.Fd())) {
 		GlobalOption.Progress = ioutil.Discard
+	} else {
+		GlobalOption.Progress = colorable.NewColorableStderr()
 	}
 }
 

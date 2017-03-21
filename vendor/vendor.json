@@ -15,12 +15,6 @@
 			"revisionTime": "2017-02-06T15:46:32Z"
 		},
 		{
-			"checksumSHA1": "yUNb1Q8upmhhmqbRTigXX5GYhlo=",
-			"path": "github.com/briandowns/spinner",
-			"revision": "ec599f41a86d9a71c359e224bd71a2df3e909a3d",
-			"revisionTime": "2017-03-12T20:27:32Z"
-		},
-		{
 			"checksumSHA1": "dvabztWVQX8f6oMLRyv4dLH+TGY=",
 			"path": "github.com/davecgh/go-spew/spew",
 			"revision": "346938d642f2ec3594ed81d874461961cd0faa76",

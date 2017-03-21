@@ -16,7 +16,7 @@ func ProductServerResource() *schema.Resource {
 			TableColumnDefines: productServerListColumns(),
 		},
 		"read": {
-			Type:          schema.CommandRead,
+			Type:          schema.CommandManipulateIDOnly,
 			Aliases:       []string{"r"},
 			Params:        productServerReadParam(),
 			IncludeFields: productServerDetailIncludes(),

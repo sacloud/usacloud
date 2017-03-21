@@ -43,17 +43,16 @@ func InternetResource() *schema.Resource {
 			Params:        internetDeleteParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),
-			NeedConfirm:   true,
 		},
 		"update-bandwidth": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           internetUpdateBandWidthParam(),
 			IncludeFields:    internetDetailIncludes(),
 			ExcludeFields:    internetDetailExcludes(),
 			UseCustomCommand: true,
 		},
 		"monitor": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandRead,
 			Params:             internetMonitorParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: internetMonitorColumns(),
@@ -144,14 +143,11 @@ func internetCreateParam() map[string]*schema.Schema {
 }
 
 func internetReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func internetUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":          paramID,
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -168,14 +164,11 @@ func internetUpdateParam() map[string]*schema.Schema {
 }
 
 func internetDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func internetUpdateBandWidthParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"band-width": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
@@ -191,7 +184,6 @@ func internetUpdateBandWidthParam() map[string]*schema.Schema {
 
 func internetMonitorParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,

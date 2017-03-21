@@ -43,10 +43,9 @@ func SSHKeyResource() *schema.Resource {
 			Params:        sshKeyDeleteParam(),
 			IncludeFields: sshKeyDetailIncludes(),
 			ExcludeFields: sshKeyDetailExcludes(),
-			NeedConfirm:   true,
 		},
 		"generate": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandCustom,
 			Aliases:          []string{"g", "gen"},
 			Params:           sshKeyGenerateParam(),
 			IncludeFields:    sshKeyDetailIncludes(),
@@ -126,21 +125,16 @@ func sshKeyGenerateParam() map[string]*schema.Schema {
 }
 
 func sshKeyReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func sshKeyUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":          paramID,
 		"name":        paramName,
 		"description": paramDescription,
 	}
 }
 
 func sshKeyDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }

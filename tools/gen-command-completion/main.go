@@ -136,6 +136,7 @@ func generateIDCompletion(command *schema.Command) (string, error) {
 	err := t.Execute(b, map[string]interface{}{
 		"FinderFieldName": ctx.CommandResourceName(),
 		"ListResultField": ctx.FindResultFieldName(),
+		"IsNeedNameComp":  !command.Type.IsNeedIDOnlyType(),
 	})
 	return b.String(), err
 }
@@ -212,6 +213,10 @@ var completeIDTemplate = `
 		return
 	}
 
+	{{if not .IsNeedNameComp}}if cur != "" && !isSakuraID(cur){
+		return
+	}{{end}}
+
 	client := ctx.GetAPIClient()
 	finder := client.Get{{.FinderFieldName}}API()
 	finder.SetEmpty()
@@ -221,8 +226,18 @@ var completeIDTemplate = `
 	if err != nil {
 		return
 	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
 	for i := range res.{{.ListResultField}} {
 		fmt.Println(res.{{.ListResultField}}[i].ID)
+		{{if .IsNeedNameComp}}var target interface{} = &res.{{.ListResultField}}[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+		{{end}}
 	}
 `
 

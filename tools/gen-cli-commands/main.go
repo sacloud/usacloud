@@ -127,18 +127,37 @@ func generateSource(resource *schema.Resource) (string, error) {
 		}
 	}
 
+	// hasIdRequiredType Command
+	needadditionalImport := false
+	needsyncImport := false
+	for _, comm := range resource.SortedCommands() {
+		if comm.Command.Type.IsRequiredIDType() {
+			needadditionalImport = true
+		}
+		if comm.Command.Type.IsRequiredIDType() && !comm.Command.Type.IsNeedIDOnlyType() {
+			needsyncImport = true
+		}
+
+		if needadditionalImport && needsyncImport {
+			break
+		}
+
+	}
+
 	buf := bytes.NewBufferString("")
 	t := template.New("t")
 	template.Must(t.Parse(srcTemplate))
 	err := t.Execute(buf, map[string]interface{}{
-		"Name":                ctx.DashR(),
-		"Aliases":             tools.FlattenStringList(resource.Aliases),
-		"Usage":               usage,
-		"Commands":            commands,
-		"Parameters":          parameters,
-		"CategoryResourceMap": categoryResourceMap,
-		"CategoryCommandMap":  categoryCommandMap,
-		"CategoryParamMap":    categoryParamMap,
+		"Name":                   ctx.DashR(),
+		"Aliases":                tools.FlattenStringList(resource.Aliases),
+		"Usage":                  usage,
+		"Commands":               commands,
+		"Parameters":             parameters,
+		"CategoryResourceMap":    categoryResourceMap,
+		"CategoryCommandMap":     categoryCommandMap,
+		"CategoryParamMap":       categoryParamMap,
+		"IsNeedAdditionalImport": needadditionalImport,
+		"IsNeedSyncImport":       needsyncImport,
 	})
 	return buf.String(), err
 }
@@ -158,7 +177,17 @@ func buildCommandsParams(command *schema.Command) (map[string]interface{}, error
 	}
 	argsUsage := command.ArgsUsage
 	if command.ArgsUsage == "" && command.Type.IsRequiredIDType() {
-		argsUsage = "[ResourceID]"
+		t := command.Type
+		switch {
+		case t.IsNeedIDOnlyType():
+			argsUsage = "<ID>"
+		case t.IsNeedSingleIDType():
+			argsUsage = "<ID or Name(only single target)>"
+		default:
+			argsUsage = "<ID or Name(allow multiple target)>"
+
+		}
+
 	}
 
 	res = map[string]interface{}{
@@ -243,6 +272,7 @@ func buildFlagsParams(params schema.SortableParams) ([]map[string]interface{}, e
 			"DefaultText":     s.DefaultText,
 			"DestinationName": dest,
 			"PropName":        ctx.InputParamFieldName(),
+			"Hidden":          s.Hidden,
 		}
 		res = append(res, param)
 	}
@@ -273,27 +303,31 @@ func buildActionParams(command *schema.Command) (map[string]interface{}, error) 
 			setDefault += fmt.Sprintf("%s.%s = c.%s(\"%s\")\n", paramName, propName, valueFuncName, flagName)
 		}
 	}
-	action := fmt.Sprintf("return %s(ctx , %s)", ctx.CommandFuncName(), paramName)
+	action := fmt.Sprintf("%s(ctx , %s)", ctx.CommandFuncName(), paramName)
 
 	needConfirm := false
 	confirmMsg := command.ConfirmMessage
-	if command.NeedConfirm {
+	if command.Type.IsNeedConfirmType() && !command.NeedlessConfirm {
 		needConfirm = true
-		if confirmMsg == "" {
-			confirmMsg = fmt.Sprintf("%s this", ctx.DashC())
-		}
+	}
+	if confirmMsg == "" {
+		confirmMsg = fmt.Sprintf("%s", ctx.DashC())
 	}
 
 	res = map[string]interface{}{
 		"ParamName":             paramName,
 		"SkipAuth":              ctx.CurrentCommand().SkipAuth,
-		"NeedAsignFromArgs":     ctx.CurrentCommand().Type.IsRequiredIDType(),
 		"SetDefault":            setDefault,
 		"Action":                action,
 		"CompleteArgsFuncName":  ctx.CompleteArgsFuncName(),
 		"CompleteFlagsFuncName": ctx.CompleteFlagsFuncName(),
 		"NeedConfirm":           needConfirm,
 		"ConfirmMsg":            confirmMsg,
+		"IdParamRequired":       command.Type.IsRequiredIDType(),
+		"CommandResourceName":   ctx.CommandResourceName(),
+		"FindResultName":        ctx.FindResultFieldName(),
+		"IsNeedSingleID":        command.Type.IsNeedSingleIDType(),
+		"IsNeedIDOnlyType":      command.Type.IsNeedIDOnlyType(),
 	}
 
 	return res, nil
@@ -341,6 +375,8 @@ import (
     "gopkg.in/urfave/cli.v2"
     "github.com/sacloud/usacloud/schema"
     "strings"
+    {{ if .IsNeedAdditionalImport }}"fmt"
+    {{ if .IsNeedSyncImport }}"sync"{{end}}{{end}}
 )
 
 func init() {
@@ -378,6 +414,8 @@ func init() {
 							DefaultText: "{{.DefaultText}}",{{ end }}
 					        {{- if .DestinationName}}
 					        	Destination: {{.DestinationName}}.{{.PropName}},{{ end }}
+					        {{- if .Hidden}}
+					        	Hidden: {{.Hidden}},{{ end }}
 					},
 					{{ end }}
 				},{{ end }}
@@ -476,11 +514,12 @@ func init() {
 						return flattenErrorsWithPrefix(errors,"GlobalOptions")
 					}
 
-					{{ if .NeedAsignFromArgs }}
-					// id is can set from option or args(first)
-					if c.NArg() > 0 {
-						c.Set("id", c.Args().First())
-					}{{ end }}
+					{{ if .IsNeedIDOnlyType }}
+					if c.NArg() == 0 {
+						return fmt.Errorf("ID argument is required")
+					}
+					c.Set("id", c.Args().First())
+					{{ end }}
 
 					// Validate specific for each command params
 					if errors := {{.ParamName}}.Validate(); len(errors) > 0 {
@@ -490,14 +529,73 @@ func init() {
 					// create command context
 					ctx := NewContext(c, c.Args().Slice(), {{.ParamName}})
 
+					{{if and .IdParamRequired (not .IsNeedIDOnlyType) }}
+					if c.NArg() == 0 {
+						return fmt.Errorf("ID or Name argument is required")
+					}
+					idOrName := c.Args().First()
+					apiClient := ctx.GetAPIClient().{{.CommandResourceName}}
+					ids := []int64{}
+
+					if id, ok := toSakuraID(idOrName); ok {
+						ids = append(ids, id)
+					} else {
+						apiClient.SetFilterBy("Name", idOrName)
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.{{.FindResultName}} {
+							ids = append(ids, v.GetID())
+						}
+					}
+
+					if len(ids) == 0 {
+						return fmt.Errorf("ID or Name argument is required")
+					}
+
+					{{ if .IsNeedSingleID }}
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+					{{ end }}
+
 					{{ if .NeedConfirm }}
 					// confirm
-					if !{{.ParamName}}.Force && !confirmContinue("{{.ConfirmMsg}}") {
+					if !{{.ParamName}}.Assumeyes && !confirmContinue("{{.ConfirmMsg}}", ids...) {
+						return nil
+					}
+					{{ end }}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						{{.ParamName}}.SetId(id)
+						p := *{{.ParamName}} // copy struct value
+						{{.ParamName}} := &p
+						go func() {
+							err := {{.Action}}
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return flattenErrors(errs)
+
+					{{ else }}
+					{{ if .NeedConfirm }}
+					// confirm
+					if !{{.ParamName}}.Assumeyes && !confirmContinue("{{.ConfirmMsg}}") {
 						return nil
 					}
 					{{ end }}
 					// Run command with params
-					{{.Action}}
+					return {{.Action}}
+					{{ end }}
 				},
 			},
 			{{ end }}

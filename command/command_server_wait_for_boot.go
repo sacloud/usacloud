@@ -20,10 +20,9 @@ func ServerWaitForBoot(ctx Context, params *WaitForBootServerParam) error {
 
 	compChan := make(chan bool)
 	errChan := make(chan error)
-	spinner := internal.NewSpinner(
-		"Booting...",
-		"Boot server is complete.\n",
-		internal.CharSetProgress,
+	spinner := internal.NewProgress(
+		fmt.Sprintf("Still booting[ID:%d]...", params.Id),
+		fmt.Sprintf("Boot server[ID:%d]", params.Id),
 		GlobalOption.Progress)
 
 	go func() { // wait for copy with progress

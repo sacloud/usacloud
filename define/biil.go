@@ -15,13 +15,15 @@ func BillResource() *schema.Resource {
 			TableType:          output.TableSimple,
 			TableColumnDefines: billListColumns(),
 			UseCustomCommand:   true,
+			NeedlessConfirm:    true,
 		},
 		"csv": {
-			Type:                   schema.CommandRead,
+			Type:                   schema.CommandManipulateIDOnly,
 			Params:                 billReadParam(),
 			UseCustomCommand:       true,
 			UseCustomArgCompletion: true,
 			NoOutput:               true, // doing manual output to GlobalOption.Out
+			NeedlessConfirm:        true,
 		},
 	}
 

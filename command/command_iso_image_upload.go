@@ -26,10 +26,9 @@ func ISOImageUpload(ctx Context, params *UploadISOImageParam) error {
 	compChan := make(chan bool)
 	errChan := make(chan error)
 
-	spinner := internal.NewSpinner(
-		"Uploading...",
-		"Upload ISOImage is complete.\n",
-		internal.CharSetUpload,
+	spinner := internal.NewProgress(
+		fmt.Sprintf("Still uploading[ID:%d]...", params.Id),
+		fmt.Sprintf("Upload ISOImage[ID:%d]", params.Id),
 		GlobalOption.Progress)
 	go func() {
 		spinner.Start()

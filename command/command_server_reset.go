@@ -16,10 +16,9 @@ func ServerReset(ctx Context, params *ResetServerParam) error {
 
 	compChan := make(chan bool)
 	errChan := make(chan error)
-	spinner := internal.NewSpinner(
-		"Waiting...",
-		"Reset server is complete.\n",
-		internal.CharSetProgress,
+	spinner := internal.NewProgress(
+		fmt.Sprintf("Still resetting[ID:%d]...", params.Id),
+		fmt.Sprintf("Reset server[ID:%d]", params.Id),
 		GlobalOption.Progress)
 
 	go func() {

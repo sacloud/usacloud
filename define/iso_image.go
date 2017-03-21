@@ -43,17 +43,16 @@ func ISOImageResource() *schema.Resource {
 			Params:        isoImageDeleteParam(),
 			IncludeFields: isoImageDetailIncludes(),
 			ExcludeFields: isoImageDetailExcludes(),
-			NeedConfirm:   true,
 		},
 		"upload": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateSingle,
 			Params:           isoImageUploadParam(),
 			IncludeFields:    isoImageDetailIncludes(),
 			ExcludeFields:    isoImageDetailExcludes(),
 			UseCustomCommand: true,
 		},
 		"download": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateSingle,
 			Params:           isoImageDownloadParam(),
 			IncludeFields:    isoImageDetailIncludes(),
 			ExcludeFields:    isoImageDetailExcludes(),
@@ -61,14 +60,14 @@ func ISOImageResource() *schema.Resource {
 			NoOutput:         true,
 		},
 		"ftp-open": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           isoImageOpenFTPParam(),
 			IncludeFields:    isoImageDetailIncludes(),
 			ExcludeFields:    isoImageDetailExcludes(),
 			UseCustomCommand: true,
 		},
 		"ftp-close": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           isoImageCloseFTPParam(),
 			IncludeFields:    isoImageDetailIncludes(),
 			ExcludeFields:    isoImageDetailExcludes(),
@@ -133,14 +132,11 @@ func isoImageCreateParam() map[string]*schema.Schema {
 }
 
 func isoImageReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func isoImageUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":          paramID,
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -149,14 +145,11 @@ func isoImageUpdateParam() map[string]*schema.Schema {
 }
 
 func isoImageDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func isoImageUploadParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"iso-file": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -169,7 +162,6 @@ func isoImageUploadParam() map[string]*schema.Schema {
 
 func isoImageDownloadParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"file-destination": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -180,13 +172,9 @@ func isoImageDownloadParam() map[string]*schema.Schema {
 }
 
 func isoImageOpenFTPParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func isoImageCloseFTPParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }

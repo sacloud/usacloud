@@ -43,10 +43,9 @@ func DiskResource() *schema.Resource {
 			Params:        diskDeleteParam(),
 			IncludeFields: diskDetailIncludes(),
 			ExcludeFields: diskDetailExcludes(),
-			NeedConfirm:   true,
 		},
 		"edit": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Aliases:          []string{"config"},
 			Params:           diskConfigParam(),
 			IncludeFields:    diskDetailIncludes(),
@@ -54,46 +53,44 @@ func DiskResource() *schema.Resource {
 			UseCustomCommand: true,
 		},
 		"wait-for-copy": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Aliases:          []string{"wait"},
 			Params:           diskWaitForCopyParam(),
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),
 			UseCustomCommand: true,
 			NoOutput:         true,
+			NeedlessConfirm:  true,
 		},
 		"reinstall-from-archive": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           diskReinstallFromArchiveParam(),
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),
 			UseCustomCommand: true,
-			NeedConfirm:      true,
 			ConfirmMessage:   "re-install from archive",
 			NoOutput:         true,
 		},
 		"reinstall-from-disk": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           diskReinstallFromDiskParam(),
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),
 			UseCustomCommand: true,
-			NeedConfirm:      true,
 			ConfirmMessage:   "re-install from disk",
 			NoOutput:         true,
 		},
 		"reinstall-to-blank": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           diskReinstallToBlankParam(),
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),
 			UseCustomCommand: true,
-			NeedConfirm:      true,
 			ConfirmMessage:   "re-install to blank",
 			NoOutput:         true,
 		},
 		"server-connect": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           diskServerConnectParam(),
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),
@@ -101,7 +98,7 @@ func DiskResource() *schema.Resource {
 			NoOutput:         true,
 		},
 		"server-disconnect": {
-			Type:             schema.CommandManipulate,
+			Type:             schema.CommandManipulateMulti,
 			Params:           diskServerDisconnectParam(),
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),
@@ -109,7 +106,7 @@ func DiskResource() *schema.Resource {
 			NoOutput:         true,
 		},
 		"monitor": {
-			Type:               schema.CommandManipulate,
+			Type:               schema.CommandRead,
 			Params:             diskMonitorParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: diskMonitorColumns(),
@@ -235,14 +232,11 @@ func diskCreateParam() map[string]*schema.Schema {
 }
 
 func diskReadParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func diskUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id":          paramID,
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -259,14 +253,11 @@ func diskUpdateParam() map[string]*schema.Schema {
 }
 
 func diskDeleteParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func diskConfigParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"hostname": {
 			Type:            schema.TypeString,
 			HandlerType:     schema.HandlerPathThrough,
@@ -329,14 +320,11 @@ func diskConfigParam() map[string]*schema.Schema {
 }
 
 func diskWaitForCopyParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func diskReinstallFromArchiveParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"source-archive-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
@@ -357,7 +345,6 @@ func diskReinstallFromArchiveParam() map[string]*schema.Schema {
 
 func diskReinstallFromDiskParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"source-disk-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
@@ -378,7 +365,6 @@ func diskReinstallFromDiskParam() map[string]*schema.Schema {
 
 func diskReinstallToBlankParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"distant-from": {
 			Type:         schema.TypeIntList,
 			HandlerType:  schema.HandlerNoop,
@@ -391,7 +377,6 @@ func diskReinstallToBlankParam() map[string]*schema.Schema {
 
 func diskServerConnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"server-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
@@ -404,14 +389,11 @@ func diskServerConnectParam() map[string]*schema.Schema {
 }
 
 func diskServerDisconnectParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-		"id": paramID,
-	}
+	return map[string]*schema.Schema{}
 }
 
 func diskMonitorParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"id": paramID,
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,

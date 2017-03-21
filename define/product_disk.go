@@ -16,7 +16,7 @@ func ProductDiskResource() *schema.Resource {
 			TableColumnDefines: productDiskListColumns(),
 		},
 		"read": {
-			Type:          schema.CommandRead,
+			Type:          schema.CommandManipulateIDOnly,
 			Aliases:       []string{"r"},
 			Params:        productDiskReadParam(),
 			IncludeFields: productDiskDetailIncludes(),

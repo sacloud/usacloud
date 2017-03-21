@@ -66,16 +66,12 @@ func ServerSsh(ctx Context, params *SshServerParam) error {
 		args = append(args, "-p", fmt.Sprintf("%d", params.Port))
 	}
 	if ctx.NArgs() > 0 {
-		if ctx.Args()[0] == fmt.Sprintf("%d", params.Id) {
-			args = append(args, ctx.Args()[1:]...)
-		} else {
-			args = append(args, ctx.Args()...)
-		}
+		args = append(args, ctx.Args()[1:]...)
 	}
 
 	// output connect info
 	if !params.Quiet {
-		fmt.Fprintf(GlobalOption.Progress, "connecting server...\n\tcommand: %sssh \n", strings.Join(args, " "))
+		fmt.Fprintf(GlobalOption.Progress, "connecting server...\n\tcommand: ssh %s \n", strings.Join(args, " "))
 	}
 
 	cmd := exec.Command("ssh", args...)

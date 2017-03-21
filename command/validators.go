@@ -3,6 +3,7 @@ package command
 import (
 	"fmt"
 	"github.com/sacloud/usacloud/output"
+	"github.com/sacloud/usacloud/schema"
 	"reflect"
 	"strings"
 	"time"
@@ -68,6 +69,10 @@ func isEmpty(object interface{}) bool {
 		}
 	}
 	return false
+}
+
+func validateSakuraID(fieldName string, object interface{}) []error {
+	return schema.ValidateSakuraID()(fieldName, object)
 }
 
 func validateRequired(fieldName string, object interface{}) []error {

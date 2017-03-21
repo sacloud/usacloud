@@ -14,6 +14,9 @@ import (
 )
 
 func flattenErrors(errors []error) error {
+	if len(errors) == 0 {
+		return nil
+	}
 	var list = make([]string, 0)
 	for _, str := range errors {
 		list = append(list, str.Error())
@@ -177,14 +180,21 @@ func getSSHDefaultUserNameArchiveRec(client *api.Client, archiveID int64) (strin
 }
 
 func confirm(msg string) bool {
-	fmt.Printf("\n%s?(Y/n) [n]: ", msg)
+	fmt.Printf("\n%s(y/n) [n]: ", msg)
 	var input string
 	fmt.Fscanln(GlobalOption.In, &input)
-	return input == "Y"
+	return input == "y"
 }
 
-func confirmContinue(target string) bool {
-	return confirm(fmt.Sprintf("Are you sure you want to %s", target))
+func confirmContinue(target string, ids ...int64) bool {
+	if len(ids) == 0 {
+		return confirm(fmt.Sprintf("Are you sure you want to %s?", target))
+	} else {
+
+		strIDs := StringIDs(ids)
+		msg := fmt.Sprintf("Target resource IDs => [\n\t%s\n]", strings.Join(strIDs, ",\n\t"))
+		return confirm(fmt.Sprintf("%s\nAre you sure you want to %s?", msg, target))
+	}
 }
 
 func parseDateTimeString(strDateTime string) time.Time {
