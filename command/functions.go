@@ -1,6 +1,7 @@
 package command
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/mitchellh/go-homedir"
 	"github.com/sacloud/libsacloud/api"
@@ -8,6 +9,8 @@ import (
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/version"
 	"gopkg.in/urfave/cli.v2"
+	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -86,10 +89,40 @@ func StringIDs(ids []int64) []string {
 	return strIDs
 }
 
+func GetConfigFilePath() (string, error) {
+	homeDir, err := homedir.Dir()
+	if err != nil {
+		return "", fmt.Errorf("getting HomeDir is failed:%s", err)
+	}
+	return filepath.Join(homeDir, ".usacloud_config"), nil
+}
+
+func LoadConfigFile() (*ConfigFileValue, error) {
+	v := &ConfigFileValue{}
+	filePath, err := GetConfigFilePath()
+	if err != nil {
+		return v, err
+	}
+
+	// file exists?
+	if _, err := os.Stat(filePath); err == nil {
+		// read file
+		buf, err := ioutil.ReadFile(filePath)
+		if err != nil {
+			return v, err
+		}
+		if err := json.Unmarshal(buf, v); err != nil {
+			return v, err
+		}
+	}
+
+	return v, nil
+}
+
 func getSSHPrivateKeyStorePath(serverID int64) (string, error) {
 	homeDir, err := homedir.Dir()
 	if err != nil {
-		return "", fmt.Errorf("ServerCreate is failed: getting HomeDir is failed:%s", err)
+		return "", fmt.Errorf("getting HomeDir is failed:%s", err)
 	}
 	return filepath.Join(homeDir, ".ssh", fmt.Sprintf("sacloud_pkey_%d", serverID)), nil
 }

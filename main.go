@@ -147,6 +147,26 @@ func main() {
 		currentHelpPrinter(w, templ, value)
 	}
 
+	app.Before = func(c *cli.Context) error {
+		// load config file
+		v, err := command.LoadConfigFile()
+		if err != nil {
+			return err
+		}
+
+		if !c.IsSet("token") && v.AccessToken != "" {
+			c.Set("token", v.AccessToken)
+		}
+		if !c.IsSet("secreet") && v.AccessTokenSecret != "" {
+			c.Set("secret", v.AccessTokenSecret)
+		}
+		if !c.IsSet("zone") && v.Zone != "" {
+			c.Set("zone", v.Zone)
+		}
+
+		return nil
+	}
+
 	app.Run(os.Args)
 }
 
