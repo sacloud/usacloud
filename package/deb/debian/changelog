@@ -1,3 +1,20 @@
+usacloud (0.0.2-1) stable; urgency=low
+
+  * Monitoring APIs (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/51>
+  * Output options (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/53>
+  * Progress output writer (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/55>
+  * Allow multiple ID or Name args (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/56>
+  * Open VNC client (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/59>
+  * Add config command (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/62>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Wed, 22 Mar 2017 13:36:48 +0000
+
 usacloud (0.0.1-1) stable; urgency=low
   * Set SkipAuth flag to object-storage commands (by yamamoto-febc)
     <https://github.com/sacloud/usacloud/pull/41>
