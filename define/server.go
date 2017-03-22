@@ -126,7 +126,7 @@ func ServerResource() *schema.Resource {
 			Params:           serverSSHParam(),
 			Usage:            "Connect to server by SSH",
 			UseCustomCommand: true,
-			Category:         "ssh",
+			Category:         "connect",
 			Order:            10,
 			NoOutput:         true,
 			NeedlessConfirm:  true,
@@ -136,7 +136,7 @@ func ServerResource() *schema.Resource {
 			Params:           serverSSHParam(),
 			Usage:            "Execute command on server connected by SSH",
 			UseCustomCommand: true,
-			Category:         "ssh",
+			Category:         "connect",
 			Order:            20,
 			NoOutput:         true,
 			NeedlessConfirm:  true,
@@ -147,9 +147,28 @@ func ServerResource() *schema.Resource {
 			Usage:            "Copy files/directories by SSH",
 			ArgsUsage:        "[ServerID:]<FROM> [ServerID:]<TO>",
 			UseCustomCommand: true,
-			Category:         "ssh",
+			Category:         "connect",
 			Order:            30,
 			NoOutput:         true,
+		},
+		"vnc": {
+			Type:             schema.CommandManipulateSingle,
+			Params:           serverVNCParam(),
+			Usage:            "Open VNC client using the OS's default application",
+			UseCustomCommand: true,
+			Category:         "connect",
+			Order:            40,
+			NoOutput:         true,
+			NeedlessConfirm:  true,
+		},
+		"vnc-info": {
+			Type:             schema.CommandRead,
+			Params:           serverVNCParam(),
+			Usage:            "Show VNC proxy information",
+			UseCustomCommand: true,
+			Category:         "connect",
+			Order:            45,
+			NeedlessConfirm:  true,
 		},
 		"disk-info": {
 			Type:               schema.CommandManipulateSingle,
@@ -420,8 +439,8 @@ var serverCommandCategories = []schema.Category{
 		Order:       20,
 	},
 	{
-		Key:         "ssh",
-		DisplayName: "SSH/SCP",
+		Key:         "connect",
+		DisplayName: "SSH/SCP/VNC",
 		Order:       30,
 	},
 	{
@@ -997,6 +1016,10 @@ func serverSCPParam() map[string]*schema.Schema {
 			Description: "disable information messages",
 		},
 	}
+}
+
+func serverVNCParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
 }
 
 func serverPowerOnParam() map[string]*schema.Schema {
