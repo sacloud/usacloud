@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.3 (2017-03-22)
+
+* Use colorable stdout #65 (yamamoto-febc)
+
+
 ## 0.0.2 (2017-03-22)
 
 * Monitoring APIs #51 (yamamoto-febc)

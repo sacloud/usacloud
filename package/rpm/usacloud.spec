@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Mar 22 2017 <yamamoto.febc@gmail.com> - 0.0.3-1
+- Use colorable stdout (by yamamoto-febc)
+
 * Wed Mar 22 2017 <yamamoto.febc@gmail.com> - 0.0.2-1
 - Monitoring APIs (by yamamoto-febc)
 - Output options (by yamamoto-febc)

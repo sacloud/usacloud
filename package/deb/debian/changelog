@@ -1,3 +1,10 @@
+usacloud (0.0.3-1) stable; urgency=low
+
+  * Use colorable stdout (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/65>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Wed, 22 Mar 2017 15:25:31 +0000
+
 usacloud (0.0.2-1) stable; urgency=low
 
   * Monitoring APIs (by yamamoto-febc)
