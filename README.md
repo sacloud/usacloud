@@ -2,13 +2,10 @@
 
 [![Build Status](https://travis-ci.org/sacloud/usacloud.svg?branch=master)](https://travis-ci.org/sacloud/usacloud)
 
-This project is work in progress!!
-
 ## Overview
 
 :rabbit:[`usacloud`](https://github.com/sacloud/usacloud) is New CLI client for the [SakuraCloud](http://cloud.sakura.ad.jp/index.html).  
 That means **"Unofficial + [`sacloud`](https://github.com/sakura-internet/node-sacloud)"**.  
-Written by Go(golang) from scratch.
 
 ## Key Features
 
@@ -48,20 +45,46 @@ Download binary file from [Release page](https://github.com/sacloud/usacloud/rel
     # or
     $ curl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud >> ~/.bashrc
 
-## Usage
+## Setting
 
-### Setting API Keys
+Set API key and secret by `usacloud config` command.  
+(Your API key settings will write to `~/.usacloud_config`)
 
 ```bash
-    # set API Key to environment variables
-    $ export SAKURACLOUD_ACCESS_TOKEN=[YOUR_API_TOKEN]
-    $ export SAKURACLOUD_ACCESS_TOKEN_SECRET=[YOUR_API_SECRET]
+    $ usacloud config
 
-    # set default zone
-    $ export SAKURACLOUD_DEFAULT_ZONE=tk1v
+    Setting SakuraCloud API Token => 
+    	Enter token: [ENTER YOUR_API_TOKEN]
+
+    Setting SakuraCloud API Secret => 
+    	Enter secret: [ENTER YOUR_API_SECRET]
+    	
+    Setting SakuraCloud Zone => 
+    	Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [ENTER ZONE]
+   
+    Written your settings to ~/.usacloud_config
+```
+
+If you want to confirm settings, use `usacloud config --show`.
+
+```bash
+   $ usacloud config --show
+   
+   token=[YOUR_API_TOKEN]
+   secret=[YOUR_API_SECRET]
+   zone=[YOUR_ZONE]
+   
+```
+
+Note: API key and secret can be also set using environment variables.
+
+```bash
+   $ export SAKURACLOUD_ACCESS_TOKEN=[YOUR_API_TOKEN]
+   $ export SAKURACLOUD_ACCESS_TOKEN_SECRET=[YOUR_API_SECRET]
+   $ export SAKURACLOUD_ZONE=tk1v
 ```
    
-#### Usage
+### Usage
 
 ```bash
 NAME:
@@ -74,6 +97,7 @@ VERSION:
    0.0.1, build xxxxxxx
 
 COMMANDS:
+   config                           A manage command of APIKey settings
    server                           A manage commands of Server
    archive                          A manage commands of Archive
    auto-backup                      A manage commands of AutoBackup

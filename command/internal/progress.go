@@ -41,7 +41,7 @@ func (s *ProgressWriter) Start() {
 	s.msgChan = make(chan bool)
 	s.wg.Add(1)
 	go func() {
-		s.print(color.New(color.FgHiWhite), fmt.Sprintf("%s\n", s.msgStart))
+		s.print(color.New(), fmt.Sprintf("%s\n", s.msgStart))
 		for {
 			select {
 			case <-time.After(s.duration):

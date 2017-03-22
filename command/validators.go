@@ -75,6 +75,10 @@ func validateSakuraID(fieldName string, object interface{}) []error {
 	return schema.ValidateSakuraID()(fieldName, object)
 }
 
+func validateInStrValues(fieldName string, object interface{}, allowValues ...string) []error {
+	return schema.ValidateInStrValues(allowValues...)(fieldName, object)
+}
+
 func validateRequired(fieldName string, object interface{}) []error {
 	if isEmpty(object) {
 		return []error{fmt.Errorf("%q: is required", fieldName)}
