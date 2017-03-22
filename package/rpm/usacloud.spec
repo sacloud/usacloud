@@ -40,6 +40,14 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Mar 22 2017 <yamamoto.febc@gmail.com> - 0.0.2-1
+- Monitoring APIs (by yamamoto-febc)
+- Output options (by yamamoto-febc)
+- Progress output writer (by yamamoto-febc)
+- Allow multiple ID or Name args (by yamamoto-febc)
+- Open VNC client (by yamamoto-febc)
+- Add config command (by yamamoto-febc)
+
 * Tue Mar 14 2017 <yamamoto.febc@gmail.com> - 0.0.1-1
 - Set SkipAuth flag to object-storage commands (by yamamoto-febc)
 - Add confirmation to dangerous operations (by yamamoto-febc)
