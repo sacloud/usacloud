@@ -32,6 +32,12 @@ var GlobalOption = &Option{
 }
 
 func init() {
+
+	if !(isatty.IsTerminal(os.Stdout.Fd()) || isatty.IsCygwinTerminal(os.Stdout.Fd())) {
+		GlobalOption.Out = ioutil.Discard
+	} else {
+		GlobalOption.Out = colorable.NewColorableStdout()
+	}
 	if !(isatty.IsTerminal(os.Stderr.Fd()) || isatty.IsCygwinTerminal(os.Stderr.Fd())) {
 		GlobalOption.Progress = ioutil.Discard
 	} else {
