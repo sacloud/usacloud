@@ -470,8 +470,8 @@ sub upload_to_github_release {
     github_release @args;
 
     # upload to ojs
-    usacloud qw/object-storage put -r repos repos/ unless $is_staging;
-    usacloud qw/object-storage put -r contrib contrib/ unless $is_staging;
+    usacloud qw/object-storage put -y -r repos repos/ unless $is_staging;
+    usacloud qw/object-storage put -y -r contrib contrib/ unless $is_staging;
 }
 
 sub create_pull_request {
