@@ -1,3 +1,14 @@
+usacloud (0.0.4-1) stable; urgency=low
+
+  * Fix build windows server (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/69>
+  * Bugfix - don't use ioutil.Discard for stdout (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/70>
+  * Windows Server 2016 + SQLServer(web/standard) (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/71>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Thu, 23 Mar 2017 06:54:50 +0000
+
 usacloud (0.0.3-1) stable; urgency=low
 
   * Use colorable stdout (by yamamoto-febc)
