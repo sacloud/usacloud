@@ -26,22 +26,14 @@ type Option struct {
 
 var GlobalOption = &Option{
 	In:       os.Stdin,
-	Out:      os.Stdout,
-	Progress: os.Stderr,
-	Err:      os.Stderr,
+	Out:      colorable.NewColorableStdout(),
+	Progress: colorable.NewColorableStderr(),
+	Err:      colorable.NewColorableStderr(),
 }
 
 func init() {
-
-	if !(isatty.IsTerminal(os.Stdout.Fd()) || isatty.IsCygwinTerminal(os.Stdout.Fd())) {
-		GlobalOption.Out = ioutil.Discard
-	} else {
-		GlobalOption.Out = colorable.NewColorableStdout()
-	}
 	if !(isatty.IsTerminal(os.Stderr.Fd()) || isatty.IsCygwinTerminal(os.Stderr.Fd())) {
 		GlobalOption.Progress = ioutil.Discard
-	} else {
-		GlobalOption.Progress = colorable.NewColorableStderr()
 	}
 }
 
