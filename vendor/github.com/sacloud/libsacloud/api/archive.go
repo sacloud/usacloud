@@ -281,15 +281,15 @@ func (api *ArchiveAPI) FindLatestStableWindows2016() (*sacloud.Archive, error) {
 
 // FindLatestStableWindows2016RDS 安定版最新のWindows2016RDSパブリックアーカイブを取得
 func (api *ArchiveAPI) FindLatestStableWindows2016RDS() (*sacloud.Archive, error) {
-	return api.findByOSTags(archiveLatestStableWindows2016Tags, map[string]interface{}{
+	return api.findByOSTags(archiveLatestStableWindows2016RDSTags, map[string]interface{}{
 		"Name": "Windows Server 2016 for RDS",
 	})
 }
 
 // FindLatestStableWindows2016RDSOffice 安定版最新のWindows2016RDS(Office)パブリックアーカイブを取得
 func (api *ArchiveAPI) FindLatestStableWindows2016RDSOffice() (*sacloud.Archive, error) {
-	return api.findByOSTags(archiveLatestStableWindows2016Tags, map[string]interface{}{
-		"Name": " Windows Server 2016 for RDS(MS Office付)",
+	return api.findByOSTags(archiveLatestStableWindows2016RDSOfficeTags, map[string]interface{}{
+		"Name": "Windows Server 2016 for RDS(MS Office付)",
 	})
 }
 
