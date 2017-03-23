@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.4 (2017-03-23)
+
+* Fix build windows server #69 (yamamoto-febc)
+* Bugfix - don't use ioutil.Discard for stdout #70 (yamamoto-febc)
+* Windows Server 2016 + SQLServer(web/standard) #71 (yamamoto-febc)
+
+
 ## 0.0.3 (2017-03-22)
 
 * Use colorable stdout #65 (yamamoto-febc)
