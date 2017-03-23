@@ -484,6 +484,7 @@ func isWindows(osType string) bool {
 		"windows2008", "windows2008-rds", "windows2008-rds-office",
 		"windows2012", "windows2012-rds", "windows2012-rds-office",
 		"windows2016", "windows2016-rds", "windows2016-rds-office",
+		"windows2016-sql-web", "windows2016-sql-standard",
 	}
 	for _, v := range windowsTypes {
 		if v == osType {
@@ -529,6 +530,10 @@ func strToOSType(osType string) ostype.ArchiveOSTypes {
 		return ostype.Windows2016RDS
 	case "windows2016-rds-office":
 		return ostype.Windows2016RDSOffice
+	case "windows2016-sql-web":
+		return ostype.Windows2016SQLServerWeb
+	case "windows2016-sql-standard":
+		return ostype.Windows2016SQLServerStandard
 	default:
 		return ostype.Custom
 	}
