@@ -142,27 +142,27 @@ type DatabaseSettingsResponse struct {
 
 // CreateDatabaseValue データベース作成用パラメータ
 type CreateDatabaseValue struct {
-	Plan             DatabasePlan // プラン
-	AdminPassword    string       // 管理者パスワード
-	DefaultUser      string       // ユーザー名
-	UserPassword     string       // パスワード
-	SourceNetwork    []string     // 接続許可ネットワーク
-	ServicePort      string       // ポート
-	BackupRotate     int          // バックアップ世代数
-	BackupTime       string       // バックアップ開始時間
-	SwitchID         string       // 接続先スイッチ
-	IPAddress1       string       // IPアドレス1
-	MaskLen          int          // ネットワークマスク長
-	DefaultRoute     string       // デフォルトルート
-	Name             string       // 名称
-	Description      string       // 説明
-	Tags             []string     // タグ
-	Icon             *Resource    // アイコン
-	DatabaseName     string       // データベース名
-	DatabaseRevision string       // リビジョン
-	DatabaseTitle    string       // データベースタイトル
-	DatabaseVersion  string       // データベースバージョン
-	ReplicaUser      string       // ReplicaUser レプリケーションユーザー
+	Plan          DatabasePlan // プラン
+	AdminPassword string       // 管理者パスワード
+	DefaultUser   string       // ユーザー名
+	UserPassword  string       // パスワード
+	SourceNetwork []string     // 接続許可ネットワーク
+	ServicePort   string       // ポート
+	// BackupRotate     int          // バックアップ世代数
+	BackupTime       string    // バックアップ開始時間
+	SwitchID         string    // 接続先スイッチ
+	IPAddress1       string    // IPアドレス1
+	MaskLen          int       // ネットワークマスク長
+	DefaultRoute     string    // デフォルトルート
+	Name             string    // 名称
+	Description      string    // 説明
+	Tags             []string  // タグ
+	Icon             *Resource // アイコン
+	DatabaseName     string    // データベース名
+	DatabaseRevision string    // リビジョン
+	DatabaseTitle    string    // データベースタイトル
+	DatabaseVersion  string    // データベースバージョン
+	ReplicaUser      string    // ReplicaUser レプリケーションユーザー
 	//ReplicaPassword  string // in current API version , setted admin password
 }
 
@@ -170,10 +170,10 @@ type CreateDatabaseValue struct {
 func NewCreatePostgreSQLDatabaseValue() *CreateDatabaseValue {
 	return &CreateDatabaseValue{
 		DatabaseName:     "postgres",
-		DatabaseRevision: "9.4.7",
-		DatabaseTitle:    "PostgreSQL 9.4.7",
-		DatabaseVersion:  "9.4",
-		ReplicaUser:      "replica",
+		DatabaseRevision: "9.6.2",
+		DatabaseTitle:    "PostgreSQL 9.6.2",
+		DatabaseVersion:  "9.6",
+		// ReplicaUser:      "replica",
 	}
 }
 
@@ -181,10 +181,10 @@ func NewCreatePostgreSQLDatabaseValue() *CreateDatabaseValue {
 func NewCreateMariaDBDatabaseValue() *CreateDatabaseValue {
 	return &CreateDatabaseValue{
 		DatabaseName:     "MariaDB",
-		DatabaseRevision: "10.1.17",
-		DatabaseTitle:    "MariaDB 10.1.17",
+		DatabaseRevision: "10.1.21",
+		DatabaseTitle:    "MariaDB 10.1.21",
 		DatabaseVersion:  "10.1",
-		ReplicaUser:      "replica",
+		// ReplicaUser:      "replica",
 	}
 }
 
@@ -235,9 +235,9 @@ func CreateNewDatabase(values *CreateDatabaseValue) *Database {
 					// DatabaseVersion
 					DatabaseVersion: values.DatabaseVersion,
 					// ReplicaUser
-					ReplicaUser: values.ReplicaUser,
+					// ReplicaUser: values.ReplicaUser,
 					// ReplicaPassword
-					ReplicaPassword: values.AdminPassword,
+					// ReplicaPassword: values.AdminPassword,
 				},
 			},
 			// Plan
@@ -250,7 +250,8 @@ func CreateNewDatabase(values *CreateDatabaseValue) *Database {
 				// Backup
 				Backup: &DatabaseBackupSetting{
 					// Rotate
-					Rotate: values.BackupRotate,
+					// Rotate: values.BackupRotate,
+					Rotate: 8,
 					// Time
 					Time: values.BackupTime,
 				},
