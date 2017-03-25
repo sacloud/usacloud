@@ -46,10 +46,10 @@ func ServerSsh(ctx Context, params *SshServerParam) error {
 	user := params.User
 	if user == "" {
 		if user == "" {
-			sshUser, err := getSSHDefaultUserName(client, p.ID)
-			if err != nil {
-				return fmt.Errorf("ServerSsh is failed: get default ssh username is failed: %s", err)
-			}
+			sshUser, _ := getSSHDefaultUserName(client, p.ID)
+			//if err != nil {
+			//	return fmt.Errorf("ServerSsh is failed: get default ssh username is failed: %s", err)
+			//}
 			if sshUser == "" {
 				sshUser = "root"
 			}
