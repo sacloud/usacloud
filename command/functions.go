@@ -184,14 +184,6 @@ func getSSHDefaultUserNameArchiveRec(client *api.Client, archiveID int64) (strin
 		return "", err
 	}
 
-	if archive.SourceDisk != nil {
-		return getSSHDefaultUserNameDiskRec(client, archive.SourceDisk.ID)
-	}
-
-	if archive.SourceArchive != nil {
-		return getSSHDefaultUserNameArchiveRec(client, archive.SourceArchive.ID)
-	}
-
 	if archive.Scope == string(sacloud.ESCopeShared) {
 
 		// has ubuntu/coreos tag?
@@ -207,7 +199,13 @@ func getSSHDefaultUserNameArchiveRec(client *api.Client, archiveID int64) (strin
 			return "core", nil
 		}
 	}
+	if archive.SourceDisk != nil {
+		return getSSHDefaultUserNameDiskRec(client, archive.SourceDisk.ID)
+	}
 
+	if archive.SourceArchive != nil {
+		return getSSHDefaultUserNameArchiveRec(client, archive.SourceArchive.ID)
+	}
 	return "", nil
 
 }
