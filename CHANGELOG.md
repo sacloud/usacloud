@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.5 (2017-03-27)
+
+* Fix getSSHDefaultUserName func #74 (yamamoto-febc)
+* Allow multiple target for vnc subcommand #76 (yamamoto-febc)
+* Display IPAddress #77 (yamamoto-febc)
+
+
 ## 0.0.4 (2017-03-23)
 
 * Fix build windows server #69 (yamamoto-febc)

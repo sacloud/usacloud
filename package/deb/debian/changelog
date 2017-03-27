@@ -1,3 +1,14 @@
+usacloud (0.0.5-1) stable; urgency=low
+
+  * Fix getSSHDefaultUserName func (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/74>
+  * Allow multiple target for vnc subcommand (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/76>
+  * Display IPAddress (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/77>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Mon, 27 Mar 2017 09:25:14 +0000
+
 usacloud (0.0.4-1) stable; urgency=low
 
   * Fix build windows server (by yamamoto-febc)
