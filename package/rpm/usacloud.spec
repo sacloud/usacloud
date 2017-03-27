@@ -40,6 +40,11 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Mon Mar 27 2017 <yamamoto.febc@gmail.com> - 0.0.5-1
+- Fix getSSHDefaultUserName func (by yamamoto-febc)
+- Allow multiple target for vnc subcommand (by yamamoto-febc)
+- Display IPAddress (by yamamoto-febc)
+
 * Thu Mar 23 2017 <yamamoto.febc@gmail.com> - 0.0.4-1
 - Fix build windows server (by yamamoto-febc)
 - Bugfix - don't use ioutil.Discard for stdout (by yamamoto-febc)
