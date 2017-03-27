@@ -342,9 +342,13 @@ func serverListColumns() []output.ColumnDef {
 			Format:  "%sMB",
 		},
 		{
-			Name:    "IPAddress",
-			Sources: []string{"IPAddress", "UserIPAddress"},
-			Format:  "%s%s",
+			Name: "IPAddress",
+			Sources: []string{
+				"Interfaces.0.IPAddress",
+				"Interfaces.0.UserIPAddress",
+				"Interfaces.0.Switch.UserSubnet.NetworkMaskLen",
+			},
+			Format: "%s%s/%s",
 		},
 		{
 			Name:    "Status",
