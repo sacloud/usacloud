@@ -152,14 +152,14 @@ func ServerResource() *schema.Resource {
 			NoOutput:         true,
 		},
 		"vnc": {
-			Type:             schema.CommandManipulateSingle,
+			Type:             schema.CommandManipulateMulti,
 			Params:           serverVNCParam(),
 			Usage:            "Open VNC client using the OS's default application",
 			UseCustomCommand: true,
 			Category:         "connect",
 			Order:            40,
 			NoOutput:         true,
-			NeedlessConfirm:  true,
+			ConfirmMessage:   "open VNC client",
 		},
 		"vnc-info": {
 			Type:             schema.CommandRead,
