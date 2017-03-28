@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.0.6 (2017-03-28)
+
+* Support homebrew #80 (yamamoto-febc)
+
+
 ## 0.0.5 (2017-03-27)
 
 * Fix getSSHDefaultUserName func #74 (yamamoto-febc)
