@@ -20,7 +20,7 @@ That means **"Unofficial + [`sacloud`](https://github.com/sakura-internet/node-s
 
 ### macOS(using `homebrew`)
 
-    tap sacloud/homebrew-usacloud; brew install usacloud
+    brew tap sacloud/homebrew-usacloud; brew install usacloud
 
 ### RHEL / CentOS
 
