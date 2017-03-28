@@ -18,6 +18,10 @@ That means **"Unofficial + [`sacloud`](https://github.com/sakura-internet/node-s
 
 ## Install
 
+### macOS(using `homebrew`)
+
+    tap sacloud/homebrew-usacloud; brew install usacloud
+
 ### RHEL / CentOS
 
     curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-yum.sh | sh
@@ -26,24 +30,17 @@ That means **"Unofficial + [`sacloud`](https://github.com/sakura-internet/node-s
 
     curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-apt.sh | sh
 
-### Others
-
-#### Using docker
-
-    alias usacloud="docker run -it --rm sacloud/usacloud" 
-
-#### Using docker with [`whalebrew`](https://github.com/bfirsh/whalebrew)
-    whalebrew install sacloud/usacloud
-
-#### Manual install
+### Windows
 
 Download binary file from [Release page](https://github.com/sacloud/usacloud/releases/latest). 
 
-**[OPTION]** Enable bash-completion
+### For Docker
 
-    $ eval "`curl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud`"
-    # or
-    $ curl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud >> ~/.bashrc
+    alias usacloud="docker run -it --rm sacloud/usacloud" 
+
+#### For Docker  with [`whalebrew`](https://github.com/bfirsh/whalebrew)
+    whalebrew install sacloud/usacloud
+
 
 ## Setting
 

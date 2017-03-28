@@ -46,7 +46,7 @@ before_deploy:
 deploy:
 - provider: script
   script: scripts/usacloud-release.pl --task=upload-to-github-release && scripts/usacloud-release.pl
-    --task=upload-master-to-github-release
+    --task=upload-master-to-github-release && scripts/release_homebrew.sh
   skip_cleanup: true
   on:
     branch: master
