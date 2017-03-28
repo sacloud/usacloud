@@ -8,6 +8,12 @@ SHA256_BASH_COMP=`openssl dgst -sha256 contrib/completion/bash/usacloud | awk '{
 git clone --depth=50 --branch=master https://github.com/sacloud/homebrew-usacloud.git homebrew-usacloud
 cd homebrew-usacloud
 
+# check version
+CURRENT_VERSION=`git log --oneline | perl -ne 'if(/^.+ v([0-9\.]+)/){print $1;exit}'`
+if [ "$CURRENT_VERSION" = "$VERSION" ] ; then
+    exit 0
+fi
+
 cat << EOL > usacloud.rb
 class Usacloud < Formula
 

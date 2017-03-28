@@ -1,3 +1,10 @@
+usacloud (0.0.6-1) stable; urgency=low
+
+  * Support homebrew (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/80>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Tue, 28 Mar 2017 13:09:15 +0000
+
 usacloud (0.0.5-1) stable; urgency=low
 
   * Fix getSSHDefaultUserName func (by yamamoto-febc)

@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Mar 28 2017 <yamamoto.febc@gmail.com> - 0.0.6-1
+- Support homebrew (by yamamoto-febc)
+
 * Mon Mar 27 2017 <yamamoto.febc@gmail.com> - 0.0.5-1
 - Fix getSSHDefaultUserName func (by yamamoto-febc)
 - Allow multiple target for vnc subcommand (by yamamoto-febc)
