@@ -1,0 +1,79 @@
+{
+    "docs": [
+        {
+            "location": "/",
+            "text": "usacloud \u65e5\u672c\u8a9e\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\n\n\n\n\n\u76ee\u6b21\n\n\n\n\nusacloud \u5c0e\u5165\u30ac\u30a4\u30c9\n\n\nusacloud\u3068\u306f\n\n\n\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb\n\n\n\u521d\u671f\u8a2d\u5b9a\n\n\n\n\n\n\nusacloud \u30b3\u30de\u30f3\u30c9\n\n\n\u57fa\u672c\u7684\u306a\u4f7f\u3044\u65b9\n\n\n\u30b3\u30de\u30f3\u30c9\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9\n\n\nserver / \u30b5\u30fc\u30d0\u30fc\n\n\ndisk / \u30c7\u30a3\u30b9\u30af",
+            "title": "\u30db\u30fc\u30e0"
+        },
+        {
+            "location": "/#usacloud",
+            "text": "",
+            "title": "usacloud \u65e5\u672c\u8a9e\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8"
+        },
+        {
+            "location": "/#_1",
+            "text": "usacloud \u5c0e\u5165\u30ac\u30a4\u30c9  usacloud\u3068\u306f  \u30a4\u30f3\u30b9\u30c8\u30fc\u30eb  \u521d\u671f\u8a2d\u5b9a    usacloud \u30b3\u30de\u30f3\u30c9  \u57fa\u672c\u7684\u306a\u4f7f\u3044\u65b9  \u30b3\u30de\u30f3\u30c9\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9  server / \u30b5\u30fc\u30d0\u30fc  disk / \u30c7\u30a3\u30b9\u30af",
+            "title": "\u76ee\u6b21"
+        },
+        {
+            "location": "/about/",
+            "text": "usacloud\u3068\u306f",
+            "title": "usacloud\u3068\u306f"
+        },
+        {
+            "location": "/about/#usacloud",
+            "text": "",
+            "title": "usacloud\u3068\u306f"
+        },
+        {
+            "location": "/installation/",
+            "text": "\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb",
+            "title": "\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb"
+        },
+        {
+            "location": "/installation/#_1",
+            "text": "",
+            "title": "\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb"
+        },
+        {
+            "location": "/configure/",
+            "text": "\u8a2d\u5b9a",
+            "title": "\u521d\u671f\u8a2d\u5b9a"
+        },
+        {
+            "location": "/configure/#_1",
+            "text": "",
+            "title": "\u8a2d\u5b9a"
+        },
+        {
+            "location": "/basic_usage/",
+            "text": "\u57fa\u672c\u7684\u306a\u4f7f\u3044\u65b9",
+            "title": "\u57fa\u672c\u7684\u306a\u4f7f\u3044\u65b9"
+        },
+        {
+            "location": "/basic_usage/#_1",
+            "text": "",
+            "title": "\u57fa\u672c\u7684\u306a\u4f7f\u3044\u65b9"
+        },
+        {
+            "location": "/commands/server/",
+            "text": "server / \u30b5\u30fc\u30d0\u30fc",
+            "title": "server / \u30b5\u30fc\u30d0\u30fc"
+        },
+        {
+            "location": "/commands/server/#server",
+            "text": "",
+            "title": "server / \u30b5\u30fc\u30d0\u30fc"
+        },
+        {
+            "location": "/commands/disk/",
+            "text": "disk / \u30c7\u30a3\u30b9\u30af",
+            "title": "disk / \u30c7\u30a3\u30b9\u30af"
+        },
+        {
+            "location": "/commands/disk/#disk",
+            "text": "",
+            "title": "disk / \u30c7\u30a3\u30b9\u30af"
+        }
+    ]
+}

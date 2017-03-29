@@ -101,7 +101,6 @@ rpm: build-linux
 deb: rpm
 	CURRENT_VERSION="$(CURRENT_VERSION)" sh -c "'$(CURDIR)/scripts/build_apt.sh'"
 
-
 .PHONY: test
 test: vet
 	go test $(TEST) $(TESTARGS) -v -timeout=30m -parallel=4 ;
@@ -123,6 +122,13 @@ golint: fmt
 .PHONY: fmt
 fmt:
 	gofmt -s -l -w $(GOFMT_FILES)
+
+.PHONY: build-docs serve-docs
+build-docs:
+	sh -c "'$(CURDIR)/scripts/build_docs.sh'"
+
+serve-docs:
+	sh -c "'$(CURDIR)/scripts/serve_docs.sh'"
 
 .PHONY: docker-run docker-test docker-build docker-rpm
 docker-run:
