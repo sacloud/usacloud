@@ -1,0 +1,5 @@
+tools/bin
+bin
+rpmbuild
+package/deb-build
+package/rpm-build

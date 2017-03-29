@@ -1,0 +1,20 @@
+site_name: Usacloudドキュメント
+site_url: https://sacloud.github.io/usacloud/
+site_description: Usacloud日本語ドキュメント
+site_author: '@yamamoto-febc'
+repo_url: https://github.com/sacloud/usacloud
+repo_name: usacloud
+copyright: Copyright (C) 2017 Kazumichi Yamamoto.
+google_analytics: null
+theme: readthedocs
+pages:
+  - ホーム: index.md
+  - usacloud 導入ガイド:
+    - usacloudとは: about.md
+    - インストール: installation.md
+    - 初期設定: configure.md
+  - usacloud コマンド:
+    - 基本的な使い方: basic_usage.md
+    - コマンドリファレンス:
+      - server / サーバー: commands/server.md
+      - disk / ディスク: commands/disk.md
