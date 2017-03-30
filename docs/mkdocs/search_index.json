@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/",
-            "text": "usacloud \u65e5\u672c\u8a9e\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\n\n\n\n\n\u76ee\u6b21\n\n\n\n\nusacloud \u5c0e\u5165\u30ac\u30a4\u30c9\n\n\nusacloud\u3068\u306f\n\n\n\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb\n\n\n\u521d\u671f\u8a2d\u5b9a\n\n\n\n\n\n\nusacloud \u30b3\u30de\u30f3\u30c9\n\n\n\u57fa\u672c\u7684\u306a\u4f7f\u3044\u65b9\n\n\n\u30b3\u30de\u30f3\u30c9\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9\n\n\nserver / \u30b5\u30fc\u30d0\u30fc\n\n\ndisk / \u30c7\u30a3\u30b9\u30af",
+            "text": "usacloud \u65e5\u672c\u8a9e\u30c9\u30ad\u30e5\u30e1\u30f3\u30c8\n\n\n\n\n\u76ee\u6b21\n\n\n\n\nusacloud \u5c0e\u5165\u30ac\u30a4\u30c9\n\n\nusacloud \u30b3\u30de\u30f3\u30c9\n\n\n\u57fa\u672c\u7684\u306a\u4f7f\u3044\u65b9\n\n\n\u30b5\u30fc\u30d0\u30fc\u306e\u4f5c\u6210\n\n\n\u96fb\u6e90\u64cd\u4f5c\n\n\n\u63a5\u7d9a(SSH/VNC)\n\n\n\u30d5\u30a1\u30a4\u30eb\u9001\u53d7\u4fe1(SCP)\n\n\n\u30aa\u30d6\u30b8\u30a7\u30af\u30c8\u30b9\u30c8\u30ec\u30fc\u30b8\u306e\u64cd\u4f5c\n\n\n\u30a2\u30fc\u30ab\u30a4\u30d6\u306e\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\n\n\nISO\u30a4\u30e1\u30fc\u30b8\u306e\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9\n\n\n\u76e3\u8996/\u30e2\u30cb\u30bf\u30ea\u30f3\u30b0\n\n\n\n\n\n\n\u30b3\u30de\u30f3\u30c9\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9\n\n\nComputing / \u30b3\u30f3\u30d4\u30e5\u30fc\u30c6\u30a3\u30f3\u30b0\n\n\nserver\n: \u30b5\u30fc\u30d0\u30fc\n\n\n\n\n\n\nStorage / \u30b9\u30c8\u30ec\u30fc\u30b8\n\n\narchive\n: \u30a2\u30fc\u30ab\u30a4\u30d6\n\n\nauto-backup\n: \u81ea\u52d5\u30d0\u30c3\u30af\u30a2\u30c3\u30d7\n\n\ndisk\n: \u30c7\u30a3\u30b9\u30af\n\n\niso-image\n: ISO\u30a4\u30e1\u30fc\u30b8\n\n\nobject-storage\n: \u30aa\u30d6\u30b8\u30a7\u30af\u30c8\u30b9\u30c8\u30ec\u30fc\u30b8\n\n\n\n\n\n\nNetworking / \u30cd\u30c3\u30c8\u30ef\u30fc\u30ad\u30f3\u30b0\n\n\nbridge\n: \u30d6\u30ea\u30c3\u30b8\n\n\ninternet\n: \u30eb\u30fc\u30bf\n\n\npacket-filter\n: \u30d1\u30b1\u30c3\u30c8\u30d5\u30a3\u30eb\u30bf\n\n\nswitch\n: \u30b9\u30a4\u30c3\u30c1\n\n\ninterface\n: \u30a4\u30f3\u30bf\u30fc\u30d5\u30a7\u30fc\u30b9\n\n\n\n\n\n\nAppliance / \u30a2\u30d7\u30e9\u30a4\u30a2\u30f3\u30b9\n\n\ndatabase\n: \u30c7\u30fc\u30bf\u30d9\u30fc\u30b9(\u672a\u5b9f\u88c5)\n\n\nload-balancer\n: \u30ed\u30fc\u30c9\u30d0\u30e9\u30f3\u30b5\u30fc(\u672a\u5b9f\u88c5)\n\n\nvpc-router\n: VPC\u30eb\u30fc\u30bf(\u672a\u5b9f\u88c5)\n\n\n\n\n\n\nCommonServiceItem / \u5171\u901a\u30b5\u30fc\u30d3\u30b9\u30a2\u30a4\u30c6\u30e0\n\n\ndns\n: DNS\n\n\ngslb\n: GSLB\n\n\nsimple-monitor\n: \u30b7\u30f3\u30d7\u30eb\u76e3\u8996\n\n\n\n\n\n\nCommonItem / \u5171\u901a\u30a2\u30a4\u30c6\u30e0\n\n\nlicense\n: \u30e9\u30a4\u30bb\u30f3\u30b9\n\n\nicon\n: \u30a2\u30a4\u30b3\u30f3\n\n\nssh-key\n: SSH\u516c\u958b\u9375\n\n\nstartup-script\n: \u30b9\u30bf\u30fc\u30c8\u30a2\u30c3\u30d7\u30b9\u30af\u30ea\u30d7\u30c8\n\n\n\n\n\n\nBilling/ \u8acb\u6c42\n\n\nbill\n: \u8acb\u6c42\u60c5\u5831\n\n\n\n\n\n\nSaaS / \u30b5\u30fc\u30d3\u30b9\n\n\nweb-accel\n: \u30a6\u30a7\u30d6\u30a2\u30af\u30bb\u30e9\u30ec\u30fc\u30bf\n\n\n\n\n\n\nInformation / \u88fd\u54c1,\u30d7\u30e9\u30f3,\u60c5\u5831\n\n\nprice\n: \u6599\u91d1\u60c5\u5831\n\n\nproduct-disk\n: \u30c7\u30a3\u30b9\u30af\u30d7\u30e9\u30f3\n\n\nproduct-internet\n: \u5e2f\u57df\u30d7\u30e9\u30f3\n\n\nproduct-license\n: \u30e9\u30a4\u30bb\u30f3\u30b9\u30d7\u30e9\u30f3\n\n\nproduct-server\n: \u30b5\u30fc\u30d0\u30fc\u30d7\u30e9\u30f3\n\n\nregion\n: \u30ea\u30fc\u30b8\u30e7\u30f3\n\n\nzone\n: \u30be\u30fc\u30f3\n\n\n\n\n\n\nOther / \u305d\u306e\u4ed6\n\n\nconfig\n: \u8a2d\u5b9a",
             "title": "\u30db\u30fc\u30e0"
         },
         {
@@ -12,38 +12,48 @@
         },
         {
             "location": "/#_1",
-            "text": "usacloud \u5c0e\u5165\u30ac\u30a4\u30c9  usacloud\u3068\u306f  \u30a4\u30f3\u30b9\u30c8\u30fc\u30eb  \u521d\u671f\u8a2d\u5b9a    usacloud \u30b3\u30de\u30f3\u30c9  \u57fa\u672c\u7684\u306a\u4f7f\u3044\u65b9  \u30b3\u30de\u30f3\u30c9\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9  server / \u30b5\u30fc\u30d0\u30fc  disk / \u30c7\u30a3\u30b9\u30af",
+            "text": "usacloud \u5c0e\u5165\u30ac\u30a4\u30c9  usacloud \u30b3\u30de\u30f3\u30c9  \u57fa\u672c\u7684\u306a\u4f7f\u3044\u65b9  \u30b5\u30fc\u30d0\u30fc\u306e\u4f5c\u6210  \u96fb\u6e90\u64cd\u4f5c  \u63a5\u7d9a(SSH/VNC)  \u30d5\u30a1\u30a4\u30eb\u9001\u53d7\u4fe1(SCP)  \u30aa\u30d6\u30b8\u30a7\u30af\u30c8\u30b9\u30c8\u30ec\u30fc\u30b8\u306e\u64cd\u4f5c  \u30a2\u30fc\u30ab\u30a4\u30d6\u306e\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9  ISO\u30a4\u30e1\u30fc\u30b8\u306e\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9  \u76e3\u8996/\u30e2\u30cb\u30bf\u30ea\u30f3\u30b0    \u30b3\u30de\u30f3\u30c9\u30ea\u30d5\u30a1\u30ec\u30f3\u30b9  Computing / \u30b3\u30f3\u30d4\u30e5\u30fc\u30c6\u30a3\u30f3\u30b0  server : \u30b5\u30fc\u30d0\u30fc    Storage / \u30b9\u30c8\u30ec\u30fc\u30b8  archive : \u30a2\u30fc\u30ab\u30a4\u30d6  auto-backup : \u81ea\u52d5\u30d0\u30c3\u30af\u30a2\u30c3\u30d7  disk : \u30c7\u30a3\u30b9\u30af  iso-image : ISO\u30a4\u30e1\u30fc\u30b8  object-storage : \u30aa\u30d6\u30b8\u30a7\u30af\u30c8\u30b9\u30c8\u30ec\u30fc\u30b8    Networking / \u30cd\u30c3\u30c8\u30ef\u30fc\u30ad\u30f3\u30b0  bridge : \u30d6\u30ea\u30c3\u30b8  internet : \u30eb\u30fc\u30bf  packet-filter : \u30d1\u30b1\u30c3\u30c8\u30d5\u30a3\u30eb\u30bf  switch : \u30b9\u30a4\u30c3\u30c1  interface : \u30a4\u30f3\u30bf\u30fc\u30d5\u30a7\u30fc\u30b9    Appliance / \u30a2\u30d7\u30e9\u30a4\u30a2\u30f3\u30b9  database : \u30c7\u30fc\u30bf\u30d9\u30fc\u30b9(\u672a\u5b9f\u88c5)  load-balancer : \u30ed\u30fc\u30c9\u30d0\u30e9\u30f3\u30b5\u30fc(\u672a\u5b9f\u88c5)  vpc-router : VPC\u30eb\u30fc\u30bf(\u672a\u5b9f\u88c5)    CommonServiceItem / \u5171\u901a\u30b5\u30fc\u30d3\u30b9\u30a2\u30a4\u30c6\u30e0  dns : DNS  gslb : GSLB  simple-monitor : \u30b7\u30f3\u30d7\u30eb\u76e3\u8996    CommonItem / \u5171\u901a\u30a2\u30a4\u30c6\u30e0  license : \u30e9\u30a4\u30bb\u30f3\u30b9  icon : \u30a2\u30a4\u30b3\u30f3  ssh-key : SSH\u516c\u958b\u9375  startup-script : \u30b9\u30bf\u30fc\u30c8\u30a2\u30c3\u30d7\u30b9\u30af\u30ea\u30d7\u30c8    Billing/ \u8acb\u6c42  bill : \u8acb\u6c42\u60c5\u5831    SaaS / \u30b5\u30fc\u30d3\u30b9  web-accel : \u30a6\u30a7\u30d6\u30a2\u30af\u30bb\u30e9\u30ec\u30fc\u30bf    Information / \u88fd\u54c1,\u30d7\u30e9\u30f3,\u60c5\u5831  price : \u6599\u91d1\u60c5\u5831  product-disk : \u30c7\u30a3\u30b9\u30af\u30d7\u30e9\u30f3  product-internet : \u5e2f\u57df\u30d7\u30e9\u30f3  product-license : \u30e9\u30a4\u30bb\u30f3\u30b9\u30d7\u30e9\u30f3  product-server : \u30b5\u30fc\u30d0\u30fc\u30d7\u30e9\u30f3  region : \u30ea\u30fc\u30b8\u30e7\u30f3  zone : \u30be\u30fc\u30f3    Other / \u305d\u306e\u4ed6  config : \u8a2d\u5b9a",
             "title": "\u76ee\u6b21"
         },
         {
-            "location": "/about/",
-            "text": "usacloud\u3068\u306f",
+            "location": "/start_guide/",
+            "text": "Usacloud\u5c0e\u5165\u30ac\u30a4\u30c9\n\n\n\n\n\u76ee\u6b21\n\n\n\n\nusacloud\u3068\u306f\n\n\n\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb\n\n\n\u8a2d\u5b9a\n\n\n\n\n\n\nusacloud\u3068\u306f\n\n\nusacloud\n\u3068\u306f\u3001\u3055\u304f\u3089\u306e\u30af\u30e9\u30a6\u30c9\u7528\u306eCLI\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u3067\u3059\u3002  \n\n\n\u4ee5\u4e0b\u306eOS/Arch\u306b\u5bfe\u5fdc\u3057\u3066\u3044\u307e\u3059\u3002\n\n\n\n\nmacOS(amd64)\n\n\nLinux(i386/amd64/arm)\n\n\nWindows(i386/amd64)\n\n\n\n\n\n\n\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb\n\n\nmacOS(\nhomebrew\n\u3092\u5229\u7528)\n\n\nbrew tap sacloud/homebrew-usacloud; brew install usacloud\n\n\n\n\n\n\u203bbash_completion\u3092\u6709\u52b9\u5316\u3059\u308b\u306b\u306f\u4e0a\u8a18\u30b3\u30de\u30f3\u30c9\u3092\u5b9f\u884c\u5f8c\u306b\u518d\u30ed\u30b0\u30a4\u30f3\u3057\u3066\u304f\u3060\u3055\u3044\u3002\n\n\n\n\n\n\nRHEL / CentOS\n\n\ncurl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-yum.sh | sh\n\n\n\n\n\n\u203bbash_completion\u3092\u6709\u52b9\u5316\u3059\u308b\u306b\u306f\u4e0a\u8a18\u30b3\u30de\u30f3\u30c9\u3092\u5b9f\u884c\u5f8c\u306b\u518d\u30ed\u30b0\u30a4\u30f3\u3057\u3066\u304f\u3060\u3055\u3044\u3002\n\n\n\n\n\n\nUbuntu / debian / bash on Windows\n\n\ncurl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-apt.sh | sh\n\n\n\n\n\n\u203bbash_completion\u3092\u6709\u52b9\u5316\u3059\u308b\u306b\u306f\u4e0a\u8a18\u30b3\u30de\u30f3\u30c9\u3092\u5b9f\u884c\u5f8c\u306b\u518d\u30ed\u30b0\u30a4\u30f3\u3057\u3066\u304f\u3060\u3055\u3044\u3002\n\n\n\n\n\n\nWindows/\u305d\u306e\u4ed6\u306e\u5834\u5408\n\n\n\u4ee5\u4e0b\u306e\u30ea\u30f3\u30af\u304b\u3089\u30d0\u30a4\u30ca\u30ea\u30fc\u30d5\u30a1\u30a4\u30eb\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3057\u3066\u5c55\u958b\u3057\u3001\u4efb\u610f\u306e\u30d5\u30a9\u30eb\u30c0\u30fc\u5185\u306b\u914d\u7f6e\u3057\u3066\u304f\u3060\u3055\u3044\u3002\n\n(PATH\u3092\u901a\u3057\u3066\u304a\u304f\u3068\u4fbf\u5229\u3067\u3059)\n\n\n\n\nWindows 64bit\u7248 : \nhttps://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-amd64.zip\n\n\nWindows 32bit\u7248 : \nhttps://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-386.zip\n\n\n\u305d\u306e\u4ed6\u306e\u5834\u5408 : \nhttps://github.com/sacloud/usacloud/releases/latest/\n\n\n\n\nbash_completion\n\u304c\u5229\u7528\u3067\u304d\u308b\u5834\u5408\u306f\u3001\u4ee5\u4e0b\u306e\u30b3\u30de\u30f3\u30c9\u3067\nusacloud\n\u7528\u306e\nbash_completion\n\u3092\u5c0e\u5165\u3059\u308b\u3053\u3068\u304c\u51fa\u6765\u307e\u3059\u3002\n\n\ncurl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud >> ~/.bashrc\n\n\n\n\n\n\u203bbash_completion\u3092\u6709\u52b9\u5316\u3059\u308b\u306b\u306f\u4e0a\u8a18\u30b3\u30de\u30f3\u30c9\u3092\u5b9f\u884c\u5f8c\u306b\u518d\u30ed\u30b0\u30a4\u30f3\u3057\u3066\u304f\u3060\u3055\u3044\u3002\n\n\n\n\n\n\nDocker\u3092\u5229\u7528\u3059\u308b\u5834\u5408\n\n\nusacloud\n\u5b9f\u884c\u7528\u30a4\u30e1\u30fc\u30b8\u3068\u3057\u3066\nsacloud/usacloud\n\u3092\u516c\u958b\u3057\u3066\u3044\u307e\u3059\u3002\n\n\n# Docker\u3067\u306eusacloud\u5b9f\u884c\u4f8b\ndocker run -it --rm \\\n    -e SAKURACLOUD_ACCESS_TOKEN \\\n    -e SAKURACLOUD_ACCESS_TOKEN_SECRET \\\n    -e SAKURACLOUD_ZONE \\\n    sacloud/usacloud server ls\n\n\n\n\n\nwhalebrew\u3092\u5229\u7528\u3059\u308b\u5834\u5408\n\n\nDocker\u30a4\u30e1\u30fc\u30b8\nsacloud/usacloud\n\u306f\nwhalebrew\n\u3067\u306e\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb/\u5b9f\u884c\u306b\u5bfe\u5fdc\u3057\u3066\u3044\u307e\u3059\u3002\n\n\n# \u30a4\u30f3\u30b9\u30c8\u30fc\u30eb\nwhalebrew install sacloud/usacloud\n\n\n\n\n\n\u8a2d\u5b9a\n\n\nusacloud\n\u306e\u5b9f\u884c\u306b\u306f\u3055\u304f\u3089\u306e\u30af\u30e9\u30a6\u30c9\u306eAPI\u30ad\u30fc\u306e\u53d6\u5f97/\u8a2d\u5b9a\u304c\u5fc5\u8981\u3067\u3059\u3002\n\n\nAPI\u30ad\u30fc\u306e\u53d6\u5f97\n\n\n\u3055\u304f\u3089\u306e\u30af\u30e9\u30a6\u30c9\u306e\u30b3\u30f3\u30c8\u30ed\u30fc\u30eb\u30d1\u30cd\u30eb\n\u304b\u3089API\u30ad\u30fc\u3092\u767a\u884c\u3057\u307e\u3059\u3002\n\n\n\u30b3\u30f3\u30c8\u30ed\u30fc\u30eb\u30d1\u30cd\u30eb\u306b\u30ed\u30b0\u30a4\u30f3\u3057\u3001\u300c\u3055\u304f\u3089\u306e\u30af\u30e9\u30a6\u30c9(IaaS)\u300d\u3092\u9078\u629e\u3057\u307e\u3059\u3002\n\n\n\n\n\u6b21\u306b\u4ee5\u4e0b\u624b\u9806\u3067API\u30ad\u30fc\u306e\u8ffd\u52a0\u753b\u9762\u3092\u8868\u793a\u3057\u307e\u3059\u3002\n\n\n\n\n(1) \u753b\u9762\u53f3\u4e0a\u306e\u300c\u8a2d\u5b9a\u300d\u3092\u30af\u30ea\u30c3\u30af\u3057\u3001\n\n\n(2) \u5de6\u5074\u306b\u8868\u793a\u3055\u308c\u308b\u30e1\u30cb\u30e5\u30fc\u304b\u3089\u300cAPI\u30ad\u30fc\u300d\u3092\u9078\u629e\u3057\u3001\n\n\n(3) \u4e00\u89a7\u306e\u53f3\u4e0a\u306e\u300c\u8ffd\u52a0\u300d\u3092\u30af\u30ea\u30c3\u30af\u3057\u307e\u3059\u3002\n\n\n\n\n\n\nAPI\u30ad\u30fc\u306e\u8ffd\u52a0\u753b\u9762\u304c\u8868\u793a\u3055\u308c\u305f\u3089\u3001\u5404\u9805\u76ee\u3092\u5165\u529b\u3057\u3066\u300c\u8ffd\u52a0\u300d\u3092\u30af\u30ea\u30c3\u30af\u3057\u307e\u3059\u3002\n\n\n\u5404\u9805\u76ee\u306f\u4ee5\u4e0b\u306e\u3088\u3046\u306b\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002\n\n\n\n\n\u540d\u524d : \u4efb\u610f\u306e\u540d\u524d\u3092\u5165\u529b\n\n\n\u8aac\u660e : \u4efb\u610f\u5165\u529b\n\n\n\u30a2\u30af\u30bb\u30b9\u30ec\u30d9\u30eb : \u300c\u4f5c\u6210\u30fb\u524a\u9664\u300d\u3092\u9078\u629e\n\n\n\u4ed6\u30b5\u30fc\u30d3\u30b9\u3078\u306e\u30a2\u30af\u30bb\u30b9\u6a29 : \u5fc5\u8981\u306b\u5fdc\u3058\u3066\u30c1\u30a7\u30c3\u30af\u3092\u5165\u308c\u308b\n\n\n\n\n\n\nAPI\u30ad\u30fc\u3092\u4f5c\u6210\u3057\u305f\u3089\u3001\u4ee5\u4e0b\u306e\u5024\u3092\u63a7\u3048\u3066\u304a\u3044\u3066\u304f\u3060\u3055\u3044\u3002\n\n\n\n\n\u30a2\u30af\u30bb\u30b9\u30c8\u30fc\u30af\u30f3\n\n\n\u30a2\u30af\u30bb\u30b9\u30b7\u30fc\u30af\u30ec\u30c3\u30c8\n\n\n\n\n\n\n\u4ee5\u4e0a\u3067API\u30ad\u30fc\u306e\u53d6\u5f97\u5b8c\u4e86\u3067\u3059\u3002\n\n\n\n\nAPI\u30ad\u30fc\u306e\u8a2d\u5b9a\n\n\nAPI\u30ad\u30fc\u306e\u53d6\u5f97\u3092\u884c\u3063\u305f\u3089\u3001\nusacloud config\n\u3092\u5b9f\u884c\u3057\u3066API\u30ad\u30fc\u3092\u8a2d\u5b9a\u3057\u307e\u3059\u3002\n\n\n\u753b\u9762\u306e\u6307\u793a\u306b\u5f93\u3044\u3001\u30a2\u30af\u30bb\u30b9\u30c8\u30fc\u30af\u30f3(token)\u3068\u30b7\u30fc\u30af\u30ec\u30c3\u30c8(secret)\u3001\u64cd\u4f5c\u5bfe\u8c61\u306e\u30be\u30fc\u30f3\u306e\u5165\u529b\u3092\u884c\u3044\u307e\u3059\u3002\n\n\n    $ usacloud config\n\n    Setting SakuraCloud API Token => \n        Enter token: [\u30a2\u30af\u30bb\u30b9\u30c8\u30fc\u30af\u30f3\u3092\u5165\u529b]\n\n    Setting SakuraCloud API Secret => \n        Enter secret: [\u30a2\u30af\u30bb\u30b9\u30b7\u30fc\u30af\u30ec\u30c3\u30c8\u3092\u5165\u529b]\n\n    Setting SakuraCloud Zone => \n        Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [\u30be\u30fc\u30f3\u3092\u5165\u529b]\n\n    Written your settings to ~/.usacloud_config\n\n\n\n\n\u64cd\u4f5c\u5bfe\u8c61\u306e\u30be\u30fc\u30f3\u306f\u4ee5\u4e0b\u306e\u3044\u305a\u308c\u304b\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002\n\n\n\n\nis1a\n : \u77f3\u72e9\u7b2c1\u30be\u30fc\u30f3\n\n\nis1b\n : \u77f3\u72e9\u7b2c2\u30be\u30fc\u30f3\n\n\ntk1a\n : \u6771\u4eac\u7b2c1\u30be\u30fc\u30f3\n\n\ntk1v\n : \u30b5\u30f3\u30c9\u30dc\u30c3\u30af\u30b9\n\n\n\n\n\n\n\u203b\nis1a\n\u306f2016\u5e747\u67081\u65e5\u4ee5\u964d\u306b\u65b0\u898f\u4f5c\u6210\u3057\u305f\u30a2\u30ab\u30a6\u30f3\u30c8\u3067\u306f\n\u5229\u7528\u3067\u304d\u307e\u305b\u3093\n\n\u203b\u3053\u3053\u3067\u5165\u529b\u3057\u305f\u5185\u5bb9\u306f\n~/.usacloud_config\n\u306bJSON\u30d5\u30a1\u30a4\u30eb\u3068\u3057\u3066\u4fdd\u5b58\u3055\u308c\u307e\u3059\n\n\n\n\n\u305d\u306e\u4ed6\u306eAPI\u30ad\u30fc\u8a2d\u5b9a\u65b9\u6cd5\n\n\nAPI\u30ad\u30fc\u306f\u74b0\u5883\u5909\u6570\u3067\u6307\u5b9a\u3059\u308b\u3053\u3068\u3082\u53ef\u80fd\u3067\u3059\u3002\n\n\nexport SAKURACLOUD_ACCESS_TOKEN=\u30a2\u30af\u30bb\u30b9\u30c8\u30fc\u30af\u30f3\nexport SAKURACLOUD_ACCESS_TOKEN_SECRET=\u30a2\u30af\u30bb\u30b9\u30b7\u30fc\u30af\u30ec\u30c3\u30c8\nexport SAKURACLOUD_ZONE=\u30be\u30fc\u30f3\n\n\n\n\u307e\u305f\u3001\u30b3\u30de\u30f3\u30c9\u5b9f\u884c\u306e\u90fd\u5ea6\u6307\u5b9a\u3059\u308b\u3053\u3068\u3082\u53ef\u80fd\u3067\u3059\u3002\n\n\nusacloud --token=\u30a2\u30af\u30bb\u30b9\u30c8\u30fc\u30af\u30f3 --secret=\u30a2\u30af\u30bb\u30b9\u30b7\u30fc\u30af\u30ec\u30c3\u30c8 --zone=\u30be\u30fc\u30f3 server ls\n\n\n\n\u8907\u6570\u306e\u7b87\u6240\u3067\u6307\u5b9a\u3055\u308c\u3066\u3044\u305f\u5834\u5408\u3001\u4ee5\u4e0b\u306e\u9806\u3067\u8aad\u307f\u8fbc\u307f\u307e\u3059(\u5f8c\u304b\u3089\u8aad\u307f\u8fbc\u3093\u3060\u3082\u306e\u304c\u512a\u5148)\u3002\n\n\n\n\nusacloud config\n\u3067\u306e\u8a2d\u5b9a\n\n\n\u74b0\u5883\u5909\u6570\u3067\u306e\u8a2d\u5b9a\n\n\n\u30b3\u30de\u30f3\u30c9\u5b9f\u884c\u6642\u306e\u6307\u5b9a\n\n\n\n\n\n\n\u4ee5\u4e0a\u3067\u8a2d\u5b9a\u7d42\u4e86\u3067\u3059\u3002\u7d9a\u3044\u3066\n\u57fa\u672c\u7684\u306a\u4f7f\u3044\u65b9\n\u306b\u9032\u3093\u3067\u304f\u3060\u3055\u3044\u3002",
+            "title": "usacloud \u5c0e\u5165\u30ac\u30a4\u30c9"
+        },
+        {
+            "location": "/start_guide/#usacloud",
+            "text": "",
+            "title": "Usacloud\u5c0e\u5165\u30ac\u30a4\u30c9"
+        },
+        {
+            "location": "/start_guide/#_1",
+            "text": "usacloud\u3068\u306f  \u30a4\u30f3\u30b9\u30c8\u30fc\u30eb  \u8a2d\u5b9a",
+            "title": "\u76ee\u6b21"
+        },
+        {
+            "location": "/start_guide/#usacloud_1",
+            "text": "usacloud \u3068\u306f\u3001\u3055\u304f\u3089\u306e\u30af\u30e9\u30a6\u30c9\u7528\u306eCLI\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u3067\u3059\u3002    \u4ee5\u4e0b\u306eOS/Arch\u306b\u5bfe\u5fdc\u3057\u3066\u3044\u307e\u3059\u3002   macOS(amd64)  Linux(i386/amd64/arm)  Windows(i386/amd64)",
             "title": "usacloud\u3068\u306f"
         },
         {
-            "location": "/about/#usacloud",
-            "text": "",
-            "title": "usacloud\u3068\u306f"
-        },
-        {
-            "location": "/installation/",
-            "text": "\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb",
+            "location": "/start_guide/#_2",
+            "text": "macOS( homebrew \u3092\u5229\u7528)  brew tap sacloud/homebrew-usacloud; brew install usacloud   \u203bbash_completion\u3092\u6709\u52b9\u5316\u3059\u308b\u306b\u306f\u4e0a\u8a18\u30b3\u30de\u30f3\u30c9\u3092\u5b9f\u884c\u5f8c\u306b\u518d\u30ed\u30b0\u30a4\u30f3\u3057\u3066\u304f\u3060\u3055\u3044\u3002    RHEL / CentOS  curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-yum.sh | sh   \u203bbash_completion\u3092\u6709\u52b9\u5316\u3059\u308b\u306b\u306f\u4e0a\u8a18\u30b3\u30de\u30f3\u30c9\u3092\u5b9f\u884c\u5f8c\u306b\u518d\u30ed\u30b0\u30a4\u30f3\u3057\u3066\u304f\u3060\u3055\u3044\u3002    Ubuntu / debian / bash on Windows  curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-apt.sh | sh   \u203bbash_completion\u3092\u6709\u52b9\u5316\u3059\u308b\u306b\u306f\u4e0a\u8a18\u30b3\u30de\u30f3\u30c9\u3092\u5b9f\u884c\u5f8c\u306b\u518d\u30ed\u30b0\u30a4\u30f3\u3057\u3066\u304f\u3060\u3055\u3044\u3002    Windows/\u305d\u306e\u4ed6\u306e\u5834\u5408  \u4ee5\u4e0b\u306e\u30ea\u30f3\u30af\u304b\u3089\u30d0\u30a4\u30ca\u30ea\u30fc\u30d5\u30a1\u30a4\u30eb\u3092\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9\u3057\u3066\u5c55\u958b\u3057\u3001\u4efb\u610f\u306e\u30d5\u30a9\u30eb\u30c0\u30fc\u5185\u306b\u914d\u7f6e\u3057\u3066\u304f\u3060\u3055\u3044\u3002 \n(PATH\u3092\u901a\u3057\u3066\u304a\u304f\u3068\u4fbf\u5229\u3067\u3059)   Windows 64bit\u7248 :  https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-amd64.zip  Windows 32bit\u7248 :  https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-386.zip  \u305d\u306e\u4ed6\u306e\u5834\u5408 :  https://github.com/sacloud/usacloud/releases/latest/   bash_completion \u304c\u5229\u7528\u3067\u304d\u308b\u5834\u5408\u306f\u3001\u4ee5\u4e0b\u306e\u30b3\u30de\u30f3\u30c9\u3067 usacloud \u7528\u306e bash_completion \u3092\u5c0e\u5165\u3059\u308b\u3053\u3068\u304c\u51fa\u6765\u307e\u3059\u3002  curl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud >> ~/.bashrc   \u203bbash_completion\u3092\u6709\u52b9\u5316\u3059\u308b\u306b\u306f\u4e0a\u8a18\u30b3\u30de\u30f3\u30c9\u3092\u5b9f\u884c\u5f8c\u306b\u518d\u30ed\u30b0\u30a4\u30f3\u3057\u3066\u304f\u3060\u3055\u3044\u3002    Docker\u3092\u5229\u7528\u3059\u308b\u5834\u5408  usacloud \u5b9f\u884c\u7528\u30a4\u30e1\u30fc\u30b8\u3068\u3057\u3066 sacloud/usacloud \u3092\u516c\u958b\u3057\u3066\u3044\u307e\u3059\u3002  # Docker\u3067\u306eusacloud\u5b9f\u884c\u4f8b\ndocker run -it --rm \\\n    -e SAKURACLOUD_ACCESS_TOKEN \\\n    -e SAKURACLOUD_ACCESS_TOKEN_SECRET \\\n    -e SAKURACLOUD_ZONE \\\n    sacloud/usacloud server ls   whalebrew\u3092\u5229\u7528\u3059\u308b\u5834\u5408  Docker\u30a4\u30e1\u30fc\u30b8 sacloud/usacloud \u306f whalebrew \u3067\u306e\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb/\u5b9f\u884c\u306b\u5bfe\u5fdc\u3057\u3066\u3044\u307e\u3059\u3002  # \u30a4\u30f3\u30b9\u30c8\u30fc\u30eb\nwhalebrew install sacloud/usacloud",
             "title": "\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb"
         },
         {
-            "location": "/installation/#_1",
-            "text": "",
-            "title": "\u30a4\u30f3\u30b9\u30c8\u30fc\u30eb"
-        },
-        {
-            "location": "/configure/",
-            "text": "\u8a2d\u5b9a",
-            "title": "\u521d\u671f\u8a2d\u5b9a"
-        },
-        {
-            "location": "/configure/#_1",
-            "text": "",
+            "location": "/start_guide/#_3",
+            "text": "usacloud \u306e\u5b9f\u884c\u306b\u306f\u3055\u304f\u3089\u306e\u30af\u30e9\u30a6\u30c9\u306eAPI\u30ad\u30fc\u306e\u53d6\u5f97/\u8a2d\u5b9a\u304c\u5fc5\u8981\u3067\u3059\u3002",
             "title": "\u8a2d\u5b9a"
+        },
+        {
+            "location": "/start_guide/#api",
+            "text": "\u3055\u304f\u3089\u306e\u30af\u30e9\u30a6\u30c9\u306e\u30b3\u30f3\u30c8\u30ed\u30fc\u30eb\u30d1\u30cd\u30eb \u304b\u3089API\u30ad\u30fc\u3092\u767a\u884c\u3057\u307e\u3059\u3002  \u30b3\u30f3\u30c8\u30ed\u30fc\u30eb\u30d1\u30cd\u30eb\u306b\u30ed\u30b0\u30a4\u30f3\u3057\u3001\u300c\u3055\u304f\u3089\u306e\u30af\u30e9\u30a6\u30c9(IaaS)\u300d\u3092\u9078\u629e\u3057\u307e\u3059\u3002   \u6b21\u306b\u4ee5\u4e0b\u624b\u9806\u3067API\u30ad\u30fc\u306e\u8ffd\u52a0\u753b\u9762\u3092\u8868\u793a\u3057\u307e\u3059\u3002   (1) \u753b\u9762\u53f3\u4e0a\u306e\u300c\u8a2d\u5b9a\u300d\u3092\u30af\u30ea\u30c3\u30af\u3057\u3001  (2) \u5de6\u5074\u306b\u8868\u793a\u3055\u308c\u308b\u30e1\u30cb\u30e5\u30fc\u304b\u3089\u300cAPI\u30ad\u30fc\u300d\u3092\u9078\u629e\u3057\u3001  (3) \u4e00\u89a7\u306e\u53f3\u4e0a\u306e\u300c\u8ffd\u52a0\u300d\u3092\u30af\u30ea\u30c3\u30af\u3057\u307e\u3059\u3002    API\u30ad\u30fc\u306e\u8ffd\u52a0\u753b\u9762\u304c\u8868\u793a\u3055\u308c\u305f\u3089\u3001\u5404\u9805\u76ee\u3092\u5165\u529b\u3057\u3066\u300c\u8ffd\u52a0\u300d\u3092\u30af\u30ea\u30c3\u30af\u3057\u307e\u3059\u3002  \u5404\u9805\u76ee\u306f\u4ee5\u4e0b\u306e\u3088\u3046\u306b\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002   \u540d\u524d : \u4efb\u610f\u306e\u540d\u524d\u3092\u5165\u529b  \u8aac\u660e : \u4efb\u610f\u5165\u529b  \u30a2\u30af\u30bb\u30b9\u30ec\u30d9\u30eb : \u300c\u4f5c\u6210\u30fb\u524a\u9664\u300d\u3092\u9078\u629e  \u4ed6\u30b5\u30fc\u30d3\u30b9\u3078\u306e\u30a2\u30af\u30bb\u30b9\u6a29 : \u5fc5\u8981\u306b\u5fdc\u3058\u3066\u30c1\u30a7\u30c3\u30af\u3092\u5165\u308c\u308b    API\u30ad\u30fc\u3092\u4f5c\u6210\u3057\u305f\u3089\u3001\u4ee5\u4e0b\u306e\u5024\u3092\u63a7\u3048\u3066\u304a\u3044\u3066\u304f\u3060\u3055\u3044\u3002   \u30a2\u30af\u30bb\u30b9\u30c8\u30fc\u30af\u30f3  \u30a2\u30af\u30bb\u30b9\u30b7\u30fc\u30af\u30ec\u30c3\u30c8    \u4ee5\u4e0a\u3067API\u30ad\u30fc\u306e\u53d6\u5f97\u5b8c\u4e86\u3067\u3059\u3002",
+            "title": "API\u30ad\u30fc\u306e\u53d6\u5f97"
+        },
+        {
+            "location": "/start_guide/#api_1",
+            "text": "API\u30ad\u30fc\u306e\u53d6\u5f97\u3092\u884c\u3063\u305f\u3089\u3001 usacloud config \u3092\u5b9f\u884c\u3057\u3066API\u30ad\u30fc\u3092\u8a2d\u5b9a\u3057\u307e\u3059\u3002  \u753b\u9762\u306e\u6307\u793a\u306b\u5f93\u3044\u3001\u30a2\u30af\u30bb\u30b9\u30c8\u30fc\u30af\u30f3(token)\u3068\u30b7\u30fc\u30af\u30ec\u30c3\u30c8(secret)\u3001\u64cd\u4f5c\u5bfe\u8c61\u306e\u30be\u30fc\u30f3\u306e\u5165\u529b\u3092\u884c\u3044\u307e\u3059\u3002      $ usacloud config\n\n    Setting SakuraCloud API Token => \n        Enter token: [\u30a2\u30af\u30bb\u30b9\u30c8\u30fc\u30af\u30f3\u3092\u5165\u529b]\n\n    Setting SakuraCloud API Secret => \n        Enter secret: [\u30a2\u30af\u30bb\u30b9\u30b7\u30fc\u30af\u30ec\u30c3\u30c8\u3092\u5165\u529b]\n\n    Setting SakuraCloud Zone => \n        Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [\u30be\u30fc\u30f3\u3092\u5165\u529b]\n\n    Written your settings to ~/.usacloud_config  \u64cd\u4f5c\u5bfe\u8c61\u306e\u30be\u30fc\u30f3\u306f\u4ee5\u4e0b\u306e\u3044\u305a\u308c\u304b\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044\u3002   is1a  : \u77f3\u72e9\u7b2c1\u30be\u30fc\u30f3  is1b  : \u77f3\u72e9\u7b2c2\u30be\u30fc\u30f3  tk1a  : \u6771\u4eac\u7b2c1\u30be\u30fc\u30f3  tk1v  : \u30b5\u30f3\u30c9\u30dc\u30c3\u30af\u30b9    \u203b is1a \u306f2016\u5e747\u67081\u65e5\u4ee5\u964d\u306b\u65b0\u898f\u4f5c\u6210\u3057\u305f\u30a2\u30ab\u30a6\u30f3\u30c8\u3067\u306f \u5229\u7528\u3067\u304d\u307e\u305b\u3093 \n\u203b\u3053\u3053\u3067\u5165\u529b\u3057\u305f\u5185\u5bb9\u306f ~/.usacloud_config \u306bJSON\u30d5\u30a1\u30a4\u30eb\u3068\u3057\u3066\u4fdd\u5b58\u3055\u308c\u307e\u3059   \u305d\u306e\u4ed6\u306eAPI\u30ad\u30fc\u8a2d\u5b9a\u65b9\u6cd5  API\u30ad\u30fc\u306f\u74b0\u5883\u5909\u6570\u3067\u6307\u5b9a\u3059\u308b\u3053\u3068\u3082\u53ef\u80fd\u3067\u3059\u3002  export SAKURACLOUD_ACCESS_TOKEN=\u30a2\u30af\u30bb\u30b9\u30c8\u30fc\u30af\u30f3\nexport SAKURACLOUD_ACCESS_TOKEN_SECRET=\u30a2\u30af\u30bb\u30b9\u30b7\u30fc\u30af\u30ec\u30c3\u30c8\nexport SAKURACLOUD_ZONE=\u30be\u30fc\u30f3  \u307e\u305f\u3001\u30b3\u30de\u30f3\u30c9\u5b9f\u884c\u306e\u90fd\u5ea6\u6307\u5b9a\u3059\u308b\u3053\u3068\u3082\u53ef\u80fd\u3067\u3059\u3002  usacloud --token=\u30a2\u30af\u30bb\u30b9\u30c8\u30fc\u30af\u30f3 --secret=\u30a2\u30af\u30bb\u30b9\u30b7\u30fc\u30af\u30ec\u30c3\u30c8 --zone=\u30be\u30fc\u30f3 server ls  \u8907\u6570\u306e\u7b87\u6240\u3067\u6307\u5b9a\u3055\u308c\u3066\u3044\u305f\u5834\u5408\u3001\u4ee5\u4e0b\u306e\u9806\u3067\u8aad\u307f\u8fbc\u307f\u307e\u3059(\u5f8c\u304b\u3089\u8aad\u307f\u8fbc\u3093\u3060\u3082\u306e\u304c\u512a\u5148)\u3002   usacloud config \u3067\u306e\u8a2d\u5b9a  \u74b0\u5883\u5909\u6570\u3067\u306e\u8a2d\u5b9a  \u30b3\u30de\u30f3\u30c9\u5b9f\u884c\u6642\u306e\u6307\u5b9a    \u4ee5\u4e0a\u3067\u8a2d\u5b9a\u7d42\u4e86\u3067\u3059\u3002\u7d9a\u3044\u3066 \u57fa\u672c\u7684\u306a\u4f7f\u3044\u65b9 \u306b\u9032\u3093\u3067\u304f\u3060\u3055\u3044\u3002",
+            "title": "API\u30ad\u30fc\u306e\u8a2d\u5b9a"
         },
         {
             "location": "/basic_usage/",
@@ -56,24 +66,404 @@
             "title": "\u57fa\u672c\u7684\u306a\u4f7f\u3044\u65b9"
         },
         {
+            "location": "/usage_server_build/",
+            "text": "",
+            "title": "\u30b5\u30fc\u30d0\u30fc\u306e\u4f5c\u6210"
+        },
+        {
+            "location": "/usage_server_power/",
+            "text": "",
+            "title": "\u96fb\u6e90\u64cd\u4f5c"
+        },
+        {
+            "location": "/usage_server_connect/",
+            "text": "",
+            "title": "\u63a5\u7d9a(SSH/VNC)"
+        },
+        {
+            "location": "/usage_server_scp/",
+            "text": "",
+            "title": "\u30d5\u30a1\u30a4\u30eb\u9001\u53d7\u4fe1(SCP)"
+        },
+        {
+            "location": "/usage_ojs/",
+            "text": "",
+            "title": "\u30aa\u30d6\u30b8\u30a7\u30af\u30c8\u30b9\u30c8\u30ec\u30fc\u30b8\u306e\u64cd\u4f5c"
+        },
+        {
+            "location": "/usage_download/",
+            "text": "",
+            "title": "\u30a2\u30fc\u30ab\u30a4\u30d6\u306e\u30c0\u30a6\u30f3\u30ed\u30fc\u30c9"
+        },
+        {
+            "location": "/usage_upload/",
+            "text": "",
+            "title": "ISO\u30a4\u30e1\u30fc\u30b8\u306e\u30a2\u30c3\u30d7\u30ed\u30fc\u30c9"
+        },
+        {
+            "location": "/usage_monitoring/",
+            "text": "",
+            "title": "\u76e3\u8996/\u30e2\u30cb\u30bf\u30ea\u30f3\u30b0"
+        },
+        {
             "location": "/commands/server/",
-            "text": "server / \u30b5\u30fc\u30d0\u30fc",
-            "title": "server / \u30b5\u30fc\u30d0\u30fc"
+            "text": "server\n\n\n\n\n\u30b5\u30fc\u30d0\u30fc\u306e\u64cd\u4f5c\u3092\u884c\u3044\u307e\u3059\u3002\n\n\n\u30b3\u30de\u30f3\u30c9\n\n\n\n\n\u57fa\u672c\u7684\u306a\u64cd\u4f5c\n\n\nlist\n - \u4e00\u89a7\u8868\u793a\n\n\nbuild\n - \u4f5c\u6210\n\n\nread\n - \u8a73\u7d30\u8868\u793a\n\n\nupdate\n - \u66f4\u65b0\n\n\ndelete\n - \u524a\u9664\n\n\nplan-change\n - \u30d7\u30e9\u30f3\u5909\u66f4\n\n\n\n\n\n\n\u96fb\u6e90\u64cd\u4f5c\n\n\nboot\n - \u8d77\u52d5\n\n\nshutdown\n - \u30b7\u30e3\u30c3\u30c8\u30c0\u30a6\u30f3(graceful)\n\n\nshutdown-force\n - \u30b7\u30e3\u30c3\u30c8\u30c0\u30a6\u30f3(force)\n\n\nreset\n - \u30ea\u30bb\u30c3\u30c8\n\n\nwait-for-boot\n - \u8d77\u52d5\u3059\u308b\u307e\u3067\u5f85\u6a5f\n\n\nwait-for-down\n - \u7d42\u4e86\u3059\u308b\u307e\u3067\u5f85\u6a5f\n\n\n\n\n\n\nSSH/SCP/VNC\n\n\nssh\n - SSH\u63a5\u7d9a\n\n\nssh-exec\n - SSH\u63a5\u7d9a(\u30b3\u30de\u30f3\u30c9\u5b9f\u884c)\n\n\nscp\n - SCP\u3067\u306e\u30d5\u30a1\u30a4\u30eb\u9001\u53d7\u4fe1\n\n\nvnc\n - VNC\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u8d77\u52d5\n\n\nvnc-info\n - VNC\u63a5\u7d9a\u60c5\u5831\u8868\u793a\n\n\n\n\n\n\n\u30c7\u30a3\u30b9\u30af\u7ba1\u7406\n\n\ndisk-info\n - \u63a5\u7d9a\u3055\u308c\u3066\u3044\u308b\u30c7\u30a3\u30b9\u30af\u3092\u4e00\u89a7\u8868\u793a\n\n\ndisk-connect\n - \u30c7\u30a3\u30b9\u30af\u306e\u63a5\u7d9a\n\n\ndisk-disconnect\n - \u30c7\u30a3\u30b9\u30af\u306e\u5207\u65ad\n\n\n\n\n\n\n\u30cd\u30c3\u30c8\u30ef\u30fc\u30af(NIC)\u7ba1\u7406\n\n\ninterface-info\n - \u63a5\u7d9a\u3055\u308c\u3066\u3044\u308bNIC\u3092\u4e00\u89a7\u8868\u793a\n\n\ninterface-add-for-internet\n - \u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8(\u5171\u6709\u30bb\u30b0\u30e1\u30f3\u30c8)\u306b\u63a5\u7d9a\u3059\u308bNIC\u3092\u8ffd\u52a0\n\n\ninterface-add-for-router\n - \u30eb\u30fc\u30bf\u30fc\u306b\u63a5\u7d9a\u3059\u308bNIC\u3092\u8ffd\u52a0\n\n\ninterface-add-for-switch\n - \u30b9\u30a4\u30c3\u30c1\u306b\u63a5\u7d9a\u3059\u308bNIC\u3092\u8ffd\u52a0\n\n\ninterface-add-disconnected\n - \u4e0a\u6d41\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u306b\u63a5\u7d9a\u3057\u3066\u3044\u306a\u3044NIC\u3092\u8ffd\u52a0\n\n\n\n\n\n\nISO\u30a4\u30e1\u30fc\u30b8(CD-ROM)\n\n\niso-info\n - \u633f\u5165\u3055\u308c\u3066\u3044\u308bISO\u30a4\u30e1\u30fc\u30b8(CD-ROM)\u306e\u8a73\u7d30\u8868\u793a\n\n\niso-insert\n - ISO\u30a4\u30e1\u30fc\u30b8(CD-ROM)\u306e\u633f\u5165\n\n\niso-eject\n - ISO\u30a4\u30e1\u30fc\u30b8(CD-ROM)\u306e\u6392\u51fa\n\n\n\n\n\n\n\u76e3\u8996/\u30e2\u30cb\u30bf\u30ea\u30f3\u30b0\n\n\nmonitor-cpu\n - \u30a2\u30af\u30c6\u30a3\u30d3\u30c6\u30a3\u30e2\u30cb\u30bf(CPU)\u53d6\u5f97\n\n\nmonitor-nic\n - \u30a2\u30af\u30c6\u30a3\u30d3\u30c6\u30a3\u30e2\u30cb\u30bf(NIC)\u53d6\u5f97\n\n\nmonitor-disk\n - \u30a2\u30af\u30c6\u30a3\u30d3\u30c6\u30a3\u30e2\u30cb\u30bf(\u30c7\u30a3\u30b9\u30af)\u53d6\u5f97\n\n\n\n\n\n\n\n\n== \u57fa\u672c\u7684\u306a\u64cd\u4f5c ==\n\n\n\n\nlist\n\n\nUSAGE:\n   usacloud server list [command options] [arguments...]\n\nOPTIONS:\n   --from value  set offset (default: 0)\n   --id value    set filter by id(s)\n   --max value   set limit (default: 0)\n   --name value  set filter by name(s)\n   --sort value  set field(s) for sort\n   --help, -h    show help (default: false)\n\n\n\n\n\n\nbuild\n\n\nUSAGE:\n   usacloud server build [command options] [arguments...]\n\nOPTIONS:\n === For server-plan options ===\n   --core value    [Required] set CPU core count (default: 1)\n   --memory value  [Required] set memory size(GB) (default: 1)\n\n === For disk options ===\n   --disk-mode value          [Required] disk create mode[create/connect/diskless] (default: \"create\")\n   --os-type value            set source OS type\n   --disk-plan value          set disk plan('hdd' or 'ssd') (default: \"ssd\")\n   --disk-connection value    set disk connection('virtio' or 'ide') (default: \"virtio\")\n   --disk-size value          set disk size(GB) (default: 20)\n   --source-archive-id value  set source disk ID (default: 0)\n   --source-disk-id value     set source disk ID (default: 0)\n   --distant-from value       set distant from disk IDs\n   --disk-id value            set connect disk ID (default: 0)\n\n === For ISO image options ===\n   --iso-image-id value  set iso-image ID (default: 0)\n\n === For network options ===\n   --network-mode value      [Required] network connection mode[shared/switch/disconnect/none] (default: \"shared\")\n   --use-nic-virtio          use virtio on nic (default: true)\n   --packet-filter-id value  set packet filter ID (default: 0)\n   --switch-id value         set connect switch ID (default: 0)\n\n === For edit-disk options ===\n   --hostname value                            set hostname\n   --password value                            set password\n   --disable-password-auth, --disable-pw-auth  disable password auth on SSH (default: false)\n\n === For edit-disk(network settings) options ===\n   --ipaddress value, --ip value                set ipaddress\n   --nw-masklen value, --network-masklen value  set ipaddress  prefix (default: 24)\n   --default-route value, --gateway value       set default gateway\n\n === For edit-disk(startup-script) options ===\n   --startup-scripts value, --notes value        set startup script(s)\n   --startup-script-ids value, --note-ids value  set startup script ID(s)\n   --startup-scripts-ephemeral                   set startup script persist mode (default: true)\n\n === For edit-disk(ssh-key) options ===\n   --ssh-key-mode value                ssh-key mode[none/id/generate/upload]\n   --ssh-key-name value                set ssh-key name\n   --ssh-key-ids value                 set ssh-key ID(s)\n   --ssh-key-pass-phrase value         set ssh-key pass phrase\n   --ssh-key-description value         set ssh-key description\n   --ssh-key-private-key-output value  set ssh-key privatekey output path\n   --ssh-key-public-keys value         set ssh-key public key\n   --ssh-key-public-key-files value    set ssh-key public key file\n   --ssh-key-ephemeral                 set ssh-key persist mode (default: true)\n\n === For server-info options ===\n   --name value                       [Required] set resource display name\n   --description value, --desc value  set resource description\n   --tags value                       set resource tags\n   --icon-id value                    set Icon ID (default: 0)\n\n === Common options ===\n   --assumeyes, -y              assume that the answer to any question which would be asked is yes (default: false)\n   --us-keyboard                use us-keyboard (default: false)\n   --disable-boot-after-create  boot after create (default: false)\n   --help, -h                   show help (default: false)\n\n\n\n\n\n\nread\n\n\nUSAGE:\n   usacloud server read [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --help, -h  show help (default: false)\n\n\n\n\n\n\nupdate\n\n\nUSAGE:\n   usacloud server update [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --assumeyes, -y                    assume that the answer to any question which would be asked is yes (default: false)\n   --description value, --desc value  set resource description\n   --icon-id value                    set Icon ID (default: 0)\n   --name value                       set resource display name\n   --tags value                       set resource tags\n   --help, -h                         show help (default: false)\n\n\n\n\n\n\ndelete\n\n\nUSAGE:\n   usacloud server delete [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --force, -f      forced-shutdown flag if server is running (default: false)\n   --with-disk      delete connected disks with server (default: true)\n   --help, -h       show help (default: false)\n\n\n\n\n\n\nplan-change\n\n\nUSAGE:\n   usacloud server plan-change [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --core value     [Required] set CPU core count (default: 0)\n   --memory value   [Required] set memory size(GB) (default: 0)\n   --help, -h       show help (default: false)\n\n\n\n\n\n\n== \u96fb\u6e90\u64cd\u4f5c ==\n\n\n\n\nboot\n\n\nUSAGE:\n   usacloud server boot [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)\n\n\n\n\n\n\nshutdown\n\n\nUSAGE:\n   usacloud server shutdown [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)\n\n\n\n\n\n\nshutdown-force\n\n\nUSAGE:\n   usacloud server shutdown-force [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)\n\n\n\n\n\n\nreset\n\n\nUSAGE:\n   usacloud server reset [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)\n\n\n\n\n\n\nwait-for-boot\n\n\nUSAGE:\n   usacloud server wait-for-boot [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --help, -h  show help (default: false)\n\n\n\n\n\n\nwait-for-down\n\n\n\n\n== SSH/SCP/VNC ==\n\n\nUSAGE:\n   usacloud server wait-for-down [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --help, -h  show help (default: false)\n\n\n\n\n\n\nssh\n\n\nUSAGE:\n   usacloud server ssh [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --key value, -i value   private-key file path\n   --password value        password(or private-key pass phrase) [$SAKURACLOUD_SSH_PASSWORD]\n   --port value, -p value  [Required] port (default: 22)\n   --quiet, -q             disable information messages (default: false)\n   --user value, -l value  user name\n   --help, -h              show help (default: false)\n\n\n\n\n\n\nssh-exec\n\n\nUSAGE:\n   usacloud server ssh-exec [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --key value, -i value   private-key file path\n   --password value        password(or private-key pass phrase) [$SAKURACLOUD_SSH_PASSWORD]\n   --port value, -p value  [Required] port (default: 22)\n   --quiet, -q             disable information messages (default: false)\n   --user value, -l value  user name\n   --help, -h              show help (default: false)\n\n\n\n\n\n\nscp\n\n\nUSAGE:\n   usacloud server scp [command options] [ServerID:]<FROM> [ServerID:]<TO>\n\nOPTIONS:\n   --assumeyes, -y         assume that the answer to any question which would be asked is yes (default: false)\n   --key value, -i value   private-key file path\n   --password value        password(or private-key pass phrase) [$SAKURACLOUD_SSH_PASSWORD]\n   --port value, -p value  [Required] port (default: 22)\n   --quiet, -q             disable information messages (default: false)\n   --recursive, -r         set recursive copy flag (default: false)\n   --user value, -l value  user name\n   --help, -h              show help (default: false)\n\n\n\n\n\n\nvnc\n\n\nUSAGE:\n   usacloud server vnc [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)\n\n\n\n\n\n\nvnc-info\n\n\nUSAGE:\n   usacloud server vnc-info [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --help, -h  show help (default: false)\n\n\n\n\n\n\n== \u30c7\u30a3\u30b9\u30af\u7ba1\u7406 ===\n\n\n\n\ndisk-info\n\n\nUSAGE:\n   usacloud server disk-info [command options] <ID or Name(only single target)>\n\nOPTIONS:\n === Common options ===\n   --help, -h  show help (default: false)\n\n\n\n\n\n\ndisk-connect\n\n\nUSAGE:\n   usacloud server disk-connect [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --disk-id value  [Required] set target disk ID (default: 0)\n   --help, -h       show help (default: false)\n\n\n\n\n\n\ndisk-disconnect\n\n\nUSAGE:\n   usacloud server disk-disconnect [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --disk-id value  [Required] set target disk ID (default: 0)\n   --help, -h       show help (default: false)\n\n\n\n\n\n\n== \u30cd\u30c3\u30c8\u30ef\u30fc\u30af(NIC)\u7ba1\u7406 ==\n\n\n\n\ninterface-info\n\n\nUSAGE:\n   usacloud server interface-info [command options] <ID or Name(only single target)>\n\nOPTIONS:\n === Common options ===\n   --help, -h  show help (default: false)\n\n\n\n\n\n\ninterface-add-for-internet\n\n\nUSAGE:\n   usacloud server interface-add-for-internet [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y      assume that the answer to any question which would be asked is yes (default: false)\n   --without-disk-edit  set skip edit-disk flag. if true, don't call DiskEdit API after interface added (default: false)\n   --help, -h           show help (default: false)\n\n\n\n\n\n\ninterface-add-for-router\n\n\nUSAGE:\n   usacloud server interface-add-for-router [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y                              assume that the answer to any question which would be asked is yes (default: false)\n   --default-route value, --gateway value       set default gateway\n   --ipaddress value, --ip value                set ipaddress\n   --nw-masklen value, --network-masklen value  set ipaddress  prefix (default: 24)\n   --switch-id value                            [Required] set connect switch(connected to router) ID (default: 0)\n   --without-disk-edit                          set skip edit-disk flag. if true, don't call DiskEdit API after interface added (default: false)\n   --help, -h                                   show help (default: false)\n\n\n\n\n\n\ninterface-add-for-switch\n\n\nUSAGE:\n   usacloud server interface-add-for-switch [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y                              assume that the answer to any question which would be asked is yes (default: false)\n   --default-route value, --gateway value       set default gateway\n   --ipaddress value, --ip value                set ipaddress\n   --nw-masklen value, --network-masklen value  set ipaddress  prefix (default: 24)\n   --switch-id value                            [Required] set connect switch ID (default: 0)\n   --without-disk-edit                          set skip edit-disk flag. if true, don't call DiskEdit API after interface added (default: false)\n   --help, -h                                   show help (default: false)\n\n\n\n\n\n\ninterface-add-disconnected\n\n\nUSAGE:\n   usacloud server interface-add-disconnected [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)\n\n\n\n\n\n\n== ISO\u30a4\u30e1\u30fc\u30b8(CD-ROM) ==\n\n\n\n\niso-info\n\n\nUSAGE:\n   usacloud server iso-info [command options] <ID or Name(only single target)>\n\nOPTIONS:\n === Common options ===\n   --help, -h  show help (default: false)\n\n\n\n\n\n\niso-insert\n\n\nUSAGE:\n   usacloud server iso-insert [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y                    assume that the answer to any question which would be asked is yes (default: false)\n   --description value, --desc value  set resource description\n   --icon-id value                    set Icon ID (default: 0)\n   --iso-file value                   set iso image file\n   --iso-image-id value               set iso-image ID (default: 0)\n   --name value                       set resource display name\n   --size value                       set iso size(GB) (default: 5)\n   --tags value                       set resource tags\n   --help, -h                         show help (default: false)\n\n\n\n\n\n\niso-eject\n\n\nUSAGE:\n   usacloud server iso-eject [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)\n\n\n\n\n\n\n== \u76e3\u8996/\u30e2\u30cb\u30bf\u30ea\u30f3\u30b0 ==\n\n\n\n\nmonitor-cpu\n\n\nUSAGE:\n   usacloud server monitor-cpu [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --end value         set end-time\n   --key-format value  [Required] set monitoring value key-format (default: \"sakuracloud.{{.ID}}.cpu\")\n   --start value       set start-time\n   --help, -h          show help (default: false)\n\n\n\n\n\n\nmonitor-nic\n\n\nUSAGE:\n   usacloud server monitor-nic [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --end value         set end-time\n   --index value       target index(es)\n   --key-format value  [Required] set monitoring value key-format (default: \"sakuracloud.{{.ID}}.nic.{{.Index}}\")\n   --start value       set start-time\n   --help, -h          show help (default: false)\n\n\n\n\n\n\nmonitor-disk\n\n\nUSAGE:\n   usacloud server monitor-disk [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --end value         set end-time\n   --index value       target index(es)\n   --key-format value  [Required] set monitoring value key-format (default: \"sakuracloud.{{.ID}}.disk.{{.Index}}\")\n   --start value       set start-time\n   --help, -h          show help (default: false)",
+            "title": "server"
         },
         {
             "location": "/commands/server/#server",
+            "text": "\u30b5\u30fc\u30d0\u30fc\u306e\u64cd\u4f5c\u3092\u884c\u3044\u307e\u3059\u3002",
+            "title": "server"
+        },
+        {
+            "location": "/commands/server/#_1",
+            "text": "\u57fa\u672c\u7684\u306a\u64cd\u4f5c  list  - \u4e00\u89a7\u8868\u793a  build  - \u4f5c\u6210  read  - \u8a73\u7d30\u8868\u793a  update  - \u66f4\u65b0  delete  - \u524a\u9664  plan-change  - \u30d7\u30e9\u30f3\u5909\u66f4    \u96fb\u6e90\u64cd\u4f5c  boot  - \u8d77\u52d5  shutdown  - \u30b7\u30e3\u30c3\u30c8\u30c0\u30a6\u30f3(graceful)  shutdown-force  - \u30b7\u30e3\u30c3\u30c8\u30c0\u30a6\u30f3(force)  reset  - \u30ea\u30bb\u30c3\u30c8  wait-for-boot  - \u8d77\u52d5\u3059\u308b\u307e\u3067\u5f85\u6a5f  wait-for-down  - \u7d42\u4e86\u3059\u308b\u307e\u3067\u5f85\u6a5f    SSH/SCP/VNC  ssh  - SSH\u63a5\u7d9a  ssh-exec  - SSH\u63a5\u7d9a(\u30b3\u30de\u30f3\u30c9\u5b9f\u884c)  scp  - SCP\u3067\u306e\u30d5\u30a1\u30a4\u30eb\u9001\u53d7\u4fe1  vnc  - VNC\u30af\u30e9\u30a4\u30a2\u30f3\u30c8\u8d77\u52d5  vnc-info  - VNC\u63a5\u7d9a\u60c5\u5831\u8868\u793a    \u30c7\u30a3\u30b9\u30af\u7ba1\u7406  disk-info  - \u63a5\u7d9a\u3055\u308c\u3066\u3044\u308b\u30c7\u30a3\u30b9\u30af\u3092\u4e00\u89a7\u8868\u793a  disk-connect  - \u30c7\u30a3\u30b9\u30af\u306e\u63a5\u7d9a  disk-disconnect  - \u30c7\u30a3\u30b9\u30af\u306e\u5207\u65ad    \u30cd\u30c3\u30c8\u30ef\u30fc\u30af(NIC)\u7ba1\u7406  interface-info  - \u63a5\u7d9a\u3055\u308c\u3066\u3044\u308bNIC\u3092\u4e00\u89a7\u8868\u793a  interface-add-for-internet  - \u30a4\u30f3\u30bf\u30fc\u30cd\u30c3\u30c8(\u5171\u6709\u30bb\u30b0\u30e1\u30f3\u30c8)\u306b\u63a5\u7d9a\u3059\u308bNIC\u3092\u8ffd\u52a0  interface-add-for-router  - \u30eb\u30fc\u30bf\u30fc\u306b\u63a5\u7d9a\u3059\u308bNIC\u3092\u8ffd\u52a0  interface-add-for-switch  - \u30b9\u30a4\u30c3\u30c1\u306b\u63a5\u7d9a\u3059\u308bNIC\u3092\u8ffd\u52a0  interface-add-disconnected  - \u4e0a\u6d41\u30cd\u30c3\u30c8\u30ef\u30fc\u30af\u306b\u63a5\u7d9a\u3057\u3066\u3044\u306a\u3044NIC\u3092\u8ffd\u52a0    ISO\u30a4\u30e1\u30fc\u30b8(CD-ROM)  iso-info  - \u633f\u5165\u3055\u308c\u3066\u3044\u308bISO\u30a4\u30e1\u30fc\u30b8(CD-ROM)\u306e\u8a73\u7d30\u8868\u793a  iso-insert  - ISO\u30a4\u30e1\u30fc\u30b8(CD-ROM)\u306e\u633f\u5165  iso-eject  - ISO\u30a4\u30e1\u30fc\u30b8(CD-ROM)\u306e\u6392\u51fa    \u76e3\u8996/\u30e2\u30cb\u30bf\u30ea\u30f3\u30b0  monitor-cpu  - \u30a2\u30af\u30c6\u30a3\u30d3\u30c6\u30a3\u30e2\u30cb\u30bf(CPU)\u53d6\u5f97  monitor-nic  - \u30a2\u30af\u30c6\u30a3\u30d3\u30c6\u30a3\u30e2\u30cb\u30bf(NIC)\u53d6\u5f97  monitor-disk  - \u30a2\u30af\u30c6\u30a3\u30d3\u30c6\u30a3\u30e2\u30cb\u30bf(\u30c7\u30a3\u30b9\u30af)\u53d6\u5f97",
+            "title": "\u30b3\u30de\u30f3\u30c9"
+        },
+        {
+            "location": "/commands/server/#_2",
             "text": "",
-            "title": "server / \u30b5\u30fc\u30d0\u30fc"
+            "title": "== \u57fa\u672c\u7684\u306a\u64cd\u4f5c =="
+        },
+        {
+            "location": "/commands/server/#list",
+            "text": "USAGE:\n   usacloud server list [command options] [arguments...]\n\nOPTIONS:\n   --from value  set offset (default: 0)\n   --id value    set filter by id(s)\n   --max value   set limit (default: 0)\n   --name value  set filter by name(s)\n   --sort value  set field(s) for sort\n   --help, -h    show help (default: false)",
+            "title": "list"
+        },
+        {
+            "location": "/commands/server/#build",
+            "text": "USAGE:\n   usacloud server build [command options] [arguments...]\n\nOPTIONS:\n === For server-plan options ===\n   --core value    [Required] set CPU core count (default: 1)\n   --memory value  [Required] set memory size(GB) (default: 1)\n\n === For disk options ===\n   --disk-mode value          [Required] disk create mode[create/connect/diskless] (default: \"create\")\n   --os-type value            set source OS type\n   --disk-plan value          set disk plan('hdd' or 'ssd') (default: \"ssd\")\n   --disk-connection value    set disk connection('virtio' or 'ide') (default: \"virtio\")\n   --disk-size value          set disk size(GB) (default: 20)\n   --source-archive-id value  set source disk ID (default: 0)\n   --source-disk-id value     set source disk ID (default: 0)\n   --distant-from value       set distant from disk IDs\n   --disk-id value            set connect disk ID (default: 0)\n\n === For ISO image options ===\n   --iso-image-id value  set iso-image ID (default: 0)\n\n === For network options ===\n   --network-mode value      [Required] network connection mode[shared/switch/disconnect/none] (default: \"shared\")\n   --use-nic-virtio          use virtio on nic (default: true)\n   --packet-filter-id value  set packet filter ID (default: 0)\n   --switch-id value         set connect switch ID (default: 0)\n\n === For edit-disk options ===\n   --hostname value                            set hostname\n   --password value                            set password\n   --disable-password-auth, --disable-pw-auth  disable password auth on SSH (default: false)\n\n === For edit-disk(network settings) options ===\n   --ipaddress value, --ip value                set ipaddress\n   --nw-masklen value, --network-masklen value  set ipaddress  prefix (default: 24)\n   --default-route value, --gateway value       set default gateway\n\n === For edit-disk(startup-script) options ===\n   --startup-scripts value, --notes value        set startup script(s)\n   --startup-script-ids value, --note-ids value  set startup script ID(s)\n   --startup-scripts-ephemeral                   set startup script persist mode (default: true)\n\n === For edit-disk(ssh-key) options ===\n   --ssh-key-mode value                ssh-key mode[none/id/generate/upload]\n   --ssh-key-name value                set ssh-key name\n   --ssh-key-ids value                 set ssh-key ID(s)\n   --ssh-key-pass-phrase value         set ssh-key pass phrase\n   --ssh-key-description value         set ssh-key description\n   --ssh-key-private-key-output value  set ssh-key privatekey output path\n   --ssh-key-public-keys value         set ssh-key public key\n   --ssh-key-public-key-files value    set ssh-key public key file\n   --ssh-key-ephemeral                 set ssh-key persist mode (default: true)\n\n === For server-info options ===\n   --name value                       [Required] set resource display name\n   --description value, --desc value  set resource description\n   --tags value                       set resource tags\n   --icon-id value                    set Icon ID (default: 0)\n\n === Common options ===\n   --assumeyes, -y              assume that the answer to any question which would be asked is yes (default: false)\n   --us-keyboard                use us-keyboard (default: false)\n   --disable-boot-after-create  boot after create (default: false)\n   --help, -h                   show help (default: false)",
+            "title": "build"
+        },
+        {
+            "location": "/commands/server/#read",
+            "text": "USAGE:\n   usacloud server read [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --help, -h  show help (default: false)",
+            "title": "read"
+        },
+        {
+            "location": "/commands/server/#update",
+            "text": "USAGE:\n   usacloud server update [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --assumeyes, -y                    assume that the answer to any question which would be asked is yes (default: false)\n   --description value, --desc value  set resource description\n   --icon-id value                    set Icon ID (default: 0)\n   --name value                       set resource display name\n   --tags value                       set resource tags\n   --help, -h                         show help (default: false)",
+            "title": "update"
+        },
+        {
+            "location": "/commands/server/#delete",
+            "text": "USAGE:\n   usacloud server delete [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --force, -f      forced-shutdown flag if server is running (default: false)\n   --with-disk      delete connected disks with server (default: true)\n   --help, -h       show help (default: false)",
+            "title": "delete"
+        },
+        {
+            "location": "/commands/server/#plan-change",
+            "text": "USAGE:\n   usacloud server plan-change [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --core value     [Required] set CPU core count (default: 0)\n   --memory value   [Required] set memory size(GB) (default: 0)\n   --help, -h       show help (default: false)",
+            "title": "plan-change"
+        },
+        {
+            "location": "/commands/server/#_3",
+            "text": "",
+            "title": "== \u96fb\u6e90\u64cd\u4f5c =="
+        },
+        {
+            "location": "/commands/server/#boot",
+            "text": "USAGE:\n   usacloud server boot [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)",
+            "title": "boot"
+        },
+        {
+            "location": "/commands/server/#shutdown",
+            "text": "USAGE:\n   usacloud server shutdown [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)",
+            "title": "shutdown"
+        },
+        {
+            "location": "/commands/server/#shutdown-force",
+            "text": "USAGE:\n   usacloud server shutdown-force [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)",
+            "title": "shutdown-force"
+        },
+        {
+            "location": "/commands/server/#reset",
+            "text": "USAGE:\n   usacloud server reset [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)",
+            "title": "reset"
+        },
+        {
+            "location": "/commands/server/#wait-for-boot",
+            "text": "USAGE:\n   usacloud server wait-for-boot [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --help, -h  show help (default: false)",
+            "title": "wait-for-boot"
+        },
+        {
+            "location": "/commands/server/#wait-for-down",
+            "text": "",
+            "title": "wait-for-down"
+        },
+        {
+            "location": "/commands/server/#sshscpvnc",
+            "text": "USAGE:\n   usacloud server wait-for-down [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --help, -h  show help (default: false)",
+            "title": "== SSH/SCP/VNC =="
+        },
+        {
+            "location": "/commands/server/#ssh",
+            "text": "USAGE:\n   usacloud server ssh [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --key value, -i value   private-key file path\n   --password value        password(or private-key pass phrase) [$SAKURACLOUD_SSH_PASSWORD]\n   --port value, -p value  [Required] port (default: 22)\n   --quiet, -q             disable information messages (default: false)\n   --user value, -l value  user name\n   --help, -h              show help (default: false)",
+            "title": "ssh"
+        },
+        {
+            "location": "/commands/server/#ssh-exec",
+            "text": "USAGE:\n   usacloud server ssh-exec [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --key value, -i value   private-key file path\n   --password value        password(or private-key pass phrase) [$SAKURACLOUD_SSH_PASSWORD]\n   --port value, -p value  [Required] port (default: 22)\n   --quiet, -q             disable information messages (default: false)\n   --user value, -l value  user name\n   --help, -h              show help (default: false)",
+            "title": "ssh-exec"
+        },
+        {
+            "location": "/commands/server/#scp",
+            "text": "USAGE:\n   usacloud server scp [command options] [ServerID:]<FROM> [ServerID:]<TO>\n\nOPTIONS:\n   --assumeyes, -y         assume that the answer to any question which would be asked is yes (default: false)\n   --key value, -i value   private-key file path\n   --password value        password(or private-key pass phrase) [$SAKURACLOUD_SSH_PASSWORD]\n   --port value, -p value  [Required] port (default: 22)\n   --quiet, -q             disable information messages (default: false)\n   --recursive, -r         set recursive copy flag (default: false)\n   --user value, -l value  user name\n   --help, -h              show help (default: false)",
+            "title": "scp"
+        },
+        {
+            "location": "/commands/server/#vnc",
+            "text": "USAGE:\n   usacloud server vnc [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)",
+            "title": "vnc"
+        },
+        {
+            "location": "/commands/server/#vnc-info",
+            "text": "USAGE:\n   usacloud server vnc-info [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --help, -h  show help (default: false)",
+            "title": "vnc-info"
+        },
+        {
+            "location": "/commands/server/#_4",
+            "text": "",
+            "title": "== \u30c7\u30a3\u30b9\u30af\u7ba1\u7406 ==="
+        },
+        {
+            "location": "/commands/server/#disk-info",
+            "text": "USAGE:\n   usacloud server disk-info [command options] <ID or Name(only single target)>\n\nOPTIONS:\n === Common options ===\n   --help, -h  show help (default: false)",
+            "title": "disk-info"
+        },
+        {
+            "location": "/commands/server/#disk-connect",
+            "text": "USAGE:\n   usacloud server disk-connect [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --disk-id value  [Required] set target disk ID (default: 0)\n   --help, -h       show help (default: false)",
+            "title": "disk-connect"
+        },
+        {
+            "location": "/commands/server/#disk-disconnect",
+            "text": "USAGE:\n   usacloud server disk-disconnect [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --disk-id value  [Required] set target disk ID (default: 0)\n   --help, -h       show help (default: false)",
+            "title": "disk-disconnect"
+        },
+        {
+            "location": "/commands/server/#nic",
+            "text": "",
+            "title": "== \u30cd\u30c3\u30c8\u30ef\u30fc\u30af(NIC)\u7ba1\u7406 =="
+        },
+        {
+            "location": "/commands/server/#interface-info",
+            "text": "USAGE:\n   usacloud server interface-info [command options] <ID or Name(only single target)>\n\nOPTIONS:\n === Common options ===\n   --help, -h  show help (default: false)",
+            "title": "interface-info"
+        },
+        {
+            "location": "/commands/server/#interface-add-for-internet",
+            "text": "USAGE:\n   usacloud server interface-add-for-internet [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y      assume that the answer to any question which would be asked is yes (default: false)\n   --without-disk-edit  set skip edit-disk flag. if true, don't call DiskEdit API after interface added (default: false)\n   --help, -h           show help (default: false)",
+            "title": "interface-add-for-internet"
+        },
+        {
+            "location": "/commands/server/#interface-add-for-router",
+            "text": "USAGE:\n   usacloud server interface-add-for-router [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y                              assume that the answer to any question which would be asked is yes (default: false)\n   --default-route value, --gateway value       set default gateway\n   --ipaddress value, --ip value                set ipaddress\n   --nw-masklen value, --network-masklen value  set ipaddress  prefix (default: 24)\n   --switch-id value                            [Required] set connect switch(connected to router) ID (default: 0)\n   --without-disk-edit                          set skip edit-disk flag. if true, don't call DiskEdit API after interface added (default: false)\n   --help, -h                                   show help (default: false)",
+            "title": "interface-add-for-router"
+        },
+        {
+            "location": "/commands/server/#interface-add-for-switch",
+            "text": "USAGE:\n   usacloud server interface-add-for-switch [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y                              assume that the answer to any question which would be asked is yes (default: false)\n   --default-route value, --gateway value       set default gateway\n   --ipaddress value, --ip value                set ipaddress\n   --nw-masklen value, --network-masklen value  set ipaddress  prefix (default: 24)\n   --switch-id value                            [Required] set connect switch ID (default: 0)\n   --without-disk-edit                          set skip edit-disk flag. if true, don't call DiskEdit API after interface added (default: false)\n   --help, -h                                   show help (default: false)",
+            "title": "interface-add-for-switch"
+        },
+        {
+            "location": "/commands/server/#interface-add-disconnected",
+            "text": "USAGE:\n   usacloud server interface-add-disconnected [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)",
+            "title": "interface-add-disconnected"
+        },
+        {
+            "location": "/commands/server/#isocd-rom",
+            "text": "",
+            "title": "== ISO\u30a4\u30e1\u30fc\u30b8(CD-ROM) =="
+        },
+        {
+            "location": "/commands/server/#iso-info",
+            "text": "USAGE:\n   usacloud server iso-info [command options] <ID or Name(only single target)>\n\nOPTIONS:\n === Common options ===\n   --help, -h  show help (default: false)",
+            "title": "iso-info"
+        },
+        {
+            "location": "/commands/server/#iso-insert",
+            "text": "USAGE:\n   usacloud server iso-insert [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y                    assume that the answer to any question which would be asked is yes (default: false)\n   --description value, --desc value  set resource description\n   --icon-id value                    set Icon ID (default: 0)\n   --iso-file value                   set iso image file\n   --iso-image-id value               set iso-image ID (default: 0)\n   --name value                       set resource display name\n   --size value                       set iso size(GB) (default: 5)\n   --tags value                       set resource tags\n   --help, -h                         show help (default: false)",
+            "title": "iso-insert"
+        },
+        {
+            "location": "/commands/server/#iso-eject",
+            "text": "USAGE:\n   usacloud server iso-eject [command options] <ID or Name(only single target)>\n\nOPTIONS:\n   --assumeyes, -y  assume that the answer to any question which would be asked is yes (default: false)\n   --help, -h       show help (default: false)",
+            "title": "iso-eject"
+        },
+        {
+            "location": "/commands/server/#_5",
+            "text": "",
+            "title": "== \u76e3\u8996/\u30e2\u30cb\u30bf\u30ea\u30f3\u30b0 =="
+        },
+        {
+            "location": "/commands/server/#monitor-cpu",
+            "text": "USAGE:\n   usacloud server monitor-cpu [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --end value         set end-time\n   --key-format value  [Required] set monitoring value key-format (default: \"sakuracloud.{{.ID}}.cpu\")\n   --start value       set start-time\n   --help, -h          show help (default: false)",
+            "title": "monitor-cpu"
+        },
+        {
+            "location": "/commands/server/#monitor-nic",
+            "text": "USAGE:\n   usacloud server monitor-nic [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --end value         set end-time\n   --index value       target index(es)\n   --key-format value  [Required] set monitoring value key-format (default: \"sakuracloud.{{.ID}}.nic.{{.Index}}\")\n   --start value       set start-time\n   --help, -h          show help (default: false)",
+            "title": "monitor-nic"
+        },
+        {
+            "location": "/commands/server/#monitor-disk",
+            "text": "USAGE:\n   usacloud server monitor-disk [command options] <ID or Name(allow multiple target)>\n\nOPTIONS:\n === Common options ===\n   --end value         set end-time\n   --index value       target index(es)\n   --key-format value  [Required] set monitoring value key-format (default: \"sakuracloud.{{.ID}}.disk.{{.Index}}\")\n   --start value       set start-time\n   --help, -h          show help (default: false)",
+            "title": "monitor-disk"
+        },
+        {
+            "location": "/commands/archive/",
+            "text": "",
+            "title": "archive"
+        },
+        {
+            "location": "/commands/auto_backup/",
+            "text": "",
+            "title": "auto-backup"
         },
         {
             "location": "/commands/disk/",
             "text": "disk / \u30c7\u30a3\u30b9\u30af",
-            "title": "disk / \u30c7\u30a3\u30b9\u30af"
+            "title": "disk"
         },
         {
             "location": "/commands/disk/#disk",
             "text": "",
             "title": "disk / \u30c7\u30a3\u30b9\u30af"
+        },
+        {
+            "location": "/commands/iso_image/",
+            "text": "",
+            "title": "iso-image"
+        },
+        {
+            "location": "/commands/object_storage/",
+            "text": "",
+            "title": "object-storage"
+        },
+        {
+            "location": "/commands/bridge/",
+            "text": "",
+            "title": "bridge"
+        },
+        {
+            "location": "/commands/internet/",
+            "text": "",
+            "title": "internet"
+        },
+        {
+            "location": "/commands/packet_filter/",
+            "text": "",
+            "title": "packet-filter"
+        },
+        {
+            "location": "/commands/switch/",
+            "text": "",
+            "title": "switch"
+        },
+        {
+            "location": "/commands/interface/",
+            "text": "",
+            "title": "interface"
+        },
+        {
+            "location": "/commands/database/",
+            "text": "",
+            "title": "database"
+        },
+        {
+            "location": "/commands/load_balancer/",
+            "text": "",
+            "title": "load-balancer"
+        },
+        {
+            "location": "/commands/vpc_router/",
+            "text": "",
+            "title": "vpc-router"
+        },
+        {
+            "location": "/commands/dns/",
+            "text": "",
+            "title": "dns"
+        },
+        {
+            "location": "/commands/gslb/",
+            "text": "",
+            "title": "gslb"
+        },
+        {
+            "location": "/commands/simple_monitor/",
+            "text": "",
+            "title": "simple-monitor"
+        },
+        {
+            "location": "/commands/license/",
+            "text": "",
+            "title": "license"
+        },
+        {
+            "location": "/commands/icon/",
+            "text": "",
+            "title": "icon"
+        },
+        {
+            "location": "/commands/ssh_key/",
+            "text": "",
+            "title": "ssh-key"
+        },
+        {
+            "location": "/commands/startup_script/",
+            "text": "",
+            "title": "startup-script"
+        },
+        {
+            "location": "/commands/bill/",
+            "text": "",
+            "title": "bill"
+        },
+        {
+            "location": "/commands/webaccel/",
+            "text": "",
+            "title": "web-accel"
+        },
+        {
+            "location": "/commands/price/",
+            "text": "",
+            "title": "price"
+        },
+        {
+            "location": "/commands/product_disk/",
+            "text": "",
+            "title": "product-disk"
+        },
+        {
+            "location": "/commands/product_internet/",
+            "text": "",
+            "title": "product-internet"
+        },
+        {
+            "location": "/commands/product_license/",
+            "text": "",
+            "title": "product-license"
+        },
+        {
+            "location": "/commands/product_server/",
+            "text": "",
+            "title": "product-server"
+        },
+        {
+            "location": "/commands/region/",
+            "text": "",
+            "title": "region"
+        },
+        {
+            "location": "/commands/zone/",
+            "text": "",
+            "title": "zone"
+        },
+        {
+            "location": "/commands/config/",
+            "text": "",
+            "title": "confg"
         }
     ]
 }

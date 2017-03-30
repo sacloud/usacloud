@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>usacloud 導入ガイド - Usacloudドキュメント</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "usacloud 導入ガイド";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
+  
+  <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-63739336-4', 'auto');
+      ga('send', 'pageview');
+  </script>
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Usacloudドキュメント</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">ホーム</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">usacloud 導入ガイド</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#usacloud">Usacloud導入ガイド</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#_1">目次</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#usacloud_1">usacloudとは</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#_2">インストール</a></li>
+                
+                    <li><a class="toctree-l4" href="#macoshomebrew">macOS(homebrewを利用)</a></li>
+                
+                    <li><a class="toctree-l4" href="#rhel-centos">RHEL / CentOS</a></li>
+                
+                    <li><a class="toctree-l4" href="#ubuntu-debian-bash-on-windows">Ubuntu / debian / bash on Windows</a></li>
+                
+                    <li><a class="toctree-l4" href="#windows">Windows/その他の場合</a></li>
+                
+                    <li><a class="toctree-l4" href="#docker">Dockerを利用する場合</a></li>
+                
+                    <li><a class="toctree-l4" href="#whalebrew">whalebrewを利用する場合</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#_3">設定</a></li>
+                
+                    <li><a class="toctree-l4" href="#api">APIキーの取得</a></li>
+                
+                    <li><a class="toctree-l4" href="#api_1">APIキーの設定</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>usacloud コマンド</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../basic_usage/">基本的な使い方</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../usage_server_build/">サーバーの作成</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../usage_server_power/">電源操作</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../usage_server_connect/">接続(SSH/VNC)</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../usage_server_scp/">ファイル送受信(SCP)</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../usage_ojs/">オブジェクトストレージの操作</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../usage_download/">アーカイブのダウンロード</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../usage_upload/">ISOイメージのアップロード</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../usage_monitoring/">監視/モニタリング</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>コマンドリファレンス</span></li>
+
+        
+            
+    <ul class="subnav">
+    <li><span>コンピューティング</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/server/">server</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>ストレージ</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/archive/">archive</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/auto_backup/">auto-backup</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/disk/">disk</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/iso_image/">iso-image</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/object_storage/">object-storage</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>ネットワーキング</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/bridge/">bridge</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/internet/">internet</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/packet_filter/">packet-filter</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/switch/">switch</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/interface/">interface</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>アプライアンス</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/database/">database</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/load_balancer/">load-balancer</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/vpc_router/">vpc-router</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>共通サービスアイテム</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/dns/">dns</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/gslb/">gslb</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/simple_monitor/">simple-monitor</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>共通アイテム</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/license/">license</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/icon/">icon</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/ssh_key/">ssh-key</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/startup_script/">startup-script</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>請求</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/bill/">bill</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>サービス</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/webaccel/">web-accel</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>製品/プラン/情報</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/price/">price</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/product_disk/">product-disk</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/product_internet/">product-internet</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/product_license/">product-license</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/product_server/">product-server</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/region/">region</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/zone/">zone</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+            
+    <ul class="subnav">
+    <li><span>その他</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../commands/config/">confg</a>
+        
+    </li>
+
+        
+    </ul>
+
+        
+    </ul>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Usacloudドキュメント</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>usacloud 導入ガイド</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="usacloud">Usacloud導入ガイド</h1>
+<hr />
+<h1 id="_1">目次</h1>
+<ul>
+<li><a href="#usacloud_1">usacloudとは</a></li>
+<li><a href="#_2">インストール</a></li>
+<li><a href="#_3">設定</a></li>
+</ul>
+<hr />
+<h1 id="usacloud_1">usacloudとは</h1>
+<p><code>usacloud</code>とは、さくらのクラウド用のCLIクライアントです。  </p>
+<p>以下のOS/Archに対応しています。</p>
+<ul>
+<li>macOS(amd64)</li>
+<li>Linux(i386/amd64/arm)</li>
+<li>Windows(i386/amd64)</li>
+</ul>
+<hr />
+<h1 id="_2">インストール</h1>
+<h3 id="macoshomebrew">macOS(<code>homebrew</code>を利用)</h3>
+<pre><code>brew tap sacloud/homebrew-usacloud; brew install usacloud
+</code></pre>
+<blockquote>
+<p>※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。</p>
+</blockquote>
+<hr />
+<h3 id="rhel-centos">RHEL / CentOS</h3>
+<pre><code>curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-yum.sh | sh
+</code></pre>
+<blockquote>
+<p>※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。</p>
+</blockquote>
+<hr />
+<h3 id="ubuntu-debian-bash-on-windows">Ubuntu / debian / bash on Windows</h3>
+<pre><code>curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-apt.sh | sh
+</code></pre>
+<blockquote>
+<p>※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。</p>
+</blockquote>
+<hr />
+<h3 id="windows">Windows/その他の場合</h3>
+<p>以下のリンクからバイナリーファイルをダウンロードして展開し、任意のフォルダー内に配置してください。<br />
+(PATHを通しておくと便利です)</p>
+<ul>
+<li>Windows 64bit版 : <a href="https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-amd64.zip">https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-amd64.zip</a></li>
+<li>Windows 32bit版 : <a href="https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-386.zip">https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-386.zip</a></li>
+<li>その他の場合 : <a href="https://github.com/sacloud/usacloud/releases/latest/">https://github.com/sacloud/usacloud/releases/latest/</a></li>
+</ul>
+<p><code>bash_completion</code>が利用できる場合は、以下のコマンドで<code>usacloud</code>用の<code>bash_completion</code>を導入することが出来ます。</p>
+<pre><code>curl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud &gt;&gt; ~/.bashrc
+</code></pre>
+<blockquote>
+<p>※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。</p>
+</blockquote>
+<hr />
+<h3 id="docker">Dockerを利用する場合</h3>
+<p><code>usacloud</code>実行用イメージとして<code>sacloud/usacloud</code>を公開しています。</p>
+<pre><code># Dockerでのusacloud実行例
+docker run -it --rm \
+    -e SAKURACLOUD_ACCESS_TOKEN \
+    -e SAKURACLOUD_ACCESS_TOKEN_SECRET \
+    -e SAKURACLOUD_ZONE \
+    sacloud/usacloud server ls
+</code></pre>
+<hr />
+<h3 id="whalebrew">whalebrewを利用する場合</h3>
+<p>Dockerイメージ<code>sacloud/usacloud</code>は<code>whalebrew</code>でのインストール/実行に対応しています。</p>
+<pre><code># インストール
+whalebrew install sacloud/usacloud
+</code></pre>
+<hr />
+<h1 id="_3">設定</h1>
+<p><code>usacloud</code>の実行にはさくらのクラウドのAPIキーの取得/設定が必要です。</p>
+<h2 id="api">APIキーの取得</h2>
+<p><a href="https://secure.sakura.ad.jp/cloud/">さくらのクラウドのコントロールパネル</a>からAPIキーを発行します。</p>
+<p>コントロールパネルにログインし、「さくらのクラウド(IaaS)」を選択します。</p>
+<p><img alt="apikey-01-01.png" src="../images/apikey-01-01.png" /></p>
+<p>次に以下手順でAPIキーの追加画面を表示します。</p>
+<ul>
+<li>(1) 画面右上の「設定」をクリックし、</li>
+<li>(2) 左側に表示されるメニューから「APIキー」を選択し、</li>
+<li>(3) 一覧の右上の「追加」をクリックします。</li>
+</ul>
+<p><img alt="apikey-01-02.png" src="../images/apikey-01-02.png" /></p>
+<p>APIキーの追加画面が表示されたら、各項目を入力して「追加」をクリックします。</p>
+<p>各項目は以下のように入力してください。</p>
+<ul>
+<li>名前 : 任意の名前を入力</li>
+<li>説明 : 任意入力</li>
+<li>アクセスレベル : 「作成・削除」を選択</li>
+<li>他サービスへのアクセス権 : 必要に応じてチェックを入れる</li>
+</ul>
+<p><img alt="apikey-01-03.png" src="../images/apikey-01-03.png" /></p>
+<p>APIキーを作成したら、以下の値を控えておいてください。</p>
+<ul>
+<li>アクセストークン</li>
+<li>アクセスシークレット</li>
+</ul>
+<p><img alt="apikey-02.png" src="../images/apikey-02.png" /></p>
+<p>以上でAPIキーの取得完了です。</p>
+<hr />
+<h2 id="api_1">APIキーの設定</h2>
+<p>APIキーの取得を行ったら、<code>usacloud config</code>を実行してAPIキーを設定します。</p>
+<p>画面の指示に従い、アクセストークン(token)とシークレット(secret)、操作対象のゾーンの入力を行います。</p>
+<pre><code class="bash">    $ usacloud config
+
+    Setting SakuraCloud API Token =&gt; 
+        Enter token: [アクセストークンを入力]
+
+    Setting SakuraCloud API Secret =&gt; 
+        Enter secret: [アクセスシークレットを入力]
+
+    Setting SakuraCloud Zone =&gt; 
+        Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [ゾーンを入力]
+
+    Written your settings to ~/.usacloud_config
+</code></pre>
+
+<p>操作対象のゾーンは以下のいずれかを入力してください。</p>
+<ul>
+<li><code>is1a</code> : 石狩第1ゾーン</li>
+<li><code>is1b</code> : 石狩第2ゾーン</li>
+<li><code>tk1a</code> : 東京第1ゾーン</li>
+<li><code>tk1v</code> : サンドボックス</li>
+</ul>
+<blockquote>
+<p>※<code>is1a</code>は2016年7月1日以降に新規作成したアカウントでは<a href="http://cloud-news.sakura.ad.jp/2016/07/01/restric_account_is1a/">利用できません</a><br />
+※ここで入力した内容は<code>~/.usacloud_config</code>にJSONファイルとして保存されます</p>
+</blockquote>
+<h3 id="api_2">その他のAPIキー設定方法</h3>
+<p>APIキーは環境変数で指定することも可能です。</p>
+<pre><code>export SAKURACLOUD_ACCESS_TOKEN=アクセストークン
+export SAKURACLOUD_ACCESS_TOKEN_SECRET=アクセスシークレット
+export SAKURACLOUD_ZONE=ゾーン
+</code></pre>
+<p>また、コマンド実行の都度指定することも可能です。</p>
+<pre><code>usacloud --token=アクセストークン --secret=アクセスシークレット --zone=ゾーン server ls
+</code></pre>
+<p>複数の箇所で指定されていた場合、以下の順で読み込みます(後から読み込んだものが優先)。</p>
+<ol>
+<li><code>usacloud config</code>での設定</li>
+<li>環境変数での設定</li>
+<li>コマンド実行時の指定</li>
+</ol>
+<hr />
+<p>以上で設定終了です。続いて<a href="../basic_usage/">基本的な使い方</a>に進んでください。</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../basic_usage/" class="btn btn-neutral float-right" title="基本的な使い方"/>Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="ホーム"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+      <p>Copyright (C) 2017 Kazumichi Yamamoto.</p>
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../basic_usage/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>
