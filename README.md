@@ -80,6 +80,8 @@ Note: API key and secret can be also set using environment variables.
    $ export SAKURACLOUD_ACCESS_TOKEN_SECRET=[YOUR_API_SECRET]
    $ export SAKURACLOUD_ZONE=tk1v
 ```
+  
+For more detail, see: [Usacloud Documents](https://sacloud.github.io/usacloud/)
    
 ### Usage
 

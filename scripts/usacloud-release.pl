@@ -53,12 +53,12 @@ sub DEBUG() { $ENV{RELEASE_DEBUG} || $verbose }
 
 sub command {
     say('+ '. join ' ', @_) if DEBUG;
-    my @args = (@_ , ("2>&1","> /dev/null"));
+    my @args = (@_ , (">& /dev/null"));
     !system("@args") or croak $!;
 }
 sub command_with_exit_code {
     say('+ '. join ' ', @_) if DEBUG;
-    my @args = (@_ , ("2>&1","> /dev/null"));
+    my @args = (@_ , (">& /dev/null"));
     system("@args");
 }
 sub _git {
@@ -472,6 +472,8 @@ sub upload_to_github_release {
     # upload to ojs
     usacloud qw/object-storage put -y -r repos repos/ unless $is_staging;
     usacloud qw/object-storage put -y -r contrib contrib/ unless $is_staging;
+    usacloud qw/object-storage put -y /, "bin/usacloud_windows-386.zip" , "repos/windows/" unless $is_staging;
+    usacloud qw/object-storage put -y /, "bin/usacloud_windows-amd64.zip", "repos/windows/" unless $is_staging;
 }
 
 sub create_pull_request {
