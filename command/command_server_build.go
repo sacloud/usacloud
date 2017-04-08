@@ -406,14 +406,11 @@ func validateServerDiskEditParams(sb interface{}, ctx Context, params *BuildServ
 		}
 	}
 
-	if sb, ok := sb.(serverEditDiskParam); ok {
+	if _, ok := sb.(serverEditDiskParam); ok {
 
 		// SSH Key generate params
 		switch params.SshKeyMode {
 		case "id":
-			for _, v := range params.SshKeyIds {
-				sb.AddSSHKeyID(v)
-			}
 			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-name", params.SshKeyName)
 			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-pass-phrase", params.SshKeyPassPhrase)
 			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-description", params.SshKeyDescription)
