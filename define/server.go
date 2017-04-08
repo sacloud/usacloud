@@ -1,6 +1,7 @@
 package define
 
 import (
+	"fmt"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
 )
@@ -343,12 +344,27 @@ func serverListColumns() []output.ColumnDef {
 		},
 		{
 			Name: "IPAddress",
-			Sources: []string{
-				"Interfaces.0.IPAddress",
-				"Interfaces.0.UserIPAddress",
-				"Interfaces.0.Switch.UserSubnet.NetworkMaskLen",
+			FormatFunc: func(values map[string]string) string {
+				if scope, ok := values["Interfaces.0.Switch.Scope"]; ok {
+					format := "%s/%s"
+					switch scope {
+					case "shared":
+						return fmt.Sprintf(format,
+							values["Interfaces.0.IPAddress"],
+							values["Interfaces.0.Switch.UserSubnet.NetworkMaskLen"],
+						)
+					case "user":
+						return fmt.Sprintf(format,
+							values["Interfaces.0.UserIPAddress"],
+							values["Interfaces.0.Switch.UserSubnet.NetworkMaskLen"],
+						)
+
+					}
+
+				}
+
+				return ""
 			},
-			Format: "%s%s/%s",
 		},
 		{
 			Name:    "Status",
