@@ -99,10 +99,6 @@
 			"revisionTime": "2017-03-23T05:04:41Z"
 		},
 		{
-			"path": "github.com/sacloud/libsacloud...",
-			"revision": ""
-		},
-		{
 			"checksumSHA1": "TBPA3rozibeC7CT1WJvVj2uPj20=",
 			"path": "github.com/sacloud/libsacloud/api",
 			"revision": "1cc0aebfa5f48998773921611622c0f798da4bb0",
