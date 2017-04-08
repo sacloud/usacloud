@@ -8,8 +8,16 @@ import (
 
 // simpleTableWriter is write table that output one line for each value
 type simpleTableWriter struct {
-	table      *tablewriter.Table
+	table      tableHandler
 	columnDefs []ColumnDef
+}
+
+type tableHandler interface {
+	SetHeader(keys []string)
+	SetAlignment(align int)
+	SetAutoWrapText(auto bool)
+	Append(row []string)
+	Render()
 }
 
 func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) tableWriter {
@@ -39,33 +47,37 @@ func (w *simpleTableWriter) append(values map[string]string) {
 	for _, def := range w.columnDefs {
 		collected := ""
 
-		exists := false
-		var sources []interface{}
-		// collect source values
-		for i, source := range def.GetSources() {
-			var s string
-			if v, ok := values[source]; ok {
-				s = v
+		if def.FormatFunc == nil {
+			exists := false
+			var sources []interface{}
+			// collect source values
+			for i, source := range def.GetSources() {
+				var s string
+				if v, ok := values[source]; ok {
+					s = v
 
-				if i < len(def.ValueMapping) {
-					mapping := def.ValueMapping[i]
-					if mapped, ok := mapping[s]; ok {
-						s = mapped
+					if i < len(def.ValueMapping) {
+						mapping := def.ValueMapping[i]
+						if mapped, ok := mapping[s]; ok {
+							s = mapped
+						}
 					}
+
 				}
-
+				if s != "" {
+					exists = true
+				}
+				sources = append(sources, s)
 			}
-			if s != "" {
-				exists = true
+			//format
+			if exists {
+				format := def.GetFormat()
+				collected = fmt.Sprintf(format, sources...)
 			}
-			sources = append(sources, s)
+		} else {
+			collected = def.FormatFunc(values)
 		}
 
-		//format
-		if exists {
-			format := def.GetFormat()
-			collected = fmt.Sprintf(format, sources...)
-		}
 		if collected == "" {
 			collected = "-"
 		}

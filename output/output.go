@@ -34,6 +34,7 @@ type ColumnDef struct {
 	Sources      []string
 	Format       string
 	ValueMapping []map[string]string
+	FormatFunc   func(values map[string]string) string
 }
 
 func (d *ColumnDef) GetSources() []string {
