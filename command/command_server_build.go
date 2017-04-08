@@ -14,8 +14,6 @@ import (
 
 func ServerBuild(ctx Context, params *BuildServerParam) error {
 
-	client := ctx.GetAPIClient()
-
 	// validate --- for disk mode params
 	errs := validateServerDiskModeParams(ctx, params)
 	if len(errs) > 0 {
@@ -23,6 +21,50 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 	}
 
 	// select builder
+	sb := createServerBuilder(ctx, params)
+
+	// handle build processes
+	for _, handler := range serverBuildHandlers {
+		err := handler(sb, ctx, params)
+		if err != nil {
+			return nil
+		}
+	}
+
+	// call Create(id)
+	var b serverBuilder = sb.(serverBuilder)
+	res, err := b.Build()
+	if err != nil {
+		return fmt.Errorf("ServerCreate is failed: %s", err)
+	}
+
+	// store private key if ssh-key was generated
+	if len(res.Disks) > 0 && res.Disks[0].GeneratedSSHKey != nil {
+		path := params.SshKeyPrivateKeyOutput
+		if path == "" {
+			p, err := getSSHPrivateKeyStorePath(res.Server.ID)
+			if err != nil {
+				return fmt.Errorf("ServerCreate is failed: getting HomeDir is failed:%s", err)
+			}
+			path = p
+		}
+		pKey := res.Disks[0].GeneratedSSHKey.PrivateKey
+		dir := filepath.Dir(path)
+		if err := os.MkdirAll(dir, 0600); err != nil {
+			return fmt.Errorf("ServerCreate is failed: creating directory(%s) is failed:%s", dir, err)
+		}
+
+		err = ioutil.WriteFile(path, []byte(pKey), os.FileMode(0600))
+		if err != nil {
+			return fmt.Errorf("ServerCreate is failed: Writing private key to %s is failed:%s", params.SshKeyPrivateKeyOutput, err)
+		}
+	}
+
+	return ctx.GetOutput().Print(res)
+}
+
+func createServerBuilder(ctx Context, params *BuildServerParam) interface{} {
+	client := ctx.GetAPIClient()
 	var sb interface{}
 
 	switch params.DiskMode {
@@ -44,9 +86,21 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 	case "diskless":
 		sb = builder.ServerDiskless(client, params.Name)
 	}
+	return sb
+}
 
+var serverBuildHandlers = []func(interface{}, Context, *BuildServerParam) error{
+	handleNetworkParams,
+	handleDiskEditParams,
+	handleDiskParams,
+	handleServerCommonParams,
+	handleDiskEvents,
+	handleServerEvents,
+}
+
+func handleNetworkParams(sb interface{}, ctx Context, params *BuildServerParam) error {
 	// validate --- for network params
-	errs = validateServerNetworkParams(sb, ctx, params)
+	errs := validateServerNetworkParams(sb, ctx, params)
 	if len(errs) > 0 {
 		return fmt.Errorf("%s", flattenErrors(errs))
 	}
@@ -74,7 +128,7 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 		case "disconnect":
 			sb.AddDisconnectedNIC()
 		case "none":
-			// noop
+		// noop
 		default:
 			panic(fmt.Errorf("Unknown NetworkMode : %s", params.NetworkMode))
 		}
@@ -85,8 +139,12 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 		}
 	}
 
+	return nil
+}
+
+func handleDiskEditParams(sb interface{}, ctx Context, params *BuildServerParam) error {
 	// validate --- for disk params
-	errs = validateServerDiskEditParams(sb, ctx, params)
+	errs := validateServerDiskEditParams(sb, ctx, params)
 	if len(errs) > 0 {
 		return fmt.Errorf("%s", flattenErrors(errs))
 	}
@@ -113,12 +171,13 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 			}
 		case "generate":
 			keyName := params.SshKeyName
-			if params.SshKeyEphemeral && keyName == "" {
+			if keyName == "" {
 				keyName = fmt.Sprintf("generated-%d", time.Now().UnixNano())
 			}
 			sb.SetGenerateSSHKeyName(keyName)
 			sb.SetGenerateSSHKeyPassPhrase(params.SshKeyPassPhrase)
 			sb.SetGenerateSSHKeyDescription(params.SshKeyDescription)
+			sb.SetSSHKeysEphemeral(params.SshKeyEphemeral)
 		case "upload":
 			// pubkey(text)
 			for _, v := range params.SshKeyPublicKeys {
@@ -137,7 +196,10 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 		}
 
 	}
+	return nil
+}
 
+func handleDiskParams(sb interface{}, ctx Context, params *BuildServerParam) error {
 	// set disk params
 	if sb, ok := sb.(serverDiskParams); ok {
 		sb.SetDiskPlan(params.DiskPlan)
@@ -146,6 +208,10 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 		sb.SetDistantFrom(params.DistantFrom)
 	}
 
+	return nil
+}
+
+func handleServerCommonParams(sb interface{}, ctx Context, params *BuildServerParam) error {
 	// set common params
 	var b serverBuilder
 	b, ok := sb.(serverBuilder)
@@ -166,7 +232,10 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 	b.SetIconID(params.IconId)
 	b.SetBootAfterCreate(!params.DisableBootAfterCreate)
 	b.SetISOImageID(params.GetIsoImageId())
+	return nil
+}
 
+func handleDiskEvents(sb interface{}, ctx Context, params *BuildServerParam) error {
 	// set events
 	if diskEventBuilder, ok := sb.(serverDiskEventParam); ok {
 		// create disk
@@ -218,6 +287,10 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 		})
 	}
 
+	return nil
+}
+
+func handleServerEvents(sb interface{}, ctx Context, params *BuildServerParam) error {
 	if serverEventBuilder, ok := sb.(serverEventparam); ok {
 		progCreate := internal.NewProgress(
 			"Still creating server...",
@@ -244,35 +317,7 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 		})
 
 	}
-
-	// call Create(id)
-	res, err := b.Build()
-	if err != nil {
-		return fmt.Errorf("ServerCreate is failed: %s", err)
-	}
-
-	if len(res.Disks) > 0 && res.Disks[0].GeneratedSSHKey != nil {
-		path := params.SshKeyPrivateKeyOutput
-		if path == "" {
-			p, err := getSSHPrivateKeyStorePath(res.Server.ID)
-			if err != nil {
-				return fmt.Errorf("ServerCreate is failed: getting HomeDir is failed:%s", err)
-			}
-			path = p
-		}
-		pKey := res.Disks[0].GeneratedSSHKey.PrivateKey
-		dir := filepath.Dir(path)
-		if err := os.MkdirAll(dir, 0600); err != nil {
-			return fmt.Errorf("ServerCreate is failed: creating directory(%s) is failed:%s", dir, err)
-		}
-
-		err = ioutil.WriteFile(path, []byte(pKey), os.FileMode(0600))
-		if err != nil {
-			return fmt.Errorf("ServerCreate is failed: Writing private key to %s is failed:%s", params.SshKeyPrivateKeyOutput, err)
-		}
-	}
-
-	return ctx.GetOutput().Print(res)
+	return nil
 }
 
 func validateServerDiskModeParams(ctx Context, params *BuildServerParam) []error {
@@ -419,9 +464,6 @@ func validateServerDiskEditParams(sb interface{}, ctx Context, params *BuildServ
 			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-public-key-files", params.SshKeyPublicKeyFiles)
 			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-ephemeral", params.SshKeyEphemeral)
 		case "generate":
-			if !params.SshKeyEphemeral {
-				appendErrors(validateRequired("ssh-key-name", params.SshKeyName))
-			}
 			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-ids", params.SshKeyIds)
 			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-private-key-output", params.SshKeyPrivateKeyOutput)
 			validateIfCtxIsSet("ssh-key-mode", params.SshKeyMode, "ssh-key-public-keys", params.SshKeyPublicKeys)
