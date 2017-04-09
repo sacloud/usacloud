@@ -69,6 +69,12 @@
 			"revisionTime": "2016-12-03T19:45:07Z"
 		},
 		{
+			"checksumSHA1": "SJOpcDnBxxKHq146atZmumzST3A=",
+			"path": "github.com/mitchellh/go-vnc",
+			"revision": "723ed9867aed0f3209a81151e52ddc61681f0b01",
+			"revisionTime": "2015-06-29T16:25:42Z"
+		},
+		{
 			"checksumSHA1": "NjuwnT9vODlUoOdFMvTgwUlJFdc=",
 			"path": "github.com/mitchellh/goamz/aws",
 			"revision": "caaaea8b30ee15616494ee68abd5d8ebbbef05cf",
