@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.0.7 (2017-04-09)
+
+* Add gh-pages using mkdocs #83 (yamamoto-febc)
+* Update docs #84 (yamamoto-febc)
+* Fix SSHKeyID param #86 (yamamoto-febc)
+* Fix displaying server IP Address #87 (yamamoto-febc)
+* Refactoring ServerBuild #88 (yamamoto-febc)
+* Add vnc-send subcommand #89 (yamamoto-febc)
+
+
 ## 0.0.6 (2017-03-28)
 
 * Support homebrew #80 (yamamoto-febc)
