@@ -171,6 +171,14 @@ func ServerResource() *schema.Resource {
 			Order:            45,
 			NeedlessConfirm:  true,
 		},
+		"vnc-send": {
+			Type:             schema.CommandManipulateSingle,
+			Params:           serverVNCSendParam(),
+			Usage:            "Send keys over VNC connection",
+			UseCustomCommand: true,
+			Category:         "connect",
+			Order:            46,
+		},
 		"disk-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             serverDiskInfoParam(),
@@ -1041,6 +1049,36 @@ func serverSCPParam() map[string]*schema.Schema {
 
 func serverVNCParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
+}
+
+func serverVNCSendParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"command": {
+			Type:          schema.TypeString,
+			HandlerType:   schema.HandlerNoop,
+			Aliases:       []string{"c"},
+			Description:   "command(compatible with HashiCorp Packer's boot_command)",
+			ConflictsWith: []string{"command-file"},
+		},
+		"command-file": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Aliases:      []string{"f"},
+			Description:  "command file(compatible with HashiCorp Packer's boot_command)",
+			ValidateFunc: validateFileExists(),
+		},
+		"use-us-keyboard": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "use US Keyboard",
+		},
+		"debug": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"d"},
+			Description: "write debug info",
+		},
+	}
 }
 
 func serverPowerOnParam() map[string]*schema.Schema {
