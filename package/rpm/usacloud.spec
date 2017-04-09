@@ -40,6 +40,14 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Sun Apr 09 2017 <yamamoto.febc@gmail.com> - 0.0.7-1
+- Add gh-pages using mkdocs (by yamamoto-febc)
+- Update docs (by yamamoto-febc)
+- Fix SSHKeyID param (by yamamoto-febc)
+- Fix displaying server IP Address (by yamamoto-febc)
+- Refactoring ServerBuild (by yamamoto-febc)
+- Add vnc-send subcommand (by yamamoto-febc)
+
 * Tue Mar 28 2017 <yamamoto.febc@gmail.com> - 0.0.6-1
 - Support homebrew (by yamamoto-febc)
 

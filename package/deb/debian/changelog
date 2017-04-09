@@ -1,3 +1,20 @@
+usacloud (0.0.7-1) stable; urgency=low
+
+  * Add gh-pages using mkdocs (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/83>
+  * Update docs (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/84>
+  * Fix SSHKeyID param (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/86>
+  * Fix displaying server IP Address (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/87>
+  * Refactoring ServerBuild (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/88>
+  * Add vnc-send subcommand (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/89>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Sun, 09 Apr 2017 23:37:12 +0000
+
 usacloud (0.0.6-1) stable; urgency=low
 
   * Support homebrew (by yamamoto-febc)
