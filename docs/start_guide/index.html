@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="../css/highlight.css">
+  <link href="../css/extra.css" rel="stylesheet">
 
   
   <script>
@@ -538,22 +539,25 @@
 <hr />
 <h1 id="_2">インストール</h1>
 <h3 id="macoshomebrew">macOS(<code>homebrew</code>を利用)</h3>
-<pre><code>brew tap sacloud/homebrew-usacloud; brew install usacloud
+<pre><code class="bash">brew tap sacloud/homebrew-usacloud; brew install usacloud
 </code></pre>
+
 <blockquote>
 <p>※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。</p>
 </blockquote>
 <hr />
 <h3 id="rhel-centos">RHEL / CentOS</h3>
-<pre><code>curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-yum.sh | sh
+<pre><code class="bash">curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-yum.sh | sh
 </code></pre>
+
 <blockquote>
 <p>※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。</p>
 </blockquote>
 <hr />
 <h3 id="ubuntu-debian-bash-on-windows">Ubuntu / debian / bash on Windows</h3>
-<pre><code>curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-apt.sh | sh
+<pre><code class="bash">curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-apt.sh | sh
 </code></pre>
+
 <blockquote>
 <p>※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。</p>
 </blockquote>
@@ -567,27 +571,30 @@
 <li>その他の場合 : <a href="https://github.com/sacloud/usacloud/releases/latest/">https://github.com/sacloud/usacloud/releases/latest/</a></li>
 </ul>
 <p><code>bash_completion</code>が利用できる場合は、以下のコマンドで<code>usacloud</code>用の<code>bash_completion</code>を導入することが出来ます。</p>
-<pre><code>curl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud &gt;&gt; ~/.bashrc
+<pre><code class="bash">curl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud &gt;&gt; ~/.bashrc
 </code></pre>
+
 <blockquote>
 <p>※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。</p>
 </blockquote>
 <hr />
 <h3 id="docker">Dockerを利用する場合</h3>
 <p><code>usacloud</code>実行用イメージとして<code>sacloud/usacloud</code>を公開しています。</p>
-<pre><code># Dockerでのusacloud実行例
+<pre><code class="bash"># Dockerでのusacloud実行例
 docker run -it --rm \
     -e SAKURACLOUD_ACCESS_TOKEN \
     -e SAKURACLOUD_ACCESS_TOKEN_SECRET \
     -e SAKURACLOUD_ZONE \
     sacloud/usacloud server ls
 </code></pre>
+
 <hr />
 <h3 id="whalebrew">whalebrewを利用する場合</h3>
 <p>Dockerイメージ<code>sacloud/usacloud</code>は<code>whalebrew</code>でのインストール/実行に対応しています。</p>
-<pre><code># インストール
+<pre><code class="bash"># インストール
 whalebrew install sacloud/usacloud
 </code></pre>
+
 <hr />
 <h1 id="_3">設定</h1>
 <p><code>usacloud</code>の実行にはさくらのクラウドのAPIキーの取得/設定が必要です。</p>
@@ -622,18 +629,18 @@ whalebrew install sacloud/usacloud
 <h2 id="api_1">APIキーの設定</h2>
 <p>APIキーの取得を行ったら、<code>usacloud config</code>を実行してAPIキーを設定します。</p>
 <p>画面の指示に従い、アクセストークン(token)とシークレット(secret)、操作対象のゾーンの入力を行います。</p>
-<pre><code class="bash">    $ usacloud config
+<pre><code class="bash">usacloud config
 
-    Setting SakuraCloud API Token =&gt; 
-        Enter token: [アクセストークンを入力]
+  Setting SakuraCloud API Token =&gt; 
+    Enter token: [アクセストークンを入力]
 
-    Setting SakuraCloud API Secret =&gt; 
-        Enter secret: [アクセスシークレットを入力]
+  Setting SakuraCloud API Secret =&gt; 
+    Enter secret: [アクセスシークレットを入力]
 
-    Setting SakuraCloud Zone =&gt; 
-        Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [ゾーンを入力]
+  Setting SakuraCloud Zone =&gt; 
+    Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [ゾーンを入力]
 
-    Written your settings to ~/.usacloud_config
+  Written your settings to ~/.usacloud_config
 </code></pre>
 
 <p>操作対象のゾーンは以下のいずれかを入力してください。</p>
@@ -649,13 +656,15 @@ whalebrew install sacloud/usacloud
 </blockquote>
 <h3 id="api_2">その他のAPIキー設定方法</h3>
 <p>APIキーは環境変数で指定することも可能です。</p>
-<pre><code>export SAKURACLOUD_ACCESS_TOKEN=アクセストークン
+<pre><code class="bash">export SAKURACLOUD_ACCESS_TOKEN=アクセストークン
 export SAKURACLOUD_ACCESS_TOKEN_SECRET=アクセスシークレット
 export SAKURACLOUD_ZONE=ゾーン
 </code></pre>
+
 <p>また、コマンド実行の都度指定することも可能です。</p>
-<pre><code>usacloud --token=アクセストークン --secret=アクセスシークレット --zone=ゾーン server ls
+<pre><code class="bash">usacloud --token=アクセストークン --secret=アクセスシークレット --zone=ゾーン server ls
 </code></pre>
+
 <p>複数の箇所で指定されていた場合、以下の順で読み込みます(後から読み込んだものが優先)。</p>
 <ol>
 <li><code>usacloud config</code>での設定</li>

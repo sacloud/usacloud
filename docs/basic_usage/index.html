@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
   <link rel="stylesheet" href="../css/highlight.css">
+  <link href="../css/extra.css" rel="stylesheet">
 
   
   <script>
@@ -85,6 +86,18 @@
             <ul>
             
                 <li class="toctree-l3"><a href="#_1">基本的な使い方</a></li>
+                
+                    <li><a class="toctree-l4" href="#_2">コマンド基本構文</a></li>
+                
+                    <li><a class="toctree-l4" href="#help">help表示</a></li>
+                
+                    <li><a class="toctree-l4" href="#_8">グローバルオプション</a></li>
+                
+                    <li><a class="toctree-l4" href="#_9">共通オプション: 出力の設定</a></li>
+                
+                    <li><a class="toctree-l4" href="#_10">共通オプション: 対話をスキップ</a></li>
+                
+                    <li><a class="toctree-l4" href="#id">引数: IDまたは名称の指定</a></li>
                 
             
             </ul>
@@ -495,6 +508,198 @@
             <div class="section">
               
                 <h1 id="_1">基本的な使い方</h1>
+<hr />
+<h2 id="_2">コマンド基本構文</h2>
+<p><code>usacloud</code>コマンドの基本構文は以下の通りです。</p>
+<pre><code class="bash">usacloud [グローバルオプション] &lt;操作対象のリソース&gt; &lt;コマンド&gt; [コマンドオプション] 引数
+</code></pre>
+
+<h4 id="_3">指定できる値</h4>
+<p>リソースやコマンド、オプションに指定できる値は<a href="#help">help表示</a>で確認できます。</p>
+<h4 id="_4">コマンド実行例</h4>
+<pre><code class="bash">#------------------------------------------------------------------------------
+# サーバー(server)に対する一覧表示コマンド(ls)の場合の例
+#------------------------------------------------------------------------------
+
+# 基本的な使い方(オプション/引数なし)
+usacloud server ls
+
+# グローバルオプションあり
+usacloud --zone tk1a server ls
+
+# オプション(短い形式)
+usacloud server ls -q
+
+# オプション(長い形式)
+usacloud server ls --name foobar
+
+# オプションは=を明示してもOK
+usacloud server ls --name=foovar
+</code></pre>
+
+<hr />
+<h2 id="help">help表示</h2>
+<p><code>-h</code>または<code>--help</code>フラグを指定するとヘルプ表示を行います。 <br />
+フラグを指定する位置で表示できる内容が変化します。</p>
+<h4 id="_5">グローバルオプション/操作対象のリソースのヘルプ表示</h4>
+<pre><code class="bash">usacloud -h
+</code></pre>
+
+<h4 id="_6">コマンドのヘルプ表示</h4>
+<pre><code class="bash">#
+# 書式: usacloud &lt;操作対象のリソース&gt; -h
+#
+
+# サーバー(server)のヘルプ表示の例
+usacloud server -h
+</code></pre>
+
+<h4 id="_7">コマンドオプション/引数のヘルプ表示</h4>
+<pre><code class="bash">#
+# 書式: usacloud &lt;操作対象のリソース&gt; &lt;コマンド&gt; -h
+#
+
+# サーバー(server1)の一覧表示コマンド(ls)のヘルプ表示の例
+usacloud server ls -h
+</code></pre>
+
+<hr />
+<h2 id="_8">グローバルオプション</h2>
+<hr />
+<h4 id="api-token">APIトークン(<code>--token</code>)</h4>
+<p>さくらのクラウドのAPIトークンを指定します。  </p>
+<blockquote>
+<p>通常この値は<code>~/.usacloud_config</code>の値が利用されます。<br />
+環境変数<code>SAKURACLOUD_ACCESS_TOKEN</code>で指定することも可能です。<br />
+コマンド実行時に<code>--token</code>を指定することでこれらの設定を上書きすることが可能です。  </p>
+</blockquote>
+<hr />
+<h4 id="api-secret">APIシークレット(<code>--secret</code>)</h4>
+<p>さくらのクラウドのAPIシークレットを指定します。  </p>
+<blockquote>
+<p>通常この値は<code>~/.usacloud_config</code>の値が利用されます。<br />
+環境変数<code>SAKURACLOUD_ACCESS_TOKEN_SECRET</code>で指定することも可能です。<br />
+コマンド実行時に<code>--secret</code>を指定することでこれらの設定を上書きすることが可能です。  </p>
+</blockquote>
+<hr />
+<h4 id="-zone">操作対象ゾーン(<code>--zone</code>)</h4>
+<p>操作対象とするさくらのクラウドのゾーンを指定します。<br />
+指定可能な値は以下のいずれかです。</p>
+<ul>
+<li><code>is1a</code> : 石狩第1ゾーン</li>
+<li><code>is1b</code> : 石狩第2ゾーン</li>
+<li><code>tk1a</code> : 東京第1ゾーン</li>
+<li><code>tk1v</code> : サンドボックス</li>
+</ul>
+<blockquote>
+<p>通常この値は<code>~/.usacloud_config</code>の値が利用されます。<br />
+環境変数<code>SAKURACLOUD_ZONE</code>で指定することも可能です。<br />
+コマンド実行時に<code>--zone</code>を指定することでこれらの設定を上書きすることが可能です。  </p>
+</blockquote>
+<hr />
+<h4 id="-help-or-h">ヘルプ表示(<code>--help</code> or <code>-h</code>)</h4>
+<p>ヘルプ表示を行います。詳細は<a href="#help">help表示</a>を参照してください。</p>
+<hr />
+<h4 id="-version-or-v">バージョン表示(<code>--version</code> or <code>-v</code>)</h4>
+<p>usacloudのバージョン情報を表示します。</p>
+<hr />
+<h4 id="-trace">トレース出力(<code>--trace</code>) * <em>上級者向け</em> *</h4>
+<p>さくらのクラウドAPI呼び出しのトレースログを標準出力へ書き込みます。</p>
+<hr />
+<h2 id="_9">共通オプション: 出力の設定</h2>
+<p>出力の行われるコマンドでは以下の出力オプションが利用可能です。<br />
+(<code>bill csv</code>などの一部コマンドでは出力オプションが利用できない場合があります。)  </p>
+<hr />
+<h4 id="-output-type-or-out">出力タイプ(<code>--output-type</code> or <code>--out</code>)</h4>
+<p>出力形式を選択します。指定可能な値は以下のいずれかです。  </p>
+<ul>
+<li><code>json</code> : JSON</li>
+<li><code>csv</code> : CSV形式</li>
+<li><code>tsv</code> : TSV形式</li>
+<li>未指定(デフォルト) : テーブル形式</li>
+</ul>
+<hr />
+<h4 id="-column-or-col">出力カラム(<code>--column</code> or <code>--col</code>)</h4>
+<p>出力する列名を指定します。<br />
+列名は対象オブジェクトのフィールド名をドットで繋いだものを指定します。<br />
+複数の列名を指定したい場合はオプションを複数指定してください。  </p>
+<p><strong>このオプションは<code>--output-type</code>が<code>csv</code>または<code>tsv</code>の場合のみ指定可能です。</strong></p>
+<p>サーバーに対する列名指定の例:</p>
+<ul>
+<li>サーバー名の場合: <code>Name</code></li>
+<li>サーバーの1番目(インデックス0)のNICのIDの場合: <code>Interfaces.0.ID</code></li>
+</ul>
+<pre><code class="bash">usacloud server ls --output-type csv --column=ID --column=Interfaces.0.ID
+</code></pre>
+
+<hr />
+<h4 id="quiet-quiet-or-q">quietモード(<code>--quiet</code> or <code>-q</code>)</h4>
+<p>IDのみ出力します。</p>
+<p><strong>このオプションは<code>--output-type</code>と一緒に指定することができません。 </strong></p>
+<hr />
+<h4 id="-format-or-fmt">フォーマット(<code>--format</code> or <code>--fmt</code>)</h4>
+<p>出力フォーマットをgo言語の<a href="https://golang.org/pkg/text/template/">text/template</a>形式で指定します。</p>
+<pre><code class="bash">usacloud server ls --format &quot;ID is {{.ID}}, Name is {{.Name}}&quot;
+</code></pre>
+
+<hr />
+<h2 id="_10">共通オプション: 対話をスキップ</h2>
+<h4 id="yes-y-or-assumeyes">yesオプション(<code>-y</code> or <code>--assumeyes</code>)</h4>
+<p>実行時に確認ダイアログが表示されるコマンドで利用可能です。<br />
+確認ダイアログ全てに<code>y</code> または <code>yes</code>を入力します。  </p>
+<h2 id="id">引数: IDまたは名称の指定</h2>
+<p>特定のリソースに対するコマンドの場合、IDまたは名称を引数にとります。<br />
+名称を指定した場合、部分一致のAND結合(スペース区切り)でヒットしたリソース全てを対象としてコマンドを実行します。</p>
+<p><strong>複数リソースの一括操作に対応していないコマンドの場合、対象が複数となる指定はエラーとなります。</strong></p>
+<p>例:</p>
+<pre><code class="bash">#------------------------------------------------------------------------------
+# 以下のリソースが存在する場合の例
+#------------------------------------------------------------------------------
+usacloud server ls
++--------------+---------+-----+--------+---------------+--------+
+|      ID      |  NAME   | CPU | MEMORY |   IPADDRESS   | STATUS |
++--------------+---------+-----+--------+---------------+--------+
+| 000000000011 | Test1-1 | 1   | 1024MB | 192.0.2.11/24 | up     |
+| 000000000021 | Test2-1 | 1   | 1024MB | 192.0.2.21/24 | up     |
+| 000000000031 | Test3-1 | 1   | 1024MB | 192.0.2.31/24 | up     |
+| 000000000032 | Test3-2 | 1   | 1024MB | 192.0.2.32/24 | up     |
++--------------+---------+-----+--------+---------------+--------+
+
+#------------------------------------------------------------------------------
+# 部分一致(例1)
+#------------------------------------------------------------------------------
+usacloud server boot Test # 名称にTestを含むもの
+
+Target resource IDs =&gt; [
+    000000000011,
+    000000000021,
+    000000000031,
+    000000000032
+]
+Are you sure you want to boot?(y/n) [n]:
+
+#------------------------------------------------------------------------------
+# 部分一致(例2)
+#------------------------------------------------------------------------------
+usacloud server boot Test3 # 名称にTest3を含むもの
+
+Target resource IDs =&gt; [
+    000000000031,
+    000000000032
+]
+Are you sure you want to boot?(y/n) [n]:
+
+#------------------------------------------------------------------------------
+# 部分一致(例3) : スペース区切りで複数指定すると部分一致のAND結合
+#------------------------------------------------------------------------------
+usacloud server boot &quot;1 2&quot; # 名称に1と2を両方含むもの
+
+Target resource IDs =&gt; [
+    000000000021
+]
+Are you sure you want to boot?(y/n) [n]:
+
+</code></pre>
               
             </div>
           </div>
