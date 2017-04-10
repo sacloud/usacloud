@@ -26,7 +26,9 @@
 
 ### macOS(`homebrew`を利用)
 
-    brew tap sacloud/homebrew-usacloud; brew install usacloud
+```bash
+brew tap sacloud/homebrew-usacloud; brew install usacloud
+```
 
 > ※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。
 
@@ -34,7 +36,9 @@
 
 ### RHEL / CentOS
 
-    curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-yum.sh | sh
+```bash
+curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-yum.sh | sh
+```
 
 > ※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。
 
@@ -42,7 +46,9 @@
 
 ### Ubuntu / debian / bash on Windows
 
-    curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-apt.sh | sh
+```bash
+curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-apt.sh | sh
+```
 
 > ※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。
 
@@ -59,7 +65,9 @@
 
 `bash_completion`が利用できる場合は、以下のコマンドで`usacloud`用の`bash_completion`を導入することが出来ます。
 
-    curl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud >> ~/.bashrc
+```bash
+curl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud >> ~/.bashrc
+```
 
 > ※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。
 
@@ -69,12 +77,14 @@
 
 `usacloud`実行用イメージとして`sacloud/usacloud`を公開しています。
 
-    # Dockerでのusacloud実行例
-    docker run -it --rm \
-        -e SAKURACLOUD_ACCESS_TOKEN \
-        -e SAKURACLOUD_ACCESS_TOKEN_SECRET \
-        -e SAKURACLOUD_ZONE \
-        sacloud/usacloud server ls
+```bash
+# Dockerでのusacloud実行例
+docker run -it --rm \
+    -e SAKURACLOUD_ACCESS_TOKEN \
+    -e SAKURACLOUD_ACCESS_TOKEN_SECRET \
+    -e SAKURACLOUD_ZONE \
+    sacloud/usacloud server ls
+```
 
 ---
 
@@ -83,8 +93,10 @@
 
 Dockerイメージ`sacloud/usacloud`は`whalebrew`でのインストール/実行に対応しています。
 
-    # インストール
-    whalebrew install sacloud/usacloud
+```bash
+# インストール
+whalebrew install sacloud/usacloud
+```
 
 ---
 
@@ -137,18 +149,18 @@ APIキーの取得を行ったら、`usacloud config`を実行してAPIキーを
 画面の指示に従い、アクセストークン(token)とシークレット(secret)、操作対象のゾーンの入力を行います。
 
 ```bash
-    $ usacloud config
+usacloud config
 
-    Setting SakuraCloud API Token => 
-    	Enter token: [アクセストークンを入力]
+  Setting SakuraCloud API Token => 
+  	Enter token: [アクセストークンを入力]
 
-    Setting SakuraCloud API Secret => 
-    	Enter secret: [アクセスシークレットを入力]
+  Setting SakuraCloud API Secret => 
+  	Enter secret: [アクセスシークレットを入力]
     	
-    Setting SakuraCloud Zone => 
-    	Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [ゾーンを入力]
-   
-    Written your settings to ~/.usacloud_config
+  Setting SakuraCloud Zone => 
+  	Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [ゾーンを入力]
+ 
+  Written your settings to ~/.usacloud_config
 ```
 
 操作対象のゾーンは以下のいずれかを入力してください。
@@ -166,14 +178,18 @@ APIキーの取得を行ったら、`usacloud config`を実行してAPIキーを
 
 APIキーは環境変数で指定することも可能です。
 
-    export SAKURACLOUD_ACCESS_TOKEN=アクセストークン
-    export SAKURACLOUD_ACCESS_TOKEN_SECRET=アクセスシークレット
-    export SAKURACLOUD_ZONE=ゾーン
+```bash
+export SAKURACLOUD_ACCESS_TOKEN=アクセストークン
+export SAKURACLOUD_ACCESS_TOKEN_SECRET=アクセスシークレット
+export SAKURACLOUD_ZONE=ゾーン
+```
 
 また、コマンド実行の都度指定することも可能です。
 
-    usacloud --token=アクセストークン --secret=アクセスシークレット --zone=ゾーン server ls
-    
+```bash
+usacloud --token=アクセストークン --secret=アクセスシークレット --zone=ゾーン server ls
+```
+
 複数の箇所で指定されていた場合、以下の順で読み込みます(後から読み込んだものが優先)。
 
 1. `usacloud config`での設定

@@ -7,6 +7,8 @@ repo_name: usacloud
 copyright: Copyright (C) 2017 Kazumichi Yamamoto.
 google_analytics: ['UA-63739336-4','auto']
 theme: readthedocs
+extra_css:
+  - css/extra.css
 pages:
   - ホーム: index.md
   - usacloud 導入ガイド: start_guide.md
