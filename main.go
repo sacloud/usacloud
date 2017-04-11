@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/schema"
 	"github.com/sacloud/usacloud/version"
@@ -29,6 +30,7 @@ func main() {
 	app.Flags = command.GlobalFlags
 	app.Commands = command.Commands
 	app.Version = version.FullVersion()
+	app.CommandNotFound = cmdNotFound
 
 	app.EnableShellCompletion = true
 	//app.ShellComplete = func(c *cli.Context) {
@@ -207,4 +209,16 @@ func appendFlagByCategory(values []*command.CategoryHelpValue, category *schema.
 	}
 
 	return values
+}
+
+func cmdNotFound(c *cli.Context, command string) {
+	fmt.Fprintf(
+		os.Stderr,
+		"%s: '%s' is not a %s command. See '%s --help'\n",
+		c.App.Name,
+		command,
+		c.App.Name,
+		c.App.Name,
+	)
+	os.Exit(1)
 }
