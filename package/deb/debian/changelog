@@ -1,3 +1,14 @@
+usacloud (0.0.8-1) stable; urgency=low
+
+  * Add basic_usage guide (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/91>
+  * Add help text when no command is found (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/92>
+  * Update sacloud API (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/93>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Wed, 19 Apr 2017 14:09:25 +0000
+
 usacloud (0.0.7-1) stable; urgency=low
 
   * Add gh-pages using mkdocs (by yamamoto-febc)
