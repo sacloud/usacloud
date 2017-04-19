@@ -40,6 +40,11 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Apr 19 2017 <yamamoto.febc@gmail.com> - 0.0.8-1
+- Add basic_usage guide (by yamamoto-febc)
+- Add help text when no command is found (by yamamoto-febc)
+- Update sacloud API (by yamamoto-febc)
+
 * Sun Apr 09 2017 <yamamoto.febc@gmail.com> - 0.0.7-1
 - Add gh-pages using mkdocs (by yamamoto-febc)
 - Update docs (by yamamoto-febc)

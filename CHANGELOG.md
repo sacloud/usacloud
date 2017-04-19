@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.8 (2017-04-19)
+
+* Add basic_usage guide #91 (yamamoto-febc)
+* Add help text when no command is found #92 (yamamoto-febc)
+* Update sacloud API #93 (yamamoto-febc)
+
+
 ## 0.0.7 (2017-04-09)
 
 * Add gh-pages using mkdocs #83 (yamamoto-febc)
