@@ -929,7 +929,6 @@ func serverBuildParam() map[string]*schema.Schema {
 
 var osTypeValues = []string{
 	"centos", "ubuntu", "debian", "vyos", "coreos", "kusanagi", "site-guard", "freebsd",
-	"windows2008", "windows2008-rds", "windows2008-rds-office",
 	"windows2012", "windows2012-rds", "windows2012-rds-office",
 	"windows2016", "windows2016-rds", "windows2016-rds-office",
 	"windows2016-sql-web", "windows2016-sql-standard",

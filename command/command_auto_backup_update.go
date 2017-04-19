@@ -22,9 +22,6 @@ func AutoBackupUpdate(ctx Context, params *UpdateAutoBackupParam) error {
 	if ctx.IsSet("tags") {
 		p.SetTags(params.Tags)
 	}
-	if ctx.IsSet("start-hour") {
-		p.SetBackupHour(params.StartHour)
-	}
 	if ctx.IsSet("description") {
 		p.SetDescription(params.Description)
 	}
