@@ -14,7 +14,7 @@ func PacketFilterRuleDelete(ctx Context, params *RuleDeletePacketFilterParam) er
 	}
 
 	if len(p.Expression) == 0 {
-		fmt.Fprintf(GlobalOption.Err, "PacketFilter1 don't have any rules\n")
+		fmt.Fprintf(GlobalOption.Err, "PacketFilter don't have any rules\n")
 		return nil
 	}
 
