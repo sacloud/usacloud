@@ -114,16 +114,6 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 			DefaultValue:    1,
 			Required:        true,
 		},
-		"start-hour": {
-			Type:            schema.TypeInt,
-			HandlerType:     schema.HandlerPathThrough,
-			Description:     "set backup start hour[0/6/12/18]",
-			DestinationProp: "SetBackupHour",
-			ValidateFunc:    validateInIntValues(sacloud.AllowAutoBackupHour()...),
-			CompleteFunc:    completeInIntValues(sacloud.AllowAutoBackupHour()...),
-			DefaultValue:    0,
-			Required:        true,
-		},
 		"weekdays": {
 			Type:            schema.TypeStringList,
 			HandlerType:     schema.HandlerPathThrough,
@@ -163,14 +153,6 @@ func autoBackupUpdateParam() map[string]*schema.Schema {
 			Description:     "set backup generation[1-10]",
 			DestinationProp: "SetBackupMaximumNumberOfArchives",
 			ValidateFunc:    validateIntRange(1, 10),
-		},
-		"start-hour": {
-			Type:            schema.TypeInt,
-			HandlerType:     schema.HandlerPathThrough,
-			Description:     "set backup start hour[0/6/12/18]",
-			DestinationProp: "SetBackupHour",
-			ValidateFunc:    validateInIntValues(sacloud.AllowAutoBackupHour()...),
-			CompleteFunc:    completeInIntValues(sacloud.AllowAutoBackupHour()...),
 		},
 		"weekdays": {
 			Type:            schema.TypeStringList,

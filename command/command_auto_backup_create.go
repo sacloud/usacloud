@@ -17,7 +17,6 @@ func AutoBackupCreate(ctx Context, params *CreateAutoBackupParam) error {
 	p.SetDescription(params.Description)
 	p.SetIconByID(params.IconId)
 	p.SetBackupMaximumNumberOfArchives(params.Generation)
-	p.SetBackupHour(params.StartHour)
 
 	exists := false
 	for _, v := range params.Weekdays {
