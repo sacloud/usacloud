@@ -93,7 +93,7 @@ USAGE:
    usacloud [global options] command [command options] [arguments...]
 
 VERSION:
-   0.0.6, build xxxxxxx
+   0.0.8, build xxxxxxx
 
 COMMANDS:
    config                           A manage command of APIKey settings
