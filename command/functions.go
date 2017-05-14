@@ -198,6 +198,10 @@ func getSSHDefaultUserNameArchiveRec(client *api.Client, archiveID int64) (strin
 		if archive.HasTag("distro-coreos") {
 			return "core", nil
 		}
+
+		if archive.HasTag("distro-rancheros") {
+			return "rancher", nil
+		}
 	}
 	if archive.SourceDisk != nil {
 		return getSSHDefaultUserNameDiskRec(client, archive.SourceDisk.ID)
