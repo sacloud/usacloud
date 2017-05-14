@@ -20,8 +20,10 @@ var (
 	archiveLatestStableDebianTags                   = []string{"current-stable", "distro-debian"}
 	archiveLatestStableVyOSTags                     = []string{"current-stable", "distro-vyos"}
 	archiveLatestStableCoreOSTags                   = []string{"current-stable", "distro-coreos"}
+	archiveLatestStableRancherOSTags                = []string{"current-stable", "distro-rancheros"}
 	archiveLatestStableKusanagiTags                 = []string{"current-stable", "pkg-kusanagi"}
 	archiveLatestStableSiteGuardTags                = []string{"current-stable", "pkg-siteguard"}
+	archiveLatestStablePleskTags                    = []string{"current-stable", "pkg-plesk"}
 	archiveLatestStableFreeBSDTags                  = []string{"current-stable", "distro-freebsd"}
 	archiveLatestStableWindows2012Tags              = []string{"os-windows", "distro-ver-2012.2"}
 	archiveLatestStableWindows2012RDSTags           = []string{"os-windows", "distro-ver-2012.2", "windows-rds"}
@@ -50,8 +52,10 @@ func NewArchiveAPI(client *Client) *ArchiveAPI {
 		ostype.Debian:                       api.FindLatestStableDebian,
 		ostype.VyOS:                         api.FindLatestStableVyOS,
 		ostype.CoreOS:                       api.FindLatestStableCoreOS,
+		ostype.RancherOS:                    api.FindLatestStableRancherOS,
 		ostype.Kusanagi:                     api.FindLatestStableKusanagi,
 		ostype.SiteGuard:                    api.FindLatestStableSiteGuard,
+		ostype.Plesk:                        api.FindLatestStablePlesk,
 		ostype.FreeBSD:                      api.FindLatestStableFreeBSD,
 		ostype.Windows2012:                  api.FindLatestStableWindows2012,
 		ostype.Windows2012RDS:               api.FindLatestStableWindows2012RDS,
@@ -165,7 +169,7 @@ func (api *ArchiveAPI) CanEditDisk(id int64) (bool, error) {
 	}
 
 	// BundleInfoがあれば編集不可
-	if archive.BundleInfo != nil {
+	if archive.BundleInfo != nil && archive.BundleInfo.HostClass == bundleInfoWindowsHostClass {
 		// Windows
 		return false, nil
 	}
@@ -213,6 +217,11 @@ func (api *ArchiveAPI) FindLatestStableCoreOS() (*sacloud.Archive, error) {
 	return api.findByOSTags(archiveLatestStableCoreOSTags)
 }
 
+// FindLatestStableRancherOS 安定版最新のRancherOSパブリックアーカイブを取得
+func (api *ArchiveAPI) FindLatestStableRancherOS() (*sacloud.Archive, error) {
+	return api.findByOSTags(archiveLatestStableRancherOSTags)
+}
+
 // FindLatestStableKusanagi 安定版最新のKusanagiパブリックアーカイブを取得
 func (api *ArchiveAPI) FindLatestStableKusanagi() (*sacloud.Archive, error) {
 	return api.findByOSTags(archiveLatestStableKusanagiTags)
@@ -221,6 +230,11 @@ func (api *ArchiveAPI) FindLatestStableKusanagi() (*sacloud.Archive, error) {
 // FindLatestStableSiteGuard 安定版最新のSiteGuardパブリックアーカイブを取得
 func (api *ArchiveAPI) FindLatestStableSiteGuard() (*sacloud.Archive, error) {
 	return api.findByOSTags(archiveLatestStableSiteGuardTags)
+}
+
+// FindLatestStablePlesk 安定版最新のPleskパブリックアーカイブを取得
+func (api *ArchiveAPI) FindLatestStablePlesk() (*sacloud.Archive, error) {
+	return api.findByOSTags(archiveLatestStablePleskTags)
 }
 
 // FindLatestStableFreeBSD 安定版最新のFreeBSDパブリックアーカイブを取得
