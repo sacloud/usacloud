@@ -2,6 +2,7 @@ package define
 
 import (
 	"fmt"
+	"github.com/sacloud/libsacloud/sacloud/ostype"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
 )
@@ -589,8 +590,8 @@ func serverBuildParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source OS type",
-			ValidateFunc: validateInStrValues(osTypeValues...),
-			CompleteFunc: completeInStrValues(osTypeValues...),
+			ValidateFunc: validateInStrValues(ostype.OSTypeShortNames...),
+			CompleteFunc: completeInStrValues(ostype.OSTypeShortNames...),
 			Category:     "disk",
 			Order:        20,
 		},
@@ -925,13 +926,6 @@ func serverBuildParam() map[string]*schema.Schema {
 			Order:        20,
 		},
 	}
-}
-
-var osTypeValues = []string{
-	"centos", "ubuntu", "debian", "vyos", "coreos", "kusanagi", "site-guard", "freebsd",
-	"windows2012", "windows2012-rds", "windows2012-rds-office",
-	"windows2016", "windows2016-rds", "windows2016-rds-office",
-	"windows2016-sql-web", "windows2016-sql-standard",
 }
 
 func serverReadParam() map[string]*schema.Schema {

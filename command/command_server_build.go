@@ -519,56 +519,11 @@ func validateServerDiskEditParams(sb interface{}, ctx Context, params *BuildServ
 }
 
 func isWindows(osType string) bool {
-	windowsTypes := []string{
-		"windows2012", "windows2012-rds", "windows2012-rds-office",
-		"windows2016", "windows2016-rds", "windows2016-rds-office",
-		"windows2016-sql-web", "windows2016-sql-standard",
-	}
-	for _, v := range windowsTypes {
-		if v == osType {
-			return true
-		}
-	}
-	return false
+	return strToOSType(osType).IsWindows()
 }
 
-func strToOSType(osType string) ostype.ArchiveOSTypes {
-	switch osType {
-	case "centos":
-		return ostype.CentOS
-	case "ubuntu":
-		return ostype.Ubuntu
-	case "debian":
-		return ostype.Debian
-	case "vyos":
-		return ostype.VyOS
-	case "coreos":
-		return ostype.CoreOS
-	case "kusanagi":
-		return ostype.Kusanagi
-	case "site-guard":
-		return ostype.SiteGuard
-	case "freebsd":
-		return ostype.FreeBSD
-	case "windows2012":
-		return ostype.Windows2012
-	case "windows2012-rds":
-		return ostype.Windows2012RDS
-	case "windows2012-rds-office":
-		return ostype.Windows2012RDSOffice
-	case "windows2016":
-		return ostype.Windows2016
-	case "windows2016-rds":
-		return ostype.Windows2016RDS
-	case "windows2016-rds-office":
-		return ostype.Windows2016RDSOffice
-	case "windows2016-sql-web":
-		return ostype.Windows2016SQLServerWeb
-	case "windows2016-sql-standard":
-		return ostype.Windows2016SQLServerStandard
-	default:
-		return ostype.Custom
-	}
+func strToOSType(strOSType string) ostype.ArchiveOSTypes {
+	return ostype.StrToOSType(strOSType)
 }
 
 type serverBuilder interface {
