@@ -2,23 +2,20 @@
 
 [![Build Status](https://travis-ci.org/sacloud/usacloud.svg?branch=master)](https://travis-ci.org/sacloud/usacloud)
 
-## Overview
+## 概要
 
-:rabbit:[`usacloud`](https://github.com/sacloud/usacloud) is New CLI client for the [SakuraCloud](http://cloud.sakura.ad.jp/index.html).  
-That means **"Unofficial + [`sacloud`](https://github.com/sakura-internet/node-sacloud)"**.  
+:rabbit:[`usacloud`](https://github.com/sacloud/usacloud)は[さくらのクラウド](http://cloud.sakura.ad.jp/index.html)用のCLIクライアントです。  
 
-## Key Features
+## 主な特徴
 
-- Cover the latest features of the SakuraCloud
-- Cross Platform(Windows/macOS/Linux) support(on Linux version, supports ARM!)
-- Includes Upload of [Archive/ISO-image](http://cloud.sakura.ad.jp/specification/server-disk/#server-disk-content03) by FTPS
-- Includes [WebAccelerator](http://cloud.sakura.ad.jp/specification/web-accelerator/) support
-- Includes [ObjectStorage](http://cloud.sakura.ad.jp/specification/object-storage/) support
-- Includes [Billing API](http://cloud-news.sakura.ad.jp/billapi/) support
+- さくらのクラウドの最新機能に追随。請求情報やオブジェクトストレージ、ウェブアクセラレータなども対応済み
+- クロスプラットフォーム(Windows/macOS/Linux)サポート。ARMでも動作可能。
+- Go言語で実装されたシングルバイナリ、インストールはバイナリをコピーするだけ(yum/apt/brewもサポート)
+- SSH/SCP/SFTP/VNCなどをバイナリ単体でサポート
 
-## Install
+## インストール
 
-### macOS(using `homebrew`)
+### macOS(`homebrew`)
 
     brew tap sacloud/homebrew-usacloud; brew install usacloud
 
@@ -26,26 +23,31 @@ That means **"Unofficial + [`sacloud`](https://github.com/sakura-internet/node-s
 
     curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-yum.sh | sh
 
-### Ubuntu / debian / bash on Windows
+### Ubuntu / debian / bash on Windows(Ubuntu)
 
     curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-apt.sh | sh
 
-### Windows
+### Windows / その他の場合
 
-Download binary file from [Release page](https://github.com/sacloud/usacloud/releases/latest). 
+以下のリンクからバイナリーファイルをダウンロードして展開し、任意のフォルダー内に配置してください。  
+(PATHを通しておくと便利です)
 
-### For Docker
+- Windows 64bit版 : [https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-amd64.zip](https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-amd64.zip)
+- Windows 32bit版 : [https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-386.zip](https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-386.zip)
+- その他の場合 : [https://github.com/sacloud/usacloud/releases/latest/](https://github.com/sacloud/usacloud/releases/latest/)
 
-    alias usacloud="docker run -it --rm sacloud/usacloud" 
+`bash_completion`が利用できる場合は、以下のコマンドで`usacloud`用の`bash_completion`を導入することが出来ます。
 
-#### For Docker  with [`whalebrew`](https://github.com/bfirsh/whalebrew)
-    whalebrew install sacloud/usacloud
+```bash
+curl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud >> ~/.bashrc
+```
 
+> ※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。
 
-## Setting
+## 初期設定
 
-Set API key and secret by `usacloud config` command.  
-(Your API key settings will write to `~/.usacloud_config`)
+`usacloud config` コマンドを用いてAPIキーを設定しておきます。 
+(APIキーの設定は`~/.usacloud_config`にファイルとして保存されます。)
 
 ```bash
     $ usacloud config
@@ -62,7 +64,7 @@ Set API key and secret by `usacloud config` command.
     Written your settings to ~/.usacloud_config
 ```
 
-If you want to confirm settings, use `usacloud config --show`.
+APIキーの設定は`usacloud config --show`コマンドで確認可能です。  
 
 ```bash
    $ usacloud config --show
@@ -73,7 +75,7 @@ If you want to confirm settings, use `usacloud config --show`.
    
 ```
 
-Note: API key and secret can be also set using environment variables.
+Note: APIキーは環境変数を用いて設定することも可能です。  
 
 ```bash
    $ export SAKURACLOUD_ACCESS_TOKEN=[YOUR_API_TOKEN]
@@ -81,9 +83,9 @@ Note: API key and secret can be also set using environment variables.
    $ export SAKURACLOUD_ZONE=tk1v
 ```
   
-For more detail, see: [Usacloud Documents](https://sacloud.github.io/usacloud/)
+詳細は[Usacloudドキュメント](https://sacloud.github.io/usacloud/)を参照してください。  
    
-### Usage
+### 使い方
 
 ```bash
 NAME:
@@ -138,173 +140,172 @@ COPYRIGHT:
 ```   
 
 
-#### Examples: List/Find/Search resource 
+#### Examples: 一覧表示/検索
 
 ```bash
-    # list all switches
+    # 全件表示
     $ usacloud switch ls 
    
-    # list switches with name "example"
+    # 名称に"example"を含むものを一覧表示
     $ usacloud switch ls --name example
     
-    # list switches order by Name(asc) and ID(desc)
+    # ソート条件指定(名称での昇順、IDでの降順)
     $ usacloud switch ls --sort Name --sort -ID
     
-    # list switches with limit=5 and offset=2
+    # Limit/Offset指定(最大5件、2件目から表示)
     $ usacloud switch ls --max 5 --from 2
     
 ```   
 
-#### Examples: Basic CRUD
+#### Examples: CRUD操作
 
 ```bash
-    # create switch
+    # 作成(Create)
     $ usacloud switch create --name "Example" --desc "description" --tags "Tag1" --tags "Tag2"
      
-    # show switch detail
-    $ usacloud switch read <ID or Name>
+    # 詳細表示(Read)
+    $ usacloud switch read <ID または 名称>
    
-    # update switch
-    $ usacloud switch update --name "Example-update" <ID or Name>
+    # 更新(Update)
+    $ usacloud switch update --name "Example-update" <ID または 名称>
     
-    # delete switch
-    $ usacloud switch delete <ID or Name>
+    # 削除(Delete)
+    $ usacloud switch delete <ID または 名称> 
     
 ```  
 
-#### Examples: Create Server 
+#### Examples: サーバ作成
 
 ```bash
-    # Build server from Public Archive(CentOS)
+    # CentOSインストール済みのサーバを構築
     $ usacloud server build \
-             --name server01 \               # ServerName
-             --os-type centos \              # OSType(use PublicArchive)
-             --hostname server01 \           # for DiskEdit parameter
-             --password "$YOUR_PASSWORD" \   # for DiskEdit parameter
-             --ssh-key-mode generate \       # generate ssh-key
-             --ssh-key-name key01 \          # generate ssh-key name
-             --disable-pw-auth               # disable password auth
+             --name server01 \               # サーバ名
+             --os-type centos \              # OS種別(パブリックアーカイブを指定)
+             --hostname server01 \           # ホスト名
+             --password "$YOUR_PASSWORD" \   # 管理者パスワード
+             --ssh-key-mode generate \       # SSH公開鍵(クラウド上で生成する)
+             --disable-pw-auth               # SSH接続時のパスワード、チャレンジ/レスポンス認証の無効化
 
     # generated private-key is saved to ~/.ssh/sacloud_pkey_[ServerID]
 ```   
 
-#### Examples: Manipulate Server
+#### Examples: サーバ操作(電源周り)
 
 ```bash
-    # boot
-    $ usacloud server boot <ID or Name>
+    # 起動
+    $ usacloud server boot <ID または 名称> 
     
-    # shutdown(graceful)
-    $ usacloud server shutdown <ID or Name>
+    # シャットダウン(graceful)
+    $ usacloud server shutdown <ID または 名称> 
     
-    # shutdown(force)
-    $ usacloud server shutdown-force <ID or Name>
+    # シャットダウン(force)
+    $ usacloud server shutdown-force <ID または 名称> 
     
-    # reset(hard)
-    $ usacloud server reset <ID or Name>
+    # リセット(hard)
+    $ usacloud server reset <ID または 名称> 
     
 ```
 
-#### Examples: Connect to server(SSH/SCP/VNC)
+#### Examples: サーバへの接続(SSH/SCP/VNC)
 
 ```bash
-    # connect to server by ssh using generated private-key(Not supported on Windows)
-    $ usacloud server ssh <ID or Name>
+    # サーバへのSSH接続
+    # デフォルトでは~/.ssh/sacloud_pkey_[サーバID]ファイルが存在すれば秘密鍵として利用する(-iオプションで明示も可)
+    $ usacloud server ssh <ID または 名称> 
     
-    # exec command on SSH(no-pty, support Windows)
-    $ usacloud server ssh-exec <ID or Name> cat /etc/passwd
+    # サーバにSSH接続し、任意のコマンドを実行(Windowsコマンドプロンプトからでも実行可能)
+    $ usacloud server ssh-exec <ID または 名称>  cat /etc/passwd
     
-    # upload/download by SSH(like scp)
-    $ usacloud server scp local-file.txt [ServerID]:/home/ubuntu/remote-file.txt # local to remote
-    $ usacloud server scp [ServerID]:/home/ubuntu/remote-file.txt local-file.txt # remote to local
-    $ usacloud server scp -r local-dir [ServerID]:/home/ubuntu/remote-dir        # recursive
-    
-    # open VNC client using the OS's default application
-    # In Windows, it is need to associate vnc client with .vnc extension
-    $ usacloud server vnc <ID or Name>
+    # SCPでのアップロード/ダウンロード
+    $ usacloud server scp local-file.txt [ServerID]:/home/ubuntu/remote-file.txt # ローカルからリモートへ
+    $ usacloud server scp [ServerID]:/home/ubuntu/remote-file.txt local-file.txt # リモートからローカルへ
+    $ usacloud server scp -r local-dir [ServerID]:/home/ubuntu/remote-dir        # ディレクトリに対して再帰的に処理
+   
+    # OSのデフォルトVNCクライアントを用いてサーバへVNC接続
+    # (Windowsの場合、.vnc拡張子に適切なVNCクライアントを関連付けしておく必要あり)
+    $ usacloud server vnc <ID または 名称> 
 ```
 
-#### Examples: Upload/Download iso-image or archive by FTPS
+#### Examples: FTPSでのアップロード/ダウンロード(アーカイブ/ISOイメージ)
 
 ```bash
-    # upload iso-image
+    # ISOイメージのアップロード
     $ usacloud iso-image create --name example --iso-file example.iso
     
-    # download archive(Only MyArchive can be downloaded)
-    $ usacloud archive download --file-destination example.img <ID or Name>
+    # アーカイブのダウンロード(マイカーカイブのみダウンロード可能)
+    $ usacloud archive download --file-destination example.img <ID または 名称> 
     
 ```
 
-#### Examples: Billing(download csv)
+#### Examples: 請求関連
 
 ```bash
-    # list bill
+    # 請求情報一覧
     $ usacloud bill list
     
-    # download bill-detail by CSV
+    # 請求CSVの出力
     $ usacloud bill csv [BillID]
 
 ``` 
 
-#### Examples: Object Storage
+#### Examples: オブジェクトストレージの操作
 
 ```bash
-    # set API key of Object Storage(per bucket)
+    # オブジェクトストレージ用にAPIキー設定(バケットごと)
     $ export SACLOUD_OJS_ACCESS_KEY_ID="[YOUR_BUCKET_ACCESS_KEY]"
     $ export SACLOUD_OJS_SECRET_ACCESS_KEY="[YOUR_BUCKET_SECRET_KEY]"
     
-    # list objects
+    # オブジェクト一覧表示
     $ usacloud object-storage ls 
     $ usacloud object-storage ls dir1/dir2
 
-    # download object to local(download remote.txt)
-    $ usacloud object-storage get remote.txt           # output to os.StdOut
-    $ usacloud object-storage get remote.txt local.txt # save as local file
-    $ usacloud object-storage get -r remote/ local/    # download recursive
+    # オブジェクトのダウンロード
+    $ usacloud object-storage get remote.txt           # 標準出力へ
+    $ usacloud object-storage get remote.txt local.txt # ローカルファイルへ
+    $ usacloud object-storage get -r remote/ local/    # ディレクトリを再帰的に処理
 
-    # upload object
-    $ usacloud object-storage put local.txt remote.txt
+    # オブジェクトのアップロード
+    $ usacloud object-storage put local.txt remote.txt 
     $ usacloud object-storage put local.txt dir1/dir2/remote.txt
-    $ usacloud object-storage put -r local/ remote/    # upload recursive
+    $ usacloud object-storage put -r local/ remote/    # ディレクトリを再帰的に処理
     
-    # delete object
+    # オブジェクトの削除
     $ usacloud object-storage del remote.txt
-    $ usacloud object-storage del -r remote/           # delete recursive
-
+    $ usacloud object-storage del -r remote/           # ディレクトリを再帰的に処理
 ```   
 
-#### Examples: Web Accelerator(purge cache)
+#### Examples: ウェブアクセラレータ
 
 ```bash
-    # purge cache on web-accel
+    # ウェブアクセラレータ上のキャッシュを削除
     $ usacloud web-accel purge https://example.com https://foobar.com
 
 ```   
 
-#### Examples: Output format
+#### Examples: 出力の定義
 
 ```bash
-    # output table(default)
+    # テーブル形式(デフォルト)
     $ usacloud switch ls
 
-    # output JSON
+    # JSON形式
     $ usacloud switch ls --output-type json
 
-    # output csv/tsv
+    # CSV/TSV形式
     $ usacloud switch ls --output-type csv # or tsv
 
-    # output csv/tsv + include columns
+    # 出力する列を指定(CSV/TSV形式での出力時に指定可能)
     $ usacloud switch ls --output-type tsv --col ID --col Name
    
-    # output QuietMode(output ID/Key only)
+    # IDまたはキーのみ出力
     $ usacloud swtich ls -q # or --quiet
     
-    # output custom format(using text/template style template)
+    # golangのテンプレートを用いてカスタム出力
     $ usacloud switch ls --format "ID is '{{.ID}}', Name is '{{.Name}}'"
     ID is '123456789012', Name is 'example'
 ```
 
-#### Examples: Output format for Monitoring
+#### Examples: 出力の定義(モニタリングツール用)
 
 ```bash
 
@@ -323,21 +324,21 @@ COPYRIGHT:
 ```
 
 
-## Development
+## 開発
 
-#### Build(includes src generate)
+#### ビルド
 
     $ make build
     
-#### Generate each command source 
+#### 各コマンドのソース生成
 
     $ make gen
     $ # or
     $ make gen-force
     
-#### Add new resource or command
+#### 新しいリソース/コマンドの追加
 
-Edit under the `define` package.
+`define`配下に定義ファイルを作成し`make gen-force`コマンドでソース生成してください。  
 
 
 ## License
