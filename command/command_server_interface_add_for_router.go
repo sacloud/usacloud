@@ -34,7 +34,7 @@ func ServerInterfaceAddForRouter(ctx Context, params *InterfaceAddForRouterServe
 	if !params.WithoutDiskEdit {
 		disks := p.GetDisks()
 		if len(disks) == 0 {
-			return fmt.Errorf("Server haven't any disks. Can't call EditDisk API without server connected disks.")
+			return fmt.Errorf("Server haven't any disks. Can't call EditDisk API without server connected disks")
 		}
 		// EditDisk API supported?
 		res, err := diskAPI.CanEditDisk(disks[0].ID)

@@ -18,7 +18,7 @@ type rowOutput struct {
 	Columns   []string
 }
 
-func NewRowOutput(out io.Writer, err io.Writer, separator rune, option FormatOption) Output {
+func NewRowOutput(out io.Writer, err io.Writer, separator rune, option Option) Output {
 	return &rowOutput{
 		Out:       out,
 		Err:       err,

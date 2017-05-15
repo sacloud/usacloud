@@ -36,9 +36,8 @@ func (s SortableResources) Less(i, j int) bool {
 
 		return s[i].Command.Name < s[j].Command.Name
 
-	} else {
-		return s[i].Category.Order < s[j].Category.Order
 	}
+	return s[i].Category.Order < s[j].Category.Order
 }
 
 type SortableCommand struct {
@@ -82,7 +81,7 @@ COPYRIGHT:
    {{.Copyright}}{{end}}
 `
 
-// SubCommandHelpTemplate is using with `usacloud [resource] --help`
+// ResourceLevelHelpTemplate is using with `usacloud [resource] --help`
 var ResourceLevelHelpTemplate = `NAME:
    {{.HelpName}} - {{.Usage}}
 
@@ -98,7 +97,7 @@ OPTIONS:
    {{end}}{{end}}
 `
 
-// CommandHelpTemplate is using with `usacloud [resource] [command] --help`
+// CommandLevelHelpTemplate is using with `usacloud [resource] [command] --help`
 var CommandLevelHelpTemplate = `NAME:
    {{.HelpName}} - {{.Usage}}
 

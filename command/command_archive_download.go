@@ -27,7 +27,7 @@ func ArchiveDownload(ctx Context, params *DownloadArchiveParam) error {
 	}
 
 	// download
-	ftpsClient := ftp.NewFTPClient(res.User, res.Password, res.HostName)
+	ftpsClient := ftp.NewClient(res.User, res.Password, res.HostName)
 	compChan := make(chan bool)
 	errChan := make(chan error)
 

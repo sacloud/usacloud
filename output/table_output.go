@@ -15,10 +15,10 @@ type tableOutput struct {
 	IncludeFields []string
 	ExcludeFields []string
 	ColumnDefs    []ColumnDef
-	TableType     OutputTableType
+	TableType     TableType
 }
 
-func NewTableOutput(out io.Writer, err io.Writer, formater OutputFormatter) Output {
+func NewTableOutput(out io.Writer, err io.Writer, formater Formatter) Output {
 	return &tableOutput{
 		Out:           out,
 		Err:           err,

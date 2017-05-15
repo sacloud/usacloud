@@ -16,12 +16,12 @@ func ServerIsoInsert(ctx Context, params *IsoInsertServerParam) error {
 	}
 
 	if p.Instance.CDROM != nil && p.Instance.CDROM.ID != sacloud.EmptyID {
-		fmt.Fprintf(GlobalOption.Err, "ISOImage is already inserted to server\n")
+		fmt.Fprint(GlobalOption.Err, "ISOImage is already inserted to server\n")
 		return nil
 	}
 
-	imageId := params.IsoImageId
-	if imageId == sacloud.EmptyID {
+	imageID := params.IsoImageId
+	if imageID == sacloud.EmptyID {
 
 		//validate
 		isoParams := &CreateISOImageParam{
@@ -54,7 +54,7 @@ func ServerIsoInsert(ctx Context, params *IsoInsertServerParam) error {
 		}
 
 		// upload
-		ftpsClient := ftp.NewFTPClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
+		ftpsClient := ftp.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
 		err = ftpsClient.Upload(params.GetIsoFile())
 		if err != nil {
 			return fmt.Errorf("ServerIsoInsert is failed: %s", err)
@@ -66,11 +66,11 @@ func ServerIsoInsert(ctx Context, params *IsoInsertServerParam) error {
 			return fmt.Errorf("ServerIsoInsert is failed: %s", err)
 		}
 
-		imageId = res.ID
+		imageID = res.ID
 	}
 
 	// call manipurate functions
-	_, err := api.InsertCDROM(params.Id, imageId)
+	_, err := api.InsertCDROM(params.Id, imageID)
 	if err != nil {
 		return fmt.Errorf("ServerIsoInsert is failed: %s", err)
 	}

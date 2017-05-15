@@ -27,7 +27,7 @@ func ISOImageCreate(ctx Context, params *CreateISOImageParam) error {
 	}
 
 	// upload
-	ftpsClient := ftp.NewFTPClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
+	ftpsClient := ftp.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
 	compChan := make(chan bool)
 	errChan := make(chan error)
 

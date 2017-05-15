@@ -29,8 +29,9 @@ _usacloud() {
             COMPREPLY=($(compgen -W "${flags[*]} ${wants_value[*]}" -- "${cur}"))
         else
             if [[ " ${wants_value[*]}  " =~ " ${prev} " ]]; then
-                # noop
-                :
+                if [ "--zone" == "${prev}" ]; then
+                    COMPREPLY=($(compgen -W "${zones[*]}" -- "${cur}"))
+                fi
             else
                 COMPREPLY=($(compgen -W "${commands[*]}" -- "${cur}"))
             fi

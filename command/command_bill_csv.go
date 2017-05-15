@@ -2,7 +2,6 @@ package command
 
 import (
 	"fmt"
-	"io"
 	"os"
 	"strings"
 )
@@ -29,7 +28,7 @@ func BillCsv(ctx Context, params *CsvBillParam) error {
 		return fmt.Errorf("BillCsv is failed: %s", err)
 	}
 
-	var out io.Writer = GlobalOption.Out
+	var out = GlobalOption.Out
 	if params.BillOutput != "" {
 		file, err := os.Create(params.BillOutput)
 		if err != nil {

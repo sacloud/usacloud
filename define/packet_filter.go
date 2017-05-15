@@ -292,7 +292,7 @@ func packetFilterInterfaceDisconnectParam() map[string]*schema.Schema {
 	}
 }
 
-func validatePacketFilterSourceNetwork() schema.SchemaValidateFunc {
+func validatePacketFilterSourceNetwork() schema.ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -351,7 +351,7 @@ func validatePacketFilterSourceNetwork() schema.SchemaValidateFunc {
 	}
 }
 
-func validatePacketFilterPort() schema.SchemaValidateFunc {
+func validatePacketFilterPort() schema.ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 

@@ -22,7 +22,7 @@ func ArchiveUpload(ctx Context, params *UploadArchiveParam) error {
 	}
 
 	// upload
-	ftpsClient := ftp.NewFTPClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
+	ftpsClient := ftp.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
 	compChan := make(chan bool)
 	errChan := make(chan error)
 

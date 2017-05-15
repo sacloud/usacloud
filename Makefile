@@ -106,7 +106,7 @@ test: vet
 	go test $(TEST) $(TESTARGS) -v -timeout=30m -parallel=4 ;
 
 .PHONY: vet
-vet: fmt gen
+vet: golint gen
 	@echo "go tool vet $(VETARGS) ."
 	@go tool vet $(VETARGS) $$(ls -d */ | grep -v vendor) ; if [ $$? -eq 1 ]; then \
 		echo ""; \
@@ -117,7 +117,9 @@ vet: fmt gen
 
 .PHONY: golint
 golint: fmt
-	golint ./...
+	for pkg in $$(go list ./... | grep -v /vendor/ ) ; do \
+        test -z "$$(golint $$pkg | grep -v '_gen.go' | grep -v '_string.go' | grep -v 'should have comment' | grep -v 'func ServerMonitorCpu' | grep -v 'func ServerSsh' | tee /dev/stderr)" || RES=1; \
+    done ;exit $$RES
 
 .PHONY: fmt
 fmt:

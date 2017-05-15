@@ -4,55 +4,55 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-func validateMulti(validators ...schema.SchemaValidateFunc) schema.SchemaValidateFunc {
+func validateMulti(validators ...schema.ValidateFunc) schema.ValidateFunc {
 	return schema.ValidateMulti(validators...)
 }
 
-func validateStringSlice(validator schema.SchemaValidateFunc) schema.SchemaValidateFunc {
+func validateStringSlice(validator schema.ValidateFunc) schema.ValidateFunc {
 	return schema.ValidateStringSlice(validator)
 }
 
-func validateIntSlice(validator schema.SchemaValidateFunc) schema.SchemaValidateFunc {
+func validateIntSlice(validator schema.ValidateFunc) schema.ValidateFunc {
 	return schema.ValidateIntSlice(validator)
 }
 
-func validateStrLen(min int, max int) schema.SchemaValidateFunc {
+func validateStrLen(min int, max int) schema.ValidateFunc {
 	return schema.ValidateStrLen(min, max)
 }
 
-func validateIntRange(min int, max int) schema.SchemaValidateFunc {
+func validateIntRange(min int, max int) schema.ValidateFunc {
 	return schema.ValidateIntRange(min, max)
 }
 
-func validateInStrValues(allows ...string) schema.SchemaValidateFunc {
+func validateInStrValues(allows ...string) schema.ValidateFunc {
 	return schema.ValidateInStrValues(allows...)
 }
 
-func validateInIntValues(allows ...int) schema.SchemaValidateFunc {
+func validateInIntValues(allows ...int) schema.ValidateFunc {
 	return schema.ValidateInIntValues(allows...)
 }
 
-func validateSakuraID() schema.SchemaValidateFunc {
+func validateSakuraID() schema.ValidateFunc {
 	return schema.ValidateSakuraID()
 }
 
-func validateSakuraShortID(digit int) schema.SchemaValidateFunc {
+func validateSakuraShortID(digit int) schema.ValidateFunc {
 	return schema.ValidateSakuraShortID(digit)
 }
 
-func validateMemberCD() schema.SchemaValidateFunc {
+func validateMemberCD() schema.ValidateFunc {
 	return schema.ValidateMemberCD()
 }
 
-func validateFileExists() schema.SchemaValidateFunc {
+func validateFileExists() schema.ValidateFunc {
 	return schema.ValidateFileExists()
 }
 
-func validateIPv4Address() schema.SchemaValidateFunc {
+func validateIPv4Address() schema.ValidateFunc {
 	return schema.ValidateIPv4Address()
 }
 
-func validateDateTimeString() schema.SchemaValidateFunc {
+func validateDateTimeString() schema.ValidateFunc {
 	return schema.ValidateDateTimeString()
 }
 
