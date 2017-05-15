@@ -5,15 +5,15 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-func completeInStrValues(values ...string) schema.SchemaCompletionFunc {
+func completeInStrValues(values ...string) schema.CompletionFunc {
 	return schema.CompleteInStrValues(values...)
 }
 
-func completeInIntValues(values ...int) schema.SchemaCompletionFunc {
+func completeInIntValues(values ...int) schema.CompletionFunc {
 	return schema.CompleteInIntValues(values...)
 }
 
-func completeIconID() schema.SchemaCompletionFunc {
+func completeIconID() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetIconAPI()
@@ -31,7 +31,7 @@ func completeIconID() schema.SchemaCompletionFunc {
 	}
 }
 
-func completeServerID() schema.SchemaCompletionFunc {
+func completeServerID() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetServerAPI()
@@ -49,7 +49,7 @@ func completeServerID() schema.SchemaCompletionFunc {
 	}
 }
 
-func completeBridgeID() schema.SchemaCompletionFunc {
+func completeBridgeID() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetBridgeAPI()
@@ -67,7 +67,7 @@ func completeBridgeID() schema.SchemaCompletionFunc {
 	}
 }
 
-func completeDiskID() schema.SchemaCompletionFunc {
+func completeDiskID() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetDiskAPI()
@@ -85,7 +85,7 @@ func completeDiskID() schema.SchemaCompletionFunc {
 	}
 }
 
-func completeArchiveID() schema.SchemaCompletionFunc {
+func completeArchiveID() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetArchiveAPI()
@@ -103,7 +103,7 @@ func completeArchiveID() schema.SchemaCompletionFunc {
 	}
 }
 
-func completeISOImageID() schema.SchemaCompletionFunc {
+func completeISOImageID() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetCDROMAPI()
@@ -121,7 +121,7 @@ func completeISOImageID() schema.SchemaCompletionFunc {
 	}
 }
 
-func completeSwitchID() schema.SchemaCompletionFunc {
+func completeSwitchID() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetSwitchAPI()
@@ -139,7 +139,7 @@ func completeSwitchID() schema.SchemaCompletionFunc {
 	}
 }
 
-func completePacketFilterID() schema.SchemaCompletionFunc {
+func completePacketFilterID() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetPacketFilterAPI()
@@ -157,7 +157,7 @@ func completePacketFilterID() schema.SchemaCompletionFunc {
 	}
 }
 
-func completeSSHKeyID() schema.SchemaCompletionFunc {
+func completeSSHKeyID() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetSSHKeyAPI()
@@ -175,7 +175,7 @@ func completeSSHKeyID() schema.SchemaCompletionFunc {
 	}
 }
 
-func completeNoteID() schema.SchemaCompletionFunc {
+func completeNoteID() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetNoteAPI()
@@ -193,7 +193,7 @@ func completeNoteID() schema.SchemaCompletionFunc {
 	}
 }
 
-func completeLicenseInfoID() schema.SchemaCompletionFunc {
+func completeLicenseInfoID() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetProductLicenseAPI()
@@ -211,7 +211,7 @@ func completeLicenseInfoID() schema.SchemaCompletionFunc {
 	}
 }
 
-func completeInterfaceID() schema.SchemaCompletionFunc {
+func completeInterfaceID() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetInterfaceAPI()
@@ -238,7 +238,7 @@ func completeInterfaceID() schema.SchemaCompletionFunc {
 	}
 }
 
-func completeServerCore() schema.SchemaCompletionFunc {
+func completeServerCore() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetProductServerAPI()
@@ -261,7 +261,7 @@ func completeServerCore() schema.SchemaCompletionFunc {
 	}
 }
 
-func completeServerMemory() schema.SchemaCompletionFunc {
+func completeServerMemory() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
 		api := ctx.GetAPIClient().GetProductServerAPI()

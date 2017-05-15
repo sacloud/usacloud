@@ -18,7 +18,7 @@ func ServerSsh(ctx Context, params *SshServerParam) error {
 
 	// has NIC?
 	if len(p.Interfaces) == 0 {
-		return fmt.Errorf("ServerSsh is failed: server has no network interfaces:")
+		return fmt.Errorf("ServerSsh is failed: server has no network interfaces")
 	}
 
 	// file exists?

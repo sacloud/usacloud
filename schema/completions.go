@@ -4,13 +4,13 @@ import (
 	"fmt"
 )
 
-func CompleteInStrValues(values ...string) SchemaCompletionFunc {
+func CompleteInStrValues(values ...string) CompletionFunc {
 	return func(ctx CompletionContext, currentValue string) []string {
 		return values
 	}
 }
 
-func CompleteInIntValues(values ...int) SchemaCompletionFunc {
+func CompleteInIntValues(values ...int) CompletionFunc {
 	return func(ctx CompletionContext, currentValue string) []string {
 		res := []string{}
 		for _, v := range values {

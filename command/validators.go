@@ -164,7 +164,7 @@ func validateBetween(fieldName string, object interface{}, min int, max int) []e
 	return []error{}
 }
 
-func validateOutputOption(o output.FormatOption) []error {
+func validateOutputOption(o output.Option) []error {
 
 	outputType := o.GetOutputType()
 	columns := o.GetColumn()

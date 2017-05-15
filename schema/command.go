@@ -28,7 +28,7 @@ type Command struct {
 
 	NoOutput bool
 
-	TableType          output.OutputTableType
+	TableType          output.TableType
 	IncludeFields      []string           // for output.TableDetail
 	ExcludeFields      []string           // for output.TableDetail
 	TableColumnDefines []output.ColumnDef // for output.TableSimple
@@ -228,11 +228,9 @@ func (s SortableParams) Less(i, j int) bool {
 
 		if s[i].Param.Order == s[j].Param.Order {
 			return s[i].ParamKey < s[j].ParamKey
-		} else {
-			return s[i].Param.Order < s[j].Param.Order
 		}
+		return s[i].Param.Order < s[j].Param.Order
 
-	} else {
-		return s[i].Category.Order < s[j].Category.Order
 	}
+	return s[i].Category.Order < s[j].Category.Order
 }

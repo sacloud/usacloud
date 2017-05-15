@@ -17,7 +17,7 @@ type freeOutput struct {
 	Format string
 }
 
-func NewFreeOutput(out io.Writer, err io.Writer, option FormatOption) Output {
+func NewFreeOutput(out io.Writer, err io.Writer, option Option) Output {
 	return &freeOutput{
 		Out:    out,
 		Err:    err,

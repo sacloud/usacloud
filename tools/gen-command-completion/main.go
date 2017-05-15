@@ -252,7 +252,7 @@ import (
 )
 
 func {{.FuncName}}(ctx Context, params *{{.ParamName}} , flagName string , currentValue string) {
-    	var comp schema.SchemaCompletionFunc
+    	var comp schema.CompletionFunc
 
 	switch flagName { {{range .Flags}}{{ if not .OutputFlag }}
 	case {{join .Names ", "}}:

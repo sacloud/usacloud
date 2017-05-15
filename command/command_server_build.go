@@ -32,7 +32,7 @@ func ServerBuild(ctx Context, params *BuildServerParam) error {
 	}
 
 	// call Create(id)
-	var b serverBuilder = sb.(serverBuilder)
+	var b = sb.(serverBuilder)
 	res, err := b.Build()
 	if err != nil {
 		return fmt.Errorf("ServerCreate is failed: %s", err)

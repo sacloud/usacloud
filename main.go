@@ -20,39 +20,51 @@ var (
 
 func main() {
 
-	app := &cli.App{}
-
-	app.Name = appName
-	app.Usage = appUsage
-	app.HelpName = appName
-	app.Copyright = appCopyright
-
-	app.Flags = command.GlobalFlags
-	app.Commands = command.Commands
-	app.Version = version.FullVersion()
-	app.CommandNotFound = cmdNotFound
-
-	app.EnableShellCompletion = true
-	//app.ShellComplete = func(c *cli.Context) {
-	//	// This will complete if no args are passed
-	//	if c.NArg() > 0 {
-	//		return
-	//	}
-	//
-	//	for _, command := range command.Commands {
-	//		fmt.Println(command.Name)
-	//	}
-	//}
+	app := &cli.App{
+		Name:                  appName,
+		Usage:                 appUsage,
+		HelpName:              appName,
+		Copyright:             appCopyright,
+		EnableShellCompletion: true,
+		Version:               version.FullVersion(),
+		Before:                applyConfigFromFile,
+		CommandNotFound:       cmdNotFound,
+		Flags:                 command.GlobalFlags,
+		Commands:              command.Commands,
+	}
 
 	cli.AppHelpTemplate = command.TopLevelHelpTemplate
 	cli.SubcommandHelpTemplate = command.ResourceLevelHelpTemplate
 	cli.CommandHelpTemplate = command.CommandLevelHelpTemplate
-
 	cli.InitCompletionFlag.Hidden = true
+	cli.HelpPrinter = getHelpPrinter(app, cli.HelpPrinter)
 
-	currentHelpPrinter := cli.HelpPrinter
-	cli.HelpPrinter = func(w io.Writer, templ string, d interface{}) {
+	app.Run(os.Args)
+}
 
+func applyConfigFromFile(c *cli.Context) error {
+	// load config file
+	v, err := command.LoadConfigFile()
+	if err != nil {
+		return err
+	}
+
+	if !c.IsSet("token") && v.AccessToken != "" {
+		c.Set("token", v.AccessToken)
+	}
+	if !c.IsSet("secreet") && v.AccessTokenSecret != "" {
+		c.Set("secret", v.AccessTokenSecret)
+	}
+	if !c.IsSet("zone") && v.Zone != "" {
+		c.Set("zone", v.Zone)
+	}
+
+	return nil
+}
+
+func getHelpPrinter(app *cli.App, currentHelpPrinter func(io.Writer, string, interface{})) func(io.Writer, string, interface{}) {
+
+	return func(w io.Writer, tmpl string, d interface{}) {
 		var value interface{}
 		switch args := d.(type) {
 		case *cli.App:
@@ -146,30 +158,8 @@ func main() {
 			}
 		}
 
-		currentHelpPrinter(w, templ, value)
+		currentHelpPrinter(w, tmpl, value)
 	}
-
-	app.Before = func(c *cli.Context) error {
-		// load config file
-		v, err := command.LoadConfigFile()
-		if err != nil {
-			return err
-		}
-
-		if !c.IsSet("token") && v.AccessToken != "" {
-			c.Set("token", v.AccessToken)
-		}
-		if !c.IsSet("secreet") && v.AccessTokenSecret != "" {
-			c.Set("secret", v.AccessTokenSecret)
-		}
-		if !c.IsSet("zone") && v.Zone != "" {
-			c.Set("zone", v.Zone)
-		}
-
-		return nil
-	}
-
-	app.Run(os.Args)
 }
 
 func appendResourceByCategory(values []*command.ResourceHelpValue, category *schema.Category, comm *cli.Command) []*command.ResourceHelpValue {

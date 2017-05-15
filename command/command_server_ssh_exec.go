@@ -18,7 +18,7 @@ func ServerSshExec(ctx Context, params *SshExecServerParam) error {
 
 	// has NIC?
 	if len(p.Interfaces) == 0 {
-		return fmt.Errorf("ServerSshExec is failed: server has no network interfaces:")
+		return fmt.Errorf("ServerSshExec is failed: server has no network interfaces")
 	}
 
 	// file exists?

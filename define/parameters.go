@@ -6,7 +6,6 @@ import (
 )
 
 var (
-	paramID   = getParamResourceID("resource ID")
 	paramName = &schema.Schema{
 		Type:         schema.TypeString,
 		HandlerType:  schema.HandlerPathThrough,
@@ -35,16 +34,6 @@ var (
 	}
 )
 
-func getParamResourceID(resourceName string) *schema.Schema {
-	return &schema.Schema{
-		Type:         schema.TypeInt64,
-		HandlerType:  schema.HandlerPathThrough,
-		Description:  fmt.Sprintf("set %s", resourceName),
-		Required:     true,
-		ValidateFunc: validateSakuraID(),
-	}
-}
-
 func getParamResourceShortID(resourceName string, digit int) *schema.Schema {
 	return &schema.Schema{
 		Type:         schema.TypeInt64,
@@ -64,7 +53,7 @@ var paramIconResourceID = &schema.Schema{
 	CompleteFunc:    completeIconID(),
 }
 
-var CommonListParam map[string]*schema.Schema = map[string]*schema.Schema{
+var CommonListParam = map[string]*schema.Schema{
 
 	"name": {
 		Type:          schema.TypeStringList,

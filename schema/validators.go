@@ -10,7 +10,7 @@ import (
 	"unicode/utf8"
 )
 
-func ValidateMulti(validators ...SchemaValidateFunc) SchemaValidateFunc {
+func ValidateMulti(validators ...ValidateFunc) ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		errors := []error{}
 
@@ -22,7 +22,7 @@ func ValidateMulti(validators ...SchemaValidateFunc) SchemaValidateFunc {
 	}
 }
 
-func ValidateStringSlice(validator SchemaValidateFunc) SchemaValidateFunc {
+func ValidateStringSlice(validator ValidateFunc) ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -47,7 +47,7 @@ func ValidateStringSlice(validator SchemaValidateFunc) SchemaValidateFunc {
 	}
 }
 
-func ValidateIntSlice(validator SchemaValidateFunc) SchemaValidateFunc {
+func ValidateIntSlice(validator ValidateFunc) ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -73,7 +73,7 @@ func ValidateIntSlice(validator SchemaValidateFunc) SchemaValidateFunc {
 	}
 }
 
-func ValidateStrLen(min int, max int) SchemaValidateFunc {
+func ValidateStrLen(min int, max int) ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -102,7 +102,7 @@ func ValidateStrLen(min int, max int) SchemaValidateFunc {
 	}
 }
 
-func ValidateIntRange(min int, max int) SchemaValidateFunc {
+func ValidateIntRange(min int, max int) ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -131,7 +131,7 @@ func ValidateIntRange(min int, max int) SchemaValidateFunc {
 	}
 }
 
-func ValidateInStrValues(allows ...string) SchemaValidateFunc {
+func ValidateInStrValues(allows ...string) ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -161,7 +161,7 @@ func ValidateInStrValues(allows ...string) SchemaValidateFunc {
 	}
 }
 
-func ValidateInIntValues(allows ...int) SchemaValidateFunc {
+func ValidateInIntValues(allows ...int) ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -195,7 +195,7 @@ func ValidateInIntValues(allows ...int) SchemaValidateFunc {
 	}
 }
 
-func ValidateSakuraID() SchemaValidateFunc {
+func ValidateSakuraID() ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 		idLen := 12
@@ -220,7 +220,7 @@ func ValidateSakuraID() SchemaValidateFunc {
 	}
 }
 
-func ValidateSakuraShortID(digit int) SchemaValidateFunc {
+func ValidateSakuraShortID(digit int) ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 		idLen := digit
@@ -245,7 +245,7 @@ func ValidateSakuraShortID(digit int) SchemaValidateFunc {
 	}
 }
 
-func ValidateMemberCD() SchemaValidateFunc {
+func ValidateMemberCD() ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -269,7 +269,7 @@ func ValidateMemberCD() SchemaValidateFunc {
 	}
 }
 
-func ValidateFileExists() SchemaValidateFunc {
+func ValidateFileExists() ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -293,7 +293,7 @@ func ValidateFileExists() SchemaValidateFunc {
 	}
 }
 
-func ValidateIPv4Address() SchemaValidateFunc {
+func ValidateIPv4Address() ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 
@@ -317,7 +317,7 @@ func ValidateIPv4Address() SchemaValidateFunc {
 	}
 }
 
-func ValidateDateTimeString() SchemaValidateFunc {
+func ValidateDateTimeString() ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
 

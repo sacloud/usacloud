@@ -4,23 +4,23 @@ type Output interface {
 	Print(...interface{}) error
 }
 
-type OutputFormatter interface {
+type Formatter interface {
 	GetIncludeFields() []string
 	GetExcludeFields() []string
 	GetColumnDefs() []ColumnDef
-	GetTableType() OutputTableType
-	FormatOption
+	GetTableType() TableType
+	Option
 }
-type FormatOption interface {
+type Option interface {
 	GetOutputType() string
 	GetColumn() []string
 	GetFormat() string
 	GetQuiet() bool
 }
 
-type OutputTableType int //go:generate stringer -type=OutputTableType :: manual
+type TableType int //go:generate stringer -type=OutputTableType :: manual
 const (
-	TableDetail OutputTableType = iota
+	TableDetail TableType = iota
 	TableSimple
 )
 

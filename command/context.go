@@ -28,7 +28,7 @@ func NewContext(flagContext FlagContext, args []string, formater interface{}) Co
 
 	var out output.Output
 	if formater != nil {
-		if o, ok := formater.(output.OutputFormatter); ok {
+		if o, ok := formater.(output.Formatter); ok {
 			out = getOutputWriter(o)
 		}
 	}

@@ -22,16 +22,16 @@ type Schema struct {
 	Required      bool
 	SakuraID      bool
 	ConflictsWith []string
-	ValidateFunc  SchemaValidateFunc
+	ValidateFunc  ValidateFunc
 
 	MaxItems int
 	MinItems int
 
 	HandlerType     HandlerType
 	DestinationProp string
-	CustomHandler   SchemaValueHandlerFunc
+	CustomHandler   ValueHandlerFunc
 
-	CompleteFunc SchemaCompletionFunc
+	CompleteFunc CompletionFunc
 }
 
 type CompletionContext interface {
@@ -39,11 +39,11 @@ type CompletionContext interface {
 	Args() []string
 }
 
-type SchemaCompletionFunc func(ctx CompletionContext, currentValue string) []string
+type CompletionFunc func(ctx CompletionContext, currentValue string) []string
 
-type SchemaValueHandlerFunc func(name string, src interface{}, dest interface{})
+type ValueHandlerFunc func(name string, src interface{}, dest interface{})
 
-type SchemaValidateFunc func(string, interface{}) []error
+type ValidateFunc func(string, interface{}) []error
 
 func (s *Schema) Validate(name string) []error {
 	errs := []error{}

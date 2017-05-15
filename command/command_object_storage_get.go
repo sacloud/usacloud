@@ -65,11 +65,9 @@ func ObjectStorageGet(ctx Context, params *GetObjectStorageParam) error {
 			return fmt.Errorf("<local file/directory> arg is required if it is not a single file download")
 		}
 		return objectStorageGetRecursive(path, path, filePath, params.Recursive, bucket)
-	} else {
-		// path is file
-		return objectStorageGet(path, filePath, bucket)
 	}
-
+	// path is file
+	return objectStorageGet(path, filePath, bucket)
 }
 
 func objectStorageGetRecursive(remoteBase, remotePath, localBase string, rec bool, bucket *s3.Bucket) error {

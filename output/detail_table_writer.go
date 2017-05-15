@@ -103,8 +103,6 @@ func (l sortedKeys) Less(i, j int) bool {
 	c2 := strings.Count(l[j], ".")
 	if c1 != c2 {
 		return c1 < c2
-	} else {
-		return l[i] < l[j]
 	}
-
+	return l[i] < l[j]
 }

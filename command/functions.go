@@ -53,7 +53,7 @@ func createAPIClient() *api.Client {
 	return c
 }
 
-func getOutputWriter(formatter output.OutputFormatter) output.Output {
+func getOutputWriter(formatter output.Formatter) output.Output {
 	o := GlobalOption
 	switch formatter.GetOutputType() {
 	case "csv":
@@ -63,17 +63,13 @@ func getOutputWriter(formatter output.OutputFormatter) output.Output {
 	case "json":
 		return output.NewJSONOutput(o.Out, o.Err)
 	default:
-
 		if formatter.GetQuiet() {
 			return output.NewIDOutput(o.Out, o.Err)
-		} else {
-			if formatter.GetFormat() == "" {
-				return output.NewTableOutput(o.Out, o.Err, formatter)
-			} else {
-				return output.NewFreeOutput(o.Out, o.Err, formatter)
-			}
 		}
-
+		if formatter.GetFormat() == "" {
+			return output.NewTableOutput(o.Out, o.Err, formatter)
+		}
+		return output.NewFreeOutput(o.Out, o.Err, formatter)
 	}
 }
 
@@ -224,12 +220,11 @@ func confirm(msg string) bool {
 func confirmContinue(target string, ids ...int64) bool {
 	if len(ids) == 0 {
 		return confirm(fmt.Sprintf("Are you sure you want to %s?", target))
-	} else {
-
-		strIDs := StringIDs(ids)
-		msg := fmt.Sprintf("Target resource IDs => [\n\t%s\n]", strings.Join(strIDs, ",\n\t"))
-		return confirm(fmt.Sprintf("%s\nAre you sure you want to %s?", msg, target))
 	}
+
+	strIDs := StringIDs(ids)
+	msg := fmt.Sprintf("Target resource IDs => [\n\t%s\n]", strings.Join(strIDs, ",\n\t"))
+	return confirm(fmt.Sprintf("%s\nAre you sure you want to %s?", msg, target))
 }
 
 func parseDateTimeString(strDateTime string) time.Time {

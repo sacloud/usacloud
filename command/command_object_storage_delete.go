@@ -47,13 +47,11 @@ func ObjectStorageDelete(ctx Context, params *DeleteObjectStorageParam) error {
 			path = path + "/"
 		}
 		return objectStorageDelRecursive(path, bucket)
-	} else {
-		// path is file
-		err = objectStorageDel(path, bucket)
-		if err != nil {
-			return fmt.Errorf("ObjectStorageDelete is failed: %s", err)
-		}
-
+	}
+	// path is file
+	err = objectStorageDel(path, bucket)
+	if err != nil {
+		return fmt.Errorf("ObjectStorageDelete is failed: %s", err)
 	}
 
 	return nil

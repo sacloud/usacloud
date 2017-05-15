@@ -341,7 +341,7 @@ func (p *{{.Name}}) GetExcludeFields() []string {
 	return p.getCommandDef().ExcludeFields
 }
 
-func (p *{{.Name}}) GetTableType() output.OutputTableType {
+func (p *{{.Name}}) GetTableType() output.TableType {
 	return p.getCommandDef().TableType
 }
 
