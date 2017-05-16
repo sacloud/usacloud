@@ -74,11 +74,16 @@ func createServerBuilder(ctx Context, params *BuildServerParam) interface{} {
 		} else if params.SourceArchiveId > 0 {
 			sb = builder.ServerFromArchive(client, params.Name, params.SourceArchiveId)
 		} else {
-			// Windows?
-			if isWindows(params.OsType) {
-				sb = builder.ServerPublicArchiveWindows(client, strToOSType(params.OsType), params.Name)
+
+			if params.OsType == "" {
+				sb = builder.ServerBlankDisk(client, params.Name)
 			} else {
-				sb = builder.ServerPublicArchiveUnix(client, strToOSType(params.OsType), params.Name, params.Password)
+				// Windows?
+				if isWindows(params.OsType) {
+					sb = builder.ServerPublicArchiveWindows(client, strToOSType(params.OsType), params.Name)
+				} else {
+					sb = builder.ServerPublicArchiveUnix(client, strToOSType(params.OsType), params.Name, params.Password)
+				}
 			}
 		}
 	case "connect":
@@ -342,10 +347,8 @@ func validateServerDiskModeParams(ctx Context, params *BuildServerParam) []error
 		appendErrors(validateRequired("disk-size", params.DiskSize))
 
 		if params.SourceDiskId == 0 && params.SourceArchiveId == 0 {
-
-			appendErrors(validateRequired("os-type", params.OsType))
 			// Windows?
-			if !isWindows(params.OsType) {
+			if params.OsType != "" && !isWindows(params.OsType) {
 				appendErrors(validateRequired("password", params.Password))
 			}
 

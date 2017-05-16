@@ -165,10 +165,10 @@ func ServerBlankDisk(client *api.Client, name string) *BlankDiskServerBuilder {
 }
 
 // ServerFromExistsDisk 既存ディスクを接続するビルダー
-func ServerFromExistsDisk(client *api.Client, name string, sourceDiskID int64) *CommonServerBuilder {
+func ServerFromExistsDisk(client *api.Client, name string, sourceDiskID int64) *ConnectDiskServerBuilder {
 	b := newServerBuilder(client, name)
 	b.connectDiskIDs = []int64{sourceDiskID}
-	return &CommonServerBuilder{
+	return &ConnectDiskServerBuilder{
 		serverBuilder: b,
 	}
 }
