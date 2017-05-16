@@ -26,6 +26,7 @@ func ProductDiskResource() *schema.Resource {
 
 	return &schema.Resource{
 		Commands:            commands,
+		DefaultCommand:      "list",
 		Aliases:             []string{"disk-plan"},
 		ResourceCategory:    CategoryInformation,
 		ListResultFieldName: "DiskPlans",

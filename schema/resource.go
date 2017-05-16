@@ -6,6 +6,7 @@ type Resource struct {
 	Aliases             []string
 	Usage               string
 	Commands            map[string]*Command
+	DefaultCommand      string // 空の場合は`resource -h`
 	AltResource         string // 空の場合はResourceのキーをCamelizeしてsacloud.XXXを対象とする。
 	ListResultFieldName string
 	CommandCategories   []Category

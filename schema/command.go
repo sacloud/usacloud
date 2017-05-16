@@ -202,8 +202,6 @@ func (c *Command) Validate() []error {
 		}
 	}
 
-	// TODO IsRequiredIDTypeの場合にidパラメータがあるか(id+nameにするかも)
-
 	return errors
 }
 

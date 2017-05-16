@@ -29,6 +29,7 @@ func BillResource() *schema.Resource {
 
 	return &schema.Resource{
 		Commands:         commands,
+		DefaultCommand:   "list",
 		ResourceCategory: CategoryBilling,
 	}
 }
