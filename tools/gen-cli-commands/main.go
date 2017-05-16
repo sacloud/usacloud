@@ -21,7 +21,7 @@ var (
 // Usage is a replacement usage function for the flags package.
 func Usage() {
 	fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
-	fmt.Fprintf(os.Stderr, "\tgen-cli-commands\n")
+	fmt.Fprint(os.Stderr, "\tgen-cli-commands\n")
 	os.Exit(2)
 }
 
@@ -151,6 +151,7 @@ func generateSource(resource *schema.Resource) (string, error) {
 		"Name":                   ctx.DashR(),
 		"Aliases":                tools.FlattenStringList(resource.Aliases),
 		"Usage":                  usage,
+		"DefaultCommand":         resource.DefaultCommand,
 		"Commands":               commands,
 		"Parameters":             parameters,
 		"CategoryResourceMap":    categoryResourceMap,
@@ -387,6 +388,14 @@ func init() {
 			Aliases: []string{ {{.Aliases}} },{{ end }}
 		{{- if .Usage}}
 			Usage: "{{.Usage}}",{{ end }}
+		{{- if .DefaultCommand }}
+			Action: func(c *cli.Context) error {
+				comm := c.App.Command("{{.DefaultCommand}}")
+				if comm != nil {
+					return comm.Run(c)
+				}
+				return cli.ShowSubcommandHelp(c)
+			},{{ end }}
 		Subcommands:[]*cli.Command{
 			{{ range .Commands -}}
 			{
