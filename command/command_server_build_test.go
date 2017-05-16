@@ -18,7 +18,6 @@ func TestServerBuild_CreateBuilder_FromDisk(t *testing.T) {
 	sb := createServerBuilder(dummyContext, param)
 	assert.NotNil(t, sb)
 
-	// builder type should be *builder.CommonServerBuilder
 	expectedBuilder := sb.(*builder.CommonServerBuilder)
 	assert.NotNil(t, expectedBuilder)
 
@@ -36,11 +35,27 @@ func TestServerBuild_CreateBuilder_FromArchive(t *testing.T) {
 	sb := createServerBuilder(dummyContext, param)
 	assert.NotNil(t, sb)
 
-	// builder type should be *builder.CommonServerBuilder
 	expectedBuilder := sb.(*builder.CommonServerBuilder)
 	assert.NotNil(t, expectedBuilder)
 
 	actualBuilder := builder.ServerFromArchive(dummyContext.GetAPIClient(), param.Name, param.SourceArchiveId)
+	assert.EqualValues(t, expectedBuilder, actualBuilder)
+}
+
+func TestServerBuild_CreateBuilder_FromBlank(t *testing.T) {
+	param := &BuildServerParam{
+		DiskMode: "create",
+		Name:     "withDisk",
+		// without os-type , source-disk-id , source-archive-id
+	}
+
+	sb := createServerBuilder(dummyContext, param)
+	assert.NotNil(t, sb)
+
+	expectedBuilder := sb.(*builder.BlankDiskServerBuilder)
+	assert.NotNil(t, expectedBuilder)
+
+	actualBuilder := builder.ServerBlankDisk(dummyContext.GetAPIClient(), param.Name)
 	assert.EqualValues(t, expectedBuilder, actualBuilder)
 }
 
@@ -55,7 +70,6 @@ func TestServerBuild_CreateBuilder_FromUnix(t *testing.T) {
 	sb := createServerBuilder(dummyContext, param)
 	assert.NotNil(t, sb)
 
-	// builder type should be *builder.CommonServerBuilder
 	expectedBuilder := sb.(*builder.PublicArchiveUnixServerBuilder)
 	assert.NotNil(t, expectedBuilder)
 
@@ -73,7 +87,6 @@ func TestServerBuild_CreateBuilder_FromWindows(t *testing.T) {
 	sb := createServerBuilder(dummyContext, param)
 	assert.NotNil(t, sb)
 
-	// builder type should be *builder.CommonServerBuilder
 	expectedBuilder := sb.(*builder.PublicArchiveWindowsServerBuilder)
 	assert.NotNil(t, expectedBuilder)
 
@@ -132,7 +145,6 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 		}
 	}
 
-	// builder type should be *builder.CommonServerBuilder
 	expectedBuilder := sb.(*builder.PublicArchiveUnixServerBuilder)
 	assert.NotNil(t, expectedBuilder)
 
@@ -184,4 +196,38 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 
 	assert.EqualValues(t, expectedBuilder, actualBuilder)
 
+}
+
+func TestServerBuild_CreateBuilder_WithConnect(t *testing.T) {
+	param := &BuildServerParam{
+		DiskMode: "connect",
+		DiskId:   999999999999,
+		Name:     "connectDisk",
+	}
+
+	sb := createServerBuilder(dummyContext, param)
+	assert.NotNil(t, sb)
+
+	expectedBuilder := sb.(*builder.ConnectDiskServerBuilder)
+	assert.NotNil(t, expectedBuilder)
+
+	actualBuilder := builder.ServerFromExistsDisk(dummyContext.GetAPIClient(), param.Name, 999999999999)
+	assert.EqualValues(t, expectedBuilder, actualBuilder)
+}
+
+func TestServerBuild_CreateBuilder_Diskless(t *testing.T) {
+	param := &BuildServerParam{
+		DiskMode: "diskless",
+		Name:     "diskless",
+	}
+
+	sb := createServerBuilder(dummyContext, param)
+	assert.NotNil(t, sb)
+
+	// builder type should be *builder.CommonServerBuilder
+	expectedBuilder := sb.(*builder.DisklessServerBuilder)
+	assert.NotNil(t, expectedBuilder)
+
+	actualBuilder := builder.ServerDiskless(dummyContext.GetAPIClient(), param.Name)
+	assert.EqualValues(t, expectedBuilder, actualBuilder)
 }
