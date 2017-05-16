@@ -1,8 +1,11 @@
 package define
 
 import (
+	"fmt"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
+	"time"
 )
 
 func BillResource() *schema.Resource {
@@ -54,8 +57,21 @@ func billListParam() map[string]*schema.Schema {
 func billListColumns() []output.ColumnDef {
 	return []output.ColumnDef{
 		{Name: "BillID"},
-		{Name: "Date"},
-		{Name: "PayLimit"},
+		{
+			Name: "Date",
+			FormatFunc: func(values map[string]string) string {
+				if strDate, ok := values["Date"]; ok {
+					t, err := time.Parse(sacloud.DatetimeLayout, strDate)
+					if err != nil {
+						return ""
+					}
+					return fmt.Sprintf("%d/%02d", t.Year(), t.Month())
+				}
+				return ""
+			},
+		},
+		{Name: "Paid"},
+		{Name: "Amount"},
 	}
 }
 
