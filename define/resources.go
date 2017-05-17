@@ -35,4 +35,5 @@ var Resources = map[string]*schema.Resource{
 	"Switch":          SwitchResource(),
 	"WebAccel":        WebAccelResource(),
 	"Zone":            ZoneResource(),
+	"Summary":         SummaryResource(),
 }
