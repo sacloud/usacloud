@@ -39,15 +39,15 @@ func priceListColumns() []output.ColumnDef {
 			Sources: []string{"Price.Zone"},
 		},
 		{
-			Name:    "Price-Hourly",
+			Name:    "Price:Hourly",
 			Sources: []string{"Price.Hourly"},
 		},
 		{
-			Name:    "Price-Daily",
+			Name:    "Price:Daily",
 			Sources: []string{"Price.Daily"},
 		},
 		{
-			Name:    "Price-Monthly",
+			Name:    "Price:Monthly",
 			Sources: []string{"Price.Monthly"},
 		},
 	}

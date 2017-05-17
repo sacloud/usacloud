@@ -72,7 +72,7 @@ func interfaceListColumns() []output.ColumnDef {
 	return []output.ColumnDef{
 		{Name: "ID"},
 		{
-			Name:    "User-IPAddress",
+			Name:    "UserIPAddress",
 			Sources: []string{"UserIPAddress"},
 			Format:  "%s",
 		},
@@ -95,12 +95,12 @@ func interfaceListColumns() []output.ColumnDef {
 			Format:  "%sMbps",
 		},
 		{
-			Name:    "Switch-ID",
+			Name:    "SwitchID",
 			Sources: []string{"Switch.ID"},
 			Format:  "%s",
 		},
 		{
-			Name:    "Server-ID",
+			Name:    "ServerID",
 			Sources: []string{"Server.ID"},
 			Format:  "%s",
 		},

@@ -93,7 +93,7 @@ func dnsListColumns() []output.ColumnDef {
 		{Name: "ID"},
 		{Name: "Name"},
 		{
-			Name:    "Name-Servers",
+			Name:    "NameServers",
 			Sources: []string{"Status.NS.0", "Status.NS.1"},
 			Format:  "%s / %s",
 		},
