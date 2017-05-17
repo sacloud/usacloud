@@ -8,6 +8,7 @@ package define
 import "github.com/sacloud/usacloud/schema"
 
 var Resources = map[string]*schema.Resource{
+	"AuthStatus":      AuthStatusResource(),
 	"Archive":         ArchiveResource(),
 	"AutoBackup":      AutoBackupResource(),
 	"Bill":            BillResource(),
