@@ -64,11 +64,11 @@ func autoBackupListColumns() []output.ColumnDef {
 		{Name: "ID"},
 		{Name: "Name"},
 		{
-			Name:    "Disk-ID",
+			Name:    "DiskID",
 			Sources: []string{"Status.DiskId"},
 		},
 		{
-			Name:    "Start-Hour",
+			Name:    "StartHour",
 			Sources: []string{"Settings.Autobackup.BackupHour"},
 		},
 		{

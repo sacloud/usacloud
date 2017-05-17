@@ -94,7 +94,7 @@ func gslbListColumns() []output.ColumnDef {
 		{Name: "ID"},
 		{Name: "Name"},
 		{
-			Name:    "Health-Check",
+			Name:    "HealthCheck",
 			Sources: []string{"Settings.GSLB.HealthCheck.Protocol"},
 		},
 		{
@@ -102,7 +102,7 @@ func gslbListColumns() []output.ColumnDef {
 			Sources: []string{"Status.FQDN"},
 		},
 		{
-			Name:    "Sorry-Server",
+			Name:    "SorryServer",
 			Sources: []string{"Settings.GSLB.SorryServer"},
 		},
 	}

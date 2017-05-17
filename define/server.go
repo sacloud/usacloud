@@ -409,7 +409,7 @@ func serverInterfaceListColumns() []output.ColumnDef {
 			Format:  "%sMbps",
 		},
 		{
-			Name:    "Switch-ID",
+			Name:    "SwitchID",
 			Sources: []string{"Switch.ID"},
 			Format:  "%s",
 		},
@@ -1341,7 +1341,7 @@ func serverMonitorNICColumns() []output.ColumnDef {
 		{Name: "Index"},
 		{Name: "Key"},
 		{
-			Name:    "NIC-ID",
+			Name:    "NICID",
 			Sources: []string{"NicID"},
 		},
 		{Name: "TimeStamp"},

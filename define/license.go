@@ -61,11 +61,11 @@ func licenseListColumns() []output.ColumnDef {
 		{Name: "ID"},
 		{Name: "Name"},
 		{
-			Name:    "LicenseInfo-ID",
+			Name:    "LicenseInfo:ID",
 			Sources: []string{"LicenseInfo.ID"},
 		},
 		{
-			Name:    "LicenseInfo-Name",
+			Name:    "LicenseInfo:Name",
 			Sources: []string{"LicenseInfo.Name"},
 		},
 	}

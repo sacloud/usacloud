@@ -16,6 +16,7 @@ type tableHandler interface {
 	SetHeader(keys []string)
 	SetAlignment(align int)
 	SetAutoWrapText(auto bool)
+	SetAutoFormatHeaders(auto bool)
 	Append(row []string)
 	Render()
 }
@@ -38,6 +39,7 @@ func newSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) tableWriter {
 	w.table.SetHeader(headers)
 	w.table.SetAlignment(tablewriter.ALIGN_LEFT)
 	w.table.SetAutoWrapText(false)
+	w.table.SetAutoFormatHeaders(false)
 	return w
 }
 
