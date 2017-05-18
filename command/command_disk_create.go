@@ -28,43 +28,33 @@ func DiskCreate(ctx Context, params *CreateDiskParam) error {
 	// wait for copy with progress
 	var res *sacloud.Disk
 	var err error
-	compChan := make(chan bool)
-	errChan := make(chan error)
-	spinner := internal.NewProgress(
+	err = internal.ExecWithProgress(
 		"Still creating...",
 		"Create disk",
-		GlobalOption.Progress)
-	spinner.Start()
+		GlobalOption.Progress,
+		func(compChan chan bool, errChan chan error) {
+			// call Create(id)
+			res, err = api.Create(p)
+			if err != nil {
+				errChan <- err
+				return
+			}
+			err = api.SleepWhileCopying(res.ID, client.DefaultTimeoutDuration)
+			if err != nil {
+				errChan <- err
+				return
+			}
+			res, err = api.Read(res.ID)
+			if err != nil {
+				errChan <- err
+				return
+			}
+			compChan <- true
+		},
+	)
 
-	// call Create(id)
-	go func() {
-		res, err = api.Create(p)
-		if err != nil {
-			errChan <- err
-			return
-		}
-		err = api.SleepWhileCopying(res.ID, client.DefaultTimeoutDuration)
-		if err != nil {
-			errChan <- err
-			return
-		}
-		res, err = api.Read(res.ID)
-		if err != nil {
-			errChan <- err
-			return
-		}
-		compChan <- true
-	}()
-
-copy:
-	for {
-		select {
-		case <-compChan:
-			spinner.Stop()
-			break copy
-		case err := <-errChan:
-			return fmt.Errorf("DiskCreate is failed: %s", err)
-		}
+	if err != nil {
+		return fmt.Errorf("DiskCreate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)

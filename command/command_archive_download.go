@@ -28,32 +28,24 @@ func ArchiveDownload(ctx Context, params *DownloadArchiveParam) error {
 
 	// download
 	ftpsClient := ftp.NewClient(res.User, res.Password, res.HostName)
-	compChan := make(chan bool)
-	errChan := make(chan error)
 
-	spinner := internal.NewProgress(
+	err = internal.ExecWithProgress(
 		fmt.Sprintf("Still downloading[ID:%d]...", params.Id),
 		fmt.Sprintf("Download archive[ID:%d]", params.Id),
-		GlobalOption.Progress)
-	go func() {
-		spinner.Start()
-		err = ftpsClient.Download(params.FileDestination)
-		if err != nil {
-			errChan <- err
-			return
-		}
-		compChan <- true
-	}()
+		GlobalOption.Progress,
+		func(compChan chan bool, errChan chan error) {
+			err = ftpsClient.Download(params.FileDestination)
+			if err != nil {
+				errChan <- err
+				return
+			}
+			compChan <- true
 
-download:
-	for {
-		select {
-		case <-compChan:
-			spinner.Stop()
-			break download
-		case err := <-errChan:
-			return fmt.Errorf("ArchiveDownload is failed: %s", err)
-		}
+		},
+	)
+
+	if err != nil {
+		return fmt.Errorf("ArchiveDownload is failed: %s", err)
 	}
 
 	// close

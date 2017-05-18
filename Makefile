@@ -26,7 +26,8 @@ clean-all:
 
 .PHONY: deps
 deps:
-	go get -u github.com/kardianos/govendor
+	go get -u github.com/kardianos/govendor; \
+	go get -u github.com/golang/lint/golint
 
 
 .PHONY: tools

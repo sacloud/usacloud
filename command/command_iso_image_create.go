@@ -28,30 +28,20 @@ func ISOImageCreate(ctx Context, params *CreateISOImageParam) error {
 
 	// upload
 	ftpsClient := ftp.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
-	compChan := make(chan bool)
-	errChan := make(chan error)
-
-	spinner := internal.NewProgress(
+	err = internal.ExecWithProgress(
 		fmt.Sprintf("Still uploading[ID:%d]...", res.ID),
-		fmt.Sprintf("Upload ISOImage[ID:%d]", res.ID),
-		GlobalOption.Progress)
-	go func() {
-		spinner.Start()
-		err = ftpsClient.Upload(params.GetIsoFile())
-		if err != nil {
-			errChan <- err
-		}
-		compChan <- true
-	}()
-upload:
-	for {
-		select {
-		case <-compChan:
-			spinner.Stop()
-			break upload
-		case err := <-errChan:
-			return fmt.Errorf("ISOImageCreate is failed: %s", err)
-		}
+		fmt.Sprintf("Upload iso-image[ID:%d]", res.ID),
+		GlobalOption.Progress,
+		func(compChan chan bool, errChan chan error) {
+			err = ftpsClient.Upload(params.GetIsoFile())
+			if err != nil {
+				errChan <- err
+			}
+			compChan <- true
+		},
+	)
+	if err != nil {
+		return fmt.Errorf("ISOImageCreate is failed: %s", err)
 	}
 
 	// close FTP

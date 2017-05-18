@@ -48,30 +48,21 @@ func ArchiveCreate(ctx Context, params *CreateArchiveParam) error {
 
 		// upload
 		ftpsClient := ftp.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
-		compChan := make(chan bool)
-		errChan := make(chan error)
 
-		spinner := internal.NewProgress(
+		err = internal.ExecWithProgress(
 			fmt.Sprintf("Still uploading[ID:%d]...", res.ID),
 			fmt.Sprintf("Upload archive[ID:%d]", res.ID),
-			GlobalOption.Progress)
-		go func() {
-			spinner.Start()
-			err = ftpsClient.Upload(params.GetArchiveFile())
-			if err != nil {
-				errChan <- err
-			}
-			compChan <- true
-		}()
-	upload:
-		for {
-			select {
-			case <-compChan:
-				spinner.Stop()
-				break upload
-			case err := <-errChan:
-				return fmt.Errorf("ArchiveCreate is failed: %s", err)
-			}
+			GlobalOption.Progress,
+			func(compChan chan bool, errChan chan error) {
+				err = ftpsClient.Upload(params.GetArchiveFile())
+				if err != nil {
+					errChan <- err
+				}
+				compChan <- true
+			},
+		)
+		if err != nil {
+			return fmt.Errorf("ArchiveCreate is failed: %s", err)
 		}
 
 		// close FTP
@@ -87,24 +78,20 @@ func ArchiveCreate(ctx Context, params *CreateArchiveParam) error {
 		}
 	} else {
 		// wait for copy with progress
-		spinner := internal.NewProgress(
+		err := internal.ExecWithProgress(
 			fmt.Sprintf("Still coping[ID:%d]...", res.ID),
 			fmt.Sprintf("Copy archive[ID:%d]", res.ID),
-			GlobalOption.Progress)
-		spinner.Start()
-		compChan, progChan, errChan := api.AsyncSleepWhileCopying(res.ID, client.DefaultTimeoutDuration)
-	copy:
-		for {
-			select {
-			case r := <-compChan:
-				res = r
-				spinner.Stop()
-				break copy
-			case <-progChan:
-			// noop
-			case err := <-errChan:
-				return fmt.Errorf("ArchiveCreate is failed: %s", err)
-			}
+			GlobalOption.Progress,
+			func(compChan chan bool, errChan chan error) {
+				err = api.SleepWhileCopying(res.ID, client.DefaultTimeoutDuration)
+				if err != nil {
+					errChan <- err
+				}
+				compChan <- true
+			},
+		)
+		if err != nil {
+			return fmt.Errorf("ArchiveCreate is failed: %s", err)
 		}
 
 	}

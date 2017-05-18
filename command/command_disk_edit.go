@@ -38,31 +38,23 @@ func DiskEdit(ctx Context, params *EditDiskParam) error {
 	}
 
 	// wait for copy with progress
-	spinner := internal.NewProgress(
+	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still editing[ID:%d]...", params.Id),
 		fmt.Sprintf("Edit disk[ID:%d]", params.Id),
-		GlobalOption.Progress)
-	spinner.Start()
-	compChan := make(chan bool)
-	errChan := make(chan error)
-	go func() {
-		// call manipurate functions
-		_, err := api.Config(params.Id, p)
-		if err != nil {
-			errChan <- err
-			return
-		}
-		compChan <- true
-	}()
-edit:
-	for {
-		select {
-		case <-compChan:
-			spinner.Stop()
-			break edit
-		case err := <-errChan:
-			return fmt.Errorf("DiskEdit is failed: %s", err)
-		}
+		GlobalOption.Progress,
+		func(compChan chan bool, errChan chan error) {
+			// call manipurate functions
+			_, err := api.Config(params.Id, p)
+			if err != nil {
+				errChan <- err
+				return
+			}
+			compChan <- true
+		},
+	)
+
+	if err != nil {
+		return fmt.Errorf("DiskEdit is failed: %s", err)
 	}
 
 	// read
@@ -71,5 +63,4 @@ edit:
 		return fmt.Errorf("DiskEdit is failed: %s", err)
 	}
 	return ctx.GetOutput().Print(res)
-
 }

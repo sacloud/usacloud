@@ -62,40 +62,28 @@ func LoadBalancerCreate(ctx Context, params *CreateLoadBalancerParam) error {
 	}
 
 	// wait for boot
-	compChan := make(chan bool)
-	errChan := make(chan error)
-	spinner := internal.NewProgress(
+	err = internal.ExecWithProgress(
 		fmt.Sprintf("Still creating[ID:%d]...", res.ID),
-		fmt.Sprintf("Create LoadBalancer[ID:%d]", res.ID),
-		GlobalOption.Progress)
-
-	go func() {
-		spinner.Start()
-		// call manipurate functions
-		err := api.SleepWhileCopying(res.ID, client.DefaultTimeoutDuration, 20)
-		if err != nil {
-			errChan <- err
-			return
-		}
-		err = api.SleepUntilUp(res.ID, client.DefaultTimeoutDuration)
-		if err != nil {
-			errChan <- err
-			return
-		}
-		compChan <- true
-	}()
-
-boot:
-	for {
-		select {
-		case <-compChan:
-			spinner.Stop()
-			break boot
-		case err := <-errChan:
-			return fmt.Errorf("LoadBalancerCreate is failed: %s", err)
-		}
+		fmt.Sprintf("Create load-balancer[ID:%d]", res.ID),
+		GlobalOption.Progress,
+		func(compChan chan bool, errChan chan error) {
+			// call manipurate functions
+			err := api.SleepWhileCopying(res.ID, client.DefaultTimeoutDuration, 20)
+			if err != nil {
+				errChan <- err
+				return
+			}
+			err = api.SleepUntilUp(res.ID, client.DefaultTimeoutDuration)
+			if err != nil {
+				errChan <- err
+				return
+			}
+			compChan <- true
+		},
+	)
+	if err != nil {
+		return fmt.Errorf("LoadBalancerCreate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)
-
 }
