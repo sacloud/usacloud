@@ -23,8 +23,8 @@ func ServerDelete(ctx Context, params *DeleteServerParam) error {
 			compChan := make(chan bool)
 			errChan := make(chan error)
 			spinner := internal.NewProgress(
-				fmt.Sprintf("Still waiting for Shutdown[ID:%d]...", params.Id),
-				fmt.Sprintf("Shutdown server[ID:%d]", params.Id),
+				fmt.Sprintf("Still waiting for Delete[ID:%d]...", params.Id),
+				fmt.Sprintf("Delete server[ID:%d]", params.Id),
 				GlobalOption.Progress)
 
 			go func() {
@@ -63,7 +63,7 @@ func ServerDelete(ctx Context, params *DeleteServerParam) error {
 
 	// call Delete(id)
 	var res *sacloud.Server
-	if params.WithDisk && len(p.Disks) > 0 {
+	if !params.WithoutDisk && len(p.Disks) > 0 {
 		res, err = api.DeleteWithDisk(params.Id, p.GetDiskIDs())
 		if err != nil {
 			return fmt.Errorf("ServerDelete is failed: %s", err)

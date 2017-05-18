@@ -949,11 +949,10 @@ func serverDeleteParam() map[string]*schema.Schema {
 			Aliases:     []string{"f"},
 			Description: "forced-shutdown flag if server is running",
 		},
-		"with-disk": {
-			Type:         schema.TypeBool,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "delete connected disks with server",
-			DefaultValue: true,
+		"without-disk": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "don't delete connected disks with server",
 		},
 	}
 }
