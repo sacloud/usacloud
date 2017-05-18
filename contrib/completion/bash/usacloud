@@ -1,7 +1,7 @@
 
 _usacloud() {
     COMPREPLY=();
-    local commands=(archive auth-status auto-backup bill bridge dns disk gslb iso-image icon interface internet license object-storage ojs packet-filter price public-price product-disk disk-plan product-internet internet-plan product-license license-info product-server server-plan region ssh-key server simple-monitor startup-script note switch web-accel zone config)
+    local commands=(archive auth-status auto-backup bill bridge dns disk gslb iso-image icon interface internet license load-balancer object-storage ojs packet-filter price public-price product-disk disk-plan product-internet internet-plan product-license license-info product-server server-plan region ssh-key server simple-monitor startup-script note switch web-accel zone config)
 
     local flags=(--trace --help --version)
     local wants_value=(--token --secret --zone )
