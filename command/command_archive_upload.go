@@ -23,30 +23,22 @@ func ArchiveUpload(ctx Context, params *UploadArchiveParam) error {
 
 	// upload
 	ftpsClient := ftp.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
-	compChan := make(chan bool)
-	errChan := make(chan error)
 
-	spinner := internal.NewProgress(
+	err = internal.ExecWithProgress(
 		fmt.Sprintf("Still uploading[ID:%d]...", params.Id),
 		fmt.Sprintf("Upload archive[ID:%d]", params.Id),
-		GlobalOption.Progress)
-	go func() {
-		spinner.Start()
-		err = ftpsClient.Upload(params.GetArchiveFile())
-		if err != nil {
-			errChan <- err
-		}
-		compChan <- true
-	}()
-upload:
-	for {
-		select {
-		case <-compChan:
-			spinner.Stop()
-			break upload
-		case err := <-errChan:
-			return fmt.Errorf("ArchiveUpload is failed: %s", err)
-		}
+		GlobalOption.Progress,
+		func(compChan chan bool, errChan chan error) {
+			err = ftpsClient.Upload(params.GetArchiveFile())
+			if err != nil {
+				errChan <- err
+			}
+			compChan <- true
+		},
+	)
+
+	if err != nil {
+		return fmt.Errorf("ArchiveUpload is failed: %s", err)
 	}
 
 	// close FTP

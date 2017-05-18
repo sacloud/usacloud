@@ -15,26 +15,21 @@ func DiskWaitForCopy(ctx Context, params *WaitForCopyDiskParam) error {
 	}
 
 	// wait for copy with progress
-	spinner := internal.NewProgress(
+	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still coping[ID:%d]...", params.Id),
 		fmt.Sprintf("Copy disk[ID:%d]", params.Id),
-		GlobalOption.Progress)
-	spinner.Start()
-	compChan, progChan, errChan := api.AsyncSleepWhileCopying(p.ID, client.DefaultTimeoutDuration)
-copy:
-	for {
-		select {
-		case r := <-compChan:
-			p = r
-			spinner.Stop()
-			break copy
-		case <-progChan:
-		// noop
-		case err := <-errChan:
-			return fmt.Errorf("DiskWaitForCopy is failed: %s", err)
-		}
+		GlobalOption.Progress,
+		func(compChan chan bool, errChan chan error) {
+			err := api.SleepWhileCopying(p.ID, client.DefaultTimeoutDuration)
+			if err != nil {
+				errChan <- err
+			}
+			compChan <- true
+		},
+	)
+	if err != nil {
+		return fmt.Errorf("DiskWaitForCopy is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(p)
-
 }

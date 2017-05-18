@@ -36,6 +36,31 @@ func NewProgress(msgProgress, msgPrefix string, out io.Writer) *ProgressWriter {
 	}
 }
 
+type ProgressWriterFunc func(chan bool, chan error)
+
+func ExecWithProgress(msgProgress, msgPrefix string, out io.Writer, f ProgressWriterFunc) error {
+	spinner := NewProgress(msgProgress, msgPrefix, out)
+	compChan := make(chan bool)
+	errChan := make(chan error)
+
+	go func() {
+		spinner.Start()
+		f(compChan, errChan)
+	}()
+progress:
+	for {
+		select {
+		case <-compChan:
+			spinner.Stop()
+			break progress
+		case err := <-errChan:
+			return err
+		}
+	}
+
+	return nil
+}
+
 func (s *ProgressWriter) Start() {
 
 	s.msgChan = make(chan bool)

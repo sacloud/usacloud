@@ -18,38 +18,27 @@ func LoadBalancerBoot(ctx Context, params *BootLoadBalancerParam) error {
 		return nil // already booted.
 	}
 
-	compChan := make(chan bool)
-	errChan := make(chan error)
-	spinner := internal.NewProgress(
+	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still booting[ID:%d]...", params.Id),
-		fmt.Sprintf("Boot LoadBalancer[ID:%d]", params.Id),
-		GlobalOption.Progress)
-
-	go func() {
-		spinner.Start()
-		// call manipurate functions
-		_, err := api.Boot(params.Id)
-		if err != nil {
-			errChan <- err
-			return
-		}
-		err = api.SleepUntilUp(params.Id, client.DefaultTimeoutDuration)
-		if err != nil {
-			errChan <- err
-			return
-		}
-		compChan <- true
-	}()
-
-boot:
-	for {
-		select {
-		case <-compChan:
-			spinner.Stop()
-			break boot
-		case err := <-errChan:
-			return fmt.Errorf("LoadBalancerBoot is failed: %s", err)
-		}
+		fmt.Sprintf("Boot load-balancer[ID:%d]", params.Id),
+		GlobalOption.Progress,
+		func(compChan chan bool, errChan chan error) {
+			// call manipurate functions
+			_, err := api.Boot(params.Id)
+			if err != nil {
+				errChan <- err
+				return
+			}
+			err = api.SleepUntilUp(params.Id, client.DefaultTimeoutDuration)
+			if err != nil {
+				errChan <- err
+				return
+			}
+			compChan <- true
+		},
+	)
+	if err != nil {
+		return fmt.Errorf("LoadBalancerBoot is failed: %s", err)
 	}
 
 	return nil

@@ -28,32 +28,22 @@ func ISOImageDownload(ctx Context, params *DownloadISOImageParam) error {
 
 	// download
 	ftpsClient := ftp.NewClient(res.User, res.Password, res.HostName)
-	compChan := make(chan bool)
-	errChan := make(chan error)
 
-	spinner := internal.NewProgress(
+	err = internal.ExecWithProgress(
 		fmt.Sprintf("Still downloading[ID:%d]...", params.Id),
-		fmt.Sprintf("Download ISOImage[ID:%d]", params.Id),
-		GlobalOption.Progress)
-	go func() {
-		spinner.Start()
-		err = ftpsClient.Download(params.FileDestination)
-		if err != nil {
-			errChan <- err
-			return
-		}
-		compChan <- true
-	}()
-
-download:
-	for {
-		select {
-		case <-compChan:
-			spinner.Stop()
-			break download
-		case err := <-errChan:
-			return fmt.Errorf("ISOImageDownload is failed: %s", err)
-		}
+		fmt.Sprintf("Download iso-image[ID:%d]", params.Id),
+		GlobalOption.Progress,
+		func(compChan chan bool, errChan chan error) {
+			err = ftpsClient.Download(params.FileDestination)
+			if err != nil {
+				errChan <- err
+				return
+			}
+			compChan <- true
+		},
+	)
+	if err != nil {
+		return fmt.Errorf("ISOImageDownload is failed: %s", err)
 	}
 
 	// close

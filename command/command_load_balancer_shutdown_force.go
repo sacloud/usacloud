@@ -18,42 +18,30 @@ func LoadBalancerShutdownForce(ctx Context, params *ShutdownForceLoadBalancerPar
 		return nil // already downed.
 	}
 
-	compChan := make(chan bool)
-	errChan := make(chan error)
-	spinner := internal.NewProgress(
+	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still waiting for Shutdown[ID:%d]...", params.Id),
-		fmt.Sprintf("Shutdown LoadBalancer[ID:%d]", params.Id),
-		GlobalOption.Progress)
+		fmt.Sprintf("Shutdown load-balancer[ID:%d]", params.Id),
+		GlobalOption.Progress,
+		func(compChan chan bool, errChan chan error) {
+			// call manipurate functions
+			var err error
+			_, err = api.Stop(params.Id)
+			if err != nil {
+				errChan <- err
+				return
+			}
 
-	go func() {
-		spinner.Start()
-		// call manipurate functions
-		var err error
-		_, err = api.Stop(params.Id)
-		if err != nil {
-			errChan <- err
-			return
-		}
-
-		err = api.SleepUntilDown(params.Id, client.DefaultTimeoutDuration)
-		if err != nil {
-			errChan <- err
-			return
-		}
-		compChan <- true
-	}()
-
-down:
-	for {
-		select {
-		case <-compChan:
-			spinner.Stop()
-			break down
-		case err := <-errChan:
-			return fmt.Errorf("LoadBalancerShutdownForce is failed: %s", err)
-		}
+			err = api.SleepUntilDown(params.Id, client.DefaultTimeoutDuration)
+			if err != nil {
+				errChan <- err
+				return
+			}
+			compChan <- true
+		},
+	)
+	if err != nil {
+		return fmt.Errorf("LoadBalancerShutdownForce is failed: %s", err)
 	}
 
 	return nil
-
 }
