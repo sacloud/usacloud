@@ -10,7 +10,7 @@ func PriceResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             priceListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: priceListColumns(),

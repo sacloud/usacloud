@@ -11,35 +11,32 @@ func InternetResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             internetListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: internetListColumns(),
 		},
 		"create": {
 			Type:          schema.CommandCreate,
-			Aliases:       []string{"c"},
 			Params:        internetCreateParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        internetReadParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
-			Aliases:       []string{"u"},
 			Params:        internetUpdateParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        internetDeleteParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),

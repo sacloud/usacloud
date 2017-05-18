@@ -12,35 +12,32 @@ func IconResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             iconListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: iconListColumns(),
 		},
 		"create": {
 			Type:          schema.CommandCreate,
-			Aliases:       []string{"c"},
 			Params:        iconCreateParam(),
 			IncludeFields: iconDetailIncludes(),
 			ExcludeFields: iconDetailExcludes(),
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        iconReadParam(),
 			IncludeFields: iconDetailIncludes(),
 			ExcludeFields: iconDetailExcludes(),
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
-			Aliases:       []string{"u"},
 			Params:        iconUpdateParam(),
 			IncludeFields: iconDetailIncludes(),
 			ExcludeFields: iconDetailExcludes(),
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        iconDeleteParam(),
 			IncludeFields: iconDetailIncludes(),
 			ExcludeFields: iconDetailExcludes(),

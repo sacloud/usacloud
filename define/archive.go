@@ -10,14 +10,13 @@ func ArchiveResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             archiveListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: archiveListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
-			Aliases:          []string{"c"},
 			Params:           archiveCreateParam(),
 			IncludeFields:    archiveDetailIncludes(),
 			ExcludeFields:    archiveDetailExcludes(),
@@ -25,21 +24,19 @@ func ArchiveResource() *schema.Resource {
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        archiveReadParam(),
 			IncludeFields: archiveDetailIncludes(),
 			ExcludeFields: archiveDetailExcludes(),
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
-			Aliases:       []string{"u"},
 			Params:        archiveUpdateParam(),
 			IncludeFields: archiveDetailIncludes(),
 			ExcludeFields: archiveDetailExcludes(),
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        archiveDeleteParam(),
 			IncludeFields: archiveDetailIncludes(),
 			ExcludeFields: archiveDetailExcludes(),

@@ -10,35 +10,32 @@ func LicenseResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             licenseListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: licenseListColumns(),
 		},
 		"create": {
 			Type:          schema.CommandCreate,
-			Aliases:       []string{"c"},
 			Params:        licenseCreateParam(),
 			IncludeFields: licenseDetailIncludes(),
 			ExcludeFields: licenseDetailExcludes(),
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        licenseReadParam(),
 			IncludeFields: licenseDetailIncludes(),
 			ExcludeFields: licenseDetailExcludes(),
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
-			Aliases:       []string{"u"},
 			Params:        licenseUpdateParam(),
 			IncludeFields: licenseDetailIncludes(),
 			ExcludeFields: licenseDetailExcludes(),
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        licenseDeleteParam(),
 			IncludeFields: licenseDetailIncludes(),
 			ExcludeFields: licenseDetailExcludes(),

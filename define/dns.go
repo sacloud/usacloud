@@ -10,14 +10,13 @@ func DNSResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             dnsListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: dnsListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
-			Aliases:          []string{"c"},
 			Params:           dnsCreateParam(),
 			IncludeFields:    dnsDetailIncludes(),
 			ExcludeFields:    dnsDetailExcludes(),
@@ -25,14 +24,12 @@ func DNSResource() *schema.Resource {
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        dnsReadParam(),
 			IncludeFields: dnsDetailIncludes(),
 			ExcludeFields: dnsDetailExcludes(),
 		},
 		"update": {
 			Type:             schema.CommandUpdate,
-			Aliases:          []string{"u"},
 			Params:           dnsUpdateParam(),
 			IncludeFields:    dnsDetailIncludes(),
 			ExcludeFields:    dnsDetailExcludes(),
@@ -40,7 +37,7 @@ func DNSResource() *schema.Resource {
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        dnsDeleteParam(),
 			IncludeFields: dnsDetailIncludes(),
 			ExcludeFields: dnsDetailExcludes(),

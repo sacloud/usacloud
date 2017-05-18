@@ -10,7 +10,7 @@ func ObjectStorageResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:                   schema.CommandCustom,
-			Aliases:                []string{"l", "ls"},
+			Aliases:                []string{"ls"},
 			Params:                 objectStorageListParam(),
 			TableType:              output.TableSimple,
 			TableColumnDefines:     objectStorageListColumns(),

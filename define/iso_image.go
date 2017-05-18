@@ -10,14 +10,13 @@ func ISOImageResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             isoImageListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: isoImageListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
-			Aliases:          []string{"c"},
 			Params:           isoImageCreateParam(),
 			IncludeFields:    isoImageDetailIncludes(),
 			ExcludeFields:    isoImageDetailExcludes(),
@@ -25,21 +24,19 @@ func ISOImageResource() *schema.Resource {
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        isoImageReadParam(),
 			IncludeFields: isoImageDetailIncludes(),
 			ExcludeFields: isoImageDetailExcludes(),
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
-			Aliases:       []string{"u"},
 			Params:        isoImageUpdateParam(),
 			IncludeFields: isoImageDetailIncludes(),
 			ExcludeFields: isoImageDetailExcludes(),
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        isoImageDeleteParam(),
 			IncludeFields: isoImageDetailIncludes(),
 			ExcludeFields: isoImageDetailExcludes(),

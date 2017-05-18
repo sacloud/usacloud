@@ -11,14 +11,13 @@ func AutoBackupResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             autoBackupListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: autoBackupListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
-			Aliases:          []string{"c"},
 			Params:           autoBackupCreateParam(),
 			IncludeFields:    autoBackupDetailIncludes(),
 			ExcludeFields:    autoBackupDetailExcludes(),
@@ -26,14 +25,12 @@ func AutoBackupResource() *schema.Resource {
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        autoBackupReadParam(),
 			IncludeFields: autoBackupDetailIncludes(),
 			ExcludeFields: autoBackupDetailExcludes(),
 		},
 		"update": {
 			Type:             schema.CommandUpdate,
-			Aliases:          []string{"u"},
 			Params:           autoBackupUpdateParam(),
 			IncludeFields:    autoBackupDetailIncludes(),
 			ExcludeFields:    autoBackupDetailExcludes(),
@@ -41,7 +38,7 @@ func AutoBackupResource() *schema.Resource {
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        autoBackupDeleteParam(),
 			IncludeFields: autoBackupDetailIncludes(),
 			ExcludeFields: autoBackupDetailExcludes(),

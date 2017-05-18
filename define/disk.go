@@ -10,14 +10,13 @@ func DiskResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             diskListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: diskListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
-			Aliases:          []string{"c"},
 			Params:           diskCreateParam(),
 			IncludeFields:    diskDetailIncludes(),
 			ExcludeFields:    diskDetailExcludes(),
@@ -25,21 +24,19 @@ func DiskResource() *schema.Resource {
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        diskReadParam(),
 			IncludeFields: diskDetailIncludes(),
 			ExcludeFields: diskDetailExcludes(),
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
-			Aliases:       []string{"u"},
 			Params:        diskUpdateParam(),
 			IncludeFields: diskDetailIncludes(),
 			ExcludeFields: diskDetailExcludes(),
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        diskDeleteParam(),
 			IncludeFields: diskDetailIncludes(),
 			ExcludeFields: diskDetailExcludes(),

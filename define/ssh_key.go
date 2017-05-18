@@ -10,14 +10,13 @@ func SSHKeyResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             sshKeyListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: sshKeyListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
-			Aliases:          []string{"c"},
 			Params:           sshKeyCreateParam(),
 			IncludeFields:    sshKeyDetailIncludes(),
 			ExcludeFields:    sshKeyDetailExcludes(),
@@ -25,28 +24,26 @@ func SSHKeyResource() *schema.Resource {
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        sshKeyReadParam(),
 			IncludeFields: sshKeyDetailIncludes(),
 			ExcludeFields: sshKeyDetailExcludes(),
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
-			Aliases:       []string{"u"},
 			Params:        sshKeyUpdateParam(),
 			IncludeFields: sshKeyDetailIncludes(),
 			ExcludeFields: sshKeyDetailExcludes(),
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        sshKeyDeleteParam(),
 			IncludeFields: sshKeyDetailIncludes(),
 			ExcludeFields: sshKeyDetailExcludes(),
 		},
 		"generate": {
 			Type:             schema.CommandCustom,
-			Aliases:          []string{"g", "gen"},
+			Aliases:          []string{"gen"},
 			Params:           sshKeyGenerateParam(),
 			IncludeFields:    sshKeyDetailIncludes(),
 			ExcludeFields:    sshKeyDetailExcludes(),

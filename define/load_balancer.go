@@ -12,7 +12,7 @@ func LoadBalancerResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             loadBalancerListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: loadBalancerListColumns(),
@@ -21,7 +21,6 @@ func LoadBalancerResource() *schema.Resource {
 		},
 		"create": {
 			Type:             schema.CommandCreate,
-			Aliases:          []string{"c"},
 			Params:           loadBalancerCreateParam(),
 			IncludeFields:    loadBalancerDetailIncludes(),
 			ExcludeFields:    loadBalancerDetailExcludes(),
@@ -31,7 +30,6 @@ func LoadBalancerResource() *schema.Resource {
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        loadBalancerReadParam(),
 			IncludeFields: loadBalancerDetailIncludes(),
 			ExcludeFields: loadBalancerDetailExcludes(),
@@ -40,7 +38,6 @@ func LoadBalancerResource() *schema.Resource {
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
-			Aliases:       []string{"u"},
 			Params:        loadBalancerUpdateParam(),
 			IncludeFields: loadBalancerDetailIncludes(),
 			ExcludeFields: loadBalancerDetailExcludes(),
@@ -49,7 +46,7 @@ func LoadBalancerResource() *schema.Resource {
 		},
 		"delete": {
 			Type:             schema.CommandDelete,
-			Aliases:          []string{"d", "rm"},
+			Aliases:          []string{"rm"},
 			Params:           loadBalancerDeleteParam(),
 			IncludeFields:    loadBalancerDetailIncludes(),
 			ExcludeFields:    loadBalancerDetailExcludes(),

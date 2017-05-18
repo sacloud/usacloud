@@ -11,14 +11,13 @@ func GSLBResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             gslbListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: gslbListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
-			Aliases:          []string{"c"},
 			Params:           gslbCreateParam(),
 			IncludeFields:    gslbDetailIncludes(),
 			ExcludeFields:    gslbDetailExcludes(),
@@ -26,14 +25,12 @@ func GSLBResource() *schema.Resource {
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        gslbReadParam(),
 			IncludeFields: gslbDetailIncludes(),
 			ExcludeFields: gslbDetailExcludes(),
 		},
 		"update": {
 			Type:             schema.CommandUpdate,
-			Aliases:          []string{"u"},
 			Params:           gslbUpdateParam(),
 			IncludeFields:    gslbDetailIncludes(),
 			ExcludeFields:    gslbDetailExcludes(),
@@ -41,7 +38,7 @@ func GSLBResource() *schema.Resource {
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        gslbDeleteParam(),
 			IncludeFields: gslbDetailIncludes(),
 			ExcludeFields: gslbDetailExcludes(),
