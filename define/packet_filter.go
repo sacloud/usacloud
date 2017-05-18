@@ -13,35 +13,32 @@ func PacketFilterResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             packetFilterListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: packetFilterListColumns(),
 		},
 		"create": {
 			Type:          schema.CommandCreate,
-			Aliases:       []string{"c"},
 			Params:        packetFilterCreateParam(),
 			IncludeFields: packetFilterDetailIncludes(),
 			ExcludeFields: packetFilterDetailExcludes(),
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        packetFilterReadParam(),
 			IncludeFields: packetFilterDetailIncludes(),
 			ExcludeFields: packetFilterDetailExcludes(),
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
-			Aliases:       []string{"u"},
 			Params:        packetFilterUpdateParam(),
 			IncludeFields: packetFilterDetailIncludes(),
 			ExcludeFields: packetFilterDetailExcludes(),
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        packetFilterDeleteParam(),
 			IncludeFields: packetFilterDetailIncludes(),
 			ExcludeFields: packetFilterDetailExcludes(),

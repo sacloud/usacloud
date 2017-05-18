@@ -10,14 +10,13 @@ func SimpleMonitorResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             simpleMonitorListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: simpleMonitorListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
-			Aliases:          []string{"c"},
 			Params:           simpleMonitorCreateParam(),
 			IncludeFields:    simpleMonitorDetailIncludes(),
 			ExcludeFields:    simpleMonitorDetailExcludes(),
@@ -25,14 +24,12 @@ func SimpleMonitorResource() *schema.Resource {
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        simpleMonitorReadParam(),
 			IncludeFields: simpleMonitorDetailIncludes(),
 			ExcludeFields: simpleMonitorDetailExcludes(),
 		},
 		"update": {
 			Type:             schema.CommandUpdate,
-			Aliases:          []string{"u"},
 			Params:           simpleMonitorUpdateParam(),
 			IncludeFields:    simpleMonitorDetailIncludes(),
 			ExcludeFields:    simpleMonitorDetailExcludes(),
@@ -40,7 +37,7 @@ func SimpleMonitorResource() *schema.Resource {
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        simpleMonitorDeleteParam(),
 			IncludeFields: simpleMonitorDetailIncludes(),
 			ExcludeFields: simpleMonitorDetailExcludes(),

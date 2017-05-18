@@ -10,35 +10,32 @@ func BridgeResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             bridgeListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: bridgeListColumns(),
 		},
 		"create": {
 			Type:          schema.CommandCreate,
-			Aliases:       []string{"c"},
 			Params:        bridgeCreateParam(),
 			IncludeFields: bridgeDetailIncludes(),
 			ExcludeFields: bridgeDetailExcludes(),
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        bridgeReadParam(),
 			IncludeFields: bridgeDetailIncludes(),
 			ExcludeFields: bridgeDetailExcludes(),
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
-			Aliases:       []string{"u"},
 			Params:        bridgeUpdateParam(),
 			IncludeFields: bridgeDetailIncludes(),
 			ExcludeFields: bridgeDetailExcludes(),
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        bridgeDeleteParam(),
 			IncludeFields: bridgeDetailIncludes(),
 			ExcludeFields: bridgeDetailExcludes(),

@@ -10,14 +10,13 @@ func StartupScriptResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             startupScriptListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: startupScriptListColumns(),
 		},
 		"create": {
 			Type:             schema.CommandCreate,
-			Aliases:          []string{"c"},
 			Params:           startupScriptCreateParam(),
 			IncludeFields:    startupScriptDetailIncludes(),
 			ExcludeFields:    startupScriptDetailExcludes(),
@@ -25,14 +24,12 @@ func StartupScriptResource() *schema.Resource {
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        startupScriptReadParam(),
 			IncludeFields: startupScriptDetailIncludes(),
 			ExcludeFields: startupScriptDetailExcludes(),
 		},
 		"update": {
 			Type:             schema.CommandUpdate,
-			Aliases:          []string{"u"},
 			Params:           startupScriptUpdateParam(),
 			IncludeFields:    startupScriptDetailIncludes(),
 			ExcludeFields:    startupScriptDetailExcludes(),
@@ -40,7 +37,7 @@ func StartupScriptResource() *schema.Resource {
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        startupScriptDeleteParam(),
 			IncludeFields: startupScriptDetailIncludes(),
 			ExcludeFields: startupScriptDetailExcludes(),

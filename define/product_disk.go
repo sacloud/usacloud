@@ -10,14 +10,13 @@ func ProductDiskResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             productDiskListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: productDiskListColumns(),
 		},
 		"read": {
 			Type:          schema.CommandManipulateIDOnly,
-			Aliases:       []string{"r"},
 			Params:        productDiskReadParam(),
 			IncludeFields: productDiskDetailIncludes(),
 			ExcludeFields: productDiskDetailExcludes(),

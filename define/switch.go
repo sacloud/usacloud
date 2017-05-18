@@ -10,35 +10,32 @@ func SwitchResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             switchListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: switchListColumns(),
 		},
 		"create": {
 			Type:          schema.CommandCreate,
-			Aliases:       []string{"c"},
 			Params:        switchCreateParam(),
 			IncludeFields: switchDetailIncludes(),
 			ExcludeFields: switchDetailExcludes(),
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        switchReadParam(),
 			IncludeFields: switchDetailIncludes(),
 			ExcludeFields: switchDetailExcludes(),
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
-			Aliases:       []string{"u"},
 			Params:        switchUpdateParam(),
 			IncludeFields: switchDetailIncludes(),
 			ExcludeFields: switchDetailExcludes(),
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        switchDeleteParam(),
 			IncludeFields: switchDetailIncludes(),
 			ExcludeFields: switchDetailExcludes(),

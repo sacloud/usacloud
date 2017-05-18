@@ -10,7 +10,7 @@ func InterfaceResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             interfaceListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: interfaceListColumns(),
@@ -18,28 +18,25 @@ func InterfaceResource() *schema.Resource {
 		},
 		"create": {
 			Type:          schema.CommandCreate,
-			Aliases:       []string{"c"},
 			Params:        interfaceCreateParam(),
 			IncludeFields: interfaceDetailIncludes(),
 			ExcludeFields: interfaceDetailExcludes(),
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        interfaceReadParam(),
 			IncludeFields: interfaceDetailIncludes(),
 			ExcludeFields: interfaceDetailExcludes(),
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
-			Aliases:       []string{"u"},
 			Params:        interfaceUpdateParam(),
 			IncludeFields: interfaceDetailIncludes(),
 			ExcludeFields: interfaceDetailExcludes(),
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
-			Aliases:       []string{"d", "rm"},
+			Aliases:       []string{"rm"},
 			Params:        interfaceDeleteParam(),
 			IncludeFields: interfaceDetailIncludes(),
 			ExcludeFields: interfaceDetailExcludes(),

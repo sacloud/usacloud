@@ -10,14 +10,13 @@ func ProductLicenseResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             productLicenseListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: productLicenseListColumns(),
 		},
 		"read": {
 			Type:          schema.CommandManipulateIDOnly,
-			Aliases:       []string{"r"},
 			Params:        productLicenseReadParam(),
 			IncludeFields: productLicenseDetailIncludes(),
 			ExcludeFields: productLicenseDetailExcludes(),

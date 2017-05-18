@@ -13,7 +13,7 @@ func BillResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandCustom,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             billListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: billListColumns(),

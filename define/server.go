@@ -12,7 +12,7 @@ func ServerResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"l", "ls", "find"},
+			Aliases:            []string{"ls", "find"},
 			Params:             serverListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: serverListColumns(),
@@ -21,7 +21,6 @@ func ServerResource() *schema.Resource {
 		},
 		"build": {
 			Type:             schema.CommandCreate,
-			Aliases:          []string{"b"},
 			ParamCategories:  serverBuildParamCategories,
 			Params:           serverBuildParam(),
 			IncludeFields:    serverDetailIncludes(),
@@ -32,7 +31,6 @@ func ServerResource() *schema.Resource {
 		},
 		"read": {
 			Type:          schema.CommandRead,
-			Aliases:       []string{"r"},
 			Params:        serverReadParam(),
 			IncludeFields: serverDetailIncludes(),
 			ExcludeFields: serverDetailExcludes(),
@@ -41,7 +39,6 @@ func ServerResource() *schema.Resource {
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
-			Aliases:       []string{"u"},
 			Params:        serverUpdateParam(),
 			IncludeFields: serverDetailIncludes(),
 			ExcludeFields: serverDetailExcludes(),
@@ -50,7 +47,7 @@ func ServerResource() *schema.Resource {
 		},
 		"delete": {
 			Type:             schema.CommandDelete,
-			Aliases:          []string{"d", "rm"},
+			Aliases:          []string{"rm"},
 			Params:           serverDeleteParam(),
 			IncludeFields:    serverDetailIncludes(),
 			ExcludeFields:    serverDetailExcludes(),
