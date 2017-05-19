@@ -203,7 +203,7 @@ func LoadBalancerResource() *schema.Resource {
 			TableType:          output.TableSimple,
 			TableColumnDefines: loadBalancerMonitorColumns(),
 			UseCustomCommand:   true,
-			Category:           "other",
+			Category:           "monitor",
 		},
 	}
 
@@ -234,6 +234,11 @@ var LoadBalancerCommandCategories = []schema.Category{
 		Key:         "servers",
 		DisplayName: "Servers under VIP Management",
 		Order:       40,
+	},
+	{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       50,
 	},
 	{
 		Key:         "other",
