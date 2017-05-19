@@ -85,6 +85,24 @@ func completeDiskID() schema.CompletionFunc {
 	}
 }
 
+func completeDatabaseID() schema.CompletionFunc {
+	return func(ctx schema.CompletionContext, currentValue string) []string {
+
+		api := ctx.GetAPIClient().GetDatabaseAPI()
+		res := []string{}
+
+		result, err := api.Find()
+		if err != nil {
+			return res
+		}
+
+		for _, v := range result.Databases {
+			res = append(res, fmt.Sprintf("%d", v.ID))
+		}
+		return res
+	}
+}
+
 func completeArchiveID() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
@@ -283,4 +301,19 @@ func completeServerMemory() schema.CompletionFunc {
 		}
 		return res
 	}
+}
+
+func completeBackupTime() schema.CompletionFunc {
+	timeStrings := []string{}
+
+	minutes := []int{0, 15, 30, 45}
+
+	// create list [00:00 ,,, 23:45]
+	for hour := 0; hour <= 23; hour++ {
+		for _, minute := range minutes {
+			timeStrings = append(timeStrings, fmt.Sprintf("%02d:%02d", hour, minute))
+		}
+	}
+
+	return schema.CompleteInStrValues(timeStrings...)
 }

@@ -1,6 +1,7 @@
 package define
 
 import (
+	"fmt"
 	"github.com/sacloud/usacloud/schema"
 )
 
@@ -54,6 +55,21 @@ func validateIPv4Address() schema.ValidateFunc {
 
 func validateDateTimeString() schema.ValidateFunc {
 	return schema.ValidateDateTimeString()
+}
+
+func validateBackupTime() schema.ValidateFunc {
+	timeStrings := []string{}
+
+	minutes := []int{0, 15, 30, 45}
+
+	// create list [00:00 ,,, 23:45]
+	for hour := 0; hour <= 23; hour++ {
+		for _, minute := range minutes {
+			timeStrings = append(timeStrings, fmt.Sprintf("%02d:%02d", hour, minute))
+		}
+	}
+
+	return schema.ValidateInStrValues(timeStrings...)
 }
 
 func mergeParameterMap(params ...map[string]*schema.Schema) map[string]*schema.Schema {
