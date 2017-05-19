@@ -761,7 +761,7 @@ func loadBalancerMonitorParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set monitoring value key-format",
-			DefaultValue: "sakuracloud.{{.ID}}.internet",
+			DefaultValue: "sakuracloud.{{.ID}}.loadbalancer",
 			Required:     true,
 		},
 	}

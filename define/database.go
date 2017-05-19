@@ -267,7 +267,7 @@ func databaseCreateParam() map[string]*schema.Schema {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set network of allow connection",
-			ValidateFunc: validateStringSlice(validateStrLen(1, 32)),
+			ValidateFunc: validateStringSlice(validateIPv4AddressWithPrefixOption()),
 		},
 		"enable-web-ui": {
 			Type:        schema.TypeBool,
@@ -333,7 +333,7 @@ func databaseUpdateParam() map[string]*schema.Schema {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set network of allow connection",
-			ValidateFunc: validateStringSlice(validateStrLen(1, 32)),
+			ValidateFunc: validateStringSlice(validateIPv4AddressWithPrefixOption()),
 		},
 		"enable-web-ui": {
 			Type:        schema.TypeBool,
@@ -421,7 +421,7 @@ func databaseMonitorParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set monitoring value key-format",
-			DefaultValue: "sakuracloud.{{.ID}}.internet",
+			DefaultValue: "sakuracloud.{{.ID}}.database",
 			Required:     true,
 		},
 	}

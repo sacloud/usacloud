@@ -53,6 +53,18 @@ func validateIPv4Address() schema.ValidateFunc {
 	return schema.ValidateIPv4Address()
 }
 
+func validateIPv4AddressWithPrefixOption() schema.ValidateFunc {
+	return schema.ValidateIPv4AddressWithPrefixOption()
+}
+
+func validateIPv4AddressWithPrefix() schema.ValidateFunc {
+	return schema.ValidateIPv4AddressWithPrefix()
+}
+
+func validateMACAddress() schema.ValidateFunc {
+	return schema.ValidateMACAddress()
+}
+
 func validateDateTimeString() schema.ValidateFunc {
 	return schema.ValidateDateTimeString()
 }

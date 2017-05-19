@@ -5,6 +5,7 @@ import (
 	"net"
 	"os"
 	"regexp"
+	"strconv"
 	"strings"
 	"time"
 	"unicode/utf8"
@@ -310,6 +311,116 @@ func ValidateIPv4Address() ValidateFunc {
 			ip := net.ParseIP(value)
 			if ip == nil || ip.To4() == nil {
 				res = append(res, fmt.Errorf("%q: Invalid IPv4 address format", fieldName))
+			}
+		}
+
+		return res
+	}
+}
+
+func ValidateIPv4AddressWithPrefixOption() ValidateFunc {
+	return func(fieldName string, object interface{}) []error {
+		res := []error{}
+
+		// if target is nil , return OK(Use required attr if necessary)
+		if object == nil {
+			return res
+		}
+
+		if value, ok := object.(string); ok {
+			if value == "" {
+				return res
+			}
+
+			tokens := strings.Split(value, "/")
+
+			if len(tokens) > 2 {
+				res = append(res, fmt.Errorf("%q: Invalid IPv4[Prefix] format", fieldName))
+				return res
+			}
+
+			ip := net.ParseIP(tokens[0])
+			if ip == nil || ip.To4() == nil {
+				res = append(res, fmt.Errorf("%q: Invalid IPv4[Prefix] format", fieldName))
+				return res
+			}
+
+			if len(tokens) == 2 {
+				i, e := strconv.Atoi(tokens[1])
+				if e != nil {
+					res = append(res, fmt.Errorf("%q: Invalid IPv4[Prefix] format", fieldName))
+					return res
+				}
+				if !(1 <= i && i <= 32) {
+					res = append(res, fmt.Errorf("%q: Invalid IPv4[Prefix] format", fieldName))
+					return res
+				}
+			}
+		}
+
+		return res
+	}
+}
+
+func ValidateIPv4AddressWithPrefix() ValidateFunc {
+	return func(fieldName string, object interface{}) []error {
+		res := []error{}
+
+		// if target is nil , return OK(Use required attr if necessary)
+		if object == nil {
+			return res
+		}
+
+		if value, ok := object.(string); ok {
+			if value == "" {
+				return res
+			}
+
+			tokens := strings.Split(value, "/")
+
+			if len(tokens) != 2 {
+				res = append(res, fmt.Errorf("%q: Invalid IPv4+Prefix format", fieldName))
+				return res
+			}
+
+			ip := net.ParseIP(tokens[0])
+			if ip == nil || ip.To4() == nil {
+				res = append(res, fmt.Errorf("%q: Invalid IPv4+Prefix format", fieldName))
+				return res
+			}
+
+			i, e := strconv.Atoi(tokens[1])
+			if e != nil {
+				res = append(res, fmt.Errorf("%q: Invalid IPv4+Prefix format", fieldName))
+				return res
+			}
+			if !(1 <= i && i <= 32) {
+				res = append(res, fmt.Errorf("%q: Invalid IPv4+Prefix format", fieldName))
+				return res
+			}
+		}
+
+		return res
+	}
+}
+
+func ValidateMACAddress() ValidateFunc {
+	return func(fieldName string, object interface{}) []error {
+		res := []error{}
+
+		// if target is nil , return OK(Use required attr if necessary)
+		if object == nil {
+			return res
+		}
+
+		if value, ok := object.(string); ok {
+			if value == "" {
+				return res
+			}
+
+			_, err := net.ParseMAC(value)
+			if err != nil {
+				res = append(res, fmt.Errorf("%q: Invalid MAC address format", fieldName))
 			}
 		}
 
