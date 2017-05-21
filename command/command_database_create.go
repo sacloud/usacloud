@@ -38,9 +38,9 @@ func DatabaseCreate(ctx Context, params *CreateDatabaseParam) error {
 	p.MaskLen = params.NwMaskLen
 	p.DefaultRoute = params.DefaultRoute
 	p.SourceNetwork = params.SourceNetworks
-
-	// TODO WebUI
-
+	if params.EnableWebUi {
+		p.WebUI = params.EnableWebUi
+	}
 	p.BackupTime = params.BackupTime
 	p.Name = params.Name
 	p.Tags = params.Tags
@@ -75,7 +75,7 @@ func DatabaseCreate(ctx Context, params *CreateDatabaseParam) error {
 		},
 	)
 	if err != nil {
-		return fmt.Errorf("LoadBalancerCreate is failed: %s", err)
+		return fmt.Errorf("DatabaseCreate is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)
