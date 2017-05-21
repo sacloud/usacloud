@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func DNSRecordList(ctx Context, params *RecordListDNSParam) error {
+func DNSRecordInfo(ctx Context, params *RecordInfoDNSParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetDNSAPI()

@@ -25,15 +25,15 @@ func LoadBalancerVipUpdate(ctx Context, params *VipUpdateLoadBalancerParam) erro
 			continue
 		}
 
-		if v.VirtualIPAddress == params.VIP {
-			return fmt.Errorf("VIP(%q) is already used", params.VIP)
+		if v.VirtualIPAddress == params.Vip {
+			return fmt.Errorf("VIP(%q) is already used", params.Vip)
 		}
 	}
 
 	vip := p.Settings.LoadBalancer[params.Index-1]
 
 	if ctx.IsSet("vip") {
-		vip.VirtualIPAddress = params.VIP
+		vip.VirtualIPAddress = params.Vip
 	}
 	if ctx.IsSet("port") {
 		vip.Port = fmt.Sprintf("%d", params.Port)

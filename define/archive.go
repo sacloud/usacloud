@@ -14,12 +14,16 @@ func ArchiveResource() *schema.Resource {
 			Params:             archiveListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: archiveListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"create": {
 			Type:             schema.CommandCreate,
 			Params:           archiveCreateParam(),
 			IncludeFields:    archiveDetailIncludes(),
 			ExcludeFields:    archiveDetailExcludes(),
+			Category:         "basics",
+			Order:            20,
 			UseCustomCommand: true,
 		},
 		"read": {
@@ -27,12 +31,16 @@ func ArchiveResource() *schema.Resource {
 			Params:        archiveReadParam(),
 			IncludeFields: archiveDetailIncludes(),
 			ExcludeFields: archiveDetailExcludes(),
+			Category:      "basics",
+			Order:         30,
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
 			Params:        archiveUpdateParam(),
 			IncludeFields: archiveDetailIncludes(),
 			ExcludeFields: archiveDetailExcludes(),
+			Category:      "basics",
+			Order:         40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -40,6 +48,8 @@ func ArchiveResource() *schema.Resource {
 			Params:        archiveDeleteParam(),
 			IncludeFields: archiveDetailIncludes(),
 			ExcludeFields: archiveDetailExcludes(),
+			Category:      "basics",
+			Order:         50,
 		},
 		"upload": {
 			Type:             schema.CommandManipulateSingle,
@@ -47,6 +57,8 @@ func ArchiveResource() *schema.Resource {
 			IncludeFields:    archiveDetailIncludes(),
 			ExcludeFields:    archiveDetailExcludes(),
 			UseCustomCommand: true,
+			Category:         "ftp",
+			Order:            10,
 		},
 		"download": {
 			Type:             schema.CommandManipulateSingle,
@@ -55,6 +67,27 @@ func ArchiveResource() *schema.Resource {
 			ExcludeFields:    archiveDetailExcludes(),
 			UseCustomCommand: true,
 			NoOutput:         true,
+			Category:         "ftp",
+			Order:            20,
+		},
+		"ftp-open": {
+			Type:             schema.CommandManipulateMulti,
+			Params:           archiveOpenFTPParam(),
+			IncludeFields:    archiveDetailIncludes(),
+			ExcludeFields:    archiveDetailExcludes(),
+			UseCustomCommand: true,
+			Category:         "ftp",
+			Order:            30,
+		},
+		"ftp-close": {
+			Type:             schema.CommandManipulateMulti,
+			Params:           archiveCloseFTPParam(),
+			IncludeFields:    archiveDetailIncludes(),
+			ExcludeFields:    archiveDetailExcludes(),
+			UseCustomCommand: true,
+			NoOutput:         true,
+			Category:         "ftp",
+			Order:            40,
 		},
 		"wait-for-copy": {
 			Type:             schema.CommandManipulateMulti,
@@ -64,28 +97,34 @@ func ArchiveResource() *schema.Resource {
 			UseCustomCommand: true,
 			NoOutput:         true,
 			NeedlessConfirm:  true,
-		},
-		"ftp-open": {
-			Type:             schema.CommandManipulateMulti,
-			Params:           archiveOpenFTPParam(),
-			IncludeFields:    archiveDetailIncludes(),
-			ExcludeFields:    archiveDetailExcludes(),
-			UseCustomCommand: true,
-		},
-		"ftp-close": {
-			Type:             schema.CommandManipulateMulti,
-			Params:           archiveCloseFTPParam(),
-			IncludeFields:    archiveDetailIncludes(),
-			ExcludeFields:    archiveDetailExcludes(),
-			UseCustomCommand: true,
-			NoOutput:         true,
+			Category:         "other",
+			Order:            10,
 		},
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		ResourceCategory: CategoryStorage,
+		Commands:          commands,
+		ResourceCategory:  CategoryStorage,
+		CommandCategories: ArchiveCommandCategories,
 	}
+}
+
+var ArchiveCommandCategories = []schema.Category{
+	{
+		Key:         "basics",
+		DisplayName: "Basics",
+		Order:       10,
+	},
+	{
+		Key:         "ftp",
+		DisplayName: "Upload/Download(SFTP)",
+		Order:       20,
+	},
+	{
+		Key:         "other",
+		DisplayName: "Other",
+		Order:       1000,
+	},
 }
 
 func archiveListParam() map[string]*schema.Schema {
@@ -119,22 +158,6 @@ func archiveCreateParam() map[string]*schema.Schema {
 		"description": paramDescription,
 		"tags":        paramTags,
 		"icon-id":     paramIconResourceID,
-		"size": {
-			Type:            schema.TypeInt,
-			HandlerType:     schema.HandlerPathThrough,
-			Description:     "set archive size(GB)",
-			DestinationProp: "SetSizeGB",
-			ValidateFunc:    validateInIntValues(allowSizes...),
-			CompleteFunc:    completeInIntValues(allowSizes...),
-			ConflictsWith:   []string{"source-archive-id", "source-disk-id"},
-		},
-		"archive-file": {
-			Type:          schema.TypeString,
-			HandlerType:   schema.HandlerNoop,
-			Description:   "set archive image file",
-			ValidateFunc:  validateFileExists(),
-			ConflictsWith: []string{"source-archive-id", "source-disk-id"},
-		},
 		"source-disk-id": {
 			Type:            schema.TypeInt64,
 			HandlerType:     schema.HandlerPathThrough,
@@ -143,6 +166,8 @@ func archiveCreateParam() map[string]*schema.Schema {
 			ValidateFunc:    validateSakuraID(),
 			CompleteFunc:    completeDiskID(),
 			ConflictsWith:   []string{"archive-file", "source-archive-id", "size"},
+			Category:        "archive",
+			Order:           10,
 		},
 		"source-archive-id": {
 			Type:            schema.TypeInt64,
@@ -152,6 +177,28 @@ func archiveCreateParam() map[string]*schema.Schema {
 			ValidateFunc:    validateSakuraID(),
 			CompleteFunc:    completeArchiveID(),
 			ConflictsWith:   []string{"archive-file", "source-disk-id", "size"},
+			Category:        "archive",
+			Order:           15,
+		},
+		"size": {
+			Type:            schema.TypeInt,
+			HandlerType:     schema.HandlerPathThrough,
+			Description:     "set archive size(GB)",
+			DestinationProp: "SetSizeGB",
+			ValidateFunc:    validateInIntValues(allowSizes...),
+			CompleteFunc:    completeInIntValues(allowSizes...),
+			ConflictsWith:   []string{"source-archive-id", "source-disk-id"},
+			Category:        "archive",
+			Order:           20,
+		},
+		"archive-file": {
+			Type:          schema.TypeString,
+			HandlerType:   schema.HandlerNoop,
+			Description:   "set archive image file",
+			ValidateFunc:  validateFileExists(),
+			ConflictsWith: []string{"source-archive-id", "source-disk-id"},
+			Category:      "archive",
+			Order:         30,
 		},
 	}
 }
@@ -181,6 +228,8 @@ func archiveUploadParam() map[string]*schema.Schema {
 			Description:  "set archive image file",
 			Required:     true,
 			ValidateFunc: validateFileExists(),
+			Category:     "archive",
+			Order:        10,
 		},
 	}
 }
@@ -192,6 +241,8 @@ func archiveDownloadParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "set file destination path",
 			Required:    true,
+			Category:    "archive",
+			Order:       10,
 		},
 	}
 }

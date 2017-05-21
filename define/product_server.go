@@ -14,12 +14,16 @@ func ProductServerResource() *schema.Resource {
 			Params:             productServerListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: productServerListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"read": {
 			Type:          schema.CommandManipulateIDOnly,
 			Params:        productServerReadParam(),
 			IncludeFields: productServerDetailIncludes(),
 			ExcludeFields: productServerDetailExcludes(),
+			Category:      "basics",
+			Order:         10,
 		},
 	}
 
@@ -58,7 +62,9 @@ func productServerDetailExcludes() []string {
 }
 
 func productServerReadParam() map[string]*schema.Schema {
+	id := getParamResourceShortID("resource ID", 6)
+	id.Hidden = true
 	return map[string]*schema.Schema{
-		"id": getParamResourceShortID("resource ID", 6),
+		"id": id,
 	}
 }

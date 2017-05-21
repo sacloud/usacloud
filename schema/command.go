@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/sacloud/usacloud/output"
 	"sort"
+	"strings"
 )
 
 type Command struct {
@@ -35,22 +36,37 @@ type Command struct {
 }
 
 func (c *Command) ParamCategory(key string) *Category {
-
-	if key == "" {
+	switch key {
+	case "":
 		return DefaultParamCategory
-	}
-
-	if key == "output" {
+	case "output":
 		return OutputParamCategory
-	}
-
-	for _, cat := range c.ParamCategories {
-		if cat.Key == key {
-			return &cat
+	case "input":
+		return InputParamCategory
+	case "common":
+		return CommonParamCategory
+	case "sort":
+		return SortParamCategory
+	case "limit-offset":
+		return LimitOffsetParamCategory
+	case "filter":
+		return FilterParamCategory
+	default:
+		if len(c.ParamCategories) == 0 {
+			return &Category{
+				Key:         key,
+				DisplayName: fmt.Sprintf("%s options", strings.Title(key)),
+				Order:       1,
+			}
 		}
-	}
 
-	return nil
+		for _, cat := range c.ParamCategories {
+			if cat.Key == key {
+				return &cat
+			}
+		}
+		return nil
+	}
 }
 
 func (c *Command) BuildedParams() SortableParams {
@@ -76,6 +92,8 @@ func (c *Command) BuildedParams() SortableParams {
 				Type:        TypeBool,
 				HandlerType: HandlerNoop,
 				Description: "assume that the answer to any question which would be asked is yes",
+				Category:    "input",
+				Order:       10,
 				Aliases:     []string{"y"},
 			}
 		}
@@ -186,7 +204,7 @@ func (c *Command) Validate() []error {
 			errors = append(errors, err)
 		}
 
-		if v.Category != "" && v.Category != "output" {
+		if v.Category != "" && v.Category != "output" && len(c.ParamCategories) > 0 {
 			exists := false
 			// category is defined on command?
 			for _, category := range c.ParamCategories {

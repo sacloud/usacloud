@@ -14,6 +14,8 @@ func ISOImageResource() *schema.Resource {
 			Params:             isoImageListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: isoImageListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"create": {
 			Type:             schema.CommandCreate,
@@ -21,18 +23,24 @@ func ISOImageResource() *schema.Resource {
 			IncludeFields:    isoImageDetailIncludes(),
 			ExcludeFields:    isoImageDetailExcludes(),
 			UseCustomCommand: true,
+			Category:         "basics",
+			Order:            20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
 			Params:        isoImageReadParam(),
 			IncludeFields: isoImageDetailIncludes(),
 			ExcludeFields: isoImageDetailExcludes(),
+			Category:      "basics",
+			Order:         30,
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
 			Params:        isoImageUpdateParam(),
 			IncludeFields: isoImageDetailIncludes(),
 			ExcludeFields: isoImageDetailExcludes(),
+			Category:      "basics",
+			Order:         40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -40,6 +48,8 @@ func ISOImageResource() *schema.Resource {
 			Params:        isoImageDeleteParam(),
 			IncludeFields: isoImageDetailIncludes(),
 			ExcludeFields: isoImageDetailExcludes(),
+			Category:      "basics",
+			Order:         50,
 		},
 		"upload": {
 			Type:             schema.CommandManipulateSingle,
@@ -47,6 +57,8 @@ func ISOImageResource() *schema.Resource {
 			IncludeFields:    isoImageDetailIncludes(),
 			ExcludeFields:    isoImageDetailExcludes(),
 			UseCustomCommand: true,
+			Category:         "ftp",
+			Order:            10,
 		},
 		"download": {
 			Type:             schema.CommandManipulateSingle,
@@ -55,6 +67,8 @@ func ISOImageResource() *schema.Resource {
 			ExcludeFields:    isoImageDetailExcludes(),
 			UseCustomCommand: true,
 			NoOutput:         true,
+			Category:         "ftp",
+			Order:            20,
 		},
 		"ftp-open": {
 			Type:             schema.CommandManipulateMulti,
@@ -62,6 +76,8 @@ func ISOImageResource() *schema.Resource {
 			IncludeFields:    isoImageDetailIncludes(),
 			ExcludeFields:    isoImageDetailExcludes(),
 			UseCustomCommand: true,
+			Category:         "ftp",
+			Order:            30,
 		},
 		"ftp-close": {
 			Type:             schema.CommandManipulateMulti,
@@ -70,6 +86,8 @@ func ISOImageResource() *schema.Resource {
 			ExcludeFields:    isoImageDetailExcludes(),
 			UseCustomCommand: true,
 			NoOutput:         true,
+			Category:         "ftp",
+			Order:            40,
 		},
 	}
 
@@ -78,7 +96,26 @@ func ISOImageResource() *schema.Resource {
 		ListResultFieldName: "CDROMs",
 		Commands:            commands,
 		ResourceCategory:    CategoryStorage,
+		CommandCategories:   isoImageCommandCategories,
 	}
+}
+
+var isoImageCommandCategories = []schema.Category{
+	{
+		Key:         "basics",
+		DisplayName: "Basics",
+		Order:       10,
+	},
+	{
+		Key:         "ftp",
+		DisplayName: "Upload/Download(SFTP)",
+		Order:       20,
+	},
+	{
+		Key:         "other",
+		DisplayName: "Other",
+		Order:       1000,
+	},
 }
 
 func isoImageListParam() map[string]*schema.Schema {
@@ -105,10 +142,6 @@ func isoImageDetailExcludes() []string {
 
 func isoImageCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"name":        paramRequiredName,
-		"description": paramDescription,
-		"tags":        paramTags,
-		"icon-id":     paramIconResourceID,
 		"size": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -117,6 +150,8 @@ func isoImageCreateParam() map[string]*schema.Schema {
 			DefaultValue: 5,
 			ValidateFunc: validateInIntValues(5, 10),
 			CompleteFunc: completeInIntValues(5, 10),
+			Category:     "ISO-Image",
+			Order:        10,
 		},
 		"iso-file": {
 			Type:         schema.TypeString,
@@ -124,7 +159,13 @@ func isoImageCreateParam() map[string]*schema.Schema {
 			Description:  "set iso image file",
 			Required:     true,
 			ValidateFunc: validateFileExists(),
+			Category:     "ISO-Image",
+			Order:        20,
 		},
+		"name":        paramRequiredName,
+		"description": paramDescription,
+		"tags":        paramTags,
+		"icon-id":     paramIconResourceID,
 	}
 }
 
@@ -153,6 +194,8 @@ func isoImageUploadParam() map[string]*schema.Schema {
 			Description:  "set iso image file",
 			Required:     true,
 			ValidateFunc: validateFileExists(),
+			Category:     "ISO-Image",
+			Order:        10,
 		},
 	}
 }
@@ -164,6 +207,8 @@ func isoImageDownloadParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "set file destination path",
 			Required:    true,
+			Category:    "ISO-Image",
+			Order:       10,
 		},
 	}
 }

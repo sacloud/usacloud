@@ -16,7 +16,7 @@ func ServerResource() *schema.Resource {
 			Params:             serverListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: serverListColumns(),
-			Category:           "basic",
+			Category:           "basics",
 			Order:              10,
 		},
 		"build": {
@@ -26,7 +26,7 @@ func ServerResource() *schema.Resource {
 			IncludeFields:    serverDetailIncludes(),
 			ExcludeFields:    serverBuildResultExcludes(),
 			UseCustomCommand: true,
-			Category:         "basic",
+			Category:         "basics",
 			Order:            20,
 		},
 		"read": {
@@ -34,7 +34,7 @@ func ServerResource() *schema.Resource {
 			Params:        serverReadParam(),
 			IncludeFields: serverDetailIncludes(),
 			ExcludeFields: serverDetailExcludes(),
-			Category:      "basic",
+			Category:      "basics",
 			Order:         30,
 		},
 		"update": {
@@ -42,7 +42,7 @@ func ServerResource() *schema.Resource {
 			Params:        serverUpdateParam(),
 			IncludeFields: serverDetailIncludes(),
 			ExcludeFields: serverDetailExcludes(),
-			Category:      "basic",
+			Category:      "basics",
 			Order:         40,
 		},
 		"delete": {
@@ -52,7 +52,7 @@ func ServerResource() *schema.Resource {
 			IncludeFields:    serverDetailIncludes(),
 			ExcludeFields:    serverDetailExcludes(),
 			UseCustomCommand: true,
-			Category:         "basic",
+			Category:         "basics",
 			Order:            50,
 		},
 		"plan-change": {
@@ -62,7 +62,7 @@ func ServerResource() *schema.Resource {
 			IncludeFields:    serverDetailIncludes(),
 			ExcludeFields:    serverDetailExcludes(),
 			UseCustomCommand: true,
-			Category:         "basic",
+			Category:         "basics",
 			Order:            60,
 		},
 		"boot": {
@@ -180,6 +180,7 @@ func ServerResource() *schema.Resource {
 		"disk-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             serverDiskInfoParam(),
+			Aliases:            []string{"disk-list"},
 			Usage:              "Show information of disk(s) connected to server",
 			TableType:          output.TableSimple,
 			TableColumnDefines: diskListColumns(),
@@ -213,6 +214,7 @@ func ServerResource() *schema.Resource {
 		"interface-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             serverInterfaceInfoParam(),
+			Aliases:            []string{"interface-list"},
 			Usage:              "Show information of NIC(s) connected to server",
 			TableType:          output.TableSimple,
 			TableColumnDefines: serverInterfaceListColumns(),
@@ -455,7 +457,7 @@ func serverBuildResultExcludes() []string {
 
 var serverCommandCategories = []schema.Category{
 	{
-		Key:         "basic",
+		Key:         "basics",
 		DisplayName: "Basics",
 		Order:       10,
 	},
@@ -945,11 +947,15 @@ func serverDeleteParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Aliases:     []string{"f"},
 			Description: "forced-shutdown flag if server is running",
+			Category:    "operation",
+			Order:       10,
 		},
 		"without-disk": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "don't delete connected disks with server",
+			Category:    "operation",
+			Order:       20,
 		},
 	}
 }
@@ -962,12 +968,16 @@ func serverSSHParam() map[string]*schema.Schema {
 			Aliases:      []string{"i"},
 			Description:  "private-key file path",
 			ValidateFunc: validateFileExists(),
+			Category:     "auth",
+			Order:        10,
 		},
 		"user": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Aliases:     []string{"l"},
 			Description: "user name",
+			Category:    "auth",
+			Order:       20,
 		},
 		"port": {
 			Type:         schema.TypeInt,
@@ -976,18 +986,24 @@ func serverSSHParam() map[string]*schema.Schema {
 			Description:  "port",
 			Required:     true,
 			DefaultValue: 22,
+			Category:     "auth",
+			Order:        30,
 		},
 		"password": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "password(or private-key pass phrase)",
 			EnvVars:     []string{"SAKURACLOUD_SSH_PASSWORD"},
+			Category:    "auth",
+			Order:       40,
 		},
 		"quiet": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Aliases:     []string{"q"},
 			Description: "disable information messages",
+			Category:    "output",
+			Order:       10,
 		},
 	}
 }
@@ -1000,12 +1016,16 @@ func serverSCPParam() map[string]*schema.Schema {
 			Aliases:      []string{"i"},
 			Description:  "private-key file path",
 			ValidateFunc: validateFileExists(),
+			Category:     "auth",
+			Order:        10,
 		},
 		"user": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Aliases:     []string{"l"},
 			Description: "user name",
+			Category:    "auth",
+			Order:       20,
 		},
 		"port": {
 			Type:         schema.TypeInt,
@@ -1014,24 +1034,32 @@ func serverSCPParam() map[string]*schema.Schema {
 			Description:  "port",
 			Required:     true,
 			DefaultValue: 22,
+			Category:     "auth",
+			Order:        30,
 		},
 		"password": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "password(or private-key pass phrase)",
 			EnvVars:     []string{"SAKURACLOUD_SSH_PASSWORD"},
+			Category:    "auth",
+			Order:       40,
 		},
 		"recursive": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Aliases:     []string{"r"},
 			Description: "set recursive copy flag",
+			Category:    "operation",
+			Order:       10,
 		},
 		"quiet": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Aliases:     []string{"q"},
 			Description: "disable information messages",
+			Category:    "output",
+			Order:       10,
 		},
 	}
 }
@@ -1048,6 +1076,8 @@ func serverVNCSendParam() map[string]*schema.Schema {
 			Aliases:       []string{"c"},
 			Description:   "command(compatible with HashiCorp Packer's boot_command)",
 			ConflictsWith: []string{"command-file"},
+			Category:      "VNC",
+			Order:         10,
 		},
 		"command-file": {
 			Type:         schema.TypeString,
@@ -1055,17 +1085,23 @@ func serverVNCSendParam() map[string]*schema.Schema {
 			Aliases:      []string{"f"},
 			Description:  "command file(compatible with HashiCorp Packer's boot_command)",
 			ValidateFunc: validateFileExists(),
+			Category:     "VNC",
+			Order:        20,
 		},
 		"use-us-keyboard": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "use US Keyboard",
+			Category:    "VNC",
+			Order:       30,
 		},
 		"debug": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Aliases:     []string{"d"},
 			Description: "write debug info",
+			Category:    "VNC",
+			Order:       40,
 		},
 	}
 }
@@ -1097,6 +1133,8 @@ func serverPlanChangeParam() map[string]*schema.Schema {
 			Description:  "set CPU core count",
 			CompleteFunc: completeServerCore(),
 			Required:     true,
+			Category:     "plan",
+			Order:        10,
 		},
 		"memory": {
 			Type:         schema.TypeInt,
@@ -1104,6 +1142,8 @@ func serverPlanChangeParam() map[string]*schema.Schema {
 			Description:  "set memory size(GB)",
 			CompleteFunc: completeServerMemory(),
 			Required:     true,
+			Category:     "plan",
+			Order:        20,
 		},
 	}
 }
@@ -1120,11 +1160,9 @@ func serverISOImageInsertParam() map[string]*schema.Schema {
 			Description:  "set iso-image ID",
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeISOImageID(),
+			Category:     "ISO-insert",
+			Order:        10,
 		},
-		"name":        paramName,
-		"description": paramDescription,
-		"tags":        paramTags,
-		"icon-id":     paramIconResourceID,
 		"size": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
@@ -1132,11 +1170,50 @@ func serverISOImageInsertParam() map[string]*schema.Schema {
 			DefaultValue: 5,
 			ValidateFunc: validateInIntValues(5, 10),
 			CompleteFunc: completeInIntValues(5, 10),
+			Category:     "ISO-upload",
+			Order:        10,
 		},
 		"iso-file": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "set iso image file",
+			Category:    "ISO-upload",
+			Order:       20,
+		},
+		"name": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerPathThrough,
+			Description:  "set resource display name",
+			ValidateFunc: validateStrLen(1, 64),
+			Category:     "ISO-upload",
+			Order:        30,
+		},
+		"description": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerPathThrough,
+			Description:  "set resource description",
+			Aliases:      []string{"desc"},
+			ValidateFunc: validateStrLen(0, 254),
+			Category:     "ISO-upload",
+			Order:        40,
+		},
+		"tags": {
+			Type:         schema.TypeStringList,
+			HandlerType:  schema.HandlerPathThrough,
+			Description:  "set resource tags",
+			ValidateFunc: validateStringSlice(validateStrLen(1, 32)),
+			Category:     "ISO-upload",
+			Order:        50,
+		},
+		"icon-id": {
+			Type:            schema.TypeInt64,
+			HandlerType:     schema.HandlerPathThrough,
+			DestinationProp: "SetIconByID",
+			Description:     "set Icon ID",
+			ValidateFunc:    validateSakuraID(),
+			CompleteFunc:    completeIconID(),
+			Category:        "ISO-upload",
+			Order:           60,
 		},
 	}
 }
@@ -1158,6 +1235,8 @@ func serverDiskConnectParam() map[string]*schema.Schema {
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeDiskID(),
+			Category:     "disk",
+			Order:        10,
 		},
 	}
 }
@@ -1171,6 +1250,8 @@ func serverDiskDisconnectParam() map[string]*schema.Schema {
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeDiskID(),
+			Category:     "disk",
+			Order:        10,
 		},
 	}
 }
@@ -1185,16 +1266,13 @@ func serverInterfaceAddForInternetParam() map[string]*schema.Schema {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "set skip edit-disk flag. if true, don't call DiskEdit API after interface added",
+			Category:    "disk-edit",
+			Order:       10,
 		},
 	}
 }
 func serverInterfaceAddForRouterParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"without-disk-edit": {
-			Type:        schema.TypeBool,
-			HandlerType: schema.HandlerNoop,
-			Description: "set skip edit-disk flag. if true, don't call DiskEdit API after interface added",
-		},
 		"switch-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
@@ -1202,6 +1280,15 @@ func serverInterfaceAddForRouterParam() map[string]*schema.Schema {
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeSwitchID(),
+			Category:     "connect",
+			Order:        10,
+		},
+		"without-disk-edit": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "set skip edit-disk flag. if true, don't call DiskEdit API after interface added",
+			Category:    "disk-edit",
+			Order:       10,
 		},
 		"ipaddress": {
 			Type:         schema.TypeString,
@@ -1209,6 +1296,8 @@ func serverInterfaceAddForRouterParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set ipaddress",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "disk-edit",
+			Order:        20,
 		},
 		"default-route": {
 			Type:         schema.TypeString,
@@ -1216,6 +1305,8 @@ func serverInterfaceAddForRouterParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set default gateway",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "disk-edit",
+			Order:        30,
 		},
 		"nw-masklen": {
 			Type:         schema.TypeInt,
@@ -1224,16 +1315,13 @@ func serverInterfaceAddForRouterParam() map[string]*schema.Schema {
 			Description:  "set ipaddress  prefix",
 			DefaultValue: 24,
 			ValidateFunc: validateIntRange(8, 29),
+			Category:     "disk-edit",
+			Order:        40,
 		},
 	}
 }
 func serverInterfaceAddForSwitchParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"without-disk-edit": {
-			Type:        schema.TypeBool,
-			HandlerType: schema.HandlerNoop,
-			Description: "set skip edit-disk flag. if true, don't call DiskEdit API after interface added",
-		},
 		"switch-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
@@ -1241,6 +1329,15 @@ func serverInterfaceAddForSwitchParam() map[string]*schema.Schema {
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeSwitchID(),
+			Category:     "connect",
+			Order:        10,
+		},
+		"without-disk-edit": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "set skip edit-disk flag. if true, don't call DiskEdit API after interface added",
+			Category:    "disk-edit",
+			Order:       10,
 		},
 		"ipaddress": {
 			Type:         schema.TypeString,
@@ -1248,6 +1345,8 @@ func serverInterfaceAddForSwitchParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set ipaddress",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "disk-edit",
+			Order:        20,
 		},
 		"default-route": {
 			Type:         schema.TypeString,
@@ -1255,6 +1354,8 @@ func serverInterfaceAddForSwitchParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set default gateway",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "disk-edit",
+			Order:        30,
 		},
 		"nw-masklen": {
 			Type:         schema.TypeInt,
@@ -1263,6 +1364,8 @@ func serverInterfaceAddForSwitchParam() map[string]*schema.Schema {
 			Description:  "set ipaddress  prefix",
 			DefaultValue: 24,
 			ValidateFunc: validateIntRange(8, 29),
+			Category:     "disk-edit",
+			Order:        40,
 		},
 	}
 }
@@ -1277,12 +1380,16 @@ func serverMonitorCPUParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set start-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        10,
 		},
 		"end": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set end-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        20,
 		},
 		"key-format": {
 			Type:         schema.TypeString,
@@ -1290,6 +1397,8 @@ func serverMonitorCPUParam() map[string]*schema.Schema {
 			Description:  "set monitoring value key-format",
 			DefaultValue: "sakuracloud.{{.ID}}.cpu",
 			Required:     true,
+			Category:     "monitor",
+			Order:        30,
 		},
 	}
 }
@@ -1310,17 +1419,23 @@ func serverMonitorNICParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set start-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        10,
 		},
 		"end": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set end-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        20,
 		},
 		"index": {
 			Type:        schema.TypeIntList,
 			HandlerType: schema.HandlerNoop,
 			Description: "target index(es)",
+			Category:    "monitor",
+			Order:       30,
 		},
 		"key-format": {
 			Type:         schema.TypeString,
@@ -1328,6 +1443,8 @@ func serverMonitorNICParam() map[string]*schema.Schema {
 			Description:  "set monitoring value key-format",
 			DefaultValue: "sakuracloud.{{.ID}}.nic.{{.Index}}",
 			Required:     true,
+			Category:     "monitor",
+			Order:        40,
 		},
 	}
 }
@@ -1353,17 +1470,23 @@ func serverMonitorDiskParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set start-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        10,
 		},
 		"end": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set end-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        20,
 		},
 		"index": {
 			Type:        schema.TypeIntList,
 			HandlerType: schema.HandlerNoop,
 			Description: "target index(es)",
+			Category:    "monitor",
+			Order:       30,
 		},
 		"key-format": {
 			Type:         schema.TypeString,
@@ -1371,6 +1494,8 @@ func serverMonitorDiskParam() map[string]*schema.Schema {
 			Description:  "set monitoring value key-format",
 			DefaultValue: "sakuracloud.{{.ID}}.disk.{{.Index}}",
 			Required:     true,
+			Category:     "monitor",
+			Order:        40,
 		},
 	}
 }

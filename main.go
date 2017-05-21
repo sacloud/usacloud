@@ -125,7 +125,10 @@ func getHelpPrinter(app *cli.App, currentHelpPrinter func(io.Writer, string, int
 			// usacloud [resource] [command] --help
 			helpKeys := strings.Split(args.FullName(), " ")
 			r := helpKeys[0]
-			c := helpKeys[1]
+			c := ""
+			if len(helpKeys) > 1 {
+				c = helpKeys[1]
+			}
 			// build flag categories
 			rawFlags := args.VisibleFlags()
 			for _, flag := range rawFlags {

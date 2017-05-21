@@ -14,24 +14,32 @@ func LicenseResource() *schema.Resource {
 			Params:             licenseListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: licenseListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"create": {
 			Type:          schema.CommandCreate,
 			Params:        licenseCreateParam(),
 			IncludeFields: licenseDetailIncludes(),
 			ExcludeFields: licenseDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
 			Params:        licenseReadParam(),
 			IncludeFields: licenseDetailIncludes(),
 			ExcludeFields: licenseDetailExcludes(),
+			Category:      "basics",
+			Order:         30,
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
 			Params:        licenseUpdateParam(),
 			IncludeFields: licenseDetailIncludes(),
 			ExcludeFields: licenseDetailExcludes(),
+			Category:      "basics",
+			Order:         40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -39,6 +47,8 @@ func LicenseResource() *schema.Resource {
 			Params:        licenseDeleteParam(),
 			IncludeFields: licenseDetailIncludes(),
 			ExcludeFields: licenseDetailExcludes(),
+			Category:      "basics",
+			Order:         50,
 		},
 	}
 
@@ -85,6 +95,8 @@ func licenseCreateParam() map[string]*schema.Schema {
 			DestinationProp: "SetLicenseInfoByID",
 			Description:     "set LicenseInfo ID",
 			CompleteFunc:    completeLicenseInfoID(),
+			Category:        "license",
+			Order:           10,
 		},
 	}
 }

@@ -15,24 +15,32 @@ func InterfaceResource() *schema.Resource {
 			TableType:          output.TableSimple,
 			TableColumnDefines: interfaceListColumns(),
 			UseCustomCommand:   true, // to ignore appliance(system servers)
+			Category:           "basics",
+			Order:              10,
 		},
 		"create": {
 			Type:          schema.CommandCreate,
 			Params:        interfaceCreateParam(),
 			IncludeFields: interfaceDetailIncludes(),
 			ExcludeFields: interfaceDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
 			Params:        interfaceReadParam(),
 			IncludeFields: interfaceDetailIncludes(),
 			ExcludeFields: interfaceDetailExcludes(),
+			Category:      "basics",
+			Order:         30,
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
 			Params:        interfaceUpdateParam(),
 			IncludeFields: interfaceDetailIncludes(),
 			ExcludeFields: interfaceDetailExcludes(),
+			Category:      "basics",
+			Order:         40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -40,18 +48,24 @@ func InterfaceResource() *schema.Resource {
 			Params:        interfaceDeleteParam(),
 			IncludeFields: interfaceDetailIncludes(),
 			ExcludeFields: interfaceDetailExcludes(),
+			Category:      "basics",
+			Order:         50,
 		},
 		"packet-filter-connect": {
 			Type:             schema.CommandManipulateMulti,
 			Params:           interfacePacketFilterConnectParam(),
 			UseCustomCommand: true,
 			NoOutput:         true,
+			Category:         "packer-filter",
+			Order:            10,
 		},
 		"packet-filter-disconnect": {
 			Type:             schema.CommandManipulateMulti,
 			Params:           interfacePacketFilterDisconnectParam(),
 			UseCustomCommand: true,
 			NoOutput:         true,
+			Category:         "packer-filter",
+			Order:            20,
 		},
 	}
 
@@ -122,6 +136,8 @@ func interfaceCreateParam() map[string]*schema.Schema {
 			Required:        true,
 			ValidateFunc:    validateSakuraID(),
 			CompleteFunc:    completeServerID(),
+			Category:        "interface",
+			Order:           10,
 		},
 	}
 }
@@ -138,6 +154,8 @@ func interfaceUpdateParam() map[string]*schema.Schema {
 			DestinationProp: "SetUserIPAddress",
 			Description:     "set user-ipaddress",
 			ValidateFunc:    validateIPv4Address(),
+			Category:        "interface",
+			Order:           10,
 		},
 	}
 }
@@ -155,6 +173,8 @@ func interfacePacketFilterConnectParam() map[string]*schema.Schema {
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completePacketFilterID(),
+			Category:     "packet-filter",
+			Order:        10,
 		},
 	}
 }
@@ -168,6 +188,8 @@ func interfacePacketFilterDisconnectParam() map[string]*schema.Schema {
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completePacketFilterID(),
+			Category:     "packet-filter",
+			Order:        10,
 		},
 	}
 }

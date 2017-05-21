@@ -16,6 +16,8 @@ func WebAccelResource() *schema.Resource {
 			TableColumnDefines: webAccelListColumns(),
 			ArgsUsage:          "[URLs]...",
 			UseCustomCommand:   true,
+			Category:           "basics",
+			Order:              10,
 		},
 	}
 

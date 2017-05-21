@@ -14,12 +14,16 @@ func ProductLicenseResource() *schema.Resource {
 			Params:             productLicenseListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: productLicenseListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"read": {
 			Type:          schema.CommandManipulateIDOnly,
 			Params:        productLicenseReadParam(),
 			IncludeFields: productLicenseDetailIncludes(),
 			ExcludeFields: productLicenseDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 	}
 
@@ -53,7 +57,9 @@ func productLicenseDetailExcludes() []string {
 }
 
 func productLicenseReadParam() map[string]*schema.Schema {
+	id := getParamResourceShortID("resource ID", 5)
+	id.Hidden = true
 	return map[string]*schema.Schema{
-		"id": getParamResourceShortID("resource ID", 5),
+		"id": id,
 	}
 }

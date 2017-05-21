@@ -14,12 +14,16 @@ func ProductInternetResource() *schema.Resource {
 			Params:             productInternetListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: productInternetListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"read": {
 			Type:          schema.CommandManipulateIDOnly,
 			Params:        productInternetReadParam(),
 			IncludeFields: productInternetDetailIncludes(),
 			ExcludeFields: productInternetDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 	}
 
@@ -57,7 +61,9 @@ func productInternetDetailExcludes() []string {
 }
 
 func productInternetReadParam() map[string]*schema.Schema {
+	id := getParamResourceShortID("resource ID", 4)
+	id.Hidden = true
 	return map[string]*schema.Schema{
-		"id": getParamResourceShortID("resource ID", 4),
+		"id": id,
 	}
 }

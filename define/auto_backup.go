@@ -15,6 +15,8 @@ func AutoBackupResource() *schema.Resource {
 			Params:             autoBackupListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: autoBackupListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"create": {
 			Type:             schema.CommandCreate,
@@ -22,12 +24,16 @@ func AutoBackupResource() *schema.Resource {
 			IncludeFields:    autoBackupDetailIncludes(),
 			ExcludeFields:    autoBackupDetailExcludes(),
 			UseCustomCommand: true,
+			Category:         "basics",
+			Order:            20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
 			Params:        autoBackupReadParam(),
 			IncludeFields: autoBackupDetailIncludes(),
 			ExcludeFields: autoBackupDetailExcludes(),
+			Category:      "basics",
+			Order:         30,
 		},
 		"update": {
 			Type:             schema.CommandUpdate,
@@ -35,6 +41,8 @@ func AutoBackupResource() *schema.Resource {
 			IncludeFields:    autoBackupDetailIncludes(),
 			ExcludeFields:    autoBackupDetailExcludes(),
 			UseCustomCommand: true,
+			Category:         "basics",
+			Order:            40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -42,6 +50,8 @@ func AutoBackupResource() *schema.Resource {
 			Params:        autoBackupDeleteParam(),
 			IncludeFields: autoBackupDetailIncludes(),
 			ExcludeFields: autoBackupDetailExcludes(),
+			Category:      "basics",
+			Order:         50,
 		},
 	}
 
@@ -102,14 +112,15 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 		"description": paramDescription,
 		"tags":        paramTags,
 		"icon-id":     paramIconResourceID,
-		"generation": {
-			Type:            schema.TypeInt,
-			HandlerType:     schema.HandlerPathThrough,
-			Description:     "set backup generation[1-10]",
-			DestinationProp: "SetBackupMaximumNumberOfArchives",
-			ValidateFunc:    validateIntRange(1, 10),
-			DefaultValue:    1,
-			Required:        true,
+		"disk-id": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set target diskID ",
+			Required:     true,
+			ValidateFunc: validateSakuraID(),
+			CompleteFunc: completeDiskID(),
+			Category:     "backup",
+			Order:        10,
 		},
 		"weekdays": {
 			Type:            schema.TypeStringList,
@@ -122,14 +133,19 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 			CompleteFunc: completeInStrValues(append(sacloud.AllowAutoBackupWeekdays(), "all")...),
 			DefaultValue: []string{"all"},
 			Required:     true,
+			Category:     "backup",
+			Order:        20,
 		},
-		"disk-id": {
-			Type:         schema.TypeInt64,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "set target diskID ",
-			Required:     true,
-			ValidateFunc: validateSakuraID(),
-			CompleteFunc: completeDiskID(),
+		"generation": {
+			Type:            schema.TypeInt,
+			HandlerType:     schema.HandlerPathThrough,
+			Description:     "set backup generation[1-10]",
+			DestinationProp: "SetBackupMaximumNumberOfArchives",
+			ValidateFunc:    validateIntRange(1, 10),
+			DefaultValue:    1,
+			Required:        true,
+			Category:        "backup",
+			Order:           30,
 		},
 	}
 }
@@ -144,13 +160,6 @@ func autoBackupUpdateParam() map[string]*schema.Schema {
 		"description": paramDescription,
 		"tags":        paramTags,
 		"icon-id":     paramIconResourceID,
-		"generation": {
-			Type:            schema.TypeInt,
-			HandlerType:     schema.HandlerPathThrough,
-			Description:     "set backup generation[1-10]",
-			DestinationProp: "SetBackupMaximumNumberOfArchives",
-			ValidateFunc:    validateIntRange(1, 10),
-		},
 		"weekdays": {
 			Type:            schema.TypeStringList,
 			HandlerType:     schema.HandlerPathThrough,
@@ -160,6 +169,17 @@ func autoBackupUpdateParam() map[string]*schema.Schema {
 				validateInStrValues(append(sacloud.AllowAutoBackupWeekdays(), "all")...),
 			),
 			CompleteFunc: completeInStrValues(append(sacloud.AllowAutoBackupWeekdays(), "all")...),
+			Category:     "backup",
+			Order:        20,
+		},
+		"generation": {
+			Type:            schema.TypeInt,
+			HandlerType:     schema.HandlerPathThrough,
+			Description:     "set backup generation[1-10]",
+			DestinationProp: "SetBackupMaximumNumberOfArchives",
+			ValidateFunc:    validateIntRange(1, 10),
+			Category:        "backup",
+			Order:           30,
 		},
 	}
 }

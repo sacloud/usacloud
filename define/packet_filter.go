@@ -17,24 +17,32 @@ func PacketFilterResource() *schema.Resource {
 			Params:             packetFilterListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: packetFilterListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"create": {
 			Type:          schema.CommandCreate,
 			Params:        packetFilterCreateParam(),
 			IncludeFields: packetFilterDetailIncludes(),
 			ExcludeFields: packetFilterDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
 			Params:        packetFilterReadParam(),
 			IncludeFields: packetFilterDetailIncludes(),
 			ExcludeFields: packetFilterDetailExcludes(),
+			Category:      "basics",
+			Order:         30,
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
 			Params:        packetFilterUpdateParam(),
 			IncludeFields: packetFilterDetailIncludes(),
 			ExcludeFields: packetFilterDetailExcludes(),
+			Category:      "basics",
+			Order:         40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -42,15 +50,19 @@ func PacketFilterResource() *schema.Resource {
 			Params:        packetFilterDeleteParam(),
 			IncludeFields: packetFilterDetailIncludes(),
 			ExcludeFields: packetFilterDetailExcludes(),
+			Category:      "basics",
+			Order:         50,
 		},
-		"rule-list": {
+		"rule-info": {
 			Type:               schema.CommandManipulateMulti,
-			Aliases:            []string{"rules"},
+			Aliases:            []string{"rules", "rule-list"},
 			Params:             packetFilterRuleListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: packetFilterRuleListColumns(),
 			UseCustomCommand:   true,
 			NeedlessConfirm:    true,
+			Category:           "rule",
+			Order:              10,
 		},
 		"rule-add": {
 			Type:               schema.CommandManipulateSingle,
@@ -58,6 +70,8 @@ func PacketFilterResource() *schema.Resource {
 			TableType:          output.TableSimple,
 			TableColumnDefines: packetFilterRuleListColumns(),
 			UseCustomCommand:   true,
+			Category:           "rule",
+			Order:              20,
 		},
 		"rule-update": {
 			Type:               schema.CommandManipulateSingle,
@@ -65,6 +79,8 @@ func PacketFilterResource() *schema.Resource {
 			TableType:          output.TableSimple,
 			TableColumnDefines: packetFilterRuleListColumns(),
 			UseCustomCommand:   true,
+			Category:           "rule",
+			Order:              30,
 		},
 		"rule-delete": {
 			Type:               schema.CommandManipulateSingle,
@@ -73,25 +89,50 @@ func PacketFilterResource() *schema.Resource {
 			TableColumnDefines: packetFilterRuleListColumns(),
 			UseCustomCommand:   true,
 			ConfirmMessage:     "delete rule",
+			Category:           "rule",
+			Order:              40,
 		},
 		"interface-connect": {
 			Type:             schema.CommandManipulateSingle,
 			Params:           packetFilterInterfaceConnectParam(),
 			UseCustomCommand: true,
 			NoOutput:         true,
+			Category:         "interface",
+			Order:            10,
 		},
 		"interface-disconnect": {
 			Type:             schema.CommandManipulateSingle,
 			Params:           packetFilterInterfaceDisconnectParam(),
 			UseCustomCommand: true,
 			NoOutput:         true,
+			Category:         "interface",
+			Order:            20,
 		},
 	}
 
 	return &schema.Resource{
-		Commands:         commands,
-		ResourceCategory: CategoryNetworking,
+		Commands:          commands,
+		ResourceCategory:  CategoryNetworking,
+		CommandCategories: packetFilterCommandCategories,
 	}
+}
+
+var packetFilterCommandCategories = []schema.Category{
+	{
+		Key:         "basics",
+		DisplayName: "Basics",
+		Order:       10,
+	},
+	{
+		Key:         "rule",
+		DisplayName: "Filter-Rule Management",
+		Order:       20,
+	},
+	{
+		Key:         "interface",
+		DisplayName: "Connection Management",
+		Order:       30,
+	},
 }
 
 func packetFilterListParam() map[string]*schema.Schema {
@@ -169,6 +210,8 @@ func packetFilterRuleAddParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "index to insert rule into",
 			DefaultValue: 1,
+			Category:     "rule",
+			Order:        1,
 		},
 		"protocol": {
 			Type:         schema.TypeString,
@@ -176,18 +219,24 @@ func packetFilterRuleAddParam() map[string]*schema.Schema {
 			Description:  "set target protocol[tcp/udp/icmp/fragment/ip]",
 			ValidateFunc: validateInStrValues(allowPacketFilterProtocol...),
 			CompleteFunc: completeInStrValues(allowPacketFilterProtocol...),
+			Category:     "rule",
+			Order:        10,
 		},
 		"source-network": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]",
 			ValidateFunc: validatePacketFilterSourceNetwork(),
+			Category:     "rule",
+			Order:        20,
 		},
 		"source-port": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
 			ValidateFunc: validatePacketFilterPort(),
+			Category:     "rule",
+			Order:        30,
 		},
 		"destination-port": {
 			Type:         schema.TypeString,
@@ -195,6 +244,8 @@ func packetFilterRuleAddParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
 			ValidateFunc: validatePacketFilterPort(),
+			Category:     "rule",
+			Order:        40,
 		},
 		"action": {
 			Type:         schema.TypeString,
@@ -202,6 +253,8 @@ func packetFilterRuleAddParam() map[string]*schema.Schema {
 			Description:  "set action[allow/deny]",
 			ValidateFunc: validateInStrValues("allow", "deny"),
 			CompleteFunc: completeInStrValues("allow", "deny"),
+			Category:     "rule",
+			Order:        50,
 		},
 		"description": paramDescription,
 	}
@@ -214,6 +267,8 @@ func packetFilterRuleUpdateParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target rule",
 			Required:    true,
+			Category:    "rule",
+			Order:       1,
 		},
 		"protocol": {
 			Type:         schema.TypeString,
@@ -221,18 +276,24 @@ func packetFilterRuleUpdateParam() map[string]*schema.Schema {
 			Description:  "set target protocol[tcp/udp/icmp/fragment/ip]",
 			ValidateFunc: validateInStrValues(allowPacketFilterProtocol...),
 			CompleteFunc: completeInStrValues(allowPacketFilterProtocol...),
+			Category:     "rule",
+			Order:        10,
 		},
 		"source-network": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]",
 			ValidateFunc: validatePacketFilterSourceNetwork(),
+			Category:     "rule",
+			Order:        20,
 		},
 		"source-port": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
 			ValidateFunc: validatePacketFilterPort(),
+			Category:     "rule",
+			Order:        30,
 		},
 		"destination-port": {
 			Type:         schema.TypeString,
@@ -240,6 +301,8 @@ func packetFilterRuleUpdateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
 			ValidateFunc: validatePacketFilterPort(),
+			Category:     "rule",
+			Order:        40,
 		},
 		"action": {
 			Type:         schema.TypeString,
@@ -247,6 +310,8 @@ func packetFilterRuleUpdateParam() map[string]*schema.Schema {
 			Description:  "set action[allow/deny]",
 			ValidateFunc: validateInStrValues("allow", "deny"),
 			CompleteFunc: completeInStrValues("allow", "deny"),
+			Category:     "rule",
+			Order:        50,
 		},
 		"description": paramDescription,
 	}
@@ -259,6 +324,8 @@ func packetFilterRuleDeleteParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target rule",
 			Required:    true,
+			Category:    "rule",
+			Order:       1,
 		},
 	}
 }
@@ -272,6 +339,8 @@ func packetFilterInterfaceConnectParam() map[string]*schema.Schema {
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeInterfaceID(),
+			Category:     "interface",
+			Order:        1,
 		},
 	}
 }
@@ -285,6 +354,8 @@ func packetFilterInterfaceDisconnectParam() map[string]*schema.Schema {
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeInterfaceID(),
+			Category:     "interface",
+			Order:        1,
 		},
 	}
 }

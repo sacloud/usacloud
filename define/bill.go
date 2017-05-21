@@ -44,12 +44,16 @@ func billListParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set year",
 			ValidateFunc: validateIntRange(2000, 9999),
+			Category:     "filter",
+			Order:        10,
 		},
 		"month": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set month",
 			ValidateFunc: validateIntRange(1, 12),
+			Category:     "filter",
+			Order:        20,
 		},
 	}
 }
@@ -76,18 +80,24 @@ func billListColumns() []output.ColumnDef {
 }
 
 func billReadParam() map[string]*schema.Schema {
+	id := getParamResourceShortID("bill ID", 8)
+	id.Hidden = true
 	return map[string]*schema.Schema{
-		"id": getParamResourceShortID("bill ID", 8),
+		"id": id,
 		"no-header": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "set output header flag",
+			Category:    "output",
+			Order:       10,
 		},
 		"bill-output": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Aliases:     []string{"file"},
 			Description: "set bill-detail output path",
+			Category:    "output",
+			Order:       20,
 		},
 	}
 }
