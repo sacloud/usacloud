@@ -5,9 +5,13 @@ import "github.com/sacloud/usacloud/schema"
 var CategoryConfig = schema.Category{
 	Key:         "config",
 	DisplayName: "Configuration",
+	Order:       3,
+}
+var CategoryAuth = schema.Category{
+	Key:         "auth",
+	DisplayName: "Authentication",
 	Order:       5,
 }
-
 var CategoryComputing = schema.Category{
 	Key:         "computing",
 	DisplayName: "Computing",
