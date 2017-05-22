@@ -516,7 +516,7 @@ func VPCRouterResource() *schema.Resource {
 
 	return &schema.Resource{
 		Commands:          commands,
-		ResourceCategory:  CategoryNetworking,
+		ResourceCategory:  CategoryAppliance,
 		CommandCategories: VPCRouterCommandCategories,
 	}
 }

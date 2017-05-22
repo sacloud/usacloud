@@ -21,7 +21,7 @@ func AuthStatusResource() *schema.Resource {
 	return &schema.Resource{
 		Commands:         commands,
 		DefaultCommand:   "show",
-		ResourceCategory: CategoryConfig,
+		ResourceCategory: CategoryAuth,
 	}
 }
 
