@@ -87,18 +87,21 @@ Note: APIキーは環境変数を用いて設定することも可能です。
    
 ### 使い方
 
+[Usacloudドキュメント:基本的な使い方](https://sacloud.github.io/usacloud/basic_usage/)を参照してください。
+
 ```bash
 NAME:
    usacloud - Unofficial 'sacloud' - CLI client of the SakuraCloud
 
 USAGE:
-   usacloud [global options] command [command options] [arguments...]
+   usacloud [global options] resource command [command options] [arguments...]
 
 VERSION:
-   0.0.8, build xxxxxxx
+   NN.NN.NN, build xxxxxx
 
 COMMANDS:
    config                           A manage command of APIKey settings
+   auth-status                      A manage commands of AuthStatus
    server                           A manage commands of Server
    archive                          A manage commands of Archive
    auto-backup                      A manage commands of AutoBackup
@@ -109,6 +112,9 @@ COMMANDS:
    internet                         A manage commands of Internet
    packet-filter                    A manage commands of PacketFilter
    switch                           A manage commands of Switch
+   database                         A manage commands of Database
+   load-balancer                    A manage commands of LoadBalancer
+   vpc-router                       A manage commands of VPCRouter
    dns                              A manage commands of DNS
    gslb                             A manage commands of GSLB
    simple-monitor                   A manage commands of SimpleMonitor
@@ -126,7 +132,6 @@ COMMANDS:
    product-server, server-plan      A manage commands of ProductServer
    region                           A manage commands of Region
    zone                             A manage commands of Zone
-   help, h                          Shows a list of commands or help for one command
 
 GLOBAL OPTIONS:
    --token value   API Token of SakuraCloud (default: none) [$SAKURACLOUD_ACCESS_TOKEN]

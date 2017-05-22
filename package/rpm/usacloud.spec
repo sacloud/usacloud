@@ -40,6 +40,26 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Mon May 22 2017 <yamamoto.febc@gmail.com> - 0.0.9-1
+- パブリックアーカイブ(RancherOS,Plesk)追加 (by yamamoto-febc)
+- RancherOSでのデフォルトSSHユーザー名設定 (by yamamoto-febc)
+- オブジェクトストレージでの環境変数読み込み順修正 (by yamamoto-febc)
+- コードのクリーンアップ (by yamamoto-febc)
+- README.mdの日本語化 to Japanese (by yamamoto-febc)
+- ブランクディスク/ディスク接続処理 (by yamamoto-febc)
+- リソースへのデフォルトコマンド追加 (by yamamoto-febc)
+- 請求情報の出力修正 (by yamamoto-febc)
+- テーブル形式出力でのヘッダ書式修正 (by yamamoto-febc)
+- auth-statusコマンドの追加 (by yamamoto-febc)
+- ロードバランサ実装 (by yamamoto-febc)
+- --with-diskオプションの変更 (by yamamoto-febc)
+- プログレス表示関数の置き換え (by yamamoto-febc)
+- コマンドでの1文字エイリアスを除去 (by yamamoto-febc)
+- データベース追加 (by yamamoto-febc)
+- VPCRouter追加 (by yamamoto-febc)
+- ヘルプ表示でのカテゴリ/ソート対応 (by yamamoto-febc)
+- トップレベルコマンドでのリソース並び順修正 (by yamamoto-febc)
+
 * Wed Apr 19 2017 <yamamoto.febc@gmail.com> - 0.0.8-1
 - Add basic_usage guide (by yamamoto-febc)
 - Add help text when no command is found (by yamamoto-febc)

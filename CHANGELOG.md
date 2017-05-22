@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.0.9 (2017-05-22)
+
+* パブリックアーカイブ(`rancheros`,`plesk`)追加 #96 (yamamoto-febc)
+* RancherOSでのデフォルトSSHユーザー名設定 #97 (yamamoto-febc)
+* オブジェクトストレージでの環境変数読み込み順修正 #98 (yamamoto-febc)
+* コードクリーンアップ、日本語化など  #100 , #101 (yamamoto-febc)
+* ブランクディスク/ディスク接続処理の実装 #104 (yamamoto-febc)
+* リソースへのデフォルトコマンド追加 #105 (yamamoto-febc)
+* 請求情報の出力修正 #107 (yamamoto-febc)
+* テーブル形式出力でのヘッダ書式修正 #110 (yamamoto-febc)
+* auth-statusコマンドの追加 #111 (yamamoto-febc)
+* --without-diskオプションの導入 #116 (yamamoto-febc)
+* プログレス表示関数の置き換え #117 (yamamoto-febc)
+* コマンドでの1文字エイリアスを除去 #118 (yamamoto-febc)
+* アプライアンス(ロードバランサ/データベース/VPCルータ) #114, #119, #121 (yamamoto-febc)
+* ヘルプ表示でのカテゴリ/ソート対応 #126, #128 (yamamoto-febc)
+
+
 ## 0.0.8 (2017-04-19)
 
 * Add basic_usage guide #91 (yamamoto-febc)

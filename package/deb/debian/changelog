@@ -1,3 +1,44 @@
+usacloud (0.0.9-1) stable; urgency=low
+
+  * パブリックアーカイブ追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/96>
+  * RancherOSでのデフォルトSSHユーザー名設定 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/97>
+  * オブジェクトストレージでの環境変数読み込み順修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/98>
+  * コードのクリーンアップ (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/100>
+  * README.mdの日本語化 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/101>
+  * ブランクディスク/ディスク接続処理 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/104>
+  * リソースへのデフォルトコマンド追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/105>
+  * 請求情報の出力修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/107>
+  * テーブル形式出力でのヘッダ書式修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/110>
+  * auth-statusコマンドの追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/111>
+  * ロードバランサ実装 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/114>
+  * --with-diskオプションの変更 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/116>
+  * プログレス表示関数の置き換え (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/117>
+  * コマンドでの1文字エイリアスを除去 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/118>
+  * データベース追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/119>
+  * VPCRouter追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/121>
+  * ヘルプ表示でのカテゴリ/ソート対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/126>
+  * トップレベルコマンドでのリソース並び順修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/128>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Mon, 22 May 2017 09:56:39 +0000
+
 usacloud (0.0.8-1) stable; urgency=low
 
   * Add basic_usage guide (by yamamoto-febc)
