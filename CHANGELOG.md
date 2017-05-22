@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.0.9 (2017-05-22)
+
+* Update public archives #96 (yamamoto-febc)
+* Fix ssh username on RancherOS #97 (yamamoto-febc)
+* Fix EnvVars handling on ObjectStorage #98 (yamamoto-febc)
+* Cleanup codes #100 (yamamoto-febc)
+* Translate README.md to Japanese #101 (yamamoto-febc)
+* ブランクディスク/ディスク接続処理 #104 (yamamoto-febc)
+* リソースへのデフォルトコマンド追加 #105 (yamamoto-febc)
+* 請求情報の出力修正 #107 (yamamoto-febc)
+* テーブル形式出力でのヘッダ書式修正 #110 (yamamoto-febc)
+* auth-statusコマンドの追加 #111 (yamamoto-febc)
+* ロードバランサ実装 #114 (yamamoto-febc)
+* --with-diskオプションの変更 #116 (yamamoto-febc)
+* プログレス表示関数の置き換え #117 (yamamoto-febc)
+* コマンドでの1文字エイリアスを除去 #118 (yamamoto-febc)
+* データベース追加 #119 (yamamoto-febc)
+* VPCRouter追加 #121 (yamamoto-febc)
+* ヘルプ表示でのカテゴリ/ソート対応 #126 (yamamoto-febc)
+* トップレベルコマンドでのリソース並び順修正 #128 (yamamoto-febc)
+
+
 ## 0.0.8 (2017-04-19)
 
 * Add basic_usage guide #91 (yamamoto-febc)
