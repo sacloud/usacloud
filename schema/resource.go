@@ -1,6 +1,10 @@
 package schema
 
-import "sort"
+import (
+	"fmt"
+	"sort"
+	"strings"
+)
 
 type Resource struct {
 	Aliases             []string
@@ -16,6 +20,14 @@ type Resource struct {
 func (r *Resource) CommandCategory(key string) *Category {
 	if key == "" {
 		return DefaultCommandCategory
+	}
+
+	if len(r.CommandCategories) == 0 {
+		return &Category{
+			Key:         key,
+			DisplayName: fmt.Sprintf("%s", strings.Title(key)),
+			Order:       1,
+		}
 	}
 
 	for _, cat := range r.CommandCategories {

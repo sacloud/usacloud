@@ -14,6 +14,8 @@ func StartupScriptResource() *schema.Resource {
 			Params:             startupScriptListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: startupScriptListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"create": {
 			Type:             schema.CommandCreate,
@@ -21,12 +23,16 @@ func StartupScriptResource() *schema.Resource {
 			IncludeFields:    startupScriptDetailIncludes(),
 			ExcludeFields:    startupScriptDetailExcludes(),
 			UseCustomCommand: true,
+			Category:         "basics",
+			Order:            20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
 			Params:        startupScriptReadParam(),
 			IncludeFields: startupScriptDetailIncludes(),
 			ExcludeFields: startupScriptDetailExcludes(),
+			Category:      "basics",
+			Order:         30,
 		},
 		"update": {
 			Type:             schema.CommandUpdate,
@@ -34,6 +40,8 @@ func StartupScriptResource() *schema.Resource {
 			IncludeFields:    startupScriptDetailIncludes(),
 			ExcludeFields:    startupScriptDetailExcludes(),
 			UseCustomCommand: true,
+			Category:         "basics",
+			Order:            40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -41,6 +49,8 @@ func StartupScriptResource() *schema.Resource {
 			Params:        startupScriptDeleteParam(),
 			IncludeFields: startupScriptDetailIncludes(),
 			ExcludeFields: startupScriptDetailExcludes(),
+			Category:      "basics",
+			Order:         50,
 		},
 	}
 
@@ -75,15 +85,14 @@ func startupScriptDetailExcludes() []string {
 
 func startupScriptCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"name":    paramRequiredName,
-		"tags":    paramTags,
-		"icon-id": paramIconResourceID,
 		"script-content": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,
 			Aliases:       []string{"note-content"},
 			Description:   "set script content",
 			ConflictsWith: []string{"script"},
+			Category:      "script-input",
+			Order:         10,
 		},
 		"script": {
 			Type:         schema.TypeString,
@@ -91,7 +100,12 @@ func startupScriptCreateParam() map[string]*schema.Schema {
 			Aliases:      []string{"note"},
 			Description:  "set script from file",
 			ValidateFunc: validateFileExists(),
+			Category:     "script-upload",
+			Order:        10,
 		},
+		"name":    paramRequiredName,
+		"tags":    paramTags,
+		"icon-id": paramIconResourceID,
 	}
 }
 
@@ -101,15 +115,14 @@ func startupScriptReadParam() map[string]*schema.Schema {
 
 func startupScriptUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"name":    paramRequiredName,
-		"tags":    paramTags,
-		"icon-id": paramIconResourceID,
 		"script-content": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,
 			Aliases:       []string{"note-content"},
 			Description:   "set script content",
 			ConflictsWith: []string{"script"},
+			Category:      "script-input",
+			Order:         10,
 		},
 		"script": {
 			Type:         schema.TypeString,
@@ -117,7 +130,12 @@ func startupScriptUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"note"},
 			Description:  "set script from file",
 			ValidateFunc: validateFileExists(),
+			Category:     "script-upload",
+			Order:        10,
 		},
+		"name":    paramRequiredName,
+		"tags":    paramTags,
+		"icon-id": paramIconResourceID,
 	}
 }
 

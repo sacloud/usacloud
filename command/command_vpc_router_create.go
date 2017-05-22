@@ -32,7 +32,7 @@ func VPCRouterCreate(ctx Context, params *CreateVPCRouterParam) error {
 			params.Vip,
 			params.Ipaddress1,
 			params.Ipaddress2,
-			params.VRID,
+			params.Vrid,
 			[]string{},
 		)
 	case "highspec":
@@ -41,7 +41,7 @@ func VPCRouterCreate(ctx Context, params *CreateVPCRouterParam) error {
 			params.Vip,
 			params.Ipaddress1,
 			params.Ipaddress2,
-			params.VRID,
+			params.Vrid,
 			[]string{},
 		)
 	}

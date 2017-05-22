@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func PacketFilterRuleList(ctx Context, params *RuleListPacketFilterParam) error {
+func PacketFilterRuleInfo(ctx Context, params *RuleInfoPacketFilterParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetPacketFilterAPI()

@@ -14,24 +14,32 @@ func BridgeResource() *schema.Resource {
 			Params:             bridgeListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: bridgeListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"create": {
 			Type:          schema.CommandCreate,
 			Params:        bridgeCreateParam(),
 			IncludeFields: bridgeDetailIncludes(),
 			ExcludeFields: bridgeDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
 			Params:        bridgeReadParam(),
 			IncludeFields: bridgeDetailIncludes(),
 			ExcludeFields: bridgeDetailExcludes(),
+			Category:      "basics",
+			Order:         30,
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
 			Params:        bridgeUpdateParam(),
 			IncludeFields: bridgeDetailIncludes(),
 			ExcludeFields: bridgeDetailExcludes(),
+			Category:      "basics",
+			Order:         40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -39,6 +47,8 @@ func BridgeResource() *schema.Resource {
 			Params:        bridgeDeleteParam(),
 			IncludeFields: bridgeDetailIncludes(),
 			ExcludeFields: bridgeDetailExcludes(),
+			Category:      "basics",
+			Order:         50,
 		},
 	}
 

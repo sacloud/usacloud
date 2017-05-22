@@ -14,6 +14,8 @@ func SSHKeyResource() *schema.Resource {
 			Params:             sshKeyListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: sshKeyListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"create": {
 			Type:             schema.CommandCreate,
@@ -21,18 +23,24 @@ func SSHKeyResource() *schema.Resource {
 			IncludeFields:    sshKeyDetailIncludes(),
 			ExcludeFields:    sshKeyDetailExcludes(),
 			UseCustomCommand: true,
+			Category:         "basics",
+			Order:            20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
 			Params:        sshKeyReadParam(),
 			IncludeFields: sshKeyDetailIncludes(),
 			ExcludeFields: sshKeyDetailExcludes(),
+			Category:      "basics",
+			Order:         30,
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
 			Params:        sshKeyUpdateParam(),
 			IncludeFields: sshKeyDetailIncludes(),
 			ExcludeFields: sshKeyDetailExcludes(),
+			Category:      "basics",
+			Order:         40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -40,6 +48,8 @@ func SSHKeyResource() *schema.Resource {
 			Params:        sshKeyDeleteParam(),
 			IncludeFields: sshKeyDetailIncludes(),
 			ExcludeFields: sshKeyDetailExcludes(),
+			Category:      "basics",
+			Order:         50,
 		},
 		"generate": {
 			Type:             schema.CommandCustom,
@@ -48,6 +58,8 @@ func SSHKeyResource() *schema.Resource {
 			IncludeFields:    sshKeyDetailIncludes(),
 			ExcludeFields:    sshKeyDetailExcludes(),
 			UseCustomCommand: true,
+			Category:         "basics",
+			Order:            60,
 		},
 	}
 
@@ -85,39 +97,47 @@ func sshKeyDetailExcludes() []string {
 
 func sshKeyCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"name":        paramRequiredName,
-		"description": paramDescription,
 		"public-key-content": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "set public-key",
 			ConflictsWith: []string{"public-key"},
+			Category:      "input",
+			Order:         10,
 		},
 		"public-key": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set public-key from file",
 			ValidateFunc: validateFileExists(),
+			Category:     "upload",
+			Order:        10,
 		},
+		"name":        paramRequiredName,
+		"description": paramDescription,
 	}
 }
 
 func sshKeyGenerateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"name":        paramRequiredName,
-		"description": paramDescription,
 		"pass-phrase": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set ssh-key pass phrase",
 			ValidateFunc: validateStrLen(8, 64),
+			Category:     "generate",
+			Order:        10,
 		},
 		"private-key-output": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Aliases:     []string{"file"},
 			Description: "set ssh-key privatekey output path",
+			Category:    "output",
+			Order:       10,
 		},
+		"name":        paramRequiredName,
+		"description": paramDescription,
 	}
 }
 

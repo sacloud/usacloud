@@ -14,12 +14,16 @@ func ZoneResource() *schema.Resource {
 			Params:             zoneListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: zoneListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"read": {
 			Type:          schema.CommandManipulateIDOnly,
 			Params:        zoneReadParam(),
 			IncludeFields: zoneDetailIncludes(),
 			ExcludeFields: zoneDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 	}
 
@@ -56,7 +60,9 @@ func zoneDetailExcludes() []string {
 }
 
 func zoneReadParam() map[string]*schema.Schema {
+	id := getParamResourceShortID("resource ID", 5)
+	id.Hidden = true
 	return map[string]*schema.Schema{
-		"id": getParamResourceShortID("resource ID", 5),
+		"id": id,
 	}
 }

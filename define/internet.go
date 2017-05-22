@@ -15,24 +15,32 @@ func InternetResource() *schema.Resource {
 			Params:             internetListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: internetListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"create": {
 			Type:          schema.CommandCreate,
 			Params:        internetCreateParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
 			Params:        internetReadParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),
+			Category:      "basics",
+			Order:         30,
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
 			Params:        internetUpdateParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),
+			Category:      "basics",
+			Order:         40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -40,6 +48,8 @@ func InternetResource() *schema.Resource {
 			Params:        internetDeleteParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),
+			Category:      "basics",
+			Order:         50,
 		},
 		"update-bandwidth": {
 			Type:             schema.CommandManipulateMulti,
@@ -47,6 +57,8 @@ func InternetResource() *schema.Resource {
 			IncludeFields:    internetDetailIncludes(),
 			ExcludeFields:    internetDetailExcludes(),
 			UseCustomCommand: true,
+			Category:         "spec",
+			Order:            10,
 		},
 		"monitor": {
 			Type:               schema.CommandRead,
@@ -54,6 +66,8 @@ func InternetResource() *schema.Resource {
 			TableType:          output.TableSimple,
 			TableColumnDefines: internetMonitorColumns(),
 			UseCustomCommand:   true,
+			Category:           "monitor",
+			Order:              10,
 		},
 	}
 
@@ -62,6 +76,24 @@ func InternetResource() *schema.Resource {
 		ResourceCategory:    CategoryNetworking,
 		ListResultFieldName: "Internet",
 	}
+}
+
+var internetCommandCategories = []schema.Category{
+	{
+		Key:         "basic",
+		DisplayName: "Basics",
+		Order:       10,
+	},
+	{
+		Key:         "spec",
+		DisplayName: "Router spec",
+		Order:       20,
+	},
+	{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       30,
+	},
 }
 
 func internetListParam() map[string]*schema.Schema {
@@ -112,10 +144,6 @@ func internetDetailExcludes() []string {
 
 func internetCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"name":        paramRequiredName,
-		"description": paramDescription,
-		"tags":        paramTags,
-		"icon-id":     paramIconResourceID,
 		"nw-masklen": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
@@ -125,6 +153,8 @@ func internetCreateParam() map[string]*schema.Schema {
 			Required:        true,
 			DefaultValue:    28,
 			ValidateFunc:    validateInIntValues(sacloud.AllowInternetNetworkMaskLen()...),
+			Category:        "router",
+			Order:           10,
 		},
 		"band-width": {
 			Type:            schema.TypeInt,
@@ -135,7 +165,13 @@ func internetCreateParam() map[string]*schema.Schema {
 			DefaultValue:    100,
 			ValidateFunc:    validateInIntValues(sacloud.AllowInternetBandWidth()...),
 			CompleteFunc:    completeInIntValues(sacloud.AllowInternetBandWidth()...),
+			Category:        "router",
+			Order:           20,
 		},
+		"name":        paramRequiredName,
+		"description": paramDescription,
+		"tags":        paramTags,
+		"icon-id":     paramIconResourceID,
 	}
 }
 
@@ -145,10 +181,6 @@ func internetReadParam() map[string]*schema.Schema {
 
 func internetUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"name":        paramName,
-		"description": paramDescription,
-		"tags":        paramTags,
-		"icon-id":     paramIconResourceID,
 		"band-width": {
 			Type:            schema.TypeInt,
 			HandlerType:     schema.HandlerPathThrough,
@@ -156,7 +188,13 @@ func internetUpdateParam() map[string]*schema.Schema {
 			DestinationProp: "SetBandWidthMbps",
 			ValidateFunc:    validateInIntValues(sacloud.AllowInternetBandWidth()...),
 			CompleteFunc:    completeInIntValues(sacloud.AllowInternetBandWidth()...),
+			Category:        "router",
+			Order:           20,
 		},
+		"name":        paramName,
+		"description": paramDescription,
+		"tags":        paramTags,
+		"icon-id":     paramIconResourceID,
 	}
 }
 
@@ -175,6 +213,8 @@ func internetUpdateBandWidthParam() map[string]*schema.Schema {
 			DefaultValue:    100,
 			ValidateFunc:    validateInIntValues(sacloud.AllowInternetBandWidth()...),
 			CompleteFunc:    completeInIntValues(sacloud.AllowInternetBandWidth()...),
+			Category:        "router",
+			Order:           20,
 		},
 	}
 }
@@ -186,12 +226,16 @@ func internetMonitorParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set start-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        10,
 		},
 		"end": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set end-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        20,
 		},
 		"key-format": {
 			Type:         schema.TypeString,
@@ -199,6 +243,8 @@ func internetMonitorParam() map[string]*schema.Schema {
 			Description:  "set monitoring value key-format",
 			DefaultValue: "sakuracloud.{{.ID}}.internet",
 			Required:     true,
+			Category:     "monitor",
+			Order:        30,
 		},
 	}
 }

@@ -14,12 +14,16 @@ func RegionResource() *schema.Resource {
 			Params:             regionListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: regionListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"read": {
 			Type:          schema.CommandManipulateIDOnly,
 			Params:        regionReadParam(),
 			IncludeFields: regionDetailIncludes(),
 			ExcludeFields: regionDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 	}
 
@@ -56,7 +60,9 @@ func regionDetailExcludes() []string {
 }
 
 func regionReadParam() map[string]*schema.Schema {
+	id := getParamResourceShortID("resource ID", 3)
+	id.Hidden = true
 	return map[string]*schema.Schema{
-		"id": getParamResourceShortID("resource ID", 3),
+		"id": id,
 	}
 }

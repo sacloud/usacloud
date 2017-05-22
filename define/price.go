@@ -14,6 +14,8 @@ func PriceResource() *schema.Resource {
 			Params:             priceListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: priceListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 	}
 

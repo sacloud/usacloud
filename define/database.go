@@ -15,15 +15,16 @@ func DatabaseResource() *schema.Resource {
 			Params:             databaseListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: databaseListColumns(),
-			Category:           "basic",
+			Category:           "basics",
 			Order:              10,
 		},
 		"create": {
 			Type:             schema.CommandCreate,
 			Params:           databaseCreateParam(),
+			ParamCategories:  databaseParamsCategories,
 			IncludeFields:    databaseDetailIncludes(),
 			ExcludeFields:    databaseDetailExcludes(),
-			Category:         "basic",
+			Category:         "basics",
 			Order:            20,
 			UseCustomCommand: true,
 		},
@@ -32,7 +33,7 @@ func DatabaseResource() *schema.Resource {
 			Params:        databaseReadParam(),
 			IncludeFields: databaseDetailIncludes(),
 			ExcludeFields: databaseDetailExcludes(),
-			Category:      "basic",
+			Category:      "basics",
 			Order:         30,
 		},
 		"update": {
@@ -40,7 +41,7 @@ func DatabaseResource() *schema.Resource {
 			Params:           databaseUpdateParam(),
 			IncludeFields:    databaseDetailIncludes(),
 			ExcludeFields:    databaseDetailExcludes(),
-			Category:         "basic",
+			Category:         "basics",
 			Order:            40,
 			UseCustomCommand: true,
 		},
@@ -50,7 +51,7 @@ func DatabaseResource() *schema.Resource {
 			Params:           databaseDeleteParam(),
 			IncludeFields:    databaseDetailIncludes(),
 			ExcludeFields:    databaseDetailExcludes(),
-			Category:         "basic",
+			Category:         "basics",
 			Order:            50,
 			UseCustomCommand: true,
 		},
@@ -120,7 +121,7 @@ func DatabaseResource() *schema.Resource {
 
 var DatabaseCommandCategories = []schema.Category{
 	{
-		Key:         "basic",
+		Key:         "basics",
 		DisplayName: "Basics",
 		Order:       10,
 	},
@@ -138,6 +139,24 @@ var DatabaseCommandCategories = []schema.Category{
 		Key:         "other",
 		DisplayName: "Other",
 		Order:       1000,
+	},
+}
+
+var databaseParamsCategories = []schema.Category{
+	{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       10,
+	},
+	{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       20,
+	},
+	{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       100,
 	},
 }
 
@@ -202,6 +221,8 @@ func databaseCreateParam() map[string]*schema.Schema {
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeSwitchID(),
 			Required:     true,
+			Category:     "database",
+			Order:        10,
 		},
 		"plan": {
 			Type:         schema.TypeInt,
@@ -211,6 +232,8 @@ func databaseCreateParam() map[string]*schema.Schema {
 			Description:  "set plan[10/30/90/240]",
 			ValidateFunc: validateInIntValues(sacloud.AllowDatabasePlans()...),
 			CompleteFunc: completeInIntValues(sacloud.AllowDatabasePlans()...),
+			Category:     "database",
+			Order:        20,
 		},
 		"database": {
 			Type:         schema.TypeString,
@@ -220,6 +243,8 @@ func databaseCreateParam() map[string]*schema.Schema {
 			Required:     true,
 			ValidateFunc: validateInStrValues("postgresql", "mariadb"),
 			CompleteFunc: completeInStrValues("postgresql", "mariadb"),
+			Category:     "database",
+			Order:        30,
 		},
 		"username": {
 			Type:         schema.TypeString,
@@ -227,6 +252,8 @@ func databaseCreateParam() map[string]*schema.Schema {
 			Description:  "set database default user name",
 			Required:     true,
 			ValidateFunc: validateStrLen(4, 20),
+			Category:     "database",
+			Order:        40,
 		},
 		"password": {
 			Type:         schema.TypeString,
@@ -234,12 +261,41 @@ func databaseCreateParam() map[string]*schema.Schema {
 			Description:  "set database default user password",
 			Required:     true,
 			ValidateFunc: validateStrLen(8, 30),
+			Category:     "database",
+			Order:        50,
+		},
+		"source-networks": {
+			Type:         schema.TypeStringList,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set network of allow connection",
+			ValidateFunc: validateStringSlice(validateIPv4AddressWithPrefixOption()),
+			Category:     "database",
+			Order:        60,
+		},
+		"enable-web-ui": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "enable web-ui",
+			Category:    "database",
+			Order:       70,
+		},
+		"backup-time": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set backup start time",
+			ValidateFunc: validateBackupTime(),
+			CompleteFunc: completeBackupTime(),
+			Category:     "database",
+			Order:        80,
 		},
 		"port": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set database port",
+			DefaultText:  "PostgreSQL:5432, MariaDB:3306",
 			ValidateFunc: validateIntRange(1024, 65535),
+			Category:     "network",
+			Order:        10,
 		},
 		"ipaddress1": {
 			Type:         schema.TypeString,
@@ -248,45 +304,36 @@ func databaseCreateParam() map[string]*schema.Schema {
 			Description:  "set ipaddress(#1)",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "network",
+			Order:        20,
 		},
-		"nw_mask_len": {
+		"nw-mask-len": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set network mask length",
 			Required:     true,
 			ValidateFunc: validateIntRange(8, 29),
+			Category:     "network",
+			Order:        30,
 		},
-		"default_route": {
+		"default-route": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set default route",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "network",
+			Order:        40,
 		},
-		"source-networks": {
-			Type:         schema.TypeStringList,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "set network of allow connection",
-			ValidateFunc: validateStringSlice(validateIPv4AddressWithPrefixOption()),
-		},
-		"enable-web-ui": {
-			Type:        schema.TypeBool,
-			HandlerType: schema.HandlerNoop,
-			Description: "enable web-ui",
-		},
-		"backup-time": {
-			Type:         schema.TypeString,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "set backup start time",
-			ValidateFunc: validateBackupTime(),
-			CompleteFunc: completeBackupTime(),
-		},
+
 		"name": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set resource display name",
 			Required:     true,
 			ValidateFunc: validateStrLen(1, 64),
+			Category:     "common",
+			Order:        500,
 		},
 		"description": {
 			Type:         schema.TypeString,
@@ -294,12 +341,16 @@ func databaseCreateParam() map[string]*schema.Schema {
 			Description:  "set resource description",
 			Aliases:      []string{"desc"},
 			ValidateFunc: validateStrLen(0, 254),
+			Category:     "common",
+			Order:        510,
 		},
 		"tags": {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set resource tags",
 			ValidateFunc: validateStringSlice(validateStrLen(1, 32)),
+			Category:     "common",
+			Order:        520,
 		},
 		"icon-id": {
 			Type:         schema.TypeInt64,
@@ -307,6 +358,8 @@ func databaseCreateParam() map[string]*schema.Schema {
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeIconID(),
+			Category:     "common",
+			Order:        530,
 		},
 	}
 }
@@ -322,23 +375,32 @@ func databaseUpdateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set database default user password",
 			ValidateFunc: validateStrLen(8, 30),
+			Category:     "database",
+			Order:        50,
 		},
 		"port": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set database port",
+			DefaultText:  "PostgreSQL:5432, MariaDB:3306",
 			ValidateFunc: validateIntRange(1024, 65535),
+			Category:     "database",
+			Order:        60,
 		},
 		"source-networks": {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set network of allow connection",
 			ValidateFunc: validateStringSlice(validateIPv4AddressWithPrefixOption()),
+			Category:     "database",
+			Order:        100,
 		},
 		"enable-web-ui": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "enable web-ui",
+			Category:    "database",
+			Order:       110,
 		},
 		"backup-time": {
 			Type:         schema.TypeString,
@@ -346,12 +408,16 @@ func databaseUpdateParam() map[string]*schema.Schema {
 			Description:  "set backup start time",
 			ValidateFunc: validateBackupTime(),
 			CompleteFunc: completeBackupTime(),
+			Category:     "database",
+			Order:        120,
 		},
 		"name": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set resource display name",
 			ValidateFunc: validateStrLen(1, 64),
+			Category:     "common",
+			Order:        500,
 		},
 		"description": {
 			Type:         schema.TypeString,
@@ -359,12 +425,16 @@ func databaseUpdateParam() map[string]*schema.Schema {
 			Description:  "set resource description",
 			Aliases:      []string{"desc"},
 			ValidateFunc: validateStrLen(0, 254),
+			Category:     "common",
+			Order:        510,
 		},
 		"tags": {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set resource tags",
 			ValidateFunc: validateStringSlice(validateStrLen(1, 32)),
+			Category:     "common",
+			Order:        520,
 		},
 		"icon-id": {
 			Type:         schema.TypeInt64,
@@ -372,6 +442,8 @@ func databaseUpdateParam() map[string]*schema.Schema {
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeIconID(),
+			Category:     "common",
+			Order:        530,
 		},
 	}
 }

@@ -14,24 +14,32 @@ func SwitchResource() *schema.Resource {
 			Params:             switchListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: switchListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"create": {
 			Type:          schema.CommandCreate,
 			Params:        switchCreateParam(),
 			IncludeFields: switchDetailIncludes(),
 			ExcludeFields: switchDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
 			Params:        switchReadParam(),
 			IncludeFields: switchDetailIncludes(),
 			ExcludeFields: switchDetailExcludes(),
+			Category:      "basics",
+			Order:         30,
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
 			Params:        switchUpdateParam(),
 			IncludeFields: switchDetailIncludes(),
 			ExcludeFields: switchDetailExcludes(),
+			Category:      "basics",
+			Order:         40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -39,6 +47,8 @@ func SwitchResource() *schema.Resource {
 			Params:        switchDeleteParam(),
 			IncludeFields: switchDetailIncludes(),
 			ExcludeFields: switchDetailExcludes(),
+			Category:      "basics",
+			Order:         50,
 		},
 		"bridge-connect": {
 			Type:             schema.CommandManipulateMulti,
@@ -47,6 +57,8 @@ func SwitchResource() *schema.Resource {
 			IncludeFields:    switchDetailIncludes(),
 			ExcludeFields:    switchDetailExcludes(),
 			NoOutput:         true,
+			Category:         "bridge",
+			Order:            10,
 		},
 		"bridge-disconnect": {
 			Type:             schema.CommandManipulateMulti,
@@ -55,14 +67,30 @@ func SwitchResource() *schema.Resource {
 			IncludeFields:    switchDetailIncludes(),
 			ExcludeFields:    switchDetailExcludes(),
 			NoOutput:         true,
+			Category:         "bridge",
+			Order:            20,
 		},
 	}
 
 	return &schema.Resource{
 		Commands:            commands,
+		CommandCategories:   switchCommandCategories,
 		ResourceCategory:    CategoryNetworking,
 		ListResultFieldName: "Switches",
 	}
+}
+
+var switchCommandCategories = []schema.Category{
+	{
+		Key:         "basics",
+		DisplayName: "Basics",
+		Order:       10,
+	},
+	{
+		Key:         "bridge",
+		DisplayName: "Bridge Connection Management",
+		Order:       20,
+	},
 }
 
 func switchListParam() map[string]*schema.Schema {
@@ -151,6 +179,8 @@ func switchConnectBridgeParam() map[string]*schema.Schema {
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeBridgeID(),
+			Category:     "bridge",
+			Order:        10,
 		},
 	}
 }

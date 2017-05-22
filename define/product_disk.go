@@ -14,12 +14,16 @@ func ProductDiskResource() *schema.Resource {
 			Params:             productDiskListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: productDiskListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"read": {
 			Type:          schema.CommandManipulateIDOnly,
 			Params:        productDiskReadParam(),
 			IncludeFields: productDiskDetailIncludes(),
 			ExcludeFields: productDiskDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 	}
 
@@ -52,7 +56,9 @@ func productDiskDetailExcludes() []string {
 }
 
 func productDiskReadParam() map[string]*schema.Schema {
+	id := getParamResourceShortID("resource ID", 1)
+	id.Hidden = true
 	return map[string]*schema.Schema{
-		"id": getParamResourceShortID("resource ID", 1),
+		"id": id,
 	}
 }

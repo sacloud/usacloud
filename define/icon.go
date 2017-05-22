@@ -16,24 +16,32 @@ func IconResource() *schema.Resource {
 			Params:             iconListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: iconListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"create": {
 			Type:          schema.CommandCreate,
 			Params:        iconCreateParam(),
 			IncludeFields: iconDetailIncludes(),
 			ExcludeFields: iconDetailExcludes(),
+			Category:      "basics",
+			Order:         20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
 			Params:        iconReadParam(),
 			IncludeFields: iconDetailIncludes(),
 			ExcludeFields: iconDetailExcludes(),
+			Category:      "basics",
+			Order:         30,
 		},
 		"update": {
 			Type:          schema.CommandUpdate,
 			Params:        iconUpdateParam(),
 			IncludeFields: iconDetailIncludes(),
 			ExcludeFields: iconDetailExcludes(),
+			Category:      "basics",
+			Order:         40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -41,6 +49,8 @@ func IconResource() *schema.Resource {
 			Params:        iconDeleteParam(),
 			IncludeFields: iconDetailIncludes(),
 			ExcludeFields: iconDetailExcludes(),
+			Category:      "basics",
+			Order:         50,
 		},
 	}
 
@@ -78,10 +88,12 @@ func iconCreateParam() map[string]*schema.Schema {
 		"image": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerCustomFunc,
-			Description:   "set icon image",
+			Description:   "set file path for upload",
 			Required:      true,
 			ValidateFunc:  validateFileExists(),
 			CustomHandler: iconSetImageContentUseBase64,
+			Category:      "icon",
+			Order:         10,
 		},
 	}
 }

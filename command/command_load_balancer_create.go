@@ -18,7 +18,7 @@ func LoadBalancerCreate(ctx Context, params *CreateLoadBalancerParam) error {
 
 	p := &sacloud.CreateLoadBalancerValue{
 		SwitchID:     fmt.Sprintf("%d", params.SwitchId),
-		VRID:         params.VRID,
+		VRID:         params.Vrid,
 		IPAddress1:   params.Ipaddress1,
 		MaskLen:      params.NwMaskLen,
 		DefaultRoute: params.DefaultRoute,

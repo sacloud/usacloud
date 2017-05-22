@@ -70,8 +70,8 @@ AUTHOR{{with $length := len .Authors}}{{if ne 1 $length}}S{{end}}{{end}}:
    {{range $index, $author := .Authors}}{{if $index}}
    {{end}}{{$author}}{{end}}{{end}}{{if .ResourceCategories}}
 
-COMMANDS:{{range .ResourceCategories}}{{range .VisibleCommands}}
-   {{join .Names ", "}}{{"\t"}}{{.Usage}}{{end}}{{end}}{{end}}{{if .VisibleFlags}}
+COMMANDS:{{range .ResourceCategories}}{{range .VisibleCommands}}{{if ne .Name "help"}}
+   {{join .Names ", "}}{{"\t"}}{{.Usage}}{{end}}{{end}}{{end}}{{end}}{{if .VisibleFlags}}
 
 GLOBAL OPTIONS:
    {{range $index, $option := .VisibleFlags}}{{if $index}}
@@ -89,8 +89,8 @@ USAGE:
    {{.HelpName}} command{{if .VisibleFlags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
 
 COMMANDS:{{range .CommandCategories}}{{if .DisplayText}}
- === {{.DisplayText}} ==={{end}}{{range .VisibleCommands}}
-   {{join .Names ", "}}{{"\t"}}{{.Usage}}{{end}}
+ === {{.DisplayText}} ==={{end}}{{range .VisibleCommands}}{{if ne .Name "help"}}
+   {{join .Names ", "}}{{"\t"}}{{.Usage}}{{end}}{{end}}
 {{end}}{{if .VisibleFlags}}
 OPTIONS:
    {{range .VisibleFlags}}{{.}}

@@ -27,22 +27,22 @@ func LoadBalancerServerAdd(ctx Context, params *ServerAddLoadBalancerParam) erro
 	}
 
 	var vip *sacloud.LoadBalancerSetting
-	if params.VIPIndex > 0 {
+	if params.VipIndex > 0 {
 		// use VIP index
-		if params.VIPIndex-1 >= len(p.Settings.LoadBalancer) {
-			return fmt.Errorf("vip-index(%d) is out of range", params.VIPIndex)
+		if params.VipIndex-1 >= len(p.Settings.LoadBalancer) {
+			return fmt.Errorf("vip-index(%d) is out of range", params.VipIndex)
 		}
-		vip = p.Settings.LoadBalancer[params.VIPIndex-1]
+		vip = p.Settings.LoadBalancer[params.VipIndex-1]
 	} else {
 		// use VIP and port
 		for _, v := range p.Settings.LoadBalancer {
-			if v.VirtualIPAddress == params.VIP && v.Port == fmt.Sprintf("%d", params.Port) {
+			if v.VirtualIPAddress == params.Vip && v.Port == fmt.Sprintf("%d", params.Port) {
 				vip = v
 				break
 			}
 		}
 		if vip == nil {
-			return fmt.Errorf("VIP(%s:%d) is not found", params.VIP, params.Port)
+			return fmt.Errorf("VIP(%s:%d) is not found", params.Vip, params.Port)
 		}
 	}
 

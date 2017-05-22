@@ -22,6 +22,7 @@ func LoadBalancerResource() *schema.Resource {
 		"create": {
 			Type:             schema.CommandCreate,
 			Params:           loadBalancerCreateParam(),
+			ParamCategories:  loadBalancerParamsCategories,
 			IncludeFields:    loadBalancerDetailIncludes(),
 			ExcludeFields:    loadBalancerDetailExcludes(),
 			Category:         "basic",
@@ -247,6 +248,24 @@ var LoadBalancerCommandCategories = []schema.Category{
 	},
 }
 
+var loadBalancerParamsCategories = []schema.Category{
+	{
+		Key:         "load-balancer",
+		DisplayName: "LoadBalancer options",
+		Order:       10,
+	},
+	{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       20,
+	},
+	{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       1000,
+	},
+}
+
 func loadBalancerListParam() map[string]*schema.Schema {
 	return CommonListParam
 }
@@ -366,13 +385,18 @@ func loadBalancerCreateParam() map[string]*schema.Schema {
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeSwitchID(),
+			Category:     "load-balancer",
+			Order:        10,
 		},
-		"VRID": {
+		"vrid": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
-			Required:     true,
+			Aliases:      []string{"VRID"},
 			Description:  "set VRID",
 			DefaultValue: 1,
+			Required:     true,
+			Category:     "load-balancer",
+			Order:        20,
 		},
 		"high-availability": {
 			Type:         schema.TypeBool,
@@ -380,6 +404,8 @@ func loadBalancerCreateParam() map[string]*schema.Schema {
 			Aliases:      []string{"ha"},
 			Description:  "use HA(High-Availability) mode",
 			DefaultValue: false,
+			Category:     "load-balancer",
+			Order:        30,
 		},
 		"plan": {
 			Type:         schema.TypeString,
@@ -389,6 +415,8 @@ func loadBalancerCreateParam() map[string]*schema.Schema {
 			Description:  "set plan[standard/highspec]",
 			ValidateFunc: validateInStrValues("standard", "highspec"),
 			CompleteFunc: completeInStrValues("standard", "highspec"),
+			Category:     "load-balancer",
+			Order:        40,
 		},
 		"ipaddress1": {
 			Type:         schema.TypeString,
@@ -397,6 +425,8 @@ func loadBalancerCreateParam() map[string]*schema.Schema {
 			Description:  "set ipaddress(#1)",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "network",
+			Order:        10,
 		},
 		"ipaddress2": {
 			Type:         schema.TypeString,
@@ -404,19 +434,25 @@ func loadBalancerCreateParam() map[string]*schema.Schema {
 			Aliases:      []string{"ip2"},
 			Description:  "set ipaddress(#2)",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "network",
+			Order:        20,
 		},
-		"nw_mask_len": {
+		"nw-mask-len": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set network mask length",
 			Required:     true,
 			ValidateFunc: validateIntRange(8, 29),
+			Category:     "network",
+			Order:        30,
 		},
-		"default_route": {
+		"default-route": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set default route",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "network",
+			Order:        40,
 		},
 		"name": {
 			Type:         schema.TypeString,
@@ -424,6 +460,8 @@ func loadBalancerCreateParam() map[string]*schema.Schema {
 			Description:  "set resource display name",
 			Required:     true,
 			ValidateFunc: validateStrLen(1, 64),
+			Category:     "common",
+			Order:        500,
 		},
 		"description": {
 			Type:         schema.TypeString,
@@ -431,12 +469,16 @@ func loadBalancerCreateParam() map[string]*schema.Schema {
 			Description:  "set resource description",
 			Aliases:      []string{"desc"},
 			ValidateFunc: validateStrLen(0, 254),
+			Category:     "common",
+			Order:        510,
 		},
 		"tags": {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set resource tags",
 			ValidateFunc: validateStringSlice(validateStrLen(1, 32)),
+			Category:     "common",
+			Order:        520,
 		},
 		"icon-id": {
 			Type:         schema.TypeInt64,
@@ -444,6 +486,8 @@ func loadBalancerCreateParam() map[string]*schema.Schema {
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeIconID(),
+			Category:     "common",
+			Order:        530,
 		},
 	}
 }
@@ -468,6 +512,8 @@ func loadBalancerDeleteParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Aliases:     []string{"f"},
 			Description: "forced-shutdown flag if server is running",
+			Category:    "load-balancer",
+			Order:       10,
 		},
 	}
 }
@@ -494,12 +540,14 @@ func loadBalancerVIPInfoParam() map[string]*schema.Schema {
 
 func loadBalancerVIPAddParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"VIP": {
+		"vip": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set VirtualIPAddress",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "vip",
+			Order:        10,
 		},
 		"port": {
 			Type:         schema.TypeInt,
@@ -507,6 +555,8 @@ func loadBalancerVIPAddParam() map[string]*schema.Schema {
 			Description:  "set port",
 			ValidateFunc: validateIntRange(1, 65535),
 			Required:     true,
+			Category:     "vip",
+			Order:        20,
 		},
 		"delay-loop": {
 			Type:         schema.TypeInt,
@@ -514,12 +564,16 @@ func loadBalancerVIPAddParam() map[string]*schema.Schema {
 			Description:  "set delay-loop",
 			ValidateFunc: validateIntRange(10, 2147483647),
 			DefaultValue: 10,
+			Category:     "vip",
+			Order:        30,
 		},
 		"sorry-server": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set IPAddress of sorry-server",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "vip",
+			Order:        40,
 		},
 	}
 }
@@ -531,18 +585,24 @@ func loadBalancerVIPUpdateParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target VIP",
 			Required:    true,
+			Category:    "vip",
+			Order:       1,
 		},
-		"VIP": {
+		"vip": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set VirtualIPAddress",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "vip",
+			Order:        10,
 		},
 		"port": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set port",
 			ValidateFunc: validateIntRange(1, 65535),
+			Category:     "vip",
+			Order:        20,
 		},
 		"delay-loop": {
 			Type:         schema.TypeInt,
@@ -550,12 +610,16 @@ func loadBalancerVIPUpdateParam() map[string]*schema.Schema {
 			Description:  "set delay-loop",
 			ValidateFunc: validateIntRange(10, 2147483647),
 			DefaultValue: 10,
+			Category:     "vip",
+			Order:        30,
 		},
 		"sorry-server": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set IPAddress of sorry-server",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "vip",
+			Order:        40,
 		},
 	}
 }
@@ -567,56 +631,70 @@ func loadBalancerVIPDeleteParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target VIP",
 			Required:    true,
+			Category:    "vip",
+			Order:       1,
 		},
 	}
 }
 
 func loadBalancerServerInfoParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"VIP-index": {
+		"vip-index": {
 			Type:          schema.TypeInt,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "index of target VIP",
-			ConflictsWith: []string{"VIP", "port"},
+			ConflictsWith: []string{"vip", "port"},
+			Category:      "server",
+			Order:         1,
 		},
-		"VIP": {
+		"vip": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "set VirtualIPAddress",
 			ValidateFunc:  validateIPv4Address(),
-			ConflictsWith: []string{"VIP-index"},
+			ConflictsWith: []string{"vip-index"},
+			Category:      "server",
+			Order:         2,
 		},
 		"port": {
 			Type:          schema.TypeInt,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "set port",
 			ValidateFunc:  validateIntRange(1, 65535),
-			ConflictsWith: []string{"VIP-index"},
+			ConflictsWith: []string{"vip-index"},
+			Category:      "server",
+			Order:         3,
 		},
 	}
 }
 
 func loadBalancerServerAddParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"VIP-index": {
+		"vip-index": {
 			Type:          schema.TypeInt,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "index of target VIP",
-			ConflictsWith: []string{"VIP", "port"},
+			ConflictsWith: []string{"vip", "port"},
+			Category:      "server",
+			Order:         1,
 		},
-		"VIP": {
+		"vip": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "set VirtualIPAddress",
 			ValidateFunc:  validateIPv4Address(),
-			ConflictsWith: []string{"VIP-index"},
+			ConflictsWith: []string{"vip-index"},
+			Category:      "server",
+			Order:         2,
 		},
 		"port": {
 			Type:          schema.TypeInt,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "set port",
 			ValidateFunc:  validateIntRange(1, 65535),
-			ConflictsWith: []string{"VIP-index"},
+			ConflictsWith: []string{"vip-index"},
+			Category:      "server",
+			Order:         3,
 		},
 		"ipaddress": {
 			Type:         schema.TypeString,
@@ -625,6 +703,8 @@ func loadBalancerServerAddParam() map[string]*schema.Schema {
 			Description:  "set real server IPAddress",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "server",
+			Order:        10,
 		},
 		"protocol": {
 			Type:         schema.TypeString,
@@ -634,16 +714,22 @@ func loadBalancerServerAddParam() map[string]*schema.Schema {
 			CompleteFunc: completeInStrValues(sacloud.AllowLoadBalancerHealthCheckProtocol()...),
 			Required:     true,
 			DefaultValue: "ping",
+			Category:     "server",
+			Order:        20,
 		},
 		"path": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "set path of http/https health check request",
+			Category:    "server",
+			Order:       30,
 		},
 		"response-code": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
 			Description: "set expect response-code of http/https health check request",
+			Category:    "server",
+			Order:       40,
 		},
 		"enabled": {
 			Type:         schema.TypeBool,
@@ -651,31 +737,39 @@ func loadBalancerServerAddParam() map[string]*schema.Schema {
 			Description:  "set enable/disable",
 			DefaultValue: true,
 			Required:     true,
+			Category:     "server",
+			Order:        50,
 		},
 	}
 }
 
 func loadBalancerServerUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"VIP-index": {
+		"vip-index": {
 			Type:          schema.TypeInt,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "index of target VIP",
-			ConflictsWith: []string{"VIP", "port"},
+			ConflictsWith: []string{"vip", "port"},
+			Category:      "server",
+			Order:         1,
 		},
-		"VIP": {
+		"vip": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "set VirtualIPAddress",
 			ValidateFunc:  validateIPv4Address(),
-			ConflictsWith: []string{"VIP-index"},
+			ConflictsWith: []string{"vip-index"},
+			Category:      "server",
+			Order:         2,
 		},
 		"port": {
 			Type:          schema.TypeInt,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "set port",
 			ValidateFunc:  validateIntRange(1, 65535),
-			ConflictsWith: []string{"VIP-index"},
+			ConflictsWith: []string{"vip-index"},
+			Category:      "server",
+			Order:         3,
 		},
 		"ipaddress": {
 			Type:         schema.TypeString,
@@ -684,6 +778,8 @@ func loadBalancerServerUpdateParam() map[string]*schema.Schema {
 			Description:  "set real server IPAddress",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "server",
+			Order:        10,
 		},
 		"protocol": {
 			Type:         schema.TypeString,
@@ -691,46 +787,60 @@ func loadBalancerServerUpdateParam() map[string]*schema.Schema {
 			Description:  "set health check protocol[http/https/ping/tcp]",
 			ValidateFunc: validateInStrValues(sacloud.AllowLoadBalancerHealthCheckProtocol()...),
 			CompleteFunc: completeInStrValues(sacloud.AllowLoadBalancerHealthCheckProtocol()...),
+			Category:     "server",
+			Order:        20,
 		},
 		"path": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "set path of http/https health check request",
+			Category:    "server",
+			Order:       30,
 		},
 		"response-code": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
 			Description: "set expect response-code of http/https health check request",
+			Category:    "server",
+			Order:       40,
 		},
 		"enabled": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "set enable/disable",
+			Category:    "server",
+			Order:       50,
 		},
 	}
 }
 
 func loadBalancerServerDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"VIP-index": {
+		"vip-index": {
 			Type:          schema.TypeInt,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "index of target VIP",
-			ConflictsWith: []string{"VIP", "port"},
+			ConflictsWith: []string{"vip", "port"},
+			Category:      "server",
+			Order:         1,
 		},
-		"VIP": {
+		"vip": {
 			Type:          schema.TypeString,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "set VirtualIPAddress",
 			ValidateFunc:  validateIPv4Address(),
-			ConflictsWith: []string{"VIP-index"},
+			ConflictsWith: []string{"vip-index"},
+			Category:      "server",
+			Order:         2,
 		},
 		"port": {
 			Type:          schema.TypeInt,
 			HandlerType:   schema.HandlerNoop,
 			Description:   "set port",
 			ValidateFunc:  validateIntRange(1, 65535),
-			ConflictsWith: []string{"VIP-index"},
+			ConflictsWith: []string{"vip-index"},
+			Category:      "server",
+			Order:         3,
 		},
 		"ipaddress": {
 			Type:         schema.TypeString,
@@ -739,6 +849,8 @@ func loadBalancerServerDeleteParam() map[string]*schema.Schema {
 			Description:  "set real server IPAddress",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "server",
+			Order:        10,
 		},
 	}
 }
@@ -750,12 +862,16 @@ func loadBalancerMonitorParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set start-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        10,
 		},
 		"end": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set end-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        20,
 		},
 		"key-format": {
 			Type:         schema.TypeString,
@@ -763,6 +879,8 @@ func loadBalancerMonitorParam() map[string]*schema.Schema {
 			Description:  "set monitoring value key-format",
 			DefaultValue: "sakuracloud.{{.ID}}.loadbalancer",
 			Required:     true,
+			Category:     "monitor",
+			Order:        30,
 		},
 	}
 }

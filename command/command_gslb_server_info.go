@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func GSLBServerList(ctx Context, params *ServerListGSLBParam) error {
+func GSLBServerInfo(ctx Context, params *ServerInfoGSLBParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetGSLBAPI()

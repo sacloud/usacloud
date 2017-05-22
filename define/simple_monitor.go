@@ -14,26 +14,36 @@ func SimpleMonitorResource() *schema.Resource {
 			Params:             simpleMonitorListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: simpleMonitorListColumns(),
+			Category:           "basics",
+			Order:              10,
 		},
 		"create": {
 			Type:             schema.CommandCreate,
 			Params:           simpleMonitorCreateParam(),
+			ParamCategories:  simpleMonitorCreateParamCategories,
 			IncludeFields:    simpleMonitorDetailIncludes(),
 			ExcludeFields:    simpleMonitorDetailExcludes(),
 			UseCustomCommand: true,
+			Category:         "basics",
+			Order:            20,
 		},
 		"read": {
 			Type:          schema.CommandRead,
 			Params:        simpleMonitorReadParam(),
 			IncludeFields: simpleMonitorDetailIncludes(),
 			ExcludeFields: simpleMonitorDetailExcludes(),
+			Category:      "basics",
+			Order:         30,
 		},
 		"update": {
 			Type:             schema.CommandUpdate,
 			Params:           simpleMonitorUpdateParam(),
+			ParamCategories:  simpleMonitorUpdateParamCategories,
 			IncludeFields:    simpleMonitorDetailIncludes(),
 			ExcludeFields:    simpleMonitorDetailExcludes(),
 			UseCustomCommand: true,
+			Category:         "basics",
+			Order:            40,
 		},
 		"delete": {
 			Type:          schema.CommandDelete,
@@ -41,6 +51,8 @@ func SimpleMonitorResource() *schema.Resource {
 			Params:        simpleMonitorDeleteParam(),
 			IncludeFields: simpleMonitorDetailIncludes(),
 			ExcludeFields: simpleMonitorDetailExcludes(),
+			Category:      "basics",
+			Order:         50,
 		},
 	}
 
@@ -48,6 +60,67 @@ func SimpleMonitorResource() *schema.Resource {
 		Commands:         commands,
 		ResourceCategory: CategoryCommonServiceItem,
 	}
+}
+
+var simpleMonitorCreateParamCategories = []schema.Category{
+	{
+		Key:         "monitor",
+		DisplayName: "Simple-Monitor options",
+		Order:       10,
+	},
+	{
+		Key:         "health-check",
+		DisplayName: "Health-Check(Common) options",
+		Order:       20,
+	},
+	{
+		Key:         "http-check",
+		DisplayName: "Health-Check(HTTP/HTTPS) options",
+		Order:       22,
+	},
+	{
+		Key:         "dns-check",
+		DisplayName: "Health-Check(DNS) options",
+		Order:       24,
+	},
+	{
+		Key:         "notify",
+		DisplayName: "Notify options",
+		Order:       30,
+	},
+	{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       100,
+	},
+}
+
+var simpleMonitorUpdateParamCategories = []schema.Category{
+	{
+		Key:         "health-check",
+		DisplayName: "Health-Check(Common) options",
+		Order:       20,
+	},
+	{
+		Key:         "http-check",
+		DisplayName: "Health-Check(HTTP/HTTPS) options",
+		Order:       22,
+	},
+	{
+		Key:         "dns-check",
+		DisplayName: "Health-Check(DNS) options",
+		Order:       24,
+	},
+	{
+		Key:         "notify",
+		DisplayName: "Notify options",
+		Order:       30,
+	},
+	{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       100,
+	},
 }
 
 func simpleMonitorListParam() map[string]*schema.Schema {
@@ -93,6 +166,8 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "set monitoring target IP or Hostname",
 			Required:    true,
+			Category:    "monitor",
+			Order:       10,
 		},
 		"protocol": {
 			Type:        schema.TypeString,
@@ -103,27 +178,16 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 			CompleteFunc: completeInStrValues(allowSimpleMonitorProtocol...),
 			Required:     true,
 			DefaultValue: "ping",
-		},
-		"host-header": {
-			Type:        schema.TypeString,
-			HandlerType: schema.HandlerNoop,
-			Description: "set host header of http/https monitoring request",
-		},
-		"path": {
-			Type:        schema.TypeString,
-			HandlerType: schema.HandlerNoop,
-			Description: "set path of http/https monitoring request",
-		},
-		"response-code": {
-			Type:        schema.TypeInt,
-			HandlerType: schema.HandlerNoop,
-			Description: "set response-code of http/https monitoring request",
+			Category:     "health-check",
+			Order:        10,
 		},
 		"port": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set port of tcp monitoring",
 			ValidateFunc: validateIntRange(1, 65535),
+			Category:     "health-check",
+			Order:        20,
 		},
 		"delay-loop": {
 			Type:         schema.TypeInt,
@@ -132,6 +196,8 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 			ValidateFunc: validateIntRange(1, 60),
 			DefaultValue: 1,
 			Required:     true,
+			Category:     "health-check",
+			Order:        30,
 		},
 		"enabled": {
 			Type:         schema.TypeBool,
@@ -139,22 +205,52 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 			Description:  "set monitoring enable/disable",
 			DefaultValue: true,
 			Required:     true,
+			Category:     "health-check",
+			Order:        40,
 		},
+		"host-header": {
+			Type:        schema.TypeString,
+			HandlerType: schema.HandlerNoop,
+			Description: "set host header of http/https monitoring request",
+			Category:    "http-check",
+			Order:       10,
+		},
+		"path": {
+			Type:        schema.TypeString,
+			HandlerType: schema.HandlerNoop,
+			Description: "set path of http/https monitoring request",
+			Category:    "http-check",
+			Order:       20,
+		},
+		"response-code": {
+			Type:        schema.TypeInt,
+			HandlerType: schema.HandlerNoop,
+			Description: "set response-code of http/https monitoring request",
+			Category:    "http-check",
+			Order:       30,
+		},
+
 		"dns-qname": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "set DNS query target name",
+			Category:    "dns-check",
+			Order:       10,
 		},
 		"dns-excepted": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "set DNS query excepted value",
+			Category:    "dns-check",
+			Order:       20,
 		},
 		"notify-email": {
 			Type:         schema.TypeBool,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "enable e-mail notification",
 			DefaultValue: true,
+			Category:     "notify",
+			Order:        10,
 		},
 		"email-type": {
 			Type:         schema.TypeString,
@@ -162,11 +258,15 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 			Description:  "set e-mail type",
 			ValidateFunc: validateInStrValues("text", "html"),
 			CompleteFunc: completeInStrValues("text", "html"),
+			Category:     "notify",
+			Order:        20,
 		},
 		"slack-webhook": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "set slack-webhook URL",
+			Category:    "notify",
+			Order:       30,
 		},
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -187,53 +287,73 @@ func simpleMonitorUpdateParam() map[string]*schema.Schema {
 			// TODO SNMP is not supported on current version.
 			ValidateFunc: validateInStrValues(allowSimpleMonitorProtocol...),
 			CompleteFunc: completeInStrValues(allowSimpleMonitorProtocol...),
-		},
-		"host-header": {
-			Type:        schema.TypeString,
-			HandlerType: schema.HandlerNoop,
-			Description: "set host header of http/https monitoring request",
-		},
-		"path": {
-			Type:        schema.TypeString,
-			HandlerType: schema.HandlerNoop,
-			Description: "set path of http/https monitoring request",
-		},
-		"response-code": {
-			Type:        schema.TypeInt,
-			HandlerType: schema.HandlerNoop,
-			Description: "set response-code of http/https monitoring request",
+			Category:     "health-check",
+			Order:        10,
 		},
 		"port": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set port of tcp monitoring",
 			ValidateFunc: validateIntRange(1, 65535),
+			Category:     "health-check",
+			Order:        20,
 		},
 		"delay-loop": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set delay-loop of monitoring(minute)",
 			ValidateFunc: validateIntRange(1, 60),
+			Category:     "health-check",
+			Order:        30,
 		},
 		"enabled": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "set monitoring enable/disable",
+			Category:    "health-check",
+			Order:       40,
+		},
+		"host-header": {
+			Type:        schema.TypeString,
+			HandlerType: schema.HandlerNoop,
+			Description: "set host header of http/https monitoring request",
+			Category:    "http-check",
+			Order:       10,
+		},
+		"path": {
+			Type:        schema.TypeString,
+			HandlerType: schema.HandlerNoop,
+			Description: "set path of http/https monitoring request",
+			Category:    "http-check",
+			Order:       20,
+		},
+		"response-code": {
+			Type:        schema.TypeInt,
+			HandlerType: schema.HandlerNoop,
+			Description: "set response-code of http/https monitoring request",
+			Category:    "http-check",
+			Order:       30,
 		},
 		"dns_qname": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "set DNS query target name",
+			Category:    "dns-check",
+			Order:       10,
 		},
 		"dns_excepted": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "set DNS query excepted value",
+			Category:    "dns-check",
+			Order:       20,
 		},
 		"notify-email": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "enable e-mail notification",
+			Category:    "notify",
+			Order:       10,
 		},
 		"email-type": {
 			Type:         schema.TypeString,
@@ -241,11 +361,15 @@ func simpleMonitorUpdateParam() map[string]*schema.Schema {
 			Description:  "set e-mail type",
 			ValidateFunc: validateInStrValues("text", "html"),
 			CompleteFunc: completeInStrValues("text", "html"),
+			Category:     "notify",
+			Order:        20,
 		},
 		"slack-webhook": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "set slack-webhook URL",
+			Category:    "notify",
+			Order:       30,
 		},
 		"description": paramDescription,
 		"tags":        paramTags,

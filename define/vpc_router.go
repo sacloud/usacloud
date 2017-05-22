@@ -16,15 +16,16 @@ func VPCRouterResource() *schema.Resource {
 			Params:             vpcRouterListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: vpcRouterListColumns(),
-			Category:           "basic",
+			Category:           "basics",
 			Order:              10,
 		},
 		"create": {
 			Type:             schema.CommandCreate,
 			Params:           vpcRouterCreateParam(),
+			ParamCategories:  vpcRouterCreateParamCategories,
 			IncludeFields:    vpcRouterDetailIncludes(),
 			ExcludeFields:    vpcRouterDetailExcludes(),
-			Category:         "basic",
+			Category:         "basics",
 			Order:            20,
 			UseCustomCommand: true,
 		},
@@ -33,15 +34,16 @@ func VPCRouterResource() *schema.Resource {
 			Params:        vpcRouterReadParam(),
 			IncludeFields: vpcRouterDetailIncludes(),
 			ExcludeFields: vpcRouterDetailExcludes(),
-			Category:      "basic",
+			Category:      "basics",
 			Order:         30,
 		},
 		"update": {
 			Type:             schema.CommandUpdate,
 			Params:           vpcRouterUpdateParam(),
+			ParamCategories:  vpcRouterUpdateParamCategories,
 			IncludeFields:    vpcRouterDetailIncludes(),
 			ExcludeFields:    vpcRouterDetailExcludes(),
-			Category:         "basic",
+			Category:         "basics",
 			Order:            40,
 			UseCustomCommand: true,
 		},
@@ -49,9 +51,10 @@ func VPCRouterResource() *schema.Resource {
 			Type:             schema.CommandDelete,
 			Aliases:          []string{"rm"},
 			Params:           vpcRouterDeleteParam(),
+			ParamCategories:  vpcRouterDeleteParamCategories,
 			IncludeFields:    vpcRouterDetailIncludes(),
 			ExcludeFields:    vpcRouterDetailExcludes(),
-			Category:         "basic",
+			Category:         "basics",
 			Order:            50,
 			UseCustomCommand: true,
 		},
@@ -113,6 +116,7 @@ func VPCRouterResource() *schema.Resource {
 		"interface-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             vpcRouterInterfaceInfoParam(),
+			Aliases:            []string{"interface-list"},
 			Usage:              "Show information of NIC(s) connected to vpc-router",
 			TableType:          output.TableSimple,
 			TableColumnDefines: vpcRouterInterfaceListColumns(),
@@ -151,6 +155,7 @@ func VPCRouterResource() *schema.Resource {
 		"static-nat-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             vpcRouterStaticNATInfoParam(),
+			Aliases:            []string{"static-nat-list"},
 			Usage:              "Show information of static NAT settings",
 			TableType:          output.TableSimple,
 			TableColumnDefines: vpcRouterStaticNATListColumns(),
@@ -189,6 +194,7 @@ func VPCRouterResource() *schema.Resource {
 		"port-forwarding-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             vpcRouterPortForwardingInfoParam(),
+			Aliases:            []string{"port-forwarding-list"},
 			Usage:              "Show information of port-forwarding settings",
 			TableType:          output.TableSimple,
 			TableColumnDefines: vpcRouterPortForwardingListColumns(),
@@ -227,6 +233,7 @@ func VPCRouterResource() *schema.Resource {
 		"firewall-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             vpcRouterFirewallInfoParam(),
+			Aliases:            []string{"firewall-list"},
 			Usage:              "Show information of firewall rules",
 			TableType:          output.TableSimple,
 			TableColumnDefines: vpcRouterFirewallListColumns(),
@@ -265,6 +272,7 @@ func VPCRouterResource() *schema.Resource {
 		"dhcp-server-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             vpcRouterDHCPServerInfoParam(),
+			Aliases:            []string{"dhcp-server-list"},
 			Usage:              "Show information of DHCP servers",
 			TableType:          output.TableSimple,
 			TableColumnDefines: vpcRouterDHCPServerListColumns(),
@@ -303,6 +311,7 @@ func VPCRouterResource() *schema.Resource {
 		"dhcp-static-mapping-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             vpcRouterDHCPStaticMappingInfoParam(),
+			Aliases:            []string{"dhcp-static-mapping-list"},
 			Usage:              "Show information of DHCP static mapping",
 			TableType:          output.TableSimple,
 			TableColumnDefines: vpcRouterDHCPStaticMappingListColumns(),
@@ -381,6 +390,7 @@ func VPCRouterResource() *schema.Resource {
 		"user-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             vpcRouterUserInfoParam(),
+			Aliases:            []string{"user-list"},
 			Usage:              "Show information of remote-access users",
 			TableType:          output.TableSimple,
 			TableColumnDefines: vpcRouterUserListColumns(),
@@ -419,6 +429,7 @@ func VPCRouterResource() *schema.Resource {
 		"site-to-site-vpn-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             vpcRouterS2SInfoParam(),
+			Aliases:            []string{"site-to-site-vpn-list"},
 			Usage:              "Show information of site-to-site IPSec VPN settings",
 			TableType:          output.TableSimple,
 			TableColumnDefines: vpcRouterS2SListColumns(),
@@ -457,6 +468,7 @@ func VPCRouterResource() *schema.Resource {
 		"static-route-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             vpcRouterStaticRouteInfoParam(),
+			Aliases:            []string{"static-route-list"},
 			Usage:              "Show information of static-routes",
 			TableType:          output.TableSimple,
 			TableColumnDefines: vpcRouterStaticRouteListColumns(),
@@ -511,7 +523,7 @@ func VPCRouterResource() *schema.Resource {
 
 var VPCRouterCommandCategories = []schema.Category{
 	{
-		Key:         "basic",
+		Key:         "basics",
 		DisplayName: "Basics",
 		Order:       10,
 	},
@@ -574,6 +586,50 @@ var VPCRouterCommandCategories = []schema.Category{
 		Key:         "other",
 		DisplayName: "Other",
 		Order:       1000,
+	},
+}
+
+var vpcRouterCreateParamCategories = []schema.Category{
+	{
+		Key:         "router",
+		DisplayName: "VPCRouter options",
+		Order:       10,
+	},
+	{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       20,
+	},
+	{
+		Key:         "operation",
+		DisplayName: "Operation options",
+		Order:       30,
+	},
+	{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       40,
+	},
+}
+
+var vpcRouterUpdateParamCategories = []schema.Category{
+	{
+		Key:         "router",
+		DisplayName: "VPCRouter options",
+		Order:       10,
+	},
+	{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       40,
+	},
+}
+
+var vpcRouterDeleteParamCategories = []schema.Category{
+	{
+		Key:         "router",
+		DisplayName: "VPCRouter options",
+		Order:       10,
 	},
 }
 
@@ -789,7 +845,6 @@ var allowVPCRouterPlans = []string{"standard", "premium", "highspec"}
 
 func vpcRouterCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-
 		"plan": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -798,6 +853,8 @@ func vpcRouterCreateParam() map[string]*schema.Schema {
 			Description:  "set plan[standard/premium/highspec]",
 			ValidateFunc: validateInStrValues(allowVPCRouterPlans...),
 			CompleteFunc: completeInStrValues(allowVPCRouterPlans...),
+			Category:     "router",
+			Order:        10,
 		},
 		"switch-id": {
 			Type:         schema.TypeInt64,
@@ -805,12 +862,26 @@ func vpcRouterCreateParam() map[string]*schema.Schema {
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeSwitchID(),
+			Category:     "router",
+			Order:        20,
+		},
+		"vrid": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Aliases:      []string{"VRID"},
+			Description:  "set VRID",
+			DefaultValue: 1,
+			Required:     true,
+			Category:     "router",
+			Order:        30,
 		},
 		"vip": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set virtual ipddress()",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "network",
+			Order:        10,
 		},
 		"ipaddress1": {
 			Type:         schema.TypeString,
@@ -818,6 +889,8 @@ func vpcRouterCreateParam() map[string]*schema.Schema {
 			Aliases:      []string{"ip1"},
 			Description:  "set ipaddress(#1)",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "network",
+			Order:        20,
 		},
 		"ipaddress2": {
 			Type:         schema.TypeString,
@@ -825,13 +898,16 @@ func vpcRouterCreateParam() map[string]*schema.Schema {
 			Aliases:      []string{"ip2"},
 			Description:  "set ipaddress(#2)",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "network",
+			Order:        30,
 		},
-		"VRID": {
-			Type:         schema.TypeInt,
+		"boot-after-create": {
+			Type:         schema.TypeBool,
 			HandlerType:  schema.HandlerNoop,
-			Required:     true,
-			Description:  "set VRID",
-			DefaultValue: 1,
+			Description:  "boot after create",
+			DefaultValue: false,
+			Category:     "operation",
+			Order:        10,
 		},
 		"name": {
 			Type:         schema.TypeString,
@@ -839,6 +915,8 @@ func vpcRouterCreateParam() map[string]*schema.Schema {
 			Description:  "set resource display name",
 			Required:     true,
 			ValidateFunc: validateStrLen(1, 64),
+			Category:     "common",
+			Order:        510,
 		},
 		"description": {
 			Type:         schema.TypeString,
@@ -846,12 +924,16 @@ func vpcRouterCreateParam() map[string]*schema.Schema {
 			Description:  "set resource description",
 			Aliases:      []string{"desc"},
 			ValidateFunc: validateStrLen(0, 254),
+			Category:     "common",
+			Order:        520,
 		},
 		"tags": {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set resource tags",
 			ValidateFunc: validateStringSlice(validateStrLen(1, 32)),
+			Category:     "common",
+			Order:        530,
 		},
 		"icon-id": {
 			Type:         schema.TypeInt64,
@@ -859,12 +941,8 @@ func vpcRouterCreateParam() map[string]*schema.Schema {
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeIconID(),
-		},
-		"boot-after-create": {
-			Type:         schema.TypeBool,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "boot after create",
-			DefaultValue: false,
+			Category:     "common",
+			Order:        540,
 		},
 	}
 }
@@ -875,16 +953,18 @@ func vpcRouterReadParam() map[string]*schema.Schema {
 
 func vpcRouterUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"name":        paramName,
-		"description": paramDescription,
-		"tags":        paramTags,
-		"icon-id":     paramIconResourceID,
 		"syslog-host": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set syslog host IPAddress",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "router",
+			Order:        10,
 		},
+		"name":        paramName,
+		"description": paramDescription,
+		"tags":        paramTags,
+		"icon-id":     paramIconResourceID,
 	}
 }
 
@@ -895,6 +975,8 @@ func vpcRouterDeleteParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Aliases:     []string{"f"},
 			Description: "forced-shutdown flag if server is running",
+			Category:    "router",
+			Order:       10,
 		},
 	}
 }
@@ -927,6 +1009,8 @@ func vpcRouterInterfaceConnectParam() map[string]*schema.Schema {
 			Description:  "index of target private-interface",
 			Required:     true,
 			ValidateFunc: validateInStrValues("1", "2", "3", "4", "5", "6", "7"),
+			Category:     "interface",
+			Order:        10,
 		},
 		"switch-id": {
 			Type:         schema.TypeInt64,
@@ -935,6 +1019,8 @@ func vpcRouterInterfaceConnectParam() map[string]*schema.Schema {
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeSwitchID(),
 			Required:     true,
+			Category:     "interface",
+			Order:        20,
 		},
 		"ipaddress": {
 			Type:         schema.TypeString,
@@ -943,6 +1029,8 @@ func vpcRouterInterfaceConnectParam() map[string]*schema.Schema {
 			Description:  "set (virtual)ipaddress",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "network",
+			Order:        10,
 		},
 		"ipaddress1": {
 			Type:         schema.TypeString,
@@ -950,6 +1038,8 @@ func vpcRouterInterfaceConnectParam() map[string]*schema.Schema {
 			Aliases:      []string{"ip1"},
 			Description:  "set ipaddress(#1)",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "network",
+			Order:        20,
 		},
 		"ipaddress2": {
 			Type:         schema.TypeString,
@@ -957,6 +1047,8 @@ func vpcRouterInterfaceConnectParam() map[string]*schema.Schema {
 			Aliases:      []string{"ip2"},
 			Description:  "set ipaddress(#2)",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "network",
+			Order:        30,
 		},
 		"nw-masklen": {
 			Type:         schema.TypeInt,
@@ -965,11 +1057,15 @@ func vpcRouterInterfaceConnectParam() map[string]*schema.Schema {
 			Description:  "set ipaddress prefix",
 			DefaultValue: 24,
 			ValidateFunc: validateIntRange(8, 29),
+			Category:     "network",
+			Order:        40,
 		},
 		"with-reboot": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "reboot after connect",
+			Category:    "operation",
+			Order:       10,
 		},
 	}
 }
@@ -982,6 +1078,8 @@ func vpcRouterInterfaceUpdateParam() map[string]*schema.Schema {
 			Description:  "index of target interface",
 			Required:     true,
 			ValidateFunc: validateInStrValues("0", "1", "2", "3", "4", "5", "6", "7"),
+			Category:     "interface",
+			Order:        10,
 		},
 		"switch-id": {
 			Type:         schema.TypeInt64,
@@ -989,6 +1087,8 @@ func vpcRouterInterfaceUpdateParam() map[string]*schema.Schema {
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeSwitchID(),
+			Category:     "interface",
+			Order:        20,
 		},
 		"ipaddress": {
 			Type:         schema.TypeString,
@@ -996,6 +1096,8 @@ func vpcRouterInterfaceUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"ip", "vip"},
 			Description:  "set (virtual)ipaddress",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "network",
+			Order:        10,
 		},
 		"ipaddress1": {
 			Type:         schema.TypeString,
@@ -1003,6 +1105,8 @@ func vpcRouterInterfaceUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"ip1"},
 			Description:  "set ipaddress(#1)",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "network",
+			Order:        20,
 		},
 		"ipaddress2": {
 			Type:         schema.TypeString,
@@ -1010,12 +1114,16 @@ func vpcRouterInterfaceUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"ip2"},
 			Description:  "set ipaddress(#2)",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "network",
+			Order:        30,
 		},
 		"alias": {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set ip aliases",
 			ValidateFunc: validateStringSlice(validateIPv4Address()),
+			Category:     "network",
+			Order:        40,
 		},
 		"nw-masklen": {
 			Type:         schema.TypeInt,
@@ -1024,11 +1132,15 @@ func vpcRouterInterfaceUpdateParam() map[string]*schema.Schema {
 			Description:  "set ipaddress prefix",
 			DefaultValue: 24,
 			ValidateFunc: validateIntRange(8, 29),
+			Category:     "network",
+			Order:        50,
 		},
 		"with-reboot": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "reboot after connect",
+			Category:    "operation",
+			Order:       10,
 		},
 	}
 }
@@ -1041,11 +1153,15 @@ func vpcRouterInterfaceDisconnectParam() map[string]*schema.Schema {
 			Description:  "index of target private-interface",
 			Required:     true,
 			ValidateFunc: validateInStrValues("1", "2", "3", "4", "5", "6", "7"),
+			Category:     "interface",
+			Order:        10,
 		},
 		"with-reboot": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "reboot after connect",
+			Category:    "operation",
+			Order:       10,
 		},
 	}
 }
@@ -1063,6 +1179,8 @@ func vpcRouterStaticNATAddParam() map[string]*schema.Schema {
 			Description:  "set global ipaddress",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "Static-NAT",
+			Order:        10,
 		},
 		"private": {
 			Type:         schema.TypeString,
@@ -1071,6 +1189,8 @@ func vpcRouterStaticNATAddParam() map[string]*schema.Schema {
 			Description:  "set private ipaddress",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "Static-NAT",
+			Order:        20,
 		},
 		"description": {
 			Type:         schema.TypeString,
@@ -1078,6 +1198,8 @@ func vpcRouterStaticNATAddParam() map[string]*schema.Schema {
 			Description:  "set description",
 			Aliases:      []string{"desc"},
 			ValidateFunc: validateStrLen(0, 512),
+			Category:     "Static-NAT",
+			Order:        30,
 		},
 	}
 }
@@ -1089,6 +1211,8 @@ func vpcRouterStaticNATUpdateParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target static NAT",
 			Required:    true,
+			Category:    "Static-NAT",
+			Order:       1,
 		},
 		"global": {
 			Type:         schema.TypeString,
@@ -1096,6 +1220,8 @@ func vpcRouterStaticNATUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"global-ip", "global-address"},
 			Description:  "set global ipaddress",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "Static-NAT",
+			Order:        10,
 		},
 		"private": {
 			Type:         schema.TypeString,
@@ -1103,6 +1229,8 @@ func vpcRouterStaticNATUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"private-ip", "private-address"},
 			Description:  "set private ipaddress",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "Static-NAT",
+			Order:        20,
 		},
 		"description": {
 			Type:         schema.TypeString,
@@ -1110,6 +1238,8 @@ func vpcRouterStaticNATUpdateParam() map[string]*schema.Schema {
 			Description:  "set description",
 			Aliases:      []string{"desc"},
 			ValidateFunc: validateStrLen(0, 512),
+			Category:     "Static-NAT",
+			Order:        30,
 		},
 	}
 }
@@ -1121,6 +1251,8 @@ func vpcRouterStaticNATDeleteParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target static NAT",
 			Required:    true,
+			Category:    "Static-NAT",
+			Order:       1,
 		},
 	}
 }
@@ -1138,6 +1270,8 @@ func vpcRouterPortForwardingAddParam() map[string]*schema.Schema {
 			ValidateFunc: validateInStrValues("tcp", "udp"),
 			CompleteFunc: completeInStrValues("tcp", "udp"),
 			Required:     true,
+			Category:     "Port-Forwarding",
+			Order:        10,
 		},
 		"global-port": {
 			Type:         schema.TypeInt,
@@ -1145,6 +1279,8 @@ func vpcRouterPortForwardingAddParam() map[string]*schema.Schema {
 			Description:  "set global ipaddress",
 			ValidateFunc: validateIntRange(1, 65535),
 			Required:     true,
+			Category:     "Port-Forwarding",
+			Order:        20,
 		},
 		"private-ipaddress": {
 			Type:         schema.TypeString,
@@ -1153,6 +1289,8 @@ func vpcRouterPortForwardingAddParam() map[string]*schema.Schema {
 			Description:  "set private ipaddress",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "Port-Forwarding",
+			Order:        30,
 		},
 		"private-port": {
 			Type:         schema.TypeInt,
@@ -1160,6 +1298,8 @@ func vpcRouterPortForwardingAddParam() map[string]*schema.Schema {
 			Description:  "set private ipaddress",
 			ValidateFunc: validateIntRange(1, 65535),
 			Required:     true,
+			Category:     "Port-Forwarding",
+			Order:        40,
 		},
 		"description": {
 			Type:         schema.TypeString,
@@ -1167,6 +1307,8 @@ func vpcRouterPortForwardingAddParam() map[string]*schema.Schema {
 			Description:  "set description",
 			Aliases:      []string{"desc"},
 			ValidateFunc: validateStrLen(0, 512),
+			Category:     "Port-Forwarding",
+			Order:        50,
 		},
 	}
 }
@@ -1178,6 +1320,8 @@ func vpcRouterPortForwardingUpdateParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target static NAT",
 			Required:    true,
+			Category:    "Port-Forwarding",
+			Order:       1,
 		},
 		"protocol": {
 			Type:         schema.TypeString,
@@ -1185,12 +1329,16 @@ func vpcRouterPortForwardingUpdateParam() map[string]*schema.Schema {
 			Description:  "set target protocol",
 			ValidateFunc: validateInStrValues("tcp", "udp"),
 			CompleteFunc: completeInStrValues("tcp", "udp"),
+			Category:     "Port-Forwarding",
+			Order:        10,
 		},
 		"global-port": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set global ipaddress",
 			ValidateFunc: validateIntRange(1, 65535),
+			Category:     "Port-Forwarding",
+			Order:        20,
 		},
 		"private-ipaddress": {
 			Type:         schema.TypeString,
@@ -1198,12 +1346,16 @@ func vpcRouterPortForwardingUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"private-ip", "private-address"},
 			Description:  "set private ipaddress",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "Port-Forwarding",
+			Order:        30,
 		},
 		"private-port": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set private ipaddress",
 			ValidateFunc: validateIntRange(1, 65535),
+			Category:     "Port-Forwarding",
+			Order:        40,
 		},
 		"description": {
 			Type:         schema.TypeString,
@@ -1211,6 +1363,8 @@ func vpcRouterPortForwardingUpdateParam() map[string]*schema.Schema {
 			Description:  "set description",
 			Aliases:      []string{"desc"},
 			ValidateFunc: validateStrLen(0, 512),
+			Category:     "Port-Forwarding",
+			Order:        50,
 		},
 	}
 }
@@ -1222,6 +1376,8 @@ func vpcRouterPortForwardingDeleteParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target static NAT",
 			Required:    true,
+			Category:    "Port-Forwarding",
+			Order:       1,
 		},
 	}
 }
@@ -1236,6 +1392,8 @@ func vpcRouterFirewallInfoParam() map[string]*schema.Schema {
 			CompleteFunc: completeInStrValues("send", "receive"),
 			Required:     true,
 			DefaultValue: "receive",
+			Category:     "Firewall",
+			Order:        1,
 		},
 	}
 }
@@ -1250,6 +1408,8 @@ func vpcRouterFirewallAddParam() map[string]*schema.Schema {
 			CompleteFunc: completeInStrValues("send", "receive"),
 			Required:     true,
 			DefaultValue: "receive",
+			Category:     "Firewall",
+			Order:        1,
 		},
 		"protocol": {
 			Type:         schema.TypeString,
@@ -1258,18 +1418,24 @@ func vpcRouterFirewallAddParam() map[string]*schema.Schema {
 			ValidateFunc: validateInStrValues("tcp", "udp", "icmp", "ip"),
 			CompleteFunc: completeInStrValues("tcp", "udp", "icmp", "ip"),
 			Required:     true,
+			Category:     "Firewall",
+			Order:        10,
 		},
 		"source-network": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source ipaddress or network address",
 			ValidateFunc: validateIPv4AddressWithPrefixOption(),
+			Category:     "Firewall",
+			Order:        20,
 		},
 		"source-port": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source port",
 			ValidateFunc: validateIntRange(1, 65535),
+			Category:     "Firewall",
+			Order:        30,
 		},
 		"destination-network": {
 			Type:         schema.TypeString,
@@ -1277,6 +1443,8 @@ func vpcRouterFirewallAddParam() map[string]*schema.Schema {
 			Aliases:      []string{"dest-network"},
 			Description:  "set destination ipaddress or network address",
 			ValidateFunc: validateIPv4AddressWithPrefixOption(),
+			Category:     "Firewall",
+			Order:        40,
 		},
 		"destination-port": {
 			Type:         schema.TypeInt,
@@ -1284,6 +1452,8 @@ func vpcRouterFirewallAddParam() map[string]*schema.Schema {
 			Aliases:      []string{"dest-port"},
 			Description:  "set destination port",
 			ValidateFunc: validateIntRange(1, 65535),
+			Category:     "Firewall",
+			Order:        50,
 		},
 		"action": {
 			Type:         schema.TypeString,
@@ -1293,11 +1463,15 @@ func vpcRouterFirewallAddParam() map[string]*schema.Schema {
 			CompleteFunc: completeInStrValues("allow", "deny"),
 			Required:     true,
 			DefaultValue: "deny",
+			Category:     "Firewall",
+			Order:        60,
 		},
 		"enable-logging": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "enable logging",
+			Category:    "Firewall",
+			Order:       70,
 		},
 		"description": {
 			Type:         schema.TypeString,
@@ -1305,6 +1479,8 @@ func vpcRouterFirewallAddParam() map[string]*schema.Schema {
 			Description:  "set description",
 			Aliases:      []string{"desc"},
 			ValidateFunc: validateStrLen(0, 512),
+			Category:     "Firewall",
+			Order:        80,
 		},
 	}
 }
@@ -1319,12 +1495,16 @@ func vpcRouterFirewallUpdateParam() map[string]*schema.Schema {
 			CompleteFunc: completeInStrValues("send", "receive"),
 			Required:     true,
 			DefaultValue: "receive",
+			Category:     "Firewall",
+			Order:        1,
 		},
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target static NAT",
 			Required:    true,
+			Category:    "Firewall",
+			Order:       2,
 		},
 		"protocol": {
 			Type:         schema.TypeString,
@@ -1332,18 +1512,24 @@ func vpcRouterFirewallUpdateParam() map[string]*schema.Schema {
 			Description:  "set target protocol",
 			ValidateFunc: validateInStrValues("tcp", "udp", "icmp", "ip"),
 			CompleteFunc: completeInStrValues("tcp", "udp", "icmp", "ip"),
+			Category:     "Firewall",
+			Order:        10,
 		},
 		"source-network": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source ipaddress or network address",
 			ValidateFunc: validateIPv4AddressWithPrefixOption(),
+			Category:     "Firewall",
+			Order:        20,
 		},
 		"source-port": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source port",
 			ValidateFunc: validateIntRange(1, 65535),
+			Category:     "Firewall",
+			Order:        30,
 		},
 		"destination-network": {
 			Type:         schema.TypeString,
@@ -1351,6 +1537,8 @@ func vpcRouterFirewallUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"dest-network"},
 			Description:  "set destination ipaddress or network address",
 			ValidateFunc: validateIPv4AddressWithPrefixOption(),
+			Category:     "Firewall",
+			Order:        40,
 		},
 		"destination-port": {
 			Type:         schema.TypeInt,
@@ -1358,6 +1546,8 @@ func vpcRouterFirewallUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"dest-port"},
 			Description:  "set destination port",
 			ValidateFunc: validateIntRange(1, 65535),
+			Category:     "Firewall",
+			Order:        50,
 		},
 		"action": {
 			Type:         schema.TypeString,
@@ -1366,11 +1556,15 @@ func vpcRouterFirewallUpdateParam() map[string]*schema.Schema {
 			ValidateFunc: validateInStrValues("allow", "deny"),
 			CompleteFunc: completeInStrValues("allow", "deny"),
 			DefaultValue: "deny",
+			Category:     "Firewall",
+			Order:        60,
 		},
 		"enable-logging": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "enable logging",
+			Category:    "Firewall",
+			Order:       70,
 		},
 		"description": {
 			Type:         schema.TypeString,
@@ -1378,6 +1572,8 @@ func vpcRouterFirewallUpdateParam() map[string]*schema.Schema {
 			Description:  "set description",
 			Aliases:      []string{"desc"},
 			ValidateFunc: validateStrLen(0, 512),
+			Category:     "Firewall",
+			Order:        80,
 		},
 	}
 }
@@ -1392,12 +1588,16 @@ func vpcRouterFirewallDeleteParam() map[string]*schema.Schema {
 			CompleteFunc: completeInStrValues("send", "receive"),
 			Required:     true,
 			DefaultValue: "receive",
+			Category:     "Firewall",
+			Order:        1,
 		},
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target static NAT",
 			Required:    true,
+			Category:    "Firewall",
+			Order:       2,
 		},
 	}
 }
@@ -1414,6 +1614,8 @@ func vpcRouterDHCPServerAddParam() map[string]*schema.Schema {
 			Description:  "set target NIC(private NIC index)",
 			ValidateFunc: validateIntRange(1, 7),
 			Required:     true,
+			Category:     "DHCP-Server",
+			Order:        1,
 		},
 		"range-start": {
 			Type:         schema.TypeString,
@@ -1421,6 +1623,8 @@ func vpcRouterDHCPServerAddParam() map[string]*schema.Schema {
 			Description:  "set DHCP IPAddress Range(start)",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "DHCP-Server",
+			Order:        10,
 		},
 		"range-stop": {
 			Type:         schema.TypeString,
@@ -1429,6 +1633,8 @@ func vpcRouterDHCPServerAddParam() map[string]*schema.Schema {
 			Description:  "set DHCP IPAddress Range(stop)",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "DHCP-Server",
+			Order:        20,
 		},
 	}
 }
@@ -1441,12 +1647,16 @@ func vpcRouterDHCPServerUpdateParam() map[string]*schema.Schema {
 			Description:  "set target NIC(private NIC index)",
 			ValidateFunc: validateIntRange(1, 7),
 			Required:     true,
+			Category:     "DHCP-Server",
+			Order:        1,
 		},
 		"range-start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set DHCP IPAddress Range(start)",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "DHCP-Server",
+			Order:        10,
 		},
 		"range-stop": {
 			Type:         schema.TypeString,
@@ -1454,6 +1664,8 @@ func vpcRouterDHCPServerUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"range-end"},
 			Description:  "set DHCP IPAddress Range(stop)",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "DHCP-Server",
+			Order:        20,
 		},
 	}
 }
@@ -1466,6 +1678,8 @@ func vpcRouterDHCPServerDeleteParam() map[string]*schema.Schema {
 			Description:  "set target NIC(private NIC index)",
 			ValidateFunc: validateIntRange(1, 7),
 			Required:     true,
+			Category:     "DHCP-Server",
+			Order:        1,
 		},
 	}
 }
@@ -1483,6 +1697,8 @@ func vpcRouterDHCPStaticMappingAddParam() map[string]*schema.Schema {
 			Description:  "set mac address",
 			ValidateFunc: validateMACAddress(),
 			Required:     true,
+			Category:     "DHCP-Static-Mapping",
+			Order:        10,
 		},
 		"ipaddress": {
 			Type:         schema.TypeString,
@@ -1491,6 +1707,8 @@ func vpcRouterDHCPStaticMappingAddParam() map[string]*schema.Schema {
 			Description:  "set ipaddress",
 			ValidateFunc: validateIPv4Address(),
 			Required:     true,
+			Category:     "DHCP-Static-Mapping",
+			Order:        20,
 		},
 	}
 }
@@ -1502,6 +1720,8 @@ func vpcRouterDHCPStaticMappingUpdateParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target DHCP static mapping",
 			Required:    true,
+			Category:    "DHCP-Static-Mapping",
+			Order:       1,
 		},
 		"macaddress": {
 			Type:         schema.TypeString,
@@ -1509,6 +1729,8 @@ func vpcRouterDHCPStaticMappingUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"mac"},
 			Description:  "set mac address",
 			ValidateFunc: validateMACAddress(),
+			Category:     "DHCP-Static-Mapping",
+			Order:        10,
 		},
 		"ipaddress": {
 			Type:         schema.TypeString,
@@ -1516,6 +1738,8 @@ func vpcRouterDHCPStaticMappingUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"ip"},
 			Description:  "set ipaddress",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "DHCP-Static-Mapping",
+			Order:        20,
 		},
 	}
 }
@@ -1527,6 +1751,8 @@ func vpcRouterDHCPStaticMappingDeleteParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target DHCP static mapping",
 			Required:    true,
+			Category:    "DHCP-Static-Mapping",
+			Order:       1,
 		},
 	}
 }
@@ -1544,12 +1770,16 @@ func vpcRouterPPTPServerUpdateParam() map[string]*schema.Schema {
 			ValidateFunc: validateInStrValues("true", "false"),
 			CompleteFunc: completeInStrValues("true", "false"),
 			Required:     true,
+			Category:     "PPTP",
+			Order:        10,
 		},
 		"range-start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set IPAddress Range(start)",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "PPTP",
+			Order:        20,
 		},
 		"range-stop": {
 			Type:         schema.TypeString,
@@ -1557,6 +1787,8 @@ func vpcRouterPPTPServerUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"range-end"},
 			Description:  "set IPAddress Range(stop)",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "PPTP",
+			Order:        30,
 		},
 	}
 }
@@ -1574,12 +1806,16 @@ func vpcRouterL2TPServerUpdateParam() map[string]*schema.Schema {
 			ValidateFunc: validateInStrValues("true", "false"),
 			CompleteFunc: completeInStrValues("true", "false"),
 			Required:     true,
+			Category:     "L2TP-IPSec",
+			Order:        10,
 		},
 		"range-start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set IPAddress Range(start)",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "L2TP-IPSec",
+			Order:        20,
 		},
 		"range-stop": {
 			Type:         schema.TypeString,
@@ -1587,12 +1823,16 @@ func vpcRouterL2TPServerUpdateParam() map[string]*schema.Schema {
 			Aliases:      []string{"range-end"},
 			Description:  "set IPAddress Range(stop)",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "L2TP-IPSec",
+			Order:        30,
 		},
 		"pre-shared-secret": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set PreSharedSecret",
 			ValidateFunc: validateStrLen(0, 40),
+			Category:     "L2TP-IPSec",
+			Order:        40,
 		},
 	}
 }
@@ -1610,6 +1850,8 @@ func vpcRouterUserAddParam() map[string]*schema.Schema {
 			Aliases:      []string{"user"},
 			Required:     true,
 			ValidateFunc: validateStrLen(0, 20),
+			Category:     "user",
+			Order:        10,
 		},
 		"password": {
 			Type:         schema.TypeString,
@@ -1618,6 +1860,8 @@ func vpcRouterUserAddParam() map[string]*schema.Schema {
 			Aliases:      []string{"pass"},
 			Required:     true,
 			ValidateFunc: validateStrLen(0, 20),
+			Category:     "user",
+			Order:        20,
 		},
 	}
 }
@@ -1629,6 +1873,8 @@ func vpcRouterUserUpdateParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target remote-access user",
 			Required:    true,
+			Category:    "user",
+			Order:       1,
 		},
 		"username": {
 			Type:         schema.TypeString,
@@ -1636,6 +1882,8 @@ func vpcRouterUserUpdateParam() map[string]*schema.Schema {
 			Description:  "set remote-access username",
 			Aliases:      []string{"user"},
 			ValidateFunc: validateStrLen(0, 20),
+			Category:     "user",
+			Order:        10,
 		},
 		"password": {
 			Type:         schema.TypeString,
@@ -1643,6 +1891,8 @@ func vpcRouterUserUpdateParam() map[string]*schema.Schema {
 			Description:  "set remote-access password",
 			Aliases:      []string{"pass"},
 			ValidateFunc: validateStrLen(0, 20),
+			Category:     "user",
+			Order:        20,
 		},
 	}
 }
@@ -1654,6 +1904,8 @@ func vpcRouterUserDeleteParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target remote-access user",
 			Required:    true,
+			Category:    "user",
+			Order:       1,
 		},
 	}
 }
@@ -1670,12 +1922,16 @@ func vpcRouterS2SAddParam() map[string]*schema.Schema {
 			Description:  "set peer address",
 			Required:     true,
 			ValidateFunc: validateIPv4Address(),
+			Category:     "Site-To-Site IPSec VPN",
+			Order:        10,
 		},
 		"remote-id": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "set remote-id",
 			Required:    true,
+			Category:    "Site-To-Site IPSec VPN",
+			Order:       20,
 		},
 		"pre-shared-secret": {
 			Type:         schema.TypeString,
@@ -1683,6 +1939,8 @@ func vpcRouterS2SAddParam() map[string]*schema.Schema {
 			Description:  "set pre-shared-secret",
 			Required:     true,
 			ValidateFunc: validateStrLen(0, 40),
+			Category:     "Site-To-Site IPSec VPN",
+			Order:        30,
 		},
 		"routes": {
 			Type:         schema.TypeStringList,
@@ -1690,6 +1948,8 @@ func vpcRouterS2SAddParam() map[string]*schema.Schema {
 			Description:  "set route list",
 			Required:     true,
 			ValidateFunc: validateStringSlice(validateIPv4AddressWithPrefix()),
+			Category:     "Site-To-Site IPSec VPN",
+			Order:        40,
 		},
 		"local-prefix": {
 			Type:         schema.TypeStringList,
@@ -1697,6 +1957,8 @@ func vpcRouterS2SAddParam() map[string]*schema.Schema {
 			Description:  "set local prefix list",
 			Required:     true,
 			ValidateFunc: validateStringSlice(validateIPv4AddressWithPrefix()),
+			Category:     "Site-To-Site IPSec VPN",
+			Order:        50,
 		},
 	}
 }
@@ -1708,35 +1970,47 @@ func vpcRouterS2SUpdateParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target remote-access user",
 			Required:    true,
+			Category:    "Site-To-Site IPSec VPN",
+			Order:       1,
 		},
 		"peer": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set peer address",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "Site-To-Site IPSec VPN",
+			Order:        10,
 		},
 		"remote-id": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
 			Description: "set remote-id",
+			Category:    "Site-To-Site IPSec VPN",
+			Order:       20,
 		},
 		"pre-shared-secret": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set pre-shared-secret",
 			ValidateFunc: validateStrLen(0, 40),
+			Category:     "Site-To-Site IPSec VPN",
+			Order:        30,
 		},
 		"routes": {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set route list",
 			ValidateFunc: validateStringSlice(validateIPv4AddressWithPrefix()),
+			Category:     "Site-To-Site IPSec VPN",
+			Order:        40,
 		},
 		"local-prefix": {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set local prefix list",
 			ValidateFunc: validateStringSlice(validateIPv4AddressWithPrefix()),
+			Category:     "Site-To-Site IPSec VPN",
+			Order:        50,
 		},
 	}
 }
@@ -1748,6 +2022,8 @@ func vpcRouterS2SDeleteParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target remote-access user",
 			Required:    true,
+			Category:    "Site-To-Site IPSec VPN",
+			Order:       1,
 		},
 	}
 }
@@ -1764,6 +2040,8 @@ func vpcRouterStaticRouteAddParam() map[string]*schema.Schema {
 			Description:  "set prefix",
 			Required:     true,
 			ValidateFunc: validateIPv4AddressWithPrefix(),
+			Category:     "Static-Route",
+			Order:        10,
 		},
 		"next-hop": {
 			Type:         schema.TypeString,
@@ -1771,6 +2049,8 @@ func vpcRouterStaticRouteAddParam() map[string]*schema.Schema {
 			Description:  "set next-hop",
 			Required:     true,
 			ValidateFunc: validateIPv4Address(),
+			Category:     "Static-Route",
+			Order:        20,
 		},
 	}
 }
@@ -1782,18 +2062,24 @@ func vpcRouterStaticRouteUpdateParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target static-route",
 			Required:    true,
+			Category:    "Static-Route",
+			Order:       1,
 		},
 		"prefix": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set prefix",
 			ValidateFunc: validateIPv4AddressWithPrefix(),
+			Category:     "Static-Route",
+			Order:        10,
 		},
 		"next-hop": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set next-hop",
 			ValidateFunc: validateIPv4Address(),
+			Category:     "Static-Route",
+			Order:        20,
 		},
 	}
 }
@@ -1805,6 +2091,8 @@ func vpcRouterStaticRouteDeleteParam() map[string]*schema.Schema {
 			HandlerType: schema.HandlerNoop,
 			Description: "index of target static-route",
 			Required:    true,
+			Category:    "Static-Route",
+			Order:       1,
 		},
 	}
 }
@@ -1818,18 +2106,24 @@ func vpcRouterMonitorParam() map[string]*schema.Schema {
 			Required:     true,
 			DefaultValue: "0",
 			ValidateFunc: validateInStrValues("0", "1", "2", "3", "4", "5", "6", "7"),
+			Category:     "monitor",
+			Order:        10,
 		},
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set start-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        20,
 		},
 		"end": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set end-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        30,
 		},
 		"key-format": {
 			Type:         schema.TypeString,
@@ -1837,6 +2131,8 @@ func vpcRouterMonitorParam() map[string]*schema.Schema {
 			Description:  "set monitoring value key-format",
 			DefaultValue: "sakuracloud.{{.ID}}.vpcrouter",
 			Required:     true,
+			Category:     "monitor",
+			Order:        40,
 		},
 	}
 }

@@ -20,14 +20,14 @@ func LoadBalancerVipAdd(ctx Context, params *VipAddLoadBalancerParam) error {
 	}
 
 	for _, v := range p.Settings.LoadBalancer {
-		if v.VirtualIPAddress == params.VIP {
-			return fmt.Errorf("VIP(%q) is already used", params.VIP)
+		if v.VirtualIPAddress == params.Vip {
+			return fmt.Errorf("VIP(%q) is already used", params.Vip)
 		}
 	}
 
 	// set params
 	var vip = &sacloud.LoadBalancerSetting{
-		VirtualIPAddress: params.VIP,
+		VirtualIPAddress: params.Vip,
 		Port:             fmt.Sprintf("%d", params.Port),
 		DelayLoop:        fmt.Sprintf("%d", params.DelayLoop),
 		SorryServer:      params.SorryServer,
