@@ -1,14 +1,14 @@
 usacloud (0.0.9-1) stable; urgency=low
 
-  * Update public archives (by yamamoto-febc)
+  * パブリックアーカイブ追加 (by yamamoto-febc)
     <https://github.com/sacloud/usacloud/pull/96>
-  * Fix ssh username on RancherOS (by yamamoto-febc)
+  * RancherOSでのデフォルトSSHユーザー名設定 (by yamamoto-febc)
     <https://github.com/sacloud/usacloud/pull/97>
-  * Fix EnvVars handling on ObjectStorage (by yamamoto-febc)
+  * オブジェクトストレージでの環境変数読み込み順修正 (by yamamoto-febc)
     <https://github.com/sacloud/usacloud/pull/98>
-  * Cleanup codes (by yamamoto-febc)
+  * コードのクリーンアップ (by yamamoto-febc)
     <https://github.com/sacloud/usacloud/pull/100>
-  * Translate README.md to Japanese (by yamamoto-febc)
+  * README.mdの日本語化 (by yamamoto-febc)
     <https://github.com/sacloud/usacloud/pull/101>
   * ブランクディスク/ディスク接続処理 (by yamamoto-febc)
     <https://github.com/sacloud/usacloud/pull/104>

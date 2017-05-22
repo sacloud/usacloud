@@ -41,11 +41,11 @@ CLI client of the SakuraCloud
 
 %changelog
 * Mon May 22 2017 <yamamoto.febc@gmail.com> - 0.0.9-1
-- Update public archives (by yamamoto-febc)
-- Fix ssh username on RancherOS (by yamamoto-febc)
-- Fix EnvVars handling on ObjectStorage (by yamamoto-febc)
-- Cleanup codes (by yamamoto-febc)
-- Translate README.md to Japanese (by yamamoto-febc)
+- パブリックアーカイブ(RancherOS,Plesk)追加 (by yamamoto-febc)
+- RancherOSでのデフォルトSSHユーザー名設定 (by yamamoto-febc)
+- オブジェクトストレージでの環境変数読み込み順修正 (by yamamoto-febc)
+- コードのクリーンアップ (by yamamoto-febc)
+- README.mdの日本語化 to Japanese (by yamamoto-febc)
 - ブランクディスク/ディスク接続処理 (by yamamoto-febc)
 - リソースへのデフォルトコマンド追加 (by yamamoto-febc)
 - 請求情報の出力修正 (by yamamoto-febc)
