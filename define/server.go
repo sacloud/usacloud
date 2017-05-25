@@ -1065,7 +1065,14 @@ func serverSCPParam() map[string]*schema.Schema {
 }
 
 func serverVNCParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+	return map[string]*schema.Schema{
+		"wait-for-boot": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "wait until the server starts up",
+			Category:    "VNC",
+		},
+	}
 }
 
 func serverVNCSendParam() map[string]*schema.Schema {
@@ -1102,6 +1109,13 @@ func serverVNCSendParam() map[string]*schema.Schema {
 			Description: "write debug info",
 			Category:    "VNC",
 			Order:       40,
+		},
+		"wait-for-boot": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "wait until the server starts up",
+			Category:    "VNC",
+			Order:       50,
 		},
 	}
 }
