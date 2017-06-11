@@ -97,7 +97,7 @@ var internetCommandCategories = []schema.Category{
 }
 
 func internetListParam() map[string]*schema.Schema {
-	return CommonListParam
+	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
 func internetListColumns() []output.ColumnDef {

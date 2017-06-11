@@ -267,7 +267,7 @@ var loadBalancerParamsCategories = []schema.Category{
 }
 
 func loadBalancerListParam() map[string]*schema.Schema {
-	return CommonListParam
+	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
 func loadBalancerListColumns() []output.ColumnDef {

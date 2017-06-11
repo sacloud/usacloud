@@ -334,7 +334,7 @@ func ServerResource() *schema.Resource {
 }
 
 func serverListParam() map[string]*schema.Schema {
-	return CommonListParam
+	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
 func serverListColumns() []output.ColumnDef {

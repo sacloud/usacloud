@@ -30,6 +30,7 @@ type Schema struct {
 	HandlerType     HandlerType
 	DestinationProp string
 	CustomHandler   ValueHandlerFunc
+	FilterFunc      ListFilterFunc
 
 	CompleteFunc CompletionFunc
 }
@@ -42,6 +43,8 @@ type CompletionContext interface {
 type CompletionFunc func(ctx CompletionContext, currentValue string) []string
 
 type ValueHandlerFunc func(name string, src interface{}, dest interface{})
+
+type ListFilterFunc func(list []interface{}, item interface{}, param interface{}) bool
 
 type ValidateFunc func(string, interface{}) []error
 
@@ -182,8 +185,20 @@ func (s *Schema) Validate(name string) []error {
 		errs = append(errs, fmt.Errorf("schema#%s.%q: needs SliceType(TypeIntList or TypeStringList) in ValueType`", name, "HandlerType"))
 	}
 
+	// customFunc
 	if s.HandlerType == HandlerCustomFunc && s.CustomHandler == nil {
 		errs = append(errs, fmt.Errorf("schema#%s.%q: is required when HandlerType is HandlerCustomFunc`", name, "CustomHandler"))
+	}
+	if s.HandlerType != HandlerCustomFunc && s.CustomHandler != nil {
+		errs = append(errs, fmt.Errorf("schema#%s.%q: is required when HandlerType is HandlerCustomFunc`", name, "CustomHandler"))
+	}
+
+	// filterFunc
+	if s.HandlerType == HandlerFilterFunc && s.FilterFunc == nil {
+		errs = append(errs, fmt.Errorf("schema#%s.%q: is required when HandlerType is HandlerFilterFunc`", name, "FilterFunc"))
+	}
+	if s.HandlerType != HandlerFilterFunc && s.FilterFunc != nil {
+		errs = append(errs, fmt.Errorf("schema#%s.%q: cannot set when HandlerType is HandlerFilterFunc`", name, "FilterFunc"))
 	}
 
 	// DestinationProp

@@ -102,7 +102,7 @@ func GSLBResource() *schema.Resource {
 }
 
 func gslbListParam() map[string]*schema.Schema {
-	return CommonListParam
+	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
 func gslbListColumns() []output.ColumnDef {

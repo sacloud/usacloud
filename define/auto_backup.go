@@ -63,7 +63,7 @@ func AutoBackupResource() *schema.Resource {
 }
 
 func autoBackupListParam() map[string]*schema.Schema {
-	return CommonListParam
+	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
 func autoBackupListColumns() []output.ColumnDef {

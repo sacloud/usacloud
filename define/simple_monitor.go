@@ -124,7 +124,7 @@ var simpleMonitorUpdateParamCategories = []schema.Category{
 }
 
 func simpleMonitorListParam() map[string]*schema.Schema {
-	return CommonListParam
+	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
 func simpleMonitorListColumns() []output.ColumnDef {
