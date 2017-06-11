@@ -94,7 +94,7 @@ var switchCommandCategories = []schema.Category{
 }
 
 func switchListParam() map[string]*schema.Schema {
-	return CommonListParam
+	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
 func switchListColumns() []output.ColumnDef {

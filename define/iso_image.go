@@ -119,7 +119,7 @@ var isoImageCommandCategories = []schema.Category{
 }
 
 func isoImageListParam() map[string]*schema.Schema {
-	return mergeParameterMap(CommonListParam, paramScopeCond)
+	return mergeParameterMap(CommonListParam, paramScopeCond, paramTagsCond)
 }
 
 func isoImageListColumns() []output.ColumnDef {

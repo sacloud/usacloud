@@ -192,3 +192,67 @@ func TestSchema_NeedCustomHadler(t *testing.T) {
 		assert.Equal(t, len(errs) == 0, result)
 	}
 }
+
+func TestSchema_NeedFilterFunc(t *testing.T) {
+	t.Run("Without FilterFunc", func(t *testing.T) {
+		resultMap := map[HandlerType]bool{
+			HandlerPathThrough:     true,
+			HandlerPathThroughEach: true,
+			HandlerSort:            true,
+			HandlerFilterBy:        true,
+			HandlerAndParams:       true,
+			HandlerOrParams:        true,
+			HandlerCustomFunc:      true,
+			HandlerFilterFunc:      false,
+		}
+
+		s := &Schema{
+			Type: TypeStringList,
+		}
+
+		for handlerType, result := range resultMap {
+			s.HandlerType = handlerType
+
+			if s.HandlerType == HandlerCustomFunc {
+				s.CustomHandler = func(name string, src interface{}, dest interface{}) {}
+			} else {
+				s.CustomHandler = nil
+			}
+
+			errs := s.Validate("test")
+			assert.Equal(t, len(errs) == 0, result,
+				"HandlerType(%s) with no FilterFunc, expect no error, but has error(%v)", handlerType, errs)
+		}
+	})
+
+	t.Run("With FilterFunc", func(t *testing.T) {
+		resultMap := map[HandlerType]bool{
+			HandlerPathThrough:     false,
+			HandlerPathThroughEach: false,
+			HandlerSort:            false,
+			HandlerFilterBy:        false,
+			HandlerAndParams:       false,
+			HandlerOrParams:        false,
+			HandlerCustomFunc:      false,
+			HandlerFilterFunc:      true,
+		}
+
+		s := &Schema{
+			Type:       TypeStringList,
+			FilterFunc: func(list []interface{}, item interface{}, p interface{}) bool { return true },
+		}
+
+		for handlerType, result := range resultMap {
+			s.HandlerType = handlerType
+			if s.HandlerType == HandlerCustomFunc {
+				s.CustomHandler = func(name string, src interface{}, dest interface{}) {}
+			} else {
+				s.CustomHandler = nil
+			}
+
+			errs := s.Validate("test")
+			assert.Equal(t, len(errs) == 0, result,
+				"HandlerType(%s) with FilterFunc, expect no error, but has error(%#v)", handlerType, errs)
+		}
+	})
+}

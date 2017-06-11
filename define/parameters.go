@@ -132,3 +132,39 @@ var paramScopeCond = map[string]*schema.Schema{
 		Order:        3,
 	},
 }
+
+var paramTagsCond = map[string]*schema.Schema{
+	"tags": {
+		Type:         schema.TypeStringList,
+		HandlerType:  schema.HandlerFilterFunc,
+		FilterFunc:   filterListByTags,
+		Description:  "set filter by tags(AND)",
+		Category:     "filter",
+		ValidateFunc: validateStringSlice(validateStrLen(1, 32)),
+		Order:        4,
+	},
+}
+
+func filterListByTags(_ []interface{}, item interface{}, param interface{}) bool {
+
+	type tagHandler interface {
+		HasTag(target string) bool
+	}
+
+	tagHolder, ok := item.(tagHandler)
+	if !ok {
+		return false
+	}
+
+	paramTags := param.([]string)
+
+	// 完全一致 + AND条件
+	res := true
+	for _, p := range paramTags {
+		if !tagHolder.HasTag(p) {
+			res = false
+			break
+		}
+	}
+	return res
+}

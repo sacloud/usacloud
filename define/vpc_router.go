@@ -634,7 +634,7 @@ var vpcRouterDeleteParamCategories = []schema.Category{
 }
 
 func vpcRouterListParam() map[string]*schema.Schema {
-	return CommonListParam
+	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
 func vpcRouterListColumns() []output.ColumnDef {

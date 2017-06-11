@@ -11,13 +11,14 @@ const (
 	HandlerAndParams
 	HandlerOrParams
 	HandlerCustomFunc
+	HandlerFilterFunc
 	HandlerNoop
 )
 
 // IsWhenListOnly return true when HandlerType is able to use with CommandList
 func (h HandlerType) IsWhenListOnly() bool {
 	switch h {
-	case HandlerSort, HandlerAndParams, HandlerOrParams:
+	case HandlerSort, HandlerAndParams, HandlerOrParams, HandlerFilterFunc:
 		return true
 	default:
 		return false

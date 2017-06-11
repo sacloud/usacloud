@@ -178,7 +178,7 @@ var DiskCommandCategories = []schema.Category{
 }
 
 func diskListParam() map[string]*schema.Schema {
-	return mergeParameterMap(CommonListParam, paramScopeCond)
+	return mergeParameterMap(CommonListParam, paramScopeCond, paramTagsCond)
 }
 
 func diskListColumns() []output.ColumnDef {

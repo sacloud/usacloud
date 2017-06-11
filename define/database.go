@@ -161,7 +161,7 @@ var databaseParamsCategories = []schema.Category{
 }
 
 func databaseListParam() map[string]*schema.Schema {
-	return CommonListParam
+	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
 func databaseListColumns() []output.ColumnDef {

@@ -121,7 +121,7 @@ var dnsCommandParamCategories = []schema.Category{
 }
 
 func dnsListParam() map[string]*schema.Schema {
-	return CommonListParam
+	return mergeParameterMap(CommonListParam, paramTagsCond)
 }
 
 func dnsListColumns() []output.ColumnDef {

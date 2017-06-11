@@ -17,11 +17,17 @@ func generateFindCommand(command *schema.Command) (string, error) {
 		return "", err
 	}
 
+	filterActions, err := generateFilterActions(command)
+	if err != nil {
+		return "", err
+	}
+
 	err = t.Execute(b, map[string]interface{}{
 		"FinderFieldName": ctx.CommandResourceName(),
 		"SetParamActions": setParamActions,
 		"FuncName":        ctx.CommandFuncName(),
 		"ListResultField": ctx.FindResultFieldName(),
+		"FilterActions":   filterActions,
 	})
 	return b.String(), err
 }
@@ -42,9 +48,9 @@ var findCommandTemplate = `
 
 	list := []interface{}{}
 	for i, _ := range res.{{.ListResultField}}{
+		{{.FilterActions}}
 		list = append(list, &res.{{.ListResultField}}[i])
 	}
-
 	return ctx.GetOutput().Print(list...)
 `
 
@@ -57,6 +63,10 @@ func generateFindSetParamActions(command *schema.Command) (string, error) {
 		p := param.Param
 
 		ctx.P = k
+
+		if p.HandlerType == schema.HandlerFilterFunc {
+			continue
+		}
 
 		t := template.New("c")
 		template.Must(t.Parse(findSetParamTemplates[p.HandlerType]))
@@ -114,3 +124,40 @@ var findSetParamTemplates = map[schema.HandlerType]string{
 		{{.CustomHandlerName}}("{{.ParamName}}" , params , finder)
 	}`,
 }
+
+func generateFilterActions(command *schema.Command) (string, error) {
+
+	b := bytes.NewBufferString("")
+
+	for _, param := range command.BuildedParams() {
+		k := param.ParamKey
+		p := param.Param
+
+		ctx.P = k
+
+		if p.HandlerType != schema.HandlerFilterFunc {
+			continue
+		}
+
+		t := template.New("c")
+		template.Must(t.Parse(findFilterFuncTemplate))
+
+		customHandlerName := fmt.Sprintf(`params.getCommandDef().Params["%s"].FilterFunc`, ctx.P)
+
+		err := t.Execute(b, map[string]interface{}{
+			"ParamName":       ctx.InputParamFieldName(),
+			"ListResultField": ctx.FindResultFieldName(),
+			"FilterFuncName":  customHandlerName,
+		})
+		if err != nil {
+			return "", err
+		}
+	}
+	return b.String(), nil
+}
+
+var findFilterFuncTemplate = `
+	if !{{.FilterFuncName}}(list, &res.{{.ListResultField}}[i], params.{{.ParamName}}) {
+		continue
+	}
+`
