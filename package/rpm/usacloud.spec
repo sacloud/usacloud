@@ -40,6 +40,13 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Mon Jun 12 2017 <yamamoto.febc@gmail.com> - 0.0.10-1
+- VNCコマンドへサーバ起動待ち用オプション追加 (by yamamoto-febc)
+- タグによる検索機能 (by yamamoto-febc)
+- lsコマンドの出力を他コマンドで利用 (by yamamoto-febc)
+- readコマンドでの操作対象を単一リソースのみに制限 (by yamamoto-febc)
+- list or lsコマンドに起動状態列を追加 (by yamamoto-febc)
+
 * Mon May 22 2017 <yamamoto.febc@gmail.com> - 0.0.9-1
 - パブリックアーカイブ(RancherOS,Plesk)追加 (by yamamoto-febc)
 - RancherOSでのデフォルトSSHユーザー名設定 (by yamamoto-febc)

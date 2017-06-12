@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.0.10 (2017-06-12)
+
+* VNCコマンドへサーバ起動待ち用オプション追加 #130 (yamamoto-febc)
+* タグによる検索機能 #132 (yamamoto-febc)
+* lsコマンドの出力を他コマンドで利用 #133 (yamamoto-febc)
+* readコマンドでの操作対象を単一リソースのみに制限 #135 (yamamoto-febc)
+* list or lsコマンドに起動状態列を追加 #136 (yamamoto-febc)
+
+
 ## 0.0.9 (2017-05-22)
 
 * パブリックアーカイブ(`rancheros`,`plesk`)追加 #96 (yamamoto-febc)
