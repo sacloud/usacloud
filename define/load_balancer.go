@@ -275,6 +275,10 @@ func loadBalancerListColumns() []output.ColumnDef {
 		{Name: "ID"},
 		{Name: "Name"},
 		{
+			Name:    "Power",
+			Sources: []string{"Instance.Status"},
+		},
+		{
 			Name:    "VRID",
 			Sources: []string{"Remark.VRRP.VRID"},
 		},

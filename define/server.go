@@ -342,6 +342,10 @@ func serverListColumns() []output.ColumnDef {
 		{Name: "ID"},
 		{Name: "Name"},
 		{
+			Name:    "Power",
+			Sources: []string{"Instance.Status"},
+		},
+		{
 			Name:    "CPU",
 			Sources: []string{"ServerPlan.CPU"},
 		},
