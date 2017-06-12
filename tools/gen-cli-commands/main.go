@@ -542,23 +542,32 @@ func init() {
 					if c.NArg() == 0 {
 						return fmt.Errorf("ID or Name argument is required")
 					}
-					idOrName := c.Args().First()
 					apiClient := ctx.GetAPIClient().{{.CommandResourceName}}
 					ids := []int64{}
 
-					if id, ok := toSakuraID(idOrName); ok {
-						ids = append(ids, id)
-					} else {
-						apiClient.SetFilterBy("Name", idOrName)
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.{{.FindResultName}} {
-							ids = append(ids, v.GetID())
+					for _, arg := range c.Args().Slice() {
+						for _, a := range strings.Split(arg, "\n") {
+							idOrName := a
+							if id, ok := toSakuraID(idOrName); ok {
+								ids = append(ids, id)
+							} else {
+								apiClient.Reset()
+								apiClient.SetFilterBy("Name", idOrName)
+								res, err := apiClient.Find()
+								if err != nil {
+									return fmt.Errorf("Find ID is failed: %s", err)
+								}
+								if res.Count == 0 {
+									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+								}
+								for _, v := range res.{{.FindResultName}} {
+									ids = append(ids, v.GetID())
+								}
+							}
 						}
 					}
 
+					ids = uniqIDs(ids)
 					if len(ids) == 0 {
 						return fmt.Errorf("ID or Name argument is required")
 					}
