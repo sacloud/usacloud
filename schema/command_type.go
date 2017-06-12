@@ -26,7 +26,7 @@ func (c CommandType) IsRequiredIDType() bool {
 }
 
 func (c CommandType) IsNeedSingleIDType() bool {
-	return c == CommandManipulateSingle
+	return c == CommandManipulateSingle || c == CommandRead
 }
 
 func (c CommandType) IsNeedIDOnlyType() bool {
