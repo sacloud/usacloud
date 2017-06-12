@@ -244,3 +244,15 @@ func parseDateTimeString(strDateTime string) time.Time {
 
 	return time.Now()
 }
+
+func uniqIDs(elements []int64) []int64 {
+	encountered := map[int64]bool{}
+	result := []int64{}
+	for v := range elements {
+		if !encountered[elements[v]] {
+			encountered[elements[v]] = true
+			result = append(result, elements[v])
+		}
+	}
+	return result
+}
