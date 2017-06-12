@@ -24,7 +24,7 @@
 
 # インストール
 
-### macOS(`homebrew`を利用)
+### macOS(`homebrew`) / Linux(`linuxbrew`)
 
 ```bash
 brew tap sacloud/homebrew-usacloud; brew install usacloud

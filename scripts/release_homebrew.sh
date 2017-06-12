@@ -1,7 +1,8 @@
 #!/bin/bash
 
 VERSION=`git log --merges --oneline | perl -ne 'if(m/^.+Merge pull request \#[0-9]+ from .+\/bump-version-([0-9\.]+)/){print $1;exit}'`
-SHA256_SRC=`openssl dgst -sha256 bin/usacloud_darwin-amd64.zip | awk '{print $2}'`
+SHA256_SRC_DARWIN=`openssl dgst -sha256 bin/usacloud_darwin-amd64.zip | awk '{print $2}'`
+SHA256_SRC_LINUX=`openssl dgst -sha256 bin/usacloud_linux-amd64.zip | awk '{print $2}'`
 SHA256_BASH_COMP=`openssl dgst -sha256 contrib/completion/bash/usacloud | awk '{print $2}'`
 
 # clone
@@ -18,15 +19,22 @@ cat << EOL > usacloud.rb
 class Usacloud < Formula
 
   usacloud_version = "${VERSION}"
-  sha256_src = "${SHA256_SRC}"
+  sha256_src_darwin = "${SHA256_SRC_DARWIN}"
+  sha256_src_linux = "${SHA256_SRC_LINUX}"
   sha256_bash_completion = "${SHA256_BASH_COMP}"
 
   desc "Unofficial 'sacloud' - CLI client of the SakuraCloud"
   homepage "https://github.com/sacloud/usacloud"
-  url "https://github.com/sacloud/usacloud/releases/download/v#{usacloud_version}/usacloud_darwin-amd64.zip"
-  sha256 sha256_src
   head "https://github.com/sacloud/usacloud.git"
   version usacloud_version
+
+  if OS.mac?
+    url "https://github.com/sacloud/usacloud/releases/download/v#{usacloud_version}/usacloud_darwin-amd64.zip"
+    sha256 sha256_src_darwin
+  else
+    url "https://github.com/sacloud/usacloud/releases/download/v#{usacloud_version}/usacloud_linux-amd64.zip"
+    sha256 sha256_src_linux
+  end
 
   option "without-completions", "Disable bash completions"
   resource "bash_completion" do

@@ -15,7 +15,7 @@
 
 ## インストール
 
-### macOS(`homebrew`)
+### macOS(`homebrew`) / Linux(`linuxbrew`)
 
     brew tap sacloud/homebrew-usacloud; brew install usacloud
 
