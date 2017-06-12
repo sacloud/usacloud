@@ -1,3 +1,18 @@
+usacloud (0.0.10-1) stable; urgency=low
+
+  * VNCコマンドへサーバ起動待ち用オプション追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/130>
+  * タグによる検索機能 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/132>
+  * lsコマンドの出力を他コマンドで利用 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/133>
+  * readコマンドでの操作対象を単一リソースのみに制限 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/135>
+  * list or lsコマンドに起動状態列を追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/136>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Mon, 12 Jun 2017 11:28:50 +0000
+
 usacloud (0.0.9-1) stable; urgency=low
 
   * パブリックアーカイブ追加 (by yamamoto-febc)
