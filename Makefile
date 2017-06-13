@@ -30,28 +30,9 @@ deps:
 	go get -u github.com/golang/lint/golint
 
 
-.PHONY: tools
-tools: tools/bin/gen-cli-commands tools/bin/gen-command-funcs tools/bin/gen-input-models tools/bin/gen-command-completion
-
-tools/bin/gen-cli-commands: tools/gen-cli-commands/*.go
-	go build -o $(CURDIR)/tools/bin/gen-cli-commands $(CURDIR)/tools/gen-cli-commands/*.go
-
-tools/bin/gen-command-funcs: tools/gen-command-funcs/*.go
-	go build -o $(CURDIR)/tools/bin/gen-command-funcs $(CURDIR)/tools/gen-command-funcs/*.go
-
-tools/bin/gen-input-models: tools/gen-input-models/*.go
-	go build -o $(CURDIR)/tools/bin/gen-input-models $(CURDIR)/tools/gen-input-models/*.go
-
-tools/bin/gen-command-completion: tools/gen-command-completion/*.go
-	go build -o $(CURDIR)/tools/bin/gen-command-completion $(CURDIR)/tools/gen-command-completion/*.go
-
-
 .PHONY: gen-bash-completion
-gen-bash-completion: gen tools/bin/gen-bash-completion
-	tools/bin/gen-bash-completion
-
-tools/bin/gen-bash-completion: tools/gen-bash-completion/*.go
-	go build -o $(CURDIR)/tools/bin/gen-bash-completion $(CURDIR)/tools/gen-bash-completion/*.go
+gen-bash-completion: gen
+	go run tools/gen-bash-completion/main.go
 
 contrib/completion/bash/usacloud: define/*.go gen-bash-completion
 

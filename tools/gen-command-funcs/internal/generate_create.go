@@ -1,17 +1,18 @@
-package main
+package internal
 
 import (
 	"bytes"
 	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/tools"
 	"text/template"
 )
 
-func generateDeleteCommand(command *schema.Command) (string, error) {
+func GenerateCreateCommand(ctx *tools.GenerateContext, command *schema.Command) (string, error) {
 	b := bytes.NewBufferString("")
 	t := template.New("c")
-	template.Must(t.Parse(deleteCommandTemplate))
+	template.Must(t.Parse(createCommandTemplate))
 
-	setParamActions, err := generateSetParamActions(command)
+	setParamActions, err := generateSetParamActions(ctx, command)
 	if err != nil {
 		return "", err
 	}
@@ -24,15 +25,16 @@ func generateDeleteCommand(command *schema.Command) (string, error) {
 	return b.String(), err
 }
 
-var deleteCommandTemplate = `
+var createCommandTemplate = `
 	client := ctx.GetAPIClient()
 	api := client.Get{{.ResourceName}}API()
+	p := api.New()
 
 	// set params
 	{{.SetParamActions}}
 
-	// call Delete(id)
-	res, err := api.Delete(params.Id)
+	// call Create(id)
+	res, err := api.Create(p)
 	if err != nil {
 		return fmt.Errorf("{{.FuncName}} is failed: %s", err)
 	}

@@ -1,17 +1,18 @@
-package main
+package internal
 
 import (
 	"bytes"
 	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/tools"
 	"text/template"
 )
 
-func generateManipulateCommand(command *schema.Command) (string, error) {
+func GenerateManipulateCommand(ctx *tools.GenerateContext, command *schema.Command) (string, error) {
 	b := bytes.NewBufferString("")
 	t := template.New("c")
 	template.Must(t.Parse(manipulateCommandTemplate))
 
-	setParamActions, err := generateSetParamActions(command)
+	setParamActions, err := generateSetParamActions(ctx, command)
 	if err != nil {
 		return "", err
 	}

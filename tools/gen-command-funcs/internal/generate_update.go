@@ -1,17 +1,18 @@
-package main
+package internal
 
 import (
 	"bytes"
 	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/tools"
 	"text/template"
 )
 
-func generateReadCommand(command *schema.Command) (string, error) {
+func GenerateUpdateCommand(ctx *tools.GenerateContext, command *schema.Command) (string, error) {
 	b := bytes.NewBufferString("")
 	t := template.New("c")
-	template.Must(t.Parse(readCommandTemplate))
+	template.Must(t.Parse(updateCommandTemplate))
 
-	setParamActions, err := generateSetParamActions(command)
+	setParamActions, err := generateSetParamActions(ctx, command)
 	if err != nil {
 		return "", err
 	}
@@ -24,15 +25,19 @@ func generateReadCommand(command *schema.Command) (string, error) {
 	return b.String(), err
 }
 
-var readCommandTemplate = `
+var updateCommandTemplate = `
 	client := ctx.GetAPIClient()
 	api := client.Get{{.ResourceName}}API()
+	p, e := api.Read(params.Id)
+	if e != nil {
+		return fmt.Errorf("{{.FuncName}} is failed: %s", e)
+	}
 
 	// set params
 	{{.SetParamActions}}
 
-	// call Read(id)
-	res, err := api.Read(params.Id)
+	// call Update(id)
+	res, err := api.Update(params.Id, p)
 	if err != nil {
 		return fmt.Errorf("{{.FuncName}} is failed: %s", err)
 	}

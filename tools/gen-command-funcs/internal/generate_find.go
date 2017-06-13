@@ -1,23 +1,24 @@
-package main
+package internal
 
 import (
 	"bytes"
 	"fmt"
 	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/tools"
 	"text/template"
 )
 
-func generateFindCommand(command *schema.Command) (string, error) {
+func GenerateFindCommand(ctx *tools.GenerateContext, command *schema.Command) (string, error) {
 	b := bytes.NewBufferString("")
 	t := template.New("c")
 	template.Must(t.Parse(findCommandTemplate))
 
-	setParamActions, err := generateFindSetParamActions(command)
+	setParamActions, err := generateFindSetParamActions(ctx, command)
 	if err != nil {
 		return "", err
 	}
 
-	filterActions, err := generateFilterActions(command)
+	filterActions, err := generateFilterActions(ctx, command)
 	if err != nil {
 		return "", err
 	}
@@ -54,7 +55,7 @@ var findCommandTemplate = `
 	return ctx.GetOutput().Print(list...)
 `
 
-func generateFindSetParamActions(command *schema.Command) (string, error) {
+func generateFindSetParamActions(ctx *tools.GenerateContext, command *schema.Command) (string, error) {
 
 	b := bytes.NewBufferString("")
 
@@ -125,7 +126,7 @@ var findSetParamTemplates = map[schema.HandlerType]string{
 	}`,
 }
 
-func generateFilterActions(command *schema.Command) (string, error) {
+func generateFilterActions(ctx *tools.GenerateContext, command *schema.Command) (string, error) {
 
 	b := bytes.NewBufferString("")
 
