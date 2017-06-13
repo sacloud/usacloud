@@ -169,18 +169,35 @@ func validateOutputOption(o output.Option) []error {
 	outputType := o.GetOutputType()
 	columns := o.GetColumn()
 	format := o.GetFormat()
+	formatFile := o.GetFormatFile()
 	quiet := o.GetQuiet()
 
+	// format and format-file
+	if format != "" && formatFile != "" {
+		return []error{fmt.Errorf("%q: can't set with --format-file", "--format")}
+	}
+
+	// format(or format-file) with output-type
 	if outputType != "" && format != "" {
-		return []error{fmt.Errorf("%q: can't set with --output-format", "--format")}
+		return []error{fmt.Errorf("%q: can't set with --output-type", "--format")}
+	}
+	if outputType != "" && formatFile != "" {
+		return []error{fmt.Errorf("%q: can't set with --output-type", "--format-file")}
+	}
+
+	if formatFile != "" {
+		errs := schema.ValidateFileExists()("--format-file", formatFile)
+		if len(errs) > 0 {
+			return errs
+		}
 	}
 
 	if outputType != "" && quiet {
-		return []error{fmt.Errorf("%q: can't set with --output-format", "--quiet")}
+		return []error{fmt.Errorf("%q: can't set with --output-type", "--quiet")}
 	}
 
 	if outputType != "tsv" && outputType != "csv" && len(columns) > 0 {
-		return []error{fmt.Errorf("%q: can't set when --output-format is csv/tsv", "column")}
+		return []error{fmt.Errorf("%q: can't set when --output-type is csv/tsv", "--column")}
 	}
 
 	return []error{}

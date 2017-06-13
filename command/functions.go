@@ -66,7 +66,7 @@ func getOutputWriter(formatter output.Formatter) output.Output {
 		if formatter.GetQuiet() {
 			return output.NewIDOutput(o.Out, o.Err)
 		}
-		if formatter.GetFormat() == "" {
+		if formatter.GetFormat() == "" && formatter.GetFormatFile() == "" {
 			return output.NewTableOutput(o.Out, o.Err, formatter)
 		}
 		return output.NewFreeOutput(o.Out, o.Err, formatter)

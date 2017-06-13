@@ -284,8 +284,12 @@ func ValidateFileExists() ValidateFunc {
 				return res
 			}
 
-			_, err := os.Stat(path)
-			if err != nil {
+			s, err := os.Stat(path)
+			if err == nil {
+				if s.Size() == 0 {
+					res = append(res, fmt.Errorf("%q: File must not be empty", fieldName))
+				}
+			} else {
 				res = append(res, fmt.Errorf("%q: File must be exists", fieldName))
 			}
 		}
