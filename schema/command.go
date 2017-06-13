@@ -71,9 +71,15 @@ func (c *Command) ParamCategory(key string) *Category {
 
 func (c *Command) BuildedParams() SortableParams {
 
+	// Notice: ここで追加されるパラメータはdefine.Resourcesからは見えない。
+	//         (コード生成時に追加されるため)
+	//         このため、ランタイムでdefine.Resourcesを参照する必要のある
+	//         ValidatorやConflictsWithは利用できない。
+	//         Validatorを利用したい場合はコード生成時に手動で呼び出すコードを出力する。
+	//         例: command.validateOutputOption(o output.Option)の呼び出し部分など
+
 	// add ID param
 	if c.Type.IsRequiredIDType() {
-		// has "force" param?
 		if _, ok := c.Params["id"]; !ok {
 			c.Params["id"] = &Schema{
 				Type:        TypeInt64,
@@ -86,7 +92,6 @@ func (c *Command) BuildedParams() SortableParams {
 	}
 
 	if c.Type.IsNeedConfirmType() && !c.NeedlessConfirm {
-		// has "assumeyes" param?
 		if _, ok := c.Params["assumeyes"]; !ok {
 			c.Params["assumeyes"] = &Schema{
 				Type:        TypeBool,
@@ -137,6 +142,15 @@ func (c *Command) BuildedParams() SortableParams {
 				Description: "Output format(see text/template package document for detail)",
 				Category:    "output",
 				Order:       40,
+			}
+		}
+		if _, ok := c.Params["format-file"]; !ok {
+			c.Params["format-file"] = &Schema{
+				Type:        TypeString,
+				HandlerType: HandlerNoop,
+				Description: "Output format from file(see text/template package document for detail)",
+				Category:    "output",
+				Order:       50,
 			}
 		}
 	}

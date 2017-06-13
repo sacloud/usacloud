@@ -15,6 +15,7 @@ type Option interface {
 	GetOutputType() string
 	GetColumn() []string
 	GetFormat() string
+	GetFormatFile() string
 	GetQuiet() bool
 }
 
