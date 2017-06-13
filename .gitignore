@@ -1,7 +1,4 @@
-command/*_gen.go
-
 .env
-
 bin/*
 tools/bin/*
 

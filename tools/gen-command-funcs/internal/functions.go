@@ -24,7 +24,7 @@ func generateSetParamActions(ctx *tools.GenerateContext, command *schema.Command
 		t := template.New("c")
 		template.Must(t.Parse(setParamTemplates[p.HandlerType]))
 
-		customFunc := fmt.Sprintf(`params.getCommandDef().Params["%s"].CustomHandler`, ctx.P)
+		customFunc := fmt.Sprintf(`params.GetCommandDef().Params["%s"].CustomHandler`, ctx.P)
 		needIsSetCheck := command.Type == schema.CommandUpdate
 
 		err := t.Execute(b, map[string]interface{}{

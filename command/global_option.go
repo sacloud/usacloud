@@ -70,7 +70,7 @@ var GlobalFlags = []cli.Flag{
 	},
 }
 
-var allowZones = []string{"is1a", "is1b", "tk1a", "tk1v"}
+var AllowZones = []string{"is1a", "is1b", "tk1a", "tk1v"}
 
 func (o *Option) Validate(skipAuth bool) []error {
 	var errs []error
@@ -78,10 +78,10 @@ func (o *Option) Validate(skipAuth bool) []error {
 	// token/secret
 	needAuth := !skipAuth
 	if needAuth {
-		errs = append(errs, validateRequired("token", o.AccessToken)...)
-		errs = append(errs, validateRequired("secret", o.AccessTokenSecret)...)
-		errs = append(errs, validateRequired("zone", o.Zone)...)
-		errs = append(errs, validateInStrValues("zone", o.Zone, allowZones...)...)
+		errs = append(errs, ValidateRequired("token", o.AccessToken)...)
+		errs = append(errs, ValidateRequired("secret", o.AccessTokenSecret)...)
+		errs = append(errs, ValidateRequired("zone", o.Zone)...)
+		errs = append(errs, ValidateInStrValues("zone", o.Zone, AllowZones...)...)
 	}
 
 	o.Validated = true

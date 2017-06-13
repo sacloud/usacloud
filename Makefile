@@ -22,7 +22,12 @@ clean:
 
 .PHONY: clean-all
 clean-all:
-	rm -Rf bin/* ; rm -Rf tools/bin/* ; rm -f command/*_gen.go
+	rm -Rf bin/* ; rm -Rf tools/bin/* ; rm -f command/*_gen.go; \
+	rm -f command/cli/*_gen.go; \
+	rm -f command/completion/*_gen.go; \
+	rm -f command/funcs/*_gen.go; \
+	rm -f command/params/*_gen.go
+
 
 .PHONY: deps
 deps:
@@ -37,7 +42,7 @@ gen-bash-completion: gen
 contrib/completion/bash/usacloud: define/*.go gen-bash-completion
 
 .PHONY: gen
-gen: tools command/*_gen.go
+gen: tools command/cli/*_gen.go command/completion/*_gen.go command/funcs/*_gen.go command/params/*_gen.go
 
 .PHONY: gen-force
 gen-force: clean-all tools
