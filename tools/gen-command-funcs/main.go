@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/sacloud/usacloud/schema"
 	"github.com/sacloud/usacloud/tools"
+	"github.com/sacloud/usacloud/tools/gen-command-funcs/internal"
 	"io/ioutil"
 	"log"
 	"os"
@@ -110,22 +111,22 @@ func generateAction(command *schema.Command) (string, error) {
 	switch command.Type {
 	case schema.CommandList:
 		// list / find / search
-		res, err = generateFindCommand(command)
+		res, err = internal.GenerateFindCommand(ctx, command)
 	case schema.CommandCreate:
 		// create
-		res, err = generateCreateCommand(command)
+		res, err = internal.GenerateCreateCommand(ctx, command)
 	case schema.CommandRead:
 		// read
-		res, err = generateReadCommand(command)
+		res, err = internal.GenerateReadCommand(ctx, command)
 	case schema.CommandUpdate:
 		// update
-		res, err = generateUpdateCommand(command)
+		res, err = internal.GenerateUpdateCommand(ctx, command)
 	case schema.CommandDelete:
 		// delete
-		res, err = generateDeleteCommand(command)
+		res, err = internal.GenerateDeleteCommand(ctx, command)
 	case schema.CommandManipulateMulti, schema.CommandManipulateSingle, schema.CommandManipulateIDOnly:
 		// power-on/off
-		res, err = generateManipulateCommand(command)
+		res, err = internal.GenerateManipulateCommand(ctx, command)
 	case schema.CommandCustom:
 		// custom
 		res = `return fmt.Errorf("Not implements")`

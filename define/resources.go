@@ -1,8 +1,8 @@
 // Package define .
-//go:generate ../tools/bin/gen-input-models
-//go:generate ../tools/bin/gen-cli-commands
-//go:generate ../tools/bin/gen-command-funcs
-//go:generate ../tools/bin/gen-command-completion
+//go:generate go run ../tools/gen-input-models/main.go
+//go:generate go run ../tools/gen-cli-commands/main.go
+//go:generate go run ../tools/gen-command-funcs/main.go
+//go:generate go run ../tools/gen-command-completion/main.go
 package define
 
 import "github.com/sacloud/usacloud/schema"

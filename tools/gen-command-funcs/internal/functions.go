@@ -1,13 +1,14 @@
-package main
+package internal
 
 import (
 	"bytes"
 	"fmt"
 	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/tools"
 	"text/template"
 )
 
-func generateSetParamActions(command *schema.Command) (string, error) {
+func generateSetParamActions(ctx *tools.GenerateContext, command *schema.Command) (string, error) {
 
 	b := bytes.NewBufferString("")
 
