@@ -55,6 +55,16 @@ func init() {
 						Name:  "tags",
 						Usage: "set filter by tags(AND)",
 					},
+					&cli.Int64Flag{
+						Name:        "source-archive-id",
+						Usage:       "set filter by source-archive-id",
+						Destination: &listParam.SourceArchiveId,
+					},
+					&cli.Int64Flag{
+						Name:        "source-disk-id",
+						Usage:       "set filter by source-disk-id",
+						Destination: &listParam.SourceDiskId,
+					},
 					&cli.IntFlag{
 						Name:        "from",
 						Aliases:     []string{"offset"},
@@ -2920,6 +2930,16 @@ func init() {
 		Key:         "sort",
 		DisplayName: "Sort options",
 		Order:       2147483607,
+	})
+	AppendFlagCategoryMap("disk", "list", "source-archive-id", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("disk", "list", "source-disk-id", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("disk", "list", "tags", &schema.Category{
 		Key:         "filter",

@@ -22,6 +22,10 @@ func DiskListCompleteFlags(ctx command.Context, params *params.ListDiskParam, fl
 		comp = define.Resources["Disk"].Commands["list"].Params["scope"].CompleteFunc
 	case "tags":
 		comp = define.Resources["Disk"].Commands["list"].Params["tags"].CompleteFunc
+	case "source-archive-id":
+		comp = define.Resources["Disk"].Commands["list"].Params["source-archive-id"].CompleteFunc
+	case "source-disk-id":
+		comp = define.Resources["Disk"].Commands["list"].Params["source-disk-id"].CompleteFunc
 	case "from", "offset":
 		comp = define.Resources["Disk"].Commands["list"].Params["from"].CompleteFunc
 	case "max", "limit":

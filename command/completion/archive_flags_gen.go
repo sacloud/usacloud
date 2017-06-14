@@ -22,6 +22,10 @@ func ArchiveListCompleteFlags(ctx command.Context, params *params.ListArchivePar
 		comp = define.Resources["Archive"].Commands["list"].Params["scope"].CompleteFunc
 	case "tags":
 		comp = define.Resources["Archive"].Commands["list"].Params["tags"].CompleteFunc
+	case "source-archive-id":
+		comp = define.Resources["Archive"].Commands["list"].Params["source-archive-id"].CompleteFunc
+	case "source-disk-id":
+		comp = define.Resources["Archive"].Commands["list"].Params["source-disk-id"].CompleteFunc
 	case "from", "offset":
 		comp = define.Resources["Archive"].Commands["list"].Params["from"].CompleteFunc
 	case "max", "limit":

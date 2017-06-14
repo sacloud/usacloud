@@ -53,6 +53,14 @@ func ArchiveList(ctx command.Context, params *params.ListArchiveParam) error {
 			continue
 		}
 
+		if !params.GetCommandDef().Params["source-archive-id"].FilterFunc(list, &res.Archives[i], params.SourceArchiveId) {
+			continue
+		}
+
+		if !params.GetCommandDef().Params["source-disk-id"].FilterFunc(list, &res.Archives[i], params.SourceDiskId) {
+			continue
+		}
+
 		list = append(list, &res.Archives[i])
 	}
 	return ctx.GetOutput().Print(list...)
