@@ -17,6 +17,7 @@ type ListPacketFilterParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -27,6 +28,50 @@ type ListPacketFilterParam struct {
 // NewListPacketFilterParam return new ListPacketFilterParam
 func NewListPacketFilterParam() *ListPacketFilterParam {
 	return &ListPacketFilterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListPacketFilterParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -158,6 +203,13 @@ func (p *ListPacketFilterParam) SetParamTemplateFile(v string) {
 func (p *ListPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListPacketFilterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListPacketFilterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListPacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -201,6 +253,7 @@ type CreatePacketFilterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -211,6 +264,44 @@ type CreatePacketFilterParam struct {
 // NewCreatePacketFilterParam return new CreatePacketFilterParam
 func NewCreatePacketFilterParam() *CreatePacketFilterParam {
 	return &CreatePacketFilterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreatePacketFilterParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -324,6 +415,13 @@ func (p *CreatePacketFilterParam) SetParamTemplateFile(v string) {
 func (p *CreatePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreatePacketFilterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreatePacketFilterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreatePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -364,6 +462,7 @@ func (p *CreatePacketFilterParam) GetFormatFile() string {
 type ReadPacketFilterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -375,6 +474,38 @@ type ReadPacketFilterParam struct {
 // NewReadPacketFilterParam return new ReadPacketFilterParam
 func NewReadPacketFilterParam() *ReadPacketFilterParam {
 	return &ReadPacketFilterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadPacketFilterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -453,6 +584,13 @@ func (p *ReadPacketFilterParam) SetParamTemplateFile(v string) {
 func (p *ReadPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadPacketFilterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadPacketFilterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadPacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -503,6 +641,7 @@ type UpdatePacketFilterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -514,6 +653,47 @@ type UpdatePacketFilterParam struct {
 // NewUpdatePacketFilterParam return new UpdatePacketFilterParam
 func NewUpdatePacketFilterParam() *UpdatePacketFilterParam {
 	return &UpdatePacketFilterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdatePacketFilterParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -627,6 +807,13 @@ func (p *UpdatePacketFilterParam) SetParamTemplateFile(v string) {
 func (p *UpdatePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdatePacketFilterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdatePacketFilterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdatePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -675,6 +862,7 @@ type DeletePacketFilterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -686,6 +874,41 @@ type DeletePacketFilterParam struct {
 // NewDeletePacketFilterParam return new DeletePacketFilterParam
 func NewDeletePacketFilterParam() *DeletePacketFilterParam {
 	return &DeletePacketFilterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeletePacketFilterParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -771,6 +994,13 @@ func (p *DeletePacketFilterParam) SetParamTemplateFile(v string) {
 func (p *DeletePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DeletePacketFilterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeletePacketFilterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DeletePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -818,6 +1048,7 @@ func (p *DeletePacketFilterParam) GetId() int64 {
 type RuleInfoPacketFilterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -829,6 +1060,38 @@ type RuleInfoPacketFilterParam struct {
 // NewRuleInfoPacketFilterParam return new RuleInfoPacketFilterParam
 func NewRuleInfoPacketFilterParam() *RuleInfoPacketFilterParam {
 	return &RuleInfoPacketFilterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *RuleInfoPacketFilterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -907,6 +1170,13 @@ func (p *RuleInfoPacketFilterParam) SetParamTemplateFile(v string) {
 func (p *RuleInfoPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *RuleInfoPacketFilterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *RuleInfoPacketFilterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *RuleInfoPacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -962,6 +1232,7 @@ type RuleAddPacketFilterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -976,6 +1247,62 @@ func NewRuleAddPacketFilterParam() *RuleAddPacketFilterParam {
 
 		Index: 1,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *RuleAddPacketFilterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if isEmpty(p.SourceNetwork) {
+		p.SourceNetwork = ""
+	}
+	if isEmpty(p.SourcePort) {
+		p.SourcePort = ""
+	}
+	if isEmpty(p.DestinationPort) {
+		p.DestinationPort = ""
+	}
+	if isEmpty(p.Action) {
+		p.Action = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1152,6 +1479,13 @@ func (p *RuleAddPacketFilterParam) SetParamTemplateFile(v string) {
 func (p *RuleAddPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *RuleAddPacketFilterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *RuleAddPacketFilterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *RuleAddPacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1207,6 +1541,7 @@ type RuleUpdatePacketFilterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1218,6 +1553,62 @@ type RuleUpdatePacketFilterParam struct {
 // NewRuleUpdatePacketFilterParam return new RuleUpdatePacketFilterParam
 func NewRuleUpdatePacketFilterParam() *RuleUpdatePacketFilterParam {
 	return &RuleUpdatePacketFilterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *RuleUpdatePacketFilterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if isEmpty(p.SourceNetwork) {
+		p.SourceNetwork = ""
+	}
+	if isEmpty(p.SourcePort) {
+		p.SourcePort = ""
+	}
+	if isEmpty(p.DestinationPort) {
+		p.DestinationPort = ""
+	}
+	if isEmpty(p.Action) {
+		p.Action = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1401,6 +1792,13 @@ func (p *RuleUpdatePacketFilterParam) SetParamTemplateFile(v string) {
 func (p *RuleUpdatePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *RuleUpdatePacketFilterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *RuleUpdatePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1450,6 +1848,7 @@ type RuleDeletePacketFilterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1461,6 +1860,44 @@ type RuleDeletePacketFilterParam struct {
 // NewRuleDeletePacketFilterParam return new RuleDeletePacketFilterParam
 func NewRuleDeletePacketFilterParam() *RuleDeletePacketFilterParam {
 	return &RuleDeletePacketFilterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *RuleDeletePacketFilterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1560,6 +1997,13 @@ func (p *RuleDeletePacketFilterParam) SetParamTemplateFile(v string) {
 func (p *RuleDeletePacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *RuleDeletePacketFilterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *RuleDeletePacketFilterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *RuleDeletePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1609,12 +2053,36 @@ type InterfaceConnectPacketFilterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewInterfaceConnectPacketFilterParam return new InterfaceConnectPacketFilterParam
 func NewInterfaceConnectPacketFilterParam() *InterfaceConnectPacketFilterParam {
 	return &InterfaceConnectPacketFilterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *InterfaceConnectPacketFilterParam) FillValueToSkeleton() {
+	if isEmpty(p.InterfaceId) {
+		p.InterfaceId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1701,6 +2169,13 @@ func (p *InterfaceConnectPacketFilterParam) SetParamTemplateFile(v string) {
 func (p *InterfaceConnectPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *InterfaceConnectPacketFilterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceConnectPacketFilterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *InterfaceConnectPacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1715,12 +2190,36 @@ type InterfaceDisconnectPacketFilterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewInterfaceDisconnectPacketFilterParam return new InterfaceDisconnectPacketFilterParam
 func NewInterfaceDisconnectPacketFilterParam() *InterfaceDisconnectPacketFilterParam {
 	return &InterfaceDisconnectPacketFilterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *InterfaceDisconnectPacketFilterParam) FillValueToSkeleton() {
+	if isEmpty(p.InterfaceId) {
+		p.InterfaceId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1806,6 +2305,13 @@ func (p *InterfaceDisconnectPacketFilterParam) SetParamTemplateFile(v string) {
 
 func (p *InterfaceDisconnectPacketFilterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *InterfaceDisconnectPacketFilterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceDisconnectPacketFilterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *InterfaceDisconnectPacketFilterParam) SetId(v int64) {
 	p.Id = v

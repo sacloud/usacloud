@@ -18,6 +18,7 @@ type ListGSLBParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -28,6 +29,53 @@ type ListGSLBParam struct {
 // NewListGSLBParam return new ListGSLBParam
 func NewListGSLBParam() *ListGSLBParam {
 	return &ListGSLBParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListGSLBParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -173,6 +221,13 @@ func (p *ListGSLBParam) SetParamTemplateFile(v string) {
 func (p *ListGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListGSLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListGSLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -213,6 +268,7 @@ func (p *ListGSLBParam) GetFormatFile() string {
 type ServerInfoGSLBParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -224,6 +280,38 @@ type ServerInfoGSLBParam struct {
 // NewServerInfoGSLBParam return new ServerInfoGSLBParam
 func NewServerInfoGSLBParam() *ServerInfoGSLBParam {
 	return &ServerInfoGSLBParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ServerInfoGSLBParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -302,6 +390,13 @@ func (p *ServerInfoGSLBParam) SetParamTemplateFile(v string) {
 func (p *ServerInfoGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ServerInfoGSLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerInfoGSLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ServerInfoGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -362,6 +457,7 @@ type CreateGSLBParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -373,16 +469,80 @@ type CreateGSLBParam struct {
 func NewCreateGSLBParam() *CreateGSLBParam {
 	return &CreateGSLBParam{
 
-		Protocol: "ping",
-
-		Path: "/",
-
+		Protocol:     "ping",
+		Path:         "/",
 		ResponseCode: 200,
-
-		DelayLoop: 10,
-
-		Weighted: true,
+		DelayLoop:    10,
+		Weighted:     true,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateGSLBParam) FillValueToSkeleton() {
+	if isEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if isEmpty(p.HostHeader) {
+		p.HostHeader = ""
+	}
+	if isEmpty(p.Path) {
+		p.Path = ""
+	}
+	if isEmpty(p.ResponseCode) {
+		p.ResponseCode = 0
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.DelayLoop) {
+		p.DelayLoop = 0
+	}
+	if isEmpty(p.Weighted) {
+		p.Weighted = false
+	}
+	if isEmpty(p.SorryServer) {
+		p.SorryServer = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -615,6 +775,13 @@ func (p *CreateGSLBParam) SetParamTemplateFile(v string) {
 func (p *CreateGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateGSLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateGSLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -659,6 +826,7 @@ type ServerAddGSLBParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -673,6 +841,50 @@ func NewServerAddGSLBParam() *ServerAddGSLBParam {
 
 		Enabled: true,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ServerAddGSLBParam) FillValueToSkeleton() {
+	if isEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if isEmpty(p.Enabled) {
+		p.Enabled = false
+	}
+	if isEmpty(p.Weight) {
+		p.Weight = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -793,6 +1005,13 @@ func (p *ServerAddGSLBParam) SetParamTemplateFile(v string) {
 func (p *ServerAddGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ServerAddGSLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerAddGSLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ServerAddGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -840,6 +1059,7 @@ func (p *ServerAddGSLBParam) GetId() int64 {
 type ReadGSLBParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -851,6 +1071,38 @@ type ReadGSLBParam struct {
 // NewReadGSLBParam return new ReadGSLBParam
 func NewReadGSLBParam() *ReadGSLBParam {
 	return &ReadGSLBParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadGSLBParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -929,6 +1181,13 @@ func (p *ReadGSLBParam) SetParamTemplateFile(v string) {
 func (p *ReadGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadGSLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadGSLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -981,6 +1240,7 @@ type ServerUpdateGSLBParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -992,6 +1252,53 @@ type ServerUpdateGSLBParam struct {
 // NewServerUpdateGSLBParam return new ServerUpdateGSLBParam
 func NewServerUpdateGSLBParam() *ServerUpdateGSLBParam {
 	return &ServerUpdateGSLBParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ServerUpdateGSLBParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if isEmpty(p.Enabled) {
+		p.Enabled = false
+	}
+	if isEmpty(p.Weight) {
+		p.Weight = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1126,6 +1433,13 @@ func (p *ServerUpdateGSLBParam) SetParamTemplateFile(v string) {
 func (p *ServerUpdateGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ServerUpdateGSLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerUpdateGSLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ServerUpdateGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1175,6 +1489,7 @@ type ServerDeleteGSLBParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1186,6 +1501,44 @@ type ServerDeleteGSLBParam struct {
 // NewServerDeleteGSLBParam return new ServerDeleteGSLBParam
 func NewServerDeleteGSLBParam() *ServerDeleteGSLBParam {
 	return &ServerDeleteGSLBParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ServerDeleteGSLBParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1285,6 +1638,13 @@ func (p *ServerDeleteGSLBParam) SetParamTemplateFile(v string) {
 func (p *ServerDeleteGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ServerDeleteGSLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerDeleteGSLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ServerDeleteGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1345,6 +1705,7 @@ type UpdateGSLBParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1356,6 +1717,77 @@ type UpdateGSLBParam struct {
 // NewUpdateGSLBParam return new UpdateGSLBParam
 func NewUpdateGSLBParam() *UpdateGSLBParam {
 	return &UpdateGSLBParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateGSLBParam) FillValueToSkeleton() {
+	if isEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if isEmpty(p.HostHeader) {
+		p.HostHeader = ""
+	}
+	if isEmpty(p.Path) {
+		p.Path = ""
+	}
+	if isEmpty(p.ResponseCode) {
+		p.ResponseCode = 0
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.DelayLoop) {
+		p.DelayLoop = 0
+	}
+	if isEmpty(p.Weighted) {
+		p.Weighted = false
+	}
+	if isEmpty(p.SorryServer) {
+		p.SorryServer = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1574,6 +2006,13 @@ func (p *UpdateGSLBParam) SetParamTemplateFile(v string) {
 func (p *UpdateGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateGSLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateGSLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1622,6 +2061,7 @@ type DeleteGSLBParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1633,6 +2073,41 @@ type DeleteGSLBParam struct {
 // NewDeleteGSLBParam return new DeleteGSLBParam
 func NewDeleteGSLBParam() *DeleteGSLBParam {
 	return &DeleteGSLBParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteGSLBParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1717,6 +2192,13 @@ func (p *DeleteGSLBParam) SetParamTemplateFile(v string) {
 
 func (p *DeleteGSLBParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteGSLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteGSLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *DeleteGSLBParam) SetOutputType(v string) {
 	p.OutputType = v

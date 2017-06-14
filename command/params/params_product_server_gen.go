@@ -17,6 +17,7 @@ type ListProductServerParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -27,6 +28,50 @@ type ListProductServerParam struct {
 // NewListProductServerParam return new ListProductServerParam
 func NewListProductServerParam() *ListProductServerParam {
 	return &ListProductServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListProductServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -158,6 +203,13 @@ func (p *ListProductServerParam) SetParamTemplateFile(v string) {
 func (p *ListProductServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListProductServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListProductServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListProductServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -199,6 +251,7 @@ type ReadProductServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -210,6 +263,41 @@ type ReadProductServerParam struct {
 // NewReadProductServerParam return new ReadProductServerParam
 func NewReadProductServerParam() *ReadProductServerParam {
 	return &ReadProductServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadProductServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -301,6 +389,13 @@ func (p *ReadProductServerParam) SetParamTemplateFile(v string) {
 
 func (p *ReadProductServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadProductServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadProductServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *ReadProductServerParam) SetOutputType(v string) {
 	p.OutputType = v

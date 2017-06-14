@@ -44,6 +44,10 @@ func init() {
 						Usage: "Set input parameter from file",
 					},
 					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.BoolFlag{
 						Name:  "no-header",
 						Usage: "set output header flag",
 					},
@@ -85,6 +89,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						csvParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						csvParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("no-header") {
 						csvParam.NoHeader = c.Bool("no-header")
@@ -179,6 +186,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						csvParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						csvParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("no-header") {
 						csvParam.NoHeader = c.Bool("no-header")
 					}
@@ -192,6 +202,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if csvParam.GenerateSkeleton {
+						csvParam.GenerateSkeleton = false
+						csvParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(csvParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					if c.NArg() == 0 {
@@ -232,6 +254,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
 					},
 					&cli.StringFlag{
 						Name:    "output-type",
@@ -291,6 +317,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						listParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						listParam.OutputType = c.String("output-type")
@@ -397,6 +426,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						listParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						listParam.OutputType = c.String("output-type")
 					}
@@ -416,6 +448,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if listParam.GenerateSkeleton {
+						listParam.GenerateSkeleton = false
+						listParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(listParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -461,6 +505,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("bill", "csv", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("bill", "csv", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -495,6 +544,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("bill", "list", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("bill", "list", "month", &schema.Category{
 		Key:         "filter",

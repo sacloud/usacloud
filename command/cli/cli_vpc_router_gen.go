@@ -113,6 +113,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -183,6 +187,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						listParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						listParam.OutputType = c.String("output-type")
@@ -301,6 +308,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						listParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						listParam.OutputType = c.String("output-type")
 					}
@@ -320,6 +330,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if listParam.GenerateSkeleton {
+						listParam.GenerateSkeleton = false
+						listParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(listParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -402,6 +424,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
 					},
 					&cli.StringFlag{
 						Name:    "output-type",
@@ -491,6 +517,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						createParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						createParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						createParam.OutputType = c.String("output-type")
@@ -627,6 +656,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						createParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						createParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						createParam.OutputType = c.String("output-type")
 					}
@@ -646,6 +678,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if createParam.GenerateSkeleton {
+						createParam.GenerateSkeleton = false
+						createParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(createParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -678,6 +722,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
 					},
 					&cli.StringFlag{
 						Name:    "output-type",
@@ -736,6 +784,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						readParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						readParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						readParam.OutputType = c.String("output-type")
@@ -839,6 +890,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						readParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						readParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						readParam.OutputType = c.String("output-type")
 					}
@@ -861,6 +915,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if readParam.GenerateSkeleton {
+						readParam.GenerateSkeleton = false
+						readParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(readParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -968,6 +1034,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -1043,6 +1113,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						updateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						updateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						updateParam.OutputType = c.String("output-type")
@@ -1164,6 +1237,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						updateParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						updateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						updateParam.OutputType = c.String("output-type")
 					}
@@ -1186,6 +1262,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if updateParam.GenerateSkeleton {
+						updateParam.GenerateSkeleton = false
+						updateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(updateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -1279,6 +1367,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -1342,6 +1434,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						deleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						deleteParam.OutputType = c.String("output-type")
@@ -1451,6 +1546,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						deleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						deleteParam.OutputType = c.String("output-type")
 					}
@@ -1473,6 +1571,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if deleteParam.GenerateSkeleton {
+						deleteParam.GenerateSkeleton = false
+						deleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(deleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -1561,6 +1671,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -1597,6 +1711,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						bootParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						bootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						bootParam.Id = c.Int64("id")
@@ -1688,6 +1805,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						bootParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						bootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						bootParam.Id = c.Int64("id")
 					}
@@ -1695,6 +1815,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if bootParam.GenerateSkeleton {
+						bootParam.GenerateSkeleton = false
+						bootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(bootParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -1783,6 +1915,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -1819,6 +1955,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						shutdownParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						shutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						shutdownParam.Id = c.Int64("id")
@@ -1910,6 +2049,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						shutdownParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						shutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						shutdownParam.Id = c.Int64("id")
 					}
@@ -1917,6 +2059,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if shutdownParam.GenerateSkeleton {
+						shutdownParam.GenerateSkeleton = false
+						shutdownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(shutdownParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -2005,6 +2159,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -2041,6 +2199,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						shutdownForceParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						shutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						shutdownForceParam.Id = c.Int64("id")
@@ -2132,6 +2293,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						shutdownForceParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						shutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						shutdownForceParam.Id = c.Int64("id")
 					}
@@ -2139,6 +2303,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if shutdownForceParam.GenerateSkeleton {
+						shutdownForceParam.GenerateSkeleton = false
+						shutdownForceParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(shutdownForceParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -2226,6 +2402,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -2262,6 +2442,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						resetParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						resetParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						resetParam.Id = c.Int64("id")
@@ -2353,6 +2536,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						resetParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						resetParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						resetParam.Id = c.Int64("id")
 					}
@@ -2360,6 +2546,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if resetParam.GenerateSkeleton {
+						resetParam.GenerateSkeleton = false
+						resetParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(resetParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -2442,6 +2640,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -2475,6 +2677,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						waitForBootParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						waitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						waitForBootParam.Id = c.Int64("id")
@@ -2563,6 +2768,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						waitForBootParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						waitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						waitForBootParam.Id = c.Int64("id")
 					}
@@ -2570,6 +2778,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if waitForBootParam.GenerateSkeleton {
+						waitForBootParam.GenerateSkeleton = false
+						waitForBootParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(waitForBootParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -2647,6 +2867,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -2680,6 +2904,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						waitForDownParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						waitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						waitForDownParam.Id = c.Int64("id")
@@ -2768,6 +2995,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						waitForDownParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						waitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						waitForDownParam.Id = c.Int64("id")
 					}
@@ -2775,6 +3005,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if waitForDownParam.GenerateSkeleton {
+						waitForDownParam.GenerateSkeleton = false
+						waitForDownParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(waitForDownParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -2853,6 +3095,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -2910,6 +3156,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						interfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						interfaceInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						interfaceInfoParam.OutputType = c.String("output-type")
@@ -3013,6 +3262,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						interfaceInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						interfaceInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						interfaceInfoParam.OutputType = c.String("output-type")
 					}
@@ -3035,6 +3287,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if interfaceInfoParam.GenerateSkeleton {
+						interfaceInfoParam.GenerateSkeleton = false
+						interfaceInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(interfaceInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -3154,6 +3418,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -3211,6 +3479,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						interfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						interfaceConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						interfaceConnectParam.Id = c.Int64("id")
@@ -3323,6 +3594,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						interfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						interfaceConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						interfaceConnectParam.Id = c.Int64("id")
 					}
@@ -3330,6 +3604,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if interfaceConnectParam.GenerateSkeleton {
+						interfaceConnectParam.GenerateSkeleton = false
+						interfaceConnectParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(interfaceConnectParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -3458,6 +3744,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -3518,6 +3808,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						interfaceUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						interfaceUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						interfaceUpdateParam.Id = c.Int64("id")
@@ -3633,6 +3926,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						interfaceUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						interfaceUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						interfaceUpdateParam.Id = c.Int64("id")
 					}
@@ -3640,6 +3936,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if interfaceUpdateParam.GenerateSkeleton {
+						interfaceUpdateParam.GenerateSkeleton = false
+						interfaceUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(interfaceUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -3739,6 +4047,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -3781,6 +4093,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						interfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						interfaceDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						interfaceDisconnectParam.Id = c.Int64("id")
@@ -3878,6 +4193,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						interfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						interfaceDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						interfaceDisconnectParam.Id = c.Int64("id")
 					}
@@ -3885,6 +4203,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if interfaceDisconnectParam.GenerateSkeleton {
+						interfaceDisconnectParam.GenerateSkeleton = false
+						interfaceDisconnectParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(interfaceDisconnectParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -3972,6 +4302,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -4029,6 +4363,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						staticNatInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticNatInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						staticNatInfoParam.OutputType = c.String("output-type")
@@ -4132,6 +4469,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						staticNatInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						staticNatInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						staticNatInfoParam.OutputType = c.String("output-type")
 					}
@@ -4154,6 +4494,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if staticNatInfoParam.GenerateSkeleton {
+						staticNatInfoParam.GenerateSkeleton = false
+						staticNatInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(staticNatInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -4255,6 +4607,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -4300,6 +4656,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						staticNatAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticNatAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						staticNatAddParam.Id = c.Int64("id")
@@ -4400,6 +4759,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						staticNatAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						staticNatAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						staticNatAddParam.Id = c.Int64("id")
 					}
@@ -4407,6 +4769,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if staticNatAddParam.GenerateSkeleton {
+						staticNatAddParam.GenerateSkeleton = false
+						staticNatAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(staticNatAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -4517,6 +4891,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -4565,6 +4943,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						staticNatUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticNatUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						staticNatUpdateParam.Id = c.Int64("id")
@@ -4668,6 +5049,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						staticNatUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						staticNatUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						staticNatUpdateParam.Id = c.Int64("id")
 					}
@@ -4675,6 +5059,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if staticNatUpdateParam.GenerateSkeleton {
+						staticNatUpdateParam.GenerateSkeleton = false
+						staticNatUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(staticNatUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -4770,6 +5166,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -4809,6 +5209,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						staticNatDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticNatDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						staticNatDeleteParam.Id = c.Int64("id")
@@ -4903,6 +5306,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						staticNatDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						staticNatDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						staticNatDeleteParam.Id = c.Int64("id")
 					}
@@ -4910,6 +5316,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if staticNatDeleteParam.GenerateSkeleton {
+						staticNatDeleteParam.GenerateSkeleton = false
+						staticNatDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(staticNatDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -4997,6 +5415,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -5054,6 +5476,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						portForwardingInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						portForwardingInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						portForwardingInfoParam.OutputType = c.String("output-type")
@@ -5157,6 +5582,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						portForwardingInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						portForwardingInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						portForwardingInfoParam.OutputType = c.String("output-type")
 					}
@@ -5179,6 +5607,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if portForwardingInfoParam.GenerateSkeleton {
+						portForwardingInfoParam.GenerateSkeleton = false
+						portForwardingInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(portForwardingInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -5287,6 +5727,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -5338,6 +5782,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						portForwardingAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						portForwardingAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						portForwardingAddParam.Id = c.Int64("id")
@@ -5444,6 +5891,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						portForwardingAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						portForwardingAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						portForwardingAddParam.Id = c.Int64("id")
 					}
@@ -5451,6 +5901,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if portForwardingAddParam.GenerateSkeleton {
+						portForwardingAddParam.GenerateSkeleton = false
+						portForwardingAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(portForwardingAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -5568,6 +6030,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -5622,6 +6088,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						portForwardingUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						portForwardingUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						portForwardingUpdateParam.Id = c.Int64("id")
@@ -5731,6 +6200,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						portForwardingUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						portForwardingUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						portForwardingUpdateParam.Id = c.Int64("id")
 					}
@@ -5738,6 +6210,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if portForwardingUpdateParam.GenerateSkeleton {
+						portForwardingUpdateParam.GenerateSkeleton = false
+						portForwardingUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(portForwardingUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -5833,6 +6317,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -5872,6 +6360,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						portForwardingDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						portForwardingDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						portForwardingDeleteParam.Id = c.Int64("id")
@@ -5966,6 +6457,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						portForwardingDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						portForwardingDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						portForwardingDeleteParam.Id = c.Int64("id")
 					}
@@ -5973,6 +6467,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if portForwardingDeleteParam.GenerateSkeleton {
+						portForwardingDeleteParam.GenerateSkeleton = false
+						portForwardingDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(portForwardingDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -6065,6 +6571,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -6125,6 +6635,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						firewallInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						firewallInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						firewallInfoParam.OutputType = c.String("output-type")
@@ -6231,6 +6744,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						firewallInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						firewallInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						firewallInfoParam.OutputType = c.String("output-type")
 					}
@@ -6253,6 +6769,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if firewallInfoParam.GenerateSkeleton {
+						firewallInfoParam.GenerateSkeleton = false
+						firewallInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(firewallInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -6380,6 +6908,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -6443,6 +6975,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						firewallAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						firewallAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						firewallAddParam.Id = c.Int64("id")
@@ -6561,6 +7096,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						firewallAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						firewallAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						firewallAddParam.Id = c.Int64("id")
 					}
@@ -6568,6 +7106,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if firewallAddParam.GenerateSkeleton {
+						firewallAddParam.GenerateSkeleton = false
+						firewallAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(firewallAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -6704,6 +7254,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -6770,6 +7324,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						firewallUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						firewallUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						firewallUpdateParam.Id = c.Int64("id")
@@ -6891,6 +7448,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						firewallUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						firewallUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						firewallUpdateParam.Id = c.Int64("id")
 					}
@@ -6898,6 +7458,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if firewallUpdateParam.GenerateSkeleton {
+						firewallUpdateParam.GenerateSkeleton = false
+						firewallUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(firewallUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -6998,6 +7570,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -7040,6 +7616,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						firewallDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						firewallDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						firewallDeleteParam.Id = c.Int64("id")
@@ -7137,6 +7716,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						firewallDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						firewallDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						firewallDeleteParam.Id = c.Int64("id")
 					}
@@ -7144,6 +7726,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if firewallDeleteParam.GenerateSkeleton {
+						firewallDeleteParam.GenerateSkeleton = false
+						firewallDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(firewallDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -7231,6 +7825,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -7288,6 +7886,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						dhcpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						dhcpServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						dhcpServerInfoParam.OutputType = c.String("output-type")
@@ -7391,6 +7992,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						dhcpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						dhcpServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						dhcpServerInfoParam.OutputType = c.String("output-type")
 					}
@@ -7413,6 +8017,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if dhcpServerInfoParam.GenerateSkeleton {
+						dhcpServerInfoParam.GenerateSkeleton = false
+						dhcpServerInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dhcpServerInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -7512,6 +8128,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -7557,6 +8177,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						dhcpServerAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						dhcpServerAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						dhcpServerAddParam.Id = c.Int64("id")
@@ -7657,6 +8280,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						dhcpServerAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						dhcpServerAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						dhcpServerAddParam.Id = c.Int64("id")
 					}
@@ -7664,6 +8290,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if dhcpServerAddParam.GenerateSkeleton {
+						dhcpServerAddParam.GenerateSkeleton = false
+						dhcpServerAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dhcpServerAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -7768,6 +8406,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -7813,6 +8455,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						dhcpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						dhcpServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						dhcpServerUpdateParam.Id = c.Int64("id")
@@ -7913,6 +8558,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						dhcpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						dhcpServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						dhcpServerUpdateParam.Id = c.Int64("id")
 					}
@@ -7920,6 +8568,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if dhcpServerUpdateParam.GenerateSkeleton {
+						dhcpServerUpdateParam.GenerateSkeleton = false
+						dhcpServerUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dhcpServerUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -8015,6 +8675,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -8054,6 +8718,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						dhcpServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						dhcpServerDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						dhcpServerDeleteParam.Id = c.Int64("id")
@@ -8148,6 +8815,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						dhcpServerDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						dhcpServerDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						dhcpServerDeleteParam.Id = c.Int64("id")
 					}
@@ -8155,6 +8825,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if dhcpServerDeleteParam.GenerateSkeleton {
+						dhcpServerDeleteParam.GenerateSkeleton = false
+						dhcpServerDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dhcpServerDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -8242,6 +8924,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -8299,6 +8985,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						dhcpStaticMappingInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						dhcpStaticMappingInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						dhcpStaticMappingInfoParam.OutputType = c.String("output-type")
@@ -8402,6 +9091,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						dhcpStaticMappingInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						dhcpStaticMappingInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						dhcpStaticMappingInfoParam.OutputType = c.String("output-type")
 					}
@@ -8424,6 +9116,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if dhcpStaticMappingInfoParam.GenerateSkeleton {
+						dhcpStaticMappingInfoParam.GenerateSkeleton = false
+						dhcpStaticMappingInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dhcpStaticMappingInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -8520,6 +9224,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -8562,6 +9270,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						dhcpStaticMappingAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						dhcpStaticMappingAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						dhcpStaticMappingAddParam.Id = c.Int64("id")
@@ -8659,6 +9370,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						dhcpStaticMappingAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						dhcpStaticMappingAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						dhcpStaticMappingAddParam.Id = c.Int64("id")
 					}
@@ -8666,6 +9380,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if dhcpStaticMappingAddParam.GenerateSkeleton {
+						dhcpStaticMappingAddParam.GenerateSkeleton = false
+						dhcpStaticMappingAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dhcpStaticMappingAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -8771,6 +9497,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -8816,6 +9546,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						dhcpStaticMappingUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						dhcpStaticMappingUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						dhcpStaticMappingUpdateParam.Id = c.Int64("id")
@@ -8916,6 +9649,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						dhcpStaticMappingUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						dhcpStaticMappingUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						dhcpStaticMappingUpdateParam.Id = c.Int64("id")
 					}
@@ -8923,6 +9659,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if dhcpStaticMappingUpdateParam.GenerateSkeleton {
+						dhcpStaticMappingUpdateParam.GenerateSkeleton = false
+						dhcpStaticMappingUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dhcpStaticMappingUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -9018,6 +9766,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -9057,6 +9809,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						dhcpStaticMappingDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						dhcpStaticMappingDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						dhcpStaticMappingDeleteParam.Id = c.Int64("id")
@@ -9151,6 +9906,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						dhcpStaticMappingDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						dhcpStaticMappingDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						dhcpStaticMappingDeleteParam.Id = c.Int64("id")
 					}
@@ -9158,6 +9916,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if dhcpStaticMappingDeleteParam.GenerateSkeleton {
+						dhcpStaticMappingDeleteParam.GenerateSkeleton = false
+						dhcpStaticMappingDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dhcpStaticMappingDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -9244,6 +10014,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -9301,6 +10075,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						pptpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						pptpServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						pptpServerInfoParam.OutputType = c.String("output-type")
@@ -9404,6 +10181,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						pptpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						pptpServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						pptpServerInfoParam.OutputType = c.String("output-type")
 					}
@@ -9426,6 +10206,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if pptpServerInfoParam.GenerateSkeleton {
+						pptpServerInfoParam.GenerateSkeleton = false
+						pptpServerInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(pptpServerInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -9525,6 +10317,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -9570,6 +10366,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						pptpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						pptpServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						pptpServerUpdateParam.Id = c.Int64("id")
@@ -9670,6 +10469,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						pptpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						pptpServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						pptpServerUpdateParam.Id = c.Int64("id")
 					}
@@ -9677,6 +10479,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if pptpServerUpdateParam.GenerateSkeleton {
+						pptpServerUpdateParam.GenerateSkeleton = false
+						pptpServerUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(pptpServerUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -9763,6 +10577,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -9820,6 +10638,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						l2tpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						l2tpServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						l2tpServerInfoParam.OutputType = c.String("output-type")
@@ -9923,6 +10744,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						l2tpServerInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						l2tpServerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						l2tpServerInfoParam.OutputType = c.String("output-type")
 					}
@@ -9945,6 +10769,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if l2tpServerInfoParam.GenerateSkeleton {
+						l2tpServerInfoParam.GenerateSkeleton = false
+						l2tpServerInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(l2tpServerInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -10048,6 +10884,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -10096,6 +10936,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						l2tpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						l2tpServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						l2tpServerUpdateParam.Id = c.Int64("id")
@@ -10199,6 +11042,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						l2tpServerUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						l2tpServerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						l2tpServerUpdateParam.Id = c.Int64("id")
 					}
@@ -10206,6 +11052,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if l2tpServerUpdateParam.GenerateSkeleton {
+						l2tpServerUpdateParam.GenerateSkeleton = false
+						l2tpServerUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(l2tpServerUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -10293,6 +11151,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -10350,6 +11212,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						userInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						userInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						userInfoParam.OutputType = c.String("output-type")
@@ -10453,6 +11318,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						userInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						userInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						userInfoParam.OutputType = c.String("output-type")
 					}
@@ -10475,6 +11343,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if userInfoParam.GenerateSkeleton {
+						userInfoParam.GenerateSkeleton = false
+						userInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(userInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -10571,6 +11451,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -10613,6 +11497,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						userAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						userAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						userAddParam.Id = c.Int64("id")
@@ -10710,6 +11597,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						userAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						userAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						userAddParam.Id = c.Int64("id")
 					}
@@ -10717,6 +11607,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if userAddParam.GenerateSkeleton {
+						userAddParam.GenerateSkeleton = false
+						userAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(userAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -10822,6 +11724,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -10867,6 +11773,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						userUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						userUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						userUpdateParam.Id = c.Int64("id")
@@ -10967,6 +11876,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						userUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						userUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						userUpdateParam.Id = c.Int64("id")
 					}
@@ -10974,6 +11886,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if userUpdateParam.GenerateSkeleton {
+						userUpdateParam.GenerateSkeleton = false
+						userUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(userUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -11069,6 +11993,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -11108,6 +12036,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						userDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						userDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						userDeleteParam.Id = c.Int64("id")
@@ -11202,6 +12133,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						userDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						userDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						userDeleteParam.Id = c.Int64("id")
 					}
@@ -11209,6 +12143,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if userDeleteParam.GenerateSkeleton {
+						userDeleteParam.GenerateSkeleton = false
+						userDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(userDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -11296,6 +12242,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -11353,6 +12303,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						siteToSiteVpnInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						siteToSiteVpnInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						siteToSiteVpnInfoParam.OutputType = c.String("output-type")
@@ -11456,6 +12409,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						siteToSiteVpnInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						siteToSiteVpnInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						siteToSiteVpnInfoParam.OutputType = c.String("output-type")
 					}
@@ -11478,6 +12434,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if siteToSiteVpnInfoParam.GenerateSkeleton {
+						siteToSiteVpnInfoParam.GenerateSkeleton = false
+						siteToSiteVpnInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(siteToSiteVpnInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -11584,6 +12552,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -11635,6 +12607,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						siteToSiteVpnAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						siteToSiteVpnAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						siteToSiteVpnAddParam.Id = c.Int64("id")
@@ -11741,6 +12716,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						siteToSiteVpnAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						siteToSiteVpnAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						siteToSiteVpnAddParam.Id = c.Int64("id")
 					}
@@ -11748,6 +12726,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if siteToSiteVpnAddParam.GenerateSkeleton {
+						siteToSiteVpnAddParam.GenerateSkeleton = false
+						siteToSiteVpnAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(siteToSiteVpnAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -11863,6 +12853,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -11917,6 +12911,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						siteToSiteVpnUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						siteToSiteVpnUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						siteToSiteVpnUpdateParam.Id = c.Int64("id")
@@ -12026,6 +13023,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						siteToSiteVpnUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						siteToSiteVpnUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						siteToSiteVpnUpdateParam.Id = c.Int64("id")
 					}
@@ -12033,6 +13033,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if siteToSiteVpnUpdateParam.GenerateSkeleton {
+						siteToSiteVpnUpdateParam.GenerateSkeleton = false
+						siteToSiteVpnUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(siteToSiteVpnUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -12128,6 +13140,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -12167,6 +13183,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						siteToSiteVpnDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						siteToSiteVpnDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						siteToSiteVpnDeleteParam.Id = c.Int64("id")
@@ -12261,6 +13280,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						siteToSiteVpnDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						siteToSiteVpnDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						siteToSiteVpnDeleteParam.Id = c.Int64("id")
 					}
@@ -12268,6 +13290,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if siteToSiteVpnDeleteParam.GenerateSkeleton {
+						siteToSiteVpnDeleteParam.GenerateSkeleton = false
+						siteToSiteVpnDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(siteToSiteVpnDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -12355,6 +13389,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -12412,6 +13450,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						staticRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						staticRouteInfoParam.OutputType = c.String("output-type")
@@ -12515,6 +13556,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						staticRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						staticRouteInfoParam.OutputType = c.String("output-type")
 					}
@@ -12537,6 +13581,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if staticRouteInfoParam.GenerateSkeleton {
+						staticRouteInfoParam.GenerateSkeleton = false
+						staticRouteInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(staticRouteInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -12631,6 +13687,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -12673,6 +13733,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						staticRouteAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						staticRouteAddParam.Id = c.Int64("id")
@@ -12770,6 +13833,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						staticRouteAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						staticRouteAddParam.Id = c.Int64("id")
 					}
@@ -12777,6 +13843,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if staticRouteAddParam.GenerateSkeleton {
+						staticRouteAddParam.GenerateSkeleton = false
+						staticRouteAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(staticRouteAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -12880,6 +13958,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -12925,6 +14007,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						staticRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						staticRouteUpdateParam.Id = c.Int64("id")
@@ -13025,6 +14110,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						staticRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						staticRouteUpdateParam.Id = c.Int64("id")
 					}
@@ -13032,6 +14120,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if staticRouteUpdateParam.GenerateSkeleton {
+						staticRouteUpdateParam.GenerateSkeleton = false
+						staticRouteUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(staticRouteUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -13127,6 +14227,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -13166,6 +14270,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						staticRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
 						staticRouteDeleteParam.Id = c.Int64("id")
@@ -13260,6 +14367,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						staticRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("id") {
 						staticRouteDeleteParam.Id = c.Int64("id")
 					}
@@ -13267,6 +14377,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if staticRouteDeleteParam.GenerateSkeleton {
+						staticRouteDeleteParam.GenerateSkeleton = false
+						staticRouteDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(staticRouteDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -13371,6 +14493,10 @@ func init() {
 						Name:  "param-template-file",
 						Usage: "Set input parameter from file",
 					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
@@ -13440,6 +14566,9 @@ func init() {
 					}
 					if c.IsSet("param-template-file") {
 						monitorParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("output-type") {
 						monitorParam.OutputType = c.String("output-type")
@@ -13555,6 +14684,9 @@ func init() {
 					if c.IsSet("param-template-file") {
 						monitorParam.ParamTemplateFile = c.String("param-template-file")
 					}
+					if c.IsSet("generate-skeleton") {
+						monitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
 					if c.IsSet("output-type") {
 						monitorParam.OutputType = c.String("output-type")
 					}
@@ -13577,6 +14709,18 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if monitorParam.GenerateSkeleton {
+						monitorParam.GenerateSkeleton = false
+						monitorParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(monitorParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
 					}
 
 					// Validate specific for each command params
@@ -13925,6 +15069,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "boot", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "boot", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -13969,6 +15118,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("vpc-router", "create", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("vpc-router", "create", "icon-id", &schema.Category{
 		Key:         "common",
@@ -14060,6 +15214,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "delete", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "delete", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -14086,6 +15245,11 @@ func init() {
 		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-server-add", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-add", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -14125,6 +15289,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-delete", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-server-delete", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -14160,6 +15329,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-server-info", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -14186,6 +15360,11 @@ func init() {
 		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-server-update", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-update", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -14225,6 +15404,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-add", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-add", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -14251,6 +15435,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-delete", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-delete", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -14290,6 +15479,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-info", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -14316,6 +15510,11 @@ func init() {
 		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-update", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-update", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -14385,6 +15584,11 @@ func init() {
 		DisplayName: "Firewall options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "firewall-add", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "firewall-add", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -14425,6 +15629,11 @@ func init() {
 		DisplayName: "Firewall options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "firewall-delete", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "firewall-delete", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -14464,6 +15673,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("vpc-router", "firewall-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("vpc-router", "firewall-info", "id", &schema.Category{
 		Key:         "default",
@@ -14525,6 +15739,11 @@ func init() {
 		DisplayName: "Firewall options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "firewall-update", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "firewall-update", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -14561,6 +15780,11 @@ func init() {
 		Order:       1,
 	})
 	AppendFlagCategoryMap("vpc-router", "interface-connect", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "interface-connect", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -14620,6 +15844,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "interface-disconnect", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "interface-disconnect", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -14660,6 +15889,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "interface-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "interface-info", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -14691,6 +15925,11 @@ func init() {
 		Order:       1,
 	})
 	AppendFlagCategoryMap("vpc-router", "interface-update", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "interface-update", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -14760,6 +15999,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "l2tp-server-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "l2tp-server-info", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -14794,6 +16038,11 @@ func init() {
 		Key:         "L2TP-IPSec",
 		DisplayName: "L2TP-IPSec options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("vpc-router", "l2tp-server-update", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("vpc-router", "l2tp-server-update", "id", &schema.Category{
 		Key:         "default",
@@ -14844,6 +16093,11 @@ func init() {
 		Key:         "limit-offset",
 		DisplayName: "Limit/Offset options",
 		Order:       2147483597,
+	})
+	AppendFlagCategoryMap("vpc-router", "list", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("vpc-router", "list", "id", &schema.Category{
 		Key:         "filter",
@@ -14910,6 +16164,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "monitor", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "monitor", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -14960,6 +16219,11 @@ func init() {
 		DisplayName: "Port-Forwarding options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "port-forwarding-add", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "port-forwarding-add", "global-port", &schema.Category{
 		Key:         "Port-Forwarding",
 		DisplayName: "Port-Forwarding options",
@@ -15000,6 +16264,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "port-forwarding-delete", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "port-forwarding-delete", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15035,6 +16304,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "port-forwarding-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "port-forwarding-info", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15069,6 +16343,11 @@ func init() {
 		Key:         "Port-Forwarding",
 		DisplayName: "Port-Forwarding options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("vpc-router", "port-forwarding-update", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("vpc-router", "port-forwarding-update", "global-port", &schema.Category{
 		Key:         "Port-Forwarding",
@@ -15125,6 +16404,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "pptp-server-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "pptp-server-info", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15159,6 +16443,11 @@ func init() {
 		Key:         "PPTP",
 		DisplayName: "PPTP options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("vpc-router", "pptp-server-update", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("vpc-router", "pptp-server-update", "id", &schema.Category{
 		Key:         "default",
@@ -15200,6 +16489,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "read", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "read", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15230,6 +16524,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "reset", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "reset", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15246,6 +16545,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("vpc-router", "shutdown", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "shutdown", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -15270,6 +16574,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "shutdown-force", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "shutdown-force", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15286,6 +16595,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-add", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-add", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -15335,6 +16649,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-delete", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-delete", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15370,6 +16689,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-info", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15396,6 +16720,11 @@ func init() {
 		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-update", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-update", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -15455,6 +16784,11 @@ func init() {
 		DisplayName: "Static-NAT options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "static-nat-add", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "static-nat-add", "global", &schema.Category{
 		Key:         "Static-NAT",
 		DisplayName: "Static-NAT options",
@@ -15481,6 +16815,11 @@ func init() {
 		Order:       1,
 	})
 	AppendFlagCategoryMap("vpc-router", "static-nat-delete", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "static-nat-delete", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -15520,6 +16859,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "static-nat-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "static-nat-info", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15554,6 +16898,11 @@ func init() {
 		Key:         "Static-NAT",
 		DisplayName: "Static-NAT options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("vpc-router", "static-nat-update", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("vpc-router", "static-nat-update", "global", &schema.Category{
 		Key:         "Static-NAT",
@@ -15590,6 +16939,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "static-route-add", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "static-route-add", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15616,6 +16970,11 @@ func init() {
 		Order:       1,
 	})
 	AppendFlagCategoryMap("vpc-router", "static-route-delete", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "static-route-delete", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -15655,6 +17014,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "static-route-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "static-route-info", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15681,6 +17045,11 @@ func init() {
 		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "static-route-update", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "static-route-update", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -15740,6 +17109,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "update", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "update", "icon-id", &schema.Category{
 		Key:         "common",
 		DisplayName: "Common options",
@@ -15790,6 +17164,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "user-add", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "user-add", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15816,6 +17195,11 @@ func init() {
 		Order:       1,
 	})
 	AppendFlagCategoryMap("vpc-router", "user-delete", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "user-delete", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -15855,6 +17239,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "user-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "user-info", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15881,6 +17270,11 @@ func init() {
 		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "user-update", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "user-update", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
@@ -15915,6 +17309,11 @@ func init() {
 		DisplayName: "User options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "wait-for-boot", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("vpc-router", "wait-for-boot", "id", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -15926,6 +17325,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("vpc-router", "wait-for-boot", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "wait-for-down", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,

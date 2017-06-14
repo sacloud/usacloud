@@ -18,6 +18,7 @@ type ListLoadBalancerParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -28,6 +29,53 @@ type ListLoadBalancerParam struct {
 // NewListLoadBalancerParam return new ListLoadBalancerParam
 func NewListLoadBalancerParam() *ListLoadBalancerParam {
 	return &ListLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -173,6 +221,13 @@ func (p *ListLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *ListLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -226,6 +281,7 @@ type CreateLoadBalancerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -238,9 +294,76 @@ func NewCreateLoadBalancerParam() *CreateLoadBalancerParam {
 	return &CreateLoadBalancerParam{
 
 		Vrid: 1,
-
 		Plan: "standard",
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.SwitchId) {
+		p.SwitchId = 0
+	}
+	if isEmpty(p.Vrid) {
+		p.Vrid = 0
+	}
+	if isEmpty(p.HighAvailability) {
+		p.HighAvailability = false
+	}
+	if isEmpty(p.Plan) {
+		p.Plan = ""
+	}
+	if isEmpty(p.Ipaddress1) {
+		p.Ipaddress1 = ""
+	}
+	if isEmpty(p.Ipaddress2) {
+		p.Ipaddress2 = ""
+	}
+	if isEmpty(p.NwMaskLen) {
+		p.NwMaskLen = 0
+	}
+	if isEmpty(p.DefaultRoute) {
+		p.DefaultRoute = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -508,6 +631,13 @@ func (p *CreateLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *CreateLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -548,6 +678,7 @@ func (p *CreateLoadBalancerParam) GetFormatFile() string {
 type ReadLoadBalancerParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -559,6 +690,38 @@ type ReadLoadBalancerParam struct {
 // NewReadLoadBalancerParam return new ReadLoadBalancerParam
 func NewReadLoadBalancerParam() *ReadLoadBalancerParam {
 	return &ReadLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -637,6 +800,13 @@ func (p *ReadLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *ReadLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -689,6 +859,7 @@ type UpdateLoadBalancerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -700,6 +871,53 @@ type UpdateLoadBalancerParam struct {
 // NewUpdateLoadBalancerParam return new UpdateLoadBalancerParam
 func NewUpdateLoadBalancerParam() *UpdateLoadBalancerParam {
 	return &UpdateLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -841,6 +1059,13 @@ func (p *UpdateLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *UpdateLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -890,6 +1115,7 @@ type DeleteLoadBalancerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -901,6 +1127,44 @@ type DeleteLoadBalancerParam struct {
 // NewDeleteLoadBalancerParam return new DeleteLoadBalancerParam
 func NewDeleteLoadBalancerParam() *DeleteLoadBalancerParam {
 	return &DeleteLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.Force) {
+		p.Force = false
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -993,6 +1257,13 @@ func (p *DeleteLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *DeleteLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DeleteLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1041,12 +1312,33 @@ type BootLoadBalancerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewBootLoadBalancerParam return new BootLoadBalancerParam
 func NewBootLoadBalancerParam() *BootLoadBalancerParam {
 	return &BootLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *BootLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1112,6 +1404,13 @@ func (p *BootLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *BootLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *BootLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BootLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *BootLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1125,12 +1424,33 @@ type ShutdownLoadBalancerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewShutdownLoadBalancerParam return new ShutdownLoadBalancerParam
 func NewShutdownLoadBalancerParam() *ShutdownLoadBalancerParam {
 	return &ShutdownLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ShutdownLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1196,6 +1516,13 @@ func (p *ShutdownLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *ShutdownLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ShutdownLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ShutdownLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1209,12 +1536,33 @@ type ShutdownForceLoadBalancerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewShutdownForceLoadBalancerParam return new ShutdownForceLoadBalancerParam
 func NewShutdownForceLoadBalancerParam() *ShutdownForceLoadBalancerParam {
 	return &ShutdownForceLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ShutdownForceLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1280,6 +1628,13 @@ func (p *ShutdownForceLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *ShutdownForceLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ShutdownForceLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ShutdownForceLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1293,12 +1648,33 @@ type ResetLoadBalancerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewResetLoadBalancerParam return new ResetLoadBalancerParam
 func NewResetLoadBalancerParam() *ResetLoadBalancerParam {
 	return &ResetLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ResetLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1364,6 +1740,13 @@ func (p *ResetLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *ResetLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ResetLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ResetLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ResetLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1376,12 +1759,30 @@ func (p *ResetLoadBalancerParam) GetId() int64 {
 type WaitForBootLoadBalancerParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewWaitForBootLoadBalancerParam return new WaitForBootLoadBalancerParam
 func NewWaitForBootLoadBalancerParam() *WaitForBootLoadBalancerParam {
 	return &WaitForBootLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *WaitForBootLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1440,6 +1841,13 @@ func (p *WaitForBootLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *WaitForBootLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *WaitForBootLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForBootLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *WaitForBootLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1452,12 +1860,30 @@ func (p *WaitForBootLoadBalancerParam) GetId() int64 {
 type WaitForDownLoadBalancerParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewWaitForDownLoadBalancerParam return new WaitForDownLoadBalancerParam
 func NewWaitForDownLoadBalancerParam() *WaitForDownLoadBalancerParam {
 	return &WaitForDownLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *WaitForDownLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1516,6 +1942,13 @@ func (p *WaitForDownLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *WaitForDownLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *WaitForDownLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForDownLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *WaitForDownLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1528,6 +1961,7 @@ func (p *WaitForDownLoadBalancerParam) GetId() int64 {
 type VipInfoLoadBalancerParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1539,6 +1973,38 @@ type VipInfoLoadBalancerParam struct {
 // NewVipInfoLoadBalancerParam return new VipInfoLoadBalancerParam
 func NewVipInfoLoadBalancerParam() *VipInfoLoadBalancerParam {
 	return &VipInfoLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *VipInfoLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1617,6 +2083,13 @@ func (p *VipInfoLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *VipInfoLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *VipInfoLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *VipInfoLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1669,6 +2142,7 @@ type VipAddLoadBalancerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
@@ -1678,6 +2152,38 @@ func NewVipAddLoadBalancerParam() *VipAddLoadBalancerParam {
 
 		DelayLoop: 10,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *VipAddLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.Vip) {
+		p.Vip = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.DelayLoop) {
+		p.DelayLoop = 0
+	}
+	if isEmpty(p.SorryServer) {
+		p.SorryServer = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1813,6 +2319,13 @@ func (p *VipAddLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *VipAddLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *VipAddLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *VipAddLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *VipAddLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1831,6 +2344,7 @@ type VipUpdateLoadBalancerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
@@ -1840,6 +2354,41 @@ func NewVipUpdateLoadBalancerParam() *VipUpdateLoadBalancerParam {
 
 		DelayLoop: 10,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *VipUpdateLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Vip) {
+		p.Vip = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.DelayLoop) {
+		p.DelayLoop = 0
+	}
+	if isEmpty(p.SorryServer) {
+		p.SorryServer = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1975,6 +2524,13 @@ func (p *VipUpdateLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *VipUpdateLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *VipUpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *VipUpdateLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1989,12 +2545,36 @@ type VipDeleteLoadBalancerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewVipDeleteLoadBalancerParam return new VipDeleteLoadBalancerParam
 func NewVipDeleteLoadBalancerParam() *VipDeleteLoadBalancerParam {
 	return &VipDeleteLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *VipDeleteLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2074,6 +2654,13 @@ func (p *VipDeleteLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *VipDeleteLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *VipDeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *VipDeleteLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *VipDeleteLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2089,6 +2676,7 @@ type ServerInfoLoadBalancerParam struct {
 	Port              int
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -2100,6 +2688,47 @@ type ServerInfoLoadBalancerParam struct {
 // NewServerInfoLoadBalancerParam return new ServerInfoLoadBalancerParam
 func NewServerInfoLoadBalancerParam() *ServerInfoLoadBalancerParam {
 	return &ServerInfoLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ServerInfoLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.VipIndex) {
+		p.VipIndex = 0
+	}
+	if isEmpty(p.Vip) {
+		p.Vip = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2241,6 +2870,13 @@ func (p *ServerInfoLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *ServerInfoLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ServerInfoLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ServerInfoLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -2297,6 +2933,7 @@ type ServerAddLoadBalancerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
@@ -2305,9 +2942,52 @@ func NewServerAddLoadBalancerParam() *ServerAddLoadBalancerParam {
 	return &ServerAddLoadBalancerParam{
 
 		Protocol: "ping",
-
-		Enabled: true,
+		Enabled:  true,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ServerAddLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.VipIndex) {
+		p.VipIndex = 0
+	}
+	if isEmpty(p.Vip) {
+		p.Vip = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if isEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if isEmpty(p.Path) {
+		p.Path = ""
+	}
+	if isEmpty(p.ResponseCode) {
+		p.ResponseCode = 0
+	}
+	if isEmpty(p.Enabled) {
+		p.Enabled = false
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2506,6 +3186,13 @@ func (p *ServerAddLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *ServerAddLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ServerAddLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ServerAddLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2527,12 +3214,57 @@ type ServerUpdateLoadBalancerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewServerUpdateLoadBalancerParam return new ServerUpdateLoadBalancerParam
 func NewServerUpdateLoadBalancerParam() *ServerUpdateLoadBalancerParam {
 	return &ServerUpdateLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ServerUpdateLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.VipIndex) {
+		p.VipIndex = 0
+	}
+	if isEmpty(p.Vip) {
+		p.Vip = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if isEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if isEmpty(p.Path) {
+		p.Path = ""
+	}
+	if isEmpty(p.ResponseCode) {
+		p.ResponseCode = 0
+	}
+	if isEmpty(p.Enabled) {
+		p.Enabled = false
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2717,6 +3449,13 @@ func (p *ServerUpdateLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *ServerUpdateLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ServerUpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ServerUpdateLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2734,12 +3473,45 @@ type ServerDeleteLoadBalancerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewServerDeleteLoadBalancerParam return new ServerDeleteLoadBalancerParam
 func NewServerDeleteLoadBalancerParam() *ServerDeleteLoadBalancerParam {
 	return &ServerDeleteLoadBalancerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ServerDeleteLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.VipIndex) {
+		p.VipIndex = 0
+	}
+	if isEmpty(p.Vip) {
+		p.Vip = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2889,6 +3661,13 @@ func (p *ServerDeleteLoadBalancerParam) SetParamTemplateFile(v string) {
 func (p *ServerDeleteLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ServerDeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ServerDeleteLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2904,6 +3683,7 @@ type MonitorLoadBalancerParam struct {
 	KeyFormat         string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -2918,6 +3698,47 @@ func NewMonitorLoadBalancerParam() *MonitorLoadBalancerParam {
 
 		KeyFormat: "sakuracloud.{{.ID}}.loadbalancer",
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorLoadBalancerParam) FillValueToSkeleton() {
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3037,6 +3858,13 @@ func (p *MonitorLoadBalancerParam) SetParamTemplateFile(v string) {
 
 func (p *MonitorLoadBalancerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorLoadBalancerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorLoadBalancerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *MonitorLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v

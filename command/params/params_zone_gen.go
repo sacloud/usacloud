@@ -17,6 +17,7 @@ type ListZoneParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -27,6 +28,50 @@ type ListZoneParam struct {
 // NewListZoneParam return new ListZoneParam
 func NewListZoneParam() *ListZoneParam {
 	return &ListZoneParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListZoneParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -158,6 +203,13 @@ func (p *ListZoneParam) SetParamTemplateFile(v string) {
 func (p *ListZoneParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListZoneParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListZoneParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListZoneParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -199,6 +251,7 @@ type ReadZoneParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -210,6 +263,41 @@ type ReadZoneParam struct {
 // NewReadZoneParam return new ReadZoneParam
 func NewReadZoneParam() *ReadZoneParam {
 	return &ReadZoneParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadZoneParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -301,6 +389,13 @@ func (p *ReadZoneParam) SetParamTemplateFile(v string) {
 
 func (p *ReadZoneParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadZoneParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadZoneParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *ReadZoneParam) SetOutputType(v string) {
 	p.OutputType = v

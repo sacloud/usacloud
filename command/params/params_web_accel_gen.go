@@ -13,6 +13,7 @@ type DeleteCacheWebAccelParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -23,6 +24,38 @@ type DeleteCacheWebAccelParam struct {
 // NewDeleteCacheWebAccelParam return new DeleteCacheWebAccelParam
 func NewDeleteCacheWebAccelParam() *DeleteCacheWebAccelParam {
 	return &DeleteCacheWebAccelParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteCacheWebAccelParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -100,6 +133,13 @@ func (p *DeleteCacheWebAccelParam) SetParamTemplateFile(v string) {
 
 func (p *DeleteCacheWebAccelParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteCacheWebAccelParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteCacheWebAccelParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *DeleteCacheWebAccelParam) SetOutputType(v string) {
 	p.OutputType = v

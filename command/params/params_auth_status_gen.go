@@ -12,6 +12,7 @@ import (
 type ShowAuthStatusParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -22,6 +23,35 @@ type ShowAuthStatusParam struct {
 // NewShowAuthStatusParam return new ShowAuthStatusParam
 func NewShowAuthStatusParam() *ShowAuthStatusParam {
 	return &ShowAuthStatusParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ShowAuthStatusParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -92,6 +122,13 @@ func (p *ShowAuthStatusParam) SetParamTemplateFile(v string) {
 
 func (p *ShowAuthStatusParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ShowAuthStatusParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShowAuthStatusParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *ShowAuthStatusParam) SetOutputType(v string) {
 	p.OutputType = v

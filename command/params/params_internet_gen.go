@@ -18,6 +18,7 @@ type ListInternetParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -28,6 +29,53 @@ type ListInternetParam struct {
 // NewListInternetParam return new ListInternetParam
 func NewListInternetParam() *ListInternetParam {
 	return &ListInternetParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListInternetParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -173,6 +221,13 @@ func (p *ListInternetParam) SetParamTemplateFile(v string) {
 func (p *ListInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListInternetParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListInternetParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListInternetParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -216,6 +271,7 @@ type MonitorInternetParam struct {
 	KeyFormat         string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -230,6 +286,47 @@ func NewMonitorInternetParam() *MonitorInternetParam {
 
 		KeyFormat: "sakuracloud.{{.ID}}.internet",
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorInternetParam) FillValueToSkeleton() {
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -350,6 +447,13 @@ func (p *MonitorInternetParam) SetParamTemplateFile(v string) {
 func (p *MonitorInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *MonitorInternetParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorInternetParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *MonitorInternetParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -399,6 +503,7 @@ type UpdateBandwidthInternetParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -413,6 +518,44 @@ func NewUpdateBandwidthInternetParam() *UpdateBandwidthInternetParam {
 
 		BandWidth: 100,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateBandwidthInternetParam) FillValueToSkeleton() {
+	if isEmpty(p.BandWidth) {
+		p.BandWidth = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -519,6 +662,13 @@ func (p *UpdateBandwidthInternetParam) SetParamTemplateFile(v string) {
 func (p *UpdateBandwidthInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateBandwidthInternetParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateBandwidthInternetParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateBandwidthInternetParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -573,6 +723,7 @@ type CreateInternetParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -585,9 +736,58 @@ func NewCreateInternetParam() *CreateInternetParam {
 	return &CreateInternetParam{
 
 		NwMasklen: 28,
-
 		BandWidth: 100,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateInternetParam) FillValueToSkeleton() {
+	if isEmpty(p.NwMasklen) {
+		p.NwMasklen = 0
+	}
+	if isEmpty(p.BandWidth) {
+		p.BandWidth = 0
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -771,6 +971,13 @@ func (p *CreateInternetParam) SetParamTemplateFile(v string) {
 func (p *CreateInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateInternetParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateInternetParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateInternetParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -811,6 +1018,7 @@ func (p *CreateInternetParam) GetFormatFile() string {
 type ReadInternetParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -822,6 +1030,38 @@ type ReadInternetParam struct {
 // NewReadInternetParam return new ReadInternetParam
 func NewReadInternetParam() *ReadInternetParam {
 	return &ReadInternetParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadInternetParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -900,6 +1140,13 @@ func (p *ReadInternetParam) SetParamTemplateFile(v string) {
 func (p *ReadInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadInternetParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadInternetParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadInternetParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -953,6 +1200,7 @@ type UpdateInternetParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -964,6 +1212,56 @@ type UpdateInternetParam struct {
 // NewUpdateInternetParam return new UpdateInternetParam
 func NewUpdateInternetParam() *UpdateInternetParam {
 	return &UpdateInternetParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateInternetParam) FillValueToSkeleton() {
+	if isEmpty(p.BandWidth) {
+		p.BandWidth = 0
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1119,6 +1417,13 @@ func (p *UpdateInternetParam) SetParamTemplateFile(v string) {
 func (p *UpdateInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateInternetParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateInternetParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateInternetParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1167,6 +1472,7 @@ type DeleteInternetParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1178,6 +1484,41 @@ type DeleteInternetParam struct {
 // NewDeleteInternetParam return new DeleteInternetParam
 func NewDeleteInternetParam() *DeleteInternetParam {
 	return &DeleteInternetParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteInternetParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1262,6 +1603,13 @@ func (p *DeleteInternetParam) SetParamTemplateFile(v string) {
 
 func (p *DeleteInternetParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteInternetParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteInternetParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *DeleteInternetParam) SetOutputType(v string) {
 	p.OutputType = v

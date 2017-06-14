@@ -19,6 +19,7 @@ type ListISOImageParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -29,6 +30,56 @@ type ListISOImageParam struct {
 // NewListISOImageParam return new ListISOImageParam
 func NewListISOImageParam() *ListISOImageParam {
 	return &ListISOImageParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Scope) {
+		p.Scope = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -188,6 +239,13 @@ func (p *ListISOImageParam) SetParamTemplateFile(v string) {
 func (p *ListISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -235,6 +293,7 @@ type CreateISOImageParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -248,6 +307,56 @@ func NewCreateISOImageParam() *CreateISOImageParam {
 
 		Size: 5,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.Size) {
+		p.Size = 0
+	}
+	if isEmpty(p.IsoFile) {
+		p.IsoFile = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -431,6 +540,13 @@ func (p *CreateISOImageParam) SetParamTemplateFile(v string) {
 func (p *CreateISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -471,6 +587,7 @@ func (p *CreateISOImageParam) GetFormatFile() string {
 type ReadISOImageParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -482,6 +599,38 @@ type ReadISOImageParam struct {
 // NewReadISOImageParam return new ReadISOImageParam
 func NewReadISOImageParam() *ReadISOImageParam {
 	return &ReadISOImageParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -560,6 +709,13 @@ func (p *ReadISOImageParam) SetParamTemplateFile(v string) {
 func (p *ReadISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -612,6 +768,7 @@ type UpdateISOImageParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -623,6 +780,53 @@ type UpdateISOImageParam struct {
 // NewUpdateISOImageParam return new UpdateISOImageParam
 func NewUpdateISOImageParam() *UpdateISOImageParam {
 	return &UpdateISOImageParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -764,6 +968,13 @@ func (p *UpdateISOImageParam) SetParamTemplateFile(v string) {
 func (p *UpdateISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -812,6 +1023,7 @@ type DeleteISOImageParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -823,6 +1035,41 @@ type DeleteISOImageParam struct {
 // NewDeleteISOImageParam return new DeleteISOImageParam
 func NewDeleteISOImageParam() *DeleteISOImageParam {
 	return &DeleteISOImageParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -908,6 +1155,13 @@ func (p *DeleteISOImageParam) SetParamTemplateFile(v string) {
 func (p *DeleteISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DeleteISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DeleteISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -957,6 +1211,7 @@ type UploadISOImageParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -968,6 +1223,44 @@ type UploadISOImageParam struct {
 // NewUploadISOImageParam return new UploadISOImageParam
 func NewUploadISOImageParam() *UploadISOImageParam {
 	return &UploadISOImageParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UploadISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.IsoFile) {
+		p.IsoFile = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1074,6 +1367,13 @@ func (p *UploadISOImageParam) SetParamTemplateFile(v string) {
 func (p *UploadISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UploadISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UploadISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UploadISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1123,12 +1423,36 @@ type DownloadISOImageParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewDownloadISOImageParam return new DownloadISOImageParam
 func NewDownloadISOImageParam() *DownloadISOImageParam {
 	return &DownloadISOImageParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DownloadISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.FileDestination) {
+		p.FileDestination = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1208,6 +1532,13 @@ func (p *DownloadISOImageParam) SetParamTemplateFile(v string) {
 func (p *DownloadISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DownloadISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DownloadISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DownloadISOImageParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1221,6 +1552,7 @@ type FtpOpenISOImageParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1232,6 +1564,41 @@ type FtpOpenISOImageParam struct {
 // NewFtpOpenISOImageParam return new FtpOpenISOImageParam
 func NewFtpOpenISOImageParam() *FtpOpenISOImageParam {
 	return &FtpOpenISOImageParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *FtpOpenISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1317,6 +1684,13 @@ func (p *FtpOpenISOImageParam) SetParamTemplateFile(v string) {
 func (p *FtpOpenISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *FtpOpenISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FtpOpenISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *FtpOpenISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1365,12 +1739,33 @@ type FtpCloseISOImageParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewFtpCloseISOImageParam return new FtpCloseISOImageParam
 func NewFtpCloseISOImageParam() *FtpCloseISOImageParam {
 	return &FtpCloseISOImageParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *FtpCloseISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1435,6 +1830,13 @@ func (p *FtpCloseISOImageParam) SetParamTemplateFile(v string) {
 
 func (p *FtpCloseISOImageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *FtpCloseISOImageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FtpCloseISOImageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *FtpCloseISOImageParam) SetId(v int64) {
 	p.Id = v

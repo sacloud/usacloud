@@ -17,6 +17,7 @@ type ListBridgeParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -27,6 +28,50 @@ type ListBridgeParam struct {
 // NewListBridgeParam return new ListBridgeParam
 func NewListBridgeParam() *ListBridgeParam {
 	return &ListBridgeParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListBridgeParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -158,6 +203,13 @@ func (p *ListBridgeParam) SetParamTemplateFile(v string) {
 func (p *ListBridgeParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListBridgeParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListBridgeParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListBridgeParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -201,6 +253,7 @@ type CreateBridgeParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -211,6 +264,44 @@ type CreateBridgeParam struct {
 // NewCreateBridgeParam return new CreateBridgeParam
 func NewCreateBridgeParam() *CreateBridgeParam {
 	return &CreateBridgeParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateBridgeParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -324,6 +415,13 @@ func (p *CreateBridgeParam) SetParamTemplateFile(v string) {
 func (p *CreateBridgeParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateBridgeParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateBridgeParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateBridgeParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -364,6 +462,7 @@ func (p *CreateBridgeParam) GetFormatFile() string {
 type ReadBridgeParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -375,6 +474,38 @@ type ReadBridgeParam struct {
 // NewReadBridgeParam return new ReadBridgeParam
 func NewReadBridgeParam() *ReadBridgeParam {
 	return &ReadBridgeParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadBridgeParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -453,6 +584,13 @@ func (p *ReadBridgeParam) SetParamTemplateFile(v string) {
 func (p *ReadBridgeParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadBridgeParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadBridgeParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadBridgeParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -503,6 +641,7 @@ type UpdateBridgeParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -514,6 +653,47 @@ type UpdateBridgeParam struct {
 // NewUpdateBridgeParam return new UpdateBridgeParam
 func NewUpdateBridgeParam() *UpdateBridgeParam {
 	return &UpdateBridgeParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateBridgeParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -627,6 +807,13 @@ func (p *UpdateBridgeParam) SetParamTemplateFile(v string) {
 func (p *UpdateBridgeParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateBridgeParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateBridgeParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateBridgeParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -675,6 +862,7 @@ type DeleteBridgeParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -686,6 +874,41 @@ type DeleteBridgeParam struct {
 // NewDeleteBridgeParam return new DeleteBridgeParam
 func NewDeleteBridgeParam() *DeleteBridgeParam {
 	return &DeleteBridgeParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteBridgeParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -770,6 +993,13 @@ func (p *DeleteBridgeParam) SetParamTemplateFile(v string) {
 
 func (p *DeleteBridgeParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteBridgeParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteBridgeParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *DeleteBridgeParam) SetOutputType(v string) {
 	p.OutputType = v

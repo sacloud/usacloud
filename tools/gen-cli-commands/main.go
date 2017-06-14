@@ -545,6 +545,18 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors,"GlobalOptions")
 					}
 
+					// Generate skeleton
+					if {{.ParamName}}.GenerateSkeleton {
+						{{.ParamName}}.GenerateSkeleton = false
+						{{.ParamName}}.FillValueToSkeleton()
+						d, err := json.MarshalIndent({{.ParamName}}, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
 					{{ if .IsNeedIDOnlyType }}
 					if c.NArg() == 0 {
 						return fmt.Errorf("ID argument is required")

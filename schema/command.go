@@ -122,6 +122,15 @@ func (c *Command) BuildedParams() SortableParams {
 			Order:       30,
 		}
 	}
+	if _, ok := c.Params["generate-skeleton"]; !ok {
+		c.Params["generate-skeleton"] = &Schema{
+			Type:        TypeBool,
+			HandlerType: HandlerNoop,
+			Description: "Output skelton of parameter JSON",
+			Category:    "input",
+			Order:       40,
+		}
+	}
 
 	if !c.NoOutput {
 		if _, ok := c.Params["output-type"]; !ok {
