@@ -316,6 +316,12 @@ func (p *{{.Name}}) Validate() []error{
 		}
 	}
 	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors , errs...)
+		}
+	}
+	{
 		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors , errs...)

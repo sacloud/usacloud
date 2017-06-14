@@ -56,8 +56,6 @@ func AutoBackupCreateCompleteFlags(ctx command.Context, params *params.CreateAut
 		comp = define.Resources["AutoBackup"].Commands["create"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["AutoBackup"].Commands["create"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["AutoBackup"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -104,8 +102,6 @@ func AutoBackupUpdateCompleteFlags(ctx command.Context, params *params.UpdateAut
 		comp = define.Resources["AutoBackup"].Commands["update"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["AutoBackup"].Commands["update"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["AutoBackup"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["AutoBackup"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -124,8 +120,6 @@ func AutoBackupDeleteCompleteFlags(ctx command.Context, params *params.DeleteAut
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["AutoBackup"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["AutoBackup"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":

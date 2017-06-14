@@ -10,20 +10,22 @@ import (
 
 // ListArchiveParam is input parameters for the sacloud API
 type ListArchiveParam struct {
-	Name            []string
-	Id              []int64
-	Scope           string
-	Tags            []string
-	SourceArchiveId int64
-	SourceDiskId    int64
-	From            int
-	Max             int
-	Sort            []string
-	OutputType      string
-	Column          []string
-	Quiet           bool
-	Format          string
-	FormatFile      string
+	Name              []string
+	Id                []int64
+	Scope             string
+	Tags              []string
+	SourceArchiveId   int64
+	SourceDiskId      int64
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListArchiveParam return new ListArchiveParam
@@ -91,6 +93,12 @@ func (p *ListArchiveParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -196,6 +204,20 @@ func (p *ListArchiveParam) SetSort(v []string) {
 func (p *ListArchiveParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -234,20 +256,22 @@ func (p *ListArchiveParam) GetFormatFile() string {
 
 // CreateArchiveParam is input parameters for the sacloud API
 type CreateArchiveParam struct {
-	SourceDiskId    int64
-	SourceArchiveId int64
-	Size            int
-	ArchiveFile     string
-	Name            string
-	Description     string
-	Tags            []string
-	IconId          int64
-	Assumeyes       bool
-	OutputType      string
-	Column          []string
-	Quiet           bool
-	Format          string
-	FormatFile      string
+	SourceDiskId      int64
+	SourceArchiveId   int64
+	Size              int
+	ArchiveFile       string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateArchiveParam return new CreateArchiveParam
@@ -372,6 +396,12 @@ func (p *CreateArchiveParam) Validate() []error {
 		}
 	}
 	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -472,6 +502,20 @@ func (p *CreateArchiveParam) SetAssumeyes(v bool) {
 func (p *CreateArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -510,12 +554,14 @@ func (p *CreateArchiveParam) GetFormatFile() string {
 
 // ReadArchiveParam is input parameters for the sacloud API
 type ReadArchiveParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadArchiveParam return new ReadArchiveParam
@@ -537,6 +583,12 @@ func (p *ReadArchiveParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -579,6 +631,20 @@ func (p *ReadArchiveParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -624,17 +690,19 @@ func (p *ReadArchiveParam) GetId() int64 {
 
 // UpdateArchiveParam is input parameters for the sacloud API
 type UpdateArchiveParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateArchiveParam return new UpdateArchiveParam
@@ -684,6 +752,12 @@ func (p *UpdateArchiveParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -761,6 +835,20 @@ func (p *UpdateArchiveParam) SetAssumeyes(v bool) {
 func (p *UpdateArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -806,13 +894,15 @@ func (p *UpdateArchiveParam) GetId() int64 {
 
 // DeleteArchiveParam is input parameters for the sacloud API
 type DeleteArchiveParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteArchiveParam return new DeleteArchiveParam
@@ -834,6 +924,12 @@ func (p *DeleteArchiveParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -883,6 +979,20 @@ func (p *DeleteArchiveParam) SetAssumeyes(v bool) {
 func (p *DeleteArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DeleteArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DeleteArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -928,14 +1038,16 @@ func (p *DeleteArchiveParam) GetId() int64 {
 
 // UploadArchiveParam is input parameters for the sacloud API
 type UploadArchiveParam struct {
-	ArchiveFile string
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	ArchiveFile       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUploadArchiveParam return new UploadArchiveParam
@@ -971,6 +1083,12 @@ func (p *UploadArchiveParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1027,6 +1145,20 @@ func (p *UploadArchiveParam) SetAssumeyes(v bool) {
 func (p *UploadArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UploadArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UploadArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UploadArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UploadArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UploadArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1072,9 +1204,11 @@ func (p *UploadArchiveParam) GetId() int64 {
 
 // DownloadArchiveParam is input parameters for the sacloud API
 type DownloadArchiveParam struct {
-	FileDestination string
-	Assumeyes       bool
-	Id              int64
+	FileDestination   string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewDownloadArchiveParam return new DownloadArchiveParam
@@ -1145,6 +1279,20 @@ func (p *DownloadArchiveParam) SetAssumeyes(v bool) {
 func (p *DownloadArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DownloadArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DownloadArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DownloadArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DownloadArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DownloadArchiveParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1155,13 +1303,15 @@ func (p *DownloadArchiveParam) GetId() int64 {
 
 // FtpOpenArchiveParam is input parameters for the sacloud API
 type FtpOpenArchiveParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewFtpOpenArchiveParam return new FtpOpenArchiveParam
@@ -1183,6 +1333,12 @@ func (p *FtpOpenArchiveParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1232,6 +1388,20 @@ func (p *FtpOpenArchiveParam) SetAssumeyes(v bool) {
 func (p *FtpOpenArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *FtpOpenArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FtpOpenArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FtpOpenArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FtpOpenArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *FtpOpenArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1277,8 +1447,10 @@ func (p *FtpOpenArchiveParam) GetId() int64 {
 
 // FtpCloseArchiveParam is input parameters for the sacloud API
 type FtpCloseArchiveParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewFtpCloseArchiveParam return new FtpCloseArchiveParam
@@ -1335,6 +1507,20 @@ func (p *FtpCloseArchiveParam) SetAssumeyes(v bool) {
 func (p *FtpCloseArchiveParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *FtpCloseArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FtpCloseArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FtpCloseArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FtpCloseArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *FtpCloseArchiveParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1345,7 +1531,9 @@ func (p *FtpCloseArchiveParam) GetId() int64 {
 
 // WaitForCopyArchiveParam is input parameters for the sacloud API
 type WaitForCopyArchiveParam struct {
-	Id int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewWaitForCopyArchiveParam return new WaitForCopyArchiveParam
@@ -1395,6 +1583,20 @@ func (p *WaitForCopyArchiveParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForCopyArchiveParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForCopyArchiveParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForCopyArchiveParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForCopyArchiveParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *WaitForCopyArchiveParam) SetId(v int64) {
 	p.Id = v
 }

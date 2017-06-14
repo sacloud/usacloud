@@ -40,8 +40,6 @@ func RegionReadCompleteFlags(ctx command.Context, params *params.ReadRegionParam
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Region"].Commands["read"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Region"].Commands["read"].Params["id"].CompleteFunc
 	case "output-type", "out":

@@ -10,12 +10,14 @@ import (
 
 // DeleteCacheWebAccelParam is input parameters for the sacloud API
 type DeleteCacheWebAccelParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewDeleteCacheWebAccelParam return new DeleteCacheWebAccelParam
@@ -30,6 +32,12 @@ func (p *DeleteCacheWebAccelParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -78,6 +86,20 @@ func (p *DeleteCacheWebAccelParam) SetAssumeyes(v bool) {
 
 func (p *DeleteCacheWebAccelParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *DeleteCacheWebAccelParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteCacheWebAccelParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteCacheWebAccelParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteCacheWebAccelParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *DeleteCacheWebAccelParam) SetOutputType(v string) {
 	p.OutputType = v

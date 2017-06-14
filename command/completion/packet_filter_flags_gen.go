@@ -44,8 +44,6 @@ func PacketFilterCreateCompleteFlags(ctx command.Context, params *params.CreateP
 		comp = define.Resources["PacketFilter"].Commands["create"].Params["name"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["PacketFilter"].Commands["create"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["PacketFilter"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -84,8 +82,6 @@ func PacketFilterUpdateCompleteFlags(ctx command.Context, params *params.UpdateP
 		comp = define.Resources["PacketFilter"].Commands["update"].Params["name"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["PacketFilter"].Commands["update"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["PacketFilter"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["PacketFilter"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -104,8 +100,6 @@ func PacketFilterDeleteCompleteFlags(ctx command.Context, params *params.DeleteP
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["PacketFilter"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["PacketFilter"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -156,8 +150,6 @@ func PacketFilterRuleAddCompleteFlags(ctx command.Context, params *params.RuleAd
 		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["action"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -190,8 +182,6 @@ func PacketFilterRuleUpdateCompleteFlags(ctx command.Context, params *params.Rul
 		comp = define.Resources["PacketFilter"].Commands["rule-update"].Params["action"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["PacketFilter"].Commands["rule-update"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["PacketFilter"].Commands["rule-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["PacketFilter"].Commands["rule-update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -212,8 +202,6 @@ func PacketFilterRuleDeleteCompleteFlags(ctx command.Context, params *params.Rul
 	switch flagName {
 	case "index":
 		comp = define.Resources["PacketFilter"].Commands["rule-delete"].Params["index"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["PacketFilter"].Commands["rule-delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["PacketFilter"].Commands["rule-delete"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -234,8 +222,6 @@ func PacketFilterInterfaceConnectCompleteFlags(ctx command.Context, params *para
 	switch flagName {
 	case "interface-id":
 		comp = define.Resources["PacketFilter"].Commands["interface-connect"].Params["interface-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["PacketFilter"].Commands["interface-connect"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["PacketFilter"].Commands["interface-connect"].Params["id"].CompleteFunc
 	}
@@ -254,8 +240,6 @@ func PacketFilterInterfaceDisconnectCompleteFlags(ctx command.Context, params *p
 	switch flagName {
 	case "interface-id":
 		comp = define.Resources["PacketFilter"].Commands["interface-disconnect"].Params["interface-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["PacketFilter"].Commands["interface-disconnect"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["PacketFilter"].Commands["interface-disconnect"].Params["id"].CompleteFunc
 	}

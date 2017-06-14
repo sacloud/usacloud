@@ -74,8 +74,6 @@ func DatabaseCreateCompleteFlags(ctx command.Context, params *params.CreateDatab
 		comp = define.Resources["Database"].Commands["create"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["Database"].Commands["create"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Database"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -128,8 +126,6 @@ func DatabaseUpdateCompleteFlags(ctx command.Context, params *params.UpdateDatab
 		comp = define.Resources["Database"].Commands["update"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["Database"].Commands["update"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Database"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Database"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -148,8 +144,6 @@ func DatabaseDeleteCompleteFlags(ctx command.Context, params *params.DeleteDatab
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Database"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "force", "f":
 		comp = define.Resources["Database"].Commands["delete"].Params["force"].CompleteFunc
 	case "id":
@@ -170,8 +164,6 @@ func DatabaseBootCompleteFlags(ctx command.Context, params *params.BootDatabaseP
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Database"].Commands["boot"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Database"].Commands["boot"].Params["id"].CompleteFunc
 	}
@@ -188,8 +180,6 @@ func DatabaseShutdownCompleteFlags(ctx command.Context, params *params.ShutdownD
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Database"].Commands["shutdown"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Database"].Commands["shutdown"].Params["id"].CompleteFunc
 	}
@@ -206,8 +196,6 @@ func DatabaseShutdownForceCompleteFlags(ctx command.Context, params *params.Shut
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Database"].Commands["shutdown-force"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Database"].Commands["shutdown-force"].Params["id"].CompleteFunc
 	}
@@ -224,8 +212,6 @@ func DatabaseResetCompleteFlags(ctx command.Context, params *params.ResetDatabas
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Database"].Commands["reset"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Database"].Commands["reset"].Params["id"].CompleteFunc
 	}

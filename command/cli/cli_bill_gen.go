@@ -3,7 +3,9 @@
 package cli
 
 import (
+	"encoding/json"
 	"fmt"
+	"github.com/imdario/mergo"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
 	"github.com/sacloud/usacloud/command/funcs"
@@ -33,22 +35,27 @@ func init() {
 				Usage:     "Csv Bill",
 				ArgsUsage: "<ID>",
 				Flags: []cli.Flag{
-					&cli.BoolFlag{
-						Name:        "no-header",
-						Usage:       "set output header flag",
-						Destination: &csvParam.NoHeader,
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
 					},
 					&cli.StringFlag{
-						Name:        "bill-output",
-						Aliases:     []string{"file"},
-						Usage:       "set bill-detail output path",
-						Destination: &csvParam.BillOutput,
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "no-header",
+						Usage: "set output header flag",
+					},
+					&cli.StringFlag{
+						Name:    "bill-output",
+						Aliases: []string{"file"},
+						Usage:   "set bill-detail output path",
 					},
 					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "[Required] set bill ID",
-						Destination: &csvParam.Id,
-						Hidden:      true,
+						Name:   "id",
+						Usage:  "[Required] set bill ID",
+						Hidden: true,
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -71,6 +78,23 @@ func init() {
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, csvParam)
+
+					// Set option values
+					if c.IsSet("param-template") {
+						csvParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						csvParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("no-header") {
+						csvParam.NoHeader = c.Bool("no-header")
+					}
+					if c.IsSet("bill-output") {
+						csvParam.BillOutput = c.String("bill-output")
+					}
+					if c.IsSet("id") {
+						csvParam.Id = c.Int64("id")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -133,6 +157,38 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					csvParam.ParamTemplate = c.String("param-template")
+					csvParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(csvParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewCsvBillParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(csvParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("param-template") {
+						csvParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						csvParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("no-header") {
+						csvParam.NoHeader = c.Bool("no-header")
+					}
+					if c.IsSet("bill-output") {
+						csvParam.BillOutput = c.String("bill-output")
+					}
+					if c.IsSet("id") {
+						csvParam.Id = c.Int64("id")
+					}
+
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
@@ -162,20 +218,25 @@ func init() {
 				Usage:   "List Bill",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
-						Name:        "year",
-						Usage:       "set year",
-						Destination: &listParam.Year,
+						Name:  "year",
+						Usage: "set year",
 					},
 					&cli.IntFlag{
-						Name:        "month",
-						Usage:       "set month",
-						Destination: &listParam.Month,
+						Name:  "month",
+						Usage: "set month",
 					},
 					&cli.StringFlag{
-						Name:        "output-type",
-						Aliases:     []string{"out"},
-						Usage:       "Output type [json/csv/tsv]",
-						Destination: &listParam.OutputType,
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -183,21 +244,18 @@ func init() {
 						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
 					},
 					&cli.BoolFlag{
-						Name:        "quiet",
-						Aliases:     []string{"q"},
-						Usage:       "Only display IDs",
-						Destination: &listParam.Quiet,
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
 					},
 					&cli.StringFlag{
-						Name:        "format",
-						Aliases:     []string{"fmt"},
-						Usage:       "Output format(see text/template package document for detail)",
-						Destination: &listParam.Format,
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
 					},
 					&cli.StringFlag{
-						Name:        "format-file",
-						Usage:       "Output format from file(see text/template package document for detail)",
-						Destination: &listParam.FormatFile,
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -221,8 +279,34 @@ func init() {
 					// build command context
 					ctx := command.NewContext(c, realArgs, listParam)
 
-					// Set option values for slice
-					listParam.Column = c.StringSlice("column")
+					// Set option values
+					if c.IsSet("year") {
+						listParam.Year = c.Int("year")
+					}
+					if c.IsSet("month") {
+						listParam.Month = c.Int("month")
+					}
+					if c.IsSet("param-template") {
+						listParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						listParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						listParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						listParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						listParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						listParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						listParam.FormatFile = c.String("format-file")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -285,8 +369,49 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					// Set option values for slice
-					listParam.Column = c.StringSlice("column")
+					listParam.ParamTemplate = c.String("param-template")
+					listParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(listParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewListBillParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(listParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("year") {
+						listParam.Year = c.Int("year")
+					}
+					if c.IsSet("month") {
+						listParam.Month = c.Int("month")
+					}
+					if c.IsSet("param-template") {
+						listParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						listParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						listParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						listParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						listParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						listParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						listParam.FormatFile = c.String("format-file")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -346,6 +471,16 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("bill", "csv", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("bill", "csv", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("bill", "list", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -370,6 +505,16 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("bill", "list", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("bill", "list", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("bill", "list", "quiet", &schema.Category{
 		Key:         "output",

@@ -10,16 +10,18 @@ import (
 
 // ListProductServerParam is input parameters for the sacloud API
 type ListProductServerParam struct {
-	Name       []string
-	Id         []int64
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListProductServerParam return new ListProductServerParam
@@ -59,6 +61,12 @@ func (p *ListProductServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -136,6 +144,20 @@ func (p *ListProductServerParam) SetSort(v []string) {
 func (p *ListProductServerParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListProductServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListProductServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListProductServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListProductServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListProductServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -174,13 +196,15 @@ func (p *ListProductServerParam) GetFormatFile() string {
 
 // ReadProductServerParam is input parameters for the sacloud API
 type ReadProductServerParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadProductServerParam return new ReadProductServerParam
@@ -209,6 +233,12 @@ func (p *ReadProductServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -257,6 +287,20 @@ func (p *ReadProductServerParam) SetAssumeyes(v bool) {
 
 func (p *ReadProductServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *ReadProductServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadProductServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadProductServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadProductServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *ReadProductServerParam) SetOutputType(v string) {
 	p.OutputType = v

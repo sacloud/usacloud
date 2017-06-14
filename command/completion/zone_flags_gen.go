@@ -40,8 +40,6 @@ func ZoneReadCompleteFlags(ctx command.Context, params *params.ReadZoneParam, fl
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Zone"].Commands["read"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Zone"].Commands["read"].Params["id"].CompleteFunc
 	case "output-type", "out":

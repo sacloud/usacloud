@@ -238,15 +238,19 @@ func generateFlagsComplete(commands ...schema.SortableCommand) (string, error) {
 				"ParamKey":    ctx.P,
 				"Names":       names,
 				"OutputFlag":  p.Category == "output",
+				"InputFlag":   p.Category == "input",
 			})
 		}
 
+		// output/inputフラグ以外を利用する場合はdefineパッケージをimportする
 		for _, f := range flags {
-			if !f["OutputFlag"].(bool) {
+			if !f["OutputFlag"].(bool) && !f["InputFlag"].(bool) {
 				useImport = true
 				break
 			}
 		}
+
+		// outputフラグがある場合、固定でoutput-typeへの補完処理を追加する
 		hasOutputFlag := false
 		for _, f := range flags {
 			if f["OutputFlag"].(bool) {
@@ -336,9 +340,9 @@ import (
 func {{.FuncName}}(ctx command.Context, params *params.{{.ParamName}} , flagName string , currentValue string) {
     	var comp schema.CompletionFunc
 
-	switch flagName { {{range .Flags}}{{ if not .OutputFlag }}
+	switch flagName { {{range .Flags}}{{ if not .OutputFlag }}{{ if not .InputFlag }}
 	case {{join .Names ", "}}:
-		comp = define.Resources["{{.ResourceKey}}"].Commands["{{.CommandKey}}"].Params["{{.ParamKey}}"].CompleteFunc{{end}}{{end}}
+		comp = define.Resources["{{.ResourceKey}}"].Commands["{{.CommandKey}}"].Params["{{.ParamKey}}"].CompleteFunc{{end}}{{end}}{{end}}
 	{{ if .HasOutputFlag }}case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 {{ end -}}

@@ -10,11 +10,13 @@ import (
 
 // ShowAuthStatusParam is input parameters for the sacloud API
 type ShowAuthStatusParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewShowAuthStatusParam return new ShowAuthStatusParam
@@ -29,6 +31,12 @@ func (p *ShowAuthStatusParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -71,6 +79,20 @@ func (p *ShowAuthStatusParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ShowAuthStatusParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShowAuthStatusParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShowAuthStatusParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShowAuthStatusParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ShowAuthStatusParam) SetOutputType(v string) {
 	p.OutputType = v
 }

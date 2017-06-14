@@ -84,7 +84,7 @@ func (c *Command) BuildedParams() SortableParams {
 			c.Params["id"] = &Schema{
 				Type:        TypeInt64,
 				HandlerType: HandlerPathThrough,
-				Description: "set target ID",
+				Description: "Set target ID",
 				SakuraID:    true,
 				Hidden:      true,
 			}
@@ -96,13 +96,33 @@ func (c *Command) BuildedParams() SortableParams {
 			c.Params["assumeyes"] = &Schema{
 				Type:        TypeBool,
 				HandlerType: HandlerNoop,
-				Description: "assume that the answer to any question which would be asked is yes",
+				Description: "Assume that the answer to any question which would be asked is yes",
 				Category:    "input",
 				Order:       10,
 				Aliases:     []string{"y"},
 			}
 		}
 	}
+
+	if _, ok := c.Params["param-template"]; !ok {
+		c.Params["param-template"] = &Schema{
+			Type:        TypeString,
+			HandlerType: HandlerNoop,
+			Description: "Set input parameter from string(JSON)",
+			Category:    "input",
+			Order:       20,
+		}
+	}
+	if _, ok := c.Params["param-template-file"]; !ok {
+		c.Params["param-template-file"] = &Schema{
+			Type:        TypeString,
+			HandlerType: HandlerNoop,
+			Description: "Set input parameter from file",
+			Category:    "input",
+			Order:       30,
+		}
+	}
+
 	if !c.NoOutput {
 		if _, ok := c.Params["output-type"]; !ok {
 			c.Params["output-type"] = &Schema{

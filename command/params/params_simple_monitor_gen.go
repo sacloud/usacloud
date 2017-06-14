@@ -10,17 +10,19 @@ import (
 
 // ListSimpleMonitorParam is input parameters for the sacloud API
 type ListSimpleMonitorParam struct {
-	Name       []string
-	Id         []int64
-	Tags       []string
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListSimpleMonitorParam return new ListSimpleMonitorParam
@@ -67,6 +69,12 @@ func (p *ListSimpleMonitorParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -151,6 +159,20 @@ func (p *ListSimpleMonitorParam) SetSort(v []string) {
 func (p *ListSimpleMonitorParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListSimpleMonitorParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListSimpleMonitorParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListSimpleMonitorParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListSimpleMonitorParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -189,28 +211,30 @@ func (p *ListSimpleMonitorParam) GetFormatFile() string {
 
 // CreateSimpleMonitorParam is input parameters for the sacloud API
 type CreateSimpleMonitorParam struct {
-	Target       string
-	Protocol     string
-	Port         int
-	DelayLoop    int
-	Enabled      bool
-	HostHeader   string
-	Path         string
-	ResponseCode int
-	DnsQname     string
-	DnsExcepted  string
-	NotifyEmail  bool
-	EmailType    string
-	SlackWebhook string
-	Description  string
-	Tags         []string
-	IconId       int64
-	Assumeyes    bool
-	OutputType   string
-	Column       []string
-	Quiet        bool
-	Format       string
-	FormatFile   string
+	Target            string
+	Protocol          string
+	Port              int
+	DelayLoop         int
+	Enabled           bool
+	HostHeader        string
+	Path              string
+	ResponseCode      int
+	DnsQname          string
+	DnsExcepted       string
+	NotifyEmail       bool
+	EmailType         string
+	SlackWebhook      string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateSimpleMonitorParam return new CreateSimpleMonitorParam
@@ -311,6 +335,12 @@ func (p *CreateSimpleMonitorParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -472,6 +502,20 @@ func (p *CreateSimpleMonitorParam) SetAssumeyes(v bool) {
 func (p *CreateSimpleMonitorParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateSimpleMonitorParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateSimpleMonitorParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateSimpleMonitorParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateSimpleMonitorParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -510,12 +554,14 @@ func (p *CreateSimpleMonitorParam) GetFormatFile() string {
 
 // ReadSimpleMonitorParam is input parameters for the sacloud API
 type ReadSimpleMonitorParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadSimpleMonitorParam return new ReadSimpleMonitorParam
@@ -537,6 +583,12 @@ func (p *ReadSimpleMonitorParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -579,6 +631,20 @@ func (p *ReadSimpleMonitorParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadSimpleMonitorParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadSimpleMonitorParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadSimpleMonitorParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadSimpleMonitorParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -624,28 +690,30 @@ func (p *ReadSimpleMonitorParam) GetId() int64 {
 
 // UpdateSimpleMonitorParam is input parameters for the sacloud API
 type UpdateSimpleMonitorParam struct {
-	Protocol     string
-	Port         int
-	DelayLoop    int
-	Enabled      bool
-	HostHeader   string
-	Path         string
-	ResponseCode int
-	DnsQname     string
-	DnsExcepted  string
-	NotifyEmail  bool
-	EmailType    string
-	SlackWebhook string
-	Description  string
-	Tags         []string
-	IconId       int64
-	Assumeyes    bool
-	OutputType   string
-	Column       []string
-	Quiet        bool
-	Format       string
-	FormatFile   string
-	Id           int64
+	Protocol          string
+	Port              int
+	DelayLoop         int
+	Enabled           bool
+	HostHeader        string
+	Path              string
+	ResponseCode      int
+	DnsQname          string
+	DnsExcepted       string
+	NotifyEmail       bool
+	EmailType         string
+	SlackWebhook      string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateSimpleMonitorParam return new UpdateSimpleMonitorParam
@@ -716,6 +784,12 @@ func (p *UpdateSimpleMonitorParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -870,6 +944,20 @@ func (p *UpdateSimpleMonitorParam) SetAssumeyes(v bool) {
 func (p *UpdateSimpleMonitorParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateSimpleMonitorParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateSimpleMonitorParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -915,13 +1003,15 @@ func (p *UpdateSimpleMonitorParam) GetId() int64 {
 
 // DeleteSimpleMonitorParam is input parameters for the sacloud API
 type DeleteSimpleMonitorParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteSimpleMonitorParam return new DeleteSimpleMonitorParam
@@ -943,6 +1033,12 @@ func (p *DeleteSimpleMonitorParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -991,6 +1087,20 @@ func (p *DeleteSimpleMonitorParam) SetAssumeyes(v bool) {
 
 func (p *DeleteSimpleMonitorParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *DeleteSimpleMonitorParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteSimpleMonitorParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteSimpleMonitorParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteSimpleMonitorParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *DeleteSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v

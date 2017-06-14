@@ -10,17 +10,19 @@ import (
 
 // ListAutoBackupParam is input parameters for the sacloud API
 type ListAutoBackupParam struct {
-	Name       []string
-	Id         []int64
-	Tags       []string
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListAutoBackupParam return new ListAutoBackupParam
@@ -67,6 +69,12 @@ func (p *ListAutoBackupParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -151,6 +159,20 @@ func (p *ListAutoBackupParam) SetSort(v []string) {
 func (p *ListAutoBackupParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListAutoBackupParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListAutoBackupParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListAutoBackupParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListAutoBackupParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListAutoBackupParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -189,19 +211,21 @@ func (p *ListAutoBackupParam) GetFormatFile() string {
 
 // CreateAutoBackupParam is input parameters for the sacloud API
 type CreateAutoBackupParam struct {
-	DiskId      int64
-	Weekdays    []string
-	Generation  int
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
+	DiskId            int64
+	Weekdays          []string
+	Generation        int
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateAutoBackupParam return new CreateAutoBackupParam
@@ -303,6 +327,12 @@ func (p *CreateAutoBackupParam) Validate() []error {
 		}
 	}
 	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -396,6 +426,20 @@ func (p *CreateAutoBackupParam) SetAssumeyes(v bool) {
 func (p *CreateAutoBackupParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateAutoBackupParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateAutoBackupParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateAutoBackupParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateAutoBackupParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateAutoBackupParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -434,12 +478,14 @@ func (p *CreateAutoBackupParam) GetFormatFile() string {
 
 // ReadAutoBackupParam is input parameters for the sacloud API
 type ReadAutoBackupParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadAutoBackupParam return new ReadAutoBackupParam
@@ -461,6 +507,12 @@ func (p *ReadAutoBackupParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -503,6 +555,20 @@ func (p *ReadAutoBackupParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadAutoBackupParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadAutoBackupParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadAutoBackupParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadAutoBackupParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadAutoBackupParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -548,19 +614,21 @@ func (p *ReadAutoBackupParam) GetId() int64 {
 
 // UpdateAutoBackupParam is input parameters for the sacloud API
 type UpdateAutoBackupParam struct {
-	Weekdays    []string
-	Generation  int
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	Weekdays          []string
+	Generation        int
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateAutoBackupParam return new UpdateAutoBackupParam
@@ -624,6 +692,12 @@ func (p *UpdateAutoBackupParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -715,6 +789,20 @@ func (p *UpdateAutoBackupParam) SetAssumeyes(v bool) {
 func (p *UpdateAutoBackupParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateAutoBackupParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateAutoBackupParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateAutoBackupParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateAutoBackupParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateAutoBackupParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -760,13 +848,15 @@ func (p *UpdateAutoBackupParam) GetId() int64 {
 
 // DeleteAutoBackupParam is input parameters for the sacloud API
 type DeleteAutoBackupParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteAutoBackupParam return new DeleteAutoBackupParam
@@ -788,6 +878,12 @@ func (p *DeleteAutoBackupParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -836,6 +932,20 @@ func (p *DeleteAutoBackupParam) SetAssumeyes(v bool) {
 
 func (p *DeleteAutoBackupParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *DeleteAutoBackupParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteAutoBackupParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteAutoBackupParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteAutoBackupParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *DeleteAutoBackupParam) SetOutputType(v string) {
 	p.OutputType = v

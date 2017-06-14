@@ -10,17 +10,19 @@ import (
 
 // ListServerParam is input parameters for the sacloud API
 type ListServerParam struct {
-	Name       []string
-	Id         []int64
-	Tags       []string
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListServerParam return new ListServerParam
@@ -67,6 +69,12 @@ func (p *ListServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -151,6 +159,20 @@ func (p *ListServerParam) SetSort(v []string) {
 func (p *ListServerParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -228,6 +250,8 @@ type BuildServerParam struct {
 	Tags                    []string
 	IconId                  int64
 	Assumeyes               bool
+	ParamTemplate           string
+	ParamTemplateFile       string
 	OutputType              string
 	Column                  []string
 	Quiet                   bool
@@ -482,6 +506,12 @@ func (p *BuildServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -797,6 +827,20 @@ func (p *BuildServerParam) SetAssumeyes(v bool) {
 func (p *BuildServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *BuildServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BuildServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BuildServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BuildServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *BuildServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -849,12 +893,14 @@ func (p *BuildServerParam) GetDisableBootAfterCreate() bool {
 
 // ReadServerParam is input parameters for the sacloud API
 type ReadServerParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadServerParam return new ReadServerParam
@@ -876,6 +922,12 @@ func (p *ReadServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -918,6 +970,20 @@ func (p *ReadServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -963,17 +1029,19 @@ func (p *ReadServerParam) GetId() int64 {
 
 // UpdateServerParam is input parameters for the sacloud API
 type UpdateServerParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateServerParam return new UpdateServerParam
@@ -1023,6 +1091,12 @@ func (p *UpdateServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1100,6 +1174,20 @@ func (p *UpdateServerParam) SetAssumeyes(v bool) {
 func (p *UpdateServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1145,15 +1233,17 @@ func (p *UpdateServerParam) GetId() int64 {
 
 // DeleteServerParam is input parameters for the sacloud API
 type DeleteServerParam struct {
-	Force       bool
-	WithoutDisk bool
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	Force             bool
+	WithoutDisk       bool
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteServerParam return new DeleteServerParam
@@ -1175,6 +1265,12 @@ func (p *DeleteServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1238,6 +1334,20 @@ func (p *DeleteServerParam) SetAssumeyes(v bool) {
 func (p *DeleteServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DeleteServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DeleteServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1283,15 +1393,17 @@ func (p *DeleteServerParam) GetId() int64 {
 
 // PlanChangeServerParam is input parameters for the sacloud API
 type PlanChangeServerParam struct {
-	Core       int
-	Memory     int
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Core              int
+	Memory            int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewPlanChangeServerParam return new PlanChangeServerParam
@@ -1327,6 +1439,12 @@ func (p *PlanChangeServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1390,6 +1508,20 @@ func (p *PlanChangeServerParam) SetAssumeyes(v bool) {
 func (p *PlanChangeServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *PlanChangeServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PlanChangeServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PlanChangeServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PlanChangeServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *PlanChangeServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1435,8 +1567,10 @@ func (p *PlanChangeServerParam) GetId() int64 {
 
 // BootServerParam is input parameters for the sacloud API
 type BootServerParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewBootServerParam return new BootServerParam
@@ -1493,6 +1627,20 @@ func (p *BootServerParam) SetAssumeyes(v bool) {
 func (p *BootServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *BootServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BootServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BootServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BootServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *BootServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1503,8 +1651,10 @@ func (p *BootServerParam) GetId() int64 {
 
 // ShutdownServerParam is input parameters for the sacloud API
 type ShutdownServerParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewShutdownServerParam return new ShutdownServerParam
@@ -1561,6 +1711,20 @@ func (p *ShutdownServerParam) SetAssumeyes(v bool) {
 func (p *ShutdownServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ShutdownServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ShutdownServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1571,8 +1735,10 @@ func (p *ShutdownServerParam) GetId() int64 {
 
 // ShutdownForceServerParam is input parameters for the sacloud API
 type ShutdownForceServerParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewShutdownForceServerParam return new ShutdownForceServerParam
@@ -1629,6 +1795,20 @@ func (p *ShutdownForceServerParam) SetAssumeyes(v bool) {
 func (p *ShutdownForceServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ShutdownForceServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownForceServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownForceServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownForceServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ShutdownForceServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1639,8 +1819,10 @@ func (p *ShutdownForceServerParam) GetId() int64 {
 
 // ResetServerParam is input parameters for the sacloud API
 type ResetServerParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewResetServerParam return new ResetServerParam
@@ -1697,6 +1879,20 @@ func (p *ResetServerParam) SetAssumeyes(v bool) {
 func (p *ResetServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ResetServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ResetServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ResetServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ResetServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ResetServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1707,7 +1903,9 @@ func (p *ResetServerParam) GetId() int64 {
 
 // WaitForBootServerParam is input parameters for the sacloud API
 type WaitForBootServerParam struct {
-	Id int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewWaitForBootServerParam return new WaitForBootServerParam
@@ -1757,6 +1955,20 @@ func (p *WaitForBootServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForBootServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForBootServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForBootServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForBootServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *WaitForBootServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1767,7 +1979,9 @@ func (p *WaitForBootServerParam) GetId() int64 {
 
 // WaitForDownServerParam is input parameters for the sacloud API
 type WaitForDownServerParam struct {
-	Id int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewWaitForDownServerParam return new WaitForDownServerParam
@@ -1817,6 +2031,20 @@ func (p *WaitForDownServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForDownServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForDownServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForDownServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForDownServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *WaitForDownServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1827,12 +2055,14 @@ func (p *WaitForDownServerParam) GetId() int64 {
 
 // SshServerParam is input parameters for the sacloud API
 type SshServerParam struct {
-	Key      string
-	User     string
-	Port     int
-	Password string
-	Quiet    bool
-	Id       int64
+	Key               string
+	User              string
+	Port              int
+	Password          string
+	ParamTemplate     string
+	ParamTemplateFile string
+	Quiet             bool
+	Id                int64
 }
 
 // NewSshServerParam return new SshServerParam
@@ -1927,6 +2157,20 @@ func (p *SshServerParam) SetPassword(v string) {
 func (p *SshServerParam) GetPassword() string {
 	return p.Password
 }
+func (p *SshServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SshServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SshServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SshServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *SshServerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
@@ -1944,12 +2188,14 @@ func (p *SshServerParam) GetId() int64 {
 
 // SshExecServerParam is input parameters for the sacloud API
 type SshExecServerParam struct {
-	Key      string
-	User     string
-	Port     int
-	Password string
-	Quiet    bool
-	Id       int64
+	Key               string
+	User              string
+	Port              int
+	Password          string
+	ParamTemplate     string
+	ParamTemplateFile string
+	Quiet             bool
+	Id                int64
 }
 
 // NewSshExecServerParam return new SshExecServerParam
@@ -2044,6 +2290,20 @@ func (p *SshExecServerParam) SetPassword(v string) {
 func (p *SshExecServerParam) GetPassword() string {
 	return p.Password
 }
+func (p *SshExecServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SshExecServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SshExecServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SshExecServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *SshExecServerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
@@ -2061,13 +2321,15 @@ func (p *SshExecServerParam) GetId() int64 {
 
 // ScpServerParam is input parameters for the sacloud API
 type ScpServerParam struct {
-	Key       string
-	Recursive bool
-	User      string
-	Port      int
-	Password  string
-	Assumeyes bool
-	Quiet     bool
+	Key               string
+	Recursive         bool
+	User              string
+	Port              int
+	Password          string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Quiet             bool
 }
 
 // NewScpServerParam return new ScpServerParam
@@ -2169,6 +2431,20 @@ func (p *ScpServerParam) SetAssumeyes(v bool) {
 func (p *ScpServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ScpServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ScpServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ScpServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ScpServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ScpServerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
@@ -2179,9 +2455,11 @@ func (p *ScpServerParam) GetQuiet() bool {
 
 // VncServerParam is input parameters for the sacloud API
 type VncServerParam struct {
-	WaitForBoot bool
-	Assumeyes   bool
-	Id          int64
+	WaitForBoot       bool
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewVncServerParam return new VncServerParam
@@ -2245,6 +2523,20 @@ func (p *VncServerParam) SetAssumeyes(v bool) {
 func (p *VncServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *VncServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *VncServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *VncServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *VncServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *VncServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2255,13 +2547,15 @@ func (p *VncServerParam) GetId() int64 {
 
 // VncInfoServerParam is input parameters for the sacloud API
 type VncInfoServerParam struct {
-	WaitForBoot bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	WaitForBoot       bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewVncInfoServerParam return new VncInfoServerParam
@@ -2283,6 +2577,12 @@ func (p *VncInfoServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2332,6 +2632,20 @@ func (p *VncInfoServerParam) SetWaitForBoot(v bool) {
 func (p *VncInfoServerParam) GetWaitForBoot() bool {
 	return p.WaitForBoot
 }
+func (p *VncInfoServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *VncInfoServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *VncInfoServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *VncInfoServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *VncInfoServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -2377,18 +2691,20 @@ func (p *VncInfoServerParam) GetId() int64 {
 
 // VncSendServerParam is input parameters for the sacloud API
 type VncSendServerParam struct {
-	Command       string
-	CommandFile   string
-	UseUsKeyboard bool
-	Debug         bool
-	WaitForBoot   bool
-	Assumeyes     bool
-	OutputType    string
-	Column        []string
-	Quiet         bool
-	Format        string
-	FormatFile    string
-	Id            int64
+	Command           string
+	CommandFile       string
+	UseUsKeyboard     bool
+	Debug             bool
+	WaitForBoot       bool
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewVncSendServerParam return new VncSendServerParam
@@ -2426,6 +2742,12 @@ func (p *VncSendServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2510,6 +2832,20 @@ func (p *VncSendServerParam) SetAssumeyes(v bool) {
 func (p *VncSendServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *VncSendServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *VncSendServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *VncSendServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *VncSendServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *VncSendServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -2555,12 +2891,14 @@ func (p *VncSendServerParam) GetId() int64 {
 
 // DiskInfoServerParam is input parameters for the sacloud API
 type DiskInfoServerParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDiskInfoServerParam return new DiskInfoServerParam
@@ -2582,6 +2920,12 @@ func (p *DiskInfoServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2624,6 +2968,20 @@ func (p *DiskInfoServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DiskInfoServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DiskInfoServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DiskInfoServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DiskInfoServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DiskInfoServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -2669,9 +3027,11 @@ func (p *DiskInfoServerParam) GetId() int64 {
 
 // DiskConnectServerParam is input parameters for the sacloud API
 type DiskConnectServerParam struct {
-	DiskId    int64
-	Assumeyes bool
-	Id        int64
+	DiskId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewDiskConnectServerParam return new DiskConnectServerParam
@@ -2749,6 +3109,20 @@ func (p *DiskConnectServerParam) SetAssumeyes(v bool) {
 func (p *DiskConnectServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DiskConnectServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DiskConnectServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DiskConnectServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DiskConnectServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DiskConnectServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2759,9 +3133,11 @@ func (p *DiskConnectServerParam) GetId() int64 {
 
 // DiskDisconnectServerParam is input parameters for the sacloud API
 type DiskDisconnectServerParam struct {
-	DiskId    int64
-	Assumeyes bool
-	Id        int64
+	DiskId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewDiskDisconnectServerParam return new DiskDisconnectServerParam
@@ -2839,6 +3215,20 @@ func (p *DiskDisconnectServerParam) SetAssumeyes(v bool) {
 func (p *DiskDisconnectServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DiskDisconnectServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DiskDisconnectServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DiskDisconnectServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DiskDisconnectServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DiskDisconnectServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2849,12 +3239,14 @@ func (p *DiskDisconnectServerParam) GetId() int64 {
 
 // InterfaceInfoServerParam is input parameters for the sacloud API
 type InterfaceInfoServerParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewInterfaceInfoServerParam return new InterfaceInfoServerParam
@@ -2876,6 +3268,12 @@ func (p *InterfaceInfoServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2918,6 +3316,20 @@ func (p *InterfaceInfoServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *InterfaceInfoServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceInfoServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceInfoServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceInfoServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *InterfaceInfoServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -2963,9 +3375,11 @@ func (p *InterfaceInfoServerParam) GetId() int64 {
 
 // InterfaceAddForInternetServerParam is input parameters for the sacloud API
 type InterfaceAddForInternetServerParam struct {
-	WithoutDiskEdit bool
-	Assumeyes       bool
-	Id              int64
+	WithoutDiskEdit   bool
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewInterfaceAddForInternetServerParam return new InterfaceAddForInternetServerParam
@@ -3029,6 +3443,20 @@ func (p *InterfaceAddForInternetServerParam) SetAssumeyes(v bool) {
 func (p *InterfaceAddForInternetServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *InterfaceAddForInternetServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceAddForInternetServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceAddForInternetServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceAddForInternetServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *InterfaceAddForInternetServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3039,13 +3467,15 @@ func (p *InterfaceAddForInternetServerParam) GetId() int64 {
 
 // InterfaceAddForRouterServerParam is input parameters for the sacloud API
 type InterfaceAddForRouterServerParam struct {
-	SwitchId        int64
-	WithoutDiskEdit bool
-	Ipaddress       string
-	DefaultRoute    string
-	NwMasklen       int
-	Assumeyes       bool
-	Id              int64
+	SwitchId          int64
+	WithoutDiskEdit   bool
+	Ipaddress         string
+	DefaultRoute      string
+	NwMasklen         int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewInterfaceAddForRouterServerParam return new InterfaceAddForRouterServerParam
@@ -3175,6 +3605,20 @@ func (p *InterfaceAddForRouterServerParam) SetAssumeyes(v bool) {
 func (p *InterfaceAddForRouterServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *InterfaceAddForRouterServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceAddForRouterServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceAddForRouterServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceAddForRouterServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *InterfaceAddForRouterServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3185,13 +3629,15 @@ func (p *InterfaceAddForRouterServerParam) GetId() int64 {
 
 // InterfaceAddForSwitchServerParam is input parameters for the sacloud API
 type InterfaceAddForSwitchServerParam struct {
-	SwitchId        int64
-	WithoutDiskEdit bool
-	Ipaddress       string
-	DefaultRoute    string
-	NwMasklen       int
-	Assumeyes       bool
-	Id              int64
+	SwitchId          int64
+	WithoutDiskEdit   bool
+	Ipaddress         string
+	DefaultRoute      string
+	NwMasklen         int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewInterfaceAddForSwitchServerParam return new InterfaceAddForSwitchServerParam
@@ -3321,6 +3767,20 @@ func (p *InterfaceAddForSwitchServerParam) SetAssumeyes(v bool) {
 func (p *InterfaceAddForSwitchServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *InterfaceAddForSwitchServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceAddForSwitchServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceAddForSwitchServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceAddForSwitchServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *InterfaceAddForSwitchServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3331,8 +3791,10 @@ func (p *InterfaceAddForSwitchServerParam) GetId() int64 {
 
 // InterfaceAddDisconnectedServerParam is input parameters for the sacloud API
 type InterfaceAddDisconnectedServerParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewInterfaceAddDisconnectedServerParam return new InterfaceAddDisconnectedServerParam
@@ -3389,6 +3851,20 @@ func (p *InterfaceAddDisconnectedServerParam) SetAssumeyes(v bool) {
 func (p *InterfaceAddDisconnectedServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *InterfaceAddDisconnectedServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceAddDisconnectedServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceAddDisconnectedServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceAddDisconnectedServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *InterfaceAddDisconnectedServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3399,12 +3875,14 @@ func (p *InterfaceAddDisconnectedServerParam) GetId() int64 {
 
 // IsoInfoServerParam is input parameters for the sacloud API
 type IsoInfoServerParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewIsoInfoServerParam return new IsoInfoServerParam
@@ -3426,6 +3904,12 @@ func (p *IsoInfoServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3468,6 +3952,20 @@ func (p *IsoInfoServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *IsoInfoServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *IsoInfoServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *IsoInfoServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *IsoInfoServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *IsoInfoServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -3513,15 +4011,17 @@ func (p *IsoInfoServerParam) GetId() int64 {
 
 // IsoInsertServerParam is input parameters for the sacloud API
 type IsoInsertServerParam struct {
-	IsoImageId  int64
-	Size        int
-	IsoFile     string
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Assumeyes   bool
-	Id          int64
+	IsoImageId        int64
+	Size              int
+	IsoFile           string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewIsoInsertServerParam return new IsoInsertServerParam
@@ -3672,6 +4172,20 @@ func (p *IsoInsertServerParam) SetAssumeyes(v bool) {
 func (p *IsoInsertServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *IsoInsertServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *IsoInsertServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *IsoInsertServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *IsoInsertServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *IsoInsertServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3682,8 +4196,10 @@ func (p *IsoInsertServerParam) GetId() int64 {
 
 // IsoEjectServerParam is input parameters for the sacloud API
 type IsoEjectServerParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewIsoEjectServerParam return new IsoEjectServerParam
@@ -3740,6 +4256,20 @@ func (p *IsoEjectServerParam) SetAssumeyes(v bool) {
 func (p *IsoEjectServerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *IsoEjectServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *IsoEjectServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *IsoEjectServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *IsoEjectServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *IsoEjectServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3750,15 +4280,17 @@ func (p *IsoEjectServerParam) GetId() int64 {
 
 // MonitorCpuServerParam is input parameters for the sacloud API
 type MonitorCpuServerParam struct {
-	Start      string
-	End        string
-	KeyFormat  string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Start             string
+	End               string
+	KeyFormat         string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewMonitorCpuServerParam return new MonitorCpuServerParam
@@ -3804,6 +4336,12 @@ func (p *MonitorCpuServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3867,6 +4405,20 @@ func (p *MonitorCpuServerParam) SetKeyFormat(v string) {
 func (p *MonitorCpuServerParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorCpuServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorCpuServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorCpuServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorCpuServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *MonitorCpuServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -3912,16 +4464,18 @@ func (p *MonitorCpuServerParam) GetId() int64 {
 
 // MonitorNicServerParam is input parameters for the sacloud API
 type MonitorNicServerParam struct {
-	Start      string
-	End        string
-	Index      []int64
-	KeyFormat  string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Start             string
+	End               string
+	Index             []int64
+	KeyFormat         string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewMonitorNicServerParam return new MonitorNicServerParam
@@ -3967,6 +4521,12 @@ func (p *MonitorNicServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4037,6 +4597,20 @@ func (p *MonitorNicServerParam) SetKeyFormat(v string) {
 func (p *MonitorNicServerParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorNicServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorNicServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorNicServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorNicServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *MonitorNicServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -4082,16 +4656,18 @@ func (p *MonitorNicServerParam) GetId() int64 {
 
 // MonitorDiskServerParam is input parameters for the sacloud API
 type MonitorDiskServerParam struct {
-	Start      string
-	End        string
-	Index      []int64
-	KeyFormat  string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Start             string
+	End               string
+	Index             []int64
+	KeyFormat         string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewMonitorDiskServerParam return new MonitorDiskServerParam
@@ -4137,6 +4713,12 @@ func (p *MonitorDiskServerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4206,6 +4788,20 @@ func (p *MonitorDiskServerParam) SetKeyFormat(v string) {
 
 func (p *MonitorDiskServerParam) GetKeyFormat() string {
 	return p.KeyFormat
+}
+func (p *MonitorDiskServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorDiskServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorDiskServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorDiskServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *MonitorDiskServerParam) SetOutputType(v string) {
 	p.OutputType = v

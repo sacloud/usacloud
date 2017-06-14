@@ -68,8 +68,6 @@ func InternetUpdateBandwidthCompleteFlags(ctx command.Context, params *params.Up
 	switch flagName {
 	case "band-width":
 		comp = define.Resources["Internet"].Commands["update-bandwidth"].Params["band-width"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Internet"].Commands["update-bandwidth"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Internet"].Commands["update-bandwidth"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -100,8 +98,6 @@ func InternetCreateCompleteFlags(ctx command.Context, params *params.CreateInter
 		comp = define.Resources["Internet"].Commands["create"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["Internet"].Commands["create"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Internet"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -146,8 +142,6 @@ func InternetUpdateCompleteFlags(ctx command.Context, params *params.UpdateInter
 		comp = define.Resources["Internet"].Commands["update"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["Internet"].Commands["update"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Internet"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Internet"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -166,8 +160,6 @@ func InternetDeleteCompleteFlags(ctx command.Context, params *params.DeleteInter
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Internet"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Internet"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":

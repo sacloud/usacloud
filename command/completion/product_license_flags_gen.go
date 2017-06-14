@@ -40,8 +40,6 @@ func ProductLicenseReadCompleteFlags(ctx command.Context, params *params.ReadPro
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["ProductLicense"].Commands["read"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["ProductLicense"].Commands["read"].Params["id"].CompleteFunc
 	case "output-type", "out":

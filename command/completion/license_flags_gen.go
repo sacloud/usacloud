@@ -44,8 +44,6 @@ func LicenseCreateCompleteFlags(ctx command.Context, params *params.CreateLicens
 		comp = define.Resources["License"].Commands["create"].Params["license-info-id"].CompleteFunc
 	case "name":
 		comp = define.Resources["License"].Commands["create"].Params["name"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["License"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -82,8 +80,6 @@ func LicenseUpdateCompleteFlags(ctx command.Context, params *params.UpdateLicens
 	switch flagName {
 	case "name":
 		comp = define.Resources["License"].Commands["update"].Params["name"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["License"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["License"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -102,8 +98,6 @@ func LicenseDeleteCompleteFlags(ctx command.Context, params *params.DeleteLicens
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["License"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["License"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":

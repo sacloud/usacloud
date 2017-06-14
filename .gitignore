@@ -1,4 +1,7 @@
 .env
+
+test.tmpl
+
 bin/*
 tools/bin/*
 

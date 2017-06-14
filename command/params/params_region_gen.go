@@ -10,16 +10,18 @@ import (
 
 // ListRegionParam is input parameters for the sacloud API
 type ListRegionParam struct {
-	Name       []string
-	Id         []int64
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListRegionParam return new ListRegionParam
@@ -59,6 +61,12 @@ func (p *ListRegionParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -136,6 +144,20 @@ func (p *ListRegionParam) SetSort(v []string) {
 func (p *ListRegionParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListRegionParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListRegionParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListRegionParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListRegionParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListRegionParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -174,13 +196,15 @@ func (p *ListRegionParam) GetFormatFile() string {
 
 // ReadRegionParam is input parameters for the sacloud API
 type ReadRegionParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadRegionParam return new ReadRegionParam
@@ -209,6 +233,12 @@ func (p *ReadRegionParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -257,6 +287,20 @@ func (p *ReadRegionParam) SetAssumeyes(v bool) {
 
 func (p *ReadRegionParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *ReadRegionParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadRegionParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadRegionParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadRegionParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *ReadRegionParam) SetOutputType(v string) {
 	p.OutputType = v

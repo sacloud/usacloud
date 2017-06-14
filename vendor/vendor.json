@@ -39,6 +39,12 @@
 			"revisionTime": "2015-11-30T12:51:19Z"
 		},
 		{
+			"checksumSHA1": "VBXGouqOkPe3OkeJnyUBkx3aZXA=",
+			"path": "github.com/imdario/mergo",
+			"revision": "d806ba8c21777d504a2090a2ca4913c750dd3a33",
+			"revisionTime": "2017-03-26T20:45:27Z"
+		},
+		{
 			"checksumSHA1": "BOFetxMdGQVex14gI977F2aI9sM=",
 			"path": "github.com/mattn/go-colorable",
 			"revision": "a392f450ea64cee2b268dfaacdc2502b50a22b18",

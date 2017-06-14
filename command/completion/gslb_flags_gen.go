@@ -84,8 +84,6 @@ func GSLBCreateCompleteFlags(ctx command.Context, params *params.CreateGSLBParam
 		comp = define.Resources["GSLB"].Commands["create"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["GSLB"].Commands["create"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["GSLB"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -108,8 +106,6 @@ func GSLBServerAddCompleteFlags(ctx command.Context, params *params.ServerAddGSL
 		comp = define.Resources["GSLB"].Commands["server-add"].Params["enabled"].CompleteFunc
 	case "weight":
 		comp = define.Resources["GSLB"].Commands["server-add"].Params["weight"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["GSLB"].Commands["server-add"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["GSLB"].Commands["server-add"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -154,8 +150,6 @@ func GSLBServerUpdateCompleteFlags(ctx command.Context, params *params.ServerUpd
 		comp = define.Resources["GSLB"].Commands["server-update"].Params["enabled"].CompleteFunc
 	case "weight":
 		comp = define.Resources["GSLB"].Commands["server-update"].Params["weight"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["GSLB"].Commands["server-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["GSLB"].Commands["server-update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -176,8 +170,6 @@ func GSLBServerDeleteCompleteFlags(ctx command.Context, params *params.ServerDel
 	switch flagName {
 	case "index":
 		comp = define.Resources["GSLB"].Commands["server-delete"].Params["index"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["GSLB"].Commands["server-delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["GSLB"].Commands["server-delete"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -220,8 +212,6 @@ func GSLBUpdateCompleteFlags(ctx command.Context, params *params.UpdateGSLBParam
 		comp = define.Resources["GSLB"].Commands["update"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["GSLB"].Commands["update"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["GSLB"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["GSLB"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -240,8 +230,6 @@ func GSLBDeleteCompleteFlags(ctx command.Context, params *params.DeleteGSLBParam
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["GSLB"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["GSLB"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":

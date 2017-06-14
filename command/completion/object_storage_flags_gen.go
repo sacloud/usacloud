@@ -46,8 +46,6 @@ func ObjectStoragePutCompleteFlags(ctx command.Context, params *params.PutObject
 		comp = define.Resources["ObjectStorage"].Commands["put"].Params["secret-key"].CompleteFunc
 	case "bucket":
 		comp = define.Resources["ObjectStorage"].Commands["put"].Params["bucket"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["ObjectStorage"].Commands["put"].Params["assumeyes"].CompleteFunc
 	}
 
 	if comp != nil {
@@ -92,8 +90,6 @@ func ObjectStorageDeleteCompleteFlags(ctx command.Context, params *params.Delete
 		comp = define.Resources["ObjectStorage"].Commands["delete"].Params["secret-key"].CompleteFunc
 	case "bucket":
 		comp = define.Resources["ObjectStorage"].Commands["delete"].Params["bucket"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["ObjectStorage"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	}
 
 	if comp != nil {

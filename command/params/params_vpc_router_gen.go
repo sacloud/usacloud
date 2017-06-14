@@ -10,17 +10,19 @@ import (
 
 // ListVPCRouterParam is input parameters for the sacloud API
 type ListVPCRouterParam struct {
-	Name       []string
-	Id         []int64
-	Tags       []string
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListVPCRouterParam return new ListVPCRouterParam
@@ -67,6 +69,12 @@ func (p *ListVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -151,6 +159,20 @@ func (p *ListVPCRouterParam) SetSort(v []string) {
 func (p *ListVPCRouterParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -189,23 +211,25 @@ func (p *ListVPCRouterParam) GetFormatFile() string {
 
 // CreateVPCRouterParam is input parameters for the sacloud API
 type CreateVPCRouterParam struct {
-	Plan            string
-	SwitchId        int64
-	Vrid            int
-	Vip             string
-	Ipaddress1      string
-	Ipaddress2      string
-	BootAfterCreate bool
-	Name            string
-	Description     string
-	Tags            []string
-	IconId          int64
-	Assumeyes       bool
-	OutputType      string
-	Column          []string
-	Quiet           bool
-	Format          string
-	FormatFile      string
+	Plan              string
+	SwitchId          int64
+	Vrid              int
+	Vip               string
+	Ipaddress1        string
+	Ipaddress2        string
+	BootAfterCreate   bool
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateVPCRouterParam return new CreateVPCRouterParam
@@ -309,6 +333,12 @@ func (p *CreateVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -435,6 +465,20 @@ func (p *CreateVPCRouterParam) SetAssumeyes(v bool) {
 func (p *CreateVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -473,12 +517,14 @@ func (p *CreateVPCRouterParam) GetFormatFile() string {
 
 // ReadVPCRouterParam is input parameters for the sacloud API
 type ReadVPCRouterParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadVPCRouterParam return new ReadVPCRouterParam
@@ -500,6 +546,12 @@ func (p *ReadVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -542,6 +594,20 @@ func (p *ReadVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -587,18 +653,20 @@ func (p *ReadVPCRouterParam) GetId() int64 {
 
 // UpdateVPCRouterParam is input parameters for the sacloud API
 type UpdateVPCRouterParam struct {
-	SyslogHost  string
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	SyslogHost        string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateVPCRouterParam return new UpdateVPCRouterParam
@@ -655,6 +723,12 @@ func (p *UpdateVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -739,6 +813,20 @@ func (p *UpdateVPCRouterParam) SetAssumeyes(v bool) {
 func (p *UpdateVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -784,14 +872,16 @@ func (p *UpdateVPCRouterParam) GetId() int64 {
 
 // DeleteVPCRouterParam is input parameters for the sacloud API
 type DeleteVPCRouterParam struct {
-	Force      bool
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Force             bool
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteVPCRouterParam return new DeleteVPCRouterParam
@@ -813,6 +903,12 @@ func (p *DeleteVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -869,6 +965,20 @@ func (p *DeleteVPCRouterParam) SetAssumeyes(v bool) {
 func (p *DeleteVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DeleteVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -914,8 +1024,10 @@ func (p *DeleteVPCRouterParam) GetId() int64 {
 
 // BootVPCRouterParam is input parameters for the sacloud API
 type BootVPCRouterParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewBootVPCRouterParam return new BootVPCRouterParam
@@ -972,6 +1084,20 @@ func (p *BootVPCRouterParam) SetAssumeyes(v bool) {
 func (p *BootVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *BootVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BootVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BootVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BootVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *BootVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -982,8 +1108,10 @@ func (p *BootVPCRouterParam) GetId() int64 {
 
 // ShutdownVPCRouterParam is input parameters for the sacloud API
 type ShutdownVPCRouterParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewShutdownVPCRouterParam return new ShutdownVPCRouterParam
@@ -1040,6 +1168,20 @@ func (p *ShutdownVPCRouterParam) SetAssumeyes(v bool) {
 func (p *ShutdownVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ShutdownVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ShutdownVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1050,8 +1192,10 @@ func (p *ShutdownVPCRouterParam) GetId() int64 {
 
 // ShutdownForceVPCRouterParam is input parameters for the sacloud API
 type ShutdownForceVPCRouterParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewShutdownForceVPCRouterParam return new ShutdownForceVPCRouterParam
@@ -1108,6 +1252,20 @@ func (p *ShutdownForceVPCRouterParam) SetAssumeyes(v bool) {
 func (p *ShutdownForceVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ShutdownForceVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownForceVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownForceVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownForceVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ShutdownForceVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1118,8 +1276,10 @@ func (p *ShutdownForceVPCRouterParam) GetId() int64 {
 
 // ResetVPCRouterParam is input parameters for the sacloud API
 type ResetVPCRouterParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewResetVPCRouterParam return new ResetVPCRouterParam
@@ -1176,6 +1336,20 @@ func (p *ResetVPCRouterParam) SetAssumeyes(v bool) {
 func (p *ResetVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ResetVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ResetVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ResetVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ResetVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ResetVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1186,7 +1360,9 @@ func (p *ResetVPCRouterParam) GetId() int64 {
 
 // WaitForBootVPCRouterParam is input parameters for the sacloud API
 type WaitForBootVPCRouterParam struct {
-	Id int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewWaitForBootVPCRouterParam return new WaitForBootVPCRouterParam
@@ -1236,6 +1412,20 @@ func (p *WaitForBootVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForBootVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForBootVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForBootVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForBootVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *WaitForBootVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1246,7 +1436,9 @@ func (p *WaitForBootVPCRouterParam) GetId() int64 {
 
 // WaitForDownVPCRouterParam is input parameters for the sacloud API
 type WaitForDownVPCRouterParam struct {
-	Id int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewWaitForDownVPCRouterParam return new WaitForDownVPCRouterParam
@@ -1296,6 +1488,20 @@ func (p *WaitForDownVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForDownVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForDownVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForDownVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForDownVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *WaitForDownVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1306,12 +1512,14 @@ func (p *WaitForDownVPCRouterParam) GetId() int64 {
 
 // InterfaceInfoVPCRouterParam is input parameters for the sacloud API
 type InterfaceInfoVPCRouterParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewInterfaceInfoVPCRouterParam return new InterfaceInfoVPCRouterParam
@@ -1333,6 +1541,12 @@ func (p *InterfaceInfoVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1375,6 +1589,20 @@ func (p *InterfaceInfoVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *InterfaceInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *InterfaceInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1420,15 +1648,17 @@ func (p *InterfaceInfoVPCRouterParam) GetId() int64 {
 
 // InterfaceConnectVPCRouterParam is input parameters for the sacloud API
 type InterfaceConnectVPCRouterParam struct {
-	Index      string
-	Ipaddress  string
-	WithReboot bool
-	Ipaddress1 string
-	SwitchId   int64
-	Ipaddress2 string
-	NwMasklen  int
-	Assumeyes  bool
-	Id         int64
+	Index             string
+	Ipaddress         string
+	WithReboot        bool
+	Ipaddress1        string
+	SwitchId          int64
+	Ipaddress2        string
+	NwMasklen         int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewInterfaceConnectVPCRouterParam return new InterfaceConnectVPCRouterParam
@@ -1600,6 +1830,20 @@ func (p *InterfaceConnectVPCRouterParam) SetAssumeyes(v bool) {
 func (p *InterfaceConnectVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *InterfaceConnectVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceConnectVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *InterfaceConnectVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1610,16 +1854,18 @@ func (p *InterfaceConnectVPCRouterParam) GetId() int64 {
 
 // InterfaceUpdateVPCRouterParam is input parameters for the sacloud API
 type InterfaceUpdateVPCRouterParam struct {
-	Index      string
-	Ipaddress  string
-	WithReboot bool
-	Ipaddress1 string
-	SwitchId   int64
-	Ipaddress2 string
-	Alias      []string
-	NwMasklen  int
-	Assumeyes  bool
-	Id         int64
+	Index             string
+	Ipaddress         string
+	WithReboot        bool
+	Ipaddress1        string
+	SwitchId          int64
+	Ipaddress2        string
+	Alias             []string
+	NwMasklen         int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewInterfaceUpdateVPCRouterParam return new InterfaceUpdateVPCRouterParam
@@ -1791,6 +2037,20 @@ func (p *InterfaceUpdateVPCRouterParam) SetAssumeyes(v bool) {
 func (p *InterfaceUpdateVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *InterfaceUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *InterfaceUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1801,10 +2061,12 @@ func (p *InterfaceUpdateVPCRouterParam) GetId() int64 {
 
 // InterfaceDisconnectVPCRouterParam is input parameters for the sacloud API
 type InterfaceDisconnectVPCRouterParam struct {
-	Index      string
-	WithReboot bool
-	Assumeyes  bool
-	Id         int64
+	Index             string
+	WithReboot        bool
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewInterfaceDisconnectVPCRouterParam return new InterfaceDisconnectVPCRouterParam
@@ -1889,6 +2151,20 @@ func (p *InterfaceDisconnectVPCRouterParam) SetAssumeyes(v bool) {
 func (p *InterfaceDisconnectVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *InterfaceDisconnectVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceDisconnectVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *InterfaceDisconnectVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1899,12 +2175,14 @@ func (p *InterfaceDisconnectVPCRouterParam) GetId() int64 {
 
 // StaticNatInfoVPCRouterParam is input parameters for the sacloud API
 type StaticNatInfoVPCRouterParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewStaticNatInfoVPCRouterParam return new StaticNatInfoVPCRouterParam
@@ -1926,6 +2204,12 @@ func (p *StaticNatInfoVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1968,6 +2252,20 @@ func (p *StaticNatInfoVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *StaticNatInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticNatInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *StaticNatInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -2013,11 +2311,13 @@ func (p *StaticNatInfoVPCRouterParam) GetId() int64 {
 
 // StaticNatAddVPCRouterParam is input parameters for the sacloud API
 type StaticNatAddVPCRouterParam struct {
-	Global      string
-	Private     string
-	Description string
-	Assumeyes   bool
-	Id          int64
+	Global            string
+	Private           string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewStaticNatAddVPCRouterParam return new StaticNatAddVPCRouterParam
@@ -2130,6 +2430,20 @@ func (p *StaticNatAddVPCRouterParam) SetAssumeyes(v bool) {
 func (p *StaticNatAddVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *StaticNatAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticNatAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticNatAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticNatAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *StaticNatAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2140,12 +2454,14 @@ func (p *StaticNatAddVPCRouterParam) GetId() int64 {
 
 // StaticNatUpdateVPCRouterParam is input parameters for the sacloud API
 type StaticNatUpdateVPCRouterParam struct {
-	Index       int
-	Global      string
-	Private     string
-	Description string
-	Assumeyes   bool
-	Id          int64
+	Index             int
+	Global            string
+	Private           string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewStaticNatUpdateVPCRouterParam return new StaticNatUpdateVPCRouterParam
@@ -2258,6 +2574,20 @@ func (p *StaticNatUpdateVPCRouterParam) SetAssumeyes(v bool) {
 func (p *StaticNatUpdateVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *StaticNatUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticNatUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *StaticNatUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2268,9 +2598,11 @@ func (p *StaticNatUpdateVPCRouterParam) GetId() int64 {
 
 // StaticNatDeleteVPCRouterParam is input parameters for the sacloud API
 type StaticNatDeleteVPCRouterParam struct {
-	Index     int
-	Assumeyes bool
-	Id        int64
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewStaticNatDeleteVPCRouterParam return new StaticNatDeleteVPCRouterParam
@@ -2341,6 +2673,20 @@ func (p *StaticNatDeleteVPCRouterParam) SetAssumeyes(v bool) {
 func (p *StaticNatDeleteVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *StaticNatDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticNatDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *StaticNatDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2351,12 +2697,14 @@ func (p *StaticNatDeleteVPCRouterParam) GetId() int64 {
 
 // PortForwardingInfoVPCRouterParam is input parameters for the sacloud API
 type PortForwardingInfoVPCRouterParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewPortForwardingInfoVPCRouterParam return new PortForwardingInfoVPCRouterParam
@@ -2378,6 +2726,12 @@ func (p *PortForwardingInfoVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2420,6 +2774,20 @@ func (p *PortForwardingInfoVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *PortForwardingInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PortForwardingInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *PortForwardingInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -2465,13 +2833,15 @@ func (p *PortForwardingInfoVPCRouterParam) GetId() int64 {
 
 // PortForwardingAddVPCRouterParam is input parameters for the sacloud API
 type PortForwardingAddVPCRouterParam struct {
-	Protocol         string
-	GlobalPort       int
-	PrivateIpaddress string
-	PrivatePort      int
-	Description      string
-	Assumeyes        bool
-	Id               int64
+	Protocol          string
+	GlobalPort        int
+	PrivateIpaddress  string
+	PrivatePort       int
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewPortForwardingAddVPCRouterParam return new PortForwardingAddVPCRouterParam
@@ -2626,6 +2996,20 @@ func (p *PortForwardingAddVPCRouterParam) SetAssumeyes(v bool) {
 func (p *PortForwardingAddVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *PortForwardingAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PortForwardingAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *PortForwardingAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2636,14 +3020,16 @@ func (p *PortForwardingAddVPCRouterParam) GetId() int64 {
 
 // PortForwardingUpdateVPCRouterParam is input parameters for the sacloud API
 type PortForwardingUpdateVPCRouterParam struct {
-	Index            int
-	Protocol         string
-	GlobalPort       int
-	PrivateIpaddress string
-	PrivatePort      int
-	Description      string
-	Assumeyes        bool
-	Id               int64
+	Index             int
+	Protocol          string
+	GlobalPort        int
+	PrivateIpaddress  string
+	PrivatePort       int
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewPortForwardingUpdateVPCRouterParam return new PortForwardingUpdateVPCRouterParam
@@ -2784,6 +3170,20 @@ func (p *PortForwardingUpdateVPCRouterParam) SetAssumeyes(v bool) {
 func (p *PortForwardingUpdateVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *PortForwardingUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PortForwardingUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *PortForwardingUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2794,9 +3194,11 @@ func (p *PortForwardingUpdateVPCRouterParam) GetId() int64 {
 
 // PortForwardingDeleteVPCRouterParam is input parameters for the sacloud API
 type PortForwardingDeleteVPCRouterParam struct {
-	Index     int
-	Assumeyes bool
-	Id        int64
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewPortForwardingDeleteVPCRouterParam return new PortForwardingDeleteVPCRouterParam
@@ -2867,6 +3269,20 @@ func (p *PortForwardingDeleteVPCRouterParam) SetAssumeyes(v bool) {
 func (p *PortForwardingDeleteVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *PortForwardingDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PortForwardingDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *PortForwardingDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2877,13 +3293,15 @@ func (p *PortForwardingDeleteVPCRouterParam) GetId() int64 {
 
 // FirewallInfoVPCRouterParam is input parameters for the sacloud API
 type FirewallInfoVPCRouterParam struct {
-	Direction  string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Direction         string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewFirewallInfoVPCRouterParam return new FirewallInfoVPCRouterParam
@@ -2922,6 +3340,12 @@ func (p *FirewallInfoVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2970,6 +3394,20 @@ func (p *FirewallInfoVPCRouterParam) SetDirection(v string) {
 
 func (p *FirewallInfoVPCRouterParam) GetDirection() string {
 	return p.Direction
+}
+func (p *FirewallInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FirewallInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *FirewallInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
@@ -3026,6 +3464,8 @@ type FirewallAddVPCRouterParam struct {
 	EnableLogging      bool
 	Description        string
 	Assumeyes          bool
+	ParamTemplate      string
+	ParamTemplateFile  string
 	Id                 int64
 }
 
@@ -3228,6 +3668,20 @@ func (p *FirewallAddVPCRouterParam) SetAssumeyes(v bool) {
 func (p *FirewallAddVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *FirewallAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FirewallAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *FirewallAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3249,6 +3703,8 @@ type FirewallUpdateVPCRouterParam struct {
 	EnableLogging      bool
 	Description        string
 	Assumeyes          bool
+	ParamTemplate      string
+	ParamTemplateFile  string
 	Id                 int64
 }
 
@@ -3451,6 +3907,20 @@ func (p *FirewallUpdateVPCRouterParam) SetAssumeyes(v bool) {
 func (p *FirewallUpdateVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *FirewallUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FirewallUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *FirewallUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3461,10 +3931,12 @@ func (p *FirewallUpdateVPCRouterParam) GetId() int64 {
 
 // FirewallDeleteVPCRouterParam is input parameters for the sacloud API
 type FirewallDeleteVPCRouterParam struct {
-	Direction string
-	Index     int
-	Assumeyes bool
-	Id        int64
+	Direction         string
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewFirewallDeleteVPCRouterParam return new FirewallDeleteVPCRouterParam
@@ -3559,6 +4031,20 @@ func (p *FirewallDeleteVPCRouterParam) SetAssumeyes(v bool) {
 func (p *FirewallDeleteVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *FirewallDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FirewallDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *FirewallDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3569,12 +4055,14 @@ func (p *FirewallDeleteVPCRouterParam) GetId() int64 {
 
 // DhcpServerInfoVPCRouterParam is input parameters for the sacloud API
 type DhcpServerInfoVPCRouterParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDhcpServerInfoVPCRouterParam return new DhcpServerInfoVPCRouterParam
@@ -3596,6 +4084,12 @@ func (p *DhcpServerInfoVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3638,6 +4132,20 @@ func (p *DhcpServerInfoVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DhcpServerInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpServerInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DhcpServerInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -3683,11 +4191,13 @@ func (p *DhcpServerInfoVPCRouterParam) GetId() int64 {
 
 // DhcpServerAddVPCRouterParam is input parameters for the sacloud API
 type DhcpServerAddVPCRouterParam struct {
-	Index      int
-	RangeStart string
-	RangeStop  string
-	Assumeyes  bool
-	Id         int64
+	Index             int
+	RangeStart        string
+	RangeStop         string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewDhcpServerAddVPCRouterParam return new DhcpServerAddVPCRouterParam
@@ -3807,6 +4317,20 @@ func (p *DhcpServerAddVPCRouterParam) SetAssumeyes(v bool) {
 func (p *DhcpServerAddVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DhcpServerAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpServerAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DhcpServerAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3817,11 +4341,13 @@ func (p *DhcpServerAddVPCRouterParam) GetId() int64 {
 
 // DhcpServerUpdateVPCRouterParam is input parameters for the sacloud API
 type DhcpServerUpdateVPCRouterParam struct {
-	Index      int
-	RangeStart string
-	RangeStop  string
-	Assumeyes  bool
-	Id         int64
+	Index             int
+	RangeStart        string
+	RangeStop         string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewDhcpServerUpdateVPCRouterParam return new DhcpServerUpdateVPCRouterParam
@@ -3927,6 +4453,20 @@ func (p *DhcpServerUpdateVPCRouterParam) SetAssumeyes(v bool) {
 func (p *DhcpServerUpdateVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DhcpServerUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpServerUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DhcpServerUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3937,9 +4477,11 @@ func (p *DhcpServerUpdateVPCRouterParam) GetId() int64 {
 
 // DhcpServerDeleteVPCRouterParam is input parameters for the sacloud API
 type DhcpServerDeleteVPCRouterParam struct {
-	Index     int
-	Assumeyes bool
-	Id        int64
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewDhcpServerDeleteVPCRouterParam return new DhcpServerDeleteVPCRouterParam
@@ -4017,6 +4559,20 @@ func (p *DhcpServerDeleteVPCRouterParam) SetAssumeyes(v bool) {
 func (p *DhcpServerDeleteVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DhcpServerDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpServerDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DhcpServerDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4027,12 +4583,14 @@ func (p *DhcpServerDeleteVPCRouterParam) GetId() int64 {
 
 // DhcpStaticMappingInfoVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingInfoVPCRouterParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDhcpStaticMappingInfoVPCRouterParam return new DhcpStaticMappingInfoVPCRouterParam
@@ -4054,6 +4612,12 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4096,6 +4660,20 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DhcpStaticMappingInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -4141,10 +4719,12 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) GetId() int64 {
 
 // DhcpStaticMappingAddVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingAddVPCRouterParam struct {
-	Macaddress string
-	Ipaddress  string
-	Assumeyes  bool
-	Id         int64
+	Macaddress        string
+	Ipaddress         string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewDhcpStaticMappingAddVPCRouterParam return new DhcpStaticMappingAddVPCRouterParam
@@ -4243,6 +4823,20 @@ func (p *DhcpStaticMappingAddVPCRouterParam) SetAssumeyes(v bool) {
 func (p *DhcpStaticMappingAddVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DhcpStaticMappingAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpStaticMappingAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DhcpStaticMappingAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4253,11 +4847,13 @@ func (p *DhcpStaticMappingAddVPCRouterParam) GetId() int64 {
 
 // DhcpStaticMappingUpdateVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingUpdateVPCRouterParam struct {
-	Index      int
-	Macaddress string
-	Ipaddress  string
-	Assumeyes  bool
-	Id         int64
+	Index             int
+	Macaddress        string
+	Ipaddress         string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewDhcpStaticMappingUpdateVPCRouterParam return new DhcpStaticMappingUpdateVPCRouterParam
@@ -4356,6 +4952,20 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) SetAssumeyes(v bool) {
 func (p *DhcpStaticMappingUpdateVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DhcpStaticMappingUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4366,9 +4976,11 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) GetId() int64 {
 
 // DhcpStaticMappingDeleteVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingDeleteVPCRouterParam struct {
-	Index     int
-	Assumeyes bool
-	Id        int64
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewDhcpStaticMappingDeleteVPCRouterParam return new DhcpStaticMappingDeleteVPCRouterParam
@@ -4439,6 +5051,20 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) SetAssumeyes(v bool) {
 func (p *DhcpStaticMappingDeleteVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DhcpStaticMappingDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DhcpStaticMappingDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DhcpStaticMappingDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4449,12 +5075,14 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) GetId() int64 {
 
 // PptpServerInfoVPCRouterParam is input parameters for the sacloud API
 type PptpServerInfoVPCRouterParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewPptpServerInfoVPCRouterParam return new PptpServerInfoVPCRouterParam
@@ -4476,6 +5104,12 @@ func (p *PptpServerInfoVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4518,6 +5152,20 @@ func (p *PptpServerInfoVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *PptpServerInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PptpServerInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *PptpServerInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -4563,11 +5211,13 @@ func (p *PptpServerInfoVPCRouterParam) GetId() int64 {
 
 // PptpServerUpdateVPCRouterParam is input parameters for the sacloud API
 type PptpServerUpdateVPCRouterParam struct {
-	Enabled    string
-	RangeStart string
-	RangeStop  string
-	Assumeyes  bool
-	Id         int64
+	Enabled           string
+	RangeStart        string
+	RangeStop         string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewPptpServerUpdateVPCRouterParam return new PptpServerUpdateVPCRouterParam
@@ -4673,6 +5323,20 @@ func (p *PptpServerUpdateVPCRouterParam) SetAssumeyes(v bool) {
 func (p *PptpServerUpdateVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *PptpServerUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PptpServerUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *PptpServerUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4683,12 +5347,14 @@ func (p *PptpServerUpdateVPCRouterParam) GetId() int64 {
 
 // L2tpServerInfoVPCRouterParam is input parameters for the sacloud API
 type L2tpServerInfoVPCRouterParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewL2tpServerInfoVPCRouterParam return new L2tpServerInfoVPCRouterParam
@@ -4710,6 +5376,12 @@ func (p *L2tpServerInfoVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -4752,6 +5424,20 @@ func (p *L2tpServerInfoVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *L2tpServerInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *L2tpServerInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *L2tpServerInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *L2tpServerInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *L2tpServerInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -4797,12 +5483,14 @@ func (p *L2tpServerInfoVPCRouterParam) GetId() int64 {
 
 // L2tpServerUpdateVPCRouterParam is input parameters for the sacloud API
 type L2tpServerUpdateVPCRouterParam struct {
-	Enabled         string
-	RangeStart      string
-	RangeStop       string
-	PreSharedSecret string
-	Assumeyes       bool
-	Id              int64
+	Enabled           string
+	RangeStart        string
+	RangeStop         string
+	PreSharedSecret   string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewL2tpServerUpdateVPCRouterParam return new L2tpServerUpdateVPCRouterParam
@@ -4922,6 +5610,20 @@ func (p *L2tpServerUpdateVPCRouterParam) SetAssumeyes(v bool) {
 func (p *L2tpServerUpdateVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *L2tpServerUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *L2tpServerUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *L2tpServerUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *L2tpServerUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *L2tpServerUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4932,12 +5634,14 @@ func (p *L2tpServerUpdateVPCRouterParam) GetId() int64 {
 
 // UserInfoVPCRouterParam is input parameters for the sacloud API
 type UserInfoVPCRouterParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUserInfoVPCRouterParam return new UserInfoVPCRouterParam
@@ -4959,6 +5663,12 @@ func (p *UserInfoVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5001,6 +5711,20 @@ func (p *UserInfoVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *UserInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UserInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UserInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UserInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UserInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -5046,10 +5770,12 @@ func (p *UserInfoVPCRouterParam) GetId() int64 {
 
 // UserAddVPCRouterParam is input parameters for the sacloud API
 type UserAddVPCRouterParam struct {
-	Username  string
-	Password  string
-	Assumeyes bool
-	Id        int64
+	Username          string
+	Password          string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewUserAddVPCRouterParam return new UserAddVPCRouterParam
@@ -5148,6 +5874,20 @@ func (p *UserAddVPCRouterParam) SetAssumeyes(v bool) {
 func (p *UserAddVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UserAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UserAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UserAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UserAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UserAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5158,11 +5898,13 @@ func (p *UserAddVPCRouterParam) GetId() int64 {
 
 // UserUpdateVPCRouterParam is input parameters for the sacloud API
 type UserUpdateVPCRouterParam struct {
-	Index     int
-	Username  string
-	Password  string
-	Assumeyes bool
-	Id        int64
+	Index             int
+	Username          string
+	Password          string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewUserUpdateVPCRouterParam return new UserUpdateVPCRouterParam
@@ -5261,6 +6003,20 @@ func (p *UserUpdateVPCRouterParam) SetAssumeyes(v bool) {
 func (p *UserUpdateVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UserUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UserUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UserUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UserUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UserUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5271,9 +6027,11 @@ func (p *UserUpdateVPCRouterParam) GetId() int64 {
 
 // UserDeleteVPCRouterParam is input parameters for the sacloud API
 type UserDeleteVPCRouterParam struct {
-	Index     int
-	Assumeyes bool
-	Id        int64
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewUserDeleteVPCRouterParam return new UserDeleteVPCRouterParam
@@ -5344,6 +6102,20 @@ func (p *UserDeleteVPCRouterParam) SetAssumeyes(v bool) {
 func (p *UserDeleteVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UserDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UserDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UserDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UserDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UserDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5354,12 +6126,14 @@ func (p *UserDeleteVPCRouterParam) GetId() int64 {
 
 // SiteToSiteVpnInfoVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVpnInfoVPCRouterParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewSiteToSiteVpnInfoVPCRouterParam return new SiteToSiteVpnInfoVPCRouterParam
@@ -5381,6 +6155,12 @@ func (p *SiteToSiteVpnInfoVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5423,6 +6203,20 @@ func (p *SiteToSiteVpnInfoVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *SiteToSiteVpnInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SiteToSiteVpnInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SiteToSiteVpnInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SiteToSiteVpnInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *SiteToSiteVpnInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -5468,13 +6262,15 @@ func (p *SiteToSiteVpnInfoVPCRouterParam) GetId() int64 {
 
 // SiteToSiteVpnAddVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVpnAddVPCRouterParam struct {
-	Peer            string
-	RemoteId        string
-	PreSharedSecret string
-	Routes          []string
-	LocalPrefix     []string
-	Assumeyes       bool
-	Id              int64
+	Peer              string
+	RemoteId          string
+	PreSharedSecret   string
+	Routes            []string
+	LocalPrefix       []string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewSiteToSiteVpnAddVPCRouterParam return new SiteToSiteVpnAddVPCRouterParam
@@ -5629,6 +6425,20 @@ func (p *SiteToSiteVpnAddVPCRouterParam) SetAssumeyes(v bool) {
 func (p *SiteToSiteVpnAddVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *SiteToSiteVpnAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SiteToSiteVpnAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SiteToSiteVpnAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SiteToSiteVpnAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *SiteToSiteVpnAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5639,14 +6449,16 @@ func (p *SiteToSiteVpnAddVPCRouterParam) GetId() int64 {
 
 // SiteToSiteVpnUpdateVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVpnUpdateVPCRouterParam struct {
-	Index           int
-	Peer            string
-	RemoteId        string
-	PreSharedSecret string
-	Routes          []string
-	LocalPrefix     []string
-	Assumeyes       bool
-	Id              int64
+	Index             int
+	Peer              string
+	RemoteId          string
+	PreSharedSecret   string
+	Routes            []string
+	LocalPrefix       []string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewSiteToSiteVpnUpdateVPCRouterParam return new SiteToSiteVpnUpdateVPCRouterParam
@@ -5780,6 +6592,20 @@ func (p *SiteToSiteVpnUpdateVPCRouterParam) SetAssumeyes(v bool) {
 func (p *SiteToSiteVpnUpdateVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *SiteToSiteVpnUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SiteToSiteVpnUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SiteToSiteVpnUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SiteToSiteVpnUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *SiteToSiteVpnUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5790,9 +6616,11 @@ func (p *SiteToSiteVpnUpdateVPCRouterParam) GetId() int64 {
 
 // SiteToSiteVpnDeleteVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVpnDeleteVPCRouterParam struct {
-	Index     int
-	Assumeyes bool
-	Id        int64
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewSiteToSiteVpnDeleteVPCRouterParam return new SiteToSiteVpnDeleteVPCRouterParam
@@ -5863,6 +6691,20 @@ func (p *SiteToSiteVpnDeleteVPCRouterParam) SetAssumeyes(v bool) {
 func (p *SiteToSiteVpnDeleteVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *SiteToSiteVpnDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SiteToSiteVpnDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SiteToSiteVpnDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SiteToSiteVpnDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *SiteToSiteVpnDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5873,12 +6715,14 @@ func (p *SiteToSiteVpnDeleteVPCRouterParam) GetId() int64 {
 
 // StaticRouteInfoVPCRouterParam is input parameters for the sacloud API
 type StaticRouteInfoVPCRouterParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewStaticRouteInfoVPCRouterParam return new StaticRouteInfoVPCRouterParam
@@ -5900,6 +6744,12 @@ func (p *StaticRouteInfoVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5942,6 +6792,20 @@ func (p *StaticRouteInfoVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *StaticRouteInfoVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticRouteInfoVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *StaticRouteInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -5987,10 +6851,12 @@ func (p *StaticRouteInfoVPCRouterParam) GetId() int64 {
 
 // StaticRouteAddVPCRouterParam is input parameters for the sacloud API
 type StaticRouteAddVPCRouterParam struct {
-	Prefix    string
-	NextHop   string
-	Assumeyes bool
-	Id        int64
+	Prefix            string
+	NextHop           string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewStaticRouteAddVPCRouterParam return new StaticRouteAddVPCRouterParam
@@ -6089,6 +6955,20 @@ func (p *StaticRouteAddVPCRouterParam) SetAssumeyes(v bool) {
 func (p *StaticRouteAddVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *StaticRouteAddVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticRouteAddVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *StaticRouteAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -6099,11 +6979,13 @@ func (p *StaticRouteAddVPCRouterParam) GetId() int64 {
 
 // StaticRouteUpdateVPCRouterParam is input parameters for the sacloud API
 type StaticRouteUpdateVPCRouterParam struct {
-	Index     int
-	Prefix    string
-	NextHop   string
-	Assumeyes bool
-	Id        int64
+	Index             int
+	Prefix            string
+	NextHop           string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewStaticRouteUpdateVPCRouterParam return new StaticRouteUpdateVPCRouterParam
@@ -6202,6 +7084,20 @@ func (p *StaticRouteUpdateVPCRouterParam) SetAssumeyes(v bool) {
 func (p *StaticRouteUpdateVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *StaticRouteUpdateVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticRouteUpdateVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *StaticRouteUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -6212,9 +7108,11 @@ func (p *StaticRouteUpdateVPCRouterParam) GetId() int64 {
 
 // StaticRouteDeleteVPCRouterParam is input parameters for the sacloud API
 type StaticRouteDeleteVPCRouterParam struct {
-	Index     int
-	Assumeyes bool
-	Id        int64
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewStaticRouteDeleteVPCRouterParam return new StaticRouteDeleteVPCRouterParam
@@ -6285,6 +7183,20 @@ func (p *StaticRouteDeleteVPCRouterParam) SetAssumeyes(v bool) {
 func (p *StaticRouteDeleteVPCRouterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *StaticRouteDeleteVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *StaticRouteDeleteVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *StaticRouteDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -6295,16 +7207,18 @@ func (p *StaticRouteDeleteVPCRouterParam) GetId() int64 {
 
 // MonitorVPCRouterParam is input parameters for the sacloud API
 type MonitorVPCRouterParam struct {
-	Index      string
-	Start      string
-	End        string
-	KeyFormat  string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Index             string
+	Start             string
+	End               string
+	KeyFormat         string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewMonitorVPCRouterParam return new MonitorVPCRouterParam
@@ -6366,6 +7280,12 @@ func (p *MonitorVPCRouterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6435,6 +7355,20 @@ func (p *MonitorVPCRouterParam) SetKeyFormat(v string) {
 
 func (p *MonitorVPCRouterParam) GetKeyFormat() string {
 	return p.KeyFormat
+}
+func (p *MonitorVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *MonitorVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v

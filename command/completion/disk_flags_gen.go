@@ -68,8 +68,6 @@ func DiskCreateCompleteFlags(ctx command.Context, params *params.CreateDiskParam
 		comp = define.Resources["Disk"].Commands["create"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["Disk"].Commands["create"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Disk"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -114,8 +112,6 @@ func DiskUpdateCompleteFlags(ctx command.Context, params *params.UpdateDiskParam
 		comp = define.Resources["Disk"].Commands["update"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["Disk"].Commands["update"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Disk"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Disk"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -134,8 +130,6 @@ func DiskDeleteCompleteFlags(ctx command.Context, params *params.DeleteDiskParam
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Disk"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Disk"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -170,8 +164,6 @@ func DiskEditCompleteFlags(ctx command.Context, params *params.EditDiskParam, fl
 		comp = define.Resources["Disk"].Commands["edit"].Params["nw-masklen"].CompleteFunc
 	case "startup-script-ids", "note-ids":
 		comp = define.Resources["Disk"].Commands["edit"].Params["startup-script-ids"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Disk"].Commands["edit"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Disk"].Commands["edit"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -194,8 +186,6 @@ func DiskReinstallFromArchiveCompleteFlags(ctx command.Context, params *params.R
 		comp = define.Resources["Disk"].Commands["reinstall-from-archive"].Params["source-archive-id"].CompleteFunc
 	case "distant-from":
 		comp = define.Resources["Disk"].Commands["reinstall-from-archive"].Params["distant-from"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Disk"].Commands["reinstall-from-archive"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Disk"].Commands["reinstall-from-archive"].Params["id"].CompleteFunc
 	}
@@ -216,8 +206,6 @@ func DiskReinstallFromDiskCompleteFlags(ctx command.Context, params *params.Rein
 		comp = define.Resources["Disk"].Commands["reinstall-from-disk"].Params["source-disk-id"].CompleteFunc
 	case "distant-from":
 		comp = define.Resources["Disk"].Commands["reinstall-from-disk"].Params["distant-from"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Disk"].Commands["reinstall-from-disk"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Disk"].Commands["reinstall-from-disk"].Params["id"].CompleteFunc
 	}
@@ -236,8 +224,6 @@ func DiskReinstallToBlankCompleteFlags(ctx command.Context, params *params.Reins
 	switch flagName {
 	case "distant-from":
 		comp = define.Resources["Disk"].Commands["reinstall-to-blank"].Params["distant-from"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Disk"].Commands["reinstall-to-blank"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Disk"].Commands["reinstall-to-blank"].Params["id"].CompleteFunc
 	}
@@ -256,8 +242,6 @@ func DiskServerConnectCompleteFlags(ctx command.Context, params *params.ServerCo
 	switch flagName {
 	case "server-id":
 		comp = define.Resources["Disk"].Commands["server-connect"].Params["server-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Disk"].Commands["server-connect"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Disk"].Commands["server-connect"].Params["id"].CompleteFunc
 	}
@@ -274,8 +258,6 @@ func DiskServerDisconnectCompleteFlags(ctx command.Context, params *params.Serve
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Disk"].Commands["server-disconnect"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Disk"].Commands["server-disconnect"].Params["id"].CompleteFunc
 	}

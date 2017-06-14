@@ -10,18 +10,20 @@ import (
 
 // ListIconParam is input parameters for the sacloud API
 type ListIconParam struct {
-	Name       []string
-	Id         []int64
-	Scope      string
-	Tags       []string
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	Scope             string
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListIconParam return new ListIconParam
@@ -75,6 +77,12 @@ func (p *ListIconParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -166,6 +174,20 @@ func (p *ListIconParam) SetSort(v []string) {
 func (p *ListIconParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListIconParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListIconParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListIconParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListIconParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListIconParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -204,15 +226,17 @@ func (p *ListIconParam) GetFormatFile() string {
 
 // CreateIconParam is input parameters for the sacloud API
 type CreateIconParam struct {
-	Image      string
-	Name       string
-	Tags       []string
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Image             string
+	Name              string
+	Tags              []string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateIconParam return new CreateIconParam
@@ -262,6 +286,12 @@ func (p *CreateIconParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -332,6 +362,20 @@ func (p *CreateIconParam) SetAssumeyes(v bool) {
 func (p *CreateIconParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateIconParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateIconParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateIconParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateIconParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateIconParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -370,12 +414,14 @@ func (p *CreateIconParam) GetFormatFile() string {
 
 // ReadIconParam is input parameters for the sacloud API
 type ReadIconParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadIconParam return new ReadIconParam
@@ -397,6 +443,12 @@ func (p *ReadIconParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -439,6 +491,20 @@ func (p *ReadIconParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadIconParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadIconParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadIconParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadIconParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadIconParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -484,15 +550,17 @@ func (p *ReadIconParam) GetId() int64 {
 
 // UpdateIconParam is input parameters for the sacloud API
 type UpdateIconParam struct {
-	Name       string
-	Tags       []string
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Name              string
+	Tags              []string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateIconParam return new UpdateIconParam
@@ -528,6 +596,12 @@ func (p *UpdateIconParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -591,6 +665,20 @@ func (p *UpdateIconParam) SetAssumeyes(v bool) {
 func (p *UpdateIconParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateIconParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateIconParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateIconParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateIconParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateIconParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -636,13 +724,15 @@ func (p *UpdateIconParam) GetId() int64 {
 
 // DeleteIconParam is input parameters for the sacloud API
 type DeleteIconParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteIconParam return new DeleteIconParam
@@ -664,6 +754,12 @@ func (p *DeleteIconParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -712,6 +808,20 @@ func (p *DeleteIconParam) SetAssumeyes(v bool) {
 
 func (p *DeleteIconParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *DeleteIconParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteIconParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteIconParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteIconParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *DeleteIconParam) SetOutputType(v string) {
 	p.OutputType = v

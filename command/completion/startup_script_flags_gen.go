@@ -54,8 +54,6 @@ func StartupScriptCreateCompleteFlags(ctx command.Context, params *params.Create
 		comp = define.Resources["StartupScript"].Commands["create"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["StartupScript"].Commands["create"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["StartupScript"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -100,8 +98,6 @@ func StartupScriptUpdateCompleteFlags(ctx command.Context, params *params.Update
 		comp = define.Resources["StartupScript"].Commands["update"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["StartupScript"].Commands["update"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["StartupScript"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["StartupScript"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -120,8 +116,6 @@ func StartupScriptDeleteCompleteFlags(ctx command.Context, params *params.Delete
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["StartupScript"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["StartupScript"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":

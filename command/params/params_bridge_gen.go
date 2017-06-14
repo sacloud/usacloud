@@ -10,16 +10,18 @@ import (
 
 // ListBridgeParam is input parameters for the sacloud API
 type ListBridgeParam struct {
-	Name       []string
-	Id         []int64
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListBridgeParam return new ListBridgeParam
@@ -59,6 +61,12 @@ func (p *ListBridgeParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -136,6 +144,20 @@ func (p *ListBridgeParam) SetSort(v []string) {
 func (p *ListBridgeParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListBridgeParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListBridgeParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListBridgeParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListBridgeParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListBridgeParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -174,14 +196,16 @@ func (p *ListBridgeParam) GetFormatFile() string {
 
 // CreateBridgeParam is input parameters for the sacloud API
 type CreateBridgeParam struct {
-	Name        string
-	Description string
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
+	Name              string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateBridgeParam return new CreateBridgeParam
@@ -217,6 +241,12 @@ func (p *CreateBridgeParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -280,6 +310,20 @@ func (p *CreateBridgeParam) SetAssumeyes(v bool) {
 func (p *CreateBridgeParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateBridgeParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateBridgeParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateBridgeParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateBridgeParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateBridgeParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -318,12 +362,14 @@ func (p *CreateBridgeParam) GetFormatFile() string {
 
 // ReadBridgeParam is input parameters for the sacloud API
 type ReadBridgeParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadBridgeParam return new ReadBridgeParam
@@ -345,6 +391,12 @@ func (p *ReadBridgeParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -387,6 +439,20 @@ func (p *ReadBridgeParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadBridgeParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadBridgeParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadBridgeParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadBridgeParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadBridgeParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -432,15 +498,17 @@ func (p *ReadBridgeParam) GetId() int64 {
 
 // UpdateBridgeParam is input parameters for the sacloud API
 type UpdateBridgeParam struct {
-	Name        string
-	Description string
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	Name              string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateBridgeParam return new UpdateBridgeParam
@@ -476,6 +544,12 @@ func (p *UpdateBridgeParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -539,6 +613,20 @@ func (p *UpdateBridgeParam) SetAssumeyes(v bool) {
 func (p *UpdateBridgeParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateBridgeParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateBridgeParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateBridgeParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateBridgeParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateBridgeParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -584,13 +672,15 @@ func (p *UpdateBridgeParam) GetId() int64 {
 
 // DeleteBridgeParam is input parameters for the sacloud API
 type DeleteBridgeParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteBridgeParam return new DeleteBridgeParam
@@ -612,6 +702,12 @@ func (p *DeleteBridgeParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -660,6 +756,20 @@ func (p *DeleteBridgeParam) SetAssumeyes(v bool) {
 
 func (p *DeleteBridgeParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *DeleteBridgeParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteBridgeParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteBridgeParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteBridgeParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *DeleteBridgeParam) SetOutputType(v string) {
 	p.OutputType = v

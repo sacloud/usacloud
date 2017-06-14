@@ -64,8 +64,6 @@ func VPCRouterCreateCompleteFlags(ctx command.Context, params *params.CreateVPCR
 		comp = define.Resources["VPCRouter"].Commands["create"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["VPCRouter"].Commands["create"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -110,8 +108,6 @@ func VPCRouterUpdateCompleteFlags(ctx command.Context, params *params.UpdateVPCR
 		comp = define.Resources["VPCRouter"].Commands["update"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["VPCRouter"].Commands["update"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -132,8 +128,6 @@ func VPCRouterDeleteCompleteFlags(ctx command.Context, params *params.DeleteVPCR
 	switch flagName {
 	case "force", "f":
 		comp = define.Resources["VPCRouter"].Commands["delete"].Params["force"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -152,8 +146,6 @@ func VPCRouterBootCompleteFlags(ctx command.Context, params *params.BootVPCRoute
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["boot"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["boot"].Params["id"].CompleteFunc
 	}
@@ -170,8 +162,6 @@ func VPCRouterShutdownCompleteFlags(ctx command.Context, params *params.Shutdown
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["shutdown"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["shutdown"].Params["id"].CompleteFunc
 	}
@@ -188,8 +178,6 @@ func VPCRouterShutdownForceCompleteFlags(ctx command.Context, params *params.Shu
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["shutdown-force"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["shutdown-force"].Params["id"].CompleteFunc
 	}
@@ -206,8 +194,6 @@ func VPCRouterResetCompleteFlags(ctx command.Context, params *params.ResetVPCRou
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["reset"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["reset"].Params["id"].CompleteFunc
 	}
@@ -288,8 +274,6 @@ func VPCRouterInterfaceConnectCompleteFlags(ctx command.Context, params *params.
 		comp = define.Resources["VPCRouter"].Commands["interface-connect"].Params["ipaddress2"].CompleteFunc
 	case "nw-masklen", "network-masklen":
 		comp = define.Resources["VPCRouter"].Commands["interface-connect"].Params["nw-masklen"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["interface-connect"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["interface-connect"].Params["id"].CompleteFunc
 	}
@@ -322,8 +306,6 @@ func VPCRouterInterfaceUpdateCompleteFlags(ctx command.Context, params *params.I
 		comp = define.Resources["VPCRouter"].Commands["interface-update"].Params["alias"].CompleteFunc
 	case "nw-masklen", "network-masklen":
 		comp = define.Resources["VPCRouter"].Commands["interface-update"].Params["nw-masklen"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["interface-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["interface-update"].Params["id"].CompleteFunc
 	}
@@ -344,8 +326,6 @@ func VPCRouterInterfaceDisconnectCompleteFlags(ctx command.Context, params *para
 		comp = define.Resources["VPCRouter"].Commands["interface-disconnect"].Params["index"].CompleteFunc
 	case "with-reboot":
 		comp = define.Resources["VPCRouter"].Commands["interface-disconnect"].Params["with-reboot"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["interface-disconnect"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["interface-disconnect"].Params["id"].CompleteFunc
 	}
@@ -386,8 +366,6 @@ func VPCRouterStaticNatAddCompleteFlags(ctx command.Context, params *params.Stat
 		comp = define.Resources["VPCRouter"].Commands["static-nat-add"].Params["private"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["VPCRouter"].Commands["static-nat-add"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-add"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["static-nat-add"].Params["id"].CompleteFunc
 	}
@@ -412,8 +390,6 @@ func VPCRouterStaticNatUpdateCompleteFlags(ctx command.Context, params *params.S
 		comp = define.Resources["VPCRouter"].Commands["static-nat-update"].Params["private"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["VPCRouter"].Commands["static-nat-update"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["static-nat-update"].Params["id"].CompleteFunc
 	}
@@ -432,8 +408,6 @@ func VPCRouterStaticNatDeleteCompleteFlags(ctx command.Context, params *params.S
 	switch flagName {
 	case "index":
 		comp = define.Resources["VPCRouter"].Commands["static-nat-delete"].Params["index"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["static-nat-delete"].Params["id"].CompleteFunc
 	}
@@ -478,8 +452,6 @@ func VPCRouterPortForwardingAddCompleteFlags(ctx command.Context, params *params
 		comp = define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["private-port"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["id"].CompleteFunc
 	}
@@ -508,8 +480,6 @@ func VPCRouterPortForwardingUpdateCompleteFlags(ctx command.Context, params *par
 		comp = define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["private-port"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["id"].CompleteFunc
 	}
@@ -528,8 +498,6 @@ func VPCRouterPortForwardingDeleteCompleteFlags(ctx command.Context, params *par
 	switch flagName {
 	case "index":
 		comp = define.Resources["VPCRouter"].Commands["port-forwarding-delete"].Params["index"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["port-forwarding-delete"].Params["id"].CompleteFunc
 	}
@@ -584,8 +552,6 @@ func VPCRouterFirewallAddCompleteFlags(ctx command.Context, params *params.Firew
 		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["enable-logging"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["id"].CompleteFunc
 	}
@@ -622,8 +588,6 @@ func VPCRouterFirewallUpdateCompleteFlags(ctx command.Context, params *params.Fi
 		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["enable-logging"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["id"].CompleteFunc
 	}
@@ -644,8 +608,6 @@ func VPCRouterFirewallDeleteCompleteFlags(ctx command.Context, params *params.Fi
 		comp = define.Resources["VPCRouter"].Commands["firewall-delete"].Params["direction"].CompleteFunc
 	case "index":
 		comp = define.Resources["VPCRouter"].Commands["firewall-delete"].Params["index"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["firewall-delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["firewall-delete"].Params["id"].CompleteFunc
 	}
@@ -686,8 +648,6 @@ func VPCRouterDhcpServerAddCompleteFlags(ctx command.Context, params *params.Dhc
 		comp = define.Resources["VPCRouter"].Commands["dhcp-server-add"].Params["range-start"].CompleteFunc
 	case "range-stop", "range-end":
 		comp = define.Resources["VPCRouter"].Commands["dhcp-server-add"].Params["range-stop"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-add"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["dhcp-server-add"].Params["id"].CompleteFunc
 	}
@@ -710,8 +670,6 @@ func VPCRouterDhcpServerUpdateCompleteFlags(ctx command.Context, params *params.
 		comp = define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["range-start"].CompleteFunc
 	case "range-stop", "range-end":
 		comp = define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["range-stop"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["id"].CompleteFunc
 	}
@@ -730,8 +688,6 @@ func VPCRouterDhcpServerDeleteCompleteFlags(ctx command.Context, params *params.
 	switch flagName {
 	case "index":
 		comp = define.Resources["VPCRouter"].Commands["dhcp-server-delete"].Params["index"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["dhcp-server-delete"].Params["id"].CompleteFunc
 	}
@@ -770,8 +726,6 @@ func VPCRouterDhcpStaticMappingAddCompleteFlags(ctx command.Context, params *par
 		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-add"].Params["macaddress"].CompleteFunc
 	case "ipaddress", "ip":
 		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-add"].Params["ipaddress"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-add"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-add"].Params["id"].CompleteFunc
 	}
@@ -794,8 +748,6 @@ func VPCRouterDhcpStaticMappingUpdateCompleteFlags(ctx command.Context, params *
 		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].Params["macaddress"].CompleteFunc
 	case "ipaddress", "ip":
 		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].Params["ipaddress"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].Params["id"].CompleteFunc
 	}
@@ -814,8 +766,6 @@ func VPCRouterDhcpStaticMappingDeleteCompleteFlags(ctx command.Context, params *
 	switch flagName {
 	case "index":
 		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-delete"].Params["index"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-delete"].Params["id"].CompleteFunc
 	}
@@ -856,8 +806,6 @@ func VPCRouterPptpServerUpdateCompleteFlags(ctx command.Context, params *params.
 		comp = define.Resources["VPCRouter"].Commands["pptp-server-update"].Params["range-start"].CompleteFunc
 	case "range-stop", "range-end":
 		comp = define.Resources["VPCRouter"].Commands["pptp-server-update"].Params["range-stop"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["pptp-server-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["pptp-server-update"].Params["id"].CompleteFunc
 	}
@@ -900,8 +848,6 @@ func VPCRouterL2tpServerUpdateCompleteFlags(ctx command.Context, params *params.
 		comp = define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["range-stop"].CompleteFunc
 	case "pre-shared-secret":
 		comp = define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["pre-shared-secret"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["id"].CompleteFunc
 	}
@@ -940,8 +886,6 @@ func VPCRouterUserAddCompleteFlags(ctx command.Context, params *params.UserAddVP
 		comp = define.Resources["VPCRouter"].Commands["user-add"].Params["username"].CompleteFunc
 	case "password", "pass":
 		comp = define.Resources["VPCRouter"].Commands["user-add"].Params["password"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["user-add"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["user-add"].Params["id"].CompleteFunc
 	}
@@ -964,8 +908,6 @@ func VPCRouterUserUpdateCompleteFlags(ctx command.Context, params *params.UserUp
 		comp = define.Resources["VPCRouter"].Commands["user-update"].Params["username"].CompleteFunc
 	case "password", "pass":
 		comp = define.Resources["VPCRouter"].Commands["user-update"].Params["password"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["user-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["user-update"].Params["id"].CompleteFunc
 	}
@@ -984,8 +926,6 @@ func VPCRouterUserDeleteCompleteFlags(ctx command.Context, params *params.UserDe
 	switch flagName {
 	case "index":
 		comp = define.Resources["VPCRouter"].Commands["user-delete"].Params["index"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["user-delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["user-delete"].Params["id"].CompleteFunc
 	}
@@ -1030,8 +970,6 @@ func VPCRouterSiteToSiteVpnAddCompleteFlags(ctx command.Context, params *params.
 		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["routes"].CompleteFunc
 	case "local-prefix":
 		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["local-prefix"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["id"].CompleteFunc
 	}
@@ -1060,8 +998,6 @@ func VPCRouterSiteToSiteVpnUpdateCompleteFlags(ctx command.Context, params *para
 		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["routes"].CompleteFunc
 	case "local-prefix":
 		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["local-prefix"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["id"].CompleteFunc
 	}
@@ -1080,8 +1016,6 @@ func VPCRouterSiteToSiteVpnDeleteCompleteFlags(ctx command.Context, params *para
 	switch flagName {
 	case "index":
 		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-delete"].Params["index"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-delete"].Params["id"].CompleteFunc
 	}
@@ -1120,8 +1054,6 @@ func VPCRouterStaticRouteAddCompleteFlags(ctx command.Context, params *params.St
 		comp = define.Resources["VPCRouter"].Commands["static-route-add"].Params["prefix"].CompleteFunc
 	case "next-hop":
 		comp = define.Resources["VPCRouter"].Commands["static-route-add"].Params["next-hop"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["static-route-add"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["static-route-add"].Params["id"].CompleteFunc
 	}
@@ -1144,8 +1076,6 @@ func VPCRouterStaticRouteUpdateCompleteFlags(ctx command.Context, params *params
 		comp = define.Resources["VPCRouter"].Commands["static-route-update"].Params["prefix"].CompleteFunc
 	case "next-hop":
 		comp = define.Resources["VPCRouter"].Commands["static-route-update"].Params["next-hop"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["static-route-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["static-route-update"].Params["id"].CompleteFunc
 	}
@@ -1164,8 +1094,6 @@ func VPCRouterStaticRouteDeleteCompleteFlags(ctx command.Context, params *params
 	switch flagName {
 	case "index":
 		comp = define.Resources["VPCRouter"].Commands["static-route-delete"].Params["index"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["VPCRouter"].Commands["static-route-delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["VPCRouter"].Commands["static-route-delete"].Params["id"].CompleteFunc
 	}

@@ -10,17 +10,19 @@ import (
 
 // ListLoadBalancerParam is input parameters for the sacloud API
 type ListLoadBalancerParam struct {
-	Name       []string
-	Id         []int64
-	Tags       []string
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListLoadBalancerParam return new ListLoadBalancerParam
@@ -67,6 +69,12 @@ func (p *ListLoadBalancerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -151,6 +159,20 @@ func (p *ListLoadBalancerParam) SetSort(v []string) {
 func (p *ListLoadBalancerParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -189,24 +211,26 @@ func (p *ListLoadBalancerParam) GetFormatFile() string {
 
 // CreateLoadBalancerParam is input parameters for the sacloud API
 type CreateLoadBalancerParam struct {
-	SwitchId         int64
-	Vrid             int
-	HighAvailability bool
-	Plan             string
-	Ipaddress1       string
-	Ipaddress2       string
-	NwMaskLen        int
-	DefaultRoute     string
-	Name             string
-	Description      string
-	Tags             []string
-	IconId           int64
-	Assumeyes        bool
-	OutputType       string
-	Column           []string
-	Quiet            bool
-	Format           string
-	FormatFile       string
+	SwitchId          int64
+	Vrid              int
+	HighAvailability  bool
+	Plan              string
+	Ipaddress1        string
+	Ipaddress2        string
+	NwMaskLen         int
+	DefaultRoute      string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateLoadBalancerParam return new CreateLoadBalancerParam
@@ -331,6 +355,12 @@ func (p *CreateLoadBalancerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -464,6 +494,20 @@ func (p *CreateLoadBalancerParam) SetAssumeyes(v bool) {
 func (p *CreateLoadBalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -502,12 +546,14 @@ func (p *CreateLoadBalancerParam) GetFormatFile() string {
 
 // ReadLoadBalancerParam is input parameters for the sacloud API
 type ReadLoadBalancerParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadLoadBalancerParam return new ReadLoadBalancerParam
@@ -529,6 +575,12 @@ func (p *ReadLoadBalancerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -571,6 +623,20 @@ func (p *ReadLoadBalancerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -616,17 +682,19 @@ func (p *ReadLoadBalancerParam) GetId() int64 {
 
 // UpdateLoadBalancerParam is input parameters for the sacloud API
 type UpdateLoadBalancerParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateLoadBalancerParam return new UpdateLoadBalancerParam
@@ -676,6 +744,12 @@ func (p *UpdateLoadBalancerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -753,6 +827,20 @@ func (p *UpdateLoadBalancerParam) SetAssumeyes(v bool) {
 func (p *UpdateLoadBalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -798,14 +886,16 @@ func (p *UpdateLoadBalancerParam) GetId() int64 {
 
 // DeleteLoadBalancerParam is input parameters for the sacloud API
 type DeleteLoadBalancerParam struct {
-	Force      bool
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Force             bool
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteLoadBalancerParam return new DeleteLoadBalancerParam
@@ -827,6 +917,12 @@ func (p *DeleteLoadBalancerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -883,6 +979,20 @@ func (p *DeleteLoadBalancerParam) SetAssumeyes(v bool) {
 func (p *DeleteLoadBalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DeleteLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DeleteLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -928,8 +1038,10 @@ func (p *DeleteLoadBalancerParam) GetId() int64 {
 
 // BootLoadBalancerParam is input parameters for the sacloud API
 type BootLoadBalancerParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewBootLoadBalancerParam return new BootLoadBalancerParam
@@ -986,6 +1098,20 @@ func (p *BootLoadBalancerParam) SetAssumeyes(v bool) {
 func (p *BootLoadBalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *BootLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BootLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BootLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BootLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *BootLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -996,8 +1122,10 @@ func (p *BootLoadBalancerParam) GetId() int64 {
 
 // ShutdownLoadBalancerParam is input parameters for the sacloud API
 type ShutdownLoadBalancerParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewShutdownLoadBalancerParam return new ShutdownLoadBalancerParam
@@ -1054,6 +1182,20 @@ func (p *ShutdownLoadBalancerParam) SetAssumeyes(v bool) {
 func (p *ShutdownLoadBalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ShutdownLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ShutdownLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1064,8 +1206,10 @@ func (p *ShutdownLoadBalancerParam) GetId() int64 {
 
 // ShutdownForceLoadBalancerParam is input parameters for the sacloud API
 type ShutdownForceLoadBalancerParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewShutdownForceLoadBalancerParam return new ShutdownForceLoadBalancerParam
@@ -1122,6 +1266,20 @@ func (p *ShutdownForceLoadBalancerParam) SetAssumeyes(v bool) {
 func (p *ShutdownForceLoadBalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ShutdownForceLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownForceLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownForceLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ShutdownForceLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1132,8 +1290,10 @@ func (p *ShutdownForceLoadBalancerParam) GetId() int64 {
 
 // ResetLoadBalancerParam is input parameters for the sacloud API
 type ResetLoadBalancerParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewResetLoadBalancerParam return new ResetLoadBalancerParam
@@ -1190,6 +1350,20 @@ func (p *ResetLoadBalancerParam) SetAssumeyes(v bool) {
 func (p *ResetLoadBalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ResetLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ResetLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ResetLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ResetLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ResetLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1200,7 +1374,9 @@ func (p *ResetLoadBalancerParam) GetId() int64 {
 
 // WaitForBootLoadBalancerParam is input parameters for the sacloud API
 type WaitForBootLoadBalancerParam struct {
-	Id int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewWaitForBootLoadBalancerParam return new WaitForBootLoadBalancerParam
@@ -1250,6 +1426,20 @@ func (p *WaitForBootLoadBalancerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForBootLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForBootLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForBootLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForBootLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *WaitForBootLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1260,7 +1450,9 @@ func (p *WaitForBootLoadBalancerParam) GetId() int64 {
 
 // WaitForDownLoadBalancerParam is input parameters for the sacloud API
 type WaitForDownLoadBalancerParam struct {
-	Id int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewWaitForDownLoadBalancerParam return new WaitForDownLoadBalancerParam
@@ -1310,6 +1502,20 @@ func (p *WaitForDownLoadBalancerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForDownLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForDownLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForDownLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForDownLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *WaitForDownLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1320,12 +1526,14 @@ func (p *WaitForDownLoadBalancerParam) GetId() int64 {
 
 // VipInfoLoadBalancerParam is input parameters for the sacloud API
 type VipInfoLoadBalancerParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewVipInfoLoadBalancerParam return new VipInfoLoadBalancerParam
@@ -1347,6 +1555,12 @@ func (p *VipInfoLoadBalancerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1389,6 +1603,20 @@ func (p *VipInfoLoadBalancerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *VipInfoLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *VipInfoLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *VipInfoLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1434,12 +1662,14 @@ func (p *VipInfoLoadBalancerParam) GetId() int64 {
 
 // VipAddLoadBalancerParam is input parameters for the sacloud API
 type VipAddLoadBalancerParam struct {
-	Vip         string
-	Port        int
-	DelayLoop   int
-	SorryServer string
-	Assumeyes   bool
-	Id          int64
+	Vip               string
+	Port              int
+	DelayLoop         int
+	SorryServer       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewVipAddLoadBalancerParam return new VipAddLoadBalancerParam
@@ -1569,6 +1799,20 @@ func (p *VipAddLoadBalancerParam) SetAssumeyes(v bool) {
 func (p *VipAddLoadBalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *VipAddLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *VipAddLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *VipAddLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *VipAddLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *VipAddLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1579,13 +1823,15 @@ func (p *VipAddLoadBalancerParam) GetId() int64 {
 
 // VipUpdateLoadBalancerParam is input parameters for the sacloud API
 type VipUpdateLoadBalancerParam struct {
-	Index       int
-	Vip         string
-	Port        int
-	DelayLoop   int
-	SorryServer string
-	Assumeyes   bool
-	Id          int64
+	Index             int
+	Vip               string
+	Port              int
+	DelayLoop         int
+	SorryServer       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewVipUpdateLoadBalancerParam return new VipUpdateLoadBalancerParam
@@ -1715,6 +1961,20 @@ func (p *VipUpdateLoadBalancerParam) SetAssumeyes(v bool) {
 func (p *VipUpdateLoadBalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *VipUpdateLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *VipUpdateLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *VipUpdateLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1725,9 +1985,11 @@ func (p *VipUpdateLoadBalancerParam) GetId() int64 {
 
 // VipDeleteLoadBalancerParam is input parameters for the sacloud API
 type VipDeleteLoadBalancerParam struct {
-	Index     int
-	Assumeyes bool
-	Id        int64
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewVipDeleteLoadBalancerParam return new VipDeleteLoadBalancerParam
@@ -1798,6 +2060,20 @@ func (p *VipDeleteLoadBalancerParam) SetAssumeyes(v bool) {
 func (p *VipDeleteLoadBalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *VipDeleteLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *VipDeleteLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *VipDeleteLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *VipDeleteLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *VipDeleteLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1808,15 +2084,17 @@ func (p *VipDeleteLoadBalancerParam) GetId() int64 {
 
 // ServerInfoLoadBalancerParam is input parameters for the sacloud API
 type ServerInfoLoadBalancerParam struct {
-	VipIndex   int
-	Vip        string
-	Port       int
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	VipIndex          int
+	Vip               string
+	Port              int
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewServerInfoLoadBalancerParam return new ServerInfoLoadBalancerParam
@@ -1885,6 +2163,12 @@ func (p *ServerInfoLoadBalancerParam) Validate() []error {
 		}
 	}
 	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1943,6 +2227,20 @@ func (p *ServerInfoLoadBalancerParam) SetPort(v int) {
 func (p *ServerInfoLoadBalancerParam) GetPort() int {
 	return p.Port
 }
+func (p *ServerInfoLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerInfoLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ServerInfoLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1988,16 +2286,18 @@ func (p *ServerInfoLoadBalancerParam) GetId() int64 {
 
 // ServerAddLoadBalancerParam is input parameters for the sacloud API
 type ServerAddLoadBalancerParam struct {
-	VipIndex     int
-	Vip          string
-	Port         int
-	Ipaddress    string
-	Protocol     string
-	Path         string
-	ResponseCode int
-	Enabled      bool
-	Assumeyes    bool
-	Id           int64
+	VipIndex          int
+	Vip               string
+	Port              int
+	Ipaddress         string
+	Protocol          string
+	Path              string
+	ResponseCode      int
+	Enabled           bool
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewServerAddLoadBalancerParam return new ServerAddLoadBalancerParam
@@ -2192,6 +2492,20 @@ func (p *ServerAddLoadBalancerParam) SetAssumeyes(v bool) {
 func (p *ServerAddLoadBalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ServerAddLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerAddLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerAddLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ServerAddLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2202,16 +2516,18 @@ func (p *ServerAddLoadBalancerParam) GetId() int64 {
 
 // ServerUpdateLoadBalancerParam is input parameters for the sacloud API
 type ServerUpdateLoadBalancerParam struct {
-	VipIndex     int
-	Vip          string
-	Port         int
-	Ipaddress    string
-	Protocol     string
-	Path         string
-	ResponseCode int
-	Enabled      bool
-	Assumeyes    bool
-	Id           int64
+	VipIndex          int
+	Vip               string
+	Port              int
+	Ipaddress         string
+	Protocol          string
+	Path              string
+	ResponseCode      int
+	Enabled           bool
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewServerUpdateLoadBalancerParam return new ServerUpdateLoadBalancerParam
@@ -2387,6 +2703,20 @@ func (p *ServerUpdateLoadBalancerParam) SetAssumeyes(v bool) {
 func (p *ServerUpdateLoadBalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ServerUpdateLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerUpdateLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerUpdateLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ServerUpdateLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2397,12 +2727,14 @@ func (p *ServerUpdateLoadBalancerParam) GetId() int64 {
 
 // ServerDeleteLoadBalancerParam is input parameters for the sacloud API
 type ServerDeleteLoadBalancerParam struct {
-	VipIndex  int
-	Vip       string
-	Port      int
-	Ipaddress string
-	Assumeyes bool
-	Id        int64
+	VipIndex          int
+	Vip               string
+	Port              int
+	Ipaddress         string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewServerDeleteLoadBalancerParam return new ServerDeleteLoadBalancerParam
@@ -2543,6 +2875,20 @@ func (p *ServerDeleteLoadBalancerParam) SetAssumeyes(v bool) {
 func (p *ServerDeleteLoadBalancerParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ServerDeleteLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerDeleteLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerDeleteLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ServerDeleteLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2553,15 +2899,17 @@ func (p *ServerDeleteLoadBalancerParam) GetId() int64 {
 
 // MonitorLoadBalancerParam is input parameters for the sacloud API
 type MonitorLoadBalancerParam struct {
-	Start      string
-	End        string
-	KeyFormat  string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Start             string
+	End               string
+	KeyFormat         string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewMonitorLoadBalancerParam return new MonitorLoadBalancerParam
@@ -2607,6 +2955,12 @@ func (p *MonitorLoadBalancerParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2669,6 +3023,20 @@ func (p *MonitorLoadBalancerParam) SetKeyFormat(v string) {
 
 func (p *MonitorLoadBalancerParam) GetKeyFormat() string {
 	return p.KeyFormat
+}
+func (p *MonitorLoadBalancerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorLoadBalancerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorLoadBalancerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorLoadBalancerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *MonitorLoadBalancerParam) SetOutputType(v string) {
 	p.OutputType = v

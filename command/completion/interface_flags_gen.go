@@ -42,8 +42,6 @@ func InterfacePacketFilterConnectCompleteFlags(ctx command.Context, params *para
 	switch flagName {
 	case "packet-filter-id":
 		comp = define.Resources["Interface"].Commands["packet-filter-connect"].Params["packet-filter-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Interface"].Commands["packet-filter-connect"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Interface"].Commands["packet-filter-connect"].Params["id"].CompleteFunc
 	}
@@ -62,8 +60,6 @@ func InterfaceCreateCompleteFlags(ctx command.Context, params *params.CreateInte
 	switch flagName {
 	case "server-id":
 		comp = define.Resources["Interface"].Commands["create"].Params["server-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Interface"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -82,8 +78,6 @@ func InterfacePacketFilterDisconnectCompleteFlags(ctx command.Context, params *p
 	switch flagName {
 	case "packet-filter-id":
 		comp = define.Resources["Interface"].Commands["packet-filter-disconnect"].Params["packet-filter-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Interface"].Commands["packet-filter-disconnect"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Interface"].Commands["packet-filter-disconnect"].Params["id"].CompleteFunc
 	}
@@ -120,8 +114,6 @@ func InterfaceUpdateCompleteFlags(ctx command.Context, params *params.UpdateInte
 	switch flagName {
 	case "user-ipaddress":
 		comp = define.Resources["Interface"].Commands["update"].Params["user-ipaddress"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Interface"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Interface"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -140,8 +132,6 @@ func InterfaceDeleteCompleteFlags(ctx command.Context, params *params.DeleteInte
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Interface"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Interface"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":

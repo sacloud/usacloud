@@ -40,8 +40,6 @@ func ProductServerReadCompleteFlags(ctx command.Context, params *params.ReadProd
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["ProductServer"].Commands["read"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["ProductServer"].Commands["read"].Params["id"].CompleteFunc
 	case "output-type", "out":

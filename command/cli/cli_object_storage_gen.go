@@ -3,6 +3,9 @@
 package cli
 
 import (
+	"encoding/json"
+	"fmt"
+	"github.com/imdario/mergo"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
 	"github.com/sacloud/usacloud/command/funcs"
@@ -30,28 +33,32 @@ func init() {
 				ArgsUsage: "<remote path>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "access-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"SACLOUD_OJS_ACCESS_KEY_ID", "AWS_ACCESS_KEY_ID"},
-						Destination: &listParam.AccessKey,
+						Name:    "access-key",
+						Usage:   "[Required] set access-key",
+						EnvVars: []string{"SACLOUD_OJS_ACCESS_KEY_ID", "AWS_ACCESS_KEY_ID"},
 					},
 					&cli.StringFlag{
-						Name:        "secret-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"SACLOUD_OJS_SECRET_ACCESS_KEY", "AWS_SECRET_ACCESS_KEY"},
-						Destination: &listParam.SecretKey,
+						Name:    "secret-key",
+						Usage:   "[Required] set access-key",
+						EnvVars: []string{"SACLOUD_OJS_SECRET_ACCESS_KEY", "AWS_SECRET_ACCESS_KEY"},
 					},
 					&cli.StringFlag{
-						Name:        "bucket",
-						Usage:       "set bucket",
-						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
-						Destination: &listParam.Bucket,
+						Name:    "bucket",
+						Usage:   "set bucket",
+						EnvVars: []string{"SACLOUD_OJS_BUCKET_NAME"},
 					},
 					&cli.StringFlag{
-						Name:        "output-type",
-						Aliases:     []string{"out"},
-						Usage:       "Output type [json/csv/tsv]",
-						Destination: &listParam.OutputType,
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -59,21 +66,18 @@ func init() {
 						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
 					},
 					&cli.BoolFlag{
-						Name:        "quiet",
-						Aliases:     []string{"q"},
-						Usage:       "Only display IDs",
-						Destination: &listParam.Quiet,
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
 					},
 					&cli.StringFlag{
-						Name:        "format",
-						Aliases:     []string{"fmt"},
-						Usage:       "Output format(see text/template package document for detail)",
-						Destination: &listParam.Format,
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
 					},
 					&cli.StringFlag{
-						Name:        "format-file",
-						Usage:       "Output format from file(see text/template package document for detail)",
-						Destination: &listParam.FormatFile,
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -97,8 +101,37 @@ func init() {
 					// build command context
 					ctx := command.NewContext(c, realArgs, listParam)
 
-					// Set option values for slice
-					listParam.Column = c.StringSlice("column")
+					// Set option values
+					if c.IsSet("access-key") {
+						listParam.AccessKey = c.String("access-key")
+					}
+					if c.IsSet("secret-key") {
+						listParam.SecretKey = c.String("secret-key")
+					}
+					if c.IsSet("bucket") {
+						listParam.Bucket = c.String("bucket")
+					}
+					if c.IsSet("param-template") {
+						listParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						listParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						listParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						listParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						listParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						listParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						listParam.FormatFile = c.String("format-file")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -161,8 +194,52 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					// Set option values for slice
-					listParam.Column = c.StringSlice("column")
+					listParam.ParamTemplate = c.String("param-template")
+					listParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(listParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewListObjectStorageParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(listParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("access-key") {
+						listParam.AccessKey = c.String("access-key")
+					}
+					if c.IsSet("secret-key") {
+						listParam.SecretKey = c.String("secret-key")
+					}
+					if c.IsSet("bucket") {
+						listParam.Bucket = c.String("bucket")
+					}
+					if c.IsSet("param-template") {
+						listParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						listParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						listParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						listParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						listParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						listParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						listParam.FormatFile = c.String("format-file")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(true); len(errors) > 0 {
@@ -188,40 +265,42 @@ func init() {
 				ArgsUsage: "<local file/directory> <remote path>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "access-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"SACLOUD_OJS_ACCESS_KEY_ID", "AWS_ACCESS_KEY_ID"},
-						Destination: &putParam.AccessKey,
+						Name:    "access-key",
+						Usage:   "[Required] set access-key",
+						EnvVars: []string{"SACLOUD_OJS_ACCESS_KEY_ID", "AWS_ACCESS_KEY_ID"},
 					},
 					&cli.StringFlag{
-						Name:        "content-type",
-						Usage:       "set content-type",
-						Value:       "application/octet-stream",
-						Destination: &putParam.ContentType,
+						Name:  "content-type",
+						Usage: "set content-type",
+						Value: "application/octet-stream",
 					},
 					&cli.BoolFlag{
-						Name:        "recursive",
-						Aliases:     []string{"r"},
-						Usage:       "put objects recursive",
-						Destination: &putParam.Recursive,
+						Name:    "recursive",
+						Aliases: []string{"r"},
+						Usage:   "put objects recursive",
 					},
 					&cli.StringFlag{
-						Name:        "secret-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"SACLOUD_OJS_SECRET_ACCESS_KEY", "AWS_SECRET_ACCESS_KEY"},
-						Destination: &putParam.SecretKey,
+						Name:    "secret-key",
+						Usage:   "[Required] set access-key",
+						EnvVars: []string{"SACLOUD_OJS_SECRET_ACCESS_KEY", "AWS_SECRET_ACCESS_KEY"},
 					},
 					&cli.StringFlag{
-						Name:        "bucket",
-						Usage:       "set bucket",
-						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
-						Destination: &putParam.Bucket,
+						Name:    "bucket",
+						Usage:   "set bucket",
+						EnvVars: []string{"SACLOUD_OJS_BUCKET_NAME"},
 					},
 					&cli.BoolFlag{
-						Name:        "assumeyes",
-						Aliases:     []string{"y"},
-						Usage:       "assume that the answer to any question which would be asked is yes",
-						Destination: &putParam.Assumeyes,
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -244,6 +323,32 @@ func init() {
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, putParam)
+
+					// Set option values
+					if c.IsSet("access-key") {
+						putParam.AccessKey = c.String("access-key")
+					}
+					if c.IsSet("content-type") {
+						putParam.ContentType = c.String("content-type")
+					}
+					if c.IsSet("recursive") {
+						putParam.Recursive = c.Bool("recursive")
+					}
+					if c.IsSet("secret-key") {
+						putParam.SecretKey = c.String("secret-key")
+					}
+					if c.IsSet("bucket") {
+						putParam.Bucket = c.String("bucket")
+					}
+					if c.IsSet("assumeyes") {
+						putParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						putParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						putParam.ParamTemplateFile = c.String("param-template-file")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -306,6 +411,47 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					putParam.ParamTemplate = c.String("param-template")
+					putParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(putParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewPutObjectStorageParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(putParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("access-key") {
+						putParam.AccessKey = c.String("access-key")
+					}
+					if c.IsSet("content-type") {
+						putParam.ContentType = c.String("content-type")
+					}
+					if c.IsSet("recursive") {
+						putParam.Recursive = c.Bool("recursive")
+					}
+					if c.IsSet("secret-key") {
+						putParam.SecretKey = c.String("secret-key")
+					}
+					if c.IsSet("bucket") {
+						putParam.Bucket = c.String("bucket")
+					}
+					if c.IsSet("assumeyes") {
+						putParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						putParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						putParam.ParamTemplateFile = c.String("param-template-file")
+					}
+
 					// Validate global params
 					if errors := command.GlobalOption.Validate(true); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
@@ -335,28 +481,32 @@ func init() {
 				ArgsUsage: "<remote path> <local file/directory>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "access-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"SACLOUD_OJS_ACCESS_KEY_ID", "AWS_ACCESS_KEY_ID"},
-						Destination: &getParam.AccessKey,
+						Name:    "access-key",
+						Usage:   "[Required] set access-key",
+						EnvVars: []string{"SACLOUD_OJS_ACCESS_KEY_ID", "AWS_ACCESS_KEY_ID"},
 					},
 					&cli.BoolFlag{
-						Name:        "recursive",
-						Aliases:     []string{"r"},
-						Usage:       "get objects recursive",
-						Destination: &getParam.Recursive,
+						Name:    "recursive",
+						Aliases: []string{"r"},
+						Usage:   "get objects recursive",
 					},
 					&cli.StringFlag{
-						Name:        "secret-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"SACLOUD_OJS_SECRET_ACCESS_KEY", "AWS_SECRET_ACCESS_KEY"},
-						Destination: &getParam.SecretKey,
+						Name:    "secret-key",
+						Usage:   "[Required] set access-key",
+						EnvVars: []string{"SACLOUD_OJS_SECRET_ACCESS_KEY", "AWS_SECRET_ACCESS_KEY"},
 					},
 					&cli.StringFlag{
-						Name:        "bucket",
-						Usage:       "set bucket",
-						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
-						Destination: &getParam.Bucket,
+						Name:    "bucket",
+						Usage:   "set bucket",
+						EnvVars: []string{"SACLOUD_OJS_BUCKET_NAME"},
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -379,6 +529,26 @@ func init() {
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, getParam)
+
+					// Set option values
+					if c.IsSet("access-key") {
+						getParam.AccessKey = c.String("access-key")
+					}
+					if c.IsSet("recursive") {
+						getParam.Recursive = c.Bool("recursive")
+					}
+					if c.IsSet("secret-key") {
+						getParam.SecretKey = c.String("secret-key")
+					}
+					if c.IsSet("bucket") {
+						getParam.Bucket = c.String("bucket")
+					}
+					if c.IsSet("param-template") {
+						getParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						getParam.ParamTemplateFile = c.String("param-template-file")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -441,6 +611,41 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					getParam.ParamTemplate = c.String("param-template")
+					getParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(getParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewGetObjectStorageParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(getParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("access-key") {
+						getParam.AccessKey = c.String("access-key")
+					}
+					if c.IsSet("recursive") {
+						getParam.Recursive = c.Bool("recursive")
+					}
+					if c.IsSet("secret-key") {
+						getParam.SecretKey = c.String("secret-key")
+					}
+					if c.IsSet("bucket") {
+						getParam.Bucket = c.String("bucket")
+					}
+					if c.IsSet("param-template") {
+						getParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						getParam.ParamTemplateFile = c.String("param-template-file")
+					}
+
 					// Validate global params
 					if errors := command.GlobalOption.Validate(true); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
@@ -466,34 +671,37 @@ func init() {
 				ArgsUsage: "<remote path>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "access-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"SACLOUD_OJS_ACCESS_KEY_ID", "AWS_ACCESS_KEY_ID"},
-						Destination: &deleteParam.AccessKey,
+						Name:    "access-key",
+						Usage:   "[Required] set access-key",
+						EnvVars: []string{"SACLOUD_OJS_ACCESS_KEY_ID", "AWS_ACCESS_KEY_ID"},
 					},
 					&cli.BoolFlag{
-						Name:        "recursive",
-						Aliases:     []string{"r"},
-						Usage:       "delete objects recursive",
-						Destination: &deleteParam.Recursive,
+						Name:    "recursive",
+						Aliases: []string{"r"},
+						Usage:   "delete objects recursive",
 					},
 					&cli.StringFlag{
-						Name:        "secret-key",
-						Usage:       "[Required] set access-key",
-						EnvVars:     []string{"SACLOUD_OJS_SECRET_ACCESS_KEY", "AWS_SECRET_ACCESS_KEY"},
-						Destination: &deleteParam.SecretKey,
+						Name:    "secret-key",
+						Usage:   "[Required] set access-key",
+						EnvVars: []string{"SACLOUD_OJS_SECRET_ACCESS_KEY", "AWS_SECRET_ACCESS_KEY"},
 					},
 					&cli.StringFlag{
-						Name:        "bucket",
-						Usage:       "set bucket",
-						EnvVars:     []string{"SACLOUD_OJS_BUCKET_NAME"},
-						Destination: &deleteParam.Bucket,
+						Name:    "bucket",
+						Usage:   "set bucket",
+						EnvVars: []string{"SACLOUD_OJS_BUCKET_NAME"},
 					},
 					&cli.BoolFlag{
-						Name:        "assumeyes",
-						Aliases:     []string{"y"},
-						Usage:       "assume that the answer to any question which would be asked is yes",
-						Destination: &deleteParam.Assumeyes,
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -516,6 +724,29 @@ func init() {
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, deleteParam)
+
+					// Set option values
+					if c.IsSet("access-key") {
+						deleteParam.AccessKey = c.String("access-key")
+					}
+					if c.IsSet("recursive") {
+						deleteParam.Recursive = c.Bool("recursive")
+					}
+					if c.IsSet("secret-key") {
+						deleteParam.SecretKey = c.String("secret-key")
+					}
+					if c.IsSet("bucket") {
+						deleteParam.Bucket = c.String("bucket")
+					}
+					if c.IsSet("assumeyes") {
+						deleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						deleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						deleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -577,6 +808,44 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					deleteParam.ParamTemplate = c.String("param-template")
+					deleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(deleteParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewDeleteObjectStorageParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(deleteParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("access-key") {
+						deleteParam.AccessKey = c.String("access-key")
+					}
+					if c.IsSet("recursive") {
+						deleteParam.Recursive = c.Bool("recursive")
+					}
+					if c.IsSet("secret-key") {
+						deleteParam.SecretKey = c.String("secret-key")
+					}
+					if c.IsSet("bucket") {
+						deleteParam.Bucket = c.String("bucket")
+					}
+					if c.IsSet("assumeyes") {
+						deleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						deleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						deleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(true); len(errors) > 0 {
@@ -651,6 +920,16 @@ func init() {
 		DisplayName: "Auth options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("object-storage", "delete", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("object-storage", "delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("object-storage", "delete", "recursive", &schema.Category{
 		Key:         "operation",
 		DisplayName: "Operation options",
@@ -670,6 +949,16 @@ func init() {
 		Key:         "auth",
 		DisplayName: "Auth options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("object-storage", "get", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("object-storage", "get", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("object-storage", "get", "recursive", &schema.Category{
 		Key:         "operation",
@@ -711,6 +1000,16 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("object-storage", "list", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("object-storage", "list", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("object-storage", "list", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -740,6 +1039,16 @@ func init() {
 		Key:         "operation",
 		DisplayName: "Operation options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("object-storage", "put", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("object-storage", "put", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("object-storage", "put", "recursive", &schema.Category{
 		Key:         "operation",

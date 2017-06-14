@@ -10,16 +10,18 @@ import (
 
 // ListPacketFilterParam is input parameters for the sacloud API
 type ListPacketFilterParam struct {
-	Name       []string
-	Id         []int64
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListPacketFilterParam return new ListPacketFilterParam
@@ -59,6 +61,12 @@ func (p *ListPacketFilterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -136,6 +144,20 @@ func (p *ListPacketFilterParam) SetSort(v []string) {
 func (p *ListPacketFilterParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListPacketFilterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListPacketFilterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListPacketFilterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListPacketFilterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListPacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -174,14 +196,16 @@ func (p *ListPacketFilterParam) GetFormatFile() string {
 
 // CreatePacketFilterParam is input parameters for the sacloud API
 type CreatePacketFilterParam struct {
-	Name        string
-	Description string
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
+	Name              string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreatePacketFilterParam return new CreatePacketFilterParam
@@ -217,6 +241,12 @@ func (p *CreatePacketFilterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -280,6 +310,20 @@ func (p *CreatePacketFilterParam) SetAssumeyes(v bool) {
 func (p *CreatePacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreatePacketFilterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreatePacketFilterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreatePacketFilterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreatePacketFilterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreatePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -318,12 +362,14 @@ func (p *CreatePacketFilterParam) GetFormatFile() string {
 
 // ReadPacketFilterParam is input parameters for the sacloud API
 type ReadPacketFilterParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadPacketFilterParam return new ReadPacketFilterParam
@@ -345,6 +391,12 @@ func (p *ReadPacketFilterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -387,6 +439,20 @@ func (p *ReadPacketFilterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadPacketFilterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadPacketFilterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadPacketFilterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadPacketFilterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadPacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -432,15 +498,17 @@ func (p *ReadPacketFilterParam) GetId() int64 {
 
 // UpdatePacketFilterParam is input parameters for the sacloud API
 type UpdatePacketFilterParam struct {
-	Name        string
-	Description string
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	Name              string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdatePacketFilterParam return new UpdatePacketFilterParam
@@ -476,6 +544,12 @@ func (p *UpdatePacketFilterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -539,6 +613,20 @@ func (p *UpdatePacketFilterParam) SetAssumeyes(v bool) {
 func (p *UpdatePacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdatePacketFilterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdatePacketFilterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdatePacketFilterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdatePacketFilterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdatePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -584,13 +672,15 @@ func (p *UpdatePacketFilterParam) GetId() int64 {
 
 // DeletePacketFilterParam is input parameters for the sacloud API
 type DeletePacketFilterParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeletePacketFilterParam return new DeletePacketFilterParam
@@ -612,6 +702,12 @@ func (p *DeletePacketFilterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -661,6 +757,20 @@ func (p *DeletePacketFilterParam) SetAssumeyes(v bool) {
 func (p *DeletePacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DeletePacketFilterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeletePacketFilterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeletePacketFilterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeletePacketFilterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DeletePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -706,12 +816,14 @@ func (p *DeletePacketFilterParam) GetId() int64 {
 
 // RuleInfoPacketFilterParam is input parameters for the sacloud API
 type RuleInfoPacketFilterParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewRuleInfoPacketFilterParam return new RuleInfoPacketFilterParam
@@ -733,6 +845,12 @@ func (p *RuleInfoPacketFilterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -775,6 +893,20 @@ func (p *RuleInfoPacketFilterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *RuleInfoPacketFilterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *RuleInfoPacketFilterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *RuleInfoPacketFilterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *RuleInfoPacketFilterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *RuleInfoPacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -820,20 +952,22 @@ func (p *RuleInfoPacketFilterParam) GetId() int64 {
 
 // RuleAddPacketFilterParam is input parameters for the sacloud API
 type RuleAddPacketFilterParam struct {
-	Index           int
-	Protocol        string
-	SourceNetwork   string
-	SourcePort      string
-	DestinationPort string
-	Action          string
-	Description     string
-	Assumeyes       bool
-	OutputType      string
-	Column          []string
-	Quiet           bool
-	Format          string
-	FormatFile      string
-	Id              int64
+	Index             int
+	Protocol          string
+	SourceNetwork     string
+	SourcePort        string
+	DestinationPort   string
+	Action            string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewRuleAddPacketFilterParam return new RuleAddPacketFilterParam
@@ -900,6 +1034,12 @@ func (p *RuleAddPacketFilterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -998,6 +1138,20 @@ func (p *RuleAddPacketFilterParam) SetAssumeyes(v bool) {
 func (p *RuleAddPacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *RuleAddPacketFilterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *RuleAddPacketFilterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *RuleAddPacketFilterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *RuleAddPacketFilterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *RuleAddPacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1043,20 +1197,22 @@ func (p *RuleAddPacketFilterParam) GetId() int64 {
 
 // RuleUpdatePacketFilterParam is input parameters for the sacloud API
 type RuleUpdatePacketFilterParam struct {
-	Index           int
-	Protocol        string
-	SourceNetwork   string
-	SourcePort      string
-	DestinationPort string
-	Action          string
-	Description     string
-	Assumeyes       bool
-	OutputType      string
-	Column          []string
-	Quiet           bool
-	Format          string
-	FormatFile      string
-	Id              int64
+	Index             int
+	Protocol          string
+	SourceNetwork     string
+	SourcePort        string
+	DestinationPort   string
+	Action            string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewRuleUpdatePacketFilterParam return new RuleUpdatePacketFilterParam
@@ -1127,6 +1283,12 @@ func (p *RuleUpdatePacketFilterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1225,6 +1387,20 @@ func (p *RuleUpdatePacketFilterParam) SetAssumeyes(v bool) {
 func (p *RuleUpdatePacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *RuleUpdatePacketFilterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *RuleUpdatePacketFilterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *RuleUpdatePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1270,14 +1446,16 @@ func (p *RuleUpdatePacketFilterParam) GetId() int64 {
 
 // RuleDeletePacketFilterParam is input parameters for the sacloud API
 type RuleDeletePacketFilterParam struct {
-	Index      int
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewRuleDeletePacketFilterParam return new RuleDeletePacketFilterParam
@@ -1306,6 +1484,12 @@ func (p *RuleDeletePacketFilterParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1362,6 +1546,20 @@ func (p *RuleDeletePacketFilterParam) SetAssumeyes(v bool) {
 func (p *RuleDeletePacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *RuleDeletePacketFilterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *RuleDeletePacketFilterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *RuleDeletePacketFilterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *RuleDeletePacketFilterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *RuleDeletePacketFilterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1407,9 +1605,11 @@ func (p *RuleDeletePacketFilterParam) GetId() int64 {
 
 // InterfaceConnectPacketFilterParam is input parameters for the sacloud API
 type InterfaceConnectPacketFilterParam struct {
-	InterfaceId int64
-	Assumeyes   bool
-	Id          int64
+	InterfaceId       int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewInterfaceConnectPacketFilterParam return new InterfaceConnectPacketFilterParam
@@ -1487,6 +1687,20 @@ func (p *InterfaceConnectPacketFilterParam) SetAssumeyes(v bool) {
 func (p *InterfaceConnectPacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *InterfaceConnectPacketFilterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceConnectPacketFilterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceConnectPacketFilterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceConnectPacketFilterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *InterfaceConnectPacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1497,9 +1711,11 @@ func (p *InterfaceConnectPacketFilterParam) GetId() int64 {
 
 // InterfaceDisconnectPacketFilterParam is input parameters for the sacloud API
 type InterfaceDisconnectPacketFilterParam struct {
-	InterfaceId int64
-	Assumeyes   bool
-	Id          int64
+	InterfaceId       int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewInterfaceDisconnectPacketFilterParam return new InterfaceDisconnectPacketFilterParam
@@ -1576,6 +1792,20 @@ func (p *InterfaceDisconnectPacketFilterParam) SetAssumeyes(v bool) {
 
 func (p *InterfaceDisconnectPacketFilterParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *InterfaceDisconnectPacketFilterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *InterfaceDisconnectPacketFilterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *InterfaceDisconnectPacketFilterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *InterfaceDisconnectPacketFilterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *InterfaceDisconnectPacketFilterParam) SetId(v int64) {
 	p.Id = v

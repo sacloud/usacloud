@@ -10,9 +10,11 @@ import (
 
 // CsvBillParam is input parameters for the sacloud API
 type CsvBillParam struct {
-	NoHeader   bool
-	BillOutput string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	NoHeader          bool
+	BillOutput        string
+	Id                int64
 }
 
 // NewCsvBillParam return new CsvBillParam
@@ -69,6 +71,20 @@ func (p *CsvBillParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *CsvBillParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CsvBillParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CsvBillParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CsvBillParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CsvBillParam) SetNoHeader(v bool) {
 	p.NoHeader = v
 }
@@ -93,13 +109,15 @@ func (p *CsvBillParam) GetId() int64 {
 
 // ListBillParam is input parameters for the sacloud API
 type ListBillParam struct {
-	Year       int
-	Month      int
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Year              int
+	Month             int
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListBillParam return new ListBillParam
@@ -128,6 +146,12 @@ func (p *ListBillParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -183,6 +207,20 @@ func (p *ListBillParam) SetMonth(v int) {
 
 func (p *ListBillParam) GetMonth() int {
 	return p.Month
+}
+func (p *ListBillParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListBillParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListBillParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListBillParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *ListBillParam) SetOutputType(v string) {
 	p.OutputType = v

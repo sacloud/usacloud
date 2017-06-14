@@ -10,16 +10,18 @@ import (
 
 // ListProductDiskParam is input parameters for the sacloud API
 type ListProductDiskParam struct {
-	Name       []string
-	Id         []int64
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListProductDiskParam return new ListProductDiskParam
@@ -59,6 +61,12 @@ func (p *ListProductDiskParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -136,6 +144,20 @@ func (p *ListProductDiskParam) SetSort(v []string) {
 func (p *ListProductDiskParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListProductDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListProductDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListProductDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListProductDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListProductDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -174,13 +196,15 @@ func (p *ListProductDiskParam) GetFormatFile() string {
 
 // ReadProductDiskParam is input parameters for the sacloud API
 type ReadProductDiskParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadProductDiskParam return new ReadProductDiskParam
@@ -209,6 +233,12 @@ func (p *ReadProductDiskParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -257,6 +287,20 @@ func (p *ReadProductDiskParam) SetAssumeyes(v bool) {
 
 func (p *ReadProductDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *ReadProductDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadProductDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadProductDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadProductDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *ReadProductDiskParam) SetOutputType(v string) {
 	p.OutputType = v

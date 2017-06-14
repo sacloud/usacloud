@@ -10,16 +10,18 @@ import (
 
 // ListInterfaceParam is input parameters for the sacloud API
 type ListInterfaceParam struct {
-	Name       []string
-	Id         []int64
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListInterfaceParam return new ListInterfaceParam
@@ -59,6 +61,12 @@ func (p *ListInterfaceParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -136,6 +144,20 @@ func (p *ListInterfaceParam) SetSort(v []string) {
 func (p *ListInterfaceParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListInterfaceParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -174,9 +196,11 @@ func (p *ListInterfaceParam) GetFormatFile() string {
 
 // PacketFilterConnectInterfaceParam is input parameters for the sacloud API
 type PacketFilterConnectInterfaceParam struct {
-	PacketFilterId int64
-	Assumeyes      bool
-	Id             int64
+	PacketFilterId    int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewPacketFilterConnectInterfaceParam return new PacketFilterConnectInterfaceParam
@@ -254,6 +278,20 @@ func (p *PacketFilterConnectInterfaceParam) SetAssumeyes(v bool) {
 func (p *PacketFilterConnectInterfaceParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *PacketFilterConnectInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PacketFilterConnectInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PacketFilterConnectInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *PacketFilterConnectInterfaceParam) SetId(v int64) {
 	p.Id = v
 }
@@ -264,13 +302,15 @@ func (p *PacketFilterConnectInterfaceParam) GetId() int64 {
 
 // CreateInterfaceParam is input parameters for the sacloud API
 type CreateInterfaceParam struct {
-	ServerId   int64
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	ServerId          int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateInterfaceParam return new CreateInterfaceParam
@@ -299,6 +339,12 @@ func (p *CreateInterfaceParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -355,6 +401,20 @@ func (p *CreateInterfaceParam) SetAssumeyes(v bool) {
 func (p *CreateInterfaceParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateInterfaceParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -393,9 +453,11 @@ func (p *CreateInterfaceParam) GetFormatFile() string {
 
 // PacketFilterDisconnectInterfaceParam is input parameters for the sacloud API
 type PacketFilterDisconnectInterfaceParam struct {
-	PacketFilterId int64
-	Assumeyes      bool
-	Id             int64
+	PacketFilterId    int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewPacketFilterDisconnectInterfaceParam return new PacketFilterDisconnectInterfaceParam
@@ -473,6 +535,20 @@ func (p *PacketFilterDisconnectInterfaceParam) SetAssumeyes(v bool) {
 func (p *PacketFilterDisconnectInterfaceParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *PacketFilterDisconnectInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PacketFilterDisconnectInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PacketFilterDisconnectInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *PacketFilterDisconnectInterfaceParam) SetId(v int64) {
 	p.Id = v
 }
@@ -483,12 +559,14 @@ func (p *PacketFilterDisconnectInterfaceParam) GetId() int64 {
 
 // ReadInterfaceParam is input parameters for the sacloud API
 type ReadInterfaceParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadInterfaceParam return new ReadInterfaceParam
@@ -510,6 +588,12 @@ func (p *ReadInterfaceParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -552,6 +636,20 @@ func (p *ReadInterfaceParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadInterfaceParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -597,14 +695,16 @@ func (p *ReadInterfaceParam) GetId() int64 {
 
 // UpdateInterfaceParam is input parameters for the sacloud API
 type UpdateInterfaceParam struct {
-	UserIpaddress string
-	Assumeyes     bool
-	OutputType    string
-	Column        []string
-	Quiet         bool
-	Format        string
-	FormatFile    string
-	Id            int64
+	UserIpaddress     string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateInterfaceParam return new UpdateInterfaceParam
@@ -633,6 +733,12 @@ func (p *UpdateInterfaceParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -689,6 +795,20 @@ func (p *UpdateInterfaceParam) SetAssumeyes(v bool) {
 func (p *UpdateInterfaceParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateInterfaceParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -734,13 +854,15 @@ func (p *UpdateInterfaceParam) GetId() int64 {
 
 // DeleteInterfaceParam is input parameters for the sacloud API
 type DeleteInterfaceParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteInterfaceParam return new DeleteInterfaceParam
@@ -762,6 +884,12 @@ func (p *DeleteInterfaceParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -810,6 +938,20 @@ func (p *DeleteInterfaceParam) SetAssumeyes(v bool) {
 
 func (p *DeleteInterfaceParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *DeleteInterfaceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteInterfaceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteInterfaceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteInterfaceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *DeleteInterfaceParam) SetOutputType(v string) {
 	p.OutputType = v

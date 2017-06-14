@@ -50,8 +50,6 @@ func SwitchCreateCompleteFlags(ctx command.Context, params *params.CreateSwitchP
 		comp = define.Resources["Switch"].Commands["create"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["Switch"].Commands["create"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Switch"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -94,8 +92,6 @@ func SwitchUpdateCompleteFlags(ctx command.Context, params *params.UpdateSwitchP
 		comp = define.Resources["Switch"].Commands["update"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["Switch"].Commands["update"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Switch"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Switch"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -114,8 +110,6 @@ func SwitchDeleteCompleteFlags(ctx command.Context, params *params.DeleteSwitchP
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Switch"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Switch"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -136,8 +130,6 @@ func SwitchBridgeConnectCompleteFlags(ctx command.Context, params *params.Bridge
 	switch flagName {
 	case "bridge-id":
 		comp = define.Resources["Switch"].Commands["bridge-connect"].Params["bridge-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Switch"].Commands["bridge-connect"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Switch"].Commands["bridge-connect"].Params["id"].CompleteFunc
 	}
@@ -154,8 +146,6 @@ func SwitchBridgeDisconnectCompleteFlags(ctx command.Context, params *params.Bri
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Switch"].Commands["bridge-disconnect"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Switch"].Commands["bridge-disconnect"].Params["id"].CompleteFunc
 	}
