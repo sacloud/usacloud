@@ -68,8 +68,6 @@ func DNSCreateCompleteFlags(ctx command.Context, params *params.CreateDNSParam, 
 		comp = define.Resources["DNS"].Commands["create"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["DNS"].Commands["create"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["DNS"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -104,8 +102,6 @@ func DNSRecordAddCompleteFlags(ctx command.Context, params *params.RecordAddDNSP
 		comp = define.Resources["DNS"].Commands["record-add"].Params["srv-port"].CompleteFunc
 	case "srv-target":
 		comp = define.Resources["DNS"].Commands["record-add"].Params["srv-target"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["DNS"].Commands["record-add"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["DNS"].Commands["record-add"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -162,8 +158,6 @@ func DNSRecordUpdateCompleteFlags(ctx command.Context, params *params.RecordUpda
 		comp = define.Resources["DNS"].Commands["record-update"].Params["srv-port"].CompleteFunc
 	case "srv-target":
 		comp = define.Resources["DNS"].Commands["record-update"].Params["srv-target"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["DNS"].Commands["record-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["DNS"].Commands["record-update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -184,8 +178,6 @@ func DNSRecordDeleteCompleteFlags(ctx command.Context, params *params.RecordDele
 	switch flagName {
 	case "index":
 		comp = define.Resources["DNS"].Commands["record-delete"].Params["index"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["DNS"].Commands["record-delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["DNS"].Commands["record-delete"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -210,8 +202,6 @@ func DNSUpdateCompleteFlags(ctx command.Context, params *params.UpdateDNSParam, 
 		comp = define.Resources["DNS"].Commands["update"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["DNS"].Commands["update"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["DNS"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["DNS"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -230,8 +220,6 @@ func DNSDeleteCompleteFlags(ctx command.Context, params *params.DeleteDNSParam, 
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["DNS"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["DNS"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":

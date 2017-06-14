@@ -64,8 +64,6 @@ func ArchiveCreateCompleteFlags(ctx command.Context, params *params.CreateArchiv
 		comp = define.Resources["Archive"].Commands["create"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["Archive"].Commands["create"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Archive"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -108,8 +106,6 @@ func ArchiveUpdateCompleteFlags(ctx command.Context, params *params.UpdateArchiv
 		comp = define.Resources["Archive"].Commands["update"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["Archive"].Commands["update"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Archive"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Archive"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -128,8 +124,6 @@ func ArchiveDeleteCompleteFlags(ctx command.Context, params *params.DeleteArchiv
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Archive"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Archive"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -150,8 +144,6 @@ func ArchiveUploadCompleteFlags(ctx command.Context, params *params.UploadArchiv
 	switch flagName {
 	case "archive-file":
 		comp = define.Resources["Archive"].Commands["upload"].Params["archive-file"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Archive"].Commands["upload"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Archive"].Commands["upload"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -172,8 +164,6 @@ func ArchiveDownloadCompleteFlags(ctx command.Context, params *params.DownloadAr
 	switch flagName {
 	case "file-destination":
 		comp = define.Resources["Archive"].Commands["download"].Params["file-destination"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Archive"].Commands["download"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Archive"].Commands["download"].Params["id"].CompleteFunc
 	}
@@ -190,8 +180,6 @@ func ArchiveFtpOpenCompleteFlags(ctx command.Context, params *params.FtpOpenArch
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Archive"].Commands["ftp-open"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Archive"].Commands["ftp-open"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -210,8 +198,6 @@ func ArchiveFtpCloseCompleteFlags(ctx command.Context, params *params.FtpCloseAr
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Archive"].Commands["ftp-close"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Archive"].Commands["ftp-close"].Params["id"].CompleteFunc
 	}

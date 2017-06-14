@@ -10,17 +10,19 @@ import (
 
 // ListDatabaseParam is input parameters for the sacloud API
 type ListDatabaseParam struct {
-	Name       []string
-	Id         []int64
-	Tags       []string
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListDatabaseParam return new ListDatabaseParam
@@ -67,6 +69,12 @@ func (p *ListDatabaseParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -151,6 +159,20 @@ func (p *ListDatabaseParam) SetSort(v []string) {
 func (p *ListDatabaseParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListDatabaseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -189,28 +211,30 @@ func (p *ListDatabaseParam) GetFormatFile() string {
 
 // CreateDatabaseParam is input parameters for the sacloud API
 type CreateDatabaseParam struct {
-	SwitchId       int64
-	Plan           int
-	Database       string
-	Username       string
-	Password       string
-	SourceNetworks []string
-	EnableWebUi    bool
-	BackupTime     string
-	Port           int
-	Ipaddress1     string
-	NwMaskLen      int
-	DefaultRoute   string
-	Name           string
-	Description    string
-	Tags           []string
-	IconId         int64
-	Assumeyes      bool
-	OutputType     string
-	Column         []string
-	Quiet          bool
-	Format         string
-	FormatFile     string
+	SwitchId          int64
+	Plan              int
+	Database          string
+	Username          string
+	Password          string
+	SourceNetworks    []string
+	EnableWebUi       bool
+	BackupTime        string
+	Port              int
+	Ipaddress1        string
+	NwMaskLen         int
+	DefaultRoute      string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateDatabaseParam return new CreateDatabaseParam
@@ -401,6 +425,12 @@ func (p *CreateDatabaseParam) Validate() []error {
 		}
 	}
 	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -557,6 +587,20 @@ func (p *CreateDatabaseParam) SetAssumeyes(v bool) {
 func (p *CreateDatabaseParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateDatabaseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -595,12 +639,14 @@ func (p *CreateDatabaseParam) GetFormatFile() string {
 
 // ReadDatabaseParam is input parameters for the sacloud API
 type ReadDatabaseParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadDatabaseParam return new ReadDatabaseParam
@@ -622,6 +668,12 @@ func (p *ReadDatabaseParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -664,6 +716,20 @@ func (p *ReadDatabaseParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadDatabaseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -709,22 +775,24 @@ func (p *ReadDatabaseParam) GetId() int64 {
 
 // UpdateDatabaseParam is input parameters for the sacloud API
 type UpdateDatabaseParam struct {
-	Password       string
-	Port           int
-	SourceNetworks []string
-	EnableWebUi    bool
-	BackupTime     string
-	Name           string
-	Description    string
-	Tags           []string
-	IconId         int64
-	Assumeyes      bool
-	OutputType     string
-	Column         []string
-	Quiet          bool
-	Format         string
-	FormatFile     string
-	Id             int64
+	Password          string
+	Port              int
+	SourceNetworks    []string
+	EnableWebUi       bool
+	BackupTime        string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateDatabaseParam return new UpdateDatabaseParam
@@ -802,6 +870,12 @@ func (p *UpdateDatabaseParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -914,6 +988,20 @@ func (p *UpdateDatabaseParam) SetAssumeyes(v bool) {
 func (p *UpdateDatabaseParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateDatabaseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -959,14 +1047,16 @@ func (p *UpdateDatabaseParam) GetId() int64 {
 
 // DeleteDatabaseParam is input parameters for the sacloud API
 type DeleteDatabaseParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Force      bool
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Force             bool
+	Id                int64
 }
 
 // NewDeleteDatabaseParam return new DeleteDatabaseParam
@@ -988,6 +1078,12 @@ func (p *DeleteDatabaseParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1036,6 +1132,20 @@ func (p *DeleteDatabaseParam) SetAssumeyes(v bool) {
 
 func (p *DeleteDatabaseParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *DeleteDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *DeleteDatabaseParam) SetOutputType(v string) {
 	p.OutputType = v
@@ -1089,8 +1199,10 @@ func (p *DeleteDatabaseParam) GetId() int64 {
 
 // BootDatabaseParam is input parameters for the sacloud API
 type BootDatabaseParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewBootDatabaseParam return new BootDatabaseParam
@@ -1147,6 +1259,20 @@ func (p *BootDatabaseParam) SetAssumeyes(v bool) {
 func (p *BootDatabaseParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *BootDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BootDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BootDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BootDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *BootDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1157,8 +1283,10 @@ func (p *BootDatabaseParam) GetId() int64 {
 
 // ShutdownDatabaseParam is input parameters for the sacloud API
 type ShutdownDatabaseParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewShutdownDatabaseParam return new ShutdownDatabaseParam
@@ -1215,6 +1343,20 @@ func (p *ShutdownDatabaseParam) SetAssumeyes(v bool) {
 func (p *ShutdownDatabaseParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ShutdownDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ShutdownDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1225,8 +1367,10 @@ func (p *ShutdownDatabaseParam) GetId() int64 {
 
 // ShutdownForceDatabaseParam is input parameters for the sacloud API
 type ShutdownForceDatabaseParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewShutdownForceDatabaseParam return new ShutdownForceDatabaseParam
@@ -1283,6 +1427,20 @@ func (p *ShutdownForceDatabaseParam) SetAssumeyes(v bool) {
 func (p *ShutdownForceDatabaseParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ShutdownForceDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ShutdownForceDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ShutdownForceDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1293,8 +1451,10 @@ func (p *ShutdownForceDatabaseParam) GetId() int64 {
 
 // ResetDatabaseParam is input parameters for the sacloud API
 type ResetDatabaseParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewResetDatabaseParam return new ResetDatabaseParam
@@ -1351,6 +1511,20 @@ func (p *ResetDatabaseParam) SetAssumeyes(v bool) {
 func (p *ResetDatabaseParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ResetDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ResetDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ResetDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ResetDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ResetDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1361,7 +1535,9 @@ func (p *ResetDatabaseParam) GetId() int64 {
 
 // WaitForBootDatabaseParam is input parameters for the sacloud API
 type WaitForBootDatabaseParam struct {
-	Id int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewWaitForBootDatabaseParam return new WaitForBootDatabaseParam
@@ -1411,6 +1587,20 @@ func (p *WaitForBootDatabaseParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForBootDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForBootDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForBootDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForBootDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *WaitForBootDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1421,7 +1611,9 @@ func (p *WaitForBootDatabaseParam) GetId() int64 {
 
 // WaitForDownDatabaseParam is input parameters for the sacloud API
 type WaitForDownDatabaseParam struct {
-	Id int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewWaitForDownDatabaseParam return new WaitForDownDatabaseParam
@@ -1471,6 +1663,20 @@ func (p *WaitForDownDatabaseParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForDownDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForDownDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForDownDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForDownDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *WaitForDownDatabaseParam) SetId(v int64) {
 	p.Id = v
 }

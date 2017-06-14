@@ -46,10 +46,6 @@ func SSHKeyCreateCompleteFlags(ctx command.Context, params *params.CreateSSHKeyP
 		comp = define.Resources["SSHKey"].Commands["create"].Params["name"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["SSHKey"].Commands["create"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["SSHKey"].Commands["create"].Params["assumeyes"].CompleteFunc
-	case "public-key-content":
-		comp = define.Resources["SSHKey"].Commands["create"].Params["public-key-content"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -88,8 +84,6 @@ func SSHKeyUpdateCompleteFlags(ctx command.Context, params *params.UpdateSSHKeyP
 		comp = define.Resources["SSHKey"].Commands["update"].Params["name"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["SSHKey"].Commands["update"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["SSHKey"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["SSHKey"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -108,8 +102,6 @@ func SSHKeyDeleteCompleteFlags(ctx command.Context, params *params.DeleteSSHKeyP
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["SSHKey"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["SSHKey"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -134,8 +126,6 @@ func SSHKeyGenerateCompleteFlags(ctx command.Context, params *params.GenerateSSH
 		comp = define.Resources["SSHKey"].Commands["generate"].Params["name"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["SSHKey"].Commands["generate"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["SSHKey"].Commands["generate"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

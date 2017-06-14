@@ -10,18 +10,20 @@ import (
 
 // ListStartupScriptParam is input parameters for the sacloud API
 type ListStartupScriptParam struct {
-	Name       []string
-	Id         []int64
-	Scope      string
-	Tags       []string
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	Scope             string
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListStartupScriptParam return new ListStartupScriptParam
@@ -75,6 +77,12 @@ func (p *ListStartupScriptParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -166,6 +174,20 @@ func (p *ListStartupScriptParam) SetSort(v []string) {
 func (p *ListStartupScriptParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListStartupScriptParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListStartupScriptParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListStartupScriptParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListStartupScriptParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListStartupScriptParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -204,17 +226,19 @@ func (p *ListStartupScriptParam) GetFormatFile() string {
 
 // CreateStartupScriptParam is input parameters for the sacloud API
 type CreateStartupScriptParam struct {
-	Script        string
-	ScriptContent string
-	Name          string
-	Tags          []string
-	IconId        int64
-	Assumeyes     bool
-	OutputType    string
-	Column        []string
-	Quiet         bool
-	Format        string
-	FormatFile    string
+	Script            string
+	ScriptContent     string
+	Name              string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateStartupScriptParam return new CreateStartupScriptParam
@@ -273,6 +297,12 @@ func (p *CreateStartupScriptParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -357,6 +387,20 @@ func (p *CreateStartupScriptParam) SetAssumeyes(v bool) {
 func (p *CreateStartupScriptParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateStartupScriptParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateStartupScriptParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateStartupScriptParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateStartupScriptParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateStartupScriptParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -395,12 +439,14 @@ func (p *CreateStartupScriptParam) GetFormatFile() string {
 
 // ReadStartupScriptParam is input parameters for the sacloud API
 type ReadStartupScriptParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadStartupScriptParam return new ReadStartupScriptParam
@@ -422,6 +468,12 @@ func (p *ReadStartupScriptParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -464,6 +516,20 @@ func (p *ReadStartupScriptParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadStartupScriptParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadStartupScriptParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadStartupScriptParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadStartupScriptParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadStartupScriptParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -509,18 +575,20 @@ func (p *ReadStartupScriptParam) GetId() int64 {
 
 // UpdateStartupScriptParam is input parameters for the sacloud API
 type UpdateStartupScriptParam struct {
-	Script        string
-	ScriptContent string
-	Name          string
-	Tags          []string
-	IconId        int64
-	Assumeyes     bool
-	OutputType    string
-	Column        []string
-	Quiet         bool
-	Format        string
-	FormatFile    string
-	Id            int64
+	Script            string
+	ScriptContent     string
+	Name              string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateStartupScriptParam return new UpdateStartupScriptParam
@@ -586,6 +654,12 @@ func (p *UpdateStartupScriptParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -670,6 +744,20 @@ func (p *UpdateStartupScriptParam) SetAssumeyes(v bool) {
 func (p *UpdateStartupScriptParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateStartupScriptParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateStartupScriptParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateStartupScriptParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateStartupScriptParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateStartupScriptParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -715,13 +803,15 @@ func (p *UpdateStartupScriptParam) GetId() int64 {
 
 // DeleteStartupScriptParam is input parameters for the sacloud API
 type DeleteStartupScriptParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteStartupScriptParam return new DeleteStartupScriptParam
@@ -743,6 +833,12 @@ func (p *DeleteStartupScriptParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -791,6 +887,20 @@ func (p *DeleteStartupScriptParam) SetAssumeyes(v bool) {
 
 func (p *DeleteStartupScriptParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *DeleteStartupScriptParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteStartupScriptParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteStartupScriptParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteStartupScriptParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *DeleteStartupScriptParam) SetOutputType(v string) {
 	p.OutputType = v

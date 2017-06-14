@@ -56,8 +56,6 @@ func ISOImageCreateCompleteFlags(ctx command.Context, params *params.CreateISOIm
 		comp = define.Resources["ISOImage"].Commands["create"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["ISOImage"].Commands["create"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["ISOImage"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -100,8 +98,6 @@ func ISOImageUpdateCompleteFlags(ctx command.Context, params *params.UpdateISOIm
 		comp = define.Resources["ISOImage"].Commands["update"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["ISOImage"].Commands["update"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["ISOImage"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["ISOImage"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -120,8 +116,6 @@ func ISOImageDeleteCompleteFlags(ctx command.Context, params *params.DeleteISOIm
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["ISOImage"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["ISOImage"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -142,8 +136,6 @@ func ISOImageUploadCompleteFlags(ctx command.Context, params *params.UploadISOIm
 	switch flagName {
 	case "iso-file":
 		comp = define.Resources["ISOImage"].Commands["upload"].Params["iso-file"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["ISOImage"].Commands["upload"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["ISOImage"].Commands["upload"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -164,8 +156,6 @@ func ISOImageDownloadCompleteFlags(ctx command.Context, params *params.DownloadI
 	switch flagName {
 	case "file-destination":
 		comp = define.Resources["ISOImage"].Commands["download"].Params["file-destination"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["ISOImage"].Commands["download"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["ISOImage"].Commands["download"].Params["id"].CompleteFunc
 	}
@@ -182,8 +172,6 @@ func ISOImageFtpOpenCompleteFlags(ctx command.Context, params *params.FtpOpenISO
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["ISOImage"].Commands["ftp-open"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["ISOImage"].Commands["ftp-open"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -202,8 +190,6 @@ func ISOImageFtpCloseCompleteFlags(ctx command.Context, params *params.FtpCloseI
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["ISOImage"].Commands["ftp-close"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["ISOImage"].Commands["ftp-close"].Params["id"].CompleteFunc
 	}

@@ -10,16 +10,18 @@ import (
 
 // ListZoneParam is input parameters for the sacloud API
 type ListZoneParam struct {
-	Name       []string
-	Id         []int64
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListZoneParam return new ListZoneParam
@@ -59,6 +61,12 @@ func (p *ListZoneParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -136,6 +144,20 @@ func (p *ListZoneParam) SetSort(v []string) {
 func (p *ListZoneParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListZoneParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListZoneParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListZoneParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListZoneParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListZoneParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -174,13 +196,15 @@ func (p *ListZoneParam) GetFormatFile() string {
 
 // ReadZoneParam is input parameters for the sacloud API
 type ReadZoneParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadZoneParam return new ReadZoneParam
@@ -209,6 +233,12 @@ func (p *ReadZoneParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -257,6 +287,20 @@ func (p *ReadZoneParam) SetAssumeyes(v bool) {
 
 func (p *ReadZoneParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *ReadZoneParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadZoneParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadZoneParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadZoneParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *ReadZoneParam) SetOutputType(v string) {
 	p.OutputType = v

@@ -10,16 +10,18 @@ import (
 
 // ListSSHKeyParam is input parameters for the sacloud API
 type ListSSHKeyParam struct {
-	Name       []string
-	Id         []int64
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListSSHKeyParam return new ListSSHKeyParam
@@ -59,6 +61,12 @@ func (p *ListSSHKeyParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -136,6 +144,20 @@ func (p *ListSSHKeyParam) SetSort(v []string) {
 func (p *ListSSHKeyParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListSSHKeyParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListSSHKeyParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListSSHKeyParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListSSHKeyParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListSSHKeyParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -174,16 +196,18 @@ func (p *ListSSHKeyParam) GetFormatFile() string {
 
 // CreateSSHKeyParam is input parameters for the sacloud API
 type CreateSSHKeyParam struct {
-	PublicKey        string
-	Name             string
-	Description      string
-	Assumeyes        bool
-	PublicKeyContent string
-	OutputType       string
-	Column           []string
-	Quiet            bool
-	Format           string
-	FormatFile       string
+	PublicKey         string
+	Name              string
+	Description       string
+	Assumeyes         bool
+	PublicKeyContent  string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateSSHKeyParam return new CreateSSHKeyParam
@@ -235,6 +259,12 @@ func (p *CreateSSHKeyParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -312,6 +342,20 @@ func (p *CreateSSHKeyParam) SetPublicKeyContent(v string) {
 func (p *CreateSSHKeyParam) GetPublicKeyContent() string {
 	return p.PublicKeyContent
 }
+func (p *CreateSSHKeyParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateSSHKeyParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateSSHKeyParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateSSHKeyParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateSSHKeyParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -350,12 +394,14 @@ func (p *CreateSSHKeyParam) GetFormatFile() string {
 
 // ReadSSHKeyParam is input parameters for the sacloud API
 type ReadSSHKeyParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadSSHKeyParam return new ReadSSHKeyParam
@@ -377,6 +423,12 @@ func (p *ReadSSHKeyParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -419,6 +471,20 @@ func (p *ReadSSHKeyParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadSSHKeyParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadSSHKeyParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadSSHKeyParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadSSHKeyParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadSSHKeyParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -464,15 +530,17 @@ func (p *ReadSSHKeyParam) GetId() int64 {
 
 // UpdateSSHKeyParam is input parameters for the sacloud API
 type UpdateSSHKeyParam struct {
-	Name        string
-	Description string
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	Name              string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateSSHKeyParam return new UpdateSSHKeyParam
@@ -508,6 +576,12 @@ func (p *UpdateSSHKeyParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -571,6 +645,20 @@ func (p *UpdateSSHKeyParam) SetAssumeyes(v bool) {
 func (p *UpdateSSHKeyParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateSSHKeyParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateSSHKeyParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateSSHKeyParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateSSHKeyParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateSSHKeyParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -616,13 +704,15 @@ func (p *UpdateSSHKeyParam) GetId() int64 {
 
 // DeleteSSHKeyParam is input parameters for the sacloud API
 type DeleteSSHKeyParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteSSHKeyParam return new DeleteSSHKeyParam
@@ -644,6 +734,12 @@ func (p *DeleteSSHKeyParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -693,6 +789,20 @@ func (p *DeleteSSHKeyParam) SetAssumeyes(v bool) {
 func (p *DeleteSSHKeyParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DeleteSSHKeyParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteSSHKeyParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteSSHKeyParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteSSHKeyParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DeleteSSHKeyParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -738,16 +848,18 @@ func (p *DeleteSSHKeyParam) GetId() int64 {
 
 // GenerateSSHKeyParam is input parameters for the sacloud API
 type GenerateSSHKeyParam struct {
-	PassPhrase       string
-	Name             string
-	Description      string
-	Assumeyes        bool
-	OutputType       string
-	PrivateKeyOutput string
-	Column           []string
-	Quiet            bool
-	Format           string
-	FormatFile       string
+	PassPhrase        string
+	Name              string
+	Description       string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	PrivateKeyOutput  string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewGenerateSSHKeyParam return new GenerateSSHKeyParam
@@ -790,6 +902,12 @@ func (p *GenerateSSHKeyParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -859,6 +977,20 @@ func (p *GenerateSSHKeyParam) SetAssumeyes(v bool) {
 
 func (p *GenerateSSHKeyParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *GenerateSSHKeyParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *GenerateSSHKeyParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *GenerateSSHKeyParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *GenerateSSHKeyParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *GenerateSSHKeyParam) SetOutputType(v string) {
 	p.OutputType = v

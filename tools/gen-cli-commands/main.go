@@ -128,37 +128,30 @@ func generateSource(resource *schema.Resource) (string, error) {
 	}
 
 	// hasIdRequiredType Command
-	needadditionalImport := false
 	needsyncImport := false
 	for _, comm := range resource.SortedCommands() {
-		if comm.Command.Type.IsRequiredIDType() {
-			needadditionalImport = true
-		}
 		if comm.Command.Type.IsRequiredIDType() && !comm.Command.Type.IsNeedIDOnlyType() {
 			needsyncImport = true
 		}
-
-		if needadditionalImport && needsyncImport {
+		if needsyncImport {
 			break
 		}
-
 	}
 
 	buf := bytes.NewBufferString("")
 	t := template.New("t")
 	template.Must(t.Parse(srcTemplate))
 	err := t.Execute(buf, map[string]interface{}{
-		"Name":                   ctx.DashR(),
-		"Aliases":                tools.FlattenStringList(resource.Aliases),
-		"Usage":                  usage,
-		"DefaultCommand":         resource.DefaultCommand,
-		"Commands":               commands,
-		"Parameters":             parameters,
-		"CategoryResourceMap":    categoryResourceMap,
-		"CategoryCommandMap":     categoryCommandMap,
-		"CategoryParamMap":       categoryParamMap,
-		"IsNeedAdditionalImport": needadditionalImport,
-		"IsNeedSyncImport":       needsyncImport,
+		"Name":                ctx.DashR(),
+		"Aliases":             tools.FlattenStringList(resource.Aliases),
+		"Usage":               usage,
+		"DefaultCommand":      resource.DefaultCommand,
+		"Commands":            commands,
+		"Parameters":          parameters,
+		"CategoryResourceMap": categoryResourceMap,
+		"CategoryCommandMap":  categoryCommandMap,
+		"CategoryParamMap":    categoryParamMap,
+		"IsNeedSyncImport":    needsyncImport,
 	})
 	return buf.String(), err
 }
@@ -253,33 +246,32 @@ func buildFlagsParams(params schema.SortableParams) ([]map[string]interface{}, e
 			return res, err
 		}
 
-		dest := ""
-		if !s.Type.IsSliceType() {
-			dest = fmt.Sprintf("&%s", ctx.InputParamVariableName())
-		}
-
 		usage := s.Description
 		if s.Required {
 			usage = fmt.Sprintf("[Required] %s", usage)
 		}
 
 		param := map[string]interface{}{
-			"FlagType":        ts,
-			"Name":            ctx.InputParamFlagName(),
-			"Aliases":         tools.FlattenStringList(s.Aliases),
-			"Usage":           usage,
-			"EnvVars":         tools.FlattenStringList(s.EnvVars),
-			"DefaultValue":    d,
-			"DefaultText":     s.DefaultText,
-			"DestinationName": dest,
-			"PropName":        ctx.InputParamFieldName(),
-			"Hidden":          s.Hidden,
+			"FlagType":     ts,
+			"Name":         ctx.InputParamFlagName(),
+			"Aliases":      tools.FlattenStringList(s.Aliases),
+			"Usage":        usage,
+			"EnvVars":      tools.FlattenStringList(s.EnvVars),
+			"DefaultValue": d,
+			"DefaultText":  s.DefaultText,
+			"PropName":     ctx.InputParamFieldName(),
+			"Hidden":       s.Hidden,
 		}
 		res = append(res, param)
 	}
 
 	return res, nil
 }
+
+var setDefaultTemplate = `if c.IsSet("%s") {
+	%s.%s = c.%s("%s")
+}
+`
 
 func buildActionParams(command *schema.Command) (map[string]interface{}, error) {
 
@@ -295,13 +287,13 @@ func buildActionParams(command *schema.Command) (map[string]interface{}, error) 
 
 		propName := ctx.InputParamFieldName()
 		flagName := ctx.InputParamFlagName()
-		valueFuncName, err := getSliceFlagTypeFuncString(p.Type)
+		valueFuncName, err := getFlagValueFuncString(p.Type)
 		if err != nil {
 			return res, err
 		}
 
 		if valueFuncName != "" {
-			setDefault += fmt.Sprintf("%s.%s = c.%s(\"%s\")\n", paramName, propName, valueFuncName, flagName)
+			setDefault += fmt.Sprintf(setDefaultTemplate, flagName, paramName, propName, valueFuncName, flagName)
 		}
 	}
 	action := fmt.Sprintf("%s(ctx , %s)", ctx.CommandFuncName(), paramName)
@@ -315,8 +307,11 @@ func buildActionParams(command *schema.Command) (map[string]interface{}, error) 
 		confirmMsg = fmt.Sprintf("%s", ctx.DashC())
 	}
 
+	createParamFuncName := fmt.Sprintf("params.New%s", ctx.InputModelTypeName())
+
 	res = map[string]interface{}{
 		"ParamName":             paramName,
+		"CreateParamFunc":       createParamFuncName,
 		"SkipAuth":              ctx.CurrentCommand().SkipAuth,
 		"SetDefault":            setDefault,
 		"Action":                action,
@@ -355,10 +350,18 @@ func getFlagTypeString(t schema.ValueType) (string, error) {
 	return "", fmt.Errorf("Inalid type: %v", t)
 }
 
-func getSliceFlagTypeFuncString(t schema.ValueType) (string, error) {
+func getFlagValueFuncString(t schema.ValueType) (string, error) {
 	switch t {
-	case schema.TypeBool, schema.TypeInt, schema.TypeInt64, schema.TypeFloat, schema.TypeString:
-		return "", nil
+	case schema.TypeBool:
+		return "Bool", nil
+	case schema.TypeInt:
+		return "Int", nil
+	case schema.TypeInt64:
+		return "Int64", nil
+	case schema.TypeFloat:
+		return "Float64", nil
+	case schema.TypeString:
+		return "String", nil
 	case schema.TypeIntList:
 		return "Int64Slice", nil
 	case schema.TypeStringList:
@@ -380,8 +383,10 @@ import (
     "github.com/sacloud/usacloud/command/completion"
     "github.com/sacloud/usacloud/command/params"
     "strings"
-    {{ if .IsNeedAdditionalImport }}"fmt"
-    {{ if .IsNeedSyncImport }}"sync"{{end}}{{end}}
+    "encoding/json"
+    "github.com/imdario/mergo"
+    "fmt"
+    {{ if .IsNeedSyncImport }}"sync"{{end}}
 )
 
 func init() {
@@ -425,8 +430,6 @@ func init() {
 							Value:       {{.DefaultValue}},{{ end }}
 						{{- if .DefaultText}}
 							DefaultText: "{{.DefaultText}}",{{ end }}
-					        {{- if .DestinationName}}
-					        	Destination: {{.DestinationName}}.{{.PropName}},{{ end }}
 					        {{- if .Hidden}}
 					        	Hidden: {{.Hidden}},{{ end }}
 					},
@@ -453,7 +456,7 @@ func init() {
 					// build command context
 					ctx := command.NewContext(c, realArgs, {{.ParamName}})
 					{{ if .SetDefault }}
-					// Set option values for slice
+					// Set option values
 					{{.SetDefault}}{{ end }}
 
 
@@ -518,8 +521,23 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					{{.ParamName}}.ParamTemplate = c.String("param-template")
+					{{.ParamName}}.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue({{.ParamName}})
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := {{.CreateParamFunc}}()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s",err)
+						}
+						mergo.MergeWithOverwrite({{.ParamName}}, p)
+					}
+
 					{{ if .SetDefault }}
-					// Set option values for slice
+					// Set option values
 					{{.SetDefault}}{{ end }}
 
 					// Validate global params

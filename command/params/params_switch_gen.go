@@ -10,17 +10,19 @@ import (
 
 // ListSwitchParam is input parameters for the sacloud API
 type ListSwitchParam struct {
-	Name       []string
-	Id         []int64
-	Tags       []string
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListSwitchParam return new ListSwitchParam
@@ -67,6 +69,12 @@ func (p *ListSwitchParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -151,6 +159,20 @@ func (p *ListSwitchParam) SetSort(v []string) {
 func (p *ListSwitchParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListSwitchParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -189,16 +211,18 @@ func (p *ListSwitchParam) GetFormatFile() string {
 
 // CreateSwitchParam is input parameters for the sacloud API
 type CreateSwitchParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateSwitchParam return new CreateSwitchParam
@@ -248,6 +272,12 @@ func (p *CreateSwitchParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -325,6 +355,20 @@ func (p *CreateSwitchParam) SetAssumeyes(v bool) {
 func (p *CreateSwitchParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateSwitchParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -363,12 +407,14 @@ func (p *CreateSwitchParam) GetFormatFile() string {
 
 // ReadSwitchParam is input parameters for the sacloud API
 type ReadSwitchParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadSwitchParam return new ReadSwitchParam
@@ -390,6 +436,12 @@ func (p *ReadSwitchParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -432,6 +484,20 @@ func (p *ReadSwitchParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadSwitchParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -477,17 +543,19 @@ func (p *ReadSwitchParam) GetId() int64 {
 
 // UpdateSwitchParam is input parameters for the sacloud API
 type UpdateSwitchParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateSwitchParam return new UpdateSwitchParam
@@ -537,6 +605,12 @@ func (p *UpdateSwitchParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -614,6 +688,20 @@ func (p *UpdateSwitchParam) SetAssumeyes(v bool) {
 func (p *UpdateSwitchParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateSwitchParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -659,13 +747,15 @@ func (p *UpdateSwitchParam) GetId() int64 {
 
 // DeleteSwitchParam is input parameters for the sacloud API
 type DeleteSwitchParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteSwitchParam return new DeleteSwitchParam
@@ -687,6 +777,12 @@ func (p *DeleteSwitchParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -736,6 +832,20 @@ func (p *DeleteSwitchParam) SetAssumeyes(v bool) {
 func (p *DeleteSwitchParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DeleteSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DeleteSwitchParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -781,9 +891,11 @@ func (p *DeleteSwitchParam) GetId() int64 {
 
 // BridgeConnectSwitchParam is input parameters for the sacloud API
 type BridgeConnectSwitchParam struct {
-	BridgeId  int64
-	Assumeyes bool
-	Id        int64
+	BridgeId          int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewBridgeConnectSwitchParam return new BridgeConnectSwitchParam
@@ -861,6 +973,20 @@ func (p *BridgeConnectSwitchParam) SetAssumeyes(v bool) {
 func (p *BridgeConnectSwitchParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *BridgeConnectSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BridgeConnectSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BridgeConnectSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BridgeConnectSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *BridgeConnectSwitchParam) SetId(v int64) {
 	p.Id = v
 }
@@ -871,8 +997,10 @@ func (p *BridgeConnectSwitchParam) GetId() int64 {
 
 // BridgeDisconnectSwitchParam is input parameters for the sacloud API
 type BridgeDisconnectSwitchParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewBridgeDisconnectSwitchParam return new BridgeDisconnectSwitchParam
@@ -928,6 +1056,20 @@ func (p *BridgeDisconnectSwitchParam) SetAssumeyes(v bool) {
 
 func (p *BridgeDisconnectSwitchParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *BridgeDisconnectSwitchParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BridgeDisconnectSwitchParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *BridgeDisconnectSwitchParam) SetId(v int64) {
 	p.Id = v

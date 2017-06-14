@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
-	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/schema"
 )
 
@@ -14,8 +13,6 @@ func WebAccelDeleteCacheCompleteFlags(ctx command.Context, params *params.Delete
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["WebAccel"].Commands["delete-cache"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

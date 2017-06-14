@@ -10,16 +10,18 @@ import (
 
 // ListPriceParam is input parameters for the sacloud API
 type ListPriceParam struct {
-	Name       []string
-	Id         []int64
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListPriceParam return new ListPriceParam
@@ -59,6 +61,12 @@ func (p *ListPriceParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -135,6 +143,20 @@ func (p *ListPriceParam) SetSort(v []string) {
 
 func (p *ListPriceParam) GetSort() []string {
 	return p.Sort
+}
+func (p *ListPriceParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListPriceParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListPriceParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListPriceParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *ListPriceParam) SetOutputType(v string) {
 	p.OutputType = v

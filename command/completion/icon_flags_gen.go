@@ -50,8 +50,6 @@ func IconCreateCompleteFlags(ctx command.Context, params *params.CreateIconParam
 		comp = define.Resources["Icon"].Commands["create"].Params["name"].CompleteFunc
 	case "tags":
 		comp = define.Resources["Icon"].Commands["create"].Params["tags"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Icon"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -90,8 +88,6 @@ func IconUpdateCompleteFlags(ctx command.Context, params *params.UpdateIconParam
 		comp = define.Resources["Icon"].Commands["update"].Params["name"].CompleteFunc
 	case "tags":
 		comp = define.Resources["Icon"].Commands["update"].Params["tags"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Icon"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Icon"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -110,8 +106,6 @@ func IconDeleteCompleteFlags(ctx command.Context, params *params.DeleteIconParam
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Icon"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Icon"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":

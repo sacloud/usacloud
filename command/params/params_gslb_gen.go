@@ -10,17 +10,19 @@ import (
 
 // ListGSLBParam is input parameters for the sacloud API
 type ListGSLBParam struct {
-	Name       []string
-	Id         []int64
-	Tags       []string
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListGSLBParam return new ListGSLBParam
@@ -67,6 +69,12 @@ func (p *ListGSLBParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -151,6 +159,20 @@ func (p *ListGSLBParam) SetSort(v []string) {
 func (p *ListGSLBParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListGSLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListGSLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListGSLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListGSLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -189,12 +211,14 @@ func (p *ListGSLBParam) GetFormatFile() string {
 
 // ServerInfoGSLBParam is input parameters for the sacloud API
 type ServerInfoGSLBParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewServerInfoGSLBParam return new ServerInfoGSLBParam
@@ -216,6 +240,12 @@ func (p *ServerInfoGSLBParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -258,6 +288,20 @@ func (p *ServerInfoGSLBParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ServerInfoGSLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerInfoGSLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerInfoGSLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerInfoGSLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ServerInfoGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -303,24 +347,26 @@ func (p *ServerInfoGSLBParam) GetId() int64 {
 
 // CreateGSLBParam is input parameters for the sacloud API
 type CreateGSLBParam struct {
-	Protocol     string
-	HostHeader   string
-	Path         string
-	ResponseCode int
-	Port         int
-	DelayLoop    int
-	Weighted     bool
-	SorryServer  string
-	Name         string
-	Description  string
-	Tags         []string
-	IconId       int64
-	Assumeyes    bool
-	OutputType   string
-	Column       []string
-	Quiet        bool
-	Format       string
-	FormatFile   string
+	Protocol          string
+	HostHeader        string
+	Path              string
+	ResponseCode      int
+	Port              int
+	DelayLoop         int
+	Weighted          bool
+	SorryServer       string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateGSLBParam return new CreateGSLBParam
@@ -416,6 +462,12 @@ func (p *CreateGSLBParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -549,6 +601,20 @@ func (p *CreateGSLBParam) SetAssumeyes(v bool) {
 func (p *CreateGSLBParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateGSLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateGSLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateGSLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateGSLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -587,16 +653,18 @@ func (p *CreateGSLBParam) GetFormatFile() string {
 
 // ServerAddGSLBParam is input parameters for the sacloud API
 type ServerAddGSLBParam struct {
-	Ipaddress  string
-	Enabled    bool
-	Weight     int
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Ipaddress         string
+	Enabled           bool
+	Weight            int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewServerAddGSLBParam return new ServerAddGSLBParam
@@ -635,6 +703,12 @@ func (p *ServerAddGSLBParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -705,6 +779,20 @@ func (p *ServerAddGSLBParam) SetAssumeyes(v bool) {
 func (p *ServerAddGSLBParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ServerAddGSLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerAddGSLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerAddGSLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerAddGSLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ServerAddGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -750,12 +838,14 @@ func (p *ServerAddGSLBParam) GetId() int64 {
 
 // ReadGSLBParam is input parameters for the sacloud API
 type ReadGSLBParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadGSLBParam return new ReadGSLBParam
@@ -777,6 +867,12 @@ func (p *ReadGSLBParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -819,6 +915,20 @@ func (p *ReadGSLBParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadGSLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadGSLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadGSLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadGSLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -864,17 +974,19 @@ func (p *ReadGSLBParam) GetId() int64 {
 
 // ServerUpdateGSLBParam is input parameters for the sacloud API
 type ServerUpdateGSLBParam struct {
-	Index      int
-	Ipaddress  string
-	Enabled    bool
-	Weight     int
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Index             int
+	Ipaddress         string
+	Enabled           bool
+	Weight            int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewServerUpdateGSLBParam return new ServerUpdateGSLBParam
@@ -917,6 +1029,12 @@ func (p *ServerUpdateGSLBParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -994,6 +1112,20 @@ func (p *ServerUpdateGSLBParam) SetAssumeyes(v bool) {
 func (p *ServerUpdateGSLBParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ServerUpdateGSLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerUpdateGSLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerUpdateGSLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerUpdateGSLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ServerUpdateGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1039,14 +1171,16 @@ func (p *ServerUpdateGSLBParam) GetId() int64 {
 
 // ServerDeleteGSLBParam is input parameters for the sacloud API
 type ServerDeleteGSLBParam struct {
-	Index      int
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Index             int
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewServerDeleteGSLBParam return new ServerDeleteGSLBParam
@@ -1075,6 +1209,12 @@ func (p *ServerDeleteGSLBParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1131,6 +1271,20 @@ func (p *ServerDeleteGSLBParam) SetAssumeyes(v bool) {
 func (p *ServerDeleteGSLBParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ServerDeleteGSLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerDeleteGSLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerDeleteGSLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerDeleteGSLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ServerDeleteGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1176,25 +1330,27 @@ func (p *ServerDeleteGSLBParam) GetId() int64 {
 
 // UpdateGSLBParam is input parameters for the sacloud API
 type UpdateGSLBParam struct {
-	Protocol     string
-	HostHeader   string
-	Path         string
-	ResponseCode int
-	Port         int
-	DelayLoop    int
-	Weighted     bool
-	SorryServer  string
-	Name         string
-	Description  string
-	Tags         []string
-	IconId       int64
-	Assumeyes    bool
-	OutputType   string
-	Column       []string
-	Quiet        bool
-	Format       string
-	FormatFile   string
-	Id           int64
+	Protocol          string
+	HostHeader        string
+	Path              string
+	ResponseCode      int
+	Port              int
+	DelayLoop         int
+	Weighted          bool
+	SorryServer       string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateGSLBParam return new UpdateGSLBParam
@@ -1265,6 +1421,12 @@ func (p *UpdateGSLBParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1398,6 +1560,20 @@ func (p *UpdateGSLBParam) SetAssumeyes(v bool) {
 func (p *UpdateGSLBParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateGSLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateGSLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateGSLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateGSLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateGSLBParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1443,13 +1619,15 @@ func (p *UpdateGSLBParam) GetId() int64 {
 
 // DeleteGSLBParam is input parameters for the sacloud API
 type DeleteGSLBParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteGSLBParam return new DeleteGSLBParam
@@ -1471,6 +1649,12 @@ func (p *DeleteGSLBParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1519,6 +1703,20 @@ func (p *DeleteGSLBParam) SetAssumeyes(v bool) {
 
 func (p *DeleteGSLBParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *DeleteGSLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteGSLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteGSLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteGSLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *DeleteGSLBParam) SetOutputType(v string) {
 	p.OutputType = v

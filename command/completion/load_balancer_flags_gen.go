@@ -66,8 +66,6 @@ func LoadBalancerCreateCompleteFlags(ctx command.Context, params *params.CreateL
 		comp = define.Resources["LoadBalancer"].Commands["create"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["LoadBalancer"].Commands["create"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["LoadBalancer"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -110,8 +108,6 @@ func LoadBalancerUpdateCompleteFlags(ctx command.Context, params *params.UpdateL
 		comp = define.Resources["LoadBalancer"].Commands["update"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["LoadBalancer"].Commands["update"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["LoadBalancer"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["LoadBalancer"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -132,8 +128,6 @@ func LoadBalancerDeleteCompleteFlags(ctx command.Context, params *params.DeleteL
 	switch flagName {
 	case "force", "f":
 		comp = define.Resources["LoadBalancer"].Commands["delete"].Params["force"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["LoadBalancer"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["LoadBalancer"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -152,8 +146,6 @@ func LoadBalancerBootCompleteFlags(ctx command.Context, params *params.BootLoadB
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["LoadBalancer"].Commands["boot"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["LoadBalancer"].Commands["boot"].Params["id"].CompleteFunc
 	}
@@ -170,8 +162,6 @@ func LoadBalancerShutdownCompleteFlags(ctx command.Context, params *params.Shutd
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["LoadBalancer"].Commands["shutdown"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["LoadBalancer"].Commands["shutdown"].Params["id"].CompleteFunc
 	}
@@ -188,8 +178,6 @@ func LoadBalancerShutdownForceCompleteFlags(ctx command.Context, params *params.
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["LoadBalancer"].Commands["shutdown-force"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["LoadBalancer"].Commands["shutdown-force"].Params["id"].CompleteFunc
 	}
@@ -206,8 +194,6 @@ func LoadBalancerResetCompleteFlags(ctx command.Context, params *params.ResetLoa
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["LoadBalancer"].Commands["reset"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["LoadBalancer"].Commands["reset"].Params["id"].CompleteFunc
 	}
@@ -282,8 +268,6 @@ func LoadBalancerVipAddCompleteFlags(ctx command.Context, params *params.VipAddL
 		comp = define.Resources["LoadBalancer"].Commands["vip-add"].Params["delay-loop"].CompleteFunc
 	case "sorry-server":
 		comp = define.Resources["LoadBalancer"].Commands["vip-add"].Params["sorry-server"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["LoadBalancer"].Commands["vip-add"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["LoadBalancer"].Commands["vip-add"].Params["id"].CompleteFunc
 	}
@@ -310,8 +294,6 @@ func LoadBalancerVipUpdateCompleteFlags(ctx command.Context, params *params.VipU
 		comp = define.Resources["LoadBalancer"].Commands["vip-update"].Params["delay-loop"].CompleteFunc
 	case "sorry-server":
 		comp = define.Resources["LoadBalancer"].Commands["vip-update"].Params["sorry-server"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["LoadBalancer"].Commands["vip-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["LoadBalancer"].Commands["vip-update"].Params["id"].CompleteFunc
 	}
@@ -330,8 +312,6 @@ func LoadBalancerVipDeleteCompleteFlags(ctx command.Context, params *params.VipD
 	switch flagName {
 	case "index":
 		comp = define.Resources["LoadBalancer"].Commands["vip-delete"].Params["index"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["LoadBalancer"].Commands["vip-delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["LoadBalancer"].Commands["vip-delete"].Params["id"].CompleteFunc
 	}
@@ -388,8 +368,6 @@ func LoadBalancerServerAddCompleteFlags(ctx command.Context, params *params.Serv
 		comp = define.Resources["LoadBalancer"].Commands["server-add"].Params["response-code"].CompleteFunc
 	case "enabled":
 		comp = define.Resources["LoadBalancer"].Commands["server-add"].Params["enabled"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["LoadBalancer"].Commands["server-add"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["LoadBalancer"].Commands["server-add"].Params["id"].CompleteFunc
 	}
@@ -422,8 +400,6 @@ func LoadBalancerServerUpdateCompleteFlags(ctx command.Context, params *params.S
 		comp = define.Resources["LoadBalancer"].Commands["server-update"].Params["response-code"].CompleteFunc
 	case "enabled":
 		comp = define.Resources["LoadBalancer"].Commands["server-update"].Params["enabled"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["LoadBalancer"].Commands["server-update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["LoadBalancer"].Commands["server-update"].Params["id"].CompleteFunc
 	}
@@ -448,8 +424,6 @@ func LoadBalancerServerDeleteCompleteFlags(ctx command.Context, params *params.S
 		comp = define.Resources["LoadBalancer"].Commands["server-delete"].Params["port"].CompleteFunc
 	case "ipaddress", "ip":
 		comp = define.Resources["LoadBalancer"].Commands["server-delete"].Params["ipaddress"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["LoadBalancer"].Commands["server-delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["LoadBalancer"].Commands["server-delete"].Params["id"].CompleteFunc
 	}

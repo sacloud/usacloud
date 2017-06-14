@@ -10,16 +10,18 @@ import (
 
 // ListLicenseParam is input parameters for the sacloud API
 type ListLicenseParam struct {
-	Name       []string
-	Id         []int64
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListLicenseParam return new ListLicenseParam
@@ -59,6 +61,12 @@ func (p *ListLicenseParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -136,6 +144,20 @@ func (p *ListLicenseParam) SetSort(v []string) {
 func (p *ListLicenseParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListLicenseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListLicenseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListLicenseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListLicenseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListLicenseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -174,14 +196,16 @@ func (p *ListLicenseParam) GetFormatFile() string {
 
 // CreateLicenseParam is input parameters for the sacloud API
 type CreateLicenseParam struct {
-	LicenseInfoId int64
-	Name          string
-	Assumeyes     bool
-	OutputType    string
-	Column        []string
-	Quiet         bool
-	Format        string
-	FormatFile    string
+	LicenseInfoId     int64
+	Name              string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateLicenseParam return new CreateLicenseParam
@@ -210,6 +234,12 @@ func (p *CreateLicenseParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -273,6 +303,20 @@ func (p *CreateLicenseParam) SetAssumeyes(v bool) {
 func (p *CreateLicenseParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateLicenseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateLicenseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateLicenseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateLicenseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateLicenseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -311,12 +355,14 @@ func (p *CreateLicenseParam) GetFormatFile() string {
 
 // ReadLicenseParam is input parameters for the sacloud API
 type ReadLicenseParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadLicenseParam return new ReadLicenseParam
@@ -338,6 +384,12 @@ func (p *ReadLicenseParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -380,6 +432,20 @@ func (p *ReadLicenseParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadLicenseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadLicenseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadLicenseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadLicenseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadLicenseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -425,14 +491,16 @@ func (p *ReadLicenseParam) GetId() int64 {
 
 // UpdateLicenseParam is input parameters for the sacloud API
 type UpdateLicenseParam struct {
-	Name       string
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Name              string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateLicenseParam return new UpdateLicenseParam
@@ -461,6 +529,12 @@ func (p *UpdateLicenseParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -517,6 +591,20 @@ func (p *UpdateLicenseParam) SetAssumeyes(v bool) {
 func (p *UpdateLicenseParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateLicenseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateLicenseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateLicenseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateLicenseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateLicenseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -562,13 +650,15 @@ func (p *UpdateLicenseParam) GetId() int64 {
 
 // DeleteLicenseParam is input parameters for the sacloud API
 type DeleteLicenseParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteLicenseParam return new DeleteLicenseParam
@@ -590,6 +680,12 @@ func (p *DeleteLicenseParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -638,6 +734,20 @@ func (p *DeleteLicenseParam) SetAssumeyes(v bool) {
 
 func (p *DeleteLicenseParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *DeleteLicenseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteLicenseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteLicenseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteLicenseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *DeleteLicenseParam) SetOutputType(v string) {
 	p.OutputType = v

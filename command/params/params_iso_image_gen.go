@@ -10,18 +10,20 @@ import (
 
 // ListISOImageParam is input parameters for the sacloud API
 type ListISOImageParam struct {
-	Name       []string
-	Id         []int64
-	Scope      string
-	Tags       []string
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name              []string
+	Id                []int64
+	Scope             string
+	Tags              []string
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListISOImageParam return new ListISOImageParam
@@ -75,6 +77,12 @@ func (p *ListISOImageParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -166,6 +174,20 @@ func (p *ListISOImageParam) SetSort(v []string) {
 func (p *ListISOImageParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -204,18 +226,20 @@ func (p *ListISOImageParam) GetFormatFile() string {
 
 // CreateISOImageParam is input parameters for the sacloud API
 type CreateISOImageParam struct {
-	Size        int
-	IsoFile     string
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
+	Size              int
+	IsoFile           string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateISOImageParam return new CreateISOImageParam
@@ -296,6 +320,12 @@ func (p *CreateISOImageParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -387,6 +417,20 @@ func (p *CreateISOImageParam) SetAssumeyes(v bool) {
 func (p *CreateISOImageParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -425,12 +469,14 @@ func (p *CreateISOImageParam) GetFormatFile() string {
 
 // ReadISOImageParam is input parameters for the sacloud API
 type ReadISOImageParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadISOImageParam return new ReadISOImageParam
@@ -452,6 +498,12 @@ func (p *ReadISOImageParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -494,6 +546,20 @@ func (p *ReadISOImageParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -539,17 +605,19 @@ func (p *ReadISOImageParam) GetId() int64 {
 
 // UpdateISOImageParam is input parameters for the sacloud API
 type UpdateISOImageParam struct {
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateISOImageParam return new UpdateISOImageParam
@@ -599,6 +667,12 @@ func (p *UpdateISOImageParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -676,6 +750,20 @@ func (p *UpdateISOImageParam) SetAssumeyes(v bool) {
 func (p *UpdateISOImageParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -721,13 +809,15 @@ func (p *UpdateISOImageParam) GetId() int64 {
 
 // DeleteISOImageParam is input parameters for the sacloud API
 type DeleteISOImageParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteISOImageParam return new DeleteISOImageParam
@@ -749,6 +839,12 @@ func (p *DeleteISOImageParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -798,6 +894,20 @@ func (p *DeleteISOImageParam) SetAssumeyes(v bool) {
 func (p *DeleteISOImageParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DeleteISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DeleteISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -843,14 +953,16 @@ func (p *DeleteISOImageParam) GetId() int64 {
 
 // UploadISOImageParam is input parameters for the sacloud API
 type UploadISOImageParam struct {
-	IsoFile    string
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	IsoFile           string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUploadISOImageParam return new UploadISOImageParam
@@ -886,6 +998,12 @@ func (p *UploadISOImageParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -942,6 +1060,20 @@ func (p *UploadISOImageParam) SetAssumeyes(v bool) {
 func (p *UploadISOImageParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UploadISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UploadISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UploadISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UploadISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UploadISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -987,9 +1119,11 @@ func (p *UploadISOImageParam) GetId() int64 {
 
 // DownloadISOImageParam is input parameters for the sacloud API
 type DownloadISOImageParam struct {
-	FileDestination string
-	Assumeyes       bool
-	Id              int64
+	FileDestination   string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewDownloadISOImageParam return new DownloadISOImageParam
@@ -1060,6 +1194,20 @@ func (p *DownloadISOImageParam) SetAssumeyes(v bool) {
 func (p *DownloadISOImageParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *DownloadISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DownloadISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DownloadISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DownloadISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *DownloadISOImageParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1070,13 +1218,15 @@ func (p *DownloadISOImageParam) GetId() int64 {
 
 // FtpOpenISOImageParam is input parameters for the sacloud API
 type FtpOpenISOImageParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewFtpOpenISOImageParam return new FtpOpenISOImageParam
@@ -1098,6 +1248,12 @@ func (p *FtpOpenISOImageParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1147,6 +1303,20 @@ func (p *FtpOpenISOImageParam) SetAssumeyes(v bool) {
 func (p *FtpOpenISOImageParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *FtpOpenISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FtpOpenISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FtpOpenISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FtpOpenISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *FtpOpenISOImageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1192,8 +1362,10 @@ func (p *FtpOpenISOImageParam) GetId() int64 {
 
 // FtpCloseISOImageParam is input parameters for the sacloud API
 type FtpCloseISOImageParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewFtpCloseISOImageParam return new FtpCloseISOImageParam
@@ -1249,6 +1421,20 @@ func (p *FtpCloseISOImageParam) SetAssumeyes(v bool) {
 
 func (p *FtpCloseISOImageParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *FtpCloseISOImageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *FtpCloseISOImageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *FtpCloseISOImageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *FtpCloseISOImageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *FtpCloseISOImageParam) SetId(v int64) {
 	p.Id = v

@@ -10,20 +10,22 @@ import (
 
 // ListDiskParam is input parameters for the sacloud API
 type ListDiskParam struct {
-	Name            []string
-	Id              []int64
-	Scope           string
-	Tags            []string
-	SourceArchiveId int64
-	SourceDiskId    int64
-	From            int
-	Max             int
-	Sort            []string
-	OutputType      string
-	Column          []string
-	Quiet           bool
-	Format          string
-	FormatFile      string
+	Name              []string
+	Id                []int64
+	Scope             string
+	Tags              []string
+	SourceArchiveId   int64
+	SourceDiskId      int64
+	From              int
+	Max               int
+	Sort              []string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListDiskParam return new ListDiskParam
@@ -91,6 +93,12 @@ func (p *ListDiskParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -196,6 +204,20 @@ func (p *ListDiskParam) SetSort(v []string) {
 func (p *ListDiskParam) GetSort() []string {
 	return p.Sort
 }
+func (p *ListDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -234,22 +256,24 @@ func (p *ListDiskParam) GetFormatFile() string {
 
 // CreateDiskParam is input parameters for the sacloud API
 type CreateDiskParam struct {
-	Plan            string
-	Connection      string
-	SourceArchiveId int64
-	SourceDiskId    int64
-	Size            int
-	DistantFrom     []int64
-	Name            string
-	Description     string
-	Tags            []string
-	IconId          int64
-	Assumeyes       bool
-	OutputType      string
-	Column          []string
-	Quiet           bool
-	Format          string
-	FormatFile      string
+	Plan              string
+	Connection        string
+	SourceArchiveId   int64
+	SourceDiskId      int64
+	Size              int
+	DistantFrom       []int64
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewCreateDiskParam return new CreateDiskParam
@@ -392,6 +416,12 @@ func (p *CreateDiskParam) Validate() []error {
 		}
 	}
 	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -506,6 +536,20 @@ func (p *CreateDiskParam) SetAssumeyes(v bool) {
 func (p *CreateDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *CreateDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CreateDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CreateDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CreateDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *CreateDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -544,12 +588,14 @@ func (p *CreateDiskParam) GetFormatFile() string {
 
 // ReadDiskParam is input parameters for the sacloud API
 type ReadDiskParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewReadDiskParam return new ReadDiskParam
@@ -571,6 +617,12 @@ func (p *ReadDiskParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -613,6 +665,20 @@ func (p *ReadDiskParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReadDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReadDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReadDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReadDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -658,18 +724,20 @@ func (p *ReadDiskParam) GetId() int64 {
 
 // UpdateDiskParam is input parameters for the sacloud API
 type UpdateDiskParam struct {
-	Connection  string
-	Name        string
-	Description string
-	Tags        []string
-	IconId      int64
-	Assumeyes   bool
-	OutputType  string
-	Column      []string
-	Quiet       bool
-	Format      string
-	FormatFile  string
-	Id          int64
+	Connection        string
+	Name              string
+	Description       string
+	Tags              []string
+	IconId            int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewUpdateDiskParam return new UpdateDiskParam
@@ -726,6 +794,12 @@ func (p *UpdateDiskParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -810,6 +884,20 @@ func (p *UpdateDiskParam) SetAssumeyes(v bool) {
 func (p *UpdateDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *UpdateDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *UpdateDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *UpdateDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *UpdateDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *UpdateDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -855,13 +943,15 @@ func (p *UpdateDiskParam) GetId() int64 {
 
 // DeleteDiskParam is input parameters for the sacloud API
 type DeleteDiskParam struct {
-	Assumeyes  bool
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	Id         int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	Id                int64
 }
 
 // NewDeleteDiskParam return new DeleteDiskParam
@@ -883,6 +973,12 @@ func (p *DeleteDiskParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -931,6 +1027,20 @@ func (p *DeleteDiskParam) SetAssumeyes(v bool) {
 
 func (p *DeleteDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *DeleteDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }
 func (p *DeleteDiskParam) SetOutputType(v string) {
 	p.OutputType = v
@@ -986,6 +1096,8 @@ type EditDiskParam struct {
 	NwMasklen           int
 	StartupScriptIds    []int64
 	Assumeyes           bool
+	ParamTemplate       string
+	ParamTemplateFile   string
 	OutputType          string
 	Column              []string
 	Quiet               bool
@@ -1037,6 +1149,12 @@ func (p *EditDiskParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1142,6 +1260,20 @@ func (p *EditDiskParam) SetAssumeyes(v bool) {
 func (p *EditDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *EditDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *EditDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *EditDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *EditDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *EditDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1187,10 +1319,12 @@ func (p *EditDiskParam) GetId() int64 {
 
 // ReinstallFromArchiveDiskParam is input parameters for the sacloud API
 type ReinstallFromArchiveDiskParam struct {
-	SourceArchiveId int64
-	DistantFrom     []int64
-	Assumeyes       bool
-	Id              int64
+	SourceArchiveId   int64
+	DistantFrom       []int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewReinstallFromArchiveDiskParam return new ReinstallFromArchiveDiskParam
@@ -1282,6 +1416,20 @@ func (p *ReinstallFromArchiveDiskParam) SetAssumeyes(v bool) {
 func (p *ReinstallFromArchiveDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ReinstallFromArchiveDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReinstallFromArchiveDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReinstallFromArchiveDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1292,10 +1440,12 @@ func (p *ReinstallFromArchiveDiskParam) GetId() int64 {
 
 // ReinstallFromDiskDiskParam is input parameters for the sacloud API
 type ReinstallFromDiskDiskParam struct {
-	SourceDiskId int64
-	DistantFrom  []int64
-	Assumeyes    bool
-	Id           int64
+	SourceDiskId      int64
+	DistantFrom       []int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewReinstallFromDiskDiskParam return new ReinstallFromDiskDiskParam
@@ -1387,6 +1537,20 @@ func (p *ReinstallFromDiskDiskParam) SetAssumeyes(v bool) {
 func (p *ReinstallFromDiskDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ReinstallFromDiskDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReinstallFromDiskDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReinstallFromDiskDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1397,9 +1561,11 @@ func (p *ReinstallFromDiskDiskParam) GetId() int64 {
 
 // ReinstallToBlankDiskParam is input parameters for the sacloud API
 type ReinstallToBlankDiskParam struct {
-	DistantFrom []int64
-	Assumeyes   bool
-	Id          int64
+	DistantFrom       []int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewReinstallToBlankDiskParam return new ReinstallToBlankDiskParam
@@ -1470,6 +1636,20 @@ func (p *ReinstallToBlankDiskParam) SetAssumeyes(v bool) {
 func (p *ReinstallToBlankDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ReinstallToBlankDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ReinstallToBlankDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ReinstallToBlankDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1480,9 +1660,11 @@ func (p *ReinstallToBlankDiskParam) GetId() int64 {
 
 // ServerConnectDiskParam is input parameters for the sacloud API
 type ServerConnectDiskParam struct {
-	ServerId  int64
-	Assumeyes bool
-	Id        int64
+	ServerId          int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewServerConnectDiskParam return new ServerConnectDiskParam
@@ -1560,6 +1742,20 @@ func (p *ServerConnectDiskParam) SetAssumeyes(v bool) {
 func (p *ServerConnectDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ServerConnectDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerConnectDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerConnectDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerConnectDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ServerConnectDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1570,8 +1766,10 @@ func (p *ServerConnectDiskParam) GetId() int64 {
 
 // ServerDisconnectDiskParam is input parameters for the sacloud API
 type ServerDisconnectDiskParam struct {
-	Assumeyes bool
-	Id        int64
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewServerDisconnectDiskParam return new ServerDisconnectDiskParam
@@ -1628,6 +1826,20 @@ func (p *ServerDisconnectDiskParam) SetAssumeyes(v bool) {
 func (p *ServerDisconnectDiskParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *ServerDisconnectDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ServerDisconnectDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ServerDisconnectDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ServerDisconnectDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ServerDisconnectDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1638,15 +1850,17 @@ func (p *ServerDisconnectDiskParam) GetId() int64 {
 
 // MonitorDiskParam is input parameters for the sacloud API
 type MonitorDiskParam struct {
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
-	End        string
-	Id         int64
-	KeyFormat  string
-	Start      string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+	End               string
+	Id                int64
+	KeyFormat         string
+	Start             string
 }
 
 // NewMonitorDiskParam return new MonitorDiskParam
@@ -1697,6 +1911,12 @@ func (p *MonitorDiskParam) Validate() []error {
 		}
 	}
 	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
 		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1734,6 +1954,20 @@ func (p *MonitorDiskParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *MonitorDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *MonitorDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1800,7 +2034,9 @@ func (p *MonitorDiskParam) GetStart() string {
 
 // WaitForCopyDiskParam is input parameters for the sacloud API
 type WaitForCopyDiskParam struct {
-	Id int64
+	ParamTemplate     string
+	ParamTemplateFile string
+	Id                int64
 }
 
 // NewWaitForCopyDiskParam return new WaitForCopyDiskParam
@@ -1850,6 +2086,20 @@ func (p *WaitForCopyDiskParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForCopyDiskParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *WaitForCopyDiskParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *WaitForCopyDiskParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *WaitForCopyDiskParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *WaitForCopyDiskParam) SetId(v int64) {
 	p.Id = v
 }

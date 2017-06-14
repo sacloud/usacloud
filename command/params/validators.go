@@ -36,3 +36,7 @@ func validateBetween(fieldName string, object interface{}, min int, max int) []e
 func validateOutputOption(o output.Option) []error {
 	return command.ValidateOutputOption(o)
 }
+
+func validateInputOption(o command.InputOption) []error {
+	return command.ValidateInputOption(o)
+}

@@ -10,14 +10,16 @@ import (
 
 // ListObjectStorageParam is input parameters for the sacloud API
 type ListObjectStorageParam struct {
-	AccessKey  string
-	SecretKey  string
-	Bucket     string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	AccessKey         string
+	SecretKey         string
+	Bucket            string
+	ParamTemplate     string
+	ParamTemplateFile string
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
 }
 
 // NewListObjectStorageParam return new ListObjectStorageParam
@@ -46,6 +48,12 @@ func (p *ListObjectStorageParam) Validate() []error {
 	{
 		validator := schema.ValidateInStrValues("json", "csv", "tsv")
 		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -109,6 +117,20 @@ func (p *ListObjectStorageParam) SetBucket(v string) {
 func (p *ListObjectStorageParam) GetBucket() string {
 	return p.Bucket
 }
+func (p *ListObjectStorageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ListObjectStorageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ListObjectStorageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ListObjectStorageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 func (p *ListObjectStorageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -147,12 +169,14 @@ func (p *ListObjectStorageParam) GetFormatFile() string {
 
 // PutObjectStorageParam is input parameters for the sacloud API
 type PutObjectStorageParam struct {
-	AccessKey   string
-	ContentType string
-	Recursive   bool
-	SecretKey   string
-	Bucket      string
-	Assumeyes   bool
+	AccessKey         string
+	ContentType       string
+	Recursive         bool
+	SecretKey         string
+	Bucket            string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
 }
 
 // NewPutObjectStorageParam return new PutObjectStorageParam
@@ -254,13 +278,29 @@ func (p *PutObjectStorageParam) SetAssumeyes(v bool) {
 func (p *PutObjectStorageParam) GetAssumeyes() bool {
 	return p.Assumeyes
 }
+func (p *PutObjectStorageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PutObjectStorageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PutObjectStorageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PutObjectStorageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 
 // GetObjectStorageParam is input parameters for the sacloud API
 type GetObjectStorageParam struct {
-	AccessKey string
-	Recursive bool
-	SecretKey string
-	Bucket    string
+	AccessKey         string
+	Recursive         bool
+	SecretKey         string
+	Bucket            string
+	ParamTemplate     string
+	ParamTemplateFile string
 }
 
 // NewGetObjectStorageParam return new GetObjectStorageParam
@@ -345,14 +385,30 @@ func (p *GetObjectStorageParam) SetBucket(v string) {
 func (p *GetObjectStorageParam) GetBucket() string {
 	return p.Bucket
 }
+func (p *GetObjectStorageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *GetObjectStorageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *GetObjectStorageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *GetObjectStorageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
 
 // DeleteObjectStorageParam is input parameters for the sacloud API
 type DeleteObjectStorageParam struct {
-	AccessKey string
-	Recursive bool
-	SecretKey string
-	Bucket    string
-	Assumeyes bool
+	AccessKey         string
+	Recursive         bool
+	SecretKey         string
+	Bucket            string
+	Assumeyes         bool
+	ParamTemplate     string
+	ParamTemplateFile string
 }
 
 // NewDeleteObjectStorageParam return new DeleteObjectStorageParam
@@ -443,4 +499,18 @@ func (p *DeleteObjectStorageParam) SetAssumeyes(v bool) {
 
 func (p *DeleteObjectStorageParam) GetAssumeyes() bool {
 	return p.Assumeyes
+}
+func (p *DeleteObjectStorageParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DeleteObjectStorageParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DeleteObjectStorageParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DeleteObjectStorageParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
 }

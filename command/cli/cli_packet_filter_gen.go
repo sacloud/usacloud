@@ -3,7 +3,9 @@
 package cli
 
 import (
+	"encoding/json"
 	"fmt"
+	"github.com/imdario/mergo"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
 	"github.com/sacloud/usacloud/command/funcs"
@@ -45,26 +47,31 @@ func init() {
 						Usage: "set filter by id(s)",
 					},
 					&cli.IntFlag{
-						Name:        "from",
-						Aliases:     []string{"offset"},
-						Usage:       "set offset",
-						Destination: &listParam.From,
+						Name:    "from",
+						Aliases: []string{"offset"},
+						Usage:   "set offset",
 					},
 					&cli.IntFlag{
-						Name:        "max",
-						Aliases:     []string{"limit"},
-						Usage:       "set limit",
-						Destination: &listParam.Max,
+						Name:    "max",
+						Aliases: []string{"limit"},
+						Usage:   "set limit",
 					},
 					&cli.StringSliceFlag{
 						Name:  "sort",
 						Usage: "set field(s) for sort",
 					},
 					&cli.StringFlag{
-						Name:        "output-type",
-						Aliases:     []string{"out"},
-						Usage:       "Output type [json/csv/tsv]",
-						Destination: &listParam.OutputType,
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -72,21 +79,18 @@ func init() {
 						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
 					},
 					&cli.BoolFlag{
-						Name:        "quiet",
-						Aliases:     []string{"q"},
-						Usage:       "Only display IDs",
-						Destination: &listParam.Quiet,
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
 					},
 					&cli.StringFlag{
-						Name:        "format",
-						Aliases:     []string{"fmt"},
-						Usage:       "Output format(see text/template package document for detail)",
-						Destination: &listParam.Format,
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
 					},
 					&cli.StringFlag{
-						Name:        "format-file",
-						Usage:       "Output format from file(see text/template package document for detail)",
-						Destination: &listParam.FormatFile,
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -110,11 +114,43 @@ func init() {
 					// build command context
 					ctx := command.NewContext(c, realArgs, listParam)
 
-					// Set option values for slice
-					listParam.Name = c.StringSlice("name")
-					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
-					listParam.Column = c.StringSlice("column")
+					// Set option values
+					if c.IsSet("name") {
+						listParam.Name = c.StringSlice("name")
+					}
+					if c.IsSet("id") {
+						listParam.Id = c.Int64Slice("id")
+					}
+					if c.IsSet("from") {
+						listParam.From = c.Int("from")
+					}
+					if c.IsSet("max") {
+						listParam.Max = c.Int("max")
+					}
+					if c.IsSet("sort") {
+						listParam.Sort = c.StringSlice("sort")
+					}
+					if c.IsSet("param-template") {
+						listParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						listParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						listParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						listParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						listParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						listParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						listParam.FormatFile = c.String("format-file")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -177,11 +213,58 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					// Set option values for slice
-					listParam.Name = c.StringSlice("name")
-					listParam.Id = c.Int64Slice("id")
-					listParam.Sort = c.StringSlice("sort")
-					listParam.Column = c.StringSlice("column")
+					listParam.ParamTemplate = c.String("param-template")
+					listParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(listParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewListPacketFilterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(listParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("name") {
+						listParam.Name = c.StringSlice("name")
+					}
+					if c.IsSet("id") {
+						listParam.Id = c.Int64Slice("id")
+					}
+					if c.IsSet("from") {
+						listParam.From = c.Int("from")
+					}
+					if c.IsSet("max") {
+						listParam.Max = c.Int("max")
+					}
+					if c.IsSet("sort") {
+						listParam.Sort = c.StringSlice("sort")
+					}
+					if c.IsSet("param-template") {
+						listParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						listParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						listParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						listParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						listParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						listParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						listParam.FormatFile = c.String("format-file")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -206,27 +289,31 @@ func init() {
 				Usage: "Create PacketFilter",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "[Required] set resource display name",
-						Destination: &createParam.Name,
+						Name:  "name",
+						Usage: "[Required] set resource display name",
 					},
 					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &createParam.Description,
+						Name:    "description",
+						Aliases: []string{"desc"},
+						Usage:   "set resource description",
 					},
 					&cli.BoolFlag{
-						Name:        "assumeyes",
-						Aliases:     []string{"y"},
-						Usage:       "assume that the answer to any question which would be asked is yes",
-						Destination: &createParam.Assumeyes,
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
 					},
 					&cli.StringFlag{
-						Name:        "output-type",
-						Aliases:     []string{"out"},
-						Usage:       "Output type [json/csv/tsv]",
-						Destination: &createParam.OutputType,
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -234,21 +321,18 @@ func init() {
 						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
 					},
 					&cli.BoolFlag{
-						Name:        "quiet",
-						Aliases:     []string{"q"},
-						Usage:       "Only display IDs",
-						Destination: &createParam.Quiet,
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
 					},
 					&cli.StringFlag{
-						Name:        "format",
-						Aliases:     []string{"fmt"},
-						Usage:       "Output format(see text/template package document for detail)",
-						Destination: &createParam.Format,
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
 					},
 					&cli.StringFlag{
-						Name:        "format-file",
-						Usage:       "Output format from file(see text/template package document for detail)",
-						Destination: &createParam.FormatFile,
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -272,8 +356,37 @@ func init() {
 					// build command context
 					ctx := command.NewContext(c, realArgs, createParam)
 
-					// Set option values for slice
-					createParam.Column = c.StringSlice("column")
+					// Set option values
+					if c.IsSet("name") {
+						createParam.Name = c.String("name")
+					}
+					if c.IsSet("description") {
+						createParam.Description = c.String("description")
+					}
+					if c.IsSet("assumeyes") {
+						createParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						createParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						createParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						createParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						createParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						createParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						createParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						createParam.FormatFile = c.String("format-file")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -336,8 +449,52 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					// Set option values for slice
-					createParam.Column = c.StringSlice("column")
+					createParam.ParamTemplate = c.String("param-template")
+					createParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(createParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewCreatePacketFilterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(createParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("name") {
+						createParam.Name = c.String("name")
+					}
+					if c.IsSet("description") {
+						createParam.Description = c.String("description")
+					}
+					if c.IsSet("assumeyes") {
+						createParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						createParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						createParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						createParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						createParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						createParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						createParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						createParam.FormatFile = c.String("format-file")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -368,10 +525,17 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "output-type",
-						Aliases:     []string{"out"},
-						Usage:       "Output type [json/csv/tsv]",
-						Destination: &readParam.OutputType,
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -379,27 +543,23 @@ func init() {
 						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
 					},
 					&cli.BoolFlag{
-						Name:        "quiet",
-						Aliases:     []string{"q"},
-						Usage:       "Only display IDs",
-						Destination: &readParam.Quiet,
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
 					},
 					&cli.StringFlag{
-						Name:        "format",
-						Aliases:     []string{"fmt"},
-						Usage:       "Output format(see text/template package document for detail)",
-						Destination: &readParam.Format,
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
 					},
 					&cli.StringFlag{
-						Name:        "format-file",
-						Usage:       "Output format from file(see text/template package document for detail)",
-						Destination: &readParam.FormatFile,
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
 					},
 					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "set target ID",
-						Destination: &readParam.Id,
-						Hidden:      true,
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -423,8 +583,31 @@ func init() {
 					// build command context
 					ctx := command.NewContext(c, realArgs, readParam)
 
-					// Set option values for slice
-					readParam.Column = c.StringSlice("column")
+					// Set option values
+					if c.IsSet("param-template") {
+						readParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						readParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						readParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						readParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						readParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						readParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						readParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						readParam.Id = c.Int64("id")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -487,8 +670,46 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					// Set option values for slice
-					readParam.Column = c.StringSlice("column")
+					readParam.ParamTemplate = c.String("param-template")
+					readParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(readParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewReadPacketFilterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(readParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("param-template") {
+						readParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						readParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						readParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						readParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						readParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						readParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						readParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						readParam.Id = c.Int64("id")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -567,27 +788,31 @@ func init() {
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "name",
-						Usage:       "set resource display name",
-						Destination: &updateParam.Name,
+						Name:  "name",
+						Usage: "set resource display name",
 					},
 					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &updateParam.Description,
+						Name:    "description",
+						Aliases: []string{"desc"},
+						Usage:   "set resource description",
 					},
 					&cli.BoolFlag{
-						Name:        "assumeyes",
-						Aliases:     []string{"y"},
-						Usage:       "assume that the answer to any question which would be asked is yes",
-						Destination: &updateParam.Assumeyes,
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
 					},
 					&cli.StringFlag{
-						Name:        "output-type",
-						Aliases:     []string{"out"},
-						Usage:       "Output type [json/csv/tsv]",
-						Destination: &updateParam.OutputType,
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -595,27 +820,23 @@ func init() {
 						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
 					},
 					&cli.BoolFlag{
-						Name:        "quiet",
-						Aliases:     []string{"q"},
-						Usage:       "Only display IDs",
-						Destination: &updateParam.Quiet,
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
 					},
 					&cli.StringFlag{
-						Name:        "format",
-						Aliases:     []string{"fmt"},
-						Usage:       "Output format(see text/template package document for detail)",
-						Destination: &updateParam.Format,
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
 					},
 					&cli.StringFlag{
-						Name:        "format-file",
-						Usage:       "Output format from file(see text/template package document for detail)",
-						Destination: &updateParam.FormatFile,
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
 					},
 					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "set target ID",
-						Destination: &updateParam.Id,
-						Hidden:      true,
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -639,8 +860,40 @@ func init() {
 					// build command context
 					ctx := command.NewContext(c, realArgs, updateParam)
 
-					// Set option values for slice
-					updateParam.Column = c.StringSlice("column")
+					// Set option values
+					if c.IsSet("name") {
+						updateParam.Name = c.String("name")
+					}
+					if c.IsSet("description") {
+						updateParam.Description = c.String("description")
+					}
+					if c.IsSet("assumeyes") {
+						updateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						updateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						updateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						updateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						updateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						updateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						updateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						updateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						updateParam.Id = c.Int64("id")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -703,8 +956,55 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					// Set option values for slice
-					updateParam.Column = c.StringSlice("column")
+					updateParam.ParamTemplate = c.String("param-template")
+					updateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(updateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewUpdatePacketFilterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(updateParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("name") {
+						updateParam.Name = c.String("name")
+					}
+					if c.IsSet("description") {
+						updateParam.Description = c.String("description")
+					}
+					if c.IsSet("assumeyes") {
+						updateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						updateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						updateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						updateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						updateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						updateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						updateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						updateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						updateParam.Id = c.Int64("id")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -785,16 +1085,22 @@ func init() {
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.BoolFlag{
-						Name:        "assumeyes",
-						Aliases:     []string{"y"},
-						Usage:       "assume that the answer to any question which would be asked is yes",
-						Destination: &deleteParam.Assumeyes,
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
 					},
 					&cli.StringFlag{
-						Name:        "output-type",
-						Aliases:     []string{"out"},
-						Usage:       "Output type [json/csv/tsv]",
-						Destination: &deleteParam.OutputType,
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -802,27 +1108,23 @@ func init() {
 						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
 					},
 					&cli.BoolFlag{
-						Name:        "quiet",
-						Aliases:     []string{"q"},
-						Usage:       "Only display IDs",
-						Destination: &deleteParam.Quiet,
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
 					},
 					&cli.StringFlag{
-						Name:        "format",
-						Aliases:     []string{"fmt"},
-						Usage:       "Output format(see text/template package document for detail)",
-						Destination: &deleteParam.Format,
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
 					},
 					&cli.StringFlag{
-						Name:        "format-file",
-						Usage:       "Output format from file(see text/template package document for detail)",
-						Destination: &deleteParam.FormatFile,
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
 					},
 					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "set target ID",
-						Destination: &deleteParam.Id,
-						Hidden:      true,
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -846,8 +1148,34 @@ func init() {
 					// build command context
 					ctx := command.NewContext(c, realArgs, deleteParam)
 
-					// Set option values for slice
-					deleteParam.Column = c.StringSlice("column")
+					// Set option values
+					if c.IsSet("assumeyes") {
+						deleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						deleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						deleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						deleteParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						deleteParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						deleteParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						deleteParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						deleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						deleteParam.Id = c.Int64("id")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -910,8 +1238,49 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					// Set option values for slice
-					deleteParam.Column = c.StringSlice("column")
+					deleteParam.ParamTemplate = c.String("param-template")
+					deleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(deleteParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewDeletePacketFilterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(deleteParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("assumeyes") {
+						deleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						deleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						deleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						deleteParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						deleteParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						deleteParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						deleteParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						deleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						deleteParam.Id = c.Int64("id")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -992,10 +1361,17 @@ func init() {
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:        "output-type",
-						Aliases:     []string{"out"},
-						Usage:       "Output type [json/csv/tsv]",
-						Destination: &ruleInfoParam.OutputType,
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -1003,27 +1379,23 @@ func init() {
 						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
 					},
 					&cli.BoolFlag{
-						Name:        "quiet",
-						Aliases:     []string{"q"},
-						Usage:       "Only display IDs",
-						Destination: &ruleInfoParam.Quiet,
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
 					},
 					&cli.StringFlag{
-						Name:        "format",
-						Aliases:     []string{"fmt"},
-						Usage:       "Output format(see text/template package document for detail)",
-						Destination: &ruleInfoParam.Format,
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
 					},
 					&cli.StringFlag{
-						Name:        "format-file",
-						Usage:       "Output format from file(see text/template package document for detail)",
-						Destination: &ruleInfoParam.FormatFile,
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
 					},
 					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "set target ID",
-						Destination: &ruleInfoParam.Id,
-						Hidden:      true,
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -1047,8 +1419,31 @@ func init() {
 					// build command context
 					ctx := command.NewContext(c, realArgs, ruleInfoParam)
 
-					// Set option values for slice
-					ruleInfoParam.Column = c.StringSlice("column")
+					// Set option values
+					if c.IsSet("param-template") {
+						ruleInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ruleInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						ruleInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						ruleInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						ruleInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						ruleInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						ruleInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						ruleInfoParam.Id = c.Int64("id")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -1111,8 +1506,46 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					// Set option values for slice
-					ruleInfoParam.Column = c.StringSlice("column")
+					ruleInfoParam.ParamTemplate = c.String("param-template")
+					ruleInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ruleInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewRuleInfoPacketFilterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(ruleInfoParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("param-template") {
+						ruleInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ruleInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						ruleInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						ruleInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						ruleInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						ruleInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						ruleInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						ruleInfoParam.Id = c.Int64("id")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -1187,54 +1620,53 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
-						Name:        "index",
-						Usage:       "index to insert rule into",
-						Value:       1,
-						Destination: &ruleAddParam.Index,
+						Name:  "index",
+						Usage: "index to insert rule into",
+						Value: 1,
 					},
 					&cli.StringFlag{
-						Name:        "protocol",
-						Usage:       "set target protocol[tcp/udp/icmp/fragment/ip]",
-						Destination: &ruleAddParam.Protocol,
+						Name:  "protocol",
+						Usage: "set target protocol[tcp/udp/icmp/fragment/ip]",
 					},
 					&cli.StringFlag{
-						Name:        "source-network",
-						Usage:       "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]",
-						Destination: &ruleAddParam.SourceNetwork,
+						Name:  "source-network",
+						Usage: "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]",
 					},
 					&cli.StringFlag{
-						Name:        "source-port",
-						Usage:       "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
-						Destination: &ruleAddParam.SourcePort,
+						Name:  "source-port",
+						Usage: "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
 					},
 					&cli.StringFlag{
-						Name:        "destination-port",
-						Aliases:     []string{"dest-port"},
-						Usage:       "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
-						Destination: &ruleAddParam.DestinationPort,
+						Name:    "destination-port",
+						Aliases: []string{"dest-port"},
+						Usage:   "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
 					},
 					&cli.StringFlag{
-						Name:        "action",
-						Usage:       "set action[allow/deny]",
-						Destination: &ruleAddParam.Action,
+						Name:  "action",
+						Usage: "set action[allow/deny]",
 					},
 					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &ruleAddParam.Description,
+						Name:    "description",
+						Aliases: []string{"desc"},
+						Usage:   "set resource description",
 					},
 					&cli.BoolFlag{
-						Name:        "assumeyes",
-						Aliases:     []string{"y"},
-						Usage:       "assume that the answer to any question which would be asked is yes",
-						Destination: &ruleAddParam.Assumeyes,
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
 					},
 					&cli.StringFlag{
-						Name:        "output-type",
-						Aliases:     []string{"out"},
-						Usage:       "Output type [json/csv/tsv]",
-						Destination: &ruleAddParam.OutputType,
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -1242,27 +1674,23 @@ func init() {
 						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
 					},
 					&cli.BoolFlag{
-						Name:        "quiet",
-						Aliases:     []string{"q"},
-						Usage:       "Only display IDs",
-						Destination: &ruleAddParam.Quiet,
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
 					},
 					&cli.StringFlag{
-						Name:        "format",
-						Aliases:     []string{"fmt"},
-						Usage:       "Output format(see text/template package document for detail)",
-						Destination: &ruleAddParam.Format,
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
 					},
 					&cli.StringFlag{
-						Name:        "format-file",
-						Usage:       "Output format from file(see text/template package document for detail)",
-						Destination: &ruleAddParam.FormatFile,
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
 					},
 					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "set target ID",
-						Destination: &ruleAddParam.Id,
-						Hidden:      true,
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -1286,8 +1714,55 @@ func init() {
 					// build command context
 					ctx := command.NewContext(c, realArgs, ruleAddParam)
 
-					// Set option values for slice
-					ruleAddParam.Column = c.StringSlice("column")
+					// Set option values
+					if c.IsSet("index") {
+						ruleAddParam.Index = c.Int("index")
+					}
+					if c.IsSet("protocol") {
+						ruleAddParam.Protocol = c.String("protocol")
+					}
+					if c.IsSet("source-network") {
+						ruleAddParam.SourceNetwork = c.String("source-network")
+					}
+					if c.IsSet("source-port") {
+						ruleAddParam.SourcePort = c.String("source-port")
+					}
+					if c.IsSet("destination-port") {
+						ruleAddParam.DestinationPort = c.String("destination-port")
+					}
+					if c.IsSet("action") {
+						ruleAddParam.Action = c.String("action")
+					}
+					if c.IsSet("description") {
+						ruleAddParam.Description = c.String("description")
+					}
+					if c.IsSet("assumeyes") {
+						ruleAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						ruleAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ruleAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						ruleAddParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						ruleAddParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						ruleAddParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						ruleAddParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						ruleAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						ruleAddParam.Id = c.Int64("id")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -1350,8 +1825,70 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					// Set option values for slice
-					ruleAddParam.Column = c.StringSlice("column")
+					ruleAddParam.ParamTemplate = c.String("param-template")
+					ruleAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ruleAddParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewRuleAddPacketFilterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(ruleAddParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						ruleAddParam.Index = c.Int("index")
+					}
+					if c.IsSet("protocol") {
+						ruleAddParam.Protocol = c.String("protocol")
+					}
+					if c.IsSet("source-network") {
+						ruleAddParam.SourceNetwork = c.String("source-network")
+					}
+					if c.IsSet("source-port") {
+						ruleAddParam.SourcePort = c.String("source-port")
+					}
+					if c.IsSet("destination-port") {
+						ruleAddParam.DestinationPort = c.String("destination-port")
+					}
+					if c.IsSet("action") {
+						ruleAddParam.Action = c.String("action")
+					}
+					if c.IsSet("description") {
+						ruleAddParam.Description = c.String("description")
+					}
+					if c.IsSet("assumeyes") {
+						ruleAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						ruleAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ruleAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						ruleAddParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						ruleAddParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						ruleAddParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						ruleAddParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						ruleAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						ruleAddParam.Id = c.Int64("id")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -1435,53 +1972,52 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
-						Name:        "index",
-						Usage:       "[Required] index of target rule",
-						Destination: &ruleUpdateParam.Index,
+						Name:  "index",
+						Usage: "[Required] index of target rule",
 					},
 					&cli.StringFlag{
-						Name:        "protocol",
-						Usage:       "set target protocol[tcp/udp/icmp/fragment/ip]",
-						Destination: &ruleUpdateParam.Protocol,
+						Name:  "protocol",
+						Usage: "set target protocol[tcp/udp/icmp/fragment/ip]",
 					},
 					&cli.StringFlag{
-						Name:        "source-network",
-						Usage:       "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]",
-						Destination: &ruleUpdateParam.SourceNetwork,
+						Name:  "source-network",
+						Usage: "set source network[A.A.A.A] or [A.A.A.A/N (N=1..31)] or [A.A.A.A/M.M.M.M]",
 					},
 					&cli.StringFlag{
-						Name:        "source-port",
-						Usage:       "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
-						Destination: &ruleUpdateParam.SourcePort,
+						Name:  "source-port",
+						Usage: "set source port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
 					},
 					&cli.StringFlag{
-						Name:        "destination-port",
-						Aliases:     []string{"dest-port"},
-						Usage:       "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
-						Destination: &ruleUpdateParam.DestinationPort,
+						Name:    "destination-port",
+						Aliases: []string{"dest-port"},
+						Usage:   "set destination port[N (N=0..65535)] or [N-N (N=0..65535)] or [0xPPPP/0xMMMM]",
 					},
 					&cli.StringFlag{
-						Name:        "action",
-						Usage:       "set action[allow/deny]",
-						Destination: &ruleUpdateParam.Action,
+						Name:  "action",
+						Usage: "set action[allow/deny]",
 					},
 					&cli.StringFlag{
-						Name:        "description",
-						Aliases:     []string{"desc"},
-						Usage:       "set resource description",
-						Destination: &ruleUpdateParam.Description,
+						Name:    "description",
+						Aliases: []string{"desc"},
+						Usage:   "set resource description",
 					},
 					&cli.BoolFlag{
-						Name:        "assumeyes",
-						Aliases:     []string{"y"},
-						Usage:       "assume that the answer to any question which would be asked is yes",
-						Destination: &ruleUpdateParam.Assumeyes,
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
 					},
 					&cli.StringFlag{
-						Name:        "output-type",
-						Aliases:     []string{"out"},
-						Usage:       "Output type [json/csv/tsv]",
-						Destination: &ruleUpdateParam.OutputType,
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -1489,27 +2025,23 @@ func init() {
 						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
 					},
 					&cli.BoolFlag{
-						Name:        "quiet",
-						Aliases:     []string{"q"},
-						Usage:       "Only display IDs",
-						Destination: &ruleUpdateParam.Quiet,
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
 					},
 					&cli.StringFlag{
-						Name:        "format",
-						Aliases:     []string{"fmt"},
-						Usage:       "Output format(see text/template package document for detail)",
-						Destination: &ruleUpdateParam.Format,
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
 					},
 					&cli.StringFlag{
-						Name:        "format-file",
-						Usage:       "Output format from file(see text/template package document for detail)",
-						Destination: &ruleUpdateParam.FormatFile,
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
 					},
 					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "set target ID",
-						Destination: &ruleUpdateParam.Id,
-						Hidden:      true,
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -1533,8 +2065,55 @@ func init() {
 					// build command context
 					ctx := command.NewContext(c, realArgs, ruleUpdateParam)
 
-					// Set option values for slice
-					ruleUpdateParam.Column = c.StringSlice("column")
+					// Set option values
+					if c.IsSet("index") {
+						ruleUpdateParam.Index = c.Int("index")
+					}
+					if c.IsSet("protocol") {
+						ruleUpdateParam.Protocol = c.String("protocol")
+					}
+					if c.IsSet("source-network") {
+						ruleUpdateParam.SourceNetwork = c.String("source-network")
+					}
+					if c.IsSet("source-port") {
+						ruleUpdateParam.SourcePort = c.String("source-port")
+					}
+					if c.IsSet("destination-port") {
+						ruleUpdateParam.DestinationPort = c.String("destination-port")
+					}
+					if c.IsSet("action") {
+						ruleUpdateParam.Action = c.String("action")
+					}
+					if c.IsSet("description") {
+						ruleUpdateParam.Description = c.String("description")
+					}
+					if c.IsSet("assumeyes") {
+						ruleUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						ruleUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ruleUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						ruleUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						ruleUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						ruleUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						ruleUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						ruleUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						ruleUpdateParam.Id = c.Int64("id")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -1597,8 +2176,70 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					// Set option values for slice
-					ruleUpdateParam.Column = c.StringSlice("column")
+					ruleUpdateParam.ParamTemplate = c.String("param-template")
+					ruleUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ruleUpdateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewRuleUpdatePacketFilterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(ruleUpdateParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						ruleUpdateParam.Index = c.Int("index")
+					}
+					if c.IsSet("protocol") {
+						ruleUpdateParam.Protocol = c.String("protocol")
+					}
+					if c.IsSet("source-network") {
+						ruleUpdateParam.SourceNetwork = c.String("source-network")
+					}
+					if c.IsSet("source-port") {
+						ruleUpdateParam.SourcePort = c.String("source-port")
+					}
+					if c.IsSet("destination-port") {
+						ruleUpdateParam.DestinationPort = c.String("destination-port")
+					}
+					if c.IsSet("action") {
+						ruleUpdateParam.Action = c.String("action")
+					}
+					if c.IsSet("description") {
+						ruleUpdateParam.Description = c.String("description")
+					}
+					if c.IsSet("assumeyes") {
+						ruleUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						ruleUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ruleUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						ruleUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						ruleUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						ruleUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						ruleUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						ruleUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						ruleUpdateParam.Id = c.Int64("id")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -1682,21 +2323,26 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
-						Name:        "index",
-						Usage:       "[Required] index of target rule",
-						Destination: &ruleDeleteParam.Index,
+						Name:  "index",
+						Usage: "[Required] index of target rule",
 					},
 					&cli.BoolFlag{
-						Name:        "assumeyes",
-						Aliases:     []string{"y"},
-						Usage:       "assume that the answer to any question which would be asked is yes",
-						Destination: &ruleDeleteParam.Assumeyes,
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
 					},
 					&cli.StringFlag{
-						Name:        "output-type",
-						Aliases:     []string{"out"},
-						Usage:       "Output type [json/csv/tsv]",
-						Destination: &ruleDeleteParam.OutputType,
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -1704,27 +2350,23 @@ func init() {
 						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
 					},
 					&cli.BoolFlag{
-						Name:        "quiet",
-						Aliases:     []string{"q"},
-						Usage:       "Only display IDs",
-						Destination: &ruleDeleteParam.Quiet,
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
 					},
 					&cli.StringFlag{
-						Name:        "format",
-						Aliases:     []string{"fmt"},
-						Usage:       "Output format(see text/template package document for detail)",
-						Destination: &ruleDeleteParam.Format,
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
 					},
 					&cli.StringFlag{
-						Name:        "format-file",
-						Usage:       "Output format from file(see text/template package document for detail)",
-						Destination: &ruleDeleteParam.FormatFile,
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
 					},
 					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "set target ID",
-						Destination: &ruleDeleteParam.Id,
-						Hidden:      true,
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -1748,8 +2390,37 @@ func init() {
 					// build command context
 					ctx := command.NewContext(c, realArgs, ruleDeleteParam)
 
-					// Set option values for slice
-					ruleDeleteParam.Column = c.StringSlice("column")
+					// Set option values
+					if c.IsSet("index") {
+						ruleDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("assumeyes") {
+						ruleDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						ruleDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ruleDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						ruleDeleteParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						ruleDeleteParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						ruleDeleteParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						ruleDeleteParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						ruleDeleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						ruleDeleteParam.Id = c.Int64("id")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -1812,8 +2483,52 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
-					// Set option values for slice
-					ruleDeleteParam.Column = c.StringSlice("column")
+					ruleDeleteParam.ParamTemplate = c.String("param-template")
+					ruleDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ruleDeleteParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewRuleDeletePacketFilterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(ruleDeleteParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						ruleDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("assumeyes") {
+						ruleDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						ruleDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ruleDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("output-type") {
+						ruleDeleteParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						ruleDeleteParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						ruleDeleteParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						ruleDeleteParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						ruleDeleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						ruleDeleteParam.Id = c.Int64("id")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -1897,21 +2612,26 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
-						Name:        "interface-id",
-						Usage:       "[Required] set interface ID",
-						Destination: &interfaceConnectParam.InterfaceId,
+						Name:  "interface-id",
+						Usage: "[Required] set interface ID",
 					},
 					&cli.BoolFlag{
-						Name:        "assumeyes",
-						Aliases:     []string{"y"},
-						Usage:       "assume that the answer to any question which would be asked is yes",
-						Destination: &interfaceConnectParam.Assumeyes,
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
 					},
 					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "set target ID",
-						Destination: &interfaceConnectParam.Id,
-						Hidden:      true,
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -1934,6 +2654,23 @@ func init() {
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, interfaceConnectParam)
+
+					// Set option values
+					if c.IsSet("interface-id") {
+						interfaceConnectParam.InterfaceId = c.Int64("interface-id")
+					}
+					if c.IsSet("assumeyes") {
+						interfaceConnectParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						interfaceConnectParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						interfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("id") {
+						interfaceConnectParam.Id = c.Int64("id")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -1995,6 +2732,38 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					interfaceConnectParam.ParamTemplate = c.String("param-template")
+					interfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(interfaceConnectParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewInterfaceConnectPacketFilterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(interfaceConnectParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("interface-id") {
+						interfaceConnectParam.InterfaceId = c.Int64("interface-id")
+					}
+					if c.IsSet("assumeyes") {
+						interfaceConnectParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						interfaceConnectParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						interfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("id") {
+						interfaceConnectParam.Id = c.Int64("id")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -2078,21 +2847,26 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
-						Name:        "interface-id",
-						Usage:       "[Required] set interface ID",
-						Destination: &interfaceDisconnectParam.InterfaceId,
+						Name:  "interface-id",
+						Usage: "[Required] set interface ID",
 					},
 					&cli.BoolFlag{
-						Name:        "assumeyes",
-						Aliases:     []string{"y"},
-						Usage:       "assume that the answer to any question which would be asked is yes",
-						Destination: &interfaceDisconnectParam.Assumeyes,
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
 					},
 					&cli.Int64Flag{
-						Name:        "id",
-						Usage:       "set target ID",
-						Destination: &interfaceDisconnectParam.Id,
-						Hidden:      true,
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -2115,6 +2889,23 @@ func init() {
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, interfaceDisconnectParam)
+
+					// Set option values
+					if c.IsSet("interface-id") {
+						interfaceDisconnectParam.InterfaceId = c.Int64("interface-id")
+					}
+					if c.IsSet("assumeyes") {
+						interfaceDisconnectParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						interfaceDisconnectParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						interfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("id") {
+						interfaceDisconnectParam.Id = c.Int64("id")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -2176,6 +2967,38 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					interfaceDisconnectParam.ParamTemplate = c.String("param-template")
+					interfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(interfaceDisconnectParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewInterfaceDisconnectPacketFilterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(interfaceDisconnectParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("interface-id") {
+						interfaceDisconnectParam.InterfaceId = c.Int64("interface-id")
+					}
+					if c.IsSet("assumeyes") {
+						interfaceDisconnectParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						interfaceDisconnectParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						interfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("id") {
+						interfaceDisconnectParam.Id = c.Int64("id")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -2358,6 +3181,16 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("packet-filter", "create", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("packet-filter", "create", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("packet-filter", "create", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2393,6 +3226,16 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("packet-filter", "delete", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("packet-filter", "delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("packet-filter", "delete", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2413,6 +3256,16 @@ func init() {
 		DisplayName: "Interface options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("packet-filter", "interface-connect", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("packet-filter", "interface-connect", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("packet-filter", "interface-disconnect", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -2427,6 +3280,16 @@ func init() {
 		Key:         "interface",
 		DisplayName: "Interface options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("packet-filter", "interface-disconnect", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("packet-filter", "interface-disconnect", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("packet-filter", "list", "column", &schema.Category{
 		Key:         "output",
@@ -2468,6 +3331,16 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("packet-filter", "list", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("packet-filter", "list", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("packet-filter", "list", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2502,6 +3375,16 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("packet-filter", "read", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("packet-filter", "read", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("packet-filter", "read", "quiet", &schema.Category{
 		Key:         "output",
@@ -2558,6 +3441,16 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("packet-filter", "rule-add", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("packet-filter", "rule-add", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("packet-filter", "rule-add", "protocol", &schema.Category{
 		Key:         "rule",
 		DisplayName: "Rule options",
@@ -2613,6 +3506,16 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("packet-filter", "rule-delete", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("packet-filter", "rule-delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
 	AppendFlagCategoryMap("packet-filter", "rule-delete", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2642,6 +3545,16 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("packet-filter", "rule-info", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("packet-filter", "rule-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("packet-filter", "rule-info", "quiet", &schema.Category{
 		Key:         "output",
@@ -2697,6 +3610,16 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("packet-filter", "rule-update", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("packet-filter", "rule-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("packet-filter", "rule-update", "protocol", &schema.Category{
 		Key:         "rule",
@@ -2757,6 +3680,16 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("packet-filter", "update", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("packet-filter", "update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("packet-filter", "update", "quiet", &schema.Category{
 		Key:         "output",

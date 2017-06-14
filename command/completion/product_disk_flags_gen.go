@@ -40,8 +40,6 @@ func ProductDiskReadCompleteFlags(ctx command.Context, params *params.ReadProduc
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["ProductDisk"].Commands["read"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["ProductDisk"].Commands["read"].Params["id"].CompleteFunc
 	case "output-type", "out":

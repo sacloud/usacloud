@@ -44,8 +44,6 @@ func BridgeCreateCompleteFlags(ctx command.Context, params *params.CreateBridgeP
 		comp = define.Resources["Bridge"].Commands["create"].Params["name"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["Bridge"].Commands["create"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Bridge"].Commands["create"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -84,8 +82,6 @@ func BridgeUpdateCompleteFlags(ctx command.Context, params *params.UpdateBridgeP
 		comp = define.Resources["Bridge"].Commands["update"].Params["name"].CompleteFunc
 	case "description", "desc":
 		comp = define.Resources["Bridge"].Commands["update"].Params["description"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Bridge"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Bridge"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -104,8 +100,6 @@ func BridgeDeleteCompleteFlags(ctx command.Context, params *params.DeleteBridgeP
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Bridge"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Bridge"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":

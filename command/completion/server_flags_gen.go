@@ -118,8 +118,6 @@ func ServerBuildCompleteFlags(ctx command.Context, params *params.BuildServerPar
 		comp = define.Resources["Server"].Commands["build"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["Server"].Commands["build"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["build"].Params["assumeyes"].CompleteFunc
 	case "us-keyboard":
 		comp = define.Resources["Server"].Commands["build"].Params["us-keyboard"].CompleteFunc
 	case "disable-boot-after-create":
@@ -166,8 +164,6 @@ func ServerUpdateCompleteFlags(ctx command.Context, params *params.UpdateServerP
 		comp = define.Resources["Server"].Commands["update"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["Server"].Commands["update"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["update"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["update"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -190,8 +186,6 @@ func ServerDeleteCompleteFlags(ctx command.Context, params *params.DeleteServerP
 		comp = define.Resources["Server"].Commands["delete"].Params["force"].CompleteFunc
 	case "without-disk":
 		comp = define.Resources["Server"].Commands["delete"].Params["without-disk"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["delete"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["delete"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -214,8 +208,6 @@ func ServerPlanChangeCompleteFlags(ctx command.Context, params *params.PlanChang
 		comp = define.Resources["Server"].Commands["plan-change"].Params["core"].CompleteFunc
 	case "memory":
 		comp = define.Resources["Server"].Commands["plan-change"].Params["memory"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["plan-change"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["plan-change"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -234,8 +226,6 @@ func ServerBootCompleteFlags(ctx command.Context, params *params.BootServerParam
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["boot"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["boot"].Params["id"].CompleteFunc
 	}
@@ -252,8 +242,6 @@ func ServerShutdownCompleteFlags(ctx command.Context, params *params.ShutdownSer
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["shutdown"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["shutdown"].Params["id"].CompleteFunc
 	}
@@ -270,8 +258,6 @@ func ServerShutdownForceCompleteFlags(ctx command.Context, params *params.Shutdo
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["shutdown-force"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["shutdown-force"].Params["id"].CompleteFunc
 	}
@@ -288,8 +274,6 @@ func ServerResetCompleteFlags(ctx command.Context, params *params.ResetServerPar
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["reset"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["reset"].Params["id"].CompleteFunc
 	}
@@ -400,8 +384,6 @@ func ServerScpCompleteFlags(ctx command.Context, params *params.ScpServerParam, 
 		comp = define.Resources["Server"].Commands["scp"].Params["port"].CompleteFunc
 	case "password":
 		comp = define.Resources["Server"].Commands["scp"].Params["password"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["scp"].Params["assumeyes"].CompleteFunc
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -420,8 +402,6 @@ func ServerVncCompleteFlags(ctx command.Context, params *params.VncServerParam, 
 	switch flagName {
 	case "wait-for-boot":
 		comp = define.Resources["Server"].Commands["vnc"].Params["wait-for-boot"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["vnc"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["vnc"].Params["id"].CompleteFunc
 	}
@@ -468,8 +448,6 @@ func ServerVncSendCompleteFlags(ctx command.Context, params *params.VncSendServe
 		comp = define.Resources["Server"].Commands["vnc-send"].Params["debug"].CompleteFunc
 	case "wait-for-boot":
 		comp = define.Resources["Server"].Commands["vnc-send"].Params["wait-for-boot"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["vnc-send"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["vnc-send"].Params["id"].CompleteFunc
 	case "output-type", "out":
@@ -508,8 +486,6 @@ func ServerDiskConnectCompleteFlags(ctx command.Context, params *params.DiskConn
 	switch flagName {
 	case "disk-id":
 		comp = define.Resources["Server"].Commands["disk-connect"].Params["disk-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["disk-connect"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["disk-connect"].Params["id"].CompleteFunc
 	}
@@ -528,8 +504,6 @@ func ServerDiskDisconnectCompleteFlags(ctx command.Context, params *params.DiskD
 	switch flagName {
 	case "disk-id":
 		comp = define.Resources["Server"].Commands["disk-disconnect"].Params["disk-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["disk-disconnect"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["disk-disconnect"].Params["id"].CompleteFunc
 	}
@@ -566,8 +540,6 @@ func ServerInterfaceAddForInternetCompleteFlags(ctx command.Context, params *par
 	switch flagName {
 	case "without-disk-edit":
 		comp = define.Resources["Server"].Commands["interface-add-for-internet"].Params["without-disk-edit"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["interface-add-for-internet"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["interface-add-for-internet"].Params["id"].CompleteFunc
 	}
@@ -594,8 +566,6 @@ func ServerInterfaceAddForRouterCompleteFlags(ctx command.Context, params *param
 		comp = define.Resources["Server"].Commands["interface-add-for-router"].Params["default-route"].CompleteFunc
 	case "nw-masklen", "network-masklen":
 		comp = define.Resources["Server"].Commands["interface-add-for-router"].Params["nw-masklen"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["interface-add-for-router"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["interface-add-for-router"].Params["id"].CompleteFunc
 	}
@@ -622,8 +592,6 @@ func ServerInterfaceAddForSwitchCompleteFlags(ctx command.Context, params *param
 		comp = define.Resources["Server"].Commands["interface-add-for-switch"].Params["default-route"].CompleteFunc
 	case "nw-masklen", "network-masklen":
 		comp = define.Resources["Server"].Commands["interface-add-for-switch"].Params["nw-masklen"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["interface-add-for-switch"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["interface-add-for-switch"].Params["id"].CompleteFunc
 	}
@@ -640,8 +608,6 @@ func ServerInterfaceAddDisconnectedCompleteFlags(ctx command.Context, params *pa
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["interface-add-disconnected"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["interface-add-disconnected"].Params["id"].CompleteFunc
 	}
@@ -690,8 +656,6 @@ func ServerIsoInsertCompleteFlags(ctx command.Context, params *params.IsoInsertS
 		comp = define.Resources["Server"].Commands["iso-insert"].Params["tags"].CompleteFunc
 	case "icon-id":
 		comp = define.Resources["Server"].Commands["iso-insert"].Params["icon-id"].CompleteFunc
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["iso-insert"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["iso-insert"].Params["id"].CompleteFunc
 	}
@@ -708,8 +672,6 @@ func ServerIsoEjectCompleteFlags(ctx command.Context, params *params.IsoEjectSer
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "assumeyes", "y":
-		comp = define.Resources["Server"].Commands["iso-eject"].Params["assumeyes"].CompleteFunc
 	case "id":
 		comp = define.Resources["Server"].Commands["iso-eject"].Params["id"].CompleteFunc
 	}
