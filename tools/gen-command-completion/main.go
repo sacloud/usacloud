@@ -14,7 +14,7 @@ import (
 )
 
 var (
-	destination = "src/github.com/sacloud/usacloud/command"
+	destination = "src/github.com/sacloud/usacloud/command/completion"
 	ctx         = tools.NewGenerateContext()
 )
 
@@ -41,37 +41,38 @@ func main() {
 
 func generateResource(resource *schema.Resource) error {
 
-	// build commands
+	normalArgCompletions := []schema.SortableCommand{}
+	normalFlagCompletions := []schema.SortableCommand{}
+
+	// build custom completions per command
 	for _, comm := range resource.SortedCommands() {
 		c := comm.Command
 		k := comm.CommandKey
 		ctx.C = k
-
-		// generate args completion
-		src, err := generateArgsComplete(c)
-		if err != nil {
-			return err
-		}
 
 		// Write to file.
 		// like 'comp_switch_list_args.go'
 		baseName := ctx.CommandArgsCompletionFileName(c.UseCustomArgCompletion)
 		outputName := filepath.Join(ctx.Gopath(), destination, baseName)
 
-		// target file is exist?
-		_, err = os.Stat(outputName)
-		if !c.UseCustomArgCompletion || err != nil {
-			err = ioutil.WriteFile(outputName, tools.Sformat([]byte(src)), 0644)
+		if c.UseCustomArgCompletion {
+			// target file is exist?
+			_, err := os.Stat(outputName)
 			if err != nil {
-				return err
-			}
-			fmt.Printf("generated: %s\n", filepath.Join(destination, baseName))
-		}
+				// generate args completion
+				src, err := generateArgsComplete(comm)
+				if err != nil {
+					return err
+				}
 
-		// generate flags completion
-		src, err = generateFlagsComplete(c)
-		if err != nil {
-			return err
+				err = ioutil.WriteFile(outputName, tools.Sformat([]byte(src)), 0644)
+				if err != nil {
+					return err
+				}
+				fmt.Printf("generated: %s\n", filepath.Join(destination, baseName))
+			}
+		} else {
+			normalArgCompletions = append(normalArgCompletions, comm)
 		}
 
 		// Write to file.
@@ -79,36 +80,98 @@ func generateResource(resource *schema.Resource) error {
 		baseName = ctx.CommandFlagsCompletionFileName(c.UseCustomFlagsCompletion)
 		outputName = filepath.Join(ctx.Gopath(), destination, baseName)
 
-		// target file is exist?
-		_, err = os.Stat(outputName)
-		if !c.UseCustomFlagsCompletion || err != nil {
-			err = ioutil.WriteFile(outputName, tools.Sformat([]byte(src)), 0644)
+		if c.UseCustomFlagsCompletion {
+			// target file is exist?
+			_, err := os.Stat(outputName)
 			if err != nil {
-				return err
+
+				// generate flags completion
+				src, err := generateFlagsComplete(comm)
+				if err != nil {
+					return err
+				}
+
+				err = ioutil.WriteFile(outputName, tools.Sformat([]byte(src)), 0644)
+				if err != nil {
+					return err
+				}
+				fmt.Printf("generated: %s\n", filepath.Join(destination, baseName))
 			}
-			fmt.Printf("generated: %s\n", filepath.Join(destination, baseName))
+		} else {
+			normalFlagCompletions = append(normalFlagCompletions, comm)
 		}
+	}
+
+	// build completions per resource
+
+	// args
+	if len(normalArgCompletions) > 0 {
+
+		baseName := ctx.ResourceArgsCompletionFileName()
+		outputName := filepath.Join(ctx.Gopath(), destination, baseName)
+		// generate args completion
+		src, err := generateArgsComplete(normalArgCompletions...)
+		if err != nil {
+			return err
+		}
+		err = ioutil.WriteFile(outputName, tools.Sformat([]byte(src)), 0644)
+		if err != nil {
+			return err
+		}
+		fmt.Printf("generated: %s\n", filepath.Join(destination, baseName))
+	}
+
+	if len(normalFlagCompletions) > 0 {
+
+		// flags
+		baseName := ctx.ResourceFlagsCompletionFileName()
+		outputName := filepath.Join(ctx.Gopath(), destination, baseName)
+		// generate args completion
+		src, err := generateFlagsComplete(normalFlagCompletions...)
+		if err != nil {
+			return err
+		}
+		err = ioutil.WriteFile(outputName, tools.Sformat([]byte(src)), 0644)
+		if err != nil {
+			return err
+		}
+		fmt.Printf("generated: %s\n", filepath.Join(destination, baseName))
 	}
 
 	return nil
 }
 
-func generateArgsComplete(command *schema.Command) (string, error) {
+func generateArgsComplete(commands ...schema.SortableCommand) (string, error) {
 	b := bytes.NewBufferString("")
 	t := template.New("c")
 	template.Must(t.Parse(completeArgsTemplate))
 
-	action, err := generateArgsCompleteAction(command)
-	if err != nil {
-		return "", err
+	paramCommands := []map[string]interface{}{}
+	useImport := false
+
+	for _, command := range commands {
+		c := command.Command
+		k := command.CommandKey
+		ctx.C = k
+
+		action, err := generateArgsCompleteAction(c)
+		if err != nil {
+			return "", err
+		}
+		paramCommands = append(paramCommands, map[string]interface{}{
+			"FuncName":  ctx.CompleteArgsFuncName(),
+			"ParamName": ctx.InputModelTypeName(),
+			"Action":    action,
+		})
+		if action != "" {
+			useImport = true
+		}
 	}
 
-	err = t.Execute(b, map[string]interface{}{
-		"FuncName":             ctx.CompleteArgsFuncName(),
-		"ParamName":            ctx.InputModelTypeName(),
-		"Action":               action,
-		"NeedDonotEditComment": !command.UseCustomArgCompletion,
-		"UseImport":            action != "",
+	err := t.Execute(b, map[string]interface{}{
+		"NeedDonotEditComment": len(commands) == 1 && !commands[0].Command.UseCustomArgCompletion,
+		"UseImport":            useImport,
+		"Commands":             paramCommands,
 	})
 
 	return b.String(), err
@@ -141,7 +204,7 @@ func generateIDCompletion(command *schema.Command) (string, error) {
 	return b.String(), err
 }
 
-func generateFlagsComplete(command *schema.Command) (string, error) {
+func generateFlagsComplete(commands ...schema.SortableCommand) (string, error) {
 	b := bytes.NewBufferString("")
 	t := template.New("c")
 	t.Funcs(template.FuncMap{
@@ -149,47 +212,61 @@ func generateFlagsComplete(command *schema.Command) (string, error) {
 	})
 	template.Must(t.Parse(completeFlagsTemplate))
 
-	flags := []map[string]interface{}{}
-	for _, param := range command.BuildedParams() {
-		p := param.Param
-		ctx.P = param.ParamKey
+	paramCommands := []map[string]interface{}{}
+	useImport := false
 
-		names := []string{param.ParamKey}
-		names = append(names, p.Aliases...)
-		for i := range names {
-			names[i] = fmt.Sprintf("%q", names[i])
+	for _, command := range commands {
+
+		c := command.Command
+		k := command.CommandKey
+		ctx.C = k
+
+		flags := []map[string]interface{}{}
+		for _, param := range c.BuildedParams() {
+			p := param.Param
+			ctx.P = param.ParamKey
+
+			names := []string{param.ParamKey}
+			names = append(names, p.Aliases...)
+			for i := range names {
+				names[i] = fmt.Sprintf("%q", names[i])
+			}
+
+			flags = append(flags, map[string]interface{}{
+				"ResourceKey": ctx.R,
+				"CommandKey":  ctx.C,
+				"ParamKey":    ctx.P,
+				"Names":       names,
+				"OutputFlag":  p.Category == "output",
+			})
 		}
 
-		flags = append(flags, map[string]interface{}{
-			"ResourceKey": ctx.R,
-			"CommandKey":  ctx.C,
-			"ParamKey":    ctx.P,
-			"Names":       names,
-			"OutputFlag":  p.Category == "output",
+		for _, f := range flags {
+			if !f["OutputFlag"].(bool) {
+				useImport = true
+				break
+			}
+		}
+		hasOutputFlag := false
+		for _, f := range flags {
+			if f["OutputFlag"].(bool) {
+				hasOutputFlag = true
+				break
+			}
+		}
+
+		paramCommands = append(paramCommands, map[string]interface{}{
+			"FuncName":      ctx.CompleteFlagsFuncName(),
+			"ParamName":     ctx.InputModelTypeName(),
+			"Flags":         flags,
+			"HasOutputFlag": hasOutputFlag,
 		})
 	}
 
-	useImport := false
-	for _, f := range flags {
-		if !f["OutputFlag"].(bool) {
-			useImport = true
-			break
-		}
-	}
-	hasOutputFlag := false
-	for _, f := range flags {
-		if f["OutputFlag"].(bool) {
-			hasOutputFlag = true
-			break
-		}
-	}
 	err := t.Execute(b, map[string]interface{}{
-		"FuncName":             ctx.CompleteFlagsFuncName(),
-		"ParamName":            ctx.InputModelTypeName(),
-		"Flags":                flags,
-		"NeedDonotEditComment": !command.UseCustomFlagsCompletion,
+		"NeedDonotEditComment": !commands[0].Command.UseCustomFlagsCompletion,
 		"UseImport":            useImport,
-		"HasOutputFlag":        hasOutputFlag,
+		"Commands":             paramCommands,
 	})
 
 	return b.String(), err
@@ -197,19 +274,22 @@ func generateFlagsComplete(command *schema.Command) (string, error) {
 
 var completeArgsTemplate = `{{ if .NeedDonotEditComment }}// Code generated by 'github.com/sacloud/usacloud/tools/gen-command-completion'; DO NOT EDIT{{ end }}
 
-package command
+package completion
 
-{{if .UseImport}}import (
-    "fmt"
-){{end}}
-
-func {{.FuncName}}(ctx Context, params *{{.ParamName}}, cur, prev, commandName string) {
+import ({{if .UseImport}}
+    "fmt"{{end}}
+    "github.com/sacloud/usacloud/command"
+    "github.com/sacloud/usacloud/command/params"
+)
+{{range .Commands}}
+func {{.FuncName}}(ctx command.Context, params *params.{{.ParamName}}, cur, prev, commandName string) {
     {{.Action}}
 }
+{{end}}
 `
 
 var completeIDTemplate = `
-	if !GlobalOption.Valid {
+	if !command.GlobalOption.Valid {
 		return
 	}
 
@@ -243,15 +323,17 @@ var completeIDTemplate = `
 
 var completeFlagsTemplate = `{{ if .NeedDonotEditComment }}// Code generated by 'github.com/sacloud/usacloud/tools/gen-command-completion'; DO NOT EDIT{{ end }}
 
-package command
+package completion
 
 import (
 	"github.com/sacloud/usacloud/schema"{{if .UseImport}}
 	"github.com/sacloud/usacloud/define"{{end}}
+	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/params"
 	"fmt"
 )
-
-func {{.FuncName}}(ctx Context, params *{{.ParamName}} , flagName string , currentValue string) {
+{{range .Commands}}
+func {{.FuncName}}(ctx command.Context, params *params.{{.ParamName}} , flagName string , currentValue string) {
     	var comp schema.CompletionFunc
 
 	switch flagName { {{range .Flags}}{{ if not .OutputFlag }}
@@ -269,4 +351,5 @@ func {{.FuncName}}(ctx Context, params *{{.ParamName}} , flagName string , curre
 		}
 	}
 }
+{{end}}
 `

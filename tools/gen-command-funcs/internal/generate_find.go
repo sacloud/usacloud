@@ -72,7 +72,7 @@ func generateFindSetParamActions(ctx *tools.GenerateContext, command *schema.Com
 		t := template.New("c")
 		template.Must(t.Parse(findSetParamTemplates[p.HandlerType]))
 
-		customHandlerName := fmt.Sprintf(`params.getCommandDef().Params["%s"].CustomHandler`, ctx.P)
+		customHandlerName := fmt.Sprintf(`params.GetCommandDef().Params["%s"].CustomHandler`, ctx.P)
 
 		err := t.Execute(b, map[string]interface{}{
 			"ParamName":         ctx.InputParamFieldName(),
@@ -89,39 +89,39 @@ func generateFindSetParamActions(ctx *tools.GenerateContext, command *schema.Com
 
 var findSetParamTemplates = map[schema.HandlerType]string{
 	schema.HandlerPathThrough: `
-	if !isEmpty(params.{{.ParamName}}) {
+	if !command.IsEmpty(params.{{.ParamName}}) {
 		finder.{{.SetterFuncName}}(params.{{.ParamName}})
 	}`,
 	schema.HandlerPathThroughEach: `
-	if !isEmpty(params.{{.ParamName}}) {
+	if !command.IsEmpty(params.{{.ParamName}}) {
 		for _ , v := range params.{{.ParamName}} {
 			finder.{{.SetterFuncName}}(v)
 		}
 	}`,
 	schema.HandlerSort: `
-	if !isEmpty(params.{{.ParamName}}) {
+	if !command.IsEmpty(params.{{.ParamName}}) {
 		for _ , v := range params.{{.ParamName}} {
 			setSortBy(finder , v)
 		}
 	}`,
 	schema.HandlerFilterBy: `
-	if !isEmpty(params.{{.ParamName}}) {
+	if !command.IsEmpty(params.{{.ParamName}}) {
 		finder.SetFilterBy("{{.ParamName}}", params.{{.ParamName}})
 	}`,
 	schema.HandlerAndParams: `
-	if !isEmpty(params.{{.ParamName}}) {
+	if !command.IsEmpty(params.{{.ParamName}}) {
 		for _ , v := range params.{{.ParamName}} {
 			finder.SetFilterMultiBy("{{.Destination}}", v)
 		}
 	}`,
 	schema.HandlerOrParams: `
-	if !isEmpty(params.{{.ParamName}}) {
+	if !command.IsEmpty(params.{{.ParamName}}) {
 		for _ , v := range params.{{.ParamName}} {
 			finder.SetFilterBy("{{.Destination}}", v)
 		}
 	}`,
 	schema.HandlerCustomFunc: `
-	if !isEmpty(params.{{.ParamName}}) {
+	if !command.IsEmpty(params.{{.ParamName}}) {
 		{{.CustomHandlerName}}("{{.ParamName}}" , params , finder)
 	}`,
 }
@@ -143,7 +143,7 @@ func generateFilterActions(ctx *tools.GenerateContext, command *schema.Command) 
 		t := template.New("c")
 		template.Must(t.Parse(findFilterFuncTemplate))
 
-		customHandlerName := fmt.Sprintf(`params.getCommandDef().Params["%s"].FilterFunc`, ctx.P)
+		customHandlerName := fmt.Sprintf(`params.GetCommandDef().Params["%s"].FilterFunc`, ctx.P)
 
 		err := t.Execute(b, map[string]interface{}{
 			"ParamName":       ctx.InputParamFieldName(),

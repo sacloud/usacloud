@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/sacloud/usacloud/command"
+	usacloud_cli "github.com/sacloud/usacloud/command/cli"
 	"github.com/sacloud/usacloud/schema"
 	"github.com/sacloud/usacloud/version"
 	"gopkg.in/urfave/cli.v2"
@@ -30,12 +31,12 @@ func main() {
 		Before:                applyConfigFromFile,
 		CommandNotFound:       cmdNotFound,
 		Flags:                 command.GlobalFlags,
-		Commands:              command.Commands,
+		Commands:              usacloud_cli.Commands,
 	}
 
-	cli.AppHelpTemplate = command.TopLevelHelpTemplate
-	cli.SubcommandHelpTemplate = command.ResourceLevelHelpTemplate
-	cli.CommandHelpTemplate = command.CommandLevelHelpTemplate
+	cli.AppHelpTemplate = usacloud_cli.TopLevelHelpTemplate
+	cli.SubcommandHelpTemplate = usacloud_cli.ResourceLevelHelpTemplate
+	cli.CommandHelpTemplate = usacloud_cli.CommandLevelHelpTemplate
 	cli.InitCompletionFlag.Hidden = true
 	cli.HelpPrinter = getHelpPrinter(app, cli.HelpPrinter)
 
@@ -72,20 +73,20 @@ func getHelpPrinter(app *cli.App, currentHelpPrinter func(io.Writer, string, int
 				// usacloud --help
 				rawCommands := args.VisibleCommands()
 
-				var sortedCommands = command.SortableResources{}
+				var sortedCommands = usacloud_cli.SortableResources{}
 				for _, c := range rawCommands {
-					category, ok := command.ResourceCategoryMap[c.Name]
+					category, ok := usacloud_cli.ResourceCategoryMap[c.Name]
 					if !ok {
 						category = schema.DefaultResourceCategory
 					}
-					sortedCommands = append(sortedCommands, command.SortableResource{
+					sortedCommands = append(sortedCommands, usacloud_cli.SortableResource{
 						Category: category,
 						Command:  c,
 					})
 				}
 
 				sort.Sort(sortedCommands)
-				resourceHelpValue := []*command.ResourceHelpValue{}
+				resourceHelpValue := []*usacloud_cli.ResourceHelpValue{}
 				for _, c := range sortedCommands {
 					resourceHelpValue = appendResourceByCategory(resourceHelpValue, c.Category, c.Command)
 				}
@@ -93,7 +94,7 @@ func getHelpPrinter(app *cli.App, currentHelpPrinter func(io.Writer, string, int
 				// define and create struct which has *cli.App + ResourceCategories
 				value = struct {
 					*cli.App
-					ResourceCategories []*command.ResourceHelpValue
+					ResourceCategories []*usacloud_cli.ResourceHelpValue
 				}{args, resourceHelpValue}
 			} else {
 				// usacloud [resource] --help
@@ -102,10 +103,10 @@ func getHelpPrinter(app *cli.App, currentHelpPrinter func(io.Writer, string, int
 				r := helpKeys[1]
 
 				rawCommands := args.VisibleCommands()
-				resourceHelpValue := []*command.ResourceHelpValue{}
+				resourceHelpValue := []*usacloud_cli.ResourceHelpValue{}
 
 				for _, c := range rawCommands {
-					category, ok := command.CommandCategoryMap[r][c.Name]
+					category, ok := usacloud_cli.CommandCategoryMap[r][c.Name]
 					if !ok {
 						category = schema.DefaultCommandCategory
 					}
@@ -115,13 +116,13 @@ func getHelpPrinter(app *cli.App, currentHelpPrinter func(io.Writer, string, int
 				// define and create struct which has *cli.App + ResourceCategories
 				value = struct {
 					*cli.App
-					CommandCategories []*command.ResourceHelpValue
+					CommandCategories []*usacloud_cli.ResourceHelpValue
 				}{args, resourceHelpValue}
 
 			}
 
 		case *cli.Command:
-			var categoryHelpValues []*command.CategoryHelpValue
+			var categoryHelpValues []*usacloud_cli.CategoryHelpValue
 			// usacloud [resource] [command] --help
 			helpKeys := strings.Split(args.FullName(), " ")
 			r := helpKeys[0]
@@ -136,7 +137,7 @@ func getHelpPrinter(app *cli.App, currentHelpPrinter func(io.Writer, string, int
 				found := false
 				for _, name := range flag.Names() {
 
-					if category, ok := command.FlagCategoryMap[r][c][name]; ok {
+					if category, ok := usacloud_cli.FlagCategoryMap[r][c][name]; ok {
 						categoryHelpValues = appendFlagByCategory(categoryHelpValues, category, flag)
 						found = true
 					}
@@ -153,7 +154,7 @@ func getHelpPrinter(app *cli.App, currentHelpPrinter func(io.Writer, string, int
 			// define and create struct which has *cli.Command + FlagCategories
 			value = struct {
 				*cli.Command
-				FlagCategories []*command.CategoryHelpValue
+				FlagCategories []*usacloud_cli.CategoryHelpValue
 			}{args, categoryHelpValues}
 
 			if len(categoryHelpValues) == 1 && categoryHelpValues[0].Name == "default" {
@@ -165,7 +166,7 @@ func getHelpPrinter(app *cli.App, currentHelpPrinter func(io.Writer, string, int
 	}
 }
 
-func appendResourceByCategory(values []*command.ResourceHelpValue, category *schema.Category, comm *cli.Command) []*command.ResourceHelpValue {
+func appendResourceByCategory(values []*usacloud_cli.ResourceHelpValue, category *schema.Category, comm *cli.Command) []*usacloud_cli.ResourceHelpValue {
 	exists := false
 	for _, catHelp := range values {
 		if catHelp.Name == category.Key {
@@ -175,7 +176,7 @@ func appendResourceByCategory(values []*command.ResourceHelpValue, category *sch
 	}
 
 	if !exists {
-		values = append(values, &command.ResourceHelpValue{
+		values = append(values, &usacloud_cli.ResourceHelpValue{
 			Name:            category.Key,
 			DisplayText:     category.DisplayName,
 			VisibleCommands: []*cli.Command{comm},
@@ -185,7 +186,7 @@ func appendResourceByCategory(values []*command.ResourceHelpValue, category *sch
 	return values
 }
 
-func appendFlagByCategory(values []*command.CategoryHelpValue, category *schema.Category, flag cli.Flag) []*command.CategoryHelpValue {
+func appendFlagByCategory(values []*usacloud_cli.CategoryHelpValue, category *schema.Category, flag cli.Flag) []*usacloud_cli.CategoryHelpValue {
 	exists := false
 	for _, catHelp := range values {
 		if catHelp.Name == category.Key {
@@ -194,7 +195,7 @@ func appendFlagByCategory(values []*command.CategoryHelpValue, category *schema.
 		}
 	}
 	if !exists {
-		values = append(values, &command.CategoryHelpValue{
+		values = append(values, &usacloud_cli.CategoryHelpValue{
 			Name:         category.Key,
 			DisplayText:  category.DisplayName,
 			VisibleFlags: []cli.Flag{flag},

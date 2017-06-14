@@ -10,8 +10,8 @@ func TestFilterByTagFunc(t *testing.T) {
 
 	t.Run("With single word", func(t *testing.T) {
 
-		var sw1 *sacloud.Switch = &sacloud.Switch{Resource: sacloud.NewResource(1)}
-		var sw2 *sacloud.Switch = &sacloud.Switch{Resource: sacloud.NewResource(2)}
+		var sw1 = &sacloud.Switch{Resource: sacloud.NewResource(1)}
+		var sw2 = &sacloud.Switch{Resource: sacloud.NewResource(2)}
 
 		items := []interface{}{sw1, sw2}
 
@@ -36,9 +36,9 @@ func TestFilterByTagFunc(t *testing.T) {
 
 	t.Run("With multiple word", func(t *testing.T) {
 
-		var sw1 *sacloud.Switch = &sacloud.Switch{Resource: sacloud.NewResource(1)}
-		var sw2 *sacloud.Switch = &sacloud.Switch{Resource: sacloud.NewResource(2)}
-		var sw3 *sacloud.Switch = &sacloud.Switch{Resource: sacloud.NewResource(3)}
+		var sw1 = &sacloud.Switch{Resource: sacloud.NewResource(1)}
+		var sw2 = &sacloud.Switch{Resource: sacloud.NewResource(2)}
+		var sw3 = &sacloud.Switch{Resource: sacloud.NewResource(3)}
 
 		items := []interface{}{sw1, sw2, sw3}
 

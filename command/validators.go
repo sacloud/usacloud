@@ -4,100 +4,36 @@ import (
 	"fmt"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
-	"reflect"
 	"strings"
-	"time"
 )
 
-var numericZeros = []interface{}{
-	int(0),
-	int8(0),
-	int16(0),
-	int32(0),
-	int64(0),
-	uint(0),
-	uint8(0),
-	uint16(0),
-	uint32(0),
-	uint64(0),
-	float32(0),
-	float64(0),
-}
-
-// isEmpty is copied from github.com/stretchr/testify/assert/assetions.go
-func isEmpty(object interface{}) bool {
-
-	if object == nil {
-		return true
-	} else if object == "" {
-		return true
-	} else if object == false {
-		return true
-	}
-
-	for _, v := range numericZeros {
-		if object == v {
-			return true
-		}
-	}
-
-	objValue := reflect.ValueOf(object)
-
-	switch objValue.Kind() {
-	case reflect.Map:
-		fallthrough
-	case reflect.Slice, reflect.Chan:
-		{
-			return (objValue.Len() == 0)
-		}
-	case reflect.Struct:
-		switch object.(type) {
-		case time.Time:
-			return object.(time.Time).IsZero()
-		}
-	case reflect.Ptr:
-		{
-			if objValue.IsNil() {
-				return true
-			}
-			switch object.(type) {
-			case *time.Time:
-				return object.(*time.Time).IsZero()
-			default:
-				return false
-			}
-		}
-	}
-	return false
-}
-
-func validateSakuraID(fieldName string, object interface{}) []error {
-	return schema.ValidateSakuraID()(fieldName, object)
-}
-
-func validateInStrValues(fieldName string, object interface{}, allowValues ...string) []error {
+func ValidateInStrValues(fieldName string, object interface{}, allowValues ...string) []error {
 	return schema.ValidateInStrValues(allowValues...)(fieldName, object)
 }
 
-func validateRequired(fieldName string, object interface{}) []error {
-	if isEmpty(object) {
+func ValidateRequired(fieldName string, object interface{}) []error {
+	if IsEmpty(object) {
 		return []error{fmt.Errorf("%q: is required", fieldName)}
 	}
 	return []error{}
 }
 
-func validateSetProhibited(fieldName string, object interface{}) []error {
-	if !isEmpty(object) {
+func ValidateSakuraID(fieldName string, object interface{}) []error {
+	return schema.ValidateSakuraID()(fieldName, object)
+}
+
+func ValidateSetProhibited(fieldName string, object interface{}) []error {
+	if !IsEmpty(object) {
 		return []error{fmt.Errorf("%q: can't set on current context", fieldName)}
 	}
 	return []error{}
 }
 
-func validateConflicts(fieldName string, object interface{}, values map[string]interface{}) []error {
+func ValidateConflicts(fieldName string, object interface{}, values map[string]interface{}) []error {
 
-	if !isEmpty(object) {
+	if !IsEmpty(object) {
 		for _, v := range values {
-			if !isEmpty(v) {
+			if !IsEmpty(v) {
 				keys := []string{}
 				for k := range values {
 					keys = append(keys, fmt.Sprintf("%q", k))
@@ -110,11 +46,11 @@ func validateConflicts(fieldName string, object interface{}, values map[string]i
 
 }
 
-func validateConflictValues(fieldName string, object interface{}, values map[string]interface{}) []error {
+func ValidateConflictValues(fieldName string, object interface{}, values map[string]interface{}) []error {
 
-	if !isEmpty(object) {
+	if !IsEmpty(object) {
 		for _, v := range values {
-			if !isEmpty(v) {
+			if !IsEmpty(v) {
 				keys := []string{}
 				for k := range values {
 					keys = append(keys, fmt.Sprintf("%q", k))
@@ -127,7 +63,7 @@ func validateConflictValues(fieldName string, object interface{}, values map[str
 
 }
 
-func validateBetween(fieldName string, object interface{}, min int, max int) []error {
+func ValidateBetween(fieldName string, object interface{}, min int, max int) []error {
 
 	if object == nil {
 		object = []int64{}
@@ -164,7 +100,7 @@ func validateBetween(fieldName string, object interface{}, min int, max int) []e
 	return []error{}
 }
 
-func validateOutputOption(o output.Option) []error {
+func ValidateOutputOption(o output.Option) []error {
 
 	outputType := o.GetOutputType()
 	columns := o.GetColumn()

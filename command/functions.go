@@ -5,18 +5,79 @@ import (
 	"fmt"
 	"github.com/mitchellh/go-homedir"
 	"github.com/sacloud/libsacloud/api"
-	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/version"
-	"gopkg.in/urfave/cli.v2"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"reflect"
 	"strings"
 	"time"
 )
 
-func flattenErrors(errors []error) error {
+var numericZeros = []interface{}{
+	int(0),
+	int8(0),
+	int16(0),
+	int32(0),
+	int64(0),
+	uint(0),
+	uint8(0),
+	uint16(0),
+	uint32(0),
+	uint64(0),
+	float32(0),
+	float64(0),
+}
+
+// IsEmpty is copied from github.com/stretchr/testify/assert/assetions.go
+func IsEmpty(object interface{}) bool {
+
+	if object == nil {
+		return true
+	} else if object == "" {
+		return true
+	} else if object == false {
+		return true
+	}
+
+	for _, v := range numericZeros {
+		if object == v {
+			return true
+		}
+	}
+
+	objValue := reflect.ValueOf(object)
+
+	switch objValue.Kind() {
+	case reflect.Map:
+		fallthrough
+	case reflect.Slice, reflect.Chan:
+		{
+			return (objValue.Len() == 0)
+		}
+	case reflect.Struct:
+		switch object.(type) {
+		case time.Time:
+			return object.(time.Time).IsZero()
+		}
+	case reflect.Ptr:
+		{
+			if objValue.IsNil() {
+				return true
+			}
+			switch object.(type) {
+			case *time.Time:
+				return object.(*time.Time).IsZero()
+			default:
+				return false
+			}
+		}
+	}
+	return false
+}
+
+func FlattenErrors(errors []error) error {
 	if len(errors) == 0 {
 		return nil
 	}
@@ -27,23 +88,13 @@ func flattenErrors(errors []error) error {
 	return fmt.Errorf(strings.Join(list, "\n"))
 }
 
-func flattenErrorsWithPrefix(errors []error, pref string) error {
+func FlattenErrorsWithPrefix(errors []error, pref string) error {
 	var list = make([]string, 0)
 	for _, str := range errors {
 		list = append(list, fmt.Sprintf("[%s] : %s", pref, str.Error()))
 	}
 	return fmt.Errorf(strings.Join(list, "\n"))
 
-}
-
-func setSortBy(target sortable, key string) {
-	reverse := strings.HasPrefix(key, "-")
-	key = strings.Replace(key, "-", "", -1)
-	target.SetSortBy(key, reverse)
-}
-
-type sortable interface {
-	SetSortBy(key string, reverse bool)
 }
 
 func createAPIClient() *api.Client {
@@ -93,6 +144,18 @@ func GetConfigFilePath() (string, error) {
 	return filepath.Join(homeDir, ".usacloud_config"), nil
 }
 
+type ConfigFileValue struct {
+	AccessToken       string
+	AccessTokenSecret string
+	Zone              string
+}
+
+func (p *ConfigFileValue) IsEmpty() bool {
+	return p.AccessToken == "" &&
+		p.AccessTokenSecret == "" &&
+		p.Zone == ""
+}
+
 func LoadConfigFile() (*ConfigFileValue, error) {
 	v := &ConfigFileValue{}
 	filePath, err := GetConfigFilePath()
@@ -115,137 +178,24 @@ func LoadConfigFile() (*ConfigFileValue, error) {
 	return v, nil
 }
 
-func getSSHPrivateKeyStorePath(serverID int64) (string, error) {
-	homeDir, err := homedir.Dir()
-	if err != nil {
-		return "", fmt.Errorf("getting HomeDir is failed:%s", err)
-	}
-	return filepath.Join(homeDir, ".ssh", fmt.Sprintf("sacloud_pkey_%d", serverID)), nil
-}
-
-func completionFlagNames(c *cli.Context, commandName string) {
-	comm := c.App.Command(commandName)
-	if comm == nil {
-		return
-	}
-	for _, f := range comm.VisibleFlags() {
-		for _, n := range f.Names() {
-			format := "--%s\n"
-			if len(n) == 1 {
-				format = "-%s\n"
-			}
-			fmt.Printf(format, n)
-		}
-	}
-}
-
-func getSSHDefaultUserName(client *api.Client, serverID int64) (string, error) {
-
-	// read server
-	server, err := client.GetServerAPI().Read(serverID)
-	if err != nil {
-		return "", err
-	}
-
-	if len(server.Disks) == 0 {
-		return "", nil
-	}
-
-	return getSSHDefaultUserNameDiskRec(client, server.Disks[0].ID)
-}
-
-func getSSHDefaultUserNameDiskRec(client *api.Client, diskID int64) (string, error) {
-
-	disk, err := client.GetDiskAPI().Read(diskID)
-	if err != nil {
-		return "", err
-	}
-
-	if disk.SourceDisk != nil {
-		return getSSHDefaultUserNameDiskRec(client, disk.SourceDisk.ID)
-	}
-
-	if disk.SourceArchive != nil {
-		return getSSHDefaultUserNameArchiveRec(client, disk.SourceArchive.ID)
-
-	}
-
-	return "", nil
-}
-
-func getSSHDefaultUserNameArchiveRec(client *api.Client, archiveID int64) (string, error) {
-	// read archive
-	archive, err := client.GetArchiveAPI().Read(archiveID)
-	if err != nil {
-		return "", err
-	}
-
-	if archive.Scope == string(sacloud.ESCopeShared) {
-
-		// has ubuntu/coreos tag?
-		if archive.HasTag("distro-ubuntu") {
-			return "ubuntu", nil
-		}
-
-		if archive.HasTag("distro-vyos") {
-			return "vyos", nil
-		}
-
-		if archive.HasTag("distro-coreos") {
-			return "core", nil
-		}
-
-		if archive.HasTag("distro-rancheros") {
-			return "rancher", nil
-		}
-	}
-	if archive.SourceDisk != nil {
-		return getSSHDefaultUserNameDiskRec(client, archive.SourceDisk.ID)
-	}
-
-	if archive.SourceArchive != nil {
-		return getSSHDefaultUserNameArchiveRec(client, archive.SourceArchive.ID)
-	}
-	return "", nil
-
-}
-
-func confirm(msg string) bool {
+func Confirm(msg string) bool {
 	fmt.Printf("\n%s(y/n) [n]: ", msg)
 	var input string
 	fmt.Fscanln(GlobalOption.In, &input)
 	return input == "y"
 }
 
-func confirmContinue(target string, ids ...int64) bool {
+func ConfirmContinue(target string, ids ...int64) bool {
 	if len(ids) == 0 {
-		return confirm(fmt.Sprintf("Are you sure you want to %s?", target))
+		return Confirm(fmt.Sprintf("Are you sure you want to %s?", target))
 	}
 
 	strIDs := StringIDs(ids)
 	msg := fmt.Sprintf("Target resource IDs => [\n\t%s\n]", strings.Join(strIDs, ",\n\t"))
-	return confirm(fmt.Sprintf("%s\nAre you sure you want to %s?", msg, target))
+	return Confirm(fmt.Sprintf("%s\nAre you sure you want to %s?", msg, target))
 }
 
-func parseDateTimeString(strDateTime string) time.Time {
-	allowDatetimeFormatList := []string{
-		time.RFC3339,
-	}
-
-	if strDateTime != "" {
-		for _, format := range allowDatetimeFormatList {
-			d, err := time.Parse(format, strDateTime)
-			if err == nil {
-				// success
-				return d
-			}
-		}
-	}
-
-	return time.Now()
-}
-
-func uniqIDs(elements []int64) []int64 {
+func UniqIDs(elements []int64) []int64 {
 	encountered := map[int64]bool{}
 	result := []int64{}
 	for v := range elements {
