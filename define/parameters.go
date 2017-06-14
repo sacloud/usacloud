@@ -168,3 +168,55 @@ func filterListByTags(_ []interface{}, item interface{}, param interface{}) bool
 	}
 	return res
 }
+
+var paramSourceArchiveIDCond = map[string]*schema.Schema{
+	"source-archive-id": {
+		Type:         schema.TypeInt64,
+		HandlerType:  schema.HandlerFilterFunc,
+		FilterFunc:   filterBySourceArchiveID,
+		Description:  "set filter by source-archive-id",
+		Category:     "filter",
+		ValidateFunc: validateSakuraID(),
+		Order:        5,
+	},
+}
+
+var paramSourceDiskCond = map[string]*schema.Schema{
+	"source-disk-id": {
+		Type:         schema.TypeInt64,
+		HandlerType:  schema.HandlerFilterFunc,
+		FilterFunc:   filterBySourceDiskID,
+		Description:  "set filter by source-disk-id",
+		Category:     "filter",
+		ValidateFunc: validateSakuraID(),
+		Order:        6,
+	},
+}
+
+func filterBySourceArchiveID(_ []interface{}, item interface{}, param interface{}) bool {
+
+	type archiveIDHandler interface {
+		GetSourceArchiveID() int64
+	}
+
+	archiveIDHolder, ok := item.(archiveIDHandler)
+	if !ok {
+		return false
+	}
+
+	return archiveIDHolder.GetSourceArchiveID() == param.(int64)
+}
+
+func filterBySourceDiskID(_ []interface{}, item interface{}, param interface{}) bool {
+
+	type diskIDHandler interface {
+		GetSourceDiskID() int64
+	}
+
+	diskIDHolder, ok := item.(diskIDHandler)
+	if !ok {
+		return false
+	}
+
+	return diskIDHolder.GetSourceDiskID() == param.(int64)
+}

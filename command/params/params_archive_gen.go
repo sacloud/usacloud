@@ -10,18 +10,20 @@ import (
 
 // ListArchiveParam is input parameters for the sacloud API
 type ListArchiveParam struct {
-	Name       []string
-	Id         []int64
-	Scope      string
-	Tags       []string
-	From       int
-	Max        int
-	Sort       []string
-	OutputType string
-	Column     []string
-	Quiet      bool
-	Format     string
-	FormatFile string
+	Name            []string
+	Id              []int64
+	Scope           string
+	Tags            []string
+	SourceArchiveId int64
+	SourceDiskId    int64
+	From            int
+	Max             int
+	Sort            []string
+	OutputType      string
+	Column          []string
+	Quiet           bool
+	Format          string
+	FormatFile      string
 }
 
 // NewListArchiveParam return new ListArchiveParam
@@ -67,6 +69,20 @@ func (p *ListArchiveParam) Validate() []error {
 	{
 		validator := define.Resources["Archive"].Commands["list"].Params["tags"].ValidateFunc
 		errs := validator("--tags", p.Tags)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Archive"].Commands["list"].Params["source-archive-id"].ValidateFunc
+		errs := validator("--source-archive-id", p.SourceArchiveId)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Archive"].Commands["list"].Params["source-disk-id"].ValidateFunc
+		errs := validator("--source-disk-id", p.SourceDiskId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -144,6 +160,20 @@ func (p *ListArchiveParam) SetTags(v []string) {
 
 func (p *ListArchiveParam) GetTags() []string {
 	return p.Tags
+}
+func (p *ListArchiveParam) SetSourceArchiveId(v int64) {
+	p.SourceArchiveId = v
+}
+
+func (p *ListArchiveParam) GetSourceArchiveId() int64 {
+	return p.SourceArchiveId
+}
+func (p *ListArchiveParam) SetSourceDiskId(v int64) {
+	p.SourceDiskId = v
+}
+
+func (p *ListArchiveParam) GetSourceDiskId() int64 {
+	return p.SourceDiskId
 }
 func (p *ListArchiveParam) SetFrom(v int) {
 	p.From = v

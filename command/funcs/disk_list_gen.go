@@ -53,6 +53,14 @@ func DiskList(ctx command.Context, params *params.ListDiskParam) error {
 			continue
 		}
 
+		if !params.GetCommandDef().Params["source-archive-id"].FilterFunc(list, &res.Disks[i], params.SourceArchiveId) {
+			continue
+		}
+
+		if !params.GetCommandDef().Params["source-disk-id"].FilterFunc(list, &res.Disks[i], params.SourceDiskId) {
+			continue
+		}
+
 		list = append(list, &res.Disks[i])
 	}
 	return ctx.GetOutput().Print(list...)

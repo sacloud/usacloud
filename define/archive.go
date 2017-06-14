@@ -128,7 +128,13 @@ var ArchiveCommandCategories = []schema.Category{
 }
 
 func archiveListParam() map[string]*schema.Schema {
-	return mergeParameterMap(CommonListParam, paramScopeCond, paramTagsCond)
+	return mergeParameterMap(
+		CommonListParam,
+		paramScopeCond,
+		paramTagsCond,
+		paramSourceArchiveIDCond,
+		paramSourceDiskCond,
+	)
 }
 
 func archiveListColumns() []output.ColumnDef {
