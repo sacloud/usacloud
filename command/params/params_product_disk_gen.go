@@ -17,6 +17,7 @@ type ListProductDiskParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -27,6 +28,50 @@ type ListProductDiskParam struct {
 // NewListProductDiskParam return new ListProductDiskParam
 func NewListProductDiskParam() *ListProductDiskParam {
 	return &ListProductDiskParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListProductDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -158,6 +203,13 @@ func (p *ListProductDiskParam) SetParamTemplateFile(v string) {
 func (p *ListProductDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListProductDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListProductDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListProductDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -199,6 +251,7 @@ type ReadProductDiskParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -210,6 +263,41 @@ type ReadProductDiskParam struct {
 // NewReadProductDiskParam return new ReadProductDiskParam
 func NewReadProductDiskParam() *ReadProductDiskParam {
 	return &ReadProductDiskParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadProductDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -301,6 +389,13 @@ func (p *ReadProductDiskParam) SetParamTemplateFile(v string) {
 
 func (p *ReadProductDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadProductDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadProductDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *ReadProductDiskParam) SetOutputType(v string) {
 	p.OutputType = v

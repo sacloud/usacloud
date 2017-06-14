@@ -17,6 +17,7 @@ type ListProductLicenseParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -27,6 +28,50 @@ type ListProductLicenseParam struct {
 // NewListProductLicenseParam return new ListProductLicenseParam
 func NewListProductLicenseParam() *ListProductLicenseParam {
 	return &ListProductLicenseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListProductLicenseParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -158,6 +203,13 @@ func (p *ListProductLicenseParam) SetParamTemplateFile(v string) {
 func (p *ListProductLicenseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListProductLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListProductLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListProductLicenseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -199,6 +251,7 @@ type ReadProductLicenseParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -210,6 +263,41 @@ type ReadProductLicenseParam struct {
 // NewReadProductLicenseParam return new ReadProductLicenseParam
 func NewReadProductLicenseParam() *ReadProductLicenseParam {
 	return &ReadProductLicenseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadProductLicenseParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -301,6 +389,13 @@ func (p *ReadProductLicenseParam) SetParamTemplateFile(v string) {
 
 func (p *ReadProductLicenseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadProductLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadProductLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *ReadProductLicenseParam) SetOutputType(v string) {
 	p.OutputType = v

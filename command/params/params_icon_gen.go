@@ -19,6 +19,7 @@ type ListIconParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -29,6 +30,56 @@ type ListIconParam struct {
 // NewListIconParam return new ListIconParam
 func NewListIconParam() *ListIconParam {
 	return &ListIconParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListIconParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Scope) {
+		p.Scope = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -188,6 +239,13 @@ func (p *ListIconParam) SetParamTemplateFile(v string) {
 func (p *ListIconParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListIconParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListIconParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListIconParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -232,6 +290,7 @@ type CreateIconParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -242,6 +301,47 @@ type CreateIconParam struct {
 // NewCreateIconParam return new CreateIconParam
 func NewCreateIconParam() *CreateIconParam {
 	return &CreateIconParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateIconParam) FillValueToSkeleton() {
+	if isEmpty(p.Image) {
+		p.Image = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -376,6 +476,13 @@ func (p *CreateIconParam) SetParamTemplateFile(v string) {
 func (p *CreateIconParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateIconParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateIconParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateIconParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -416,6 +523,7 @@ func (p *CreateIconParam) GetFormatFile() string {
 type ReadIconParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -427,6 +535,38 @@ type ReadIconParam struct {
 // NewReadIconParam return new ReadIconParam
 func NewReadIconParam() *ReadIconParam {
 	return &ReadIconParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadIconParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -505,6 +645,13 @@ func (p *ReadIconParam) SetParamTemplateFile(v string) {
 func (p *ReadIconParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadIconParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadIconParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadIconParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -555,6 +702,7 @@ type UpdateIconParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -566,6 +714,47 @@ type UpdateIconParam struct {
 // NewUpdateIconParam return new UpdateIconParam
 func NewUpdateIconParam() *UpdateIconParam {
 	return &UpdateIconParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateIconParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -679,6 +868,13 @@ func (p *UpdateIconParam) SetParamTemplateFile(v string) {
 func (p *UpdateIconParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateIconParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateIconParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateIconParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -727,6 +923,7 @@ type DeleteIconParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -738,6 +935,41 @@ type DeleteIconParam struct {
 // NewDeleteIconParam return new DeleteIconParam
 func NewDeleteIconParam() *DeleteIconParam {
 	return &DeleteIconParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteIconParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -822,6 +1054,13 @@ func (p *DeleteIconParam) SetParamTemplateFile(v string) {
 
 func (p *DeleteIconParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteIconParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteIconParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *DeleteIconParam) SetOutputType(v string) {
 	p.OutputType = v

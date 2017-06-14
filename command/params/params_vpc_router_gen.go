@@ -18,6 +18,7 @@ type ListVPCRouterParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -28,6 +29,53 @@ type ListVPCRouterParam struct {
 // NewListVPCRouterParam return new ListVPCRouterParam
 func NewListVPCRouterParam() *ListVPCRouterParam {
 	return &ListVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -173,6 +221,13 @@ func (p *ListVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *ListVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -225,6 +280,7 @@ type CreateVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -237,9 +293,73 @@ func NewCreateVPCRouterParam() *CreateVPCRouterParam {
 	return &CreateVPCRouterParam{
 
 		Plan: "standard",
-
 		Vrid: 1,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Plan) {
+		p.Plan = ""
+	}
+	if isEmpty(p.SwitchId) {
+		p.SwitchId = 0
+	}
+	if isEmpty(p.Vrid) {
+		p.Vrid = 0
+	}
+	if isEmpty(p.Vip) {
+		p.Vip = ""
+	}
+	if isEmpty(p.Ipaddress1) {
+		p.Ipaddress1 = ""
+	}
+	if isEmpty(p.Ipaddress2) {
+		p.Ipaddress2 = ""
+	}
+	if isEmpty(p.BootAfterCreate) {
+		p.BootAfterCreate = false
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -479,6 +599,13 @@ func (p *CreateVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *CreateVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -519,6 +646,7 @@ func (p *CreateVPCRouterParam) GetFormatFile() string {
 type ReadVPCRouterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -530,6 +658,38 @@ type ReadVPCRouterParam struct {
 // NewReadVPCRouterParam return new ReadVPCRouterParam
 func NewReadVPCRouterParam() *ReadVPCRouterParam {
 	return &ReadVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -608,6 +768,13 @@ func (p *ReadVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *ReadVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -661,6 +828,7 @@ type UpdateVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -672,6 +840,56 @@ type UpdateVPCRouterParam struct {
 // NewUpdateVPCRouterParam return new UpdateVPCRouterParam
 func NewUpdateVPCRouterParam() *UpdateVPCRouterParam {
 	return &UpdateVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.SyslogHost) {
+		p.SyslogHost = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -827,6 +1045,13 @@ func (p *UpdateVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *UpdateVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -876,6 +1101,7 @@ type DeleteVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -887,6 +1113,44 @@ type DeleteVPCRouterParam struct {
 // NewDeleteVPCRouterParam return new DeleteVPCRouterParam
 func NewDeleteVPCRouterParam() *DeleteVPCRouterParam {
 	return &DeleteVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Force) {
+		p.Force = false
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -979,6 +1243,13 @@ func (p *DeleteVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *DeleteVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DeleteVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1027,12 +1298,33 @@ type BootVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewBootVPCRouterParam return new BootVPCRouterParam
 func NewBootVPCRouterParam() *BootVPCRouterParam {
 	return &BootVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *BootVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1098,6 +1390,13 @@ func (p *BootVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *BootVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *BootVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BootVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *BootVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1111,12 +1410,33 @@ type ShutdownVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewShutdownVPCRouterParam return new ShutdownVPCRouterParam
 func NewShutdownVPCRouterParam() *ShutdownVPCRouterParam {
 	return &ShutdownVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ShutdownVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1182,6 +1502,13 @@ func (p *ShutdownVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *ShutdownVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ShutdownVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ShutdownVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1195,12 +1522,33 @@ type ShutdownForceVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewShutdownForceVPCRouterParam return new ShutdownForceVPCRouterParam
 func NewShutdownForceVPCRouterParam() *ShutdownForceVPCRouterParam {
 	return &ShutdownForceVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ShutdownForceVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1266,6 +1614,13 @@ func (p *ShutdownForceVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *ShutdownForceVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ShutdownForceVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownForceVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ShutdownForceVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1279,12 +1634,33 @@ type ResetVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewResetVPCRouterParam return new ResetVPCRouterParam
 func NewResetVPCRouterParam() *ResetVPCRouterParam {
 	return &ResetVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ResetVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1350,6 +1726,13 @@ func (p *ResetVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *ResetVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ResetVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ResetVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ResetVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1362,12 +1745,30 @@ func (p *ResetVPCRouterParam) GetId() int64 {
 type WaitForBootVPCRouterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewWaitForBootVPCRouterParam return new WaitForBootVPCRouterParam
 func NewWaitForBootVPCRouterParam() *WaitForBootVPCRouterParam {
 	return &WaitForBootVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *WaitForBootVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1426,6 +1827,13 @@ func (p *WaitForBootVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *WaitForBootVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *WaitForBootVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForBootVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *WaitForBootVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1438,12 +1846,30 @@ func (p *WaitForBootVPCRouterParam) GetId() int64 {
 type WaitForDownVPCRouterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewWaitForDownVPCRouterParam return new WaitForDownVPCRouterParam
 func NewWaitForDownVPCRouterParam() *WaitForDownVPCRouterParam {
 	return &WaitForDownVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *WaitForDownVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1502,6 +1928,13 @@ func (p *WaitForDownVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *WaitForDownVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *WaitForDownVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForDownVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *WaitForDownVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1514,6 +1947,7 @@ func (p *WaitForDownVPCRouterParam) GetId() int64 {
 type InterfaceInfoVPCRouterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1525,6 +1959,38 @@ type InterfaceInfoVPCRouterParam struct {
 // NewInterfaceInfoVPCRouterParam return new InterfaceInfoVPCRouterParam
 func NewInterfaceInfoVPCRouterParam() *InterfaceInfoVPCRouterParam {
 	return &InterfaceInfoVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *InterfaceInfoVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1603,6 +2069,13 @@ func (p *InterfaceInfoVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *InterfaceInfoVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *InterfaceInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *InterfaceInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1658,6 +2131,7 @@ type InterfaceConnectVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
@@ -1667,6 +2141,47 @@ func NewInterfaceConnectVPCRouterParam() *InterfaceConnectVPCRouterParam {
 
 		NwMasklen: 24,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *InterfaceConnectVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = ""
+	}
+	if isEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if isEmpty(p.WithReboot) {
+		p.WithReboot = false
+	}
+	if isEmpty(p.Ipaddress1) {
+		p.Ipaddress1 = ""
+	}
+	if isEmpty(p.SwitchId) {
+		p.SwitchId = 0
+	}
+	if isEmpty(p.Ipaddress2) {
+		p.Ipaddress2 = ""
+	}
+	if isEmpty(p.NwMasklen) {
+		p.NwMasklen = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1844,6 +2359,13 @@ func (p *InterfaceConnectVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *InterfaceConnectVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *InterfaceConnectVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceConnectVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *InterfaceConnectVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1865,6 +2387,7 @@ type InterfaceUpdateVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
@@ -1874,6 +2397,50 @@ func NewInterfaceUpdateVPCRouterParam() *InterfaceUpdateVPCRouterParam {
 
 		NwMasklen: 24,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *InterfaceUpdateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = ""
+	}
+	if isEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if isEmpty(p.WithReboot) {
+		p.WithReboot = false
+	}
+	if isEmpty(p.Ipaddress1) {
+		p.Ipaddress1 = ""
+	}
+	if isEmpty(p.SwitchId) {
+		p.SwitchId = 0
+	}
+	if isEmpty(p.Ipaddress2) {
+		p.Ipaddress2 = ""
+	}
+	if isEmpty(p.Alias) {
+		p.Alias = []string{""}
+	}
+	if isEmpty(p.NwMasklen) {
+		p.NwMasklen = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2051,6 +2618,13 @@ func (p *InterfaceUpdateVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *InterfaceUpdateVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *InterfaceUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *InterfaceUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2066,12 +2640,39 @@ type InterfaceDisconnectVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewInterfaceDisconnectVPCRouterParam return new InterfaceDisconnectVPCRouterParam
 func NewInterfaceDisconnectVPCRouterParam() *InterfaceDisconnectVPCRouterParam {
 	return &InterfaceDisconnectVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *InterfaceDisconnectVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = ""
+	}
+	if isEmpty(p.WithReboot) {
+		p.WithReboot = false
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2165,6 +2766,13 @@ func (p *InterfaceDisconnectVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *InterfaceDisconnectVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *InterfaceDisconnectVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceDisconnectVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *InterfaceDisconnectVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2177,6 +2785,7 @@ func (p *InterfaceDisconnectVPCRouterParam) GetId() int64 {
 type StaticNatInfoVPCRouterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -2188,6 +2797,38 @@ type StaticNatInfoVPCRouterParam struct {
 // NewStaticNatInfoVPCRouterParam return new StaticNatInfoVPCRouterParam
 func NewStaticNatInfoVPCRouterParam() *StaticNatInfoVPCRouterParam {
 	return &StaticNatInfoVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *StaticNatInfoVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2266,6 +2907,13 @@ func (p *StaticNatInfoVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *StaticNatInfoVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *StaticNatInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *StaticNatInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -2317,12 +2965,42 @@ type StaticNatAddVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewStaticNatAddVPCRouterParam return new StaticNatAddVPCRouterParam
 func NewStaticNatAddVPCRouterParam() *StaticNatAddVPCRouterParam {
 	return &StaticNatAddVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *StaticNatAddVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Global) {
+		p.Global = ""
+	}
+	if isEmpty(p.Private) {
+		p.Private = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2444,6 +3122,13 @@ func (p *StaticNatAddVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *StaticNatAddVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *StaticNatAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticNatAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *StaticNatAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2461,12 +3146,45 @@ type StaticNatUpdateVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewStaticNatUpdateVPCRouterParam return new StaticNatUpdateVPCRouterParam
 func NewStaticNatUpdateVPCRouterParam() *StaticNatUpdateVPCRouterParam {
 	return &StaticNatUpdateVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *StaticNatUpdateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Global) {
+		p.Global = ""
+	}
+	if isEmpty(p.Private) {
+		p.Private = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2588,6 +3306,13 @@ func (p *StaticNatUpdateVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *StaticNatUpdateVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *StaticNatUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticNatUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *StaticNatUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2602,12 +3327,36 @@ type StaticNatDeleteVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewStaticNatDeleteVPCRouterParam return new StaticNatDeleteVPCRouterParam
 func NewStaticNatDeleteVPCRouterParam() *StaticNatDeleteVPCRouterParam {
 	return &StaticNatDeleteVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *StaticNatDeleteVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2687,6 +3436,13 @@ func (p *StaticNatDeleteVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *StaticNatDeleteVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *StaticNatDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticNatDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *StaticNatDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2699,6 +3455,7 @@ func (p *StaticNatDeleteVPCRouterParam) GetId() int64 {
 type PortForwardingInfoVPCRouterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -2710,6 +3467,38 @@ type PortForwardingInfoVPCRouterParam struct {
 // NewPortForwardingInfoVPCRouterParam return new PortForwardingInfoVPCRouterParam
 func NewPortForwardingInfoVPCRouterParam() *PortForwardingInfoVPCRouterParam {
 	return &PortForwardingInfoVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *PortForwardingInfoVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2788,6 +3577,13 @@ func (p *PortForwardingInfoVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *PortForwardingInfoVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *PortForwardingInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *PortForwardingInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -2841,12 +3637,48 @@ type PortForwardingAddVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewPortForwardingAddVPCRouterParam return new PortForwardingAddVPCRouterParam
 func NewPortForwardingAddVPCRouterParam() *PortForwardingAddVPCRouterParam {
 	return &PortForwardingAddVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *PortForwardingAddVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if isEmpty(p.GlobalPort) {
+		p.GlobalPort = 0
+	}
+	if isEmpty(p.PrivateIpaddress) {
+		p.PrivateIpaddress = ""
+	}
+	if isEmpty(p.PrivatePort) {
+		p.PrivatePort = 0
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3010,6 +3842,13 @@ func (p *PortForwardingAddVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *PortForwardingAddVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *PortForwardingAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PortForwardingAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *PortForwardingAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3029,12 +3868,51 @@ type PortForwardingUpdateVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewPortForwardingUpdateVPCRouterParam return new PortForwardingUpdateVPCRouterParam
 func NewPortForwardingUpdateVPCRouterParam() *PortForwardingUpdateVPCRouterParam {
 	return &PortForwardingUpdateVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *PortForwardingUpdateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if isEmpty(p.GlobalPort) {
+		p.GlobalPort = 0
+	}
+	if isEmpty(p.PrivateIpaddress) {
+		p.PrivateIpaddress = ""
+	}
+	if isEmpty(p.PrivatePort) {
+		p.PrivatePort = 0
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3184,6 +4062,13 @@ func (p *PortForwardingUpdateVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *PortForwardingUpdateVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *PortForwardingUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PortForwardingUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *PortForwardingUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3198,12 +4083,36 @@ type PortForwardingDeleteVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewPortForwardingDeleteVPCRouterParam return new PortForwardingDeleteVPCRouterParam
 func NewPortForwardingDeleteVPCRouterParam() *PortForwardingDeleteVPCRouterParam {
 	return &PortForwardingDeleteVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *PortForwardingDeleteVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3283,6 +4192,13 @@ func (p *PortForwardingDeleteVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *PortForwardingDeleteVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *PortForwardingDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PortForwardingDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *PortForwardingDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3296,6 +4212,7 @@ type FirewallInfoVPCRouterParam struct {
 	Direction         string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -3310,6 +4227,41 @@ func NewFirewallInfoVPCRouterParam() *FirewallInfoVPCRouterParam {
 
 		Direction: "receive",
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *FirewallInfoVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Direction) {
+		p.Direction = ""
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3409,6 +4361,13 @@ func (p *FirewallInfoVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *FirewallInfoVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *FirewallInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *FirewallInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -3466,6 +4425,7 @@ type FirewallAddVPCRouterParam struct {
 	Assumeyes          bool
 	ParamTemplate      string
 	ParamTemplateFile  string
+	GenerateSkeleton   bool
 	Id                 int64
 }
 
@@ -3474,9 +4434,55 @@ func NewFirewallAddVPCRouterParam() *FirewallAddVPCRouterParam {
 	return &FirewallAddVPCRouterParam{
 
 		Direction: "receive",
-
-		Action: "deny",
+		Action:    "deny",
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *FirewallAddVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Direction) {
+		p.Direction = ""
+	}
+	if isEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if isEmpty(p.SourceNetwork) {
+		p.SourceNetwork = ""
+	}
+	if isEmpty(p.SourcePort) {
+		p.SourcePort = 0
+	}
+	if isEmpty(p.DestinationNetwork) {
+		p.DestinationNetwork = ""
+	}
+	if isEmpty(p.DestinationPort) {
+		p.DestinationPort = 0
+	}
+	if isEmpty(p.Action) {
+		p.Action = ""
+	}
+	if isEmpty(p.EnableLogging) {
+		p.EnableLogging = false
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3682,6 +4688,13 @@ func (p *FirewallAddVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *FirewallAddVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *FirewallAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *FirewallAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3705,6 +4718,7 @@ type FirewallUpdateVPCRouterParam struct {
 	Assumeyes          bool
 	ParamTemplate      string
 	ParamTemplateFile  string
+	GenerateSkeleton   bool
 	Id                 int64
 }
 
@@ -3713,9 +4727,58 @@ func NewFirewallUpdateVPCRouterParam() *FirewallUpdateVPCRouterParam {
 	return &FirewallUpdateVPCRouterParam{
 
 		Direction: "receive",
-
-		Action: "deny",
+		Action:    "deny",
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *FirewallUpdateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Direction) {
+		p.Direction = ""
+	}
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if isEmpty(p.SourceNetwork) {
+		p.SourceNetwork = ""
+	}
+	if isEmpty(p.SourcePort) {
+		p.SourcePort = 0
+	}
+	if isEmpty(p.DestinationNetwork) {
+		p.DestinationNetwork = ""
+	}
+	if isEmpty(p.DestinationPort) {
+		p.DestinationPort = 0
+	}
+	if isEmpty(p.Action) {
+		p.Action = ""
+	}
+	if isEmpty(p.EnableLogging) {
+		p.EnableLogging = false
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3921,6 +4984,13 @@ func (p *FirewallUpdateVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *FirewallUpdateVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *FirewallUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *FirewallUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3936,6 +5006,7 @@ type FirewallDeleteVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
@@ -3945,6 +5016,32 @@ func NewFirewallDeleteVPCRouterParam() *FirewallDeleteVPCRouterParam {
 
 		Direction: "receive",
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *FirewallDeleteVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Direction) {
+		p.Direction = ""
+	}
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -4045,6 +5142,13 @@ func (p *FirewallDeleteVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *FirewallDeleteVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *FirewallDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *FirewallDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4057,6 +5161,7 @@ func (p *FirewallDeleteVPCRouterParam) GetId() int64 {
 type DhcpServerInfoVPCRouterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -4068,6 +5173,38 @@ type DhcpServerInfoVPCRouterParam struct {
 // NewDhcpServerInfoVPCRouterParam return new DhcpServerInfoVPCRouterParam
 func NewDhcpServerInfoVPCRouterParam() *DhcpServerInfoVPCRouterParam {
 	return &DhcpServerInfoVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DhcpServerInfoVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -4146,6 +5283,13 @@ func (p *DhcpServerInfoVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *DhcpServerInfoVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DhcpServerInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DhcpServerInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -4197,12 +5341,42 @@ type DhcpServerAddVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewDhcpServerAddVPCRouterParam return new DhcpServerAddVPCRouterParam
 func NewDhcpServerAddVPCRouterParam() *DhcpServerAddVPCRouterParam {
 	return &DhcpServerAddVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DhcpServerAddVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.RangeStart) {
+		p.RangeStart = ""
+	}
+	if isEmpty(p.RangeStop) {
+		p.RangeStop = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -4331,6 +5505,13 @@ func (p *DhcpServerAddVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *DhcpServerAddVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DhcpServerAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DhcpServerAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4347,12 +5528,42 @@ type DhcpServerUpdateVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewDhcpServerUpdateVPCRouterParam return new DhcpServerUpdateVPCRouterParam
 func NewDhcpServerUpdateVPCRouterParam() *DhcpServerUpdateVPCRouterParam {
 	return &DhcpServerUpdateVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DhcpServerUpdateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.RangeStart) {
+		p.RangeStart = ""
+	}
+	if isEmpty(p.RangeStop) {
+		p.RangeStop = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -4467,6 +5678,13 @@ func (p *DhcpServerUpdateVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *DhcpServerUpdateVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DhcpServerUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DhcpServerUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4481,12 +5699,36 @@ type DhcpServerDeleteVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewDhcpServerDeleteVPCRouterParam return new DhcpServerDeleteVPCRouterParam
 func NewDhcpServerDeleteVPCRouterParam() *DhcpServerDeleteVPCRouterParam {
 	return &DhcpServerDeleteVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DhcpServerDeleteVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -4573,6 +5815,13 @@ func (p *DhcpServerDeleteVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *DhcpServerDeleteVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DhcpServerDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpServerDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DhcpServerDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4585,6 +5834,7 @@ func (p *DhcpServerDeleteVPCRouterParam) GetId() int64 {
 type DhcpStaticMappingInfoVPCRouterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -4596,6 +5846,38 @@ type DhcpStaticMappingInfoVPCRouterParam struct {
 // NewDhcpStaticMappingInfoVPCRouterParam return new DhcpStaticMappingInfoVPCRouterParam
 func NewDhcpStaticMappingInfoVPCRouterParam() *DhcpStaticMappingInfoVPCRouterParam {
 	return &DhcpStaticMappingInfoVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DhcpStaticMappingInfoVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -4674,6 +5956,13 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *DhcpStaticMappingInfoVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DhcpStaticMappingInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -4724,12 +6013,39 @@ type DhcpStaticMappingAddVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewDhcpStaticMappingAddVPCRouterParam return new DhcpStaticMappingAddVPCRouterParam
 func NewDhcpStaticMappingAddVPCRouterParam() *DhcpStaticMappingAddVPCRouterParam {
 	return &DhcpStaticMappingAddVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DhcpStaticMappingAddVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Macaddress) {
+		p.Macaddress = ""
+	}
+	if isEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -4837,6 +6153,13 @@ func (p *DhcpStaticMappingAddVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *DhcpStaticMappingAddVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DhcpStaticMappingAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpStaticMappingAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DhcpStaticMappingAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4853,12 +6176,42 @@ type DhcpStaticMappingUpdateVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewDhcpStaticMappingUpdateVPCRouterParam return new DhcpStaticMappingUpdateVPCRouterParam
 func NewDhcpStaticMappingUpdateVPCRouterParam() *DhcpStaticMappingUpdateVPCRouterParam {
 	return &DhcpStaticMappingUpdateVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DhcpStaticMappingUpdateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Macaddress) {
+		p.Macaddress = ""
+	}
+	if isEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -4966,6 +6319,13 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *DhcpStaticMappingUpdateVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DhcpStaticMappingUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpStaticMappingUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DhcpStaticMappingUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4980,12 +6340,36 @@ type DhcpStaticMappingDeleteVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewDhcpStaticMappingDeleteVPCRouterParam return new DhcpStaticMappingDeleteVPCRouterParam
 func NewDhcpStaticMappingDeleteVPCRouterParam() *DhcpStaticMappingDeleteVPCRouterParam {
 	return &DhcpStaticMappingDeleteVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DhcpStaticMappingDeleteVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -5065,6 +6449,13 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *DhcpStaticMappingDeleteVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DhcpStaticMappingDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DhcpStaticMappingDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DhcpStaticMappingDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5077,6 +6468,7 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) GetId() int64 {
 type PptpServerInfoVPCRouterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -5088,6 +6480,38 @@ type PptpServerInfoVPCRouterParam struct {
 // NewPptpServerInfoVPCRouterParam return new PptpServerInfoVPCRouterParam
 func NewPptpServerInfoVPCRouterParam() *PptpServerInfoVPCRouterParam {
 	return &PptpServerInfoVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *PptpServerInfoVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -5166,6 +6590,13 @@ func (p *PptpServerInfoVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *PptpServerInfoVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *PptpServerInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *PptpServerInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -5217,12 +6648,42 @@ type PptpServerUpdateVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewPptpServerUpdateVPCRouterParam return new PptpServerUpdateVPCRouterParam
 func NewPptpServerUpdateVPCRouterParam() *PptpServerUpdateVPCRouterParam {
 	return &PptpServerUpdateVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *PptpServerUpdateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Enabled) {
+		p.Enabled = ""
+	}
+	if isEmpty(p.RangeStart) {
+		p.RangeStart = ""
+	}
+	if isEmpty(p.RangeStop) {
+		p.RangeStop = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -5337,6 +6798,13 @@ func (p *PptpServerUpdateVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *PptpServerUpdateVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *PptpServerUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PptpServerUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *PptpServerUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5349,6 +6817,7 @@ func (p *PptpServerUpdateVPCRouterParam) GetId() int64 {
 type L2tpServerInfoVPCRouterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -5360,6 +6829,38 @@ type L2tpServerInfoVPCRouterParam struct {
 // NewL2tpServerInfoVPCRouterParam return new L2tpServerInfoVPCRouterParam
 func NewL2tpServerInfoVPCRouterParam() *L2tpServerInfoVPCRouterParam {
 	return &L2tpServerInfoVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *L2tpServerInfoVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -5438,6 +6939,13 @@ func (p *L2tpServerInfoVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *L2tpServerInfoVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *L2tpServerInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *L2tpServerInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *L2tpServerInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -5490,12 +6998,45 @@ type L2tpServerUpdateVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewL2tpServerUpdateVPCRouterParam return new L2tpServerUpdateVPCRouterParam
 func NewL2tpServerUpdateVPCRouterParam() *L2tpServerUpdateVPCRouterParam {
 	return &L2tpServerUpdateVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *L2tpServerUpdateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Enabled) {
+		p.Enabled = ""
+	}
+	if isEmpty(p.RangeStart) {
+		p.RangeStart = ""
+	}
+	if isEmpty(p.RangeStop) {
+		p.RangeStop = ""
+	}
+	if isEmpty(p.PreSharedSecret) {
+		p.PreSharedSecret = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -5624,6 +7165,13 @@ func (p *L2tpServerUpdateVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *L2tpServerUpdateVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *L2tpServerUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *L2tpServerUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *L2tpServerUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5636,6 +7184,7 @@ func (p *L2tpServerUpdateVPCRouterParam) GetId() int64 {
 type UserInfoVPCRouterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -5647,6 +7196,38 @@ type UserInfoVPCRouterParam struct {
 // NewUserInfoVPCRouterParam return new UserInfoVPCRouterParam
 func NewUserInfoVPCRouterParam() *UserInfoVPCRouterParam {
 	return &UserInfoVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UserInfoVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -5725,6 +7306,13 @@ func (p *UserInfoVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *UserInfoVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UserInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UserInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UserInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -5775,12 +7363,39 @@ type UserAddVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewUserAddVPCRouterParam return new UserAddVPCRouterParam
 func NewUserAddVPCRouterParam() *UserAddVPCRouterParam {
 	return &UserAddVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UserAddVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Username) {
+		p.Username = ""
+	}
+	if isEmpty(p.Password) {
+		p.Password = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -5888,6 +7503,13 @@ func (p *UserAddVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *UserAddVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UserAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UserAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UserAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5904,12 +7526,42 @@ type UserUpdateVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewUserUpdateVPCRouterParam return new UserUpdateVPCRouterParam
 func NewUserUpdateVPCRouterParam() *UserUpdateVPCRouterParam {
 	return &UserUpdateVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UserUpdateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Username) {
+		p.Username = ""
+	}
+	if isEmpty(p.Password) {
+		p.Password = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -6017,6 +7669,13 @@ func (p *UserUpdateVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *UserUpdateVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UserUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UserUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UserUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -6031,12 +7690,36 @@ type UserDeleteVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewUserDeleteVPCRouterParam return new UserDeleteVPCRouterParam
 func NewUserDeleteVPCRouterParam() *UserDeleteVPCRouterParam {
 	return &UserDeleteVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UserDeleteVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -6116,6 +7799,13 @@ func (p *UserDeleteVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *UserDeleteVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UserDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UserDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UserDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -6128,6 +7818,7 @@ func (p *UserDeleteVPCRouterParam) GetId() int64 {
 type SiteToSiteVpnInfoVPCRouterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -6139,6 +7830,38 @@ type SiteToSiteVpnInfoVPCRouterParam struct {
 // NewSiteToSiteVpnInfoVPCRouterParam return new SiteToSiteVpnInfoVPCRouterParam
 func NewSiteToSiteVpnInfoVPCRouterParam() *SiteToSiteVpnInfoVPCRouterParam {
 	return &SiteToSiteVpnInfoVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *SiteToSiteVpnInfoVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -6217,6 +7940,13 @@ func (p *SiteToSiteVpnInfoVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *SiteToSiteVpnInfoVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *SiteToSiteVpnInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SiteToSiteVpnInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *SiteToSiteVpnInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -6270,12 +8000,48 @@ type SiteToSiteVpnAddVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewSiteToSiteVpnAddVPCRouterParam return new SiteToSiteVpnAddVPCRouterParam
 func NewSiteToSiteVpnAddVPCRouterParam() *SiteToSiteVpnAddVPCRouterParam {
 	return &SiteToSiteVpnAddVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *SiteToSiteVpnAddVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Peer) {
+		p.Peer = ""
+	}
+	if isEmpty(p.RemoteId) {
+		p.RemoteId = ""
+	}
+	if isEmpty(p.PreSharedSecret) {
+		p.PreSharedSecret = ""
+	}
+	if isEmpty(p.Routes) {
+		p.Routes = []string{""}
+	}
+	if isEmpty(p.LocalPrefix) {
+		p.LocalPrefix = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -6439,6 +8205,13 @@ func (p *SiteToSiteVpnAddVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *SiteToSiteVpnAddVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *SiteToSiteVpnAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SiteToSiteVpnAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *SiteToSiteVpnAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -6458,12 +8231,51 @@ type SiteToSiteVpnUpdateVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewSiteToSiteVpnUpdateVPCRouterParam return new SiteToSiteVpnUpdateVPCRouterParam
 func NewSiteToSiteVpnUpdateVPCRouterParam() *SiteToSiteVpnUpdateVPCRouterParam {
 	return &SiteToSiteVpnUpdateVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *SiteToSiteVpnUpdateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Peer) {
+		p.Peer = ""
+	}
+	if isEmpty(p.RemoteId) {
+		p.RemoteId = ""
+	}
+	if isEmpty(p.PreSharedSecret) {
+		p.PreSharedSecret = ""
+	}
+	if isEmpty(p.Routes) {
+		p.Routes = []string{""}
+	}
+	if isEmpty(p.LocalPrefix) {
+		p.LocalPrefix = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -6606,6 +8418,13 @@ func (p *SiteToSiteVpnUpdateVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *SiteToSiteVpnUpdateVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *SiteToSiteVpnUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SiteToSiteVpnUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *SiteToSiteVpnUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -6620,12 +8439,36 @@ type SiteToSiteVpnDeleteVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewSiteToSiteVpnDeleteVPCRouterParam return new SiteToSiteVpnDeleteVPCRouterParam
 func NewSiteToSiteVpnDeleteVPCRouterParam() *SiteToSiteVpnDeleteVPCRouterParam {
 	return &SiteToSiteVpnDeleteVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *SiteToSiteVpnDeleteVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -6705,6 +8548,13 @@ func (p *SiteToSiteVpnDeleteVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *SiteToSiteVpnDeleteVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *SiteToSiteVpnDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SiteToSiteVpnDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *SiteToSiteVpnDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -6717,6 +8567,7 @@ func (p *SiteToSiteVpnDeleteVPCRouterParam) GetId() int64 {
 type StaticRouteInfoVPCRouterParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -6728,6 +8579,38 @@ type StaticRouteInfoVPCRouterParam struct {
 // NewStaticRouteInfoVPCRouterParam return new StaticRouteInfoVPCRouterParam
 func NewStaticRouteInfoVPCRouterParam() *StaticRouteInfoVPCRouterParam {
 	return &StaticRouteInfoVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *StaticRouteInfoVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -6806,6 +8689,13 @@ func (p *StaticRouteInfoVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *StaticRouteInfoVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *StaticRouteInfoVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *StaticRouteInfoVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -6856,12 +8746,39 @@ type StaticRouteAddVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewStaticRouteAddVPCRouterParam return new StaticRouteAddVPCRouterParam
 func NewStaticRouteAddVPCRouterParam() *StaticRouteAddVPCRouterParam {
 	return &StaticRouteAddVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *StaticRouteAddVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Prefix) {
+		p.Prefix = ""
+	}
+	if isEmpty(p.NextHop) {
+		p.NextHop = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -6969,6 +8886,13 @@ func (p *StaticRouteAddVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *StaticRouteAddVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *StaticRouteAddVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticRouteAddVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *StaticRouteAddVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -6985,12 +8909,42 @@ type StaticRouteUpdateVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewStaticRouteUpdateVPCRouterParam return new StaticRouteUpdateVPCRouterParam
 func NewStaticRouteUpdateVPCRouterParam() *StaticRouteUpdateVPCRouterParam {
 	return &StaticRouteUpdateVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *StaticRouteUpdateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Prefix) {
+		p.Prefix = ""
+	}
+	if isEmpty(p.NextHop) {
+		p.NextHop = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -7098,6 +9052,13 @@ func (p *StaticRouteUpdateVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *StaticRouteUpdateVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *StaticRouteUpdateVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticRouteUpdateVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *StaticRouteUpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -7112,12 +9073,36 @@ type StaticRouteDeleteVPCRouterParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewStaticRouteDeleteVPCRouterParam return new StaticRouteDeleteVPCRouterParam
 func NewStaticRouteDeleteVPCRouterParam() *StaticRouteDeleteVPCRouterParam {
 	return &StaticRouteDeleteVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *StaticRouteDeleteVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -7197,6 +9182,13 @@ func (p *StaticRouteDeleteVPCRouterParam) SetParamTemplateFile(v string) {
 func (p *StaticRouteDeleteVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *StaticRouteDeleteVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *StaticRouteDeleteVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *StaticRouteDeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -7213,6 +9205,7 @@ type MonitorVPCRouterParam struct {
 	KeyFormat         string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -7225,10 +9218,53 @@ type MonitorVPCRouterParam struct {
 func NewMonitorVPCRouterParam() *MonitorVPCRouterParam {
 	return &MonitorVPCRouterParam{
 
-		Index: "0",
-
+		Index:     "0",
 		KeyFormat: "sakuracloud.{{.ID}}.vpcrouter",
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = ""
+	}
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -7369,6 +9405,13 @@ func (p *MonitorVPCRouterParam) SetParamTemplateFile(v string) {
 
 func (p *MonitorVPCRouterParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *MonitorVPCRouterParam) SetOutputType(v string) {
 	p.OutputType = v

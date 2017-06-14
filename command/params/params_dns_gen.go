@@ -18,6 +18,7 @@ type ListDNSParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -28,6 +29,53 @@ type ListDNSParam struct {
 // NewListDNSParam return new ListDNSParam
 func NewListDNSParam() *ListDNSParam {
 	return &ListDNSParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -173,6 +221,13 @@ func (p *ListDNSParam) SetParamTemplateFile(v string) {
 func (p *ListDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListDNSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListDNSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -213,6 +268,7 @@ func (p *ListDNSParam) GetFormatFile() string {
 type RecordInfoDNSParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -224,6 +280,38 @@ type RecordInfoDNSParam struct {
 // NewRecordInfoDNSParam return new RecordInfoDNSParam
 func NewRecordInfoDNSParam() *RecordInfoDNSParam {
 	return &RecordInfoDNSParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *RecordInfoDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -302,6 +390,13 @@ func (p *RecordInfoDNSParam) SetParamTemplateFile(v string) {
 func (p *RecordInfoDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *RecordInfoDNSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *RecordInfoDNSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *RecordInfoDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -354,6 +449,7 @@ type CreateDNSParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -364,6 +460,50 @@ type CreateDNSParam struct {
 // NewCreateDNSParam return new CreateDNSParam
 func NewCreateDNSParam() *CreateDNSParam {
 	return &CreateDNSParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -505,6 +645,13 @@ func (p *CreateDNSParam) SetParamTemplateFile(v string) {
 func (p *CreateDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateDNSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateDNSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -555,6 +702,7 @@ type RecordAddDNSParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -567,10 +715,71 @@ type RecordAddDNSParam struct {
 func NewRecordAddDNSParam() *RecordAddDNSParam {
 	return &RecordAddDNSParam{
 
-		Ttl: 3600,
-
+		Ttl:        3600,
 		MxPriority: 10,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *RecordAddDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Type) {
+		p.Type = ""
+	}
+	if isEmpty(p.Value) {
+		p.Value = ""
+	}
+	if isEmpty(p.Ttl) {
+		p.Ttl = 0
+	}
+	if isEmpty(p.MxPriority) {
+		p.MxPriority = 0
+	}
+	if isEmpty(p.SrvPriority) {
+		p.SrvPriority = 0
+	}
+	if isEmpty(p.SrvWeight) {
+		p.SrvWeight = 0
+	}
+	if isEmpty(p.SrvPort) {
+		p.SrvPort = 0
+	}
+	if isEmpty(p.SrvTarget) {
+		p.SrvTarget = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -789,6 +998,13 @@ func (p *RecordAddDNSParam) SetParamTemplateFile(v string) {
 func (p *RecordAddDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *RecordAddDNSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *RecordAddDNSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *RecordAddDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -836,6 +1052,7 @@ func (p *RecordAddDNSParam) GetId() int64 {
 type ReadDNSParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -847,6 +1064,38 @@ type ReadDNSParam struct {
 // NewReadDNSParam return new ReadDNSParam
 func NewReadDNSParam() *ReadDNSParam {
 	return &ReadDNSParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -925,6 +1174,13 @@ func (p *ReadDNSParam) SetParamTemplateFile(v string) {
 func (p *ReadDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadDNSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadDNSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -983,6 +1239,7 @@ type RecordUpdateDNSParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -994,6 +1251,71 @@ type RecordUpdateDNSParam struct {
 // NewRecordUpdateDNSParam return new RecordUpdateDNSParam
 func NewRecordUpdateDNSParam() *RecordUpdateDNSParam {
 	return &RecordUpdateDNSParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *RecordUpdateDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Type) {
+		p.Type = ""
+	}
+	if isEmpty(p.Value) {
+		p.Value = ""
+	}
+	if isEmpty(p.Ttl) {
+		p.Ttl = 0
+	}
+	if isEmpty(p.MxPriority) {
+		p.MxPriority = 0
+	}
+	if isEmpty(p.SrvPriority) {
+		p.SrvPriority = 0
+	}
+	if isEmpty(p.SrvWeight) {
+		p.SrvWeight = 0
+	}
+	if isEmpty(p.SrvPort) {
+		p.SrvPort = 0
+	}
+	if isEmpty(p.SrvTarget) {
+		p.SrvTarget = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1212,6 +1534,13 @@ func (p *RecordUpdateDNSParam) SetParamTemplateFile(v string) {
 func (p *RecordUpdateDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *RecordUpdateDNSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *RecordUpdateDNSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *RecordUpdateDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1261,6 +1590,7 @@ type RecordDeleteDNSParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1272,6 +1602,44 @@ type RecordDeleteDNSParam struct {
 // NewRecordDeleteDNSParam return new RecordDeleteDNSParam
 func NewRecordDeleteDNSParam() *RecordDeleteDNSParam {
 	return &RecordDeleteDNSParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *RecordDeleteDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1371,6 +1739,13 @@ func (p *RecordDeleteDNSParam) SetParamTemplateFile(v string) {
 func (p *RecordDeleteDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *RecordDeleteDNSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *RecordDeleteDNSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *RecordDeleteDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1422,6 +1797,7 @@ type UpdateDNSParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1433,6 +1809,50 @@ type UpdateDNSParam struct {
 // NewUpdateDNSParam return new UpdateDNSParam
 func NewUpdateDNSParam() *UpdateDNSParam {
 	return &UpdateDNSParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1560,6 +1980,13 @@ func (p *UpdateDNSParam) SetParamTemplateFile(v string) {
 func (p *UpdateDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateDNSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateDNSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateDNSParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1608,6 +2035,7 @@ type DeleteDNSParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1619,6 +2047,41 @@ type DeleteDNSParam struct {
 // NewDeleteDNSParam return new DeleteDNSParam
 func NewDeleteDNSParam() *DeleteDNSParam {
 	return &DeleteDNSParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1703,6 +2166,13 @@ func (p *DeleteDNSParam) SetParamTemplateFile(v string) {
 
 func (p *DeleteDNSParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteDNSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteDNSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *DeleteDNSParam) SetOutputType(v string) {
 	p.OutputType = v

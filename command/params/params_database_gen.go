@@ -18,6 +18,7 @@ type ListDatabaseParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -28,6 +29,53 @@ type ListDatabaseParam struct {
 // NewListDatabaseParam return new ListDatabaseParam
 func NewListDatabaseParam() *ListDatabaseParam {
 	return &ListDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -173,6 +221,13 @@ func (p *ListDatabaseParam) SetParamTemplateFile(v string) {
 func (p *ListDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListDatabaseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -230,6 +285,7 @@ type CreateDatabaseParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -243,6 +299,86 @@ func NewCreateDatabaseParam() *CreateDatabaseParam {
 
 		Plan: 10,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.SwitchId) {
+		p.SwitchId = 0
+	}
+	if isEmpty(p.Plan) {
+		p.Plan = 0
+	}
+	if isEmpty(p.Database) {
+		p.Database = ""
+	}
+	if isEmpty(p.Username) {
+		p.Username = ""
+	}
+	if isEmpty(p.Password) {
+		p.Password = ""
+	}
+	if isEmpty(p.SourceNetworks) {
+		p.SourceNetworks = []string{""}
+	}
+	if isEmpty(p.EnableWebUi) {
+		p.EnableWebUi = false
+	}
+	if isEmpty(p.BackupTime) {
+		p.BackupTime = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.Ipaddress1) {
+		p.Ipaddress1 = ""
+	}
+	if isEmpty(p.NwMaskLen) {
+		p.NwMaskLen = 0
+	}
+	if isEmpty(p.DefaultRoute) {
+		p.DefaultRoute = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -601,6 +737,13 @@ func (p *CreateDatabaseParam) SetParamTemplateFile(v string) {
 func (p *CreateDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateDatabaseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -641,6 +784,7 @@ func (p *CreateDatabaseParam) GetFormatFile() string {
 type ReadDatabaseParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -652,6 +796,38 @@ type ReadDatabaseParam struct {
 // NewReadDatabaseParam return new ReadDatabaseParam
 func NewReadDatabaseParam() *ReadDatabaseParam {
 	return &ReadDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -730,6 +906,13 @@ func (p *ReadDatabaseParam) SetParamTemplateFile(v string) {
 func (p *ReadDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadDatabaseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -787,6 +970,7 @@ type UpdateDatabaseParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -798,6 +982,68 @@ type UpdateDatabaseParam struct {
 // NewUpdateDatabaseParam return new UpdateDatabaseParam
 func NewUpdateDatabaseParam() *UpdateDatabaseParam {
 	return &UpdateDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Password) {
+		p.Password = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.SourceNetworks) {
+		p.SourceNetworks = []string{""}
+	}
+	if isEmpty(p.EnableWebUi) {
+		p.EnableWebUi = false
+	}
+	if isEmpty(p.BackupTime) {
+		p.BackupTime = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1002,6 +1248,13 @@ func (p *UpdateDatabaseParam) SetParamTemplateFile(v string) {
 func (p *UpdateDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateDatabaseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1050,6 +1303,7 @@ type DeleteDatabaseParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1062,6 +1316,44 @@ type DeleteDatabaseParam struct {
 // NewDeleteDatabaseParam return new DeleteDatabaseParam
 func NewDeleteDatabaseParam() *DeleteDatabaseParam {
 	return &DeleteDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Force) {
+		p.Force = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1147,6 +1439,13 @@ func (p *DeleteDatabaseParam) SetParamTemplateFile(v string) {
 func (p *DeleteDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DeleteDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DeleteDatabaseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1202,12 +1501,33 @@ type BootDatabaseParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewBootDatabaseParam return new BootDatabaseParam
 func NewBootDatabaseParam() *BootDatabaseParam {
 	return &BootDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *BootDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1273,6 +1593,13 @@ func (p *BootDatabaseParam) SetParamTemplateFile(v string) {
 func (p *BootDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *BootDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BootDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *BootDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1286,12 +1613,33 @@ type ShutdownDatabaseParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewShutdownDatabaseParam return new ShutdownDatabaseParam
 func NewShutdownDatabaseParam() *ShutdownDatabaseParam {
 	return &ShutdownDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ShutdownDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1357,6 +1705,13 @@ func (p *ShutdownDatabaseParam) SetParamTemplateFile(v string) {
 func (p *ShutdownDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ShutdownDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ShutdownDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1370,12 +1725,33 @@ type ShutdownForceDatabaseParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewShutdownForceDatabaseParam return new ShutdownForceDatabaseParam
 func NewShutdownForceDatabaseParam() *ShutdownForceDatabaseParam {
 	return &ShutdownForceDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ShutdownForceDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1441,6 +1817,13 @@ func (p *ShutdownForceDatabaseParam) SetParamTemplateFile(v string) {
 func (p *ShutdownForceDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ShutdownForceDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ShutdownForceDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1454,12 +1837,33 @@ type ResetDatabaseParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewResetDatabaseParam return new ResetDatabaseParam
 func NewResetDatabaseParam() *ResetDatabaseParam {
 	return &ResetDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ResetDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1525,6 +1929,13 @@ func (p *ResetDatabaseParam) SetParamTemplateFile(v string) {
 func (p *ResetDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ResetDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ResetDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ResetDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1537,12 +1948,30 @@ func (p *ResetDatabaseParam) GetId() int64 {
 type WaitForBootDatabaseParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewWaitForBootDatabaseParam return new WaitForBootDatabaseParam
 func NewWaitForBootDatabaseParam() *WaitForBootDatabaseParam {
 	return &WaitForBootDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *WaitForBootDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1601,6 +2030,13 @@ func (p *WaitForBootDatabaseParam) SetParamTemplateFile(v string) {
 func (p *WaitForBootDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *WaitForBootDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForBootDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *WaitForBootDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1613,12 +2049,30 @@ func (p *WaitForBootDatabaseParam) GetId() int64 {
 type WaitForDownDatabaseParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewWaitForDownDatabaseParam return new WaitForDownDatabaseParam
 func NewWaitForDownDatabaseParam() *WaitForDownDatabaseParam {
 	return &WaitForDownDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *WaitForDownDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1676,6 +2130,13 @@ func (p *WaitForDownDatabaseParam) SetParamTemplateFile(v string) {
 
 func (p *WaitForDownDatabaseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForDownDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForDownDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *WaitForDownDatabaseParam) SetId(v int64) {
 	p.Id = v

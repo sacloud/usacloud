@@ -12,6 +12,7 @@ import (
 type CsvBillParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	NoHeader          bool
 	BillOutput        string
 	Id                int64
@@ -20,6 +21,29 @@ type CsvBillParam struct {
 // NewCsvBillParam return new CsvBillParam
 func NewCsvBillParam() *CsvBillParam {
 	return &CsvBillParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CsvBillParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.NoHeader) {
+		p.NoHeader = false
+	}
+	if isEmpty(p.BillOutput) {
+		p.BillOutput = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -85,6 +109,13 @@ func (p *CsvBillParam) SetParamTemplateFile(v string) {
 func (p *CsvBillParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CsvBillParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CsvBillParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CsvBillParam) SetNoHeader(v bool) {
 	p.NoHeader = v
 }
@@ -113,6 +144,7 @@ type ListBillParam struct {
 	Month             int
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -123,6 +155,41 @@ type ListBillParam struct {
 // NewListBillParam return new ListBillParam
 func NewListBillParam() *ListBillParam {
 	return &ListBillParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListBillParam) FillValueToSkeleton() {
+	if isEmpty(p.Year) {
+		p.Year = 0
+	}
+	if isEmpty(p.Month) {
+		p.Month = 0
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -221,6 +288,13 @@ func (p *ListBillParam) SetParamTemplateFile(v string) {
 
 func (p *ListBillParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListBillParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListBillParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *ListBillParam) SetOutputType(v string) {
 	p.OutputType = v

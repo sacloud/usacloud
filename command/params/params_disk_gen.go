@@ -21,6 +21,7 @@ type ListDiskParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -31,6 +32,62 @@ type ListDiskParam struct {
 // NewListDiskParam return new ListDiskParam
 func NewListDiskParam() *ListDiskParam {
 	return &ListDiskParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Scope) {
+		p.Scope = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.SourceArchiveId) {
+		p.SourceArchiveId = 0
+	}
+	if isEmpty(p.SourceDiskId) {
+		p.SourceDiskId = 0
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -218,6 +275,13 @@ func (p *ListDiskParam) SetParamTemplateFile(v string) {
 func (p *ListDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -269,6 +333,7 @@ type CreateDiskParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -280,12 +345,72 @@ type CreateDiskParam struct {
 func NewCreateDiskParam() *CreateDiskParam {
 	return &CreateDiskParam{
 
-		Plan: "ssd",
-
+		Plan:       "ssd",
 		Connection: "virtio",
-
-		Size: 20,
+		Size:       20,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.Plan) {
+		p.Plan = ""
+	}
+	if isEmpty(p.Connection) {
+		p.Connection = ""
+	}
+	if isEmpty(p.SourceArchiveId) {
+		p.SourceArchiveId = 0
+	}
+	if isEmpty(p.SourceDiskId) {
+		p.SourceDiskId = 0
+	}
+	if isEmpty(p.Size) {
+		p.Size = 0
+	}
+	if isEmpty(p.DistantFrom) {
+		p.DistantFrom = []int64{0}
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -550,6 +675,13 @@ func (p *CreateDiskParam) SetParamTemplateFile(v string) {
 func (p *CreateDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -590,6 +722,7 @@ func (p *CreateDiskParam) GetFormatFile() string {
 type ReadDiskParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -601,6 +734,38 @@ type ReadDiskParam struct {
 // NewReadDiskParam return new ReadDiskParam
 func NewReadDiskParam() *ReadDiskParam {
 	return &ReadDiskParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -679,6 +844,13 @@ func (p *ReadDiskParam) SetParamTemplateFile(v string) {
 func (p *ReadDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -732,6 +904,7 @@ type UpdateDiskParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -743,6 +916,56 @@ type UpdateDiskParam struct {
 // NewUpdateDiskParam return new UpdateDiskParam
 func NewUpdateDiskParam() *UpdateDiskParam {
 	return &UpdateDiskParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.Connection) {
+		p.Connection = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -898,6 +1121,13 @@ func (p *UpdateDiskParam) SetParamTemplateFile(v string) {
 func (p *UpdateDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -946,6 +1176,7 @@ type DeleteDiskParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -957,6 +1188,41 @@ type DeleteDiskParam struct {
 // NewDeleteDiskParam return new DeleteDiskParam
 func NewDeleteDiskParam() *DeleteDiskParam {
 	return &DeleteDiskParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1042,6 +1308,13 @@ func (p *DeleteDiskParam) SetParamTemplateFile(v string) {
 func (p *DeleteDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DeleteDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DeleteDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1098,6 +1371,7 @@ type EditDiskParam struct {
 	Assumeyes           bool
 	ParamTemplate       string
 	ParamTemplateFile   string
+	GenerateSkeleton    bool
 	OutputType          string
 	Column              []string
 	Quiet               bool
@@ -1112,6 +1386,65 @@ func NewEditDiskParam() *EditDiskParam {
 
 		NwMasklen: 24,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *EditDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.Hostname) {
+		p.Hostname = ""
+	}
+	if isEmpty(p.Password) {
+		p.Password = ""
+	}
+	if isEmpty(p.SshKeyIds) {
+		p.SshKeyIds = []int64{0}
+	}
+	if isEmpty(p.DisablePasswordAuth) {
+		p.DisablePasswordAuth = false
+	}
+	if isEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if isEmpty(p.DefaultRoute) {
+		p.DefaultRoute = ""
+	}
+	if isEmpty(p.NwMasklen) {
+		p.NwMasklen = 0
+	}
+	if isEmpty(p.StartupScriptIds) {
+		p.StartupScriptIds = []int64{0}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1274,6 +1607,13 @@ func (p *EditDiskParam) SetParamTemplateFile(v string) {
 func (p *EditDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *EditDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *EditDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *EditDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1324,12 +1664,39 @@ type ReinstallFromArchiveDiskParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewReinstallFromArchiveDiskParam return new ReinstallFromArchiveDiskParam
 func NewReinstallFromArchiveDiskParam() *ReinstallFromArchiveDiskParam {
 	return &ReinstallFromArchiveDiskParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReinstallFromArchiveDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.SourceArchiveId) {
+		p.SourceArchiveId = 0
+	}
+	if isEmpty(p.DistantFrom) {
+		p.DistantFrom = []int64{0}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1430,6 +1797,13 @@ func (p *ReinstallFromArchiveDiskParam) SetParamTemplateFile(v string) {
 func (p *ReinstallFromArchiveDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReinstallFromArchiveDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReinstallFromArchiveDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1445,12 +1819,39 @@ type ReinstallFromDiskDiskParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewReinstallFromDiskDiskParam return new ReinstallFromDiskDiskParam
 func NewReinstallFromDiskDiskParam() *ReinstallFromDiskDiskParam {
 	return &ReinstallFromDiskDiskParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReinstallFromDiskDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.SourceDiskId) {
+		p.SourceDiskId = 0
+	}
+	if isEmpty(p.DistantFrom) {
+		p.DistantFrom = []int64{0}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1551,6 +1952,13 @@ func (p *ReinstallFromDiskDiskParam) SetParamTemplateFile(v string) {
 func (p *ReinstallFromDiskDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReinstallFromDiskDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReinstallFromDiskDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1565,12 +1973,36 @@ type ReinstallToBlankDiskParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewReinstallToBlankDiskParam return new ReinstallToBlankDiskParam
 func NewReinstallToBlankDiskParam() *ReinstallToBlankDiskParam {
 	return &ReinstallToBlankDiskParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReinstallToBlankDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.DistantFrom) {
+		p.DistantFrom = []int64{0}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1650,6 +2082,13 @@ func (p *ReinstallToBlankDiskParam) SetParamTemplateFile(v string) {
 func (p *ReinstallToBlankDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReinstallToBlankDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReinstallToBlankDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1664,12 +2103,36 @@ type ServerConnectDiskParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewServerConnectDiskParam return new ServerConnectDiskParam
 func NewServerConnectDiskParam() *ServerConnectDiskParam {
 	return &ServerConnectDiskParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ServerConnectDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.ServerId) {
+		p.ServerId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1756,6 +2219,13 @@ func (p *ServerConnectDiskParam) SetParamTemplateFile(v string) {
 func (p *ServerConnectDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ServerConnectDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerConnectDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ServerConnectDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1769,12 +2239,33 @@ type ServerDisconnectDiskParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewServerDisconnectDiskParam return new ServerDisconnectDiskParam
 func NewServerDisconnectDiskParam() *ServerDisconnectDiskParam {
 	return &ServerDisconnectDiskParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ServerDisconnectDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1840,6 +2331,13 @@ func (p *ServerDisconnectDiskParam) SetParamTemplateFile(v string) {
 func (p *ServerDisconnectDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ServerDisconnectDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ServerDisconnectDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ServerDisconnectDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1852,6 +2350,7 @@ func (p *ServerDisconnectDiskParam) GetId() int64 {
 type MonitorDiskParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1869,6 +2368,47 @@ func NewMonitorDiskParam() *MonitorDiskParam {
 
 		KeyFormat: "sakuracloud.{{.ID}}.disk",
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -1968,6 +2508,13 @@ func (p *MonitorDiskParam) SetParamTemplateFile(v string) {
 func (p *MonitorDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *MonitorDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *MonitorDiskParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -2036,12 +2583,30 @@ func (p *MonitorDiskParam) GetStart() string {
 type WaitForCopyDiskParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewWaitForCopyDiskParam return new WaitForCopyDiskParam
 func NewWaitForCopyDiskParam() *WaitForCopyDiskParam {
 	return &WaitForCopyDiskParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *WaitForCopyDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2099,6 +2664,13 @@ func (p *WaitForCopyDiskParam) SetParamTemplateFile(v string) {
 
 func (p *WaitForCopyDiskParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForCopyDiskParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForCopyDiskParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *WaitForCopyDiskParam) SetId(v int64) {
 	p.Id = v

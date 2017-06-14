@@ -21,6 +21,7 @@ type ListArchiveParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -31,6 +32,62 @@ type ListArchiveParam struct {
 // NewListArchiveParam return new ListArchiveParam
 func NewListArchiveParam() *ListArchiveParam {
 	return &ListArchiveParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Scope) {
+		p.Scope = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.SourceArchiveId) {
+		p.SourceArchiveId = 0
+	}
+	if isEmpty(p.SourceDiskId) {
+		p.SourceDiskId = 0
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -218,6 +275,13 @@ func (p *ListArchiveParam) SetParamTemplateFile(v string) {
 func (p *ListArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -267,6 +331,7 @@ type CreateArchiveParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -277,6 +342,62 @@ type CreateArchiveParam struct {
 // NewCreateArchiveParam return new CreateArchiveParam
 func NewCreateArchiveParam() *CreateArchiveParam {
 	return &CreateArchiveParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.SourceDiskId) {
+		p.SourceDiskId = 0
+	}
+	if isEmpty(p.SourceArchiveId) {
+		p.SourceArchiveId = 0
+	}
+	if isEmpty(p.Size) {
+		p.Size = 0
+	}
+	if isEmpty(p.ArchiveFile) {
+		p.ArchiveFile = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -516,6 +637,13 @@ func (p *CreateArchiveParam) SetParamTemplateFile(v string) {
 func (p *CreateArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -556,6 +684,7 @@ func (p *CreateArchiveParam) GetFormatFile() string {
 type ReadArchiveParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -567,6 +696,38 @@ type ReadArchiveParam struct {
 // NewReadArchiveParam return new ReadArchiveParam
 func NewReadArchiveParam() *ReadArchiveParam {
 	return &ReadArchiveParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -645,6 +806,13 @@ func (p *ReadArchiveParam) SetParamTemplateFile(v string) {
 func (p *ReadArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -697,6 +865,7 @@ type UpdateArchiveParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -708,6 +877,53 @@ type UpdateArchiveParam struct {
 // NewUpdateArchiveParam return new UpdateArchiveParam
 func NewUpdateArchiveParam() *UpdateArchiveParam {
 	return &UpdateArchiveParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -849,6 +1065,13 @@ func (p *UpdateArchiveParam) SetParamTemplateFile(v string) {
 func (p *UpdateArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -897,6 +1120,7 @@ type DeleteArchiveParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -908,6 +1132,41 @@ type DeleteArchiveParam struct {
 // NewDeleteArchiveParam return new DeleteArchiveParam
 func NewDeleteArchiveParam() *DeleteArchiveParam {
 	return &DeleteArchiveParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -993,6 +1252,13 @@ func (p *DeleteArchiveParam) SetParamTemplateFile(v string) {
 func (p *DeleteArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DeleteArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DeleteArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1042,6 +1308,7 @@ type UploadArchiveParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1053,6 +1320,44 @@ type UploadArchiveParam struct {
 // NewUploadArchiveParam return new UploadArchiveParam
 func NewUploadArchiveParam() *UploadArchiveParam {
 	return &UploadArchiveParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UploadArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.ArchiveFile) {
+		p.ArchiveFile = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1159,6 +1464,13 @@ func (p *UploadArchiveParam) SetParamTemplateFile(v string) {
 func (p *UploadArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UploadArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UploadArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UploadArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1208,12 +1520,36 @@ type DownloadArchiveParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewDownloadArchiveParam return new DownloadArchiveParam
 func NewDownloadArchiveParam() *DownloadArchiveParam {
 	return &DownloadArchiveParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DownloadArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.FileDestination) {
+		p.FileDestination = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1293,6 +1629,13 @@ func (p *DownloadArchiveParam) SetParamTemplateFile(v string) {
 func (p *DownloadArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DownloadArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DownloadArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DownloadArchiveParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1306,6 +1649,7 @@ type FtpOpenArchiveParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1317,6 +1661,41 @@ type FtpOpenArchiveParam struct {
 // NewFtpOpenArchiveParam return new FtpOpenArchiveParam
 func NewFtpOpenArchiveParam() *FtpOpenArchiveParam {
 	return &FtpOpenArchiveParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *FtpOpenArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1402,6 +1781,13 @@ func (p *FtpOpenArchiveParam) SetParamTemplateFile(v string) {
 func (p *FtpOpenArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *FtpOpenArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FtpOpenArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *FtpOpenArchiveParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1450,12 +1836,33 @@ type FtpCloseArchiveParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewFtpCloseArchiveParam return new FtpCloseArchiveParam
 func NewFtpCloseArchiveParam() *FtpCloseArchiveParam {
 	return &FtpCloseArchiveParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *FtpCloseArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1521,6 +1928,13 @@ func (p *FtpCloseArchiveParam) SetParamTemplateFile(v string) {
 func (p *FtpCloseArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *FtpCloseArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *FtpCloseArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *FtpCloseArchiveParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1533,12 +1947,30 @@ func (p *FtpCloseArchiveParam) GetId() int64 {
 type WaitForCopyArchiveParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewWaitForCopyArchiveParam return new WaitForCopyArchiveParam
 func NewWaitForCopyArchiveParam() *WaitForCopyArchiveParam {
 	return &WaitForCopyArchiveParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *WaitForCopyArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1596,6 +2028,13 @@ func (p *WaitForCopyArchiveParam) SetParamTemplateFile(v string) {
 
 func (p *WaitForCopyArchiveParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *WaitForCopyArchiveParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForCopyArchiveParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *WaitForCopyArchiveParam) SetId(v int64) {
 	p.Id = v

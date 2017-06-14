@@ -17,6 +17,7 @@ type ListPriceParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -27,6 +28,50 @@ type ListPriceParam struct {
 // NewListPriceParam return new ListPriceParam
 func NewListPriceParam() *ListPriceParam {
 	return &ListPriceParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListPriceParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -157,6 +202,13 @@ func (p *ListPriceParam) SetParamTemplateFile(v string) {
 
 func (p *ListPriceParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ListPriceParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListPriceParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *ListPriceParam) SetOutputType(v string) {
 	p.OutputType = v

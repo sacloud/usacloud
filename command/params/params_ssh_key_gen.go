@@ -17,6 +17,7 @@ type ListSSHKeyParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -27,6 +28,50 @@ type ListSSHKeyParam struct {
 // NewListSSHKeyParam return new ListSSHKeyParam
 func NewListSSHKeyParam() *ListSSHKeyParam {
 	return &ListSSHKeyParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListSSHKeyParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -158,6 +203,13 @@ func (p *ListSSHKeyParam) SetParamTemplateFile(v string) {
 func (p *ListSSHKeyParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListSSHKeyParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListSSHKeyParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListSSHKeyParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -203,6 +255,7 @@ type CreateSSHKeyParam struct {
 	PublicKeyContent  string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -213,6 +266,50 @@ type CreateSSHKeyParam struct {
 // NewCreateSSHKeyParam return new CreateSSHKeyParam
 func NewCreateSSHKeyParam() *CreateSSHKeyParam {
 	return &CreateSSHKeyParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateSSHKeyParam) FillValueToSkeleton() {
+	if isEmpty(p.PublicKey) {
+		p.PublicKey = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.PublicKeyContent) {
+		p.PublicKeyContent = ""
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -356,6 +453,13 @@ func (p *CreateSSHKeyParam) SetParamTemplateFile(v string) {
 func (p *CreateSSHKeyParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateSSHKeyParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateSSHKeyParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateSSHKeyParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -396,6 +500,7 @@ func (p *CreateSSHKeyParam) GetFormatFile() string {
 type ReadSSHKeyParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -407,6 +512,38 @@ type ReadSSHKeyParam struct {
 // NewReadSSHKeyParam return new ReadSSHKeyParam
 func NewReadSSHKeyParam() *ReadSSHKeyParam {
 	return &ReadSSHKeyParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadSSHKeyParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -485,6 +622,13 @@ func (p *ReadSSHKeyParam) SetParamTemplateFile(v string) {
 func (p *ReadSSHKeyParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadSSHKeyParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadSSHKeyParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadSSHKeyParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -535,6 +679,7 @@ type UpdateSSHKeyParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -546,6 +691,47 @@ type UpdateSSHKeyParam struct {
 // NewUpdateSSHKeyParam return new UpdateSSHKeyParam
 func NewUpdateSSHKeyParam() *UpdateSSHKeyParam {
 	return &UpdateSSHKeyParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateSSHKeyParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -659,6 +845,13 @@ func (p *UpdateSSHKeyParam) SetParamTemplateFile(v string) {
 func (p *UpdateSSHKeyParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateSSHKeyParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateSSHKeyParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateSSHKeyParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -707,6 +900,7 @@ type DeleteSSHKeyParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -718,6 +912,41 @@ type DeleteSSHKeyParam struct {
 // NewDeleteSSHKeyParam return new DeleteSSHKeyParam
 func NewDeleteSSHKeyParam() *DeleteSSHKeyParam {
 	return &DeleteSSHKeyParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteSSHKeyParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -803,6 +1032,13 @@ func (p *DeleteSSHKeyParam) SetParamTemplateFile(v string) {
 func (p *DeleteSSHKeyParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DeleteSSHKeyParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteSSHKeyParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DeleteSSHKeyParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -854,6 +1090,7 @@ type GenerateSSHKeyParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	PrivateKeyOutput  string
 	Column            []string
@@ -865,6 +1102,50 @@ type GenerateSSHKeyParam struct {
 // NewGenerateSSHKeyParam return new GenerateSSHKeyParam
 func NewGenerateSSHKeyParam() *GenerateSSHKeyParam {
 	return &GenerateSSHKeyParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *GenerateSSHKeyParam) FillValueToSkeleton() {
+	if isEmpty(p.PassPhrase) {
+		p.PassPhrase = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.PrivateKeyOutput) {
+		p.PrivateKeyOutput = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -991,6 +1272,13 @@ func (p *GenerateSSHKeyParam) SetParamTemplateFile(v string) {
 
 func (p *GenerateSSHKeyParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *GenerateSSHKeyParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *GenerateSSHKeyParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *GenerateSSHKeyParam) SetOutputType(v string) {
 	p.OutputType = v

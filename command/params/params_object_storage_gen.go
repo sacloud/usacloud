@@ -15,6 +15,7 @@ type ListObjectStorageParam struct {
 	Bucket            string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -25,6 +26,44 @@ type ListObjectStorageParam struct {
 // NewListObjectStorageParam return new ListObjectStorageParam
 func NewListObjectStorageParam() *ListObjectStorageParam {
 	return &ListObjectStorageParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListObjectStorageParam) FillValueToSkeleton() {
+	if isEmpty(p.AccessKey) {
+		p.AccessKey = ""
+	}
+	if isEmpty(p.SecretKey) {
+		p.SecretKey = ""
+	}
+	if isEmpty(p.Bucket) {
+		p.Bucket = ""
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -131,6 +170,13 @@ func (p *ListObjectStorageParam) SetParamTemplateFile(v string) {
 func (p *ListObjectStorageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListObjectStorageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListObjectStorageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListObjectStorageParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -177,6 +223,7 @@ type PutObjectStorageParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 }
 
 // NewPutObjectStorageParam return new PutObjectStorageParam
@@ -185,6 +232,38 @@ func NewPutObjectStorageParam() *PutObjectStorageParam {
 
 		ContentType: "application/octet-stream",
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *PutObjectStorageParam) FillValueToSkeleton() {
+	if isEmpty(p.AccessKey) {
+		p.AccessKey = ""
+	}
+	if isEmpty(p.ContentType) {
+		p.ContentType = ""
+	}
+	if isEmpty(p.Recursive) {
+		p.Recursive = false
+	}
+	if isEmpty(p.SecretKey) {
+		p.SecretKey = ""
+	}
+	if isEmpty(p.Bucket) {
+		p.Bucket = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+
 }
 
 // Validate checks current values in model
@@ -292,6 +371,13 @@ func (p *PutObjectStorageParam) SetParamTemplateFile(v string) {
 func (p *PutObjectStorageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *PutObjectStorageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PutObjectStorageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 
 // GetObjectStorageParam is input parameters for the sacloud API
 type GetObjectStorageParam struct {
@@ -301,11 +387,38 @@ type GetObjectStorageParam struct {
 	Bucket            string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 }
 
 // NewGetObjectStorageParam return new GetObjectStorageParam
 func NewGetObjectStorageParam() *GetObjectStorageParam {
 	return &GetObjectStorageParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *GetObjectStorageParam) FillValueToSkeleton() {
+	if isEmpty(p.AccessKey) {
+		p.AccessKey = ""
+	}
+	if isEmpty(p.Recursive) {
+		p.Recursive = false
+	}
+	if isEmpty(p.SecretKey) {
+		p.SecretKey = ""
+	}
+	if isEmpty(p.Bucket) {
+		p.Bucket = ""
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+
 }
 
 // Validate checks current values in model
@@ -399,6 +512,13 @@ func (p *GetObjectStorageParam) SetParamTemplateFile(v string) {
 func (p *GetObjectStorageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *GetObjectStorageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *GetObjectStorageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 
 // DeleteObjectStorageParam is input parameters for the sacloud API
 type DeleteObjectStorageParam struct {
@@ -409,11 +529,41 @@ type DeleteObjectStorageParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 }
 
 // NewDeleteObjectStorageParam return new DeleteObjectStorageParam
 func NewDeleteObjectStorageParam() *DeleteObjectStorageParam {
 	return &DeleteObjectStorageParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteObjectStorageParam) FillValueToSkeleton() {
+	if isEmpty(p.AccessKey) {
+		p.AccessKey = ""
+	}
+	if isEmpty(p.Recursive) {
+		p.Recursive = false
+	}
+	if isEmpty(p.SecretKey) {
+		p.SecretKey = ""
+	}
+	if isEmpty(p.Bucket) {
+		p.Bucket = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+
 }
 
 // Validate checks current values in model
@@ -513,4 +663,11 @@ func (p *DeleteObjectStorageParam) SetParamTemplateFile(v string) {
 
 func (p *DeleteObjectStorageParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteObjectStorageParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteObjectStorageParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }

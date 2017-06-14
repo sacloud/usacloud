@@ -18,6 +18,7 @@ type ListSimpleMonitorParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -28,6 +29,53 @@ type ListSimpleMonitorParam struct {
 // NewListSimpleMonitorParam return new ListSimpleMonitorParam
 func NewListSimpleMonitorParam() *ListSimpleMonitorParam {
 	return &ListSimpleMonitorParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListSimpleMonitorParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -173,6 +221,13 @@ func (p *ListSimpleMonitorParam) SetParamTemplateFile(v string) {
 func (p *ListSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListSimpleMonitorParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListSimpleMonitorParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -230,6 +285,7 @@ type CreateSimpleMonitorParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -241,14 +297,91 @@ type CreateSimpleMonitorParam struct {
 func NewCreateSimpleMonitorParam() *CreateSimpleMonitorParam {
 	return &CreateSimpleMonitorParam{
 
-		Protocol: "ping",
-
-		DelayLoop: 1,
-
-		Enabled: true,
-
+		Protocol:    "ping",
+		DelayLoop:   1,
+		Enabled:     true,
 		NotifyEmail: true,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateSimpleMonitorParam) FillValueToSkeleton() {
+	if isEmpty(p.Target) {
+		p.Target = ""
+	}
+	if isEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.DelayLoop) {
+		p.DelayLoop = 0
+	}
+	if isEmpty(p.Enabled) {
+		p.Enabled = false
+	}
+	if isEmpty(p.HostHeader) {
+		p.HostHeader = ""
+	}
+	if isEmpty(p.Path) {
+		p.Path = ""
+	}
+	if isEmpty(p.ResponseCode) {
+		p.ResponseCode = 0
+	}
+	if isEmpty(p.DnsQname) {
+		p.DnsQname = ""
+	}
+	if isEmpty(p.DnsExcepted) {
+		p.DnsExcepted = ""
+	}
+	if isEmpty(p.NotifyEmail) {
+		p.NotifyEmail = false
+	}
+	if isEmpty(p.EmailType) {
+		p.EmailType = ""
+	}
+	if isEmpty(p.SlackWebhook) {
+		p.SlackWebhook = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -516,6 +649,13 @@ func (p *CreateSimpleMonitorParam) SetParamTemplateFile(v string) {
 func (p *CreateSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateSimpleMonitorParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateSimpleMonitorParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -556,6 +696,7 @@ func (p *CreateSimpleMonitorParam) GetFormatFile() string {
 type ReadSimpleMonitorParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -567,6 +708,38 @@ type ReadSimpleMonitorParam struct {
 // NewReadSimpleMonitorParam return new ReadSimpleMonitorParam
 func NewReadSimpleMonitorParam() *ReadSimpleMonitorParam {
 	return &ReadSimpleMonitorParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadSimpleMonitorParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -645,6 +818,13 @@ func (p *ReadSimpleMonitorParam) SetParamTemplateFile(v string) {
 func (p *ReadSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadSimpleMonitorParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadSimpleMonitorParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -708,6 +888,7 @@ type UpdateSimpleMonitorParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -719,6 +900,86 @@ type UpdateSimpleMonitorParam struct {
 // NewUpdateSimpleMonitorParam return new UpdateSimpleMonitorParam
 func NewUpdateSimpleMonitorParam() *UpdateSimpleMonitorParam {
 	return &UpdateSimpleMonitorParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
+	if isEmpty(p.Protocol) {
+		p.Protocol = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.DelayLoop) {
+		p.DelayLoop = 0
+	}
+	if isEmpty(p.Enabled) {
+		p.Enabled = false
+	}
+	if isEmpty(p.HostHeader) {
+		p.HostHeader = ""
+	}
+	if isEmpty(p.Path) {
+		p.Path = ""
+	}
+	if isEmpty(p.ResponseCode) {
+		p.ResponseCode = 0
+	}
+	if isEmpty(p.DnsQname) {
+		p.DnsQname = ""
+	}
+	if isEmpty(p.DnsExcepted) {
+		p.DnsExcepted = ""
+	}
+	if isEmpty(p.NotifyEmail) {
+		p.NotifyEmail = false
+	}
+	if isEmpty(p.EmailType) {
+		p.EmailType = ""
+	}
+	if isEmpty(p.SlackWebhook) {
+		p.SlackWebhook = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -958,6 +1219,13 @@ func (p *UpdateSimpleMonitorParam) SetParamTemplateFile(v string) {
 func (p *UpdateSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateSimpleMonitorParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1006,6 +1274,7 @@ type DeleteSimpleMonitorParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1017,6 +1286,41 @@ type DeleteSimpleMonitorParam struct {
 // NewDeleteSimpleMonitorParam return new DeleteSimpleMonitorParam
 func NewDeleteSimpleMonitorParam() *DeleteSimpleMonitorParam {
 	return &DeleteSimpleMonitorParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteSimpleMonitorParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1101,6 +1405,13 @@ func (p *DeleteSimpleMonitorParam) SetParamTemplateFile(v string) {
 
 func (p *DeleteSimpleMonitorParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteSimpleMonitorParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteSimpleMonitorParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *DeleteSimpleMonitorParam) SetOutputType(v string) {
 	p.OutputType = v

@@ -19,6 +19,7 @@ type ListStartupScriptParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -29,6 +30,56 @@ type ListStartupScriptParam struct {
 // NewListStartupScriptParam return new ListStartupScriptParam
 func NewListStartupScriptParam() *ListStartupScriptParam {
 	return &ListStartupScriptParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListStartupScriptParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Scope) {
+		p.Scope = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -188,6 +239,13 @@ func (p *ListStartupScriptParam) SetParamTemplateFile(v string) {
 func (p *ListStartupScriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListStartupScriptParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListStartupScriptParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListStartupScriptParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -234,6 +292,7 @@ type CreateStartupScriptParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -244,6 +303,53 @@ type CreateStartupScriptParam struct {
 // NewCreateStartupScriptParam return new CreateStartupScriptParam
 func NewCreateStartupScriptParam() *CreateStartupScriptParam {
 	return &CreateStartupScriptParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateStartupScriptParam) FillValueToSkeleton() {
+	if isEmpty(p.Script) {
+		p.Script = ""
+	}
+	if isEmpty(p.ScriptContent) {
+		p.ScriptContent = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -401,6 +507,13 @@ func (p *CreateStartupScriptParam) SetParamTemplateFile(v string) {
 func (p *CreateStartupScriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateStartupScriptParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateStartupScriptParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateStartupScriptParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -441,6 +554,7 @@ func (p *CreateStartupScriptParam) GetFormatFile() string {
 type ReadStartupScriptParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -452,6 +566,38 @@ type ReadStartupScriptParam struct {
 // NewReadStartupScriptParam return new ReadStartupScriptParam
 func NewReadStartupScriptParam() *ReadStartupScriptParam {
 	return &ReadStartupScriptParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadStartupScriptParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -530,6 +676,13 @@ func (p *ReadStartupScriptParam) SetParamTemplateFile(v string) {
 func (p *ReadStartupScriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadStartupScriptParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadStartupScriptParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadStartupScriptParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -583,6 +736,7 @@ type UpdateStartupScriptParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -594,6 +748,56 @@ type UpdateStartupScriptParam struct {
 // NewUpdateStartupScriptParam return new UpdateStartupScriptParam
 func NewUpdateStartupScriptParam() *UpdateStartupScriptParam {
 	return &UpdateStartupScriptParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateStartupScriptParam) FillValueToSkeleton() {
+	if isEmpty(p.Script) {
+		p.Script = ""
+	}
+	if isEmpty(p.ScriptContent) {
+		p.ScriptContent = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -758,6 +962,13 @@ func (p *UpdateStartupScriptParam) SetParamTemplateFile(v string) {
 func (p *UpdateStartupScriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateStartupScriptParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateStartupScriptParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateStartupScriptParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -806,6 +1017,7 @@ type DeleteStartupScriptParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -817,6 +1029,41 @@ type DeleteStartupScriptParam struct {
 // NewDeleteStartupScriptParam return new DeleteStartupScriptParam
 func NewDeleteStartupScriptParam() *DeleteStartupScriptParam {
 	return &DeleteStartupScriptParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteStartupScriptParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -901,6 +1148,13 @@ func (p *DeleteStartupScriptParam) SetParamTemplateFile(v string) {
 
 func (p *DeleteStartupScriptParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteStartupScriptParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteStartupScriptParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *DeleteStartupScriptParam) SetOutputType(v string) {
 	p.OutputType = v

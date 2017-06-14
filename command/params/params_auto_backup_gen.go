@@ -18,6 +18,7 @@ type ListAutoBackupParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -28,6 +29,53 @@ type ListAutoBackupParam struct {
 // NewListAutoBackupParam return new ListAutoBackupParam
 func NewListAutoBackupParam() *ListAutoBackupParam {
 	return &ListAutoBackupParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListAutoBackupParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -173,6 +221,13 @@ func (p *ListAutoBackupParam) SetParamTemplateFile(v string) {
 func (p *ListAutoBackupParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListAutoBackupParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListAutoBackupParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListAutoBackupParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -221,6 +276,7 @@ type CreateAutoBackupParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -232,10 +288,62 @@ type CreateAutoBackupParam struct {
 func NewCreateAutoBackupParam() *CreateAutoBackupParam {
 	return &CreateAutoBackupParam{
 
-		Weekdays: []string{"all"},
-
+		Weekdays:   []string{"all"},
 		Generation: 1,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateAutoBackupParam) FillValueToSkeleton() {
+	if isEmpty(p.DiskId) {
+		p.DiskId = 0
+	}
+	if isEmpty(p.Weekdays) {
+		p.Weekdays = []string{""}
+	}
+	if isEmpty(p.Generation) {
+		p.Generation = 0
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -440,6 +548,13 @@ func (p *CreateAutoBackupParam) SetParamTemplateFile(v string) {
 func (p *CreateAutoBackupParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateAutoBackupParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateAutoBackupParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateAutoBackupParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -480,6 +595,7 @@ func (p *CreateAutoBackupParam) GetFormatFile() string {
 type ReadAutoBackupParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -491,6 +607,38 @@ type ReadAutoBackupParam struct {
 // NewReadAutoBackupParam return new ReadAutoBackupParam
 func NewReadAutoBackupParam() *ReadAutoBackupParam {
 	return &ReadAutoBackupParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadAutoBackupParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -569,6 +717,13 @@ func (p *ReadAutoBackupParam) SetParamTemplateFile(v string) {
 func (p *ReadAutoBackupParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadAutoBackupParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadAutoBackupParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadAutoBackupParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -623,6 +778,7 @@ type UpdateAutoBackupParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -634,6 +790,59 @@ type UpdateAutoBackupParam struct {
 // NewUpdateAutoBackupParam return new UpdateAutoBackupParam
 func NewUpdateAutoBackupParam() *UpdateAutoBackupParam {
 	return &UpdateAutoBackupParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateAutoBackupParam) FillValueToSkeleton() {
+	if isEmpty(p.Weekdays) {
+		p.Weekdays = []string{""}
+	}
+	if isEmpty(p.Generation) {
+		p.Generation = 0
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -803,6 +1012,13 @@ func (p *UpdateAutoBackupParam) SetParamTemplateFile(v string) {
 func (p *UpdateAutoBackupParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateAutoBackupParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateAutoBackupParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateAutoBackupParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -851,6 +1067,7 @@ type DeleteAutoBackupParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -862,6 +1079,41 @@ type DeleteAutoBackupParam struct {
 // NewDeleteAutoBackupParam return new DeleteAutoBackupParam
 func NewDeleteAutoBackupParam() *DeleteAutoBackupParam {
 	return &DeleteAutoBackupParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteAutoBackupParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -946,6 +1198,13 @@ func (p *DeleteAutoBackupParam) SetParamTemplateFile(v string) {
 
 func (p *DeleteAutoBackupParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteAutoBackupParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteAutoBackupParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *DeleteAutoBackupParam) SetOutputType(v string) {
 	p.OutputType = v

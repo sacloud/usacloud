@@ -18,6 +18,7 @@ type ListSwitchParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -28,6 +29,53 @@ type ListSwitchParam struct {
 // NewListSwitchParam return new ListSwitchParam
 func NewListSwitchParam() *ListSwitchParam {
 	return &ListSwitchParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListSwitchParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -173,6 +221,13 @@ func (p *ListSwitchParam) SetParamTemplateFile(v string) {
 func (p *ListSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListSwitchParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -218,6 +273,7 @@ type CreateSwitchParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -228,6 +284,50 @@ type CreateSwitchParam struct {
 // NewCreateSwitchParam return new CreateSwitchParam
 func NewCreateSwitchParam() *CreateSwitchParam {
 	return &CreateSwitchParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateSwitchParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -369,6 +469,13 @@ func (p *CreateSwitchParam) SetParamTemplateFile(v string) {
 func (p *CreateSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateSwitchParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -409,6 +516,7 @@ func (p *CreateSwitchParam) GetFormatFile() string {
 type ReadSwitchParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -420,6 +528,38 @@ type ReadSwitchParam struct {
 // NewReadSwitchParam return new ReadSwitchParam
 func NewReadSwitchParam() *ReadSwitchParam {
 	return &ReadSwitchParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadSwitchParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -498,6 +638,13 @@ func (p *ReadSwitchParam) SetParamTemplateFile(v string) {
 func (p *ReadSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadSwitchParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -550,6 +697,7 @@ type UpdateSwitchParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -561,6 +709,53 @@ type UpdateSwitchParam struct {
 // NewUpdateSwitchParam return new UpdateSwitchParam
 func NewUpdateSwitchParam() *UpdateSwitchParam {
 	return &UpdateSwitchParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateSwitchParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -702,6 +897,13 @@ func (p *UpdateSwitchParam) SetParamTemplateFile(v string) {
 func (p *UpdateSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateSwitchParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -750,6 +952,7 @@ type DeleteSwitchParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -761,6 +964,41 @@ type DeleteSwitchParam struct {
 // NewDeleteSwitchParam return new DeleteSwitchParam
 func NewDeleteSwitchParam() *DeleteSwitchParam {
 	return &DeleteSwitchParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteSwitchParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -846,6 +1084,13 @@ func (p *DeleteSwitchParam) SetParamTemplateFile(v string) {
 func (p *DeleteSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DeleteSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DeleteSwitchParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -895,12 +1140,36 @@ type BridgeConnectSwitchParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewBridgeConnectSwitchParam return new BridgeConnectSwitchParam
 func NewBridgeConnectSwitchParam() *BridgeConnectSwitchParam {
 	return &BridgeConnectSwitchParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *BridgeConnectSwitchParam) FillValueToSkeleton() {
+	if isEmpty(p.BridgeId) {
+		p.BridgeId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -987,6 +1256,13 @@ func (p *BridgeConnectSwitchParam) SetParamTemplateFile(v string) {
 func (p *BridgeConnectSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *BridgeConnectSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BridgeConnectSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *BridgeConnectSwitchParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1000,12 +1276,33 @@ type BridgeDisconnectSwitchParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewBridgeDisconnectSwitchParam return new BridgeDisconnectSwitchParam
 func NewBridgeDisconnectSwitchParam() *BridgeDisconnectSwitchParam {
 	return &BridgeDisconnectSwitchParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *BridgeDisconnectSwitchParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1070,6 +1367,13 @@ func (p *BridgeDisconnectSwitchParam) SetParamTemplateFile(v string) {
 
 func (p *BridgeDisconnectSwitchParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *BridgeDisconnectSwitchParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *BridgeDisconnectSwitchParam) SetId(v int64) {
 	p.Id = v

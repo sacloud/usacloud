@@ -17,6 +17,7 @@ type ListLicenseParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -27,6 +28,50 @@ type ListLicenseParam struct {
 // NewListLicenseParam return new ListLicenseParam
 func NewListLicenseParam() *ListLicenseParam {
 	return &ListLicenseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListLicenseParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -158,6 +203,13 @@ func (p *ListLicenseParam) SetParamTemplateFile(v string) {
 func (p *ListLicenseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListLicenseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -201,6 +253,7 @@ type CreateLicenseParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -211,6 +264,44 @@ type CreateLicenseParam struct {
 // NewCreateLicenseParam return new CreateLicenseParam
 func NewCreateLicenseParam() *CreateLicenseParam {
 	return &CreateLicenseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CreateLicenseParam) FillValueToSkeleton() {
+	if isEmpty(p.LicenseInfoId) {
+		p.LicenseInfoId = 0
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -317,6 +408,13 @@ func (p *CreateLicenseParam) SetParamTemplateFile(v string) {
 func (p *CreateLicenseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *CreateLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CreateLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *CreateLicenseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -357,6 +455,7 @@ func (p *CreateLicenseParam) GetFormatFile() string {
 type ReadLicenseParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -368,6 +467,38 @@ type ReadLicenseParam struct {
 // NewReadLicenseParam return new ReadLicenseParam
 func NewReadLicenseParam() *ReadLicenseParam {
 	return &ReadLicenseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadLicenseParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -446,6 +577,13 @@ func (p *ReadLicenseParam) SetParamTemplateFile(v string) {
 func (p *ReadLicenseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadLicenseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -495,6 +633,7 @@ type UpdateLicenseParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -506,6 +645,44 @@ type UpdateLicenseParam struct {
 // NewUpdateLicenseParam return new UpdateLicenseParam
 func NewUpdateLicenseParam() *UpdateLicenseParam {
 	return &UpdateLicenseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateLicenseParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -605,6 +782,13 @@ func (p *UpdateLicenseParam) SetParamTemplateFile(v string) {
 func (p *UpdateLicenseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateLicenseParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -653,6 +837,7 @@ type DeleteLicenseParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -664,6 +849,41 @@ type DeleteLicenseParam struct {
 // NewDeleteLicenseParam return new DeleteLicenseParam
 func NewDeleteLicenseParam() *DeleteLicenseParam {
 	return &DeleteLicenseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteLicenseParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -748,6 +968,13 @@ func (p *DeleteLicenseParam) SetParamTemplateFile(v string) {
 
 func (p *DeleteLicenseParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *DeleteLicenseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteLicenseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *DeleteLicenseParam) SetOutputType(v string) {
 	p.OutputType = v

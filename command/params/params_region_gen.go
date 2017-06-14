@@ -17,6 +17,7 @@ type ListRegionParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -27,6 +28,50 @@ type ListRegionParam struct {
 // NewListRegionParam return new ListRegionParam
 func NewListRegionParam() *ListRegionParam {
 	return &ListRegionParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListRegionParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -158,6 +203,13 @@ func (p *ListRegionParam) SetParamTemplateFile(v string) {
 func (p *ListRegionParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListRegionParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListRegionParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListRegionParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -199,6 +251,7 @@ type ReadRegionParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -210,6 +263,41 @@ type ReadRegionParam struct {
 // NewReadRegionParam return new ReadRegionParam
 func NewReadRegionParam() *ReadRegionParam {
 	return &ReadRegionParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadRegionParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -301,6 +389,13 @@ func (p *ReadRegionParam) SetParamTemplateFile(v string) {
 
 func (p *ReadRegionParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *ReadRegionParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadRegionParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *ReadRegionParam) SetOutputType(v string) {
 	p.OutputType = v

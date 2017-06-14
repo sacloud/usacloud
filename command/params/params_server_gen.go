@@ -18,6 +18,7 @@ type ListServerParam struct {
 	Sort              []string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -28,6 +29,53 @@ type ListServerParam struct {
 // NewListServerParam return new ListServerParam
 func NewListServerParam() *ListServerParam {
 	return &ListServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ListServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = []string{""}
+	}
+	if isEmpty(p.Id) {
+		p.Id = []int64{0}
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.From) {
+		p.From = 0
+	}
+	if isEmpty(p.Max) {
+		p.Max = 0
+	}
+	if isEmpty(p.Sort) {
+		p.Sort = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
 }
 
 // Validate checks current values in model
@@ -173,6 +221,13 @@ func (p *ListServerParam) SetParamTemplateFile(v string) {
 func (p *ListServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ListServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ListServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ListServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -252,6 +307,7 @@ type BuildServerParam struct {
 	Assumeyes               bool
 	ParamTemplate           string
 	ParamTemplateFile       string
+	GenerateSkeleton        bool
 	OutputType              string
 	Column                  []string
 	Quiet                   bool
@@ -265,28 +321,170 @@ type BuildServerParam struct {
 func NewBuildServerParam() *BuildServerParam {
 	return &BuildServerParam{
 
-		Core: 1,
-
-		Memory: 1,
-
-		DiskMode: "create",
-
-		DiskPlan: "ssd",
-
-		DiskConnection: "virtio",
-
-		DiskSize: 20,
-
-		NetworkMode: "shared",
-
-		UseNicVirtio: true,
-
-		NwMasklen: 24,
-
+		Core:                    1,
+		Memory:                  1,
+		DiskMode:                "create",
+		DiskPlan:                "ssd",
+		DiskConnection:          "virtio",
+		DiskSize:                20,
+		NetworkMode:             "shared",
+		UseNicVirtio:            true,
+		NwMasklen:               24,
 		StartupScriptsEphemeral: true,
-
-		SshKeyEphemeral: true,
+		SshKeyEphemeral:         true,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *BuildServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Core) {
+		p.Core = 0
+	}
+	if isEmpty(p.Memory) {
+		p.Memory = 0
+	}
+	if isEmpty(p.DiskMode) {
+		p.DiskMode = ""
+	}
+	if isEmpty(p.OsType) {
+		p.OsType = ""
+	}
+	if isEmpty(p.DiskPlan) {
+		p.DiskPlan = ""
+	}
+	if isEmpty(p.DiskConnection) {
+		p.DiskConnection = ""
+	}
+	if isEmpty(p.DiskSize) {
+		p.DiskSize = 0
+	}
+	if isEmpty(p.SourceArchiveId) {
+		p.SourceArchiveId = 0
+	}
+	if isEmpty(p.SourceDiskId) {
+		p.SourceDiskId = 0
+	}
+	if isEmpty(p.DistantFrom) {
+		p.DistantFrom = []int64{0}
+	}
+	if isEmpty(p.DiskId) {
+		p.DiskId = 0
+	}
+	if isEmpty(p.IsoImageId) {
+		p.IsoImageId = 0
+	}
+	if isEmpty(p.NetworkMode) {
+		p.NetworkMode = ""
+	}
+	if isEmpty(p.UseNicVirtio) {
+		p.UseNicVirtio = false
+	}
+	if isEmpty(p.PacketFilterId) {
+		p.PacketFilterId = 0
+	}
+	if isEmpty(p.SwitchId) {
+		p.SwitchId = 0
+	}
+	if isEmpty(p.Hostname) {
+		p.Hostname = ""
+	}
+	if isEmpty(p.Password) {
+		p.Password = ""
+	}
+	if isEmpty(p.DisablePasswordAuth) {
+		p.DisablePasswordAuth = false
+	}
+	if isEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if isEmpty(p.NwMasklen) {
+		p.NwMasklen = 0
+	}
+	if isEmpty(p.DefaultRoute) {
+		p.DefaultRoute = ""
+	}
+	if isEmpty(p.StartupScripts) {
+		p.StartupScripts = []string{""}
+	}
+	if isEmpty(p.StartupScriptIds) {
+		p.StartupScriptIds = []int64{0}
+	}
+	if isEmpty(p.StartupScriptsEphemeral) {
+		p.StartupScriptsEphemeral = false
+	}
+	if isEmpty(p.SshKeyMode) {
+		p.SshKeyMode = ""
+	}
+	if isEmpty(p.SshKeyName) {
+		p.SshKeyName = ""
+	}
+	if isEmpty(p.SshKeyIds) {
+		p.SshKeyIds = []int64{0}
+	}
+	if isEmpty(p.SshKeyPassPhrase) {
+		p.SshKeyPassPhrase = ""
+	}
+	if isEmpty(p.SshKeyDescription) {
+		p.SshKeyDescription = ""
+	}
+	if isEmpty(p.SshKeyPrivateKeyOutput) {
+		p.SshKeyPrivateKeyOutput = ""
+	}
+	if isEmpty(p.SshKeyPublicKeys) {
+		p.SshKeyPublicKeys = []string{""}
+	}
+	if isEmpty(p.SshKeyPublicKeyFiles) {
+		p.SshKeyPublicKeyFiles = []string{""}
+	}
+	if isEmpty(p.SshKeyEphemeral) {
+		p.SshKeyEphemeral = false
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.UsKeyboard) {
+		p.UsKeyboard = false
+	}
+	if isEmpty(p.DisableBootAfterCreate) {
+		p.DisableBootAfterCreate = false
+	}
+
 }
 
 // Validate checks current values in model
@@ -841,6 +1039,13 @@ func (p *BuildServerParam) SetParamTemplateFile(v string) {
 func (p *BuildServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *BuildServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BuildServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *BuildServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -895,6 +1100,7 @@ func (p *BuildServerParam) GetDisableBootAfterCreate() bool {
 type ReadServerParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -906,6 +1112,38 @@ type ReadServerParam struct {
 // NewReadServerParam return new ReadServerParam
 func NewReadServerParam() *ReadServerParam {
 	return &ReadServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ReadServerParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -984,6 +1222,13 @@ func (p *ReadServerParam) SetParamTemplateFile(v string) {
 func (p *ReadServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ReadServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ReadServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ReadServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1036,6 +1281,7 @@ type UpdateServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1047,6 +1293,53 @@ type UpdateServerParam struct {
 // NewUpdateServerParam return new UpdateServerParam
 func NewUpdateServerParam() *UpdateServerParam {
 	return &UpdateServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *UpdateServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1188,6 +1481,13 @@ func (p *UpdateServerParam) SetParamTemplateFile(v string) {
 func (p *UpdateServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *UpdateServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *UpdateServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *UpdateServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1238,6 +1538,7 @@ type DeleteServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1249,6 +1550,47 @@ type DeleteServerParam struct {
 // NewDeleteServerParam return new DeleteServerParam
 func NewDeleteServerParam() *DeleteServerParam {
 	return &DeleteServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DeleteServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Force) {
+		p.Force = false
+	}
+	if isEmpty(p.WithoutDisk) {
+		p.WithoutDisk = false
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1348,6 +1690,13 @@ func (p *DeleteServerParam) SetParamTemplateFile(v string) {
 func (p *DeleteServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DeleteServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DeleteServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DeleteServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1398,6 +1747,7 @@ type PlanChangeServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -1409,6 +1759,47 @@ type PlanChangeServerParam struct {
 // NewPlanChangeServerParam return new PlanChangeServerParam
 func NewPlanChangeServerParam() *PlanChangeServerParam {
 	return &PlanChangeServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *PlanChangeServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Core) {
+		p.Core = 0
+	}
+	if isEmpty(p.Memory) {
+		p.Memory = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1522,6 +1913,13 @@ func (p *PlanChangeServerParam) SetParamTemplateFile(v string) {
 func (p *PlanChangeServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *PlanChangeServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PlanChangeServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *PlanChangeServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -1570,12 +1968,33 @@ type BootServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewBootServerParam return new BootServerParam
 func NewBootServerParam() *BootServerParam {
 	return &BootServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *BootServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1641,6 +2060,13 @@ func (p *BootServerParam) SetParamTemplateFile(v string) {
 func (p *BootServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *BootServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BootServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *BootServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1654,12 +2080,33 @@ type ShutdownServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewShutdownServerParam return new ShutdownServerParam
 func NewShutdownServerParam() *ShutdownServerParam {
 	return &ShutdownServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ShutdownServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1725,6 +2172,13 @@ func (p *ShutdownServerParam) SetParamTemplateFile(v string) {
 func (p *ShutdownServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ShutdownServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ShutdownServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1738,12 +2192,33 @@ type ShutdownForceServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewShutdownForceServerParam return new ShutdownForceServerParam
 func NewShutdownForceServerParam() *ShutdownForceServerParam {
 	return &ShutdownForceServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ShutdownForceServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1809,6 +2284,13 @@ func (p *ShutdownForceServerParam) SetParamTemplateFile(v string) {
 func (p *ShutdownForceServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ShutdownForceServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ShutdownForceServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ShutdownForceServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1822,12 +2304,33 @@ type ResetServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewResetServerParam return new ResetServerParam
 func NewResetServerParam() *ResetServerParam {
 	return &ResetServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ResetServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1893,6 +2396,13 @@ func (p *ResetServerParam) SetParamTemplateFile(v string) {
 func (p *ResetServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ResetServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ResetServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ResetServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1905,12 +2415,30 @@ func (p *ResetServerParam) GetId() int64 {
 type WaitForBootServerParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewWaitForBootServerParam return new WaitForBootServerParam
 func NewWaitForBootServerParam() *WaitForBootServerParam {
 	return &WaitForBootServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *WaitForBootServerParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -1969,6 +2497,13 @@ func (p *WaitForBootServerParam) SetParamTemplateFile(v string) {
 func (p *WaitForBootServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *WaitForBootServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForBootServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *WaitForBootServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1981,12 +2516,30 @@ func (p *WaitForBootServerParam) GetId() int64 {
 type WaitForDownServerParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewWaitForDownServerParam return new WaitForDownServerParam
 func NewWaitForDownServerParam() *WaitForDownServerParam {
 	return &WaitForDownServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *WaitForDownServerParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2045,6 +2598,13 @@ func (p *WaitForDownServerParam) SetParamTemplateFile(v string) {
 func (p *WaitForDownServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *WaitForDownServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *WaitForDownServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *WaitForDownServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2061,6 +2621,7 @@ type SshServerParam struct {
 	Password          string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Quiet             bool
 	Id                int64
 }
@@ -2071,6 +2632,38 @@ func NewSshServerParam() *SshServerParam {
 
 		Port: 22,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *SshServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Key) {
+		p.Key = ""
+	}
+	if isEmpty(p.User) {
+		p.User = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.Password) {
+		p.Password = ""
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2171,6 +2764,13 @@ func (p *SshServerParam) SetParamTemplateFile(v string) {
 func (p *SshServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *SshServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SshServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *SshServerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
@@ -2194,6 +2794,7 @@ type SshExecServerParam struct {
 	Password          string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Quiet             bool
 	Id                int64
 }
@@ -2204,6 +2805,38 @@ func NewSshExecServerParam() *SshExecServerParam {
 
 		Port: 22,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *SshExecServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Key) {
+		p.Key = ""
+	}
+	if isEmpty(p.User) {
+		p.User = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.Password) {
+		p.Password = ""
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2304,6 +2937,13 @@ func (p *SshExecServerParam) SetParamTemplateFile(v string) {
 func (p *SshExecServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *SshExecServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SshExecServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *SshExecServerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
@@ -2329,6 +2969,7 @@ type ScpServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Quiet             bool
 }
 
@@ -2338,6 +2979,41 @@ func NewScpServerParam() *ScpServerParam {
 
 		Port: 22,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ScpServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Key) {
+		p.Key = ""
+	}
+	if isEmpty(p.Recursive) {
+		p.Recursive = false
+	}
+	if isEmpty(p.User) {
+		p.User = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.Password) {
+		p.Password = ""
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+
 }
 
 // Validate checks current values in model
@@ -2445,6 +3121,13 @@ func (p *ScpServerParam) SetParamTemplateFile(v string) {
 func (p *ScpServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *ScpServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ScpServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *ScpServerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
@@ -2459,12 +3142,36 @@ type VncServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewVncServerParam return new VncServerParam
 func NewVncServerParam() *VncServerParam {
 	return &VncServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *VncServerParam) FillValueToSkeleton() {
+	if isEmpty(p.WaitForBoot) {
+		p.WaitForBoot = false
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2537,6 +3244,13 @@ func (p *VncServerParam) SetParamTemplateFile(v string) {
 func (p *VncServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *VncServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *VncServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *VncServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2550,6 +3264,7 @@ type VncInfoServerParam struct {
 	WaitForBoot       bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -2561,6 +3276,41 @@ type VncInfoServerParam struct {
 // NewVncInfoServerParam return new VncInfoServerParam
 func NewVncInfoServerParam() *VncInfoServerParam {
 	return &VncInfoServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *VncInfoServerParam) FillValueToSkeleton() {
+	if isEmpty(p.WaitForBoot) {
+		p.WaitForBoot = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2646,6 +3396,13 @@ func (p *VncInfoServerParam) SetParamTemplateFile(v string) {
 func (p *VncInfoServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *VncInfoServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *VncInfoServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *VncInfoServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -2699,6 +3456,7 @@ type VncSendServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -2710,6 +3468,56 @@ type VncSendServerParam struct {
 // NewVncSendServerParam return new VncSendServerParam
 func NewVncSendServerParam() *VncSendServerParam {
 	return &VncSendServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *VncSendServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Command) {
+		p.Command = ""
+	}
+	if isEmpty(p.CommandFile) {
+		p.CommandFile = ""
+	}
+	if isEmpty(p.UseUsKeyboard) {
+		p.UseUsKeyboard = false
+	}
+	if isEmpty(p.Debug) {
+		p.Debug = false
+	}
+	if isEmpty(p.WaitForBoot) {
+		p.WaitForBoot = false
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2846,6 +3654,13 @@ func (p *VncSendServerParam) SetParamTemplateFile(v string) {
 func (p *VncSendServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *VncSendServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *VncSendServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *VncSendServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -2893,6 +3708,7 @@ func (p *VncSendServerParam) GetId() int64 {
 type DiskInfoServerParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -2904,6 +3720,38 @@ type DiskInfoServerParam struct {
 // NewDiskInfoServerParam return new DiskInfoServerParam
 func NewDiskInfoServerParam() *DiskInfoServerParam {
 	return &DiskInfoServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DiskInfoServerParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -2982,6 +3830,13 @@ func (p *DiskInfoServerParam) SetParamTemplateFile(v string) {
 func (p *DiskInfoServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DiskInfoServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DiskInfoServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DiskInfoServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -3031,12 +3886,36 @@ type DiskConnectServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewDiskConnectServerParam return new DiskConnectServerParam
 func NewDiskConnectServerParam() *DiskConnectServerParam {
 	return &DiskConnectServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DiskConnectServerParam) FillValueToSkeleton() {
+	if isEmpty(p.DiskId) {
+		p.DiskId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3123,6 +4002,13 @@ func (p *DiskConnectServerParam) SetParamTemplateFile(v string) {
 func (p *DiskConnectServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DiskConnectServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DiskConnectServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DiskConnectServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3137,12 +4023,36 @@ type DiskDisconnectServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewDiskDisconnectServerParam return new DiskDisconnectServerParam
 func NewDiskDisconnectServerParam() *DiskDisconnectServerParam {
 	return &DiskDisconnectServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DiskDisconnectServerParam) FillValueToSkeleton() {
+	if isEmpty(p.DiskId) {
+		p.DiskId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3229,6 +4139,13 @@ func (p *DiskDisconnectServerParam) SetParamTemplateFile(v string) {
 func (p *DiskDisconnectServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *DiskDisconnectServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DiskDisconnectServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *DiskDisconnectServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3241,6 +4158,7 @@ func (p *DiskDisconnectServerParam) GetId() int64 {
 type InterfaceInfoServerParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -3252,6 +4170,38 @@ type InterfaceInfoServerParam struct {
 // NewInterfaceInfoServerParam return new InterfaceInfoServerParam
 func NewInterfaceInfoServerParam() *InterfaceInfoServerParam {
 	return &InterfaceInfoServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *InterfaceInfoServerParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3330,6 +4280,13 @@ func (p *InterfaceInfoServerParam) SetParamTemplateFile(v string) {
 func (p *InterfaceInfoServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *InterfaceInfoServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceInfoServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *InterfaceInfoServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -3379,12 +4336,36 @@ type InterfaceAddForInternetServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewInterfaceAddForInternetServerParam return new InterfaceAddForInternetServerParam
 func NewInterfaceAddForInternetServerParam() *InterfaceAddForInternetServerParam {
 	return &InterfaceAddForInternetServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *InterfaceAddForInternetServerParam) FillValueToSkeleton() {
+	if isEmpty(p.WithoutDiskEdit) {
+		p.WithoutDiskEdit = false
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3457,6 +4438,13 @@ func (p *InterfaceAddForInternetServerParam) SetParamTemplateFile(v string) {
 func (p *InterfaceAddForInternetServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *InterfaceAddForInternetServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceAddForInternetServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *InterfaceAddForInternetServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3475,6 +4463,7 @@ type InterfaceAddForRouterServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
@@ -3484,6 +4473,41 @@ func NewInterfaceAddForRouterServerParam() *InterfaceAddForRouterServerParam {
 
 		NwMasklen: 24,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *InterfaceAddForRouterServerParam) FillValueToSkeleton() {
+	if isEmpty(p.SwitchId) {
+		p.SwitchId = 0
+	}
+	if isEmpty(p.WithoutDiskEdit) {
+		p.WithoutDiskEdit = false
+	}
+	if isEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if isEmpty(p.DefaultRoute) {
+		p.DefaultRoute = ""
+	}
+	if isEmpty(p.NwMasklen) {
+		p.NwMasklen = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3619,6 +4643,13 @@ func (p *InterfaceAddForRouterServerParam) SetParamTemplateFile(v string) {
 func (p *InterfaceAddForRouterServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *InterfaceAddForRouterServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceAddForRouterServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *InterfaceAddForRouterServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3637,6 +4668,7 @@ type InterfaceAddForSwitchServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
@@ -3646,6 +4678,41 @@ func NewInterfaceAddForSwitchServerParam() *InterfaceAddForSwitchServerParam {
 
 		NwMasklen: 24,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *InterfaceAddForSwitchServerParam) FillValueToSkeleton() {
+	if isEmpty(p.SwitchId) {
+		p.SwitchId = 0
+	}
+	if isEmpty(p.WithoutDiskEdit) {
+		p.WithoutDiskEdit = false
+	}
+	if isEmpty(p.Ipaddress) {
+		p.Ipaddress = ""
+	}
+	if isEmpty(p.DefaultRoute) {
+		p.DefaultRoute = ""
+	}
+	if isEmpty(p.NwMasklen) {
+		p.NwMasklen = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3781,6 +4848,13 @@ func (p *InterfaceAddForSwitchServerParam) SetParamTemplateFile(v string) {
 func (p *InterfaceAddForSwitchServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *InterfaceAddForSwitchServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceAddForSwitchServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *InterfaceAddForSwitchServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3794,12 +4868,33 @@ type InterfaceAddDisconnectedServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewInterfaceAddDisconnectedServerParam return new InterfaceAddDisconnectedServerParam
 func NewInterfaceAddDisconnectedServerParam() *InterfaceAddDisconnectedServerParam {
 	return &InterfaceAddDisconnectedServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *InterfaceAddDisconnectedServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3865,6 +4960,13 @@ func (p *InterfaceAddDisconnectedServerParam) SetParamTemplateFile(v string) {
 func (p *InterfaceAddDisconnectedServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *InterfaceAddDisconnectedServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *InterfaceAddDisconnectedServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *InterfaceAddDisconnectedServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3877,6 +4979,7 @@ func (p *InterfaceAddDisconnectedServerParam) GetId() int64 {
 type IsoInfoServerParam struct {
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -3888,6 +4991,38 @@ type IsoInfoServerParam struct {
 // NewIsoInfoServerParam return new IsoInfoServerParam
 func NewIsoInfoServerParam() *IsoInfoServerParam {
 	return &IsoInfoServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *IsoInfoServerParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -3966,6 +5101,13 @@ func (p *IsoInfoServerParam) SetParamTemplateFile(v string) {
 func (p *IsoInfoServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *IsoInfoServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *IsoInfoServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *IsoInfoServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -4021,6 +5163,7 @@ type IsoInsertServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
@@ -4030,6 +5173,47 @@ func NewIsoInsertServerParam() *IsoInsertServerParam {
 
 		Size: 5,
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *IsoInsertServerParam) FillValueToSkeleton() {
+	if isEmpty(p.IsoImageId) {
+		p.IsoImageId = 0
+	}
+	if isEmpty(p.Size) {
+		p.Size = 0
+	}
+	if isEmpty(p.IsoFile) {
+		p.IsoFile = ""
+	}
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
+	}
+	if isEmpty(p.Tags) {
+		p.Tags = []string{""}
+	}
+	if isEmpty(p.IconId) {
+		p.IconId = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -4186,6 +5370,13 @@ func (p *IsoInsertServerParam) SetParamTemplateFile(v string) {
 func (p *IsoInsertServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *IsoInsertServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *IsoInsertServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *IsoInsertServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4199,12 +5390,33 @@ type IsoEjectServerParam struct {
 	Assumeyes         bool
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	Id                int64
 }
 
 // NewIsoEjectServerParam return new IsoEjectServerParam
 func NewIsoEjectServerParam() *IsoEjectServerParam {
 	return &IsoEjectServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *IsoEjectServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -4270,6 +5482,13 @@ func (p *IsoEjectServerParam) SetParamTemplateFile(v string) {
 func (p *IsoEjectServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *IsoEjectServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *IsoEjectServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *IsoEjectServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4285,6 +5504,7 @@ type MonitorCpuServerParam struct {
 	KeyFormat         string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -4299,6 +5519,47 @@ func NewMonitorCpuServerParam() *MonitorCpuServerParam {
 
 		KeyFormat: "sakuracloud.{{.ID}}.cpu",
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorCpuServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -4419,6 +5680,13 @@ func (p *MonitorCpuServerParam) SetParamTemplateFile(v string) {
 func (p *MonitorCpuServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *MonitorCpuServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorCpuServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *MonitorCpuServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -4470,6 +5738,7 @@ type MonitorNicServerParam struct {
 	KeyFormat         string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -4484,6 +5753,50 @@ func NewMonitorNicServerParam() *MonitorNicServerParam {
 
 		KeyFormat: "sakuracloud.{{.ID}}.nic.{{.Index}}",
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorNicServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.Index) {
+		p.Index = []int64{0}
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -4611,6 +5924,13 @@ func (p *MonitorNicServerParam) SetParamTemplateFile(v string) {
 func (p *MonitorNicServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
+func (p *MonitorNicServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorNicServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
 func (p *MonitorNicServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
@@ -4662,6 +5982,7 @@ type MonitorDiskServerParam struct {
 	KeyFormat         string
 	ParamTemplate     string
 	ParamTemplateFile string
+	GenerateSkeleton  bool
 	OutputType        string
 	Column            []string
 	Quiet             bool
@@ -4676,6 +5997,50 @@ func NewMonitorDiskServerParam() *MonitorDiskServerParam {
 
 		KeyFormat: "sakuracloud.{{.ID}}.disk.{{.Index}}",
 	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorDiskServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.Index) {
+		p.Index = []int64{0}
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
 }
 
 // Validate checks current values in model
@@ -4802,6 +6167,13 @@ func (p *MonitorDiskServerParam) SetParamTemplateFile(v string) {
 
 func (p *MonitorDiskServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
+}
+func (p *MonitorDiskServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorDiskServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
 }
 func (p *MonitorDiskServerParam) SetOutputType(v string) {
 	p.OutputType = v
