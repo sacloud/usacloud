@@ -27,7 +27,7 @@
 ### macOS(`homebrew`) / Linux(`linuxbrew`)
 
 ```bash
-brew tap sacloud/homebrew-usacloud; brew install usacloud
+brew tap sacloud/usacloud; brew install usacloud
 ```
 
 > ※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。

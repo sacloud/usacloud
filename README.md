@@ -17,7 +17,7 @@
 
 ### macOS(`homebrew`) / Linux(`linuxbrew`)
 
-    brew tap sacloud/homebrew-usacloud; brew install usacloud
+    brew tap sacloud/usacloud; brew install usacloud
 
 ### RHEL / CentOS
 
