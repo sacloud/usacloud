@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu Jun 15 2017 <yamamoto.febc@gmail.com> - 0.0.11-1
+- 環境変数からのオプション設定処理修正 (by yamamoto-febc)
+
 * Mon Jun 12 2017 <yamamoto.febc@gmail.com> - 0.0.10-1
 - VNCコマンドへサーバ起動待ち用オプション追加 (by yamamoto-febc)
 - タグによる検索機能 (by yamamoto-febc)

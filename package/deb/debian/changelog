@@ -1,3 +1,10 @@
+usacloud (0.0.11-1) stable; urgency=low
+
+  * 環境変数からのオプション設定処理修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/153>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Thu, 15 Jun 2017 02:41:36 +0000
+
 usacloud (0.0.10-1) stable; urgency=low
 
   * VNCコマンドへサーバ起動待ち用オプション追加 (by yamamoto-febc)
