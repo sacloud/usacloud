@@ -40,16 +40,6 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
-* Wed Jun 14 2017 <yamamoto.febc@gmail.com> - 0.0.11-1
-- linuxbrew対応 (by yamamoto-febc)
-- --format-fileオプションの追加 (by yamamoto-febc)
-- ビルド時にGo1.8(latest)を利用 (by yamamoto-febc)
-- Windows上でのgo generate対応 (by yamamoto-febc)
-- go generateで生成されるファイルの整理 (by yamamoto-febc)
-- コピー元アーカイブ/ディスクID検索パラメータ追加 (by yamamoto-febc)
-- コマンドパラメータのテンプレート対応 (by yamamoto-febc)
-- パラメータファイルのスケルトン出力機能 (by yamamoto-febc)
-
 * Mon Jun 12 2017 <yamamoto.febc@gmail.com> - 0.0.10-1
 - VNCコマンドへサーバ起動待ち用オプション追加 (by yamamoto-febc)
 - タグによる検索機能 (by yamamoto-febc)

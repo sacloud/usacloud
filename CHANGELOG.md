@@ -1,17 +1,5 @@
 # Changelog
 
-## 0.0.11 (2017-06-14)
-
-* linuxbrew対応 #138 (yamamoto-febc)
-* --format-fileオプションの追加 #139 (yamamoto-febc)
-* ビルド時にGo1.8(latest)を利用 #140 (yamamoto-febc)
-* Windows上でのgo generate対応 #144 (yamamoto-febc)
-* go generateで生成されるファイルの整理 #145 (yamamoto-febc)
-* コピー元アーカイブ/ディスクID検索パラメータ追加 #146 (yamamoto-febc)
-* コマンドパラメータのテンプレート対応 #149 (yamamoto-febc)
-* パラメータファイルのスケルトン出力機能 #150 (yamamoto-febc)
-
-
 ## 0.0.10 (2017-06-12)
 
 * VNCコマンドへサーバ起動待ち用オプション追加 #130 (yamamoto-febc)
