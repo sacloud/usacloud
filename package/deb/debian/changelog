@@ -1,5 +1,21 @@
 usacloud (0.0.11-1) stable; urgency=low
 
+  * linuxbrew対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/138>
+  * --format-fileオプションの追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/139>
+  * ビルド時にGo1.8(latest)を利用 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/140>
+  * Windows上でのgo generate対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/144>
+  * go generateで生成されるファイルの整理 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/145>
+  * コピー元アーカイブ/ディスクID検索パラメータ追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/146>
+  * コマンドパラメータのテンプレート対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/149>
+  * パラメータファイルのスケルトン出力機能 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/150>
   * 環境変数からのオプション設定処理修正 (by yamamoto-febc)
     <https://github.com/sacloud/usacloud/pull/153>
 
