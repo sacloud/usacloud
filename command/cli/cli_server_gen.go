@@ -418,8 +418,9 @@ func init() {
 						Usage: "set hostname",
 					},
 					&cli.StringFlag{
-						Name:  "password",
-						Usage: "set password",
+						Name:    "password",
+						Usage:   "set password",
+						EnvVars: []string{"SAKURACLOUD_SERVER_PASSWORD"},
 					},
 					&cli.BoolFlag{
 						Name:    "disable-password-auth",
@@ -635,7 +636,7 @@ func init() {
 					if c.IsSet("hostname") {
 						buildParam.Hostname = c.String("hostname")
 					}
-					if c.IsSet("password") {
+					if c.IsSet("password") || command.IsEmpty(buildParam.Password) {
 						buildParam.Password = c.String("password")
 					}
 					if c.IsSet("disable-password-auth") {
@@ -860,7 +861,7 @@ func init() {
 					if c.IsSet("hostname") {
 						buildParam.Hostname = c.String("hostname")
 					}
-					if c.IsSet("password") {
+					if c.IsSet("password") || command.IsEmpty(buildParam.Password) {
 						buildParam.Password = c.String("password")
 					}
 					if c.IsSet("disable-password-auth") {
@@ -3704,7 +3705,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "password",
 						Usage:   "password(or private-key pass phrase)",
-						EnvVars: []string{"SAKURACLOUD_SSH_PASSWORD"},
+						EnvVars: []string{"SAKURACLOUD_SERVER_PASSWORD"},
 					},
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -3760,7 +3761,7 @@ func init() {
 					if c.IsSet("port") {
 						sshParam.Port = c.Int("port")
 					}
-					if c.IsSet("password") {
+					if c.IsSet("password") || command.IsEmpty(sshParam.Password) {
 						sshParam.Password = c.String("password")
 					}
 					if c.IsSet("param-template") {
@@ -3865,7 +3866,7 @@ func init() {
 					if c.IsSet("port") {
 						sshParam.Port = c.Int("port")
 					}
-					if c.IsSet("password") {
+					if c.IsSet("password") || command.IsEmpty(sshParam.Password) {
 						sshParam.Password = c.String("password")
 					}
 					if c.IsSet("param-template") {
@@ -3991,7 +3992,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "password",
 						Usage:   "password(or private-key pass phrase)",
-						EnvVars: []string{"SAKURACLOUD_SSH_PASSWORD"},
+						EnvVars: []string{"SAKURACLOUD_SERVER_PASSWORD"},
 					},
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -4047,7 +4048,7 @@ func init() {
 					if c.IsSet("port") {
 						sshExecParam.Port = c.Int("port")
 					}
-					if c.IsSet("password") {
+					if c.IsSet("password") || command.IsEmpty(sshExecParam.Password) {
 						sshExecParam.Password = c.String("password")
 					}
 					if c.IsSet("param-template") {
@@ -4152,7 +4153,7 @@ func init() {
 					if c.IsSet("port") {
 						sshExecParam.Port = c.Int("port")
 					}
-					if c.IsSet("password") {
+					if c.IsSet("password") || command.IsEmpty(sshExecParam.Password) {
 						sshExecParam.Password = c.String("password")
 					}
 					if c.IsSet("param-template") {
@@ -4283,7 +4284,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "password",
 						Usage:   "password(or private-key pass phrase)",
-						EnvVars: []string{"SAKURACLOUD_SSH_PASSWORD"},
+						EnvVars: []string{"SAKURACLOUD_SERVER_PASSWORD"},
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -4342,7 +4343,7 @@ func init() {
 					if c.IsSet("port") {
 						scpParam.Port = c.Int("port")
 					}
-					if c.IsSet("password") {
+					if c.IsSet("password") || command.IsEmpty(scpParam.Password) {
 						scpParam.Password = c.String("password")
 					}
 					if c.IsSet("assumeyes") {
@@ -4450,7 +4451,7 @@ func init() {
 					if c.IsSet("port") {
 						scpParam.Port = c.Int("port")
 					}
-					if c.IsSet("password") {
+					if c.IsSet("password") || command.IsEmpty(scpParam.Password) {
 						scpParam.Password = c.String("password")
 					}
 					if c.IsSet("assumeyes") {

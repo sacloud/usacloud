@@ -106,13 +106,13 @@ func init() {
 					ctx := command.NewContext(c, realArgs, listParam)
 
 					// Set option values
-					if c.IsSet("access-key") {
+					if c.IsSet("access-key") || command.IsEmpty(listParam.AccessKey) {
 						listParam.AccessKey = c.String("access-key")
 					}
-					if c.IsSet("secret-key") {
+					if c.IsSet("secret-key") || command.IsEmpty(listParam.SecretKey) {
 						listParam.SecretKey = c.String("secret-key")
 					}
-					if c.IsSet("bucket") {
+					if c.IsSet("bucket") || command.IsEmpty(listParam.Bucket) {
 						listParam.Bucket = c.String("bucket")
 					}
 					if c.IsSet("param-template") {
@@ -217,13 +217,13 @@ func init() {
 					}
 
 					// Set option values
-					if c.IsSet("access-key") {
+					if c.IsSet("access-key") || command.IsEmpty(listParam.AccessKey) {
 						listParam.AccessKey = c.String("access-key")
 					}
-					if c.IsSet("secret-key") {
+					if c.IsSet("secret-key") || command.IsEmpty(listParam.SecretKey) {
 						listParam.SecretKey = c.String("secret-key")
 					}
-					if c.IsSet("bucket") {
+					if c.IsSet("bucket") || command.IsEmpty(listParam.Bucket) {
 						listParam.Bucket = c.String("bucket")
 					}
 					if c.IsSet("param-template") {
@@ -351,7 +351,7 @@ func init() {
 					ctx := command.NewContext(c, realArgs, putParam)
 
 					// Set option values
-					if c.IsSet("access-key") {
+					if c.IsSet("access-key") || command.IsEmpty(putParam.AccessKey) {
 						putParam.AccessKey = c.String("access-key")
 					}
 					if c.IsSet("content-type") {
@@ -360,10 +360,10 @@ func init() {
 					if c.IsSet("recursive") {
 						putParam.Recursive = c.Bool("recursive")
 					}
-					if c.IsSet("secret-key") {
+					if c.IsSet("secret-key") || command.IsEmpty(putParam.SecretKey) {
 						putParam.SecretKey = c.String("secret-key")
 					}
-					if c.IsSet("bucket") {
+					if c.IsSet("bucket") || command.IsEmpty(putParam.Bucket) {
 						putParam.Bucket = c.String("bucket")
 					}
 					if c.IsSet("assumeyes") {
@@ -456,7 +456,7 @@ func init() {
 					}
 
 					// Set option values
-					if c.IsSet("access-key") {
+					if c.IsSet("access-key") || command.IsEmpty(putParam.AccessKey) {
 						putParam.AccessKey = c.String("access-key")
 					}
 					if c.IsSet("content-type") {
@@ -465,10 +465,10 @@ func init() {
 					if c.IsSet("recursive") {
 						putParam.Recursive = c.Bool("recursive")
 					}
-					if c.IsSet("secret-key") {
+					if c.IsSet("secret-key") || command.IsEmpty(putParam.SecretKey) {
 						putParam.SecretKey = c.String("secret-key")
 					}
-					if c.IsSet("bucket") {
+					if c.IsSet("bucket") || command.IsEmpty(putParam.Bucket) {
 						putParam.Bucket = c.String("bucket")
 					}
 					if c.IsSet("assumeyes") {
@@ -579,16 +579,16 @@ func init() {
 					ctx := command.NewContext(c, realArgs, getParam)
 
 					// Set option values
-					if c.IsSet("access-key") {
+					if c.IsSet("access-key") || command.IsEmpty(getParam.AccessKey) {
 						getParam.AccessKey = c.String("access-key")
 					}
 					if c.IsSet("recursive") {
 						getParam.Recursive = c.Bool("recursive")
 					}
-					if c.IsSet("secret-key") {
+					if c.IsSet("secret-key") || command.IsEmpty(getParam.SecretKey) {
 						getParam.SecretKey = c.String("secret-key")
 					}
-					if c.IsSet("bucket") {
+					if c.IsSet("bucket") || command.IsEmpty(getParam.Bucket) {
 						getParam.Bucket = c.String("bucket")
 					}
 					if c.IsSet("param-template") {
@@ -678,16 +678,16 @@ func init() {
 					}
 
 					// Set option values
-					if c.IsSet("access-key") {
+					if c.IsSet("access-key") || command.IsEmpty(getParam.AccessKey) {
 						getParam.AccessKey = c.String("access-key")
 					}
 					if c.IsSet("recursive") {
 						getParam.Recursive = c.Bool("recursive")
 					}
-					if c.IsSet("secret-key") {
+					if c.IsSet("secret-key") || command.IsEmpty(getParam.SecretKey) {
 						getParam.SecretKey = c.String("secret-key")
 					}
-					if c.IsSet("bucket") {
+					if c.IsSet("bucket") || command.IsEmpty(getParam.Bucket) {
 						getParam.Bucket = c.String("bucket")
 					}
 					if c.IsSet("param-template") {
@@ -796,16 +796,16 @@ func init() {
 					ctx := command.NewContext(c, realArgs, deleteParam)
 
 					// Set option values
-					if c.IsSet("access-key") {
+					if c.IsSet("access-key") || command.IsEmpty(deleteParam.AccessKey) {
 						deleteParam.AccessKey = c.String("access-key")
 					}
 					if c.IsSet("recursive") {
 						deleteParam.Recursive = c.Bool("recursive")
 					}
-					if c.IsSet("secret-key") {
+					if c.IsSet("secret-key") || command.IsEmpty(deleteParam.SecretKey) {
 						deleteParam.SecretKey = c.String("secret-key")
 					}
-					if c.IsSet("bucket") {
+					if c.IsSet("bucket") || command.IsEmpty(deleteParam.Bucket) {
 						deleteParam.Bucket = c.String("bucket")
 					}
 					if c.IsSet("assumeyes") {
@@ -898,16 +898,16 @@ func init() {
 					}
 
 					// Set option values
-					if c.IsSet("access-key") {
+					if c.IsSet("access-key") || command.IsEmpty(deleteParam.AccessKey) {
 						deleteParam.AccessKey = c.String("access-key")
 					}
 					if c.IsSet("recursive") {
 						deleteParam.Recursive = c.Bool("recursive")
 					}
-					if c.IsSet("secret-key") {
+					if c.IsSet("secret-key") || command.IsEmpty(deleteParam.SecretKey) {
 						deleteParam.SecretKey = c.String("secret-key")
 					}
-					if c.IsSet("bucket") {
+					if c.IsSet("bucket") || command.IsEmpty(deleteParam.Bucket) {
 						deleteParam.Bucket = c.String("bucket")
 					}
 					if c.IsSet("assumeyes") {
