@@ -273,6 +273,11 @@ var setDefaultTemplate = `if c.IsSet("%s") {
 }
 `
 
+var setDefaultWithEnvTemplate = `if c.IsSet("%s") || command.IsEmpty(%s.%s) {
+	%s.%s = c.%s("%s")
+}
+`
+
 func buildActionParams(command *schema.Command) (map[string]interface{}, error) {
 
 	var res map[string]interface{}
@@ -293,7 +298,13 @@ func buildActionParams(command *schema.Command) (map[string]interface{}, error) 
 		}
 
 		if valueFuncName != "" {
-			setDefault += fmt.Sprintf(setDefaultTemplate, flagName, paramName, propName, valueFuncName, flagName)
+			if len(p.EnvVars) == 0 {
+				setDefault += fmt.Sprintf(setDefaultTemplate,
+					flagName, paramName, propName, valueFuncName, flagName)
+			} else {
+				setDefault += fmt.Sprintf(setDefaultWithEnvTemplate,
+					flagName, paramName, propName, paramName, propName, valueFuncName, flagName)
+			}
 		}
 	}
 	action := fmt.Sprintf("%s(ctx , %s)", ctx.CommandFuncName(), paramName)
