@@ -7,7 +7,7 @@
 * [usacloud 導入ガイド](start_guide.md)
 * usacloud コマンド
     - [基本的な使い方](basic_usage.md)
-    - [サーバーの作成](usage_server_build.md)
+    - [サーバの作成](usage_server_build.md)
     - [電源操作](usage_server_power.md)
     - [接続(SSH/VNC)](usage_server_connect.md)
     - [ファイル送受信(SCP)](usage_server_scp.md)
