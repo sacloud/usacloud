@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>サーバーの作成 - Usacloudドキュメント</title>
+  <title>サーバの作成 - Usacloudドキュメント</title>
   
 
   <link rel="shortcut icon" href="../img/favicon.ico">
@@ -21,7 +21,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "サーバーの作成";
+    var mkdocs_page_name = "サーバの作成";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -88,9 +88,37 @@
         
             
     <li class="toctree-l1 current">
-        <a class="current" href="./">サーバーの作成</a>
+        <a class="current" href="./">サーバの作成</a>
         
             <ul>
+            
+                <li class="toctree-l3"><a href="#_1">サーバの作成</a></li>
+                
+                    <li><a class="toctree-l4" href="#_2">概要</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#_5">各構成でのオプション指定例</a></li>
+                
+                    <li><a class="toctree-l4" href="#_6">最小構成</a></li>
+                
+                    <li><a class="toctree-l4" href="#_7">スイッチ/スイッチ+ルータに接続</a></li>
+                
+                    <li><a class="toctree-l4" href="#_8">スタートアップスクリプトの利用</a></li>
+                
+                    <li><a class="toctree-l4" href="#ssh">SSH公開鍵の利用</a></li>
+                
+                    <li><a class="toctree-l4" href="#windowsos">Windows系OSを利用</a></li>
+                
+                    <li><a class="toctree-l4" href="#id">アーカイブIDを指定</a></li>
+                
+                    <li><a class="toctree-l4" href="#id_1">コピー元ディスクIDを指定</a></li>
+                
+                    <li><a class="toctree-l4" href="#_11">既存のディスクを接続</a></li>
+                
+                    <li><a class="toctree-l4" href="#_12">ブランクディスク</a></li>
+                
+                    <li><a class="toctree-l4" href="#_13">ディスクレス</a></li>
+                
             
             </ul>
         
@@ -480,7 +508,7 @@
         
       
     
-    <li>サーバーの作成</li>
+    <li>サーバの作成</li>
     <li class="wy-breadcrumbs-aside">
       
         
@@ -492,7 +520,209 @@
           <div role="main">
             <div class="section">
               
-                
+                <h1 id="_1">サーバの作成</h1>
+<hr />
+<h2 id="_2">概要</h2>
+<p>サーバの作成は<code>server build</code>コマンドで行います。</p>
+<p>指定するオプションにより、以下の5つのタイプのサーバが作成可能です。<br />
+タイプにより指定可能なオプションが異なります。</p>
+<ul>
+<li>1) パブリックアーカイブ(非Windows系)を利用してディスクを作成  </li>
+<li>2) パブリックアーカイブ(Windows系)を利用してディスクを作成  </li>
+<li>3) 既存のディスクを接続/マイアーカイブを利用してディスクを作成  </li>
+<li>4) ブランクディスクを作成(ISOイメージなどからOSをインストール)  </li>
+<li>5) ディスクレス(ISOイメージやネットワークからブート)</li>
+</ul>
+<hr />
+<h4 id="_3">オプションのカテゴリ</h4>
+<p>指定できるオプションは以下のようなカテゴリに分かれています。 </p>
+<ul>
+<li><code>サーバプラン</code>: コア数/メモリサイズ</li>
+<li><code>ISOイメージ</code>: ISOイメージの挿入</li>
+<li><code>ネットワーク</code>: 接続する上流ネットワークの指定やパケットフィルタの指定</li>
+<li><code>ディスク</code>: 接続/作成するディスクや、コピー元のアーカイブの指定など</li>
+<li><code>ディスクの修正</code>: パスワードやホスト名など、ディスクの修正方法についての指定(<a href="#notice1">**注1</a>)<ul>
+<li><code>OS基本設定</code>: ホスト名やパスワード、SSH接続時のパスワード/チャレンジレスポンス認証の無効化など</li>
+<li><code>ネットワーク</code>: IPアドレスやネットワークマスク、デフォルトゲートウェイの設定</li>
+<li><code>スタートアップスクリプト</code>: スタートアップスクリプト関連の設定</li>
+<li><code>SSH公開鍵</code>: SSH公開鍵の生成/登録/利用などの設定</li>
+</ul>
+</li>
+<li><code>サーバ基本設定</code>: サーバ名や説明、タグなど</li>
+<li><code>その他</code>: キーボードのUS配列有効化やサーバ作成後の自動起動の抑制など</li>
+</ul>
+<p>各カテゴリの指定可能なオプションの一覧は<a href="../commands/server/#build">コマンドリファレンス:<code>server build</code></a>を参照してください。</p>
+<hr />
+<h4 id="_4"><code>ディスクの修正</code>カテゴリのオプションについて</h4>
+<p><code>ディスクの修正</code>カテゴリのオプションについては、作成/接続するディスクや、コピー元アーカイブにより指定可能な項目が異なります。 </p>
+<p><strong>1) パブリックアーカイブ(非Windows系)を利用してディスクを作成する場合</strong></p>
+<p><code>ディスクの修正</code>カテゴリの全てのオプションが利用可能です。</p>
+<p><strong>2) パブリックアーカイブ(Windows系)を利用してディスクを作成する場合</strong></p>
+<p><code>ディスクの修正</code>カテゴリのうち、以下の項目のみ利用可能です。  </p>
+<ul>
+<li>パスワード</li>
+<li>IPアドレス(共有セグメント以外に接続する場合)</li>
+<li>ネットワークマスク(共有セグメント以外に接続する場合)</li>
+<li>デフォルトゲートウェイ(共有セグメント以外に接続する場合)</li>
+</ul>
+<p><strong>3) 既存のディスクやマイアーカイブを接続する場合</strong><br />
+<strong>4) ブランクディスクを接続し、ISOイメージなどからOSをインストールする場合</strong><br />
+<strong>5) ディスクレスな場合</strong>  </p>
+<p><code>ディスクの修正</code>カテゴリのオプションは指定できません。</p>
+<hr />
+<h1 id="_5">各構成でのオプション指定例</h1>
+<hr />
+<h2 id="_6">最小構成</h2>
+<ul>
+<li>共有セグメントに接続</li>
+<li>OSはCentOSパブリックアーカイブを利用</li>
+</ul>
+<pre><code class="console">$ usacloud server build \
+        --os-type centos \
+        --hostname [put-your-hostname] \
+        --password [put-your-password] \
+        --name [put-your-server-name] 
+</code></pre>
+
+<hr />
+<h2 id="_7">スイッチ/スイッチ+ルータに接続</h2>
+<ul>
+<li>接続するスイッチのIDを指定</li>
+<li>NIC関連の設定を指定(IPアドレス/ネットワークマスク長/デフォルトルート)</li>
+</ul>
+<pre><code class="console">$ usacloud server build \
+        --os-type centos \
+        --hostname [put-your-hostname] \
+        --password [put-your-password] \
+        --name [put-your-server-name] \
+        --network-mode switch \
+        --switch-id [put-your-switchID] \
+        --ipaddress [put-your-IPAddress] \
+        --nw-masklen [put-your-network-masklen] \
+        --default-route [put-your-default-route]
+</code></pre>
+
+<p>--</p>
+<h2 id="_8">スタートアップスクリプトの利用</h2>
+<h4 id="idok">登録済みのスタートアップスクリプトを利用(IDを指定、複数指定OK)</h4>
+<pre><code class="console">$ usacloud server build \
+        --os-type centos \
+        --hostname [put-your-hostname] \
+        --password [put-your-password] \
+        --name [put-your-server-name] \
+        --startup-script-ids [put-your-script-id] \
+        --startup-script-ids [put-your-script-id]
+</code></pre>
+
+<h4 id="ok">スタートアップスクリプトの内容を記述した文字列を指定(複数指定OK)</h4>
+<pre><code class="console">$ usacloud server build \
+        --os-type centos \
+        --hostname [put-your-hostname] \
+        --password [put-your-password] \
+        --name [put-your-server-name] \
+        --startup-scripts &quot;`cat your-script-file`&quot; \
+        --startup-scripts &quot;`cat your-script-file`&quot;
+</code></pre>
+
+<h2 id="ssh">SSH公開鍵の利用</h2>
+<h4 id="sshidok">登録済みのSSH公開鍵を利用(IDを指定、複数指定OK)</h4>
+<pre><code class="console">$ usacloud server build \
+        --os-type centos \
+        --hostname [put-your-hostname] \
+        --password [put-your-password] \
+        --name [put-your-server-name] \
+        --ssh-key-mode id
+        --ssh-key-ids [put-your-key-id]
+</code></pre>
+
+<h4 id="sshok">SSH公開鍵をアップロード(複数指定OK)</h4>
+<p>公開鍵を記述した文字列を直接指定、またはファイル名での指定が可能です。  </p>
+<pre><code class="console">$ usacloud server build \
+        --os-type centos \
+        --hostname [put-your-hostname] \
+        --password [put-your-password] \
+        --name [put-your-server-name] \
+        --ssh-key-mode upload
+        --ssh-key-public-keys &quot;`cat your-publickey-file`&quot; \
+        --ssh-key-public-key-files your-publickey-file \
+</code></pre>
+
+<h4 id="ssh_1">SSHキーペアを生成</h4>
+<p>キーペアをさくらのクラウド上で生成し利用します。<br />
+生成した秘密鍵はデフォルトで<code>~/.ssh/sacloud_pkey_[サーバID]</code>に保存されます。<br />
+保存先は<code>--ssh-key-private-key-output</code>オプションで変更可能です。</p>
+<pre><code class="console">$ usacloud server build \
+        --os-type centos \
+        --hostname [put-your-hostname] \
+        --password [put-your-password] \
+        --name [put-your-server-name] \
+        --ssh-key-mode generate
+        --ssh-key-name [put-your-keyname]
+        --ssh-key-pass-phrase [put-your-pass-phrase]
+        --ssh-key-description [put-your-key-description]
+</code></pre>
+
+<h2 id="windowsos">Windows系OSを利用</h2>
+<h4 id="_9">共有セグメントに接続する場合</h4>
+<pre><code class="console">$ usacloud server build \
+        --os-type windows2016-rds \
+        --password [put-your-password] \
+        --name [put-your-server-name] \
+</code></pre>
+
+<h4 id="_10">スイッチ/スイッチ+ルータに接続する場合</h4>
+<pre><code class="console">$ usacloud server build \
+        --os-type windows2016-rds \
+        --password [put-your-password] \
+        --name [put-your-server-name] \
+        --network-mode switch \
+        --switch-id [put-your-switchID] \
+        --ipaddress [put-your-IPAddress] \
+        --nw-masklen [put-your-network-masklen] \
+        --default-route [put-your-default-route]
+</code></pre>
+
+<h2 id="id">アーカイブIDを指定</h2>
+<pre><code class="console">$ usacloud server build \
+        --hostname [put-your-hostname] \
+        --password [put-your-password] \
+        --name [put-your-server-name] \
+        --source-archive-id [put-your-archive-id]
+</code></pre>
+
+<p>Note: 指定するアーカイブによってはディスクの修正関連のオプションが使用できません。</p>
+<h2 id="id_1">コピー元ディスクIDを指定</h2>
+<pre><code class="console">$ usacloud server build \
+        --hostname [put-your-hostname] \
+        --password [put-your-password] \
+        --name [put-your-server-name] \
+        --source-disk-id [put-your-archive-id]
+</code></pre>
+
+<p>Note: 指定するディスクによってはディスクの修正関連のオプションが使用できません。</p>
+<h2 id="_11">既存のディスクを接続</h2>
+<pre><code class="console">$ usacloud server build \
+        --disk-mode connect \
+        --disk-id [put-your-disk-id] \
+        --name [put-your-server-name] 
+</code></pre>
+
+<p>Note: <code>server build</code>では複数のディスクを持つサーバを作成できません。<br />
+複数のディスクを使用したい場合、サーバ作成後に<code>server disk-connect</code>を実行してください。  </p>
+<h2 id="_12">ブランクディスク</h2>
+<p><code>--disk-mode</code>が<code>create</code>(デフォルト値)、かつ<code>--source-archive-id</code>と<code>--source-disk-id</code>が指定されていない場合はブランクディスクとなります。<br />
+ISOイメージを挿入しておく場合は<code>--iso-image-id</code>オプションを併用してください。  </p>
+<pre><code class="console">$ usacloud server build \
+        --iso-image-is [put-your-iso-id]
+        --name [put-your-server-name] 
+</code></pre>
+
+<h2 id="_13">ディスクレス</h2>
+<p>ISOイメージを挿入しておく場合は<code>--iso-image-id</code>オプションを併用してください。  </p>
+<pre><code class="console">$ usacloud server build \
+        --disk-mode diskless\
+        --name [put-your-server-name] 
+</code></pre>
               
             </div>
           </div>

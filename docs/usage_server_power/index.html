@@ -88,7 +88,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../usage_server_build/">サーバーの作成</a>
+        <a class="" href="../usage_server_build/">サーバの作成</a>
         
     </li>
 
@@ -98,6 +98,21 @@
         <a class="current" href="./">電源操作</a>
         
             <ul>
+            
+                <li class="toctree-l3"><a href="#_1">電源操作</a></li>
+                
+                    <li><a class="toctree-l4" href="#_2">起動</a></li>
+                
+                    <li><a class="toctree-l4" href="#graceful">シャットダウン(graceful)</a></li>
+                
+                    <li><a class="toctree-l4" href="#force">シャットダウン(force)</a></li>
+                
+                    <li><a class="toctree-l4" href="#_3">リセット</a></li>
+                
+                    <li><a class="toctree-l4" href="#_4">起動まで待機</a></li>
+                
+                    <li><a class="toctree-l4" href="#_5">シャットダウンまで待機</a></li>
+                
             
             </ul>
         
@@ -492,7 +507,31 @@
           <div role="main">
             <div class="section">
               
-                
+                <h1 id="_1">電源操作</h1>
+<hr />
+<h2 id="_2">起動</h2>
+<pre><code class="console">$ usacloud server boot [サーバID or サーバ名]
+</code></pre>
+
+<h2 id="graceful">シャットダウン(graceful)</h2>
+<pre><code class="console">$ usacloud server shutdown [サーバID or サーバ名]
+</code></pre>
+
+<h2 id="force">シャットダウン(force)</h2>
+<pre><code class="console">$ usacloud server shutdown-force [サーバID or サーバ名]
+</code></pre>
+
+<h2 id="_3">リセット</h2>
+<pre><code class="console">$ usacloud server reset [サーバID or サーバ名]
+</code></pre>
+
+<h2 id="_4">起動まで待機</h2>
+<pre><code class="console">$ usacloud server wait-for-boot [サーバID or サーバ名]
+</code></pre>
+
+<h2 id="_5">シャットダウンまで待機</h2>
+<pre><code class="console">$ usacloud server wait-for-down[サーバID or サーバ名]
+</code></pre>
               
             </div>
           </div>
@@ -503,7 +542,7 @@
         <a href="../usage_server_connect/" class="btn btn-neutral float-right" title="接続(SSH/VNC)"/>Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../usage_server_build/" class="btn btn-neutral" title="サーバーの作成"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../usage_server_build/" class="btn btn-neutral" title="サーバの作成"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
