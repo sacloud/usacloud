@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.0.12 (2017-06-21)
+
+* Windows2016 SQLServer Standard(RDS+Office)パブリックアーカイブ追加 #155 (yamamoto-febc)
+* サーバ操作関連のドキュメント追加 #156 (yamamoto-febc)
+* SiteGuardパブリックアーカイブ除去 #157 (yamamoto-febc)
+
+
 ## 0.0.11 (2017-06-15)
 
 * linuxbrew対応 #138 (yamamoto-febc)

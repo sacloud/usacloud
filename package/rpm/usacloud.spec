@@ -40,6 +40,11 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Jun 21 2017 <yamamoto.febc@gmail.com> - 0.0.12-1
+- Windows2016 SQLServer Standard(RDS+Office)パブリックアーカイブ追加 (by yamamoto-febc)
+- サーバ操作関連のドキュメント追加 (by yamamoto-febc)
+- SiteGuardパブリックアーカイブ除去 (by yamamoto-febc)
+
 * Thu Jun 15 2017 <yamamoto.febc@gmail.com> - 0.0.11-1
 - linuxbrew対応 (by yamamoto-febc)
 - --format-fileオプションの追加 (by yamamoto-febc)
