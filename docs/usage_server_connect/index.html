@@ -88,7 +88,7 @@
         
             
     <li class="toctree-l1 ">
-        <a class="" href="../usage_server_build/">サーバーの作成</a>
+        <a class="" href="../usage_server_build/">サーバの作成</a>
         
     </li>
 
@@ -105,6 +105,17 @@
         <a class="current" href="./">接続(SSH/VNC)</a>
         
             <ul>
+            
+                <li class="toctree-l3"><a href="#sshvnc">接続(SSH/VNC)</a></li>
+                
+                    <li><a class="toctree-l4" href="#ssh">SSH接続</a></li>
+                
+                    <li><a class="toctree-l4" href="#ssh_1">SSH接続(コマンド実行)</a></li>
+                
+                    <li><a class="toctree-l4" href="#vnc">VNC接続</a></li>
+                
+                    <li><a class="toctree-l4" href="#vnc_1">VNC接続経由でのキー入力送信</a></li>
+                
             
             </ul>
         
@@ -492,7 +503,75 @@
           <div role="main">
             <div class="section">
               
-                
+                <h1 id="sshvnc">接続(SSH/VNC)</h1>
+<hr />
+<h2 id="ssh">SSH接続</h2>
+<p><code>ssh</code>コマンドを起動します。 </p>
+<pre><code class="console">$ usacloud server ssh [サーバ名 or サーバID]
+</code></pre>
+
+<ul>
+<li>サーバのIPアドレスはさくらのクラウドAPI経由で取得した値を利用</li>
+<li>各パブリックアーカイブごとのデフォルトの管理ユーザ名を利用(パブリックアーカイブ利用時のみ)<ul>
+<li>Ubuntu: <code>ubuntu</code></li>
+<li>VyOS: <code>vyos</code></li>
+<li>CoreOS: <code>core</code></li>
+<li>RancherOS: <code>rancher</code></li>
+<li>以外の場合: <code>root</code></li>
+</ul>
+</li>
+<li>秘密鍵<code>~/.ssh/sacloud_pkey_[サーバID]</code>が存在する場合は利用</li>
+</ul>
+<p>これらの値はオプション指定で変更可能です。</p>
+<p>Note: <code>ssh</code>コマンドにPATHが通っている必要があります。</p>
+<hr />
+<h2 id="ssh_1">SSH接続(コマンド実行)</h2>
+<p>対象のサーバにSSH接続し、指定のコマンドを実行します。</p>
+<pre><code class="console">$ usacloud server ssh-exec [サーバ名 or サーバID] サーバ上で実行するコマンド [コマンド引数]
+</code></pre>
+
+<p>指定可能なオプションは<code>server ssh</code>と同様です。</p>
+<p>Note: <code>ssh</code>コマンドがインストールされていなくても動作可能です。</p>
+<h2 id="vnc">VNC接続</h2>
+<p>VNCクライアントを起動します。</p>
+<pre><code class="console">$ usacloud server vnc [サーバ名 or サーバID]
+</code></pre>
+
+<p>さくらのクラウド側が提供しているVNCプロキシを利用してVNC接続を行うため、対象のサーバ上でVNCサーバを起動しておく必要はありません。</p>
+<p>Note: Windowsの場合、任意のVNCクライアントをインストールし<code>.vnc</code>拡張子と関連付けしておく必要があります。  </p>
+<p>VNC接続のための認証情報(接続先URL/ユーザ名/パスワード)を表示したい場合は<code>server vnc-info</code>コマンドを利用してください。
+Note: 認証情報はさくらのクラウドAPI呼び出しごとに変化します。</p>
+<h2 id="vnc_1">VNC接続経由でのキー入力送信</h2>
+<p>対象のサーバに対し任意のキー入力を送信します。
+<a href="https://packer.io">Packer</a>でのイメージ構築のデバッグなどの用途を想定しています。</p>
+<pre><code class="console">$ usacloud server vnc-send  -c &quot;put-send-key-here&quot; [サーバ名 or サーバID]
+</code></pre>
+
+<p>通常のキー入力に加え、以下の特殊キーを指定可能です。</p>
+<ul>
+<li><code>&lt;bs&gt;</code> - バックスペース</li>
+<li><code>&lt;del&gt;</code> - デリート</li>
+<li><code>&lt;enter&gt;</code> <code>&lt;return&gt;</code> - エンター(リターン)キー</li>
+<li><code>&lt;esc&gt;</code> - エスケープ</li>
+<li><code>&lt;tab&gt;</code> - タブ</li>
+<li><code>&lt;f1&gt;</code> - <code>&lt;f12&gt;</code> - ファンクションキー(F1〜F12)</li>
+<li><code>&lt;up&gt;</code> <code>&lt;down&gt;</code> <code>&lt;left&gt;</code> <code>&lt;right&gt;</code> - 矢印キー</li>
+<li><code>&lt;spacebar&gt;</code> - スペース</li>
+<li><code>&lt;insert&gt;</code> - インサート</li>
+<li><code>&lt;home&gt;</code> <code>&lt;end&gt;</code> - ホーム、エンド</li>
+<li><code>&lt;pageUp&gt;</code> <code>&lt;pageDown&gt;</code> - ページアップ、ページダウン</li>
+<li><code>&lt;leftAlt&gt;</code> <code>&lt;rightAlt&gt;</code> - 左右それぞれのオルト</li>
+<li><code>&lt;leftCtrl&gt;</code> <code>&lt;rightCtrl&gt;</code> - 左右それぞれのコントロール</li>
+<li><code>&lt;leftShift&gt;</code> <code>&lt;rightShift&gt;</code> - 左右それぞれのシフト</li>
+<li><code>&lt;leftAltOn&gt;</code> <code>&lt;rightAltOn&gt;</code> - オルトを押下している状態にする</li>
+<li><code>&lt;leftCtrlOn&gt;</code> <code>&lt;rightCtrlOn&gt;</code> - コントロールを押下している状態にする</li>
+<li><code>&lt;leftShiftOn&gt;</code> <code>&lt;rightShiftOn&gt;</code> - シフトを押下している状態にする</li>
+<li><code>&lt;leftAltOff&gt;</code> <code>&lt;rightAltOff&gt;</code> - オルトを押下解除する</li>
+<li><code>&lt;leftCtrlOff&gt;</code> <code>&lt;rightCtrlOff&gt;</code> - コントロールを押下解除する</li>
+<li><code>&lt;leftShiftOff&gt;</code> <code>&lt;rightShiftOff&gt;</code> - シフトを押下解除する</li>
+<li><code>&lt;wait&gt;</code> <code>&lt;wait5&gt;</code> <code>&lt;wait10&gt;</code> - 指定秒数待機</li>
+<li><code>&lt;waitXX&gt;</code> - 指定時間待機する。待機数量 + 単位で指定する(<code>[0-9hms]形式</code>)。例: <code>&lt;wait5s&gt;</code> <code>&lt;wait1m&gt;</code></li>
+</ul>
               
             </div>
           </div>
