@@ -1,0 +1,8 @@
+{
+  "rules": {
+    "common-misspellings": true,
+    "preset-ja-technical-writing": {
+        "ja-no-mixed-period": false
+    }
+  }
+}

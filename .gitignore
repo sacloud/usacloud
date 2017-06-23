@@ -5,6 +5,8 @@ test.tmpl
 bin/*
 tools/bin/*
 
+build_docs/site
+
 package/*-build
 rpmbuild/
 repos/centos
