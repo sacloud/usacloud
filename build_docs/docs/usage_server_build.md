@@ -240,7 +240,7 @@ Note: `server build`では複数のディスクを持つサーバを作成でき
 
 ## ブランクディスク
 
-`--disk-mode`が`create`(デフォルト値)、かつ`--source-archive-id`と`--source-disk-id`が指定されていない場合はブランクディスクとなります。  
+`--disk-mode`が`create`(デフォルト値)、かつ`--source-archive-id`と`--source-disk-id`の両方が指定されていない場合はブランクディスクとなります。  
 ISOイメージを挿入しておく場合は`--iso-image-id`オプションを併用してください。  
 
 ```console

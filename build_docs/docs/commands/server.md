@@ -25,7 +25,7 @@
     - [`ssh-exec`](#ssh-exec) - SSH接続(コマンド実行)
     - [`scp`](#scp) - SCPでのファイル送受信
     - [`vnc`](#vnc) - VNCクライアント起動
-    - [`vnc-info`](#vnc-info) - VNC接続情報表示
+    - [`vnc-info`](#vnc-info) - VNC接続情報の表示
 * ディスク管理
     - [`disk-info`](#disk-info1) - 接続されているディスクを一覧表示
     - [`disk-connect`](#disk-connect) - ディスクの接続

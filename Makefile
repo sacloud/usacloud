@@ -89,7 +89,7 @@ deb: rpm
 	CURRENT_VERSION="$(CURRENT_VERSION)" sh -c "'$(CURDIR)/scripts/build_apt.sh'"
 
 .PHONY: test
-test: vet
+test: vet lint-docs
 	go test $(TEST) $(TESTARGS) -v -timeout=30m -parallel=4 ;
 
 .PHONY: vet
@@ -112,12 +112,15 @@ golint: fmt
 fmt:
 	gofmt -s -l -w $(GOFMT_FILES)
 
-.PHONY: build-docs serve-docs
+.PHONY: build-docs serve-docs lint-docs
 build-docs:
 	sh -c "'$(CURDIR)/scripts/build_docs.sh'"
 
 serve-docs:
 	sh -c "'$(CURDIR)/scripts/serve_docs.sh'"
+
+lint-docs:
+	sh -c "'$(CURDIR)/scripts/lint_docs.sh'"
 
 .PHONY: docker-run docker-test docker-build docker-rpm
 docker-run:

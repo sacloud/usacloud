@@ -710,7 +710,7 @@
 <p>Note: <code>server build</code>では複数のディスクを持つサーバを作成できません。<br />
 複数のディスクを使用したい場合、サーバ作成後に<code>server disk-connect</code>を実行してください。  </p>
 <h2 id="_12">ブランクディスク</h2>
-<p><code>--disk-mode</code>が<code>create</code>(デフォルト値)、かつ<code>--source-archive-id</code>と<code>--source-disk-id</code>が指定されていない場合はブランクディスクとなります。<br />
+<p><code>--disk-mode</code>が<code>create</code>(デフォルト値)、かつ<code>--source-archive-id</code>と<code>--source-disk-id</code>の両方が指定されていない場合はブランクディスクとなります。<br />
 ISOイメージを挿入しておく場合は<code>--iso-image-id</code>オプションを併用してください。  </p>
 <pre><code class="console">$ usacloud server build \
         --iso-image-is [put-your-iso-id]

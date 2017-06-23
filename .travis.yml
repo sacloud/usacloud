@@ -29,8 +29,8 @@ script:
 - make test
 - make docker-build
 before_deploy:
-- docker pull sacloud/usacloud:rpm-build
-- docker pull sacloud/usacloud:deb-build
+- docker pull sacloud/rpm-build:latest
+- docker pull sacloud/deb-build:latest
 - make rpm deb
 - go get github.com/aktau/github-release
 - go install github.com/sacloud/usacloud
