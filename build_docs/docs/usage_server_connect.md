@@ -84,6 +84,6 @@ $ usacloud server vnc-send  -c "put-send-key-here" [サーバ名 or サーバID]
 - `<leftAltOff>` `<rightAltOff>` - オルトを押下解除する
 - `<leftCtrlOff>` `<rightCtrlOff>` - コントロールを押下解除する
 - `<leftShiftOff>` `<rightShiftOff>` - シフトを押下解除する
-- `<wait>` `<wait5>` `<wait10>` - 指定秒数待機
-- `<waitXX>` - 指定時間待機する。待機数量 + 単位で指定する(`[0-9hms]形式`)。例: `<wait5s>` `<wait1m>`
+- `<wait>` `<wait5>` `<wait10>` - 指定の秒数待機する
+- `<waitXX>` - 指定の時間待機する。待機数量 + 単位で指定する(`[0-9hms]形式`)。例: `<wait5s>` `<wait1m>`
 
