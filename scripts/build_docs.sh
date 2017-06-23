@@ -2,7 +2,7 @@
 
 set -e
 
-DOCKER_IMAGE_NAME="sacloud/usacloud:mkdocs"
+DOCKER_IMAGE_NAME="sacloud/mkdocs:latest"
 DOCKER_CONTAINER_NAME="usacloud-docs-container"
 
 if [[ $(docker ps -a | grep $DOCKER_CONTAINER_NAME) != "" ]]; then

@@ -2,7 +2,7 @@
 
 set -e
 
-DOCKER_IMAGE_NAME="sacloud/usacloud:textlint"
+DOCKER_IMAGE_NAME="sacloud/textlint:latest"
 
 docker run -ti --rm \
        -v $PWD/build_docs:/workdir \

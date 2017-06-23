@@ -21,7 +21,7 @@ set -x
 
 
 : "building deb..."
-	docker run --rm -v "$PWD/package/deb-build":/workdir sacloud/usacloud:deb-build
+	docker run --rm -v "$PWD/package/deb-build":/workdir sacloud/deb-build:latest
     # sign to Release file
 	docker run --rm \
 	    -v "$PWD/package/deb-build":/workdir \
@@ -30,7 +30,7 @@ set -x
 	    -e GPG_FINGERPRINT \
 	    -e GPG_NAME \
 	    --entrypoint /sign_to_deb.sh \
-	    sacloud/usacloud:rpm-build
+	    sacloud/rpm-build
 
 : "create apt repo..."
     cp package/deb-build/Release repos/debian/

@@ -22,7 +22,7 @@ set -x
 	docker run --rm \
 	    -v "$PWD":/workdir \
 	    -v "$PWD/rpmbuild":/rpmbuild \
-	    sacloud/usacloud:rpm-build \
+	    sacloud/rpm-build:latest \
 	        --define "_sourcedir /workdir/package/rpm-build/src" \
 	        --define "_builddir /workdir/bin" \
 	        --define "_version ${CURRENT_VERSION}" \
@@ -39,14 +39,14 @@ set -x
 	    -e GPG_NAME \
 	    --entrypoint /sign_to_rpm.sh \
 	    --workdir /rpmbuild/RPMS/noarch \
-	    sacloud/usacloud:rpm-build
+	    sacloud/rpm-build:latest
 
 : "building x86_64..."
     unzip -oq bin/usacloud_linux-amd64.zip -d bin/
 	docker run --rm \
 	    -v "$PWD":/workdir \
 	    -v "$PWD/rpmbuild":/rpmbuild \
-	    sacloud/usacloud:rpm-build \
+	    sacloud/rpm-build:latest \
 	        --define "_sourcedir /workdir/package/rpm-build/src" \
 	        --define "_builddir /workdir/bin" \
 	        --define "_version ${CURRENT_VERSION}" \
@@ -63,7 +63,7 @@ set -x
 	    -e GPG_NAME \
 	    --entrypoint /sign_to_rpm.sh \
 	    --workdir /rpmbuild/RPMS/x86_64 \
-	    sacloud/usacloud:rpm-build
+	    sacloud/rpm-build:latest
 
 : "create yum repo..."
     cp -rf rpmbuild/RPMS/noarch/* repos/centos/noarch/
@@ -71,11 +71,11 @@ set -x
 	docker run --rm \
 	    -v "$PWD/repos/centos/noarch":/workdir \
 	    --entrypoint createrepo \
-	    sacloud/usacloud:rpm-build \
+	    sacloud/rpm-build:latest \
 	        -v /workdir
 	docker run --rm \
 	    -v "$PWD/repos/centos/x86_64":/workdir \
 	    --entrypoint createrepo \
-	    sacloud/usacloud:rpm-build \
+	    sacloud/rpm-build:latest \
 	        -v /workdir
 
