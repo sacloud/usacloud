@@ -27,6 +27,12 @@
 
     curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-apt.sh | sh
 
+### Windows(`chocolatey`)
+
+    choco install usacloud
+
+> chocolateyの[usacloudパッケージ](https://chocolatey.org/packages/usacloud)は @223n さんによってメンテナンスされています。
+
 ### Windows / その他の場合
 
 以下のリンクからバイナリーファイルをダウンロードして展開し、任意のフォルダー内に配置してください。  
