@@ -1,11 +1,11 @@
-# usacloud 日本語ドキュメント
+# usacloud日本語ドキュメント
 
 ---
 
 ## 目次
 
-* [usacloud 導入ガイド](start_guide.md)
-* usacloud コマンド
+* [usacloud導入ガイド](start_guide.md)
+* usacloudコマンド
     - [基本的な使い方](basic_usage.md)
     - [サーバの作成](usage_server_build.md)
     - [電源操作](usage_server_power.md)
@@ -47,7 +47,7 @@
         - [`bill`: 請求情報](commands/bill.md)
     * SaaS / サービス
         - [`web-accel`: ウェブアクセラレータ](commands/webaccel.md)
-    * Information / 製品,プラン,情報
+    * Information / 製品/プラン/情報
         - [`price`: 料金情報](commands/price.md)
         - [`product-disk`: ディスクプラン](commands/product_disk.md)
         - [`product-internet`: 帯域プラン](commands/product_internet.md)
