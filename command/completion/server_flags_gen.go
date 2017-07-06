@@ -759,3 +759,19 @@ func ServerMonitorDiskCompleteFlags(ctx command.Context, params *params.MonitorD
 		}
 	}
 }
+
+func ServerMaintenanceInfoCompleteFlags(ctx command.Context, params *params.MaintenanceInfoServerParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}

@@ -6217,3 +6217,161 @@ func (p *MonitorDiskServerParam) SetId(v int64) {
 func (p *MonitorDiskServerParam) GetId() int64 {
 	return p.Id
 }
+
+// MaintenanceInfoServerParam is input parameters for the sacloud API
+type MaintenanceInfoServerParam struct {
+	ParamTemplate     string
+	ParamTemplateFile string
+	GenerateSkeleton  bool
+	OutputType        string
+	Column            []string
+	Quiet             bool
+	Format            string
+	FormatFile        string
+}
+
+// NewMaintenanceInfoServerParam return new MaintenanceInfoServerParam
+func NewMaintenanceInfoServerParam() *MaintenanceInfoServerParam {
+	return &MaintenanceInfoServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MaintenanceInfoServerParam) FillValueToSkeleton() {
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+
+}
+
+// Validate checks current values in model
+func (p *MaintenanceInfoServerParam) Validate() []error {
+	errors := []error{}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *MaintenanceInfoServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *MaintenanceInfoServerParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["maintenance-info"]
+}
+
+func (p *MaintenanceInfoServerParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *MaintenanceInfoServerParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *MaintenanceInfoServerParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *MaintenanceInfoServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *MaintenanceInfoServerParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *MaintenanceInfoServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MaintenanceInfoServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MaintenanceInfoServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MaintenanceInfoServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MaintenanceInfoServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MaintenanceInfoServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MaintenanceInfoServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MaintenanceInfoServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MaintenanceInfoServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MaintenanceInfoServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MaintenanceInfoServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MaintenanceInfoServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MaintenanceInfoServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MaintenanceInfoServerParam) GetFormat() string {
+	return p.Format
+}
+func (p *MaintenanceInfoServerParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MaintenanceInfoServerParam) GetFormatFile() string {
+	return p.FormatFile
+}
