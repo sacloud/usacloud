@@ -10,19 +10,19 @@ import (
 
 // ListPacketFilterParam is input parameters for the sacloud API
 type ListPacketFilterParam struct {
-	Name              []string
-	Id                []int64
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              []string `json:"name"`
+	Id                []int64  `json:"id"`
+	From              int      `json:"from"`
+	Max               int      `json:"max"`
+	Sort              []string `json:"sort"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListPacketFilterParam return new ListPacketFilterParam
@@ -248,17 +248,17 @@ func (p *ListPacketFilterParam) GetFormatFile() string {
 
 // CreatePacketFilterParam is input parameters for the sacloud API
 type CreatePacketFilterParam struct {
-	Name              string
-	Description       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewCreatePacketFilterParam return new CreatePacketFilterParam
@@ -460,15 +460,15 @@ func (p *CreatePacketFilterParam) GetFormatFile() string {
 
 // ReadPacketFilterParam is input parameters for the sacloud API
 type ReadPacketFilterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewReadPacketFilterParam return new ReadPacketFilterParam
@@ -636,18 +636,18 @@ func (p *ReadPacketFilterParam) GetId() int64 {
 
 // UpdatePacketFilterParam is input parameters for the sacloud API
 type UpdatePacketFilterParam struct {
-	Name              string
-	Description       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUpdatePacketFilterParam return new UpdatePacketFilterParam
@@ -859,16 +859,16 @@ func (p *UpdatePacketFilterParam) GetId() int64 {
 
 // DeletePacketFilterParam is input parameters for the sacloud API
 type DeletePacketFilterParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewDeletePacketFilterParam return new DeletePacketFilterParam
@@ -1046,15 +1046,15 @@ func (p *DeletePacketFilterParam) GetId() int64 {
 
 // RuleInfoPacketFilterParam is input parameters for the sacloud API
 type RuleInfoPacketFilterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewRuleInfoPacketFilterParam return new RuleInfoPacketFilterParam
@@ -1222,23 +1222,23 @@ func (p *RuleInfoPacketFilterParam) GetId() int64 {
 
 // RuleAddPacketFilterParam is input parameters for the sacloud API
 type RuleAddPacketFilterParam struct {
-	Index             int
-	Protocol          string
-	SourceNetwork     string
-	SourcePort        string
-	DestinationPort   string
-	Action            string
-	Description       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Index             int      `json:"index"`
+	Protocol          string   `json:"protocol"`
+	SourceNetwork     string   `json:"source-network"`
+	SourcePort        string   `json:"source-port"`
+	DestinationPort   string   `json:"destination-port"`
+	Action            string   `json:"action"`
+	Description       string   `json:"description"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewRuleAddPacketFilterParam return new RuleAddPacketFilterParam
@@ -1531,23 +1531,23 @@ func (p *RuleAddPacketFilterParam) GetId() int64 {
 
 // RuleUpdatePacketFilterParam is input parameters for the sacloud API
 type RuleUpdatePacketFilterParam struct {
-	Index             int
-	Protocol          string
-	SourceNetwork     string
-	SourcePort        string
-	DestinationPort   string
-	Action            string
-	Description       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Index             int      `json:"index"`
+	Protocol          string   `json:"protocol"`
+	SourceNetwork     string   `json:"source-network"`
+	SourcePort        string   `json:"source-port"`
+	DestinationPort   string   `json:"destination-port"`
+	Action            string   `json:"action"`
+	Description       string   `json:"description"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewRuleUpdatePacketFilterParam return new RuleUpdatePacketFilterParam
@@ -1844,17 +1844,17 @@ func (p *RuleUpdatePacketFilterParam) GetId() int64 {
 
 // RuleDeletePacketFilterParam is input parameters for the sacloud API
 type RuleDeletePacketFilterParam struct {
-	Index             int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Index             int      `json:"index"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewRuleDeletePacketFilterParam return new RuleDeletePacketFilterParam
@@ -2049,12 +2049,12 @@ func (p *RuleDeletePacketFilterParam) GetId() int64 {
 
 // InterfaceConnectPacketFilterParam is input parameters for the sacloud API
 type InterfaceConnectPacketFilterParam struct {
-	InterfaceId       int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	InterfaceId       int64  `json:"interface-id"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewInterfaceConnectPacketFilterParam return new InterfaceConnectPacketFilterParam
@@ -2186,12 +2186,12 @@ func (p *InterfaceConnectPacketFilterParam) GetId() int64 {
 
 // InterfaceDisconnectPacketFilterParam is input parameters for the sacloud API
 type InterfaceDisconnectPacketFilterParam struct {
-	InterfaceId       int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	InterfaceId       int64  `json:"interface-id"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewInterfaceDisconnectPacketFilterParam return new InterfaceDisconnectPacketFilterParam

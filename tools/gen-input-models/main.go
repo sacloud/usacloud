@@ -158,7 +158,7 @@ func buildFieldsParams(params schema.SortableParams) ([]map[string]interface{}, 
 			"Name":      ctx.InputModelTypeName(),
 			"ParamName": ctx.InputParamFieldName(),
 			"TypeName":  ts,
-			"Tag":       "", // TODO not yet implemented
+			"Tag":       fmt.Sprintf("`json:%q`", ctx.InputParamFlagName()),
 		})
 
 		// to initializer

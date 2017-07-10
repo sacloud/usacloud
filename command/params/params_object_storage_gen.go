@@ -10,17 +10,17 @@ import (
 
 // ListObjectStorageParam is input parameters for the sacloud API
 type ListObjectStorageParam struct {
-	AccessKey         string
-	SecretKey         string
-	Bucket            string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	AccessKey         string   `json:"access-key"`
+	SecretKey         string   `json:"secret-key"`
+	Bucket            string   `json:"bucket"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListObjectStorageParam return new ListObjectStorageParam
@@ -215,15 +215,15 @@ func (p *ListObjectStorageParam) GetFormatFile() string {
 
 // PutObjectStorageParam is input parameters for the sacloud API
 type PutObjectStorageParam struct {
-	AccessKey         string
-	ContentType       string
-	Recursive         bool
-	SecretKey         string
-	Bucket            string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
+	AccessKey         string `json:"access-key"`
+	ContentType       string `json:"content-type"`
+	Recursive         bool   `json:"recursive"`
+	SecretKey         string `json:"secret-key"`
+	Bucket            string `json:"bucket"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
 // NewPutObjectStorageParam return new PutObjectStorageParam
@@ -381,13 +381,13 @@ func (p *PutObjectStorageParam) GetGenerateSkeleton() bool {
 
 // GetObjectStorageParam is input parameters for the sacloud API
 type GetObjectStorageParam struct {
-	AccessKey         string
-	Recursive         bool
-	SecretKey         string
-	Bucket            string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
+	AccessKey         string `json:"access-key"`
+	Recursive         bool   `json:"recursive"`
+	SecretKey         string `json:"secret-key"`
+	Bucket            string `json:"bucket"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
 // NewGetObjectStorageParam return new GetObjectStorageParam
@@ -522,14 +522,14 @@ func (p *GetObjectStorageParam) GetGenerateSkeleton() bool {
 
 // DeleteObjectStorageParam is input parameters for the sacloud API
 type DeleteObjectStorageParam struct {
-	AccessKey         string
-	Recursive         bool
-	SecretKey         string
-	Bucket            string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
+	AccessKey         string `json:"access-key"`
+	Recursive         bool   `json:"recursive"`
+	SecretKey         string `json:"secret-key"`
+	Bucket            string `json:"bucket"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
 }
 
 // NewDeleteObjectStorageParam return new DeleteObjectStorageParam

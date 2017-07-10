@@ -10,20 +10,20 @@ import (
 
 // ListDNSParam is input parameters for the sacloud API
 type ListDNSParam struct {
-	Name              []string
-	Id                []int64
-	Tags              []string
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              []string `json:"name"`
+	Id                []int64  `json:"id"`
+	Tags              []string `json:"tags"`
+	From              int      `json:"from"`
+	Max               int      `json:"max"`
+	Sort              []string `json:"sort"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListDNSParam return new ListDNSParam
@@ -266,15 +266,15 @@ func (p *ListDNSParam) GetFormatFile() string {
 
 // RecordInfoDNSParam is input parameters for the sacloud API
 type RecordInfoDNSParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewRecordInfoDNSParam return new RecordInfoDNSParam
@@ -442,19 +442,19 @@ func (p *RecordInfoDNSParam) GetId() int64 {
 
 // CreateDNSParam is input parameters for the sacloud API
 type CreateDNSParam struct {
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewCreateDNSParam return new CreateDNSParam
@@ -690,25 +690,25 @@ func (p *CreateDNSParam) GetFormatFile() string {
 
 // RecordAddDNSParam is input parameters for the sacloud API
 type RecordAddDNSParam struct {
-	Name              string
-	Type              string
-	Value             string
-	Ttl               int
-	MxPriority        int
-	SrvPriority       int
-	SrvWeight         int
-	SrvPort           int
-	SrvTarget         string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Name              string   `json:"name"`
+	Type              string   `json:"type"`
+	Value             string   `json:"value"`
+	Ttl               int      `json:"ttl"`
+	MxPriority        int      `json:"mx-priority"`
+	SrvPriority       int      `json:"srv-priority"`
+	SrvWeight         int      `json:"srv-weight"`
+	SrvPort           int      `json:"srv-port"`
+	SrvTarget         string   `json:"srv-target"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewRecordAddDNSParam return new RecordAddDNSParam
@@ -1050,15 +1050,15 @@ func (p *RecordAddDNSParam) GetId() int64 {
 
 // ReadDNSParam is input parameters for the sacloud API
 type ReadDNSParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewReadDNSParam return new ReadDNSParam
@@ -1226,26 +1226,26 @@ func (p *ReadDNSParam) GetId() int64 {
 
 // RecordUpdateDNSParam is input parameters for the sacloud API
 type RecordUpdateDNSParam struct {
-	Index             int
-	Name              string
-	Type              string
-	Value             string
-	Ttl               int
-	MxPriority        int
-	SrvPriority       int
-	SrvWeight         int
-	SrvPort           int
-	SrvTarget         string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Index             int      `json:"index"`
+	Name              string   `json:"name"`
+	Type              string   `json:"type"`
+	Value             string   `json:"value"`
+	Ttl               int      `json:"ttl"`
+	MxPriority        int      `json:"mx-priority"`
+	SrvPriority       int      `json:"srv-priority"`
+	SrvWeight         int      `json:"srv-weight"`
+	SrvPort           int      `json:"srv-port"`
+	SrvTarget         string   `json:"srv-target"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewRecordUpdateDNSParam return new RecordUpdateDNSParam
@@ -1586,17 +1586,17 @@ func (p *RecordUpdateDNSParam) GetId() int64 {
 
 // RecordDeleteDNSParam is input parameters for the sacloud API
 type RecordDeleteDNSParam struct {
-	Index             int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Index             int      `json:"index"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewRecordDeleteDNSParam return new RecordDeleteDNSParam
@@ -1791,19 +1791,19 @@ func (p *RecordDeleteDNSParam) GetId() int64 {
 
 // UpdateDNSParam is input parameters for the sacloud API
 type UpdateDNSParam struct {
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUpdateDNSParam return new UpdateDNSParam
@@ -2032,16 +2032,16 @@ func (p *UpdateDNSParam) GetId() int64 {
 
 // DeleteDNSParam is input parameters for the sacloud API
 type DeleteDNSParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewDeleteDNSParam return new DeleteDNSParam

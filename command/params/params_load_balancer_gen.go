@@ -10,20 +10,20 @@ import (
 
 // ListLoadBalancerParam is input parameters for the sacloud API
 type ListLoadBalancerParam struct {
-	Name              []string
-	Id                []int64
-	Tags              []string
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              []string `json:"name"`
+	Id                []int64  `json:"id"`
+	Tags              []string `json:"tags"`
+	From              int      `json:"from"`
+	Max               int      `json:"max"`
+	Sort              []string `json:"sort"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListLoadBalancerParam return new ListLoadBalancerParam
@@ -266,27 +266,27 @@ func (p *ListLoadBalancerParam) GetFormatFile() string {
 
 // CreateLoadBalancerParam is input parameters for the sacloud API
 type CreateLoadBalancerParam struct {
-	SwitchId          int64
-	Vrid              int
-	HighAvailability  bool
-	Plan              string
-	Ipaddress1        string
-	Ipaddress2        string
-	NwMaskLen         int
-	DefaultRoute      string
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	SwitchId          int64    `json:"switch-id"`
+	Vrid              int      `json:"vrid"`
+	HighAvailability  bool     `json:"high-availability"`
+	Plan              string   `json:"plan"`
+	Ipaddress1        string   `json:"ipaddress1"`
+	Ipaddress2        string   `json:"ipaddress2"`
+	NwMaskLen         int      `json:"nw-mask-len"`
+	DefaultRoute      string   `json:"default-route"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewCreateLoadBalancerParam return new CreateLoadBalancerParam
@@ -676,15 +676,15 @@ func (p *CreateLoadBalancerParam) GetFormatFile() string {
 
 // ReadLoadBalancerParam is input parameters for the sacloud API
 type ReadLoadBalancerParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewReadLoadBalancerParam return new ReadLoadBalancerParam
@@ -852,20 +852,20 @@ func (p *ReadLoadBalancerParam) GetId() int64 {
 
 // UpdateLoadBalancerParam is input parameters for the sacloud API
 type UpdateLoadBalancerParam struct {
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUpdateLoadBalancerParam return new UpdateLoadBalancerParam
@@ -1111,17 +1111,17 @@ func (p *UpdateLoadBalancerParam) GetId() int64 {
 
 // DeleteLoadBalancerParam is input parameters for the sacloud API
 type DeleteLoadBalancerParam struct {
-	Force             bool
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Force             bool     `json:"force"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewDeleteLoadBalancerParam return new DeleteLoadBalancerParam
@@ -1309,11 +1309,11 @@ func (p *DeleteLoadBalancerParam) GetId() int64 {
 
 // BootLoadBalancerParam is input parameters for the sacloud API
 type BootLoadBalancerParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewBootLoadBalancerParam return new BootLoadBalancerParam
@@ -1421,11 +1421,11 @@ func (p *BootLoadBalancerParam) GetId() int64 {
 
 // ShutdownLoadBalancerParam is input parameters for the sacloud API
 type ShutdownLoadBalancerParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewShutdownLoadBalancerParam return new ShutdownLoadBalancerParam
@@ -1533,11 +1533,11 @@ func (p *ShutdownLoadBalancerParam) GetId() int64 {
 
 // ShutdownForceLoadBalancerParam is input parameters for the sacloud API
 type ShutdownForceLoadBalancerParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewShutdownForceLoadBalancerParam return new ShutdownForceLoadBalancerParam
@@ -1645,11 +1645,11 @@ func (p *ShutdownForceLoadBalancerParam) GetId() int64 {
 
 // ResetLoadBalancerParam is input parameters for the sacloud API
 type ResetLoadBalancerParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewResetLoadBalancerParam return new ResetLoadBalancerParam
@@ -1757,10 +1757,10 @@ func (p *ResetLoadBalancerParam) GetId() int64 {
 
 // WaitForBootLoadBalancerParam is input parameters for the sacloud API
 type WaitForBootLoadBalancerParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewWaitForBootLoadBalancerParam return new WaitForBootLoadBalancerParam
@@ -1858,10 +1858,10 @@ func (p *WaitForBootLoadBalancerParam) GetId() int64 {
 
 // WaitForDownLoadBalancerParam is input parameters for the sacloud API
 type WaitForDownLoadBalancerParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewWaitForDownLoadBalancerParam return new WaitForDownLoadBalancerParam
@@ -1959,15 +1959,15 @@ func (p *WaitForDownLoadBalancerParam) GetId() int64 {
 
 // VipInfoLoadBalancerParam is input parameters for the sacloud API
 type VipInfoLoadBalancerParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewVipInfoLoadBalancerParam return new VipInfoLoadBalancerParam
@@ -2135,15 +2135,15 @@ func (p *VipInfoLoadBalancerParam) GetId() int64 {
 
 // VipAddLoadBalancerParam is input parameters for the sacloud API
 type VipAddLoadBalancerParam struct {
-	Vip               string
-	Port              int
-	DelayLoop         int
-	SorryServer       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Vip               string `json:"vip"`
+	Port              int    `json:"port"`
+	DelayLoop         int    `json:"delay-loop"`
+	SorryServer       string `json:"sorry-server"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewVipAddLoadBalancerParam return new VipAddLoadBalancerParam
@@ -2336,16 +2336,16 @@ func (p *VipAddLoadBalancerParam) GetId() int64 {
 
 // VipUpdateLoadBalancerParam is input parameters for the sacloud API
 type VipUpdateLoadBalancerParam struct {
-	Index             int
-	Vip               string
-	Port              int
-	DelayLoop         int
-	SorryServer       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Vip               string `json:"vip"`
+	Port              int    `json:"port"`
+	DelayLoop         int    `json:"delay-loop"`
+	SorryServer       string `json:"sorry-server"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewVipUpdateLoadBalancerParam return new VipUpdateLoadBalancerParam
@@ -2541,12 +2541,12 @@ func (p *VipUpdateLoadBalancerParam) GetId() int64 {
 
 // VipDeleteLoadBalancerParam is input parameters for the sacloud API
 type VipDeleteLoadBalancerParam struct {
-	Index             int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewVipDeleteLoadBalancerParam return new VipDeleteLoadBalancerParam
@@ -2671,18 +2671,18 @@ func (p *VipDeleteLoadBalancerParam) GetId() int64 {
 
 // ServerInfoLoadBalancerParam is input parameters for the sacloud API
 type ServerInfoLoadBalancerParam struct {
-	VipIndex          int
-	Vip               string
-	Port              int
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	VipIndex          int      `json:"vip-index"`
+	Vip               string   `json:"vip"`
+	Port              int      `json:"port"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewServerInfoLoadBalancerParam return new ServerInfoLoadBalancerParam
@@ -2922,19 +2922,19 @@ func (p *ServerInfoLoadBalancerParam) GetId() int64 {
 
 // ServerAddLoadBalancerParam is input parameters for the sacloud API
 type ServerAddLoadBalancerParam struct {
-	VipIndex          int
-	Vip               string
-	Port              int
-	Ipaddress         string
-	Protocol          string
-	Path              string
-	ResponseCode      int
-	Enabled           bool
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	VipIndex          int    `json:"vip-index"`
+	Vip               string `json:"vip"`
+	Port              int    `json:"port"`
+	Ipaddress         string `json:"ipaddress"`
+	Protocol          string `json:"protocol"`
+	Path              string `json:"path"`
+	ResponseCode      int    `json:"response-code"`
+	Enabled           bool   `json:"enabled"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewServerAddLoadBalancerParam return new ServerAddLoadBalancerParam
@@ -3203,19 +3203,19 @@ func (p *ServerAddLoadBalancerParam) GetId() int64 {
 
 // ServerUpdateLoadBalancerParam is input parameters for the sacloud API
 type ServerUpdateLoadBalancerParam struct {
-	VipIndex          int
-	Vip               string
-	Port              int
-	Ipaddress         string
-	Protocol          string
-	Path              string
-	ResponseCode      int
-	Enabled           bool
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	VipIndex          int    `json:"vip-index"`
+	Vip               string `json:"vip"`
+	Port              int    `json:"port"`
+	Ipaddress         string `json:"ipaddress"`
+	Protocol          string `json:"protocol"`
+	Path              string `json:"path"`
+	ResponseCode      int    `json:"response-code"`
+	Enabled           bool   `json:"enabled"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewServerUpdateLoadBalancerParam return new ServerUpdateLoadBalancerParam
@@ -3466,15 +3466,15 @@ func (p *ServerUpdateLoadBalancerParam) GetId() int64 {
 
 // ServerDeleteLoadBalancerParam is input parameters for the sacloud API
 type ServerDeleteLoadBalancerParam struct {
-	VipIndex          int
-	Vip               string
-	Port              int
-	Ipaddress         string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	VipIndex          int    `json:"vip-index"`
+	Vip               string `json:"vip"`
+	Port              int    `json:"port"`
+	Ipaddress         string `json:"ipaddress"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewServerDeleteLoadBalancerParam return new ServerDeleteLoadBalancerParam
@@ -3678,18 +3678,18 @@ func (p *ServerDeleteLoadBalancerParam) GetId() int64 {
 
 // MonitorLoadBalancerParam is input parameters for the sacloud API
 type MonitorLoadBalancerParam struct {
-	Start             string
-	End               string
-	KeyFormat         string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Start             string   `json:"start"`
+	End               string   `json:"end"`
+	KeyFormat         string   `json:"key-format"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewMonitorLoadBalancerParam return new MonitorLoadBalancerParam
