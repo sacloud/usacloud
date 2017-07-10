@@ -10,19 +10,19 @@ import (
 
 // ListLicenseParam is input parameters for the sacloud API
 type ListLicenseParam struct {
-	Name              []string
-	Id                []int64
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              []string `json:"name"`
+	Id                []int64  `json:"id"`
+	From              int      `json:"from"`
+	Max               int      `json:"max"`
+	Sort              []string `json:"sort"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListLicenseParam return new ListLicenseParam
@@ -248,17 +248,17 @@ func (p *ListLicenseParam) GetFormatFile() string {
 
 // CreateLicenseParam is input parameters for the sacloud API
 type CreateLicenseParam struct {
-	LicenseInfoId     int64
-	Name              string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	LicenseInfoId     int64    `json:"license-info-id"`
+	Name              string   `json:"name"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewCreateLicenseParam return new CreateLicenseParam
@@ -453,15 +453,15 @@ func (p *CreateLicenseParam) GetFormatFile() string {
 
 // ReadLicenseParam is input parameters for the sacloud API
 type ReadLicenseParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewReadLicenseParam return new ReadLicenseParam
@@ -629,17 +629,17 @@ func (p *ReadLicenseParam) GetId() int64 {
 
 // UpdateLicenseParam is input parameters for the sacloud API
 type UpdateLicenseParam struct {
-	Name              string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Name              string   `json:"name"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUpdateLicenseParam return new UpdateLicenseParam
@@ -834,16 +834,16 @@ func (p *UpdateLicenseParam) GetId() int64 {
 
 // DeleteLicenseParam is input parameters for the sacloud API
 type DeleteLicenseParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewDeleteLicenseParam return new DeleteLicenseParam

@@ -10,19 +10,19 @@ import (
 
 // ListSSHKeyParam is input parameters for the sacloud API
 type ListSSHKeyParam struct {
-	Name              []string
-	Id                []int64
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              []string `json:"name"`
+	Id                []int64  `json:"id"`
+	From              int      `json:"from"`
+	Max               int      `json:"max"`
+	Sort              []string `json:"sort"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListSSHKeyParam return new ListSSHKeyParam
@@ -248,19 +248,19 @@ func (p *ListSSHKeyParam) GetFormatFile() string {
 
 // CreateSSHKeyParam is input parameters for the sacloud API
 type CreateSSHKeyParam struct {
-	PublicKey         string
-	Name              string
-	Description       string
-	Assumeyes         bool
-	PublicKeyContent  string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	PublicKey         string   `json:"public-key"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Assumeyes         bool     `json:"assumeyes"`
+	PublicKeyContent  string   `json:"public-key-content"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewCreateSSHKeyParam return new CreateSSHKeyParam
@@ -498,15 +498,15 @@ func (p *CreateSSHKeyParam) GetFormatFile() string {
 
 // ReadSSHKeyParam is input parameters for the sacloud API
 type ReadSSHKeyParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewReadSSHKeyParam return new ReadSSHKeyParam
@@ -674,18 +674,18 @@ func (p *ReadSSHKeyParam) GetId() int64 {
 
 // UpdateSSHKeyParam is input parameters for the sacloud API
 type UpdateSSHKeyParam struct {
-	Name              string
-	Description       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUpdateSSHKeyParam return new UpdateSSHKeyParam
@@ -897,16 +897,16 @@ func (p *UpdateSSHKeyParam) GetId() int64 {
 
 // DeleteSSHKeyParam is input parameters for the sacloud API
 type DeleteSSHKeyParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewDeleteSSHKeyParam return new DeleteSSHKeyParam
@@ -1084,19 +1084,19 @@ func (p *DeleteSSHKeyParam) GetId() int64 {
 
 // GenerateSSHKeyParam is input parameters for the sacloud API
 type GenerateSSHKeyParam struct {
-	PassPhrase        string
-	Name              string
-	Description       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	PrivateKeyOutput  string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	PassPhrase        string   `json:"pass-phrase"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	PrivateKeyOutput  string   `json:"private-key-output"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewGenerateSSHKeyParam return new GenerateSSHKeyParam

@@ -10,20 +10,20 @@ import (
 
 // ListSimpleMonitorParam is input parameters for the sacloud API
 type ListSimpleMonitorParam struct {
-	Name              []string
-	Id                []int64
-	Tags              []string
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              []string `json:"name"`
+	Id                []int64  `json:"id"`
+	Tags              []string `json:"tags"`
+	From              int      `json:"from"`
+	Max               int      `json:"max"`
+	Sort              []string `json:"sort"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListSimpleMonitorParam return new ListSimpleMonitorParam
@@ -266,31 +266,31 @@ func (p *ListSimpleMonitorParam) GetFormatFile() string {
 
 // CreateSimpleMonitorParam is input parameters for the sacloud API
 type CreateSimpleMonitorParam struct {
-	Target            string
-	Protocol          string
-	Port              int
-	DelayLoop         int
-	Enabled           bool
-	HostHeader        string
-	Path              string
-	ResponseCode      int
-	DnsQname          string
-	DnsExcepted       string
-	NotifyEmail       bool
-	EmailType         string
-	SlackWebhook      string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Target            string   `json:"target"`
+	Protocol          string   `json:"protocol"`
+	Port              int      `json:"port"`
+	DelayLoop         int      `json:"delay-loop"`
+	Enabled           bool     `json:"enabled"`
+	HostHeader        string   `json:"host-header"`
+	Path              string   `json:"path"`
+	ResponseCode      int      `json:"response-code"`
+	DnsQname          string   `json:"dns-qname"`
+	DnsExcepted       string   `json:"dns-excepted"`
+	NotifyEmail       bool     `json:"notify-email"`
+	EmailType         string   `json:"email-type"`
+	SlackWebhook      string   `json:"slack-webhook"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewCreateSimpleMonitorParam return new CreateSimpleMonitorParam
@@ -694,15 +694,15 @@ func (p *CreateSimpleMonitorParam) GetFormatFile() string {
 
 // ReadSimpleMonitorParam is input parameters for the sacloud API
 type ReadSimpleMonitorParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewReadSimpleMonitorParam return new ReadSimpleMonitorParam
@@ -870,31 +870,31 @@ func (p *ReadSimpleMonitorParam) GetId() int64 {
 
 // UpdateSimpleMonitorParam is input parameters for the sacloud API
 type UpdateSimpleMonitorParam struct {
-	Protocol          string
-	Port              int
-	DelayLoop         int
-	Enabled           bool
-	HostHeader        string
-	Path              string
-	ResponseCode      int
-	DnsQname          string
-	DnsExcepted       string
-	NotifyEmail       bool
-	EmailType         string
-	SlackWebhook      string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Protocol          string   `json:"protocol"`
+	Port              int      `json:"port"`
+	DelayLoop         int      `json:"delay-loop"`
+	Enabled           bool     `json:"enabled"`
+	HostHeader        string   `json:"host-header"`
+	Path              string   `json:"path"`
+	ResponseCode      int      `json:"response-code"`
+	DnsQname          string   `json:"dns-qname"`
+	DnsExcepted       string   `json:"dns-excepted"`
+	NotifyEmail       bool     `json:"notify-email"`
+	EmailType         string   `json:"email-type"`
+	SlackWebhook      string   `json:"slack-webhook"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUpdateSimpleMonitorParam return new UpdateSimpleMonitorParam
@@ -1271,16 +1271,16 @@ func (p *UpdateSimpleMonitorParam) GetId() int64 {
 
 // DeleteSimpleMonitorParam is input parameters for the sacloud API
 type DeleteSimpleMonitorParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewDeleteSimpleMonitorParam return new DeleteSimpleMonitorParam

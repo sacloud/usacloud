@@ -10,19 +10,19 @@ import (
 
 // ListBridgeParam is input parameters for the sacloud API
 type ListBridgeParam struct {
-	Name              []string
-	Id                []int64
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              []string `json:"name"`
+	Id                []int64  `json:"id"`
+	From              int      `json:"from"`
+	Max               int      `json:"max"`
+	Sort              []string `json:"sort"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListBridgeParam return new ListBridgeParam
@@ -248,17 +248,17 @@ func (p *ListBridgeParam) GetFormatFile() string {
 
 // CreateBridgeParam is input parameters for the sacloud API
 type CreateBridgeParam struct {
-	Name              string
-	Description       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewCreateBridgeParam return new CreateBridgeParam
@@ -460,15 +460,15 @@ func (p *CreateBridgeParam) GetFormatFile() string {
 
 // ReadBridgeParam is input parameters for the sacloud API
 type ReadBridgeParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewReadBridgeParam return new ReadBridgeParam
@@ -636,18 +636,18 @@ func (p *ReadBridgeParam) GetId() int64 {
 
 // UpdateBridgeParam is input parameters for the sacloud API
 type UpdateBridgeParam struct {
-	Name              string
-	Description       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUpdateBridgeParam return new UpdateBridgeParam
@@ -859,16 +859,16 @@ func (p *UpdateBridgeParam) GetId() int64 {
 
 // DeleteBridgeParam is input parameters for the sacloud API
 type DeleteBridgeParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewDeleteBridgeParam return new DeleteBridgeParam

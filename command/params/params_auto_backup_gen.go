@@ -10,20 +10,20 @@ import (
 
 // ListAutoBackupParam is input parameters for the sacloud API
 type ListAutoBackupParam struct {
-	Name              []string
-	Id                []int64
-	Tags              []string
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              []string `json:"name"`
+	Id                []int64  `json:"id"`
+	Tags              []string `json:"tags"`
+	From              int      `json:"from"`
+	Max               int      `json:"max"`
+	Sort              []string `json:"sort"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListAutoBackupParam return new ListAutoBackupParam
@@ -266,22 +266,22 @@ func (p *ListAutoBackupParam) GetFormatFile() string {
 
 // CreateAutoBackupParam is input parameters for the sacloud API
 type CreateAutoBackupParam struct {
-	DiskId            int64
-	Weekdays          []string
-	Generation        int
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	DiskId            int64    `json:"disk-id"`
+	Weekdays          []string `json:"weekdays"`
+	Generation        int      `json:"generation"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewCreateAutoBackupParam return new CreateAutoBackupParam
@@ -593,15 +593,15 @@ func (p *CreateAutoBackupParam) GetFormatFile() string {
 
 // ReadAutoBackupParam is input parameters for the sacloud API
 type ReadAutoBackupParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewReadAutoBackupParam return new ReadAutoBackupParam
@@ -769,22 +769,22 @@ func (p *ReadAutoBackupParam) GetId() int64 {
 
 // UpdateAutoBackupParam is input parameters for the sacloud API
 type UpdateAutoBackupParam struct {
-	Weekdays          []string
-	Generation        int
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Weekdays          []string `json:"weekdays"`
+	Generation        int      `json:"generation"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUpdateAutoBackupParam return new UpdateAutoBackupParam
@@ -1064,16 +1064,16 @@ func (p *UpdateAutoBackupParam) GetId() int64 {
 
 // DeleteAutoBackupParam is input parameters for the sacloud API
 type DeleteAutoBackupParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewDeleteAutoBackupParam return new DeleteAutoBackupParam

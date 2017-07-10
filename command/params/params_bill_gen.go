@@ -10,12 +10,12 @@ import (
 
 // CsvBillParam is input parameters for the sacloud API
 type CsvBillParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	NoHeader          bool
-	BillOutput        string
-	Id                int64
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	NoHeader          bool   `json:"no-header"`
+	BillOutput        string `json:"bill-output"`
+	Id                int64  `json:"id"`
 }
 
 // NewCsvBillParam return new CsvBillParam
@@ -140,16 +140,16 @@ func (p *CsvBillParam) GetId() int64 {
 
 // ListBillParam is input parameters for the sacloud API
 type ListBillParam struct {
-	Year              int
-	Month             int
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Year              int      `json:"year"`
+	Month             int      `json:"month"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListBillParam return new ListBillParam

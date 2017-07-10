@@ -10,20 +10,20 @@ import (
 
 // ListDatabaseParam is input parameters for the sacloud API
 type ListDatabaseParam struct {
-	Name              []string
-	Id                []int64
-	Tags              []string
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              []string `json:"name"`
+	Id                []int64  `json:"id"`
+	Tags              []string `json:"tags"`
+	From              int      `json:"from"`
+	Max               int      `json:"max"`
+	Sort              []string `json:"sort"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListDatabaseParam return new ListDatabaseParam
@@ -266,31 +266,31 @@ func (p *ListDatabaseParam) GetFormatFile() string {
 
 // CreateDatabaseParam is input parameters for the sacloud API
 type CreateDatabaseParam struct {
-	SwitchId          int64
-	Plan              int
-	Database          string
-	Username          string
-	Password          string
-	SourceNetworks    []string
-	EnableWebUi       bool
-	BackupTime        string
-	Port              int
-	Ipaddress1        string
-	NwMaskLen         int
-	DefaultRoute      string
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	SwitchId          int64    `json:"switch-id"`
+	Plan              int      `json:"plan"`
+	Database          string   `json:"database"`
+	Username          string   `json:"username"`
+	Password          string   `json:"password"`
+	SourceNetworks    []string `json:"source-networks"`
+	EnableWebUi       bool     `json:"enable-web-ui"`
+	BackupTime        string   `json:"backup-time"`
+	Port              int      `json:"port"`
+	Ipaddress1        string   `json:"ipaddress1"`
+	NwMaskLen         int      `json:"nw-mask-len"`
+	DefaultRoute      string   `json:"default-route"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewCreateDatabaseParam return new CreateDatabaseParam
@@ -782,15 +782,15 @@ func (p *CreateDatabaseParam) GetFormatFile() string {
 
 // ReadDatabaseParam is input parameters for the sacloud API
 type ReadDatabaseParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewReadDatabaseParam return new ReadDatabaseParam
@@ -958,25 +958,25 @@ func (p *ReadDatabaseParam) GetId() int64 {
 
 // UpdateDatabaseParam is input parameters for the sacloud API
 type UpdateDatabaseParam struct {
-	Password          string
-	Port              int
-	SourceNetworks    []string
-	EnableWebUi       bool
-	BackupTime        string
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Password          string   `json:"password"`
+	Port              int      `json:"port"`
+	SourceNetworks    []string `json:"source-networks"`
+	EnableWebUi       bool     `json:"enable-web-ui"`
+	BackupTime        string   `json:"backup-time"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUpdateDatabaseParam return new UpdateDatabaseParam
@@ -1300,17 +1300,17 @@ func (p *UpdateDatabaseParam) GetId() int64 {
 
 // DeleteDatabaseParam is input parameters for the sacloud API
 type DeleteDatabaseParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Force             bool
-	Id                int64
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Force             bool     `json:"force"`
+	Id                int64    `json:"id"`
 }
 
 // NewDeleteDatabaseParam return new DeleteDatabaseParam
@@ -1498,11 +1498,11 @@ func (p *DeleteDatabaseParam) GetId() int64 {
 
 // BootDatabaseParam is input parameters for the sacloud API
 type BootDatabaseParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewBootDatabaseParam return new BootDatabaseParam
@@ -1610,11 +1610,11 @@ func (p *BootDatabaseParam) GetId() int64 {
 
 // ShutdownDatabaseParam is input parameters for the sacloud API
 type ShutdownDatabaseParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewShutdownDatabaseParam return new ShutdownDatabaseParam
@@ -1722,11 +1722,11 @@ func (p *ShutdownDatabaseParam) GetId() int64 {
 
 // ShutdownForceDatabaseParam is input parameters for the sacloud API
 type ShutdownForceDatabaseParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewShutdownForceDatabaseParam return new ShutdownForceDatabaseParam
@@ -1834,11 +1834,11 @@ func (p *ShutdownForceDatabaseParam) GetId() int64 {
 
 // ResetDatabaseParam is input parameters for the sacloud API
 type ResetDatabaseParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewResetDatabaseParam return new ResetDatabaseParam
@@ -1946,10 +1946,10 @@ func (p *ResetDatabaseParam) GetId() int64 {
 
 // WaitForBootDatabaseParam is input parameters for the sacloud API
 type WaitForBootDatabaseParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewWaitForBootDatabaseParam return new WaitForBootDatabaseParam
@@ -2047,10 +2047,10 @@ func (p *WaitForBootDatabaseParam) GetId() int64 {
 
 // WaitForDownDatabaseParam is input parameters for the sacloud API
 type WaitForDownDatabaseParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewWaitForDownDatabaseParam return new WaitForDownDatabaseParam

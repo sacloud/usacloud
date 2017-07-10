@@ -10,21 +10,21 @@ import (
 
 // ListISOImageParam is input parameters for the sacloud API
 type ListISOImageParam struct {
-	Name              []string
-	Id                []int64
-	Scope             string
-	Tags              []string
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              []string `json:"name"`
+	Id                []int64  `json:"id"`
+	Scope             string   `json:"scope"`
+	Tags              []string `json:"tags"`
+	From              int      `json:"from"`
+	Max               int      `json:"max"`
+	Sort              []string `json:"sort"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListISOImageParam return new ListISOImageParam
@@ -284,21 +284,21 @@ func (p *ListISOImageParam) GetFormatFile() string {
 
 // CreateISOImageParam is input parameters for the sacloud API
 type CreateISOImageParam struct {
-	Size              int
-	IsoFile           string
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Size              int      `json:"size"`
+	IsoFile           string   `json:"iso-file"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewCreateISOImageParam return new CreateISOImageParam
@@ -585,15 +585,15 @@ func (p *CreateISOImageParam) GetFormatFile() string {
 
 // ReadISOImageParam is input parameters for the sacloud API
 type ReadISOImageParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewReadISOImageParam return new ReadISOImageParam
@@ -761,20 +761,20 @@ func (p *ReadISOImageParam) GetId() int64 {
 
 // UpdateISOImageParam is input parameters for the sacloud API
 type UpdateISOImageParam struct {
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUpdateISOImageParam return new UpdateISOImageParam
@@ -1020,16 +1020,16 @@ func (p *UpdateISOImageParam) GetId() int64 {
 
 // DeleteISOImageParam is input parameters for the sacloud API
 type DeleteISOImageParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewDeleteISOImageParam return new DeleteISOImageParam
@@ -1207,17 +1207,17 @@ func (p *DeleteISOImageParam) GetId() int64 {
 
 // UploadISOImageParam is input parameters for the sacloud API
 type UploadISOImageParam struct {
-	IsoFile           string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	IsoFile           string   `json:"iso-file"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUploadISOImageParam return new UploadISOImageParam
@@ -1419,12 +1419,12 @@ func (p *UploadISOImageParam) GetId() int64 {
 
 // DownloadISOImageParam is input parameters for the sacloud API
 type DownloadISOImageParam struct {
-	FileDestination   string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	FileDestination   string `json:"file-destination"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewDownloadISOImageParam return new DownloadISOImageParam
@@ -1549,16 +1549,16 @@ func (p *DownloadISOImageParam) GetId() int64 {
 
 // FtpOpenISOImageParam is input parameters for the sacloud API
 type FtpOpenISOImageParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewFtpOpenISOImageParam return new FtpOpenISOImageParam
@@ -1736,11 +1736,11 @@ func (p *FtpOpenISOImageParam) GetId() int64 {
 
 // FtpCloseISOImageParam is input parameters for the sacloud API
 type FtpCloseISOImageParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewFtpCloseISOImageParam return new FtpCloseISOImageParam

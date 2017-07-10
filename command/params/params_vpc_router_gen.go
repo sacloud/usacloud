@@ -10,20 +10,20 @@ import (
 
 // ListVPCRouterParam is input parameters for the sacloud API
 type ListVPCRouterParam struct {
-	Name              []string
-	Id                []int64
-	Tags              []string
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              []string `json:"name"`
+	Id                []int64  `json:"id"`
+	Tags              []string `json:"tags"`
+	From              int      `json:"from"`
+	Max               int      `json:"max"`
+	Sort              []string `json:"sort"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListVPCRouterParam return new ListVPCRouterParam
@@ -266,26 +266,26 @@ func (p *ListVPCRouterParam) GetFormatFile() string {
 
 // CreateVPCRouterParam is input parameters for the sacloud API
 type CreateVPCRouterParam struct {
-	Plan              string
-	SwitchId          int64
-	Vrid              int
-	Vip               string
-	Ipaddress1        string
-	Ipaddress2        string
-	BootAfterCreate   bool
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Plan              string   `json:"plan"`
+	SwitchId          int64    `json:"switch-id"`
+	Vrid              int      `json:"vrid"`
+	Vip               string   `json:"vip"`
+	Ipaddress1        string   `json:"ipaddress1"`
+	Ipaddress2        string   `json:"ipaddress2"`
+	BootAfterCreate   bool     `json:"boot-after-create"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewCreateVPCRouterParam return new CreateVPCRouterParam
@@ -644,15 +644,15 @@ func (p *CreateVPCRouterParam) GetFormatFile() string {
 
 // ReadVPCRouterParam is input parameters for the sacloud API
 type ReadVPCRouterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewReadVPCRouterParam return new ReadVPCRouterParam
@@ -820,21 +820,21 @@ func (p *ReadVPCRouterParam) GetId() int64 {
 
 // UpdateVPCRouterParam is input parameters for the sacloud API
 type UpdateVPCRouterParam struct {
-	SyslogHost        string
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	SyslogHost        string   `json:"syslog-host"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUpdateVPCRouterParam return new UpdateVPCRouterParam
@@ -1097,17 +1097,17 @@ func (p *UpdateVPCRouterParam) GetId() int64 {
 
 // DeleteVPCRouterParam is input parameters for the sacloud API
 type DeleteVPCRouterParam struct {
-	Force             bool
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Force             bool     `json:"force"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewDeleteVPCRouterParam return new DeleteVPCRouterParam
@@ -1295,11 +1295,11 @@ func (p *DeleteVPCRouterParam) GetId() int64 {
 
 // BootVPCRouterParam is input parameters for the sacloud API
 type BootVPCRouterParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewBootVPCRouterParam return new BootVPCRouterParam
@@ -1407,11 +1407,11 @@ func (p *BootVPCRouterParam) GetId() int64 {
 
 // ShutdownVPCRouterParam is input parameters for the sacloud API
 type ShutdownVPCRouterParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewShutdownVPCRouterParam return new ShutdownVPCRouterParam
@@ -1519,11 +1519,11 @@ func (p *ShutdownVPCRouterParam) GetId() int64 {
 
 // ShutdownForceVPCRouterParam is input parameters for the sacloud API
 type ShutdownForceVPCRouterParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewShutdownForceVPCRouterParam return new ShutdownForceVPCRouterParam
@@ -1631,11 +1631,11 @@ func (p *ShutdownForceVPCRouterParam) GetId() int64 {
 
 // ResetVPCRouterParam is input parameters for the sacloud API
 type ResetVPCRouterParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewResetVPCRouterParam return new ResetVPCRouterParam
@@ -1743,10 +1743,10 @@ func (p *ResetVPCRouterParam) GetId() int64 {
 
 // WaitForBootVPCRouterParam is input parameters for the sacloud API
 type WaitForBootVPCRouterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewWaitForBootVPCRouterParam return new WaitForBootVPCRouterParam
@@ -1844,10 +1844,10 @@ func (p *WaitForBootVPCRouterParam) GetId() int64 {
 
 // WaitForDownVPCRouterParam is input parameters for the sacloud API
 type WaitForDownVPCRouterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewWaitForDownVPCRouterParam return new WaitForDownVPCRouterParam
@@ -1945,15 +1945,15 @@ func (p *WaitForDownVPCRouterParam) GetId() int64 {
 
 // InterfaceInfoVPCRouterParam is input parameters for the sacloud API
 type InterfaceInfoVPCRouterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewInterfaceInfoVPCRouterParam return new InterfaceInfoVPCRouterParam
@@ -2121,18 +2121,18 @@ func (p *InterfaceInfoVPCRouterParam) GetId() int64 {
 
 // InterfaceConnectVPCRouterParam is input parameters for the sacloud API
 type InterfaceConnectVPCRouterParam struct {
-	Index             string
-	Ipaddress         string
-	WithReboot        bool
-	Ipaddress1        string
-	SwitchId          int64
-	Ipaddress2        string
-	NwMasklen         int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             string `json:"index"`
+	Ipaddress         string `json:"ipaddress"`
+	WithReboot        bool   `json:"with-reboot"`
+	Ipaddress1        string `json:"ipaddress1"`
+	SwitchId          int64  `json:"switch-id"`
+	Ipaddress2        string `json:"ipaddress2"`
+	NwMasklen         int    `json:"nw-masklen"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewInterfaceConnectVPCRouterParam return new InterfaceConnectVPCRouterParam
@@ -2376,19 +2376,19 @@ func (p *InterfaceConnectVPCRouterParam) GetId() int64 {
 
 // InterfaceUpdateVPCRouterParam is input parameters for the sacloud API
 type InterfaceUpdateVPCRouterParam struct {
-	Index             string
-	Ipaddress         string
-	WithReboot        bool
-	Ipaddress1        string
-	SwitchId          int64
-	Ipaddress2        string
-	Alias             []string
-	NwMasklen         int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             string   `json:"index"`
+	Ipaddress         string   `json:"ipaddress"`
+	WithReboot        bool     `json:"with-reboot"`
+	Ipaddress1        string   `json:"ipaddress1"`
+	SwitchId          int64    `json:"switch-id"`
+	Ipaddress2        string   `json:"ipaddress2"`
+	Alias             []string `json:"alias"`
+	NwMasklen         int      `json:"nw-masklen"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewInterfaceUpdateVPCRouterParam return new InterfaceUpdateVPCRouterParam
@@ -2635,13 +2635,13 @@ func (p *InterfaceUpdateVPCRouterParam) GetId() int64 {
 
 // InterfaceDisconnectVPCRouterParam is input parameters for the sacloud API
 type InterfaceDisconnectVPCRouterParam struct {
-	Index             string
-	WithReboot        bool
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             string `json:"index"`
+	WithReboot        bool   `json:"with-reboot"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewInterfaceDisconnectVPCRouterParam return new InterfaceDisconnectVPCRouterParam
@@ -2783,15 +2783,15 @@ func (p *InterfaceDisconnectVPCRouterParam) GetId() int64 {
 
 // StaticNatInfoVPCRouterParam is input parameters for the sacloud API
 type StaticNatInfoVPCRouterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewStaticNatInfoVPCRouterParam return new StaticNatInfoVPCRouterParam
@@ -2959,14 +2959,14 @@ func (p *StaticNatInfoVPCRouterParam) GetId() int64 {
 
 // StaticNatAddVPCRouterParam is input parameters for the sacloud API
 type StaticNatAddVPCRouterParam struct {
-	Global            string
-	Private           string
-	Description       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Global            string `json:"global"`
+	Private           string `json:"private"`
+	Description       string `json:"description"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewStaticNatAddVPCRouterParam return new StaticNatAddVPCRouterParam
@@ -3139,15 +3139,15 @@ func (p *StaticNatAddVPCRouterParam) GetId() int64 {
 
 // StaticNatUpdateVPCRouterParam is input parameters for the sacloud API
 type StaticNatUpdateVPCRouterParam struct {
-	Index             int
-	Global            string
-	Private           string
-	Description       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Global            string `json:"global"`
+	Private           string `json:"private"`
+	Description       string `json:"description"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewStaticNatUpdateVPCRouterParam return new StaticNatUpdateVPCRouterParam
@@ -3323,12 +3323,12 @@ func (p *StaticNatUpdateVPCRouterParam) GetId() int64 {
 
 // StaticNatDeleteVPCRouterParam is input parameters for the sacloud API
 type StaticNatDeleteVPCRouterParam struct {
-	Index             int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewStaticNatDeleteVPCRouterParam return new StaticNatDeleteVPCRouterParam
@@ -3453,15 +3453,15 @@ func (p *StaticNatDeleteVPCRouterParam) GetId() int64 {
 
 // PortForwardingInfoVPCRouterParam is input parameters for the sacloud API
 type PortForwardingInfoVPCRouterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewPortForwardingInfoVPCRouterParam return new PortForwardingInfoVPCRouterParam
@@ -3629,16 +3629,16 @@ func (p *PortForwardingInfoVPCRouterParam) GetId() int64 {
 
 // PortForwardingAddVPCRouterParam is input parameters for the sacloud API
 type PortForwardingAddVPCRouterParam struct {
-	Protocol          string
-	GlobalPort        int
-	PrivateIpaddress  string
-	PrivatePort       int
-	Description       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Protocol          string `json:"protocol"`
+	GlobalPort        int    `json:"global-port"`
+	PrivateIpaddress  string `json:"private-ipaddress"`
+	PrivatePort       int    `json:"private-port"`
+	Description       string `json:"description"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewPortForwardingAddVPCRouterParam return new PortForwardingAddVPCRouterParam
@@ -3859,17 +3859,17 @@ func (p *PortForwardingAddVPCRouterParam) GetId() int64 {
 
 // PortForwardingUpdateVPCRouterParam is input parameters for the sacloud API
 type PortForwardingUpdateVPCRouterParam struct {
-	Index             int
-	Protocol          string
-	GlobalPort        int
-	PrivateIpaddress  string
-	PrivatePort       int
-	Description       string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Protocol          string `json:"protocol"`
+	GlobalPort        int    `json:"global-port"`
+	PrivateIpaddress  string `json:"private-ipaddress"`
+	PrivatePort       int    `json:"private-port"`
+	Description       string `json:"description"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewPortForwardingUpdateVPCRouterParam return new PortForwardingUpdateVPCRouterParam
@@ -4079,12 +4079,12 @@ func (p *PortForwardingUpdateVPCRouterParam) GetId() int64 {
 
 // PortForwardingDeleteVPCRouterParam is input parameters for the sacloud API
 type PortForwardingDeleteVPCRouterParam struct {
-	Index             int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewPortForwardingDeleteVPCRouterParam return new PortForwardingDeleteVPCRouterParam
@@ -4209,16 +4209,16 @@ func (p *PortForwardingDeleteVPCRouterParam) GetId() int64 {
 
 // FirewallInfoVPCRouterParam is input parameters for the sacloud API
 type FirewallInfoVPCRouterParam struct {
-	Direction         string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Direction         string   `json:"direction"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewFirewallInfoVPCRouterParam return new FirewallInfoVPCRouterParam
@@ -4413,20 +4413,20 @@ func (p *FirewallInfoVPCRouterParam) GetId() int64 {
 
 // FirewallAddVPCRouterParam is input parameters for the sacloud API
 type FirewallAddVPCRouterParam struct {
-	Direction          string
-	Protocol           string
-	SourceNetwork      string
-	SourcePort         int
-	DestinationNetwork string
-	DestinationPort    int
-	Action             string
-	EnableLogging      bool
-	Description        string
-	Assumeyes          bool
-	ParamTemplate      string
-	ParamTemplateFile  string
-	GenerateSkeleton   bool
-	Id                 int64
+	Direction          string `json:"direction"`
+	Protocol           string `json:"protocol"`
+	SourceNetwork      string `json:"source-network"`
+	SourcePort         int    `json:"source-port"`
+	DestinationNetwork string `json:"destination-network"`
+	DestinationPort    int    `json:"destination-port"`
+	Action             string `json:"action"`
+	EnableLogging      bool   `json:"enable-logging"`
+	Description        string `json:"description"`
+	Assumeyes          bool   `json:"assumeyes"`
+	ParamTemplate      string `json:"param-template"`
+	ParamTemplateFile  string `json:"param-template-file"`
+	GenerateSkeleton   bool   `json:"generate-skeleton"`
+	Id                 int64  `json:"id"`
 }
 
 // NewFirewallAddVPCRouterParam return new FirewallAddVPCRouterParam
@@ -4705,21 +4705,21 @@ func (p *FirewallAddVPCRouterParam) GetId() int64 {
 
 // FirewallUpdateVPCRouterParam is input parameters for the sacloud API
 type FirewallUpdateVPCRouterParam struct {
-	Direction          string
-	Index              int
-	Protocol           string
-	SourceNetwork      string
-	SourcePort         int
-	DestinationNetwork string
-	DestinationPort    int
-	Action             string
-	EnableLogging      bool
-	Description        string
-	Assumeyes          bool
-	ParamTemplate      string
-	ParamTemplateFile  string
-	GenerateSkeleton   bool
-	Id                 int64
+	Direction          string `json:"direction"`
+	Index              int    `json:"index"`
+	Protocol           string `json:"protocol"`
+	SourceNetwork      string `json:"source-network"`
+	SourcePort         int    `json:"source-port"`
+	DestinationNetwork string `json:"destination-network"`
+	DestinationPort    int    `json:"destination-port"`
+	Action             string `json:"action"`
+	EnableLogging      bool   `json:"enable-logging"`
+	Description        string `json:"description"`
+	Assumeyes          bool   `json:"assumeyes"`
+	ParamTemplate      string `json:"param-template"`
+	ParamTemplateFile  string `json:"param-template-file"`
+	GenerateSkeleton   bool   `json:"generate-skeleton"`
+	Id                 int64  `json:"id"`
 }
 
 // NewFirewallUpdateVPCRouterParam return new FirewallUpdateVPCRouterParam
@@ -5001,13 +5001,13 @@ func (p *FirewallUpdateVPCRouterParam) GetId() int64 {
 
 // FirewallDeleteVPCRouterParam is input parameters for the sacloud API
 type FirewallDeleteVPCRouterParam struct {
-	Direction         string
-	Index             int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Direction         string `json:"direction"`
+	Index             int    `json:"index"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewFirewallDeleteVPCRouterParam return new FirewallDeleteVPCRouterParam
@@ -5159,15 +5159,15 @@ func (p *FirewallDeleteVPCRouterParam) GetId() int64 {
 
 // DhcpServerInfoVPCRouterParam is input parameters for the sacloud API
 type DhcpServerInfoVPCRouterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewDhcpServerInfoVPCRouterParam return new DhcpServerInfoVPCRouterParam
@@ -5335,14 +5335,14 @@ func (p *DhcpServerInfoVPCRouterParam) GetId() int64 {
 
 // DhcpServerAddVPCRouterParam is input parameters for the sacloud API
 type DhcpServerAddVPCRouterParam struct {
-	Index             int
-	RangeStart        string
-	RangeStop         string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	RangeStart        string `json:"range-start"`
+	RangeStop         string `json:"range-stop"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewDhcpServerAddVPCRouterParam return new DhcpServerAddVPCRouterParam
@@ -5522,14 +5522,14 @@ func (p *DhcpServerAddVPCRouterParam) GetId() int64 {
 
 // DhcpServerUpdateVPCRouterParam is input parameters for the sacloud API
 type DhcpServerUpdateVPCRouterParam struct {
-	Index             int
-	RangeStart        string
-	RangeStop         string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	RangeStart        string `json:"range-start"`
+	RangeStop         string `json:"range-stop"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewDhcpServerUpdateVPCRouterParam return new DhcpServerUpdateVPCRouterParam
@@ -5695,12 +5695,12 @@ func (p *DhcpServerUpdateVPCRouterParam) GetId() int64 {
 
 // DhcpServerDeleteVPCRouterParam is input parameters for the sacloud API
 type DhcpServerDeleteVPCRouterParam struct {
-	Index             int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewDhcpServerDeleteVPCRouterParam return new DhcpServerDeleteVPCRouterParam
@@ -5832,15 +5832,15 @@ func (p *DhcpServerDeleteVPCRouterParam) GetId() int64 {
 
 // DhcpStaticMappingInfoVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingInfoVPCRouterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewDhcpStaticMappingInfoVPCRouterParam return new DhcpStaticMappingInfoVPCRouterParam
@@ -6008,13 +6008,13 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) GetId() int64 {
 
 // DhcpStaticMappingAddVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingAddVPCRouterParam struct {
-	Macaddress        string
-	Ipaddress         string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Macaddress        string `json:"macaddress"`
+	Ipaddress         string `json:"ipaddress"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewDhcpStaticMappingAddVPCRouterParam return new DhcpStaticMappingAddVPCRouterParam
@@ -6170,14 +6170,14 @@ func (p *DhcpStaticMappingAddVPCRouterParam) GetId() int64 {
 
 // DhcpStaticMappingUpdateVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingUpdateVPCRouterParam struct {
-	Index             int
-	Macaddress        string
-	Ipaddress         string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Macaddress        string `json:"macaddress"`
+	Ipaddress         string `json:"ipaddress"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewDhcpStaticMappingUpdateVPCRouterParam return new DhcpStaticMappingUpdateVPCRouterParam
@@ -6336,12 +6336,12 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) GetId() int64 {
 
 // DhcpStaticMappingDeleteVPCRouterParam is input parameters for the sacloud API
 type DhcpStaticMappingDeleteVPCRouterParam struct {
-	Index             int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewDhcpStaticMappingDeleteVPCRouterParam return new DhcpStaticMappingDeleteVPCRouterParam
@@ -6466,15 +6466,15 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) GetId() int64 {
 
 // PptpServerInfoVPCRouterParam is input parameters for the sacloud API
 type PptpServerInfoVPCRouterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewPptpServerInfoVPCRouterParam return new PptpServerInfoVPCRouterParam
@@ -6642,14 +6642,14 @@ func (p *PptpServerInfoVPCRouterParam) GetId() int64 {
 
 // PptpServerUpdateVPCRouterParam is input parameters for the sacloud API
 type PptpServerUpdateVPCRouterParam struct {
-	Enabled           string
-	RangeStart        string
-	RangeStop         string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Enabled           string `json:"enabled"`
+	RangeStart        string `json:"range-start"`
+	RangeStop         string `json:"range-stop"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewPptpServerUpdateVPCRouterParam return new PptpServerUpdateVPCRouterParam
@@ -6815,15 +6815,15 @@ func (p *PptpServerUpdateVPCRouterParam) GetId() int64 {
 
 // L2tpServerInfoVPCRouterParam is input parameters for the sacloud API
 type L2tpServerInfoVPCRouterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewL2tpServerInfoVPCRouterParam return new L2tpServerInfoVPCRouterParam
@@ -6991,15 +6991,15 @@ func (p *L2tpServerInfoVPCRouterParam) GetId() int64 {
 
 // L2tpServerUpdateVPCRouterParam is input parameters for the sacloud API
 type L2tpServerUpdateVPCRouterParam struct {
-	Enabled           string
-	RangeStart        string
-	RangeStop         string
-	PreSharedSecret   string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Enabled           string `json:"enabled"`
+	RangeStart        string `json:"range-start"`
+	RangeStop         string `json:"range-stop"`
+	PreSharedSecret   string `json:"pre-shared-secret"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewL2tpServerUpdateVPCRouterParam return new L2tpServerUpdateVPCRouterParam
@@ -7182,15 +7182,15 @@ func (p *L2tpServerUpdateVPCRouterParam) GetId() int64 {
 
 // UserInfoVPCRouterParam is input parameters for the sacloud API
 type UserInfoVPCRouterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUserInfoVPCRouterParam return new UserInfoVPCRouterParam
@@ -7358,13 +7358,13 @@ func (p *UserInfoVPCRouterParam) GetId() int64 {
 
 // UserAddVPCRouterParam is input parameters for the sacloud API
 type UserAddVPCRouterParam struct {
-	Username          string
-	Password          string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Username          string `json:"username"`
+	Password          string `json:"password"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewUserAddVPCRouterParam return new UserAddVPCRouterParam
@@ -7520,14 +7520,14 @@ func (p *UserAddVPCRouterParam) GetId() int64 {
 
 // UserUpdateVPCRouterParam is input parameters for the sacloud API
 type UserUpdateVPCRouterParam struct {
-	Index             int
-	Username          string
-	Password          string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Username          string `json:"username"`
+	Password          string `json:"password"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewUserUpdateVPCRouterParam return new UserUpdateVPCRouterParam
@@ -7686,12 +7686,12 @@ func (p *UserUpdateVPCRouterParam) GetId() int64 {
 
 // UserDeleteVPCRouterParam is input parameters for the sacloud API
 type UserDeleteVPCRouterParam struct {
-	Index             int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewUserDeleteVPCRouterParam return new UserDeleteVPCRouterParam
@@ -7816,15 +7816,15 @@ func (p *UserDeleteVPCRouterParam) GetId() int64 {
 
 // SiteToSiteVpnInfoVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVpnInfoVPCRouterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewSiteToSiteVpnInfoVPCRouterParam return new SiteToSiteVpnInfoVPCRouterParam
@@ -7992,16 +7992,16 @@ func (p *SiteToSiteVpnInfoVPCRouterParam) GetId() int64 {
 
 // SiteToSiteVpnAddVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVpnAddVPCRouterParam struct {
-	Peer              string
-	RemoteId          string
-	PreSharedSecret   string
-	Routes            []string
-	LocalPrefix       []string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Peer              string   `json:"peer"`
+	RemoteId          string   `json:"remote-id"`
+	PreSharedSecret   string   `json:"pre-shared-secret"`
+	Routes            []string `json:"routes"`
+	LocalPrefix       []string `json:"local-prefix"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewSiteToSiteVpnAddVPCRouterParam return new SiteToSiteVpnAddVPCRouterParam
@@ -8222,17 +8222,17 @@ func (p *SiteToSiteVpnAddVPCRouterParam) GetId() int64 {
 
 // SiteToSiteVpnUpdateVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVpnUpdateVPCRouterParam struct {
-	Index             int
-	Peer              string
-	RemoteId          string
-	PreSharedSecret   string
-	Routes            []string
-	LocalPrefix       []string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int      `json:"index"`
+	Peer              string   `json:"peer"`
+	RemoteId          string   `json:"remote-id"`
+	PreSharedSecret   string   `json:"pre-shared-secret"`
+	Routes            []string `json:"routes"`
+	LocalPrefix       []string `json:"local-prefix"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewSiteToSiteVpnUpdateVPCRouterParam return new SiteToSiteVpnUpdateVPCRouterParam
@@ -8435,12 +8435,12 @@ func (p *SiteToSiteVpnUpdateVPCRouterParam) GetId() int64 {
 
 // SiteToSiteVpnDeleteVPCRouterParam is input parameters for the sacloud API
 type SiteToSiteVpnDeleteVPCRouterParam struct {
-	Index             int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewSiteToSiteVpnDeleteVPCRouterParam return new SiteToSiteVpnDeleteVPCRouterParam
@@ -8565,15 +8565,15 @@ func (p *SiteToSiteVpnDeleteVPCRouterParam) GetId() int64 {
 
 // StaticRouteInfoVPCRouterParam is input parameters for the sacloud API
 type StaticRouteInfoVPCRouterParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewStaticRouteInfoVPCRouterParam return new StaticRouteInfoVPCRouterParam
@@ -8741,13 +8741,13 @@ func (p *StaticRouteInfoVPCRouterParam) GetId() int64 {
 
 // StaticRouteAddVPCRouterParam is input parameters for the sacloud API
 type StaticRouteAddVPCRouterParam struct {
-	Prefix            string
-	NextHop           string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Prefix            string `json:"prefix"`
+	NextHop           string `json:"next-hop"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewStaticRouteAddVPCRouterParam return new StaticRouteAddVPCRouterParam
@@ -8903,14 +8903,14 @@ func (p *StaticRouteAddVPCRouterParam) GetId() int64 {
 
 // StaticRouteUpdateVPCRouterParam is input parameters for the sacloud API
 type StaticRouteUpdateVPCRouterParam struct {
-	Index             int
-	Prefix            string
-	NextHop           string
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Prefix            string `json:"prefix"`
+	NextHop           string `json:"next-hop"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewStaticRouteUpdateVPCRouterParam return new StaticRouteUpdateVPCRouterParam
@@ -9069,12 +9069,12 @@ func (p *StaticRouteUpdateVPCRouterParam) GetId() int64 {
 
 // StaticRouteDeleteVPCRouterParam is input parameters for the sacloud API
 type StaticRouteDeleteVPCRouterParam struct {
-	Index             int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	Id                int64
+	Index             int    `json:"index"`
+	Assumeyes         bool   `json:"assumeyes"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Id                int64  `json:"id"`
 }
 
 // NewStaticRouteDeleteVPCRouterParam return new StaticRouteDeleteVPCRouterParam
@@ -9199,19 +9199,19 @@ func (p *StaticRouteDeleteVPCRouterParam) GetId() int64 {
 
 // MonitorVPCRouterParam is input parameters for the sacloud API
 type MonitorVPCRouterParam struct {
-	Index             string
-	Start             string
-	End               string
-	KeyFormat         string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Index             string   `json:"index"`
+	Start             string   `json:"start"`
+	End               string   `json:"end"`
+	KeyFormat         string   `json:"key-format"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewMonitorVPCRouterParam return new MonitorVPCRouterParam

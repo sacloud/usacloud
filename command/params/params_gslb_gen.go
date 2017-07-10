@@ -10,20 +10,20 @@ import (
 
 // ListGSLBParam is input parameters for the sacloud API
 type ListGSLBParam struct {
-	Name              []string
-	Id                []int64
-	Tags              []string
-	From              int
-	Max               int
-	Sort              []string
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Name              []string `json:"name"`
+	Id                []int64  `json:"id"`
+	Tags              []string `json:"tags"`
+	From              int      `json:"from"`
+	Max               int      `json:"max"`
+	Sort              []string `json:"sort"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewListGSLBParam return new ListGSLBParam
@@ -266,15 +266,15 @@ func (p *ListGSLBParam) GetFormatFile() string {
 
 // ServerInfoGSLBParam is input parameters for the sacloud API
 type ServerInfoGSLBParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewServerInfoGSLBParam return new ServerInfoGSLBParam
@@ -442,27 +442,27 @@ func (p *ServerInfoGSLBParam) GetId() int64 {
 
 // CreateGSLBParam is input parameters for the sacloud API
 type CreateGSLBParam struct {
-	Protocol          string
-	HostHeader        string
-	Path              string
-	ResponseCode      int
-	Port              int
-	DelayLoop         int
-	Weighted          bool
-	SorryServer       string
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
+	Protocol          string   `json:"protocol"`
+	HostHeader        string   `json:"host-header"`
+	Path              string   `json:"path"`
+	ResponseCode      int      `json:"response-code"`
+	Port              int      `json:"port"`
+	DelayLoop         int      `json:"delay-loop"`
+	Weighted          bool     `json:"weighted"`
+	SorryServer       string   `json:"sorry-server"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
 }
 
 // NewCreateGSLBParam return new CreateGSLBParam
@@ -820,19 +820,19 @@ func (p *CreateGSLBParam) GetFormatFile() string {
 
 // ServerAddGSLBParam is input parameters for the sacloud API
 type ServerAddGSLBParam struct {
-	Ipaddress         string
-	Enabled           bool
-	Weight            int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Ipaddress         string   `json:"ipaddress"`
+	Enabled           bool     `json:"enabled"`
+	Weight            int      `json:"weight"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewServerAddGSLBParam return new ServerAddGSLBParam
@@ -1057,15 +1057,15 @@ func (p *ServerAddGSLBParam) GetId() int64 {
 
 // ReadGSLBParam is input parameters for the sacloud API
 type ReadGSLBParam struct {
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewReadGSLBParam return new ReadGSLBParam
@@ -1233,20 +1233,20 @@ func (p *ReadGSLBParam) GetId() int64 {
 
 // ServerUpdateGSLBParam is input parameters for the sacloud API
 type ServerUpdateGSLBParam struct {
-	Index             int
-	Ipaddress         string
-	Enabled           bool
-	Weight            int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Index             int      `json:"index"`
+	Ipaddress         string   `json:"ipaddress"`
+	Enabled           bool     `json:"enabled"`
+	Weight            int      `json:"weight"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewServerUpdateGSLBParam return new ServerUpdateGSLBParam
@@ -1485,17 +1485,17 @@ func (p *ServerUpdateGSLBParam) GetId() int64 {
 
 // ServerDeleteGSLBParam is input parameters for the sacloud API
 type ServerDeleteGSLBParam struct {
-	Index             int
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Index             int      `json:"index"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewServerDeleteGSLBParam return new ServerDeleteGSLBParam
@@ -1690,28 +1690,28 @@ func (p *ServerDeleteGSLBParam) GetId() int64 {
 
 // UpdateGSLBParam is input parameters for the sacloud API
 type UpdateGSLBParam struct {
-	Protocol          string
-	HostHeader        string
-	Path              string
-	ResponseCode      int
-	Port              int
-	DelayLoop         int
-	Weighted          bool
-	SorryServer       string
-	Name              string
-	Description       string
-	Tags              []string
-	IconId            int64
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Protocol          string   `json:"protocol"`
+	HostHeader        string   `json:"host-header"`
+	Path              string   `json:"path"`
+	ResponseCode      int      `json:"response-code"`
+	Port              int      `json:"port"`
+	DelayLoop         int      `json:"delay-loop"`
+	Weighted          bool     `json:"weighted"`
+	SorryServer       string   `json:"sorry-server"`
+	Name              string   `json:"name"`
+	Description       string   `json:"description"`
+	Tags              []string `json:"tags"`
+	IconId            int64    `json:"icon-id"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewUpdateGSLBParam return new UpdateGSLBParam
@@ -2058,16 +2058,16 @@ func (p *UpdateGSLBParam) GetId() int64 {
 
 // DeleteGSLBParam is input parameters for the sacloud API
 type DeleteGSLBParam struct {
-	Assumeyes         bool
-	ParamTemplate     string
-	ParamTemplateFile string
-	GenerateSkeleton  bool
-	OutputType        string
-	Column            []string
-	Quiet             bool
-	Format            string
-	FormatFile        string
-	Id                int64
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
 }
 
 // NewDeleteGSLBParam return new DeleteGSLBParam
