@@ -49,6 +49,7 @@ func init() {
 	monitorCpuParam := params.NewMonitorCpuServerParam()
 	monitorNicParam := params.NewMonitorNicServerParam()
 	monitorDiskParam := params.NewMonitorDiskServerParam()
+	maintenanceInfoParam := params.NewMaintenanceInfoServerParam()
 
 	cliCommand := &cli.Command{
 		Name:  "server",
@@ -9418,6 +9419,226 @@ func init() {
 
 				},
 			},
+			{
+				Name:  "maintenance-info",
+				Usage: "MaintenanceInfo Server",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, maintenanceInfoParam)
+
+					// Set option values
+					if c.IsSet("param-template") {
+						maintenanceInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						maintenanceInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						maintenanceInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						maintenanceInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						maintenanceInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						maintenanceInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						maintenanceInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						maintenanceInfoParam.FormatFile = c.String("format-file")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ServerMaintenanceInfoCompleteArgs(ctx, maintenanceInfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ServerMaintenanceInfoCompleteArgs(ctx, maintenanceInfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ServerMaintenanceInfoCompleteFlags(ctx, maintenanceInfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ServerMaintenanceInfoCompleteArgs(ctx, maintenanceInfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					maintenanceInfoParam.ParamTemplate = c.String("param-template")
+					maintenanceInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(maintenanceInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewMaintenanceInfoServerParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(maintenanceInfoParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("param-template") {
+						maintenanceInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						maintenanceInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						maintenanceInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						maintenanceInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						maintenanceInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						maintenanceInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						maintenanceInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						maintenanceInfoParam.FormatFile = c.String("format-file")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if maintenanceInfoParam.GenerateSkeleton {
+						maintenanceInfoParam.GenerateSkeleton = false
+						maintenanceInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(maintenanceInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := maintenanceInfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), maintenanceInfoParam)
+
+					// Run command with params
+					return funcs.ServerMaintenanceInfo(ctx, maintenanceInfoParam)
+
+				},
+			},
 		},
 	}
 
@@ -9504,6 +9725,11 @@ func init() {
 		Key:         "basics",
 		DisplayName: "Basics",
 		Order:       10,
+	})
+	AppendCommandCategoryMap("server", "maintenance-info", &schema.Category{
+		Key:         "other",
+		DisplayName: "Other",
+		Order:       1000,
 	})
 	AppendCommandCategoryMap("server", "monitor-cpu", &schema.Category{
 		Key:         "monitor",
@@ -10427,6 +10653,46 @@ func init() {
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("server", "maintenance-info", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "maintenance-info", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "maintenance-info", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "maintenance-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "maintenance-info", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "maintenance-info", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "maintenance-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "maintenance-info", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("server", "monitor-cpu", "column", &schema.Category{
 		Key:         "output",

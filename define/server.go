@@ -324,6 +324,15 @@ func ServerResource() *schema.Resource {
 			Category:           "monitor",
 			Order:              30,
 		},
+		"maintenance-info": {
+			Type:               schema.CommandList,
+			Params:             serverMaintenanceInfoParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: serverMaintenanceInfoColumns(),
+			UseCustomCommand:   true,
+			Category:           "other",
+			Order:              10,
+		},
 	}
 
 	return &schema.Resource{
@@ -341,10 +350,6 @@ func serverListColumns() []output.ColumnDef {
 	return []output.ColumnDef{
 		{Name: "ID"},
 		{Name: "Name"},
-		{
-			Name:    "Power",
-			Sources: []string{"Instance.Status"},
-		},
 		{
 			Name:    "CPU",
 			Sources: []string{"ServerPlan.CPU"},
@@ -421,6 +426,24 @@ func serverInterfaceListColumns() []output.ColumnDef {
 			Sources: []string{"PacketFilter.Name", "PacketFilter.ID"},
 			Format:  "%s(%s)",
 		},
+	}
+}
+
+func serverMaintenanceInfoColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "ID"},
+		{Name: "Name"},
+		{
+			Name:    "Host",
+			Sources: []string{"Instance.Host.Name"},
+			Format:  "%s",
+		},
+		{
+			Name:    "Date",
+			Sources: []string{"StartDate", "EndDate"},
+			Format:  "%s 〜 %s",
+		},
+		{Name: "InfoURL"},
 	}
 }
 
@@ -1529,4 +1552,8 @@ func serverMonitorDiskColumns() []output.ColumnDef {
 		{Name: "Read"},
 		{Name: "Write"},
 	}
+}
+
+func serverMaintenanceInfoParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
 }

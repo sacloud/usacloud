@@ -916,3 +916,7 @@ func ServerMonitorDiskCompleteArgs(ctx command.Context, params *params.MonitorDi
 	}
 
 }
+
+func ServerMaintenanceInfoCompleteArgs(ctx command.Context, params *params.MaintenanceInfoServerParam, cur, prev, commandName string) {
+
+}
