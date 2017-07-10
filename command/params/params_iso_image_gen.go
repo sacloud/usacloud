@@ -585,6 +585,7 @@ func (p *CreateISOImageParam) GetFormatFile() string {
 
 // ReadISOImageParam is input parameters for the sacloud API
 type ReadISOImageParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -603,6 +604,9 @@ func NewReadISOImageParam() *ReadISOImageParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ReadISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -695,6 +699,13 @@ func (p *ReadISOImageParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadISOImageParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReadISOImageParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -761,6 +772,7 @@ func (p *ReadISOImageParam) GetId() int64 {
 
 // UpdateISOImageParam is input parameters for the sacloud API
 type UpdateISOImageParam struct {
+	Selector          []string `json:"selector"`
 	Name              string   `json:"name"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
@@ -784,6 +796,9 @@ func NewUpdateISOImageParam() *UpdateISOImageParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *UpdateISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -919,6 +934,13 @@ func (p *UpdateISOImageParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *UpdateISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateISOImageParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateISOImageParam) SetName(v string) {
 	p.Name = v
 }
@@ -1020,6 +1042,7 @@ func (p *UpdateISOImageParam) GetId() int64 {
 
 // DeleteISOImageParam is input parameters for the sacloud API
 type DeleteISOImageParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1039,6 +1062,9 @@ func NewDeleteISOImageParam() *DeleteISOImageParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DeleteISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1134,6 +1160,13 @@ func (p *DeleteISOImageParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DeleteISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteISOImageParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DeleteISOImageParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1208,6 +1241,7 @@ func (p *DeleteISOImageParam) GetId() int64 {
 // UploadISOImageParam is input parameters for the sacloud API
 type UploadISOImageParam struct {
 	IsoFile           string   `json:"iso-file"`
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1229,6 +1263,9 @@ func NewUploadISOImageParam() *UploadISOImageParam {
 func (p *UploadISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.IsoFile) {
 		p.IsoFile = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1346,6 +1383,13 @@ func (p *UploadISOImageParam) SetIsoFile(v string) {
 func (p *UploadISOImageParam) GetIsoFile() string {
 	return p.IsoFile
 }
+func (p *UploadISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UploadISOImageParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UploadISOImageParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1419,12 +1463,13 @@ func (p *UploadISOImageParam) GetId() int64 {
 
 // DownloadISOImageParam is input parameters for the sacloud API
 type DownloadISOImageParam struct {
-	FileDestination   string `json:"file-destination"`
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	FileDestination   string   `json:"file-destination"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewDownloadISOImageParam return new DownloadISOImageParam
@@ -1436,6 +1481,9 @@ func NewDownloadISOImageParam() *DownloadISOImageParam {
 func (p *DownloadISOImageParam) FillValueToSkeleton() {
 	if isEmpty(p.FileDestination) {
 		p.FileDestination = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1511,6 +1559,13 @@ func (p *DownloadISOImageParam) SetFileDestination(v string) {
 func (p *DownloadISOImageParam) GetFileDestination() string {
 	return p.FileDestination
 }
+func (p *DownloadISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DownloadISOImageParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DownloadISOImageParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1549,6 +1604,7 @@ func (p *DownloadISOImageParam) GetId() int64 {
 
 // FtpOpenISOImageParam is input parameters for the sacloud API
 type FtpOpenISOImageParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1568,6 +1624,9 @@ func NewFtpOpenISOImageParam() *FtpOpenISOImageParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *FtpOpenISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1663,6 +1722,13 @@ func (p *FtpOpenISOImageParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *FtpOpenISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *FtpOpenISOImageParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *FtpOpenISOImageParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1736,11 +1802,12 @@ func (p *FtpOpenISOImageParam) GetId() int64 {
 
 // FtpCloseISOImageParam is input parameters for the sacloud API
 type FtpCloseISOImageParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewFtpCloseISOImageParam return new FtpCloseISOImageParam
@@ -1750,6 +1817,9 @@ func NewFtpCloseISOImageParam() *FtpCloseISOImageParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *FtpCloseISOImageParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1810,6 +1880,13 @@ func (p *FtpCloseISOImageParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *FtpCloseISOImageParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *FtpCloseISOImageParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *FtpCloseISOImageParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }

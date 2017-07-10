@@ -322,6 +322,7 @@ func buildActionParams(command *schema.Command) (map[string]interface{}, error) 
 
 	res = map[string]interface{}{
 		"ParamName":             paramName,
+		"NoSelector":            command.NoSelector,
 		"CreateParamFunc":       createParamFuncName,
 		"SkipAuth":              ctx.CurrentCommand().SkipAuth,
 		"SetDefault":            setDefault,
@@ -573,6 +574,7 @@ func init() {
 						return fmt.Errorf("ID argument is required")
 					}
 					c.Set("id", c.Args().First())
+					{{.ParamName}}.SetId(c.Int64("id"))
 					{{ end }}
 
 					// Validate specific for each command params
@@ -584,29 +586,51 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), {{.ParamName}})
 
 					{{if and .IdParamRequired (not .IsNeedIDOnlyType) }}
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().{{.CommandResourceName}}
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.{{.FindResultName}} {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+						{{ if .NoSelector }}
+						return fmt.Errorf("ID or Name argument is required")
+						{{ else }}
+						if len({{.ParamName}}.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.{{.FindResultName}} {
+							if hasTags(&v, {{.ParamName}}.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", {{.ParamName}}.Selector)
+						}
+						{{ end }}
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.{{.FindResultName}} {
+										{{ if not .NoSelector }}if len({{.ParamName}}.Selector) == 0 || hasTags(&v, {{.ParamName}}.Selector) { {{ end }}
+											ids = append(ids, v.GetID())
+										{{ if not .NoSelector }}} {{ end }}
+									}
 								}
 							}
 						}
@@ -614,7 +638,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					{{ if .IsNeedSingleID }}

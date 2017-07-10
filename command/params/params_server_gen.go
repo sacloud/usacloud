@@ -1098,6 +1098,7 @@ func (p *BuildServerParam) GetDisableBootAfterCreate() bool {
 
 // ReadServerParam is input parameters for the sacloud API
 type ReadServerParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -1116,6 +1117,9 @@ func NewReadServerParam() *ReadServerParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ReadServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -1208,6 +1212,13 @@ func (p *ReadServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReadServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -1274,6 +1285,7 @@ func (p *ReadServerParam) GetId() int64 {
 
 // UpdateServerParam is input parameters for the sacloud API
 type UpdateServerParam struct {
+	Selector          []string `json:"selector"`
 	Name              string   `json:"name"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
@@ -1297,6 +1309,9 @@ func NewUpdateServerParam() *UpdateServerParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *UpdateServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -1432,6 +1447,13 @@ func (p *UpdateServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *UpdateServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateServerParam) SetName(v string) {
 	p.Name = v
 }
@@ -1535,6 +1557,7 @@ func (p *UpdateServerParam) GetId() int64 {
 type DeleteServerParam struct {
 	Force             bool     `json:"force"`
 	WithoutDisk       bool     `json:"without-disk"`
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1559,6 +1582,9 @@ func (p *DeleteServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.WithoutDisk) {
 		p.WithoutDisk = false
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1669,6 +1695,13 @@ func (p *DeleteServerParam) SetWithoutDisk(v bool) {
 func (p *DeleteServerParam) GetWithoutDisk() bool {
 	return p.WithoutDisk
 }
+func (p *DeleteServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DeleteServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1744,6 +1777,7 @@ func (p *DeleteServerParam) GetId() int64 {
 type PlanChangeServerParam struct {
 	Core              int      `json:"core"`
 	Memory            int      `json:"memory"`
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1768,6 +1802,9 @@ func (p *PlanChangeServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Memory) {
 		p.Memory = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1892,6 +1929,13 @@ func (p *PlanChangeServerParam) SetMemory(v int) {
 func (p *PlanChangeServerParam) GetMemory() int {
 	return p.Memory
 }
+func (p *PlanChangeServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *PlanChangeServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *PlanChangeServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1965,11 +2009,12 @@ func (p *PlanChangeServerParam) GetId() int64 {
 
 // BootServerParam is input parameters for the sacloud API
 type BootServerParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewBootServerParam return new BootServerParam
@@ -1979,6 +2024,9 @@ func NewBootServerParam() *BootServerParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *BootServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -2039,6 +2087,13 @@ func (p *BootServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *BootServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *BootServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *BootServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -2077,11 +2132,12 @@ func (p *BootServerParam) GetId() int64 {
 
 // ShutdownServerParam is input parameters for the sacloud API
 type ShutdownServerParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewShutdownServerParam return new ShutdownServerParam
@@ -2091,6 +2147,9 @@ func NewShutdownServerParam() *ShutdownServerParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ShutdownServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -2151,6 +2210,13 @@ func (p *ShutdownServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ShutdownServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ShutdownServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ShutdownServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -2189,11 +2255,12 @@ func (p *ShutdownServerParam) GetId() int64 {
 
 // ShutdownForceServerParam is input parameters for the sacloud API
 type ShutdownForceServerParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewShutdownForceServerParam return new ShutdownForceServerParam
@@ -2203,6 +2270,9 @@ func NewShutdownForceServerParam() *ShutdownForceServerParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ShutdownForceServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -2263,6 +2333,13 @@ func (p *ShutdownForceServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ShutdownForceServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ShutdownForceServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ShutdownForceServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -2301,11 +2378,12 @@ func (p *ShutdownForceServerParam) GetId() int64 {
 
 // ResetServerParam is input parameters for the sacloud API
 type ResetServerParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewResetServerParam return new ResetServerParam
@@ -2315,6 +2393,9 @@ func NewResetServerParam() *ResetServerParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ResetServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -2375,6 +2456,13 @@ func (p *ResetServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ResetServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ResetServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ResetServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -2413,10 +2501,11 @@ func (p *ResetServerParam) GetId() int64 {
 
 // WaitForBootServerParam is input parameters for the sacloud API
 type WaitForBootServerParam struct {
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewWaitForBootServerParam return new WaitForBootServerParam
@@ -2426,6 +2515,9 @@ func NewWaitForBootServerParam() *WaitForBootServerParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *WaitForBootServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -2483,6 +2575,13 @@ func (p *WaitForBootServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForBootServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForBootServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *WaitForBootServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -2514,10 +2613,11 @@ func (p *WaitForBootServerParam) GetId() int64 {
 
 // WaitForDownServerParam is input parameters for the sacloud API
 type WaitForDownServerParam struct {
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewWaitForDownServerParam return new WaitForDownServerParam
@@ -2527,6 +2627,9 @@ func NewWaitForDownServerParam() *WaitForDownServerParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *WaitForDownServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -2584,6 +2687,13 @@ func (p *WaitForDownServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForDownServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForDownServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *WaitForDownServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -2615,15 +2725,16 @@ func (p *WaitForDownServerParam) GetId() int64 {
 
 // SshServerParam is input parameters for the sacloud API
 type SshServerParam struct {
-	Key               string `json:"key"`
-	User              string `json:"user"`
-	Port              int    `json:"port"`
-	Password          string `json:"password"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Quiet             bool   `json:"quiet"`
-	Id                int64  `json:"id"`
+	Key               string   `json:"key"`
+	User              string   `json:"user"`
+	Port              int      `json:"port"`
+	Password          string   `json:"password"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Quiet             bool     `json:"quiet"`
+	Id                int64    `json:"id"`
 }
 
 // NewSshServerParam return new SshServerParam
@@ -2647,6 +2758,9 @@ func (p *SshServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Password) {
 		p.Password = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
@@ -2750,6 +2864,13 @@ func (p *SshServerParam) SetPassword(v string) {
 func (p *SshServerParam) GetPassword() string {
 	return p.Password
 }
+func (p *SshServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *SshServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *SshServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -2788,15 +2909,16 @@ func (p *SshServerParam) GetId() int64 {
 
 // SshExecServerParam is input parameters for the sacloud API
 type SshExecServerParam struct {
-	Key               string `json:"key"`
-	User              string `json:"user"`
-	Port              int    `json:"port"`
-	Password          string `json:"password"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Quiet             bool   `json:"quiet"`
-	Id                int64  `json:"id"`
+	Key               string   `json:"key"`
+	User              string   `json:"user"`
+	Port              int      `json:"port"`
+	Password          string   `json:"password"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Quiet             bool     `json:"quiet"`
+	Id                int64    `json:"id"`
 }
 
 // NewSshExecServerParam return new SshExecServerParam
@@ -2820,6 +2942,9 @@ func (p *SshExecServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Password) {
 		p.Password = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
@@ -2922,6 +3047,13 @@ func (p *SshExecServerParam) SetPassword(v string) {
 
 func (p *SshExecServerParam) GetPassword() string {
 	return p.Password
+}
+func (p *SshExecServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *SshExecServerParam) GetSelector() []string {
+	return p.Selector
 }
 func (p *SshExecServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
@@ -3138,12 +3270,13 @@ func (p *ScpServerParam) GetQuiet() bool {
 
 // VncServerParam is input parameters for the sacloud API
 type VncServerParam struct {
-	WaitForBoot       bool   `json:"wait-for-boot"`
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	WaitForBoot       bool     `json:"wait-for-boot"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewVncServerParam return new VncServerParam
@@ -3155,6 +3288,9 @@ func NewVncServerParam() *VncServerParam {
 func (p *VncServerParam) FillValueToSkeleton() {
 	if isEmpty(p.WaitForBoot) {
 		p.WaitForBoot = false
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -3223,6 +3359,13 @@ func (p *VncServerParam) SetWaitForBoot(v bool) {
 func (p *VncServerParam) GetWaitForBoot() bool {
 	return p.WaitForBoot
 }
+func (p *VncServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *VncServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *VncServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -3262,6 +3405,7 @@ func (p *VncServerParam) GetId() int64 {
 // VncInfoServerParam is input parameters for the sacloud API
 type VncInfoServerParam struct {
 	WaitForBoot       bool     `json:"wait-for-boot"`
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -3282,6 +3426,9 @@ func NewVncInfoServerParam() *VncInfoServerParam {
 func (p *VncInfoServerParam) FillValueToSkeleton() {
 	if isEmpty(p.WaitForBoot) {
 		p.WaitForBoot = false
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
@@ -3382,6 +3529,13 @@ func (p *VncInfoServerParam) SetWaitForBoot(v bool) {
 func (p *VncInfoServerParam) GetWaitForBoot() bool {
 	return p.WaitForBoot
 }
+func (p *VncInfoServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *VncInfoServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *VncInfoServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -3453,6 +3607,7 @@ type VncSendServerParam struct {
 	UseUsKeyboard     bool     `json:"use-us-keyboard"`
 	Debug             bool     `json:"debug"`
 	WaitForBoot       bool     `json:"wait-for-boot"`
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -3486,6 +3641,9 @@ func (p *VncSendServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.WaitForBoot) {
 		p.WaitForBoot = false
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -3633,6 +3791,13 @@ func (p *VncSendServerParam) SetWaitForBoot(v bool) {
 func (p *VncSendServerParam) GetWaitForBoot() bool {
 	return p.WaitForBoot
 }
+func (p *VncSendServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *VncSendServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *VncSendServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -3706,6 +3871,7 @@ func (p *VncSendServerParam) GetId() int64 {
 
 // DiskInfoServerParam is input parameters for the sacloud API
 type DiskInfoServerParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -3724,6 +3890,9 @@ func NewDiskInfoServerParam() *DiskInfoServerParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DiskInfoServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -3816,6 +3985,13 @@ func (p *DiskInfoServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DiskInfoServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DiskInfoServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DiskInfoServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -3882,12 +4058,13 @@ func (p *DiskInfoServerParam) GetId() int64 {
 
 // DiskConnectServerParam is input parameters for the sacloud API
 type DiskConnectServerParam struct {
-	DiskId            int64  `json:"disk-id"`
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	DiskId            int64    `json:"disk-id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewDiskConnectServerParam return new DiskConnectServerParam
@@ -3899,6 +4076,9 @@ func NewDiskConnectServerParam() *DiskConnectServerParam {
 func (p *DiskConnectServerParam) FillValueToSkeleton() {
 	if isEmpty(p.DiskId) {
 		p.DiskId = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -3981,6 +4161,13 @@ func (p *DiskConnectServerParam) SetDiskId(v int64) {
 func (p *DiskConnectServerParam) GetDiskId() int64 {
 	return p.DiskId
 }
+func (p *DiskConnectServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DiskConnectServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DiskConnectServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -4019,12 +4206,13 @@ func (p *DiskConnectServerParam) GetId() int64 {
 
 // DiskDisconnectServerParam is input parameters for the sacloud API
 type DiskDisconnectServerParam struct {
-	DiskId            int64  `json:"disk-id"`
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	DiskId            int64    `json:"disk-id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewDiskDisconnectServerParam return new DiskDisconnectServerParam
@@ -4036,6 +4224,9 @@ func NewDiskDisconnectServerParam() *DiskDisconnectServerParam {
 func (p *DiskDisconnectServerParam) FillValueToSkeleton() {
 	if isEmpty(p.DiskId) {
 		p.DiskId = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -4118,6 +4309,13 @@ func (p *DiskDisconnectServerParam) SetDiskId(v int64) {
 func (p *DiskDisconnectServerParam) GetDiskId() int64 {
 	return p.DiskId
 }
+func (p *DiskDisconnectServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DiskDisconnectServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DiskDisconnectServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -4156,6 +4354,7 @@ func (p *DiskDisconnectServerParam) GetId() int64 {
 
 // InterfaceInfoServerParam is input parameters for the sacloud API
 type InterfaceInfoServerParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -4174,6 +4373,9 @@ func NewInterfaceInfoServerParam() *InterfaceInfoServerParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *InterfaceInfoServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -4266,6 +4468,13 @@ func (p *InterfaceInfoServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *InterfaceInfoServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *InterfaceInfoServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *InterfaceInfoServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -4332,12 +4541,13 @@ func (p *InterfaceInfoServerParam) GetId() int64 {
 
 // InterfaceAddForInternetServerParam is input parameters for the sacloud API
 type InterfaceAddForInternetServerParam struct {
-	WithoutDiskEdit   bool   `json:"without-disk-edit"`
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	WithoutDiskEdit   bool     `json:"without-disk-edit"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewInterfaceAddForInternetServerParam return new InterfaceAddForInternetServerParam
@@ -4349,6 +4559,9 @@ func NewInterfaceAddForInternetServerParam() *InterfaceAddForInternetServerParam
 func (p *InterfaceAddForInternetServerParam) FillValueToSkeleton() {
 	if isEmpty(p.WithoutDiskEdit) {
 		p.WithoutDiskEdit = false
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -4417,6 +4630,13 @@ func (p *InterfaceAddForInternetServerParam) SetWithoutDiskEdit(v bool) {
 func (p *InterfaceAddForInternetServerParam) GetWithoutDiskEdit() bool {
 	return p.WithoutDiskEdit
 }
+func (p *InterfaceAddForInternetServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *InterfaceAddForInternetServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *InterfaceAddForInternetServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -4455,16 +4675,17 @@ func (p *InterfaceAddForInternetServerParam) GetId() int64 {
 
 // InterfaceAddForRouterServerParam is input parameters for the sacloud API
 type InterfaceAddForRouterServerParam struct {
-	SwitchId          int64  `json:"switch-id"`
-	WithoutDiskEdit   bool   `json:"without-disk-edit"`
-	Ipaddress         string `json:"ipaddress"`
-	DefaultRoute      string `json:"default-route"`
-	NwMasklen         int    `json:"nw-masklen"`
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	SwitchId          int64    `json:"switch-id"`
+	WithoutDiskEdit   bool     `json:"without-disk-edit"`
+	Ipaddress         string   `json:"ipaddress"`
+	DefaultRoute      string   `json:"default-route"`
+	NwMasklen         int      `json:"nw-masklen"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewInterfaceAddForRouterServerParam return new InterfaceAddForRouterServerParam
@@ -4491,6 +4712,9 @@ func (p *InterfaceAddForRouterServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -4622,6 +4846,13 @@ func (p *InterfaceAddForRouterServerParam) SetNwMasklen(v int) {
 func (p *InterfaceAddForRouterServerParam) GetNwMasklen() int {
 	return p.NwMasklen
 }
+func (p *InterfaceAddForRouterServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *InterfaceAddForRouterServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *InterfaceAddForRouterServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -4660,16 +4891,17 @@ func (p *InterfaceAddForRouterServerParam) GetId() int64 {
 
 // InterfaceAddForSwitchServerParam is input parameters for the sacloud API
 type InterfaceAddForSwitchServerParam struct {
-	SwitchId          int64  `json:"switch-id"`
-	WithoutDiskEdit   bool   `json:"without-disk-edit"`
-	Ipaddress         string `json:"ipaddress"`
-	DefaultRoute      string `json:"default-route"`
-	NwMasklen         int    `json:"nw-masklen"`
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	SwitchId          int64    `json:"switch-id"`
+	WithoutDiskEdit   bool     `json:"without-disk-edit"`
+	Ipaddress         string   `json:"ipaddress"`
+	DefaultRoute      string   `json:"default-route"`
+	NwMasklen         int      `json:"nw-masklen"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewInterfaceAddForSwitchServerParam return new InterfaceAddForSwitchServerParam
@@ -4696,6 +4928,9 @@ func (p *InterfaceAddForSwitchServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -4827,6 +5062,13 @@ func (p *InterfaceAddForSwitchServerParam) SetNwMasklen(v int) {
 func (p *InterfaceAddForSwitchServerParam) GetNwMasklen() int {
 	return p.NwMasklen
 }
+func (p *InterfaceAddForSwitchServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *InterfaceAddForSwitchServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *InterfaceAddForSwitchServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -4865,11 +5107,12 @@ func (p *InterfaceAddForSwitchServerParam) GetId() int64 {
 
 // InterfaceAddDisconnectedServerParam is input parameters for the sacloud API
 type InterfaceAddDisconnectedServerParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewInterfaceAddDisconnectedServerParam return new InterfaceAddDisconnectedServerParam
@@ -4879,6 +5122,9 @@ func NewInterfaceAddDisconnectedServerParam() *InterfaceAddDisconnectedServerPar
 
 // FillValueToSkeleton fill values to empty fields
 func (p *InterfaceAddDisconnectedServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -4939,6 +5185,13 @@ func (p *InterfaceAddDisconnectedServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *InterfaceAddDisconnectedServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *InterfaceAddDisconnectedServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *InterfaceAddDisconnectedServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -4977,6 +5230,7 @@ func (p *InterfaceAddDisconnectedServerParam) GetId() int64 {
 
 // IsoInfoServerParam is input parameters for the sacloud API
 type IsoInfoServerParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -4995,6 +5249,9 @@ func NewIsoInfoServerParam() *IsoInfoServerParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *IsoInfoServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -5087,6 +5344,13 @@ func (p *IsoInfoServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *IsoInfoServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *IsoInfoServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *IsoInfoServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -5160,6 +5424,7 @@ type IsoInsertServerParam struct {
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
 	IconId            int64    `json:"icon-id"`
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -5197,6 +5462,9 @@ func (p *IsoInsertServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.IconId) {
 		p.IconId = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -5349,6 +5617,13 @@ func (p *IsoInsertServerParam) SetIconId(v int64) {
 func (p *IsoInsertServerParam) GetIconId() int64 {
 	return p.IconId
 }
+func (p *IsoInsertServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *IsoInsertServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *IsoInsertServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -5387,11 +5662,12 @@ func (p *IsoInsertServerParam) GetId() int64 {
 
 // IsoEjectServerParam is input parameters for the sacloud API
 type IsoEjectServerParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewIsoEjectServerParam return new IsoEjectServerParam
@@ -5401,6 +5677,9 @@ func NewIsoEjectServerParam() *IsoEjectServerParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *IsoEjectServerParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -5461,6 +5740,13 @@ func (p *IsoEjectServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *IsoEjectServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *IsoEjectServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *IsoEjectServerParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -5502,6 +5788,7 @@ type MonitorCpuServerParam struct {
 	Start             string   `json:"start"`
 	End               string   `json:"end"`
 	KeyFormat         string   `json:"key-format"`
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -5531,6 +5818,9 @@ func (p *MonitorCpuServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
@@ -5666,6 +5956,13 @@ func (p *MonitorCpuServerParam) SetKeyFormat(v string) {
 func (p *MonitorCpuServerParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorCpuServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorCpuServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *MonitorCpuServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -5736,6 +6033,7 @@ type MonitorNicServerParam struct {
 	End               string   `json:"end"`
 	Index             []int64  `json:"index"`
 	KeyFormat         string   `json:"key-format"`
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -5768,6 +6066,9 @@ func (p *MonitorNicServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
@@ -5910,6 +6211,13 @@ func (p *MonitorNicServerParam) SetKeyFormat(v string) {
 func (p *MonitorNicServerParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorNicServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorNicServerParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *MonitorNicServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -5980,6 +6288,7 @@ type MonitorDiskServerParam struct {
 	End               string   `json:"end"`
 	Index             []int64  `json:"index"`
 	KeyFormat         string   `json:"key-format"`
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -6012,6 +6321,9 @@ func (p *MonitorDiskServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
@@ -6153,6 +6465,13 @@ func (p *MonitorDiskServerParam) SetKeyFormat(v string) {
 
 func (p *MonitorDiskServerParam) GetKeyFormat() string {
 	return p.KeyFormat
+}
+func (p *MonitorDiskServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorDiskServerParam) GetSelector() []string {
+	return p.Selector
 }
 func (p *MonitorDiskServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v

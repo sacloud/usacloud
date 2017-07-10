@@ -29,6 +29,8 @@ type Command struct {
 
 	NoOutput bool
 
+	NoSelector bool // --selectorオプション利用有無、trueの場合利用しない
+
 	TableType          output.TableType
 	IncludeFields      []string           // for output.TableDetail
 	ExcludeFields      []string           // for output.TableDetail
@@ -87,6 +89,17 @@ func (c *Command) BuildedParams() SortableParams {
 				Description: "Set target ID",
 				SakuraID:    true,
 				Hidden:      true,
+			}
+		}
+	}
+	if c.Type.CanUseSelector() && !c.NoSelector {
+		if _, ok := c.Params["selector"]; !ok {
+			c.Params["selector"] = &Schema{
+				Type:        TypeStringList,
+				HandlerType: HandlerNoop,
+				Description: "Set target filter by tag",
+				Category:    "filter",
+				Order:       10,
 			}
 		}
 	}
@@ -212,6 +225,10 @@ func (c *Command) Validate() []error {
 		errors = append(errors, fmt.Errorf("command#TableColumnDefines: required when Command#TableType is output.TableSimple"))
 	}
 
+	if c.NoSelector && !c.Type.CanUseSelector() {
+		errors = append(errors, fmt.Errorf("command#NoSelector: NoSelector isnot used with CommandType[%s]", c.Type.String()))
+	}
+
 	if len(c.ParamCategories) > 0 && len(c.Params) > 0 {
 		for _, category := range c.ParamCategories {
 			exists := false
@@ -292,4 +309,13 @@ func (s SortableParams) Less(i, j int) bool {
 
 	}
 	return s[i].Category.Order < s[j].Category.Order
+}
+
+func (s SortableParams) Get(key string) *SortableParam {
+	for _, param := range s {
+		if param.ParamKey == key {
+			return &param
+		}
+	}
+	return nil
 }

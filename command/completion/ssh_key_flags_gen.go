@@ -15,15 +15,30 @@ func SSHKeyListCompleteFlags(ctx command.Context, params *params.ListSSHKeyParam
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["SSHKey"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["SSHKey"].Commands["list"].Params["id"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["SSHKey"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["SSHKey"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["SSHKey"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -41,11 +56,20 @@ func SSHKeyCreateCompleteFlags(ctx command.Context, params *params.CreateSSHKeyP
 
 	switch flagName {
 	case "public-key":
-		comp = define.Resources["SSHKey"].Commands["create"].Params["public-key"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["create"].BuildedParams().Get("public-key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["SSHKey"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["SSHKey"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -63,7 +87,10 @@ func SSHKeyReadCompleteFlags(ctx command.Context, params *params.ReadSSHKeyParam
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["SSHKey"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -81,11 +108,20 @@ func SSHKeyUpdateCompleteFlags(ctx command.Context, params *params.UpdateSSHKeyP
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["SSHKey"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["SSHKey"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["SSHKey"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -103,7 +139,10 @@ func SSHKeyDeleteCompleteFlags(ctx command.Context, params *params.DeleteSSHKeyP
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["SSHKey"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -121,11 +160,20 @@ func SSHKeyGenerateCompleteFlags(ctx command.Context, params *params.GenerateSSH
 
 	switch flagName {
 	case "pass-phrase":
-		comp = define.Resources["SSHKey"].Commands["generate"].Params["pass-phrase"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["generate"].BuildedParams().Get("pass-phrase")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["SSHKey"].Commands["generate"].Params["name"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["generate"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["SSHKey"].Commands["generate"].Params["description"].CompleteFunc
+		param := define.Resources["SSHKey"].Commands["generate"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

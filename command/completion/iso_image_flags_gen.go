@@ -15,19 +15,40 @@ func ISOImageListCompleteFlags(ctx command.Context, params *params.ListISOImageP
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["ISOImage"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["ISOImage"].Commands["list"].Params["id"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "scope":
-		comp = define.Resources["ISOImage"].Commands["list"].Params["scope"].CompleteFunc
-	case "tags":
-		comp = define.Resources["ISOImage"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["list"].BuildedParams().Get("scope")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["ISOImage"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["ISOImage"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["ISOImage"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["ISOImage"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -45,17 +66,35 @@ func ISOImageCreateCompleteFlags(ctx command.Context, params *params.CreateISOIm
 
 	switch flagName {
 	case "size":
-		comp = define.Resources["ISOImage"].Commands["create"].Params["size"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["create"].BuildedParams().Get("size")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "iso-file":
-		comp = define.Resources["ISOImage"].Commands["create"].Params["iso-file"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["create"].BuildedParams().Get("iso-file")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["ISOImage"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["ISOImage"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["ISOImage"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["ISOImage"].Commands["create"].Params["icon-id"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["create"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -72,8 +111,16 @@ func ISOImageReadCompleteFlags(ctx command.Context, params *params.ReadISOImageP
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["ISOImage"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["ISOImage"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -90,16 +137,36 @@ func ISOImageUpdateCompleteFlags(ctx command.Context, params *params.UpdateISOIm
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["ISOImage"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["ISOImage"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["ISOImage"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["ISOImage"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["ISOImage"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["ISOImage"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -116,8 +183,16 @@ func ISOImageDeleteCompleteFlags(ctx command.Context, params *params.DeleteISOIm
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["ISOImage"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["ISOImage"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -135,9 +210,20 @@ func ISOImageUploadCompleteFlags(ctx command.Context, params *params.UploadISOIm
 
 	switch flagName {
 	case "iso-file":
-		comp = define.Resources["ISOImage"].Commands["upload"].Params["iso-file"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["upload"].BuildedParams().Get("iso-file")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ISOImage"].Commands["upload"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["ISOImage"].Commands["upload"].Params["id"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["upload"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -155,9 +241,20 @@ func ISOImageDownloadCompleteFlags(ctx command.Context, params *params.DownloadI
 
 	switch flagName {
 	case "file-destination":
-		comp = define.Resources["ISOImage"].Commands["download"].Params["file-destination"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["download"].BuildedParams().Get("file-destination")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ISOImage"].Commands["download"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["ISOImage"].Commands["download"].Params["id"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["download"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -172,8 +269,16 @@ func ISOImageFtpOpenCompleteFlags(ctx command.Context, params *params.FtpOpenISO
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["ISOImage"].Commands["ftp-open"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["ISOImage"].Commands["ftp-open"].Params["id"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["ftp-open"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -190,8 +295,16 @@ func ISOImageFtpCloseCompleteFlags(ctx command.Context, params *params.FtpCloseI
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["ISOImage"].Commands["ftp-close"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["ISOImage"].Commands["ftp-close"].Params["id"].CompleteFunc
+		param := define.Resources["ISOImage"].Commands["ftp-close"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {

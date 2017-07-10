@@ -15,17 +15,35 @@ func DatabaseListCompleteFlags(ctx command.Context, params *params.ListDatabaseP
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["Database"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["Database"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Database"].Commands["list"].Params["id"].CompleteFunc
-	case "tags":
-		comp = define.Resources["Database"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["Database"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["Database"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["Database"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["Database"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["Database"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["Database"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["Database"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["Database"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -43,37 +61,85 @@ func DatabaseCreateCompleteFlags(ctx command.Context, params *params.CreateDatab
 
 	switch flagName {
 	case "switch-id":
-		comp = define.Resources["Database"].Commands["create"].Params["switch-id"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("switch-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "plan":
-		comp = define.Resources["Database"].Commands["create"].Params["plan"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("plan")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "database", "db":
-		comp = define.Resources["Database"].Commands["create"].Params["database"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("database")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "username":
-		comp = define.Resources["Database"].Commands["create"].Params["username"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("username")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "password":
-		comp = define.Resources["Database"].Commands["create"].Params["password"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("password")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-networks":
-		comp = define.Resources["Database"].Commands["create"].Params["source-networks"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("source-networks")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "enable-web-ui":
-		comp = define.Resources["Database"].Commands["create"].Params["enable-web-ui"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("enable-web-ui")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "backup-time":
-		comp = define.Resources["Database"].Commands["create"].Params["backup-time"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("backup-time")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port":
-		comp = define.Resources["Database"].Commands["create"].Params["port"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress1", "ip1", "ipaddress", "ip":
-		comp = define.Resources["Database"].Commands["create"].Params["ipaddress1"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("ipaddress1")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "nw-mask-len":
-		comp = define.Resources["Database"].Commands["create"].Params["nw-mask-len"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("nw-mask-len")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "default-route":
-		comp = define.Resources["Database"].Commands["create"].Params["default-route"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("default-route")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Database"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Database"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Database"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["Database"].Commands["create"].Params["icon-id"].CompleteFunc
+		param := define.Resources["Database"].Commands["create"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -90,8 +156,16 @@ func DatabaseReadCompleteFlags(ctx command.Context, params *params.ReadDatabaseP
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Database"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Database"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["Database"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -109,25 +183,60 @@ func DatabaseUpdateCompleteFlags(ctx command.Context, params *params.UpdateDatab
 
 	switch flagName {
 	case "password":
-		comp = define.Resources["Database"].Commands["update"].Params["password"].CompleteFunc
+		param := define.Resources["Database"].Commands["update"].BuildedParams().Get("password")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port":
-		comp = define.Resources["Database"].Commands["update"].Params["port"].CompleteFunc
+		param := define.Resources["Database"].Commands["update"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-networks":
-		comp = define.Resources["Database"].Commands["update"].Params["source-networks"].CompleteFunc
+		param := define.Resources["Database"].Commands["update"].BuildedParams().Get("source-networks")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "enable-web-ui":
-		comp = define.Resources["Database"].Commands["update"].Params["enable-web-ui"].CompleteFunc
+		param := define.Resources["Database"].Commands["update"].BuildedParams().Get("enable-web-ui")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "backup-time":
-		comp = define.Resources["Database"].Commands["update"].Params["backup-time"].CompleteFunc
+		param := define.Resources["Database"].Commands["update"].BuildedParams().Get("backup-time")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Database"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Database"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["Database"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Database"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["Database"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Database"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["Database"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["Database"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["Database"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Database"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["Database"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -144,10 +253,21 @@ func DatabaseDeleteCompleteFlags(ctx command.Context, params *params.DeleteDatab
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Database"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "force", "f":
-		comp = define.Resources["Database"].Commands["delete"].Params["force"].CompleteFunc
+		param := define.Resources["Database"].Commands["delete"].BuildedParams().Get("force")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Database"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["Database"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -164,8 +284,16 @@ func DatabaseBootCompleteFlags(ctx command.Context, params *params.BootDatabaseP
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Database"].Commands["boot"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Database"].Commands["boot"].Params["id"].CompleteFunc
+		param := define.Resources["Database"].Commands["boot"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -180,8 +308,16 @@ func DatabaseShutdownCompleteFlags(ctx command.Context, params *params.ShutdownD
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Database"].Commands["shutdown"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Database"].Commands["shutdown"].Params["id"].CompleteFunc
+		param := define.Resources["Database"].Commands["shutdown"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -196,8 +332,16 @@ func DatabaseShutdownForceCompleteFlags(ctx command.Context, params *params.Shut
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Database"].Commands["shutdown-force"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Database"].Commands["shutdown-force"].Params["id"].CompleteFunc
+		param := define.Resources["Database"].Commands["shutdown-force"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -212,8 +356,16 @@ func DatabaseResetCompleteFlags(ctx command.Context, params *params.ResetDatabas
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Database"].Commands["reset"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Database"].Commands["reset"].Params["id"].CompleteFunc
+		param := define.Resources["Database"].Commands["reset"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -228,8 +380,16 @@ func DatabaseWaitForBootCompleteFlags(ctx command.Context, params *params.WaitFo
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Database"].Commands["wait-for-boot"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Database"].Commands["wait-for-boot"].Params["id"].CompleteFunc
+		param := define.Resources["Database"].Commands["wait-for-boot"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -244,8 +404,16 @@ func DatabaseWaitForDownCompleteFlags(ctx command.Context, params *params.WaitFo
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Database"].Commands["wait-for-down"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Database"].Commands["wait-for-down"].Params["id"].CompleteFunc
+		param := define.Resources["Database"].Commands["wait-for-down"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {

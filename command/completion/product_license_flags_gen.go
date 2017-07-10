@@ -15,15 +15,30 @@ func ProductLicenseListCompleteFlags(ctx command.Context, params *params.ListPro
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["ProductLicense"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["ProductLicense"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["ProductLicense"].Commands["list"].Params["id"].CompleteFunc
+		param := define.Resources["ProductLicense"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["ProductLicense"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["ProductLicense"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["ProductLicense"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["ProductLicense"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["ProductLicense"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["ProductLicense"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -41,7 +56,10 @@ func ProductLicenseReadCompleteFlags(ctx command.Context, params *params.ReadPro
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["ProductLicense"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["ProductLicense"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

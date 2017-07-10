@@ -15,15 +15,30 @@ func InterfaceListCompleteFlags(ctx command.Context, params *params.ListInterfac
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["Interface"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["Interface"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Interface"].Commands["list"].Params["id"].CompleteFunc
+		param := define.Resources["Interface"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["Interface"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["Interface"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["Interface"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["Interface"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["Interface"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["Interface"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -41,9 +56,15 @@ func InterfacePacketFilterConnectCompleteFlags(ctx command.Context, params *para
 
 	switch flagName {
 	case "packet-filter-id":
-		comp = define.Resources["Interface"].Commands["packet-filter-connect"].Params["packet-filter-id"].CompleteFunc
+		param := define.Resources["Interface"].Commands["packet-filter-connect"].BuildedParams().Get("packet-filter-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Interface"].Commands["packet-filter-connect"].Params["id"].CompleteFunc
+		param := define.Resources["Interface"].Commands["packet-filter-connect"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -59,7 +80,10 @@ func InterfaceCreateCompleteFlags(ctx command.Context, params *params.CreateInte
 
 	switch flagName {
 	case "server-id":
-		comp = define.Resources["Interface"].Commands["create"].Params["server-id"].CompleteFunc
+		param := define.Resources["Interface"].Commands["create"].BuildedParams().Get("server-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -77,9 +101,15 @@ func InterfacePacketFilterDisconnectCompleteFlags(ctx command.Context, params *p
 
 	switch flagName {
 	case "packet-filter-id":
-		comp = define.Resources["Interface"].Commands["packet-filter-disconnect"].Params["packet-filter-id"].CompleteFunc
+		param := define.Resources["Interface"].Commands["packet-filter-disconnect"].BuildedParams().Get("packet-filter-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Interface"].Commands["packet-filter-disconnect"].Params["id"].CompleteFunc
+		param := define.Resources["Interface"].Commands["packet-filter-disconnect"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -95,7 +125,10 @@ func InterfaceReadCompleteFlags(ctx command.Context, params *params.ReadInterfac
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["Interface"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["Interface"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -113,9 +146,15 @@ func InterfaceUpdateCompleteFlags(ctx command.Context, params *params.UpdateInte
 
 	switch flagName {
 	case "user-ipaddress":
-		comp = define.Resources["Interface"].Commands["update"].Params["user-ipaddress"].CompleteFunc
+		param := define.Resources["Interface"].Commands["update"].BuildedParams().Get("user-ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Interface"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["Interface"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -133,7 +172,10 @@ func InterfaceDeleteCompleteFlags(ctx command.Context, params *params.DeleteInte
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["Interface"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["Interface"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

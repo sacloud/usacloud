@@ -15,11 +15,20 @@ func ObjectStorageListCompleteFlags(ctx command.Context, params *params.ListObje
 
 	switch flagName {
 	case "access-key":
-		comp = define.Resources["ObjectStorage"].Commands["list"].Params["access-key"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["list"].BuildedParams().Get("access-key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "secret-key":
-		comp = define.Resources["ObjectStorage"].Commands["list"].Params["secret-key"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["list"].BuildedParams().Get("secret-key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "bucket":
-		comp = define.Resources["ObjectStorage"].Commands["list"].Params["bucket"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["list"].BuildedParams().Get("bucket")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -37,15 +46,30 @@ func ObjectStoragePutCompleteFlags(ctx command.Context, params *params.PutObject
 
 	switch flagName {
 	case "access-key":
-		comp = define.Resources["ObjectStorage"].Commands["put"].Params["access-key"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["put"].BuildedParams().Get("access-key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "content-type":
-		comp = define.Resources["ObjectStorage"].Commands["put"].Params["content-type"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["put"].BuildedParams().Get("content-type")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "recursive", "r":
-		comp = define.Resources["ObjectStorage"].Commands["put"].Params["recursive"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["put"].BuildedParams().Get("recursive")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "secret-key":
-		comp = define.Resources["ObjectStorage"].Commands["put"].Params["secret-key"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["put"].BuildedParams().Get("secret-key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "bucket":
-		comp = define.Resources["ObjectStorage"].Commands["put"].Params["bucket"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["put"].BuildedParams().Get("bucket")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -61,13 +85,25 @@ func ObjectStorageGetCompleteFlags(ctx command.Context, params *params.GetObject
 
 	switch flagName {
 	case "access-key":
-		comp = define.Resources["ObjectStorage"].Commands["get"].Params["access-key"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["get"].BuildedParams().Get("access-key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "recursive", "r":
-		comp = define.Resources["ObjectStorage"].Commands["get"].Params["recursive"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["get"].BuildedParams().Get("recursive")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "secret-key":
-		comp = define.Resources["ObjectStorage"].Commands["get"].Params["secret-key"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["get"].BuildedParams().Get("secret-key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "bucket":
-		comp = define.Resources["ObjectStorage"].Commands["get"].Params["bucket"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["get"].BuildedParams().Get("bucket")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -83,13 +119,25 @@ func ObjectStorageDeleteCompleteFlags(ctx command.Context, params *params.Delete
 
 	switch flagName {
 	case "access-key":
-		comp = define.Resources["ObjectStorage"].Commands["delete"].Params["access-key"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["delete"].BuildedParams().Get("access-key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "recursive", "r":
-		comp = define.Resources["ObjectStorage"].Commands["delete"].Params["recursive"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["delete"].BuildedParams().Get("recursive")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "secret-key":
-		comp = define.Resources["ObjectStorage"].Commands["delete"].Params["secret-key"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["delete"].BuildedParams().Get("secret-key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "bucket":
-		comp = define.Resources["ObjectStorage"].Commands["delete"].Params["bucket"].CompleteFunc
+		param := define.Resources["ObjectStorage"].Commands["delete"].BuildedParams().Get("bucket")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {

@@ -15,17 +15,35 @@ func SimpleMonitorListCompleteFlags(ctx command.Context, params *params.ListSimp
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["SimpleMonitor"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["SimpleMonitor"].Commands["list"].Params["id"].CompleteFunc
-	case "tags":
-		comp = define.Resources["SimpleMonitor"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["SimpleMonitor"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["SimpleMonitor"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["SimpleMonitor"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["SimpleMonitor"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -43,37 +61,85 @@ func SimpleMonitorCreateCompleteFlags(ctx command.Context, params *params.Create
 
 	switch flagName {
 	case "target":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["target"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("target")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "protocol":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["protocol"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("protocol")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["port"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "delay-loop":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["delay-loop"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("delay-loop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "enabled":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["enabled"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("enabled")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "host-header":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["host-header"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("host-header")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "path":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["path"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("path")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "response-code":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["response-code"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("response-code")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "dns-qname":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["dns-qname"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("dns-qname")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "dns-excepted":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["dns-excepted"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("dns-excepted")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "notify-email":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["notify-email"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("notify-email")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "email-type":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["email-type"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("email-type")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "slack-webhook":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["slack-webhook"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("slack-webhook")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["SimpleMonitor"].Commands["create"].Params["icon-id"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -90,8 +156,16 @@ func SimpleMonitorReadCompleteFlags(ctx command.Context, params *params.ReadSimp
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["SimpleMonitor"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["SimpleMonitor"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -109,37 +183,90 @@ func SimpleMonitorUpdateCompleteFlags(ctx command.Context, params *params.Update
 
 	switch flagName {
 	case "protocol":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["protocol"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("protocol")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["port"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "delay-loop":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["delay-loop"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("delay-loop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "enabled":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["enabled"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("enabled")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "host-header":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["host-header"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("host-header")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "path":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["path"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("path")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "response-code":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["response-code"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("response-code")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "dns_qname":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["dns_qname"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("dns_qname")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "dns_excepted":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["dns_excepted"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("dns_excepted")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "notify-email":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["notify-email"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("notify-email")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "email-type":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["email-type"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("email-type")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "slack-webhook":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["slack-webhook"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("slack-webhook")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["SimpleMonitor"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -156,8 +283,16 @@ func SimpleMonitorDeleteCompleteFlags(ctx command.Context, params *params.Delete
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["SimpleMonitor"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["SimpleMonitor"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["SimpleMonitor"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

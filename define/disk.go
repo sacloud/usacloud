@@ -10,7 +10,7 @@ func DiskResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
+			Aliases:            []string{"ls", "find", "selector"},
 			Params:             diskListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: diskListColumns(),

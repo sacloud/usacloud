@@ -10,7 +10,7 @@ func StartupScriptResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
+			Aliases:            []string{"ls", "find", "selector"},
 			Params:             startupScriptListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: startupScriptListColumns(),

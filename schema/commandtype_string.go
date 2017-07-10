@@ -4,9 +4,9 @@ package schema
 
 import "fmt"
 
-const _CommandType_name = "CommandInvalidCommandListCommandCreateCommandReadCommandUpdateCommandDeleteCommandManipulateCommandCustom"
+const _CommandType_name = "CommandInvalidCommandListCommandCreateCommandReadCommandUpdateCommandDeleteCommandManipulateMultiCommandManipulateSingleCommandManipulateIDOnlyCommandCustom"
 
-var _CommandType_index = [...]uint8{0, 14, 25, 38, 49, 62, 75, 92, 105}
+var _CommandType_index = [...]uint8{0, 14, 25, 38, 49, 62, 75, 97, 120, 143, 156}
 
 func (i CommandType) String() string {
 	if i < 0 || i >= CommandType(len(_CommandType_index)-1) {

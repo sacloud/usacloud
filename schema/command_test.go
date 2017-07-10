@@ -126,3 +126,30 @@ func TestCommand_Categories_Params(t *testing.T) {
 	assert.True(t, len(errs) > 0)
 
 }
+
+func TestCommand_NoSelector(t *testing.T) {
+	var errs []error
+
+	expectList := map[CommandType]bool{
+		CommandInvalid:          false,
+		CommandList:             false,
+		CommandCreate:           false,
+		CommandRead:             true,
+		CommandUpdate:           true,
+		CommandDelete:           true,
+		CommandManipulateMulti:  true,
+		CommandManipulateSingle: true,
+		CommandManipulateIDOnly: false,
+		CommandCustom:           false,
+	}
+
+	for key, expect := range expectList {
+		c := &Command{
+			Type:       key,
+			NoSelector: true,
+		}
+		errs = c.Validate()
+		assert.Equal(t, expect, len(errs) == 0, "CommandType[%s]+NoSelector: expected:%v but actual:%v: err: %s", key.String(), expect, len(errs) == 0, errs)
+	}
+
+}

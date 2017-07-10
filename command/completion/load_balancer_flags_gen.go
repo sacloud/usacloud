@@ -15,17 +15,35 @@ func LoadBalancerListCompleteFlags(ctx command.Context, params *params.ListLoadB
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["LoadBalancer"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["list"].Params["id"].CompleteFunc
-	case "tags":
-		comp = define.Resources["LoadBalancer"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["LoadBalancer"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["LoadBalancer"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["LoadBalancer"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["LoadBalancer"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -43,29 +61,65 @@ func LoadBalancerCreateCompleteFlags(ctx command.Context, params *params.CreateL
 
 	switch flagName {
 	case "switch-id":
-		comp = define.Resources["LoadBalancer"].Commands["create"].Params["switch-id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["create"].BuildedParams().Get("switch-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "vrid", "VRID":
-		comp = define.Resources["LoadBalancer"].Commands["create"].Params["vrid"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["create"].BuildedParams().Get("vrid")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "high-availability", "ha":
-		comp = define.Resources["LoadBalancer"].Commands["create"].Params["high-availability"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["create"].BuildedParams().Get("high-availability")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "plan":
-		comp = define.Resources["LoadBalancer"].Commands["create"].Params["plan"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["create"].BuildedParams().Get("plan")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress1", "ip1":
-		comp = define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress1"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["create"].BuildedParams().Get("ipaddress1")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress2", "ip2":
-		comp = define.Resources["LoadBalancer"].Commands["create"].Params["ipaddress2"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["create"].BuildedParams().Get("ipaddress2")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "nw-mask-len":
-		comp = define.Resources["LoadBalancer"].Commands["create"].Params["nw-mask-len"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["create"].BuildedParams().Get("nw-mask-len")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "default-route":
-		comp = define.Resources["LoadBalancer"].Commands["create"].Params["default-route"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["create"].BuildedParams().Get("default-route")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["LoadBalancer"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["LoadBalancer"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["LoadBalancer"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["LoadBalancer"].Commands["create"].Params["icon-id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["create"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -82,8 +136,16 @@ func LoadBalancerReadCompleteFlags(ctx command.Context, params *params.ReadLoadB
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -100,16 +162,36 @@ func LoadBalancerUpdateCompleteFlags(ctx command.Context, params *params.UpdateL
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["LoadBalancer"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["LoadBalancer"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["LoadBalancer"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["LoadBalancer"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -127,9 +209,20 @@ func LoadBalancerDeleteCompleteFlags(ctx command.Context, params *params.DeleteL
 
 	switch flagName {
 	case "force", "f":
-		comp = define.Resources["LoadBalancer"].Commands["delete"].Params["force"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["delete"].BuildedParams().Get("force")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -146,8 +239,16 @@ func LoadBalancerBootCompleteFlags(ctx command.Context, params *params.BootLoadB
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["boot"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["boot"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["boot"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -162,8 +263,16 @@ func LoadBalancerShutdownCompleteFlags(ctx command.Context, params *params.Shutd
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["shutdown"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["shutdown"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["shutdown"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -178,8 +287,16 @@ func LoadBalancerShutdownForceCompleteFlags(ctx command.Context, params *params.
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["shutdown-force"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["shutdown-force"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["shutdown-force"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -194,8 +311,16 @@ func LoadBalancerResetCompleteFlags(ctx command.Context, params *params.ResetLoa
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["reset"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["reset"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["reset"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -210,8 +335,16 @@ func LoadBalancerWaitForBootCompleteFlags(ctx command.Context, params *params.Wa
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["wait-for-boot"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["wait-for-boot"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["wait-for-boot"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -226,8 +359,16 @@ func LoadBalancerWaitForDownCompleteFlags(ctx command.Context, params *params.Wa
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["wait-for-down"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["wait-for-down"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["wait-for-down"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -242,8 +383,16 @@ func LoadBalancerVipInfoCompleteFlags(ctx command.Context, params *params.VipInf
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["vip-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["vip-info"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -261,15 +410,35 @@ func LoadBalancerVipAddCompleteFlags(ctx command.Context, params *params.VipAddL
 
 	switch flagName {
 	case "vip":
-		comp = define.Resources["LoadBalancer"].Commands["vip-add"].Params["vip"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-add"].BuildedParams().Get("vip")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port":
-		comp = define.Resources["LoadBalancer"].Commands["vip-add"].Params["port"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-add"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "delay-loop":
-		comp = define.Resources["LoadBalancer"].Commands["vip-add"].Params["delay-loop"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-add"].BuildedParams().Get("delay-loop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sorry-server":
-		comp = define.Resources["LoadBalancer"].Commands["vip-add"].Params["sorry-server"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-add"].BuildedParams().Get("sorry-server")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["vip-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["vip-add"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -285,17 +454,40 @@ func LoadBalancerVipUpdateCompleteFlags(ctx command.Context, params *params.VipU
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["LoadBalancer"].Commands["vip-update"].Params["index"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "vip":
-		comp = define.Resources["LoadBalancer"].Commands["vip-update"].Params["vip"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-update"].BuildedParams().Get("vip")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port":
-		comp = define.Resources["LoadBalancer"].Commands["vip-update"].Params["port"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-update"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "delay-loop":
-		comp = define.Resources["LoadBalancer"].Commands["vip-update"].Params["delay-loop"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-update"].BuildedParams().Get("delay-loop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sorry-server":
-		comp = define.Resources["LoadBalancer"].Commands["vip-update"].Params["sorry-server"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-update"].BuildedParams().Get("sorry-server")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["vip-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["vip-update"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -311,9 +503,20 @@ func LoadBalancerVipDeleteCompleteFlags(ctx command.Context, params *params.VipD
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["LoadBalancer"].Commands["vip-delete"].Params["index"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["vip-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["vip-delete"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["vip-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -329,13 +532,30 @@ func LoadBalancerServerInfoCompleteFlags(ctx command.Context, params *params.Ser
 
 	switch flagName {
 	case "vip-index":
-		comp = define.Resources["LoadBalancer"].Commands["server-info"].Params["vip-index"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-info"].BuildedParams().Get("vip-index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "vip":
-		comp = define.Resources["LoadBalancer"].Commands["server-info"].Params["vip"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-info"].BuildedParams().Get("vip")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port":
-		comp = define.Resources["LoadBalancer"].Commands["server-info"].Params["port"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-info"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["server-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["server-info"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -353,23 +573,55 @@ func LoadBalancerServerAddCompleteFlags(ctx command.Context, params *params.Serv
 
 	switch flagName {
 	case "vip-index":
-		comp = define.Resources["LoadBalancer"].Commands["server-add"].Params["vip-index"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-add"].BuildedParams().Get("vip-index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "vip":
-		comp = define.Resources["LoadBalancer"].Commands["server-add"].Params["vip"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-add"].BuildedParams().Get("vip")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port":
-		comp = define.Resources["LoadBalancer"].Commands["server-add"].Params["port"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-add"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress", "ip":
-		comp = define.Resources["LoadBalancer"].Commands["server-add"].Params["ipaddress"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-add"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "protocol":
-		comp = define.Resources["LoadBalancer"].Commands["server-add"].Params["protocol"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-add"].BuildedParams().Get("protocol")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "path":
-		comp = define.Resources["LoadBalancer"].Commands["server-add"].Params["path"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-add"].BuildedParams().Get("path")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "response-code":
-		comp = define.Resources["LoadBalancer"].Commands["server-add"].Params["response-code"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-add"].BuildedParams().Get("response-code")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "enabled":
-		comp = define.Resources["LoadBalancer"].Commands["server-add"].Params["enabled"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-add"].BuildedParams().Get("enabled")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["server-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["server-add"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -385,23 +637,55 @@ func LoadBalancerServerUpdateCompleteFlags(ctx command.Context, params *params.S
 
 	switch flagName {
 	case "vip-index":
-		comp = define.Resources["LoadBalancer"].Commands["server-update"].Params["vip-index"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-update"].BuildedParams().Get("vip-index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "vip":
-		comp = define.Resources["LoadBalancer"].Commands["server-update"].Params["vip"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-update"].BuildedParams().Get("vip")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port":
-		comp = define.Resources["LoadBalancer"].Commands["server-update"].Params["port"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-update"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress", "ip":
-		comp = define.Resources["LoadBalancer"].Commands["server-update"].Params["ipaddress"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-update"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "protocol":
-		comp = define.Resources["LoadBalancer"].Commands["server-update"].Params["protocol"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-update"].BuildedParams().Get("protocol")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "path":
-		comp = define.Resources["LoadBalancer"].Commands["server-update"].Params["path"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-update"].BuildedParams().Get("path")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "response-code":
-		comp = define.Resources["LoadBalancer"].Commands["server-update"].Params["response-code"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-update"].BuildedParams().Get("response-code")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "enabled":
-		comp = define.Resources["LoadBalancer"].Commands["server-update"].Params["enabled"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-update"].BuildedParams().Get("enabled")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["server-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["server-update"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -417,15 +701,35 @@ func LoadBalancerServerDeleteCompleteFlags(ctx command.Context, params *params.S
 
 	switch flagName {
 	case "vip-index":
-		comp = define.Resources["LoadBalancer"].Commands["server-delete"].Params["vip-index"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-delete"].BuildedParams().Get("vip-index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "vip":
-		comp = define.Resources["LoadBalancer"].Commands["server-delete"].Params["vip"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-delete"].BuildedParams().Get("vip")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port":
-		comp = define.Resources["LoadBalancer"].Commands["server-delete"].Params["port"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-delete"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress", "ip":
-		comp = define.Resources["LoadBalancer"].Commands["server-delete"].Params["ipaddress"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-delete"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["server-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["server-delete"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["server-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -441,13 +745,30 @@ func LoadBalancerMonitorCompleteFlags(ctx command.Context, params *params.Monito
 
 	switch flagName {
 	case "start":
-		comp = define.Resources["LoadBalancer"].Commands["monitor"].Params["start"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["monitor"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "end":
-		comp = define.Resources["LoadBalancer"].Commands["monitor"].Params["end"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["monitor"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "key-format":
-		comp = define.Resources["LoadBalancer"].Commands["monitor"].Params["key-format"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["monitor"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["LoadBalancer"].Commands["monitor"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["LoadBalancer"].Commands["monitor"].Params["id"].CompleteFunc
+		param := define.Resources["LoadBalancer"].Commands["monitor"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

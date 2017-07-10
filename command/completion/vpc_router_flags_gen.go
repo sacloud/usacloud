@@ -15,17 +15,35 @@ func VPCRouterListCompleteFlags(ctx command.Context, params *params.ListVPCRoute
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["VPCRouter"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["list"].Params["id"].CompleteFunc
-	case "tags":
-		comp = define.Resources["VPCRouter"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["VPCRouter"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["VPCRouter"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["VPCRouter"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["VPCRouter"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -43,27 +61,60 @@ func VPCRouterCreateCompleteFlags(ctx command.Context, params *params.CreateVPCR
 
 	switch flagName {
 	case "plan":
-		comp = define.Resources["VPCRouter"].Commands["create"].Params["plan"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["create"].BuildedParams().Get("plan")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "switch-id":
-		comp = define.Resources["VPCRouter"].Commands["create"].Params["switch-id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["create"].BuildedParams().Get("switch-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "vrid", "VRID":
-		comp = define.Resources["VPCRouter"].Commands["create"].Params["vrid"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["create"].BuildedParams().Get("vrid")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "vip":
-		comp = define.Resources["VPCRouter"].Commands["create"].Params["vip"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["create"].BuildedParams().Get("vip")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress1", "ip1":
-		comp = define.Resources["VPCRouter"].Commands["create"].Params["ipaddress1"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["create"].BuildedParams().Get("ipaddress1")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress2", "ip2":
-		comp = define.Resources["VPCRouter"].Commands["create"].Params["ipaddress2"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["create"].BuildedParams().Get("ipaddress2")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "boot-after-create":
-		comp = define.Resources["VPCRouter"].Commands["create"].Params["boot-after-create"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["create"].BuildedParams().Get("boot-after-create")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["VPCRouter"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["VPCRouter"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["VPCRouter"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["VPCRouter"].Commands["create"].Params["icon-id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["create"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -80,8 +131,16 @@ func VPCRouterReadCompleteFlags(ctx command.Context, params *params.ReadVPCRoute
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -99,17 +158,40 @@ func VPCRouterUpdateCompleteFlags(ctx command.Context, params *params.UpdateVPCR
 
 	switch flagName {
 	case "syslog-host":
-		comp = define.Resources["VPCRouter"].Commands["update"].Params["syslog-host"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["update"].BuildedParams().Get("syslog-host")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["VPCRouter"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["VPCRouter"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["VPCRouter"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["VPCRouter"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -127,9 +209,20 @@ func VPCRouterDeleteCompleteFlags(ctx command.Context, params *params.DeleteVPCR
 
 	switch flagName {
 	case "force", "f":
-		comp = define.Resources["VPCRouter"].Commands["delete"].Params["force"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["delete"].BuildedParams().Get("force")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -146,8 +239,16 @@ func VPCRouterBootCompleteFlags(ctx command.Context, params *params.BootVPCRoute
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["boot"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["boot"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["boot"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -162,8 +263,16 @@ func VPCRouterShutdownCompleteFlags(ctx command.Context, params *params.Shutdown
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["shutdown"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["shutdown"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["shutdown"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -178,8 +287,16 @@ func VPCRouterShutdownForceCompleteFlags(ctx command.Context, params *params.Shu
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["shutdown-force"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["shutdown-force"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["shutdown-force"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -194,8 +311,16 @@ func VPCRouterResetCompleteFlags(ctx command.Context, params *params.ResetVPCRou
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["reset"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["reset"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["reset"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -210,8 +335,16 @@ func VPCRouterWaitForBootCompleteFlags(ctx command.Context, params *params.WaitF
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["wait-for-boot"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["wait-for-boot"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["wait-for-boot"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -226,8 +359,16 @@ func VPCRouterWaitForDownCompleteFlags(ctx command.Context, params *params.WaitF
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["wait-for-down"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["wait-for-down"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["wait-for-down"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -242,8 +383,16 @@ func VPCRouterInterfaceInfoCompleteFlags(ctx command.Context, params *params.Int
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["interface-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["interface-info"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -261,21 +410,50 @@ func VPCRouterInterfaceConnectCompleteFlags(ctx command.Context, params *params.
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["interface-connect"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-connect"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress", "ip", "vip":
-		comp = define.Resources["VPCRouter"].Commands["interface-connect"].Params["ipaddress"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-connect"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "with-reboot":
-		comp = define.Resources["VPCRouter"].Commands["interface-connect"].Params["with-reboot"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-connect"].BuildedParams().Get("with-reboot")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress1", "ip1":
-		comp = define.Resources["VPCRouter"].Commands["interface-connect"].Params["ipaddress1"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-connect"].BuildedParams().Get("ipaddress1")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "switch-id":
-		comp = define.Resources["VPCRouter"].Commands["interface-connect"].Params["switch-id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-connect"].BuildedParams().Get("switch-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress2", "ip2":
-		comp = define.Resources["VPCRouter"].Commands["interface-connect"].Params["ipaddress2"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-connect"].BuildedParams().Get("ipaddress2")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "nw-masklen", "network-masklen":
-		comp = define.Resources["VPCRouter"].Commands["interface-connect"].Params["nw-masklen"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-connect"].BuildedParams().Get("nw-masklen")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["interface-connect"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["interface-connect"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-connect"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -291,23 +469,55 @@ func VPCRouterInterfaceUpdateCompleteFlags(ctx command.Context, params *params.I
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["interface-update"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress", "ip", "vip":
-		comp = define.Resources["VPCRouter"].Commands["interface-update"].Params["ipaddress"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-update"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "with-reboot":
-		comp = define.Resources["VPCRouter"].Commands["interface-update"].Params["with-reboot"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-update"].BuildedParams().Get("with-reboot")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress1", "ip1":
-		comp = define.Resources["VPCRouter"].Commands["interface-update"].Params["ipaddress1"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-update"].BuildedParams().Get("ipaddress1")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "switch-id":
-		comp = define.Resources["VPCRouter"].Commands["interface-update"].Params["switch-id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-update"].BuildedParams().Get("switch-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress2", "ip2":
-		comp = define.Resources["VPCRouter"].Commands["interface-update"].Params["ipaddress2"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-update"].BuildedParams().Get("ipaddress2")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "alias":
-		comp = define.Resources["VPCRouter"].Commands["interface-update"].Params["alias"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-update"].BuildedParams().Get("alias")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "nw-masklen", "network-masklen":
-		comp = define.Resources["VPCRouter"].Commands["interface-update"].Params["nw-masklen"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-update"].BuildedParams().Get("nw-masklen")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["interface-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["interface-update"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -323,11 +533,25 @@ func VPCRouterInterfaceDisconnectCompleteFlags(ctx command.Context, params *para
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["interface-disconnect"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-disconnect"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "with-reboot":
-		comp = define.Resources["VPCRouter"].Commands["interface-disconnect"].Params["with-reboot"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-disconnect"].BuildedParams().Get("with-reboot")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["interface-disconnect"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["interface-disconnect"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["interface-disconnect"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -342,8 +566,16 @@ func VPCRouterStaticNatInfoCompleteFlags(ctx command.Context, params *params.Sta
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["static-nat-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-info"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-nat-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -361,13 +593,30 @@ func VPCRouterStaticNatAddCompleteFlags(ctx command.Context, params *params.Stat
 
 	switch flagName {
 	case "global", "global-ip", "global-address":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-add"].Params["global"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-nat-add"].BuildedParams().Get("global")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "private", "private-ip", "private-address":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-add"].Params["private"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-nat-add"].BuildedParams().Get("private")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-add"].Params["description"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-nat-add"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["static-nat-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-add"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-nat-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -383,15 +632,35 @@ func VPCRouterStaticNatUpdateCompleteFlags(ctx command.Context, params *params.S
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-update"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-nat-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "global", "global-ip", "global-address":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-update"].Params["global"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-nat-update"].BuildedParams().Get("global")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "private", "private-ip", "private-address":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-update"].Params["private"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-nat-update"].BuildedParams().Get("private")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-update"].Params["description"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-nat-update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["static-nat-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-update"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-nat-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -407,9 +676,20 @@ func VPCRouterStaticNatDeleteCompleteFlags(ctx command.Context, params *params.S
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-delete"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-nat-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["static-nat-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["static-nat-delete"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-nat-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -424,8 +704,16 @@ func VPCRouterPortForwardingInfoCompleteFlags(ctx command.Context, params *param
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-info"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -443,17 +731,40 @@ func VPCRouterPortForwardingAddCompleteFlags(ctx command.Context, params *params
 
 	switch flagName {
 	case "protocol":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["protocol"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-add"].BuildedParams().Get("protocol")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "global-port":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["global-port"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-add"].BuildedParams().Get("global-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "private-ipaddress", "private-ip", "private-address":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["private-ipaddress"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-add"].BuildedParams().Get("private-ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "private-port":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["private-port"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-add"].BuildedParams().Get("private-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["description"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-add"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-add"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -469,19 +780,45 @@ func VPCRouterPortForwardingUpdateCompleteFlags(ctx command.Context, params *par
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "protocol":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["protocol"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-update"].BuildedParams().Get("protocol")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "global-port":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["global-port"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-update"].BuildedParams().Get("global-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "private-ipaddress", "private-ip", "private-address":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["private-ipaddress"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-update"].BuildedParams().Get("private-ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "private-port":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["private-port"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-update"].BuildedParams().Get("private-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["description"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-update"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -497,9 +834,20 @@ func VPCRouterPortForwardingDeleteCompleteFlags(ctx command.Context, params *par
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-delete"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["port-forwarding-delete"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["port-forwarding-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -515,9 +863,20 @@ func VPCRouterFirewallInfoCompleteFlags(ctx command.Context, params *params.Fire
 
 	switch flagName {
 	case "direction":
-		comp = define.Resources["VPCRouter"].Commands["firewall-info"].Params["direction"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-info"].BuildedParams().Get("direction")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["firewall-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["firewall-info"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -535,25 +894,60 @@ func VPCRouterFirewallAddCompleteFlags(ctx command.Context, params *params.Firew
 
 	switch flagName {
 	case "direction":
-		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["direction"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-add"].BuildedParams().Get("direction")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "protocol":
-		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["protocol"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-add"].BuildedParams().Get("protocol")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-network":
-		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["source-network"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-add"].BuildedParams().Get("source-network")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-port":
-		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["source-port"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-add"].BuildedParams().Get("source-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "destination-network", "dest-network":
-		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["destination-network"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-add"].BuildedParams().Get("destination-network")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "destination-port", "dest-port":
-		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["destination-port"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-add"].BuildedParams().Get("destination-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "action":
-		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["action"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-add"].BuildedParams().Get("action")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "enable-logging":
-		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["enable-logging"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-add"].BuildedParams().Get("enable-logging")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["description"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-add"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["firewall-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["firewall-add"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -569,27 +963,65 @@ func VPCRouterFirewallUpdateCompleteFlags(ctx command.Context, params *params.Fi
 
 	switch flagName {
 	case "direction":
-		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["direction"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("direction")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "protocol":
-		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["protocol"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("protocol")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-network":
-		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["source-network"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("source-network")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-port":
-		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["source-port"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("source-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "destination-network", "dest-network":
-		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["destination-network"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("destination-network")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "destination-port", "dest-port":
-		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["destination-port"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("destination-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "action":
-		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["action"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("action")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "enable-logging":
-		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["enable-logging"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("enable-logging")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["description"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["firewall-update"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -605,11 +1037,25 @@ func VPCRouterFirewallDeleteCompleteFlags(ctx command.Context, params *params.Fi
 
 	switch flagName {
 	case "direction":
-		comp = define.Resources["VPCRouter"].Commands["firewall-delete"].Params["direction"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-delete"].BuildedParams().Get("direction")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["firewall-delete"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["firewall-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["firewall-delete"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["firewall-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -624,8 +1070,16 @@ func VPCRouterDhcpServerInfoCompleteFlags(ctx command.Context, params *params.Dh
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-info"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -643,13 +1097,30 @@ func VPCRouterDhcpServerAddCompleteFlags(ctx command.Context, params *params.Dhc
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-add"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-add"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "range-start":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-add"].Params["range-start"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-add"].BuildedParams().Get("range-start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "range-stop", "range-end":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-add"].Params["range-stop"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-add"].BuildedParams().Get("range-stop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-add"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -665,13 +1136,30 @@ func VPCRouterDhcpServerUpdateCompleteFlags(ctx command.Context, params *params.
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "range-start":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["range-start"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-update"].BuildedParams().Get("range-start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "range-stop", "range-end":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["range-stop"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-update"].BuildedParams().Get("range-stop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -687,9 +1175,20 @@ func VPCRouterDhcpServerDeleteCompleteFlags(ctx command.Context, params *params.
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-delete"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-server-delete"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -704,8 +1203,16 @@ func VPCRouterDhcpStaticMappingInfoCompleteFlags(ctx command.Context, params *pa
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-info"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -723,11 +1230,25 @@ func VPCRouterDhcpStaticMappingAddCompleteFlags(ctx command.Context, params *par
 
 	switch flagName {
 	case "macaddress", "mac":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-add"].Params["macaddress"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-add"].BuildedParams().Get("macaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress", "ip":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-add"].Params["ipaddress"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-add"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-add"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -743,13 +1264,30 @@ func VPCRouterDhcpStaticMappingUpdateCompleteFlags(ctx command.Context, params *
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "macaddress", "mac":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].Params["macaddress"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].BuildedParams().Get("macaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress", "ip":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].Params["ipaddress"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -765,9 +1303,20 @@ func VPCRouterDhcpStaticMappingDeleteCompleteFlags(ctx command.Context, params *
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-delete"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["dhcp-static-mapping-delete"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["dhcp-static-mapping-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -782,8 +1331,16 @@ func VPCRouterPptpServerInfoCompleteFlags(ctx command.Context, params *params.Pp
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["pptp-server-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["pptp-server-info"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["pptp-server-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -801,13 +1358,30 @@ func VPCRouterPptpServerUpdateCompleteFlags(ctx command.Context, params *params.
 
 	switch flagName {
 	case "enabled":
-		comp = define.Resources["VPCRouter"].Commands["pptp-server-update"].Params["enabled"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["pptp-server-update"].BuildedParams().Get("enabled")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "range-start":
-		comp = define.Resources["VPCRouter"].Commands["pptp-server-update"].Params["range-start"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["pptp-server-update"].BuildedParams().Get("range-start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "range-stop", "range-end":
-		comp = define.Resources["VPCRouter"].Commands["pptp-server-update"].Params["range-stop"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["pptp-server-update"].BuildedParams().Get("range-stop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["pptp-server-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["pptp-server-update"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["pptp-server-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -822,8 +1396,16 @@ func VPCRouterL2tpServerInfoCompleteFlags(ctx command.Context, params *params.L2
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["l2tp-server-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["l2tp-server-info"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["l2tp-server-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -841,15 +1423,35 @@ func VPCRouterL2tpServerUpdateCompleteFlags(ctx command.Context, params *params.
 
 	switch flagName {
 	case "enabled":
-		comp = define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["enabled"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["l2tp-server-update"].BuildedParams().Get("enabled")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "range-start":
-		comp = define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["range-start"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["l2tp-server-update"].BuildedParams().Get("range-start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "range-stop", "range-end":
-		comp = define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["range-stop"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["l2tp-server-update"].BuildedParams().Get("range-stop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "pre-shared-secret":
-		comp = define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["pre-shared-secret"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["l2tp-server-update"].BuildedParams().Get("pre-shared-secret")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["l2tp-server-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["l2tp-server-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -864,8 +1466,16 @@ func VPCRouterUserInfoCompleteFlags(ctx command.Context, params *params.UserInfo
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["user-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["user-info"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["user-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -883,11 +1493,25 @@ func VPCRouterUserAddCompleteFlags(ctx command.Context, params *params.UserAddVP
 
 	switch flagName {
 	case "username", "user":
-		comp = define.Resources["VPCRouter"].Commands["user-add"].Params["username"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["user-add"].BuildedParams().Get("username")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "password", "pass":
-		comp = define.Resources["VPCRouter"].Commands["user-add"].Params["password"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["user-add"].BuildedParams().Get("password")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["user-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["user-add"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["user-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -903,13 +1527,30 @@ func VPCRouterUserUpdateCompleteFlags(ctx command.Context, params *params.UserUp
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["user-update"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["user-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "username", "user":
-		comp = define.Resources["VPCRouter"].Commands["user-update"].Params["username"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["user-update"].BuildedParams().Get("username")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "password", "pass":
-		comp = define.Resources["VPCRouter"].Commands["user-update"].Params["password"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["user-update"].BuildedParams().Get("password")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["user-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["user-update"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["user-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -925,9 +1566,20 @@ func VPCRouterUserDeleteCompleteFlags(ctx command.Context, params *params.UserDe
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["user-delete"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["user-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["user-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["user-delete"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["user-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -942,8 +1594,16 @@ func VPCRouterSiteToSiteVpnInfoCompleteFlags(ctx command.Context, params *params
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-info"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -961,17 +1621,40 @@ func VPCRouterSiteToSiteVpnAddCompleteFlags(ctx command.Context, params *params.
 
 	switch flagName {
 	case "peer":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["peer"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].BuildedParams().Get("peer")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "remote-id":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["remote-id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].BuildedParams().Get("remote-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "pre-shared-secret":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["pre-shared-secret"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].BuildedParams().Get("pre-shared-secret")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "routes":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["routes"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].BuildedParams().Get("routes")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "local-prefix":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["local-prefix"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].BuildedParams().Get("local-prefix")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -987,19 +1670,45 @@ func VPCRouterSiteToSiteVpnUpdateCompleteFlags(ctx command.Context, params *para
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "peer":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["peer"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].BuildedParams().Get("peer")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "remote-id":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["remote-id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].BuildedParams().Get("remote-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "pre-shared-secret":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["pre-shared-secret"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].BuildedParams().Get("pre-shared-secret")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "routes":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["routes"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].BuildedParams().Get("routes")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "local-prefix":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["local-prefix"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].BuildedParams().Get("local-prefix")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -1015,9 +1724,20 @@ func VPCRouterSiteToSiteVpnDeleteCompleteFlags(ctx command.Context, params *para
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-delete"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["site-to-site-vpn-delete"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -1032,8 +1752,16 @@ func VPCRouterStaticRouteInfoCompleteFlags(ctx command.Context, params *params.S
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["static-route-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["static-route-info"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-route-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -1051,11 +1779,25 @@ func VPCRouterStaticRouteAddCompleteFlags(ctx command.Context, params *params.St
 
 	switch flagName {
 	case "prefix":
-		comp = define.Resources["VPCRouter"].Commands["static-route-add"].Params["prefix"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-route-add"].BuildedParams().Get("prefix")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "next-hop":
-		comp = define.Resources["VPCRouter"].Commands["static-route-add"].Params["next-hop"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-route-add"].BuildedParams().Get("next-hop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["static-route-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["static-route-add"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-route-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -1071,13 +1813,30 @@ func VPCRouterStaticRouteUpdateCompleteFlags(ctx command.Context, params *params
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["static-route-update"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-route-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "prefix":
-		comp = define.Resources["VPCRouter"].Commands["static-route-update"].Params["prefix"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-route-update"].BuildedParams().Get("prefix")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "next-hop":
-		comp = define.Resources["VPCRouter"].Commands["static-route-update"].Params["next-hop"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-route-update"].BuildedParams().Get("next-hop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["static-route-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["static-route-update"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-route-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -1093,9 +1852,20 @@ func VPCRouterStaticRouteDeleteCompleteFlags(ctx command.Context, params *params
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["static-route-delete"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-route-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["static-route-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["static-route-delete"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["static-route-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -1111,15 +1881,35 @@ func VPCRouterMonitorCompleteFlags(ctx command.Context, params *params.MonitorVP
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["VPCRouter"].Commands["monitor"].Params["index"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["monitor"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "start":
-		comp = define.Resources["VPCRouter"].Commands["monitor"].Params["start"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["monitor"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "end":
-		comp = define.Resources["VPCRouter"].Commands["monitor"].Params["end"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["monitor"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "key-format":
-		comp = define.Resources["VPCRouter"].Commands["monitor"].Params["key-format"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["monitor"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["monitor"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["VPCRouter"].Commands["monitor"].Params["id"].CompleteFunc
+		param := define.Resources["VPCRouter"].Commands["monitor"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

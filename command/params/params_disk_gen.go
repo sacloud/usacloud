@@ -720,6 +720,7 @@ func (p *CreateDiskParam) GetFormatFile() string {
 
 // ReadDiskParam is input parameters for the sacloud API
 type ReadDiskParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -738,6 +739,9 @@ func NewReadDiskParam() *ReadDiskParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ReadDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -830,6 +834,13 @@ func (p *ReadDiskParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadDiskParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReadDiskParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -897,6 +908,7 @@ func (p *ReadDiskParam) GetId() int64 {
 // UpdateDiskParam is input parameters for the sacloud API
 type UpdateDiskParam struct {
 	Connection        string   `json:"connection"`
+	Selector          []string `json:"selector"`
 	Name              string   `json:"name"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
@@ -922,6 +934,9 @@ func NewUpdateDiskParam() *UpdateDiskParam {
 func (p *UpdateDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.Connection) {
 		p.Connection = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -1072,6 +1087,13 @@ func (p *UpdateDiskParam) SetConnection(v string) {
 func (p *UpdateDiskParam) GetConnection() string {
 	return p.Connection
 }
+func (p *UpdateDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateDiskParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateDiskParam) SetName(v string) {
 	p.Name = v
 }
@@ -1173,6 +1195,7 @@ func (p *UpdateDiskParam) GetId() int64 {
 
 // DeleteDiskParam is input parameters for the sacloud API
 type DeleteDiskParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1192,6 +1215,9 @@ func NewDeleteDiskParam() *DeleteDiskParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DeleteDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1287,6 +1313,13 @@ func (p *DeleteDiskParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DeleteDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteDiskParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DeleteDiskParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1368,6 +1401,7 @@ type EditDiskParam struct {
 	DefaultRoute        string   `json:"default-route"`
 	NwMasklen           int      `json:"nw-masklen"`
 	StartupScriptIds    []int64  `json:"startup-script-ids"`
+	Selector            []string `json:"selector"`
 	Assumeyes           bool     `json:"assumeyes"`
 	ParamTemplate       string   `json:"param-template"`
 	ParamTemplateFile   string   `json:"param-template-file"`
@@ -1413,6 +1447,9 @@ func (p *EditDiskParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.StartupScriptIds) {
 		p.StartupScriptIds = []int64{0}
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1586,6 +1623,13 @@ func (p *EditDiskParam) SetStartupScriptIds(v []int64) {
 func (p *EditDiskParam) GetStartupScriptIds() []int64 {
 	return p.StartupScriptIds
 }
+func (p *EditDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *EditDiskParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *EditDiskParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1659,13 +1703,14 @@ func (p *EditDiskParam) GetId() int64 {
 
 // ReinstallFromArchiveDiskParam is input parameters for the sacloud API
 type ReinstallFromArchiveDiskParam struct {
-	SourceArchiveId   int64   `json:"source-archive-id"`
-	DistantFrom       []int64 `json:"distant-from"`
-	Assumeyes         bool    `json:"assumeyes"`
-	ParamTemplate     string  `json:"param-template"`
-	ParamTemplateFile string  `json:"param-template-file"`
-	GenerateSkeleton  bool    `json:"generate-skeleton"`
-	Id                int64   `json:"id"`
+	SourceArchiveId   int64    `json:"source-archive-id"`
+	DistantFrom       []int64  `json:"distant-from"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewReinstallFromArchiveDiskParam return new ReinstallFromArchiveDiskParam
@@ -1680,6 +1725,9 @@ func (p *ReinstallFromArchiveDiskParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.DistantFrom) {
 		p.DistantFrom = []int64{0}
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1776,6 +1824,13 @@ func (p *ReinstallFromArchiveDiskParam) SetDistantFrom(v []int64) {
 func (p *ReinstallFromArchiveDiskParam) GetDistantFrom() []int64 {
 	return p.DistantFrom
 }
+func (p *ReinstallFromArchiveDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReinstallFromArchiveDiskParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReinstallFromArchiveDiskParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1814,13 +1869,14 @@ func (p *ReinstallFromArchiveDiskParam) GetId() int64 {
 
 // ReinstallFromDiskDiskParam is input parameters for the sacloud API
 type ReinstallFromDiskDiskParam struct {
-	SourceDiskId      int64   `json:"source-disk-id"`
-	DistantFrom       []int64 `json:"distant-from"`
-	Assumeyes         bool    `json:"assumeyes"`
-	ParamTemplate     string  `json:"param-template"`
-	ParamTemplateFile string  `json:"param-template-file"`
-	GenerateSkeleton  bool    `json:"generate-skeleton"`
-	Id                int64   `json:"id"`
+	SourceDiskId      int64    `json:"source-disk-id"`
+	DistantFrom       []int64  `json:"distant-from"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewReinstallFromDiskDiskParam return new ReinstallFromDiskDiskParam
@@ -1835,6 +1891,9 @@ func (p *ReinstallFromDiskDiskParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.DistantFrom) {
 		p.DistantFrom = []int64{0}
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1931,6 +1990,13 @@ func (p *ReinstallFromDiskDiskParam) SetDistantFrom(v []int64) {
 func (p *ReinstallFromDiskDiskParam) GetDistantFrom() []int64 {
 	return p.DistantFrom
 }
+func (p *ReinstallFromDiskDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReinstallFromDiskDiskParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReinstallFromDiskDiskParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1969,12 +2035,13 @@ func (p *ReinstallFromDiskDiskParam) GetId() int64 {
 
 // ReinstallToBlankDiskParam is input parameters for the sacloud API
 type ReinstallToBlankDiskParam struct {
-	DistantFrom       []int64 `json:"distant-from"`
-	Assumeyes         bool    `json:"assumeyes"`
-	ParamTemplate     string  `json:"param-template"`
-	ParamTemplateFile string  `json:"param-template-file"`
-	GenerateSkeleton  bool    `json:"generate-skeleton"`
-	Id                int64   `json:"id"`
+	DistantFrom       []int64  `json:"distant-from"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewReinstallToBlankDiskParam return new ReinstallToBlankDiskParam
@@ -1986,6 +2053,9 @@ func NewReinstallToBlankDiskParam() *ReinstallToBlankDiskParam {
 func (p *ReinstallToBlankDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.DistantFrom) {
 		p.DistantFrom = []int64{0}
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -2061,6 +2131,13 @@ func (p *ReinstallToBlankDiskParam) SetDistantFrom(v []int64) {
 func (p *ReinstallToBlankDiskParam) GetDistantFrom() []int64 {
 	return p.DistantFrom
 }
+func (p *ReinstallToBlankDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReinstallToBlankDiskParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReinstallToBlankDiskParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -2099,12 +2176,13 @@ func (p *ReinstallToBlankDiskParam) GetId() int64 {
 
 // ServerConnectDiskParam is input parameters for the sacloud API
 type ServerConnectDiskParam struct {
-	ServerId          int64  `json:"server-id"`
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	ServerId          int64    `json:"server-id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewServerConnectDiskParam return new ServerConnectDiskParam
@@ -2116,6 +2194,9 @@ func NewServerConnectDiskParam() *ServerConnectDiskParam {
 func (p *ServerConnectDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ServerId) {
 		p.ServerId = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -2198,6 +2279,13 @@ func (p *ServerConnectDiskParam) SetServerId(v int64) {
 func (p *ServerConnectDiskParam) GetServerId() int64 {
 	return p.ServerId
 }
+func (p *ServerConnectDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ServerConnectDiskParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ServerConnectDiskParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -2236,11 +2324,12 @@ func (p *ServerConnectDiskParam) GetId() int64 {
 
 // ServerDisconnectDiskParam is input parameters for the sacloud API
 type ServerDisconnectDiskParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewServerDisconnectDiskParam return new ServerDisconnectDiskParam
@@ -2250,6 +2339,9 @@ func NewServerDisconnectDiskParam() *ServerDisconnectDiskParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ServerDisconnectDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -2310,6 +2402,13 @@ func (p *ServerDisconnectDiskParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ServerDisconnectDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ServerDisconnectDiskParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ServerDisconnectDiskParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -2348,6 +2447,7 @@ func (p *ServerDisconnectDiskParam) GetId() int64 {
 
 // MonitorDiskParam is input parameters for the sacloud API
 type MonitorDiskParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -2372,6 +2472,9 @@ func NewMonitorDiskParam() *MonitorDiskParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *MonitorDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -2494,6 +2597,13 @@ func (p *MonitorDiskParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *MonitorDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorDiskParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *MonitorDiskParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -2581,10 +2691,11 @@ func (p *MonitorDiskParam) GetStart() string {
 
 // WaitForCopyDiskParam is input parameters for the sacloud API
 type WaitForCopyDiskParam struct {
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewWaitForCopyDiskParam return new WaitForCopyDiskParam
@@ -2594,6 +2705,9 @@ func NewWaitForCopyDiskParam() *WaitForCopyDiskParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *WaitForCopyDiskParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -2651,6 +2765,13 @@ func (p *WaitForCopyDiskParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForCopyDiskParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForCopyDiskParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *WaitForCopyDiskParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }

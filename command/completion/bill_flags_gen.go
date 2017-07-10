@@ -15,7 +15,10 @@ func BillCsvCompleteFlags(ctx command.Context, params *params.CsvBillParam, flag
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["Bill"].Commands["csv"].Params["id"].CompleteFunc
+		param := define.Resources["Bill"].Commands["csv"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -33,9 +36,15 @@ func BillListCompleteFlags(ctx command.Context, params *params.ListBillParam, fl
 
 	switch flagName {
 	case "year":
-		comp = define.Resources["Bill"].Commands["list"].Params["year"].CompleteFunc
+		param := define.Resources["Bill"].Commands["list"].BuildedParams().Get("year")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "month":
-		comp = define.Resources["Bill"].Commands["list"].Params["month"].CompleteFunc
+		param := define.Resources["Bill"].Commands["list"].BuildedParams().Get("month")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

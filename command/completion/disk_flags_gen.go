@@ -15,23 +15,50 @@ func DiskListCompleteFlags(ctx command.Context, params *params.ListDiskParam, fl
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["Disk"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["Disk"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Disk"].Commands["list"].Params["id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "scope":
-		comp = define.Resources["Disk"].Commands["list"].Params["scope"].CompleteFunc
-	case "tags":
-		comp = define.Resources["Disk"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["Disk"].Commands["list"].BuildedParams().Get("scope")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["Disk"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-archive-id":
-		comp = define.Resources["Disk"].Commands["list"].Params["source-archive-id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["list"].BuildedParams().Get("source-archive-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-disk-id":
-		comp = define.Resources["Disk"].Commands["list"].Params["source-disk-id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["list"].BuildedParams().Get("source-disk-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["Disk"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["Disk"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["Disk"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["Disk"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["Disk"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["Disk"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -49,25 +76,55 @@ func DiskCreateCompleteFlags(ctx command.Context, params *params.CreateDiskParam
 
 	switch flagName {
 	case "plan":
-		comp = define.Resources["Disk"].Commands["create"].Params["plan"].CompleteFunc
+		param := define.Resources["Disk"].Commands["create"].BuildedParams().Get("plan")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "connection":
-		comp = define.Resources["Disk"].Commands["create"].Params["connection"].CompleteFunc
+		param := define.Resources["Disk"].Commands["create"].BuildedParams().Get("connection")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-archive-id":
-		comp = define.Resources["Disk"].Commands["create"].Params["source-archive-id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["create"].BuildedParams().Get("source-archive-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-disk-id":
-		comp = define.Resources["Disk"].Commands["create"].Params["source-disk-id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["create"].BuildedParams().Get("source-disk-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "size":
-		comp = define.Resources["Disk"].Commands["create"].Params["size"].CompleteFunc
+		param := define.Resources["Disk"].Commands["create"].BuildedParams().Get("size")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "distant-from":
-		comp = define.Resources["Disk"].Commands["create"].Params["distant-from"].CompleteFunc
+		param := define.Resources["Disk"].Commands["create"].BuildedParams().Get("distant-from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Disk"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["Disk"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Disk"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["Disk"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Disk"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["Disk"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["Disk"].Commands["create"].Params["icon-id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["create"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -84,8 +141,16 @@ func DiskReadCompleteFlags(ctx command.Context, params *params.ReadDiskParam, fl
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Disk"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Disk"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -103,17 +168,40 @@ func DiskUpdateCompleteFlags(ctx command.Context, params *params.UpdateDiskParam
 
 	switch flagName {
 	case "connection":
-		comp = define.Resources["Disk"].Commands["update"].Params["connection"].CompleteFunc
+		param := define.Resources["Disk"].Commands["update"].BuildedParams().Get("connection")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Disk"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Disk"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["Disk"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Disk"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["Disk"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Disk"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["Disk"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["Disk"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Disk"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -130,8 +218,16 @@ func DiskDeleteCompleteFlags(ctx command.Context, params *params.DeleteDiskParam
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Disk"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Disk"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -149,23 +245,55 @@ func DiskEditCompleteFlags(ctx command.Context, params *params.EditDiskParam, fl
 
 	switch flagName {
 	case "hostname":
-		comp = define.Resources["Disk"].Commands["edit"].Params["hostname"].CompleteFunc
+		param := define.Resources["Disk"].Commands["edit"].BuildedParams().Get("hostname")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "password":
-		comp = define.Resources["Disk"].Commands["edit"].Params["password"].CompleteFunc
+		param := define.Resources["Disk"].Commands["edit"].BuildedParams().Get("password")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ssh-key-ids":
-		comp = define.Resources["Disk"].Commands["edit"].Params["ssh-key-ids"].CompleteFunc
+		param := define.Resources["Disk"].Commands["edit"].BuildedParams().Get("ssh-key-ids")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "disable-password-auth", "disable-pw-auth":
-		comp = define.Resources["Disk"].Commands["edit"].Params["disable-password-auth"].CompleteFunc
+		param := define.Resources["Disk"].Commands["edit"].BuildedParams().Get("disable-password-auth")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress", "ip":
-		comp = define.Resources["Disk"].Commands["edit"].Params["ipaddress"].CompleteFunc
+		param := define.Resources["Disk"].Commands["edit"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "default-route", "gateway":
-		comp = define.Resources["Disk"].Commands["edit"].Params["default-route"].CompleteFunc
+		param := define.Resources["Disk"].Commands["edit"].BuildedParams().Get("default-route")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "nw-masklen", "network-masklen":
-		comp = define.Resources["Disk"].Commands["edit"].Params["nw-masklen"].CompleteFunc
+		param := define.Resources["Disk"].Commands["edit"].BuildedParams().Get("nw-masklen")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "startup-script-ids", "note-ids":
-		comp = define.Resources["Disk"].Commands["edit"].Params["startup-script-ids"].CompleteFunc
+		param := define.Resources["Disk"].Commands["edit"].BuildedParams().Get("startup-script-ids")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Disk"].Commands["edit"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Disk"].Commands["edit"].Params["id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["edit"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -183,11 +311,25 @@ func DiskReinstallFromArchiveCompleteFlags(ctx command.Context, params *params.R
 
 	switch flagName {
 	case "source-archive-id":
-		comp = define.Resources["Disk"].Commands["reinstall-from-archive"].Params["source-archive-id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["reinstall-from-archive"].BuildedParams().Get("source-archive-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "distant-from":
-		comp = define.Resources["Disk"].Commands["reinstall-from-archive"].Params["distant-from"].CompleteFunc
+		param := define.Resources["Disk"].Commands["reinstall-from-archive"].BuildedParams().Get("distant-from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Disk"].Commands["reinstall-from-archive"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Disk"].Commands["reinstall-from-archive"].Params["id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["reinstall-from-archive"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -203,11 +345,25 @@ func DiskReinstallFromDiskCompleteFlags(ctx command.Context, params *params.Rein
 
 	switch flagName {
 	case "source-disk-id":
-		comp = define.Resources["Disk"].Commands["reinstall-from-disk"].Params["source-disk-id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["reinstall-from-disk"].BuildedParams().Get("source-disk-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "distant-from":
-		comp = define.Resources["Disk"].Commands["reinstall-from-disk"].Params["distant-from"].CompleteFunc
+		param := define.Resources["Disk"].Commands["reinstall-from-disk"].BuildedParams().Get("distant-from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Disk"].Commands["reinstall-from-disk"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Disk"].Commands["reinstall-from-disk"].Params["id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["reinstall-from-disk"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -223,9 +379,20 @@ func DiskReinstallToBlankCompleteFlags(ctx command.Context, params *params.Reins
 
 	switch flagName {
 	case "distant-from":
-		comp = define.Resources["Disk"].Commands["reinstall-to-blank"].Params["distant-from"].CompleteFunc
+		param := define.Resources["Disk"].Commands["reinstall-to-blank"].BuildedParams().Get("distant-from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Disk"].Commands["reinstall-to-blank"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Disk"].Commands["reinstall-to-blank"].Params["id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["reinstall-to-blank"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -241,9 +408,20 @@ func DiskServerConnectCompleteFlags(ctx command.Context, params *params.ServerCo
 
 	switch flagName {
 	case "server-id":
-		comp = define.Resources["Disk"].Commands["server-connect"].Params["server-id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["server-connect"].BuildedParams().Get("server-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Disk"].Commands["server-connect"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Disk"].Commands["server-connect"].Params["id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["server-connect"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -258,8 +436,16 @@ func DiskServerDisconnectCompleteFlags(ctx command.Context, params *params.Serve
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Disk"].Commands["server-disconnect"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Disk"].Commands["server-disconnect"].Params["id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["server-disconnect"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -274,14 +460,31 @@ func DiskMonitorCompleteFlags(ctx command.Context, params *params.MonitorDiskPar
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Disk"].Commands["monitor"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "end":
-		comp = define.Resources["Disk"].Commands["monitor"].Params["end"].CompleteFunc
+		param := define.Resources["Disk"].Commands["monitor"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Disk"].Commands["monitor"].Params["id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["monitor"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "key-format":
-		comp = define.Resources["Disk"].Commands["monitor"].Params["key-format"].CompleteFunc
+		param := define.Resources["Disk"].Commands["monitor"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "start":
-		comp = define.Resources["Disk"].Commands["monitor"].Params["start"].CompleteFunc
+		param := define.Resources["Disk"].Commands["monitor"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -298,8 +501,16 @@ func DiskWaitForCopyCompleteFlags(ctx command.Context, params *params.WaitForCop
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Disk"].Commands["wait-for-copy"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Disk"].Commands["wait-for-copy"].Params["id"].CompleteFunc
+		param := define.Resources["Disk"].Commands["wait-for-copy"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {

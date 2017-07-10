@@ -15,15 +15,30 @@ func LicenseListCompleteFlags(ctx command.Context, params *params.ListLicensePar
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["License"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["License"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["License"].Commands["list"].Params["id"].CompleteFunc
+		param := define.Resources["License"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["License"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["License"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["License"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["License"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["License"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["License"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -41,9 +56,15 @@ func LicenseCreateCompleteFlags(ctx command.Context, params *params.CreateLicens
 
 	switch flagName {
 	case "license-info-id":
-		comp = define.Resources["License"].Commands["create"].Params["license-info-id"].CompleteFunc
+		param := define.Resources["License"].Commands["create"].BuildedParams().Get("license-info-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["License"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["License"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -61,7 +82,10 @@ func LicenseReadCompleteFlags(ctx command.Context, params *params.ReadLicensePar
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["License"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["License"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -79,9 +103,15 @@ func LicenseUpdateCompleteFlags(ctx command.Context, params *params.UpdateLicens
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["License"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["License"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["License"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["License"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -99,7 +129,10 @@ func LicenseDeleteCompleteFlags(ctx command.Context, params *params.DeleteLicens
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["License"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["License"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

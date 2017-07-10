@@ -266,6 +266,7 @@ func (p *ListGSLBParam) GetFormatFile() string {
 
 // ServerInfoGSLBParam is input parameters for the sacloud API
 type ServerInfoGSLBParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -284,6 +285,9 @@ func NewServerInfoGSLBParam() *ServerInfoGSLBParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ServerInfoGSLBParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -376,6 +380,13 @@ func (p *ServerInfoGSLBParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ServerInfoGSLBParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ServerInfoGSLBParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ServerInfoGSLBParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -823,6 +834,7 @@ type ServerAddGSLBParam struct {
 	Ipaddress         string   `json:"ipaddress"`
 	Enabled           bool     `json:"enabled"`
 	Weight            int      `json:"weight"`
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -853,6 +865,9 @@ func (p *ServerAddGSLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Weight) {
 		p.Weight = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -984,6 +999,13 @@ func (p *ServerAddGSLBParam) SetWeight(v int) {
 func (p *ServerAddGSLBParam) GetWeight() int {
 	return p.Weight
 }
+func (p *ServerAddGSLBParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ServerAddGSLBParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ServerAddGSLBParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1057,6 +1079,7 @@ func (p *ServerAddGSLBParam) GetId() int64 {
 
 // ReadGSLBParam is input parameters for the sacloud API
 type ReadGSLBParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -1075,6 +1098,9 @@ func NewReadGSLBParam() *ReadGSLBParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ReadGSLBParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -1167,6 +1193,13 @@ func (p *ReadGSLBParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadGSLBParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadGSLBParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReadGSLBParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -1237,6 +1270,7 @@ type ServerUpdateGSLBParam struct {
 	Ipaddress         string   `json:"ipaddress"`
 	Enabled           bool     `json:"enabled"`
 	Weight            int      `json:"weight"`
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1267,6 +1301,9 @@ func (p *ServerUpdateGSLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Weight) {
 		p.Weight = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1412,6 +1449,13 @@ func (p *ServerUpdateGSLBParam) SetWeight(v int) {
 func (p *ServerUpdateGSLBParam) GetWeight() int {
 	return p.Weight
 }
+func (p *ServerUpdateGSLBParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ServerUpdateGSLBParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ServerUpdateGSLBParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1486,6 +1530,7 @@ func (p *ServerUpdateGSLBParam) GetId() int64 {
 // ServerDeleteGSLBParam is input parameters for the sacloud API
 type ServerDeleteGSLBParam struct {
 	Index             int      `json:"index"`
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1507,6 +1552,9 @@ func NewServerDeleteGSLBParam() *ServerDeleteGSLBParam {
 func (p *ServerDeleteGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1617,6 +1665,13 @@ func (p *ServerDeleteGSLBParam) SetIndex(v int) {
 func (p *ServerDeleteGSLBParam) GetIndex() int {
 	return p.Index
 }
+func (p *ServerDeleteGSLBParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ServerDeleteGSLBParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ServerDeleteGSLBParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1698,6 +1753,7 @@ type UpdateGSLBParam struct {
 	DelayLoop         int      `json:"delay-loop"`
 	Weighted          bool     `json:"weighted"`
 	SorryServer       string   `json:"sorry-server"`
+	Selector          []string `json:"selector"`
 	Name              string   `json:"name"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
@@ -1744,6 +1800,9 @@ func (p *UpdateGSLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.SorryServer) {
 		p.SorryServer = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -1957,6 +2016,13 @@ func (p *UpdateGSLBParam) SetSorryServer(v string) {
 func (p *UpdateGSLBParam) GetSorryServer() string {
 	return p.SorryServer
 }
+func (p *UpdateGSLBParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateGSLBParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateGSLBParam) SetName(v string) {
 	p.Name = v
 }
@@ -2058,6 +2124,7 @@ func (p *UpdateGSLBParam) GetId() int64 {
 
 // DeleteGSLBParam is input parameters for the sacloud API
 type DeleteGSLBParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -2077,6 +2144,9 @@ func NewDeleteGSLBParam() *DeleteGSLBParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DeleteGSLBParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -2172,6 +2242,13 @@ func (p *DeleteGSLBParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DeleteGSLBParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteGSLBParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DeleteGSLBParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }

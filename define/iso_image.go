@@ -10,7 +10,7 @@ func ISOImageResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
+			Aliases:            []string{"ls", "find", "selector"},
 			Params:             isoImageListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: isoImageListColumns(),

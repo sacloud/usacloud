@@ -552,6 +552,7 @@ func (p *CreateStartupScriptParam) GetFormatFile() string {
 
 // ReadStartupScriptParam is input parameters for the sacloud API
 type ReadStartupScriptParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -570,6 +571,9 @@ func NewReadStartupScriptParam() *ReadStartupScriptParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ReadStartupScriptParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -662,6 +666,13 @@ func (p *ReadStartupScriptParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadStartupScriptParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadStartupScriptParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReadStartupScriptParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -730,6 +741,7 @@ func (p *ReadStartupScriptParam) GetId() int64 {
 type UpdateStartupScriptParam struct {
 	Script            string   `json:"script"`
 	ScriptContent     string   `json:"script-content"`
+	Selector          []string `json:"selector"`
 	Name              string   `json:"name"`
 	Tags              []string `json:"tags"`
 	IconId            int64    `json:"icon-id"`
@@ -757,6 +769,9 @@ func (p *UpdateStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.ScriptContent) {
 		p.ScriptContent = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -920,6 +935,13 @@ func (p *UpdateStartupScriptParam) SetScriptContent(v string) {
 func (p *UpdateStartupScriptParam) GetScriptContent() string {
 	return p.ScriptContent
 }
+func (p *UpdateStartupScriptParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateStartupScriptParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateStartupScriptParam) SetName(v string) {
 	p.Name = v
 }
@@ -1014,6 +1036,7 @@ func (p *UpdateStartupScriptParam) GetId() int64 {
 
 // DeleteStartupScriptParam is input parameters for the sacloud API
 type DeleteStartupScriptParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1033,6 +1056,9 @@ func NewDeleteStartupScriptParam() *DeleteStartupScriptParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DeleteStartupScriptParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1128,6 +1154,13 @@ func (p *DeleteStartupScriptParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DeleteStartupScriptParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteStartupScriptParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DeleteStartupScriptParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }

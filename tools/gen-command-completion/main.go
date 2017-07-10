@@ -342,7 +342,10 @@ func {{.FuncName}}(ctx command.Context, params *params.{{.ParamName}} , flagName
 
 	switch flagName { {{range .Flags}}{{ if not .OutputFlag }}{{ if not .InputFlag }}
 	case {{join .Names ", "}}:
-		comp = define.Resources["{{.ResourceKey}}"].Commands["{{.CommandKey}}"].Params["{{.ParamKey}}"].CompleteFunc{{end}}{{end}}{{end}}
+		param := define.Resources["{{.ResourceKey}}"].Commands["{{.CommandKey}}"].BuildedParams().Get("{{.ParamKey}}")
+		if param != nil {
+	 		comp = param.Param.CompleteFunc
+	 	}{{end}}{{end}}{{end}}
 	{{ if .HasOutputFlag }}case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 {{ end -}}
