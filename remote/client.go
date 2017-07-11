@@ -15,6 +15,7 @@ import (
 )
 
 type SSHParams struct {
+	DisplayName    string
 	UserName       string
 	Password       string
 	Host           string
@@ -77,7 +78,11 @@ func CreateSSHClient(params *SSHParams) (*ssh.Client, error) {
 	// password prompt
 	authMethods = append(authMethods, ssh.PasswordCallback(func() (string, error) {
 		if params.Password == "" {
-			return pprompt("password: ")
+			prefix := ""
+			if params.DisplayName != "" {
+				prefix = fmt.Sprintf("%s | ", params.DisplayName)
+			}
+			return pprompt(fmt.Sprintf("%spassword: ", prefix))
 		}
 		return params.Password, nil
 	}))

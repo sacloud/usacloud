@@ -2,14 +2,22 @@ package funcs
 
 import (
 	"fmt"
+	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/remote"
 	"os"
 	"strings"
+	"sync"
 )
 
+var serverSSHMutex = sync.Mutex{}
+
 func ServerSshExec(ctx command.Context, params *params.SshExecServerParam) error {
+
+	// run as serialized
+	serverSSHMutex.Lock()
+	defer serverSSHMutex.Unlock()
 
 	client := ctx.GetAPIClient()
 	api := client.GetServerAPI()
@@ -57,7 +65,9 @@ func ServerSshExec(ctx command.Context, params *params.SshExecServerParam) error
 		}
 	}
 
+	displayName := fmt.Sprintf("%s(%d)", p.Name, p.ID)
 	sshParam := &remote.SSHParams{
+		DisplayName:    displayName,
 		UserName:       user,
 		Password:       params.Password,
 		Host:           ip,
@@ -87,7 +97,14 @@ func ServerSshExec(ctx command.Context, params *params.SshExecServerParam) error
 		args = append(args, ctx.Args()[1:]...)
 	}
 
+	clr := color.New(color.FgHiGreen)
+	if !params.Quiet {
+		clr.Fprintf(command.GlobalOption.Progress, "=== start | %s ===\n", displayName)
+	}
 	err = session.Run(strings.Join(args, " "))
+	if !params.Quiet {
+		clr.Fprintf(command.GlobalOption.Progress, "=== end | %s ===\n", displayName)
+	}
 
 	if err != nil {
 		return fmt.Errorf("ServerSshExec is failed: %s", err)
