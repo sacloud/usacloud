@@ -40,6 +40,16 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Jul 11 2017 <yamamoto.febc@gmail.com> - 0.0.13-1
+- textlint導入 (by yamamoto-febc)
+- Chocolateyでのインストール方法追記 (by yamamoto-febc)
+- textlintルール追加 (by yamamoto-febc)
+- メンテナンス情報取得コマンド追加 (by yamamoto-febc)
+- パラメータテンプレートでのフィールド名をハイフン区切りに変更 (by yamamoto-febc)
+- --selectorオプション追加 (by yamamoto-febc)
+- server ssh-execの複数ホストでのコマンド実行対応 (by yamamoto-febc)
+- server scpコマンドでのサーバ名での対象指定 (by yamamoto-febc)
+
 * Wed Jun 21 2017 <yamamoto.febc@gmail.com> - 0.0.12-1
 - Windows2016 SQLServer Standard(RDS+Office)パブリックアーカイブ追加 (by yamamoto-febc)
 - サーバ操作関連のドキュメント追加 (by yamamoto-febc)

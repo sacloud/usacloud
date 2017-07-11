@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.0.13 (2017-07-11)
+
+* textlint導入 #159 (yamamoto-febc)
+* Chocolateyでのインストール方法追記 #160 (yamamoto-febc)
+* textlintルール追加 #161 (yamamoto-febc)
+* メンテナンス情報取得コマンド追加 #162 (yamamoto-febc)
+* パラメータテンプレートでのフィールド名をハイフン区切りに変更 #168 (yamamoto-febc)
+* --selectorオプション追加 #171 (yamamoto-febc)
+* server ssh-execの複数ホストでのコマンド実行対応 #173 (yamamoto-febc)
+* server scpコマンドでのサーバ名での対象指定 #174 (yamamoto-febc)
+
+
 ## 0.0.12 (2017-06-21)
 
 * Windows2016 SQLServer Standard(RDS+Office)パブリックアーカイブ追加 #155 (yamamoto-febc)
