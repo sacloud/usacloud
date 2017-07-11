@@ -1255,7 +1255,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -1277,7 +1279,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -1622,7 +1626,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -1644,7 +1650,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -1971,7 +1979,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -1993,7 +2003,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -2318,7 +2330,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -2340,7 +2354,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -2592,7 +2608,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -2614,7 +2632,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -2866,7 +2886,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -2888,7 +2910,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -3140,7 +3164,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -3162,7 +3188,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -3413,7 +3441,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -3435,7 +3465,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -3675,7 +3707,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -3697,7 +3731,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -3932,7 +3968,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -3954,7 +3992,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -4245,7 +4285,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -4267,7 +4309,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -4303,7 +4347,7 @@ func init() {
 			{
 				Name:      "ssh-exec",
 				Usage:     "Execute command on server connected by SSH",
-				ArgsUsage: "<ID or Name(only single target)>",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:    "key",
@@ -4325,10 +4369,6 @@ func init() {
 						Name:    "password",
 						Usage:   "password(or private-key pass phrase)",
 						EnvVars: []string{"SAKURACLOUD_SERVER_PASSWORD"},
-					},
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
 					},
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -4386,9 +4426,6 @@ func init() {
 					}
 					if c.IsSet("password") || command.IsEmpty(sshExecParam.Password) {
 						sshExecParam.Password = c.String("password")
-					}
-					if c.IsSet("selector") {
-						sshExecParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
 						sshExecParam.ParamTemplate = c.String("param-template")
@@ -4495,9 +4532,6 @@ func init() {
 					if c.IsSet("password") || command.IsEmpty(sshExecParam.Password) {
 						sshExecParam.Password = c.String("password")
 					}
-					if c.IsSet("selector") {
-						sshExecParam.Selector = c.StringSlice("selector")
-					}
 					if c.IsSet("param-template") {
 						sshExecParam.ParamTemplate = c.String("param-template")
 					}
@@ -4544,56 +4578,39 @@ func init() {
 
 					if c.NArg() == 0 {
 
-						if len(sshExecParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.Servers {
-							if hasTags(&v, sshExecParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", sshExecParam.Selector)
-						}
+						return fmt.Errorf("ID or Name argument is required")
 
 					} else {
-						for _, arg := range c.Args().Slice() {
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.Servers {
-										if len(sshExecParam.Selector) == 0 || hasTags(&v, sshExecParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
+
+						arg := c.Args().First()
+
+						for _, a := range strings.Split(arg, "\n") {
+							idOrName := a
+							if id, ok := toSakuraID(idOrName); ok {
+								ids = append(ids, id)
+							} else {
+								apiClient.Reset()
+								apiClient.SetFilterBy("Name", idOrName)
+								res, err := apiClient.Find()
+								if err != nil {
+									return fmt.Errorf("Find ID is failed: %s", err)
+								}
+								if res.Count == 0 {
+									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+								}
+								for _, v := range res.Servers {
+
+									ids = append(ids, v.GetID())
+
 								}
 							}
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
 						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
 					}
 
 					wg := sync.WaitGroup{}
@@ -5094,7 +5111,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -5116,7 +5135,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -5420,7 +5441,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -5442,7 +5465,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -5799,29 +5824,31 @@ func init() {
 						}
 
 					} else {
-						for _, arg := range c.Args().Slice() {
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.Servers {
-										if len(vncSendParam.Selector) == 0 || hasTags(&v, vncSendParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
+
+						arg := c.Args().First()
+
+						for _, a := range strings.Split(arg, "\n") {
+							idOrName := a
+							if id, ok := toSakuraID(idOrName); ok {
+								ids = append(ids, id)
+							} else {
+								apiClient.Reset()
+								apiClient.SetFilterBy("Name", idOrName)
+								res, err := apiClient.Find()
+								if err != nil {
+									return fmt.Errorf("Find ID is failed: %s", err)
+								}
+								if res.Count == 0 {
+									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+								}
+								for _, v := range res.Servers {
+									if len(vncSendParam.Selector) == 0 || hasTags(&v, vncSendParam.Selector) {
+										ids = append(ids, v.GetID())
 									}
 								}
 							}
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -6120,7 +6147,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -6142,7 +6171,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -6402,7 +6433,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -6424,7 +6457,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -6689,7 +6724,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -6711,7 +6748,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -7010,7 +7049,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -7032,7 +7073,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -7292,7 +7335,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -7314,7 +7359,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -7623,7 +7670,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -7645,7 +7694,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -7954,7 +8005,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -7976,7 +8029,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -8231,7 +8286,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -8253,7 +8310,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -8551,7 +8610,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -8573,7 +8634,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -8895,7 +8958,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -8917,7 +8982,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -9172,7 +9239,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -9194,7 +9263,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -9523,7 +9594,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -9545,7 +9618,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -9879,7 +9954,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -9901,7 +9978,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -10235,7 +10314,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -10257,7 +10338,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -12179,11 +12262,6 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
-	})
-	AppendFlagCategoryMap("server", "ssh-exec", "selector", &schema.Category{
-		Key:         "filter",
-		DisplayName: "Filter options",
-		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "ssh-exec", "user", &schema.Category{
 		Key:         "auth",

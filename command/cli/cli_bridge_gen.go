@@ -792,7 +792,9 @@ func init() {
 						return fmt.Errorf("ID or Name argument is required")
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -814,7 +816,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -1114,7 +1118,9 @@ func init() {
 						return fmt.Errorf("ID or Name argument is required")
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -1136,7 +1142,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -1417,7 +1425,9 @@ func init() {
 						return fmt.Errorf("ID or Name argument is required")
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -1439,7 +1449,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)

@@ -336,6 +336,7 @@ func buildActionParams(command *schema.Command) (map[string]interface{}, error) 
 		"FindResultName":        ctx.FindResultFieldName(),
 		"IsNeedSingleID":        command.Type.IsNeedSingleIDType(),
 		"IsNeedIDOnlyType":      command.Type.IsNeedIDOnlyType(),
+		"SkipAfterSecondArgs":   command.SkipAfterSecondArgs,
 	}
 
 	return res, nil
@@ -611,7 +612,11 @@ func init() {
 						}
 						{{ end }}
 					} else {
+						{{if .SkipAfterSecondArgs}}
+						arg := c.Args().First()
+						{{ else }}
 						for _, arg := range c.Args().Slice() {
+						{{ end }}
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -633,7 +638,9 @@ func init() {
 									}
 								}
 							}
+						{{ if not .SkipAfterSecondArgs }}
 						}
+						{{ end }}
 					}
 
 					ids = command.UniqIDs(ids)

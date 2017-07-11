@@ -576,7 +576,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -598,7 +600,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -1295,7 +1299,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -1317,7 +1323,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -1615,7 +1623,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -1637,7 +1647,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -1981,7 +1993,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -2003,7 +2017,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -2322,7 +2338,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -2344,7 +2362,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -2774,7 +2794,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -2796,7 +2818,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)
@@ -3102,7 +3126,9 @@ func init() {
 						}
 
 					} else {
+
 						for _, arg := range c.Args().Slice() {
+
 							for _, a := range strings.Split(arg, "\n") {
 								idOrName := a
 								if id, ok := toSakuraID(idOrName); ok {
@@ -3124,7 +3150,9 @@ func init() {
 									}
 								}
 							}
+
 						}
+
 					}
 
 					ids = command.UniqIDs(ids)

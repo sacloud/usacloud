@@ -630,11 +630,6 @@ func ServerSshExecCompleteFlags(ctx command.Context, params *params.SshExecServe
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "selector":
-		param := define.Resources["Server"].Commands["ssh-exec"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
 	case "id":
 		param := define.Resources["Server"].Commands["ssh-exec"].BuildedParams().Get("id")
 		if param != nil {

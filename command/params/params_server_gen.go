@@ -2909,16 +2909,15 @@ func (p *SshServerParam) GetId() int64 {
 
 // SshExecServerParam is input parameters for the sacloud API
 type SshExecServerParam struct {
-	Key               string   `json:"key"`
-	User              string   `json:"user"`
-	Port              int      `json:"port"`
-	Password          string   `json:"password"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Quiet             bool     `json:"quiet"`
-	Id                int64    `json:"id"`
+	Key               string `json:"key"`
+	User              string `json:"user"`
+	Port              int    `json:"port"`
+	Password          string `json:"password"`
+	ParamTemplate     string `json:"param-template"`
+	ParamTemplateFile string `json:"param-template-file"`
+	GenerateSkeleton  bool   `json:"generate-skeleton"`
+	Quiet             bool   `json:"quiet"`
+	Id                int64  `json:"id"`
 }
 
 // NewSshExecServerParam return new SshExecServerParam
@@ -2942,9 +2941,6 @@ func (p *SshExecServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Password) {
 		p.Password = ""
-	}
-	if isEmpty(p.Selector) {
-		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
@@ -3047,13 +3043,6 @@ func (p *SshExecServerParam) SetPassword(v string) {
 
 func (p *SshExecServerParam) GetPassword() string {
 	return p.Password
-}
-func (p *SshExecServerParam) SetSelector(v []string) {
-	p.Selector = v
-}
-
-func (p *SshExecServerParam) GetSelector() []string {
-	return p.Selector
 }
 func (p *SshExecServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
