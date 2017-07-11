@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/hnakamur/go-scp"
+	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/usacloud/remote"
 )
 
@@ -26,11 +27,11 @@ func ServerScp(ctx command.Context, params *params.ScpServerParam) error {
 	src := ctx.Args()[0]
 	dest := ctx.Args()[1]
 
-	srcID, srcTokens, e := parseScpArgs(src)
+	srcID, srcTokens, e := parseScpArgs(api, src)
 	if e != nil {
 		return fmt.Errorf("ServerScp is failed: %s", e)
 	}
-	destID, destTokens, e := parseScpArgs(dest)
+	destID, destTokens, e := parseScpArgs(api, dest)
 	if e != nil {
 		return fmt.Errorf("ServerScp is failed: %s", e)
 	}
@@ -178,7 +179,7 @@ func ServerScp(ctx command.Context, params *params.ScpServerParam) error {
 	return nil
 }
 
-func parseScpArgs(arg string) (int64, []string, error) {
+func parseScpArgs(api *api.ServerAPI, arg string) (int64, []string, error) {
 
 	tokens := strings.Split(arg, ":")
 
@@ -187,7 +188,26 @@ func parseScpArgs(arg string) (int64, []string, error) {
 		strID := tokens[0]
 		id, err := strconv.ParseInt(strID, 10, 64)
 		if err != nil {
-			return -1, tokens, nil // for windows like path (C://...)
+
+			api.Reset()
+			api.SetNameLike(strID)
+			res, err := api.Find()
+			if err != nil {
+				return -1, []string{}, fmt.Errorf("Find server[%s] is failed: %s", strID, err)
+			}
+
+			switch len(res.Servers) {
+			case 0:
+				return -1, tokens, nil // for windows like path (C://...)
+			case 1:
+				id = res.Servers[0].ID
+			default:
+				return -1, []string{}, fmt.Errorf("scp command can't specify more than one server")
+			}
+
+			if len(res.Servers) == 0 {
+			}
+
 		}
 		if len(fmt.Sprintf("%d", id)) != 12 {
 			return -1, []string{}, fmt.Errorf("ID is invalid: %s", err)
