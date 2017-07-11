@@ -228,9 +228,9 @@ COPYRIGHT:
     $ usacloud server ssh-exec <ID または 名称>  cat /etc/passwd
     
     # SCPでのアップロード/ダウンロード
-    $ usacloud server scp local-file.txt [ServerID]:/home/ubuntu/remote-file.txt # ローカルからリモートへ
-    $ usacloud server scp [ServerID]:/home/ubuntu/remote-file.txt local-file.txt # リモートからローカルへ
-    $ usacloud server scp -r local-dir [ServerID]:/home/ubuntu/remote-dir        # ディレクトリに対して再帰的に処理
+    $ usacloud server scp local-file.txt [ID または 名称]:/home/ubuntu/remote-file.txt # ローカルからリモートへ
+    $ usacloud server scp [ID または 名称]:/home/ubuntu/remote-file.txt local-file.txt # リモートからローカルへ
+    $ usacloud server scp -r local-dir [ID または 名称]:/home/ubuntu/remote-dir        # ディレクトリに対して再帰的に処理
    
     # OSのデフォルトVNCクライアントを用いてサーバへVNC接続
     # (Windowsの場合、.vnc拡張子に適切なVNCクライアントを関連付けしておく必要あり)
