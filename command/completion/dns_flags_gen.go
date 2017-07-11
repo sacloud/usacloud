@@ -15,17 +15,35 @@ func DNSListCompleteFlags(ctx command.Context, params *params.ListDNSParam, flag
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["DNS"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["DNS"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["DNS"].Commands["list"].Params["id"].CompleteFunc
-	case "tags":
-		comp = define.Resources["DNS"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["DNS"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["DNS"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["DNS"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["DNS"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["DNS"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["DNS"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["DNS"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["DNS"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -42,8 +60,16 @@ func DNSRecordInfoCompleteFlags(ctx command.Context, params *params.RecordInfoDN
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["DNS"].Commands["record-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["DNS"].Commands["record-info"].Params["id"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -61,13 +87,25 @@ func DNSCreateCompleteFlags(ctx command.Context, params *params.CreateDNSParam, 
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["DNS"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["DNS"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["DNS"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["DNS"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["DNS"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["DNS"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["DNS"].Commands["create"].Params["icon-id"].CompleteFunc
+		param := define.Resources["DNS"].Commands["create"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -85,25 +123,60 @@ func DNSRecordAddCompleteFlags(ctx command.Context, params *params.RecordAddDNSP
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["DNS"].Commands["record-add"].Params["name"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-add"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "type":
-		comp = define.Resources["DNS"].Commands["record-add"].Params["type"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-add"].BuildedParams().Get("type")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "value":
-		comp = define.Resources["DNS"].Commands["record-add"].Params["value"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-add"].BuildedParams().Get("value")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ttl":
-		comp = define.Resources["DNS"].Commands["record-add"].Params["ttl"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-add"].BuildedParams().Get("ttl")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "mx-priority":
-		comp = define.Resources["DNS"].Commands["record-add"].Params["mx-priority"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-add"].BuildedParams().Get("mx-priority")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "srv-priority":
-		comp = define.Resources["DNS"].Commands["record-add"].Params["srv-priority"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-add"].BuildedParams().Get("srv-priority")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "srv-weight":
-		comp = define.Resources["DNS"].Commands["record-add"].Params["srv-weight"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-add"].BuildedParams().Get("srv-weight")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "srv-port":
-		comp = define.Resources["DNS"].Commands["record-add"].Params["srv-port"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-add"].BuildedParams().Get("srv-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "srv-target":
-		comp = define.Resources["DNS"].Commands["record-add"].Params["srv-target"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-add"].BuildedParams().Get("srv-target")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["DNS"].Commands["record-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["DNS"].Commands["record-add"].Params["id"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -120,8 +193,16 @@ func DNSReadCompleteFlags(ctx command.Context, params *params.ReadDNSParam, flag
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["DNS"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["DNS"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["DNS"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -139,27 +220,65 @@ func DNSRecordUpdateCompleteFlags(ctx command.Context, params *params.RecordUpda
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["DNS"].Commands["record-update"].Params["index"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["DNS"].Commands["record-update"].Params["name"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "type":
-		comp = define.Resources["DNS"].Commands["record-update"].Params["type"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-update"].BuildedParams().Get("type")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "value":
-		comp = define.Resources["DNS"].Commands["record-update"].Params["value"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-update"].BuildedParams().Get("value")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ttl":
-		comp = define.Resources["DNS"].Commands["record-update"].Params["ttl"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-update"].BuildedParams().Get("ttl")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "mx-priority":
-		comp = define.Resources["DNS"].Commands["record-update"].Params["mx-priority"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-update"].BuildedParams().Get("mx-priority")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "srv-priority":
-		comp = define.Resources["DNS"].Commands["record-update"].Params["srv-priority"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-update"].BuildedParams().Get("srv-priority")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "srv-weight":
-		comp = define.Resources["DNS"].Commands["record-update"].Params["srv-weight"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-update"].BuildedParams().Get("srv-weight")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "srv-port":
-		comp = define.Resources["DNS"].Commands["record-update"].Params["srv-port"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-update"].BuildedParams().Get("srv-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "srv-target":
-		comp = define.Resources["DNS"].Commands["record-update"].Params["srv-target"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-update"].BuildedParams().Get("srv-target")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["DNS"].Commands["record-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["DNS"].Commands["record-update"].Params["id"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -177,9 +296,20 @@ func DNSRecordDeleteCompleteFlags(ctx command.Context, params *params.RecordDele
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["DNS"].Commands["record-delete"].Params["index"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["DNS"].Commands["record-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["DNS"].Commands["record-delete"].Params["id"].CompleteFunc
+		param := define.Resources["DNS"].Commands["record-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -196,14 +326,31 @@ func DNSUpdateCompleteFlags(ctx command.Context, params *params.UpdateDNSParam, 
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["DNS"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["DNS"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["DNS"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["DNS"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["DNS"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["DNS"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["DNS"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["DNS"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["DNS"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -220,8 +367,16 @@ func DNSDeleteCompleteFlags(ctx command.Context, params *params.DeleteDNSParam, 
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["DNS"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["DNS"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["DNS"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

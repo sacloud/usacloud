@@ -15,23 +15,50 @@ func ArchiveListCompleteFlags(ctx command.Context, params *params.ListArchivePar
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["Archive"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["Archive"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Archive"].Commands["list"].Params["id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "scope":
-		comp = define.Resources["Archive"].Commands["list"].Params["scope"].CompleteFunc
-	case "tags":
-		comp = define.Resources["Archive"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["Archive"].Commands["list"].BuildedParams().Get("scope")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["Archive"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-archive-id":
-		comp = define.Resources["Archive"].Commands["list"].Params["source-archive-id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["list"].BuildedParams().Get("source-archive-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-disk-id":
-		comp = define.Resources["Archive"].Commands["list"].Params["source-disk-id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["list"].BuildedParams().Get("source-disk-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["Archive"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["Archive"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["Archive"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["Archive"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["Archive"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["Archive"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -49,21 +76,45 @@ func ArchiveCreateCompleteFlags(ctx command.Context, params *params.CreateArchiv
 
 	switch flagName {
 	case "source-disk-id":
-		comp = define.Resources["Archive"].Commands["create"].Params["source-disk-id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["create"].BuildedParams().Get("source-disk-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-archive-id":
-		comp = define.Resources["Archive"].Commands["create"].Params["source-archive-id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["create"].BuildedParams().Get("source-archive-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "size":
-		comp = define.Resources["Archive"].Commands["create"].Params["size"].CompleteFunc
+		param := define.Resources["Archive"].Commands["create"].BuildedParams().Get("size")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "archive-file":
-		comp = define.Resources["Archive"].Commands["create"].Params["archive-file"].CompleteFunc
+		param := define.Resources["Archive"].Commands["create"].BuildedParams().Get("archive-file")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Archive"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["Archive"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Archive"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["Archive"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Archive"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["Archive"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["Archive"].Commands["create"].Params["icon-id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["create"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -80,8 +131,16 @@ func ArchiveReadCompleteFlags(ctx command.Context, params *params.ReadArchivePar
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Archive"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Archive"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -98,16 +157,36 @@ func ArchiveUpdateCompleteFlags(ctx command.Context, params *params.UpdateArchiv
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Archive"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Archive"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["Archive"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Archive"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["Archive"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Archive"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["Archive"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["Archive"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Archive"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -124,8 +203,16 @@ func ArchiveDeleteCompleteFlags(ctx command.Context, params *params.DeleteArchiv
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Archive"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Archive"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -143,9 +230,20 @@ func ArchiveUploadCompleteFlags(ctx command.Context, params *params.UploadArchiv
 
 	switch flagName {
 	case "archive-file":
-		comp = define.Resources["Archive"].Commands["upload"].Params["archive-file"].CompleteFunc
+		param := define.Resources["Archive"].Commands["upload"].BuildedParams().Get("archive-file")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Archive"].Commands["upload"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Archive"].Commands["upload"].Params["id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["upload"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -163,9 +261,20 @@ func ArchiveDownloadCompleteFlags(ctx command.Context, params *params.DownloadAr
 
 	switch flagName {
 	case "file-destination":
-		comp = define.Resources["Archive"].Commands["download"].Params["file-destination"].CompleteFunc
+		param := define.Resources["Archive"].Commands["download"].BuildedParams().Get("file-destination")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Archive"].Commands["download"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Archive"].Commands["download"].Params["id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["download"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -180,8 +289,16 @@ func ArchiveFtpOpenCompleteFlags(ctx command.Context, params *params.FtpOpenArch
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Archive"].Commands["ftp-open"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Archive"].Commands["ftp-open"].Params["id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["ftp-open"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -198,8 +315,16 @@ func ArchiveFtpCloseCompleteFlags(ctx command.Context, params *params.FtpCloseAr
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Archive"].Commands["ftp-close"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Archive"].Commands["ftp-close"].Params["id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["ftp-close"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -214,8 +339,16 @@ func ArchiveWaitForCopyCompleteFlags(ctx command.Context, params *params.WaitFor
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Archive"].Commands["wait-for-copy"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Archive"].Commands["wait-for-copy"].Params["id"].CompleteFunc
+		param := define.Resources["Archive"].Commands["wait-for-copy"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {

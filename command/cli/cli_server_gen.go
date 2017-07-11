@@ -57,7 +57,7 @@ func init() {
 		Subcommands: []*cli.Command{
 			{
 				Name:    "list",
-				Aliases: []string{"ls", "find"},
+				Aliases: []string{"ls", "find", "selector"},
 				Usage:   "List Server",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -69,8 +69,9 @@ func init() {
 						Usage: "set filter by id(s)",
 					},
 					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set filter by tags(AND)",
+						Name:    "tags",
+						Aliases: []string{"selector"},
+						Usage:   "set filter by tags(AND)",
 					},
 					&cli.IntFlag{
 						Name:    "from",
@@ -999,6 +1000,10 @@ func init() {
 				Usage:     "Read Server",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -1063,6 +1068,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, readParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						readParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						readParam.ParamTemplate = c.String("param-template")
 					}
@@ -1168,6 +1176,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						readParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						readParam.ParamTemplate = c.String("param-template")
 					}
@@ -1221,29 +1232,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), readParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(readParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, readParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -1251,7 +1282,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -1284,6 +1315,10 @@ func init() {
 				Usage:     "Update Server",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "name",
 						Usage: "set resource display name",
@@ -1370,6 +1405,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, updateParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						updateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("name") {
 						updateParam.Name = c.String("name")
 					}
@@ -1490,6 +1528,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						updateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("name") {
 						updateParam.Name = c.String("name")
 					}
@@ -1558,29 +1599,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(updateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, updateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -1588,7 +1649,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -1631,6 +1692,10 @@ func init() {
 					&cli.BoolFlag{
 						Name:  "without-disk",
 						Usage: "don't delete connected disks with server",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -1706,6 +1771,9 @@ func init() {
 					}
 					if c.IsSet("without-disk") {
 						deleteParam.WithoutDisk = c.Bool("without-disk")
+					}
+					if c.IsSet("selector") {
+						deleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						deleteParam.Assumeyes = c.Bool("assumeyes")
@@ -1821,6 +1889,9 @@ func init() {
 					if c.IsSet("without-disk") {
 						deleteParam.WithoutDisk = c.Bool("without-disk")
 					}
+					if c.IsSet("selector") {
+						deleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						deleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -1877,29 +1948,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(deleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, deleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -1907,7 +1998,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -1948,6 +2039,10 @@ func init() {
 					&cli.IntFlag{
 						Name:  "memory",
 						Usage: "[Required] set memory size(GB)",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -2023,6 +2118,9 @@ func init() {
 					}
 					if c.IsSet("memory") {
 						planChangeParam.Memory = c.Int("memory")
+					}
+					if c.IsSet("selector") {
+						planChangeParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						planChangeParam.Assumeyes = c.Bool("assumeyes")
@@ -2138,6 +2236,9 @@ func init() {
 					if c.IsSet("memory") {
 						planChangeParam.Memory = c.Int("memory")
 					}
+					if c.IsSet("selector") {
+						planChangeParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						planChangeParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2194,29 +2295,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), planChangeParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(planChangeParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, planChangeParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", planChangeParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(planChangeParam.Selector) == 0 || hasTags(&v, planChangeParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2224,7 +2345,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -2259,6 +2380,10 @@ func init() {
 				Usage:     "Boot Server",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -2304,6 +2429,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, bootParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						bootParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						bootParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2397,6 +2525,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						bootParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						bootParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2438,29 +2569,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), bootParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(bootParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, bootParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bootParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(bootParam.Selector) == 0 || hasTags(&v, bootParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2468,7 +2619,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -2503,6 +2654,10 @@ func init() {
 				Usage:     "Shutdown Server",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -2548,6 +2703,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, shutdownParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						shutdownParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						shutdownParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2641,6 +2799,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						shutdownParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						shutdownParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2682,29 +2843,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), shutdownParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(shutdownParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, shutdownParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", shutdownParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(shutdownParam.Selector) == 0 || hasTags(&v, shutdownParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2712,7 +2893,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -2747,6 +2928,10 @@ func init() {
 				Usage:     "ShutdownForce Server",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -2792,6 +2977,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, shutdownForceParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						shutdownForceParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						shutdownForceParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2885,6 +3073,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						shutdownForceParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						shutdownForceParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2926,29 +3117,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), shutdownForceParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(shutdownForceParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, shutdownForceParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", shutdownForceParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(shutdownForceParam.Selector) == 0 || hasTags(&v, shutdownForceParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2956,7 +3167,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -2990,6 +3201,10 @@ func init() {
 				Usage:     "Reset Server",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -3035,6 +3250,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, resetParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						resetParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						resetParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -3128,6 +3346,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						resetParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						resetParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -3169,29 +3390,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), resetParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(resetParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, resetParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", resetParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(resetParam.Selector) == 0 || hasTags(&v, resetParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -3199,7 +3440,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -3233,6 +3474,10 @@ func init() {
 				Usage:     "Wait until boot is completed",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -3273,6 +3518,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, waitForBootParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						waitForBootParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						waitForBootParam.ParamTemplate = c.String("param-template")
 					}
@@ -3363,6 +3611,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						waitForBootParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						waitForBootParam.ParamTemplate = c.String("param-template")
 					}
@@ -3401,29 +3652,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), waitForBootParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(waitForBootParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, waitForBootParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForBootParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(waitForBootParam.Selector) == 0 || hasTags(&v, waitForBootParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -3431,7 +3702,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					wg := sync.WaitGroup{}
@@ -3460,6 +3731,10 @@ func init() {
 				Usage:     "Wait until shutdown is completed",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -3500,6 +3775,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, waitForDownParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						waitForDownParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						waitForDownParam.ParamTemplate = c.String("param-template")
 					}
@@ -3590,6 +3868,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						waitForDownParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						waitForDownParam.ParamTemplate = c.String("param-template")
 					}
@@ -3628,29 +3909,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), waitForDownParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(waitForDownParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, waitForDownParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForDownParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(waitForDownParam.Selector) == 0 || hasTags(&v, waitForDownParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -3658,7 +3959,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					wg := sync.WaitGroup{}
@@ -3707,6 +4008,10 @@ func init() {
 						Name:    "password",
 						Usage:   "password(or private-key pass phrase)",
 						EnvVars: []string{"SAKURACLOUD_SERVER_PASSWORD"},
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -3764,6 +4069,9 @@ func init() {
 					}
 					if c.IsSet("password") || command.IsEmpty(sshParam.Password) {
 						sshParam.Password = c.String("password")
+					}
+					if c.IsSet("selector") {
+						sshParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
 						sshParam.ParamTemplate = c.String("param-template")
@@ -3870,6 +4178,9 @@ func init() {
 					if c.IsSet("password") || command.IsEmpty(sshParam.Password) {
 						sshParam.Password = c.String("password")
 					}
+					if c.IsSet("selector") {
+						sshParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						sshParam.ParamTemplate = c.String("param-template")
 					}
@@ -3911,29 +4222,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), sshParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(sshParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, sshParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", sshParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(sshParam.Selector) == 0 || hasTags(&v, sshParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -3941,7 +4272,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -3994,6 +4325,10 @@ func init() {
 						Name:    "password",
 						Usage:   "password(or private-key pass phrase)",
 						EnvVars: []string{"SAKURACLOUD_SERVER_PASSWORD"},
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -4051,6 +4386,9 @@ func init() {
 					}
 					if c.IsSet("password") || command.IsEmpty(sshExecParam.Password) {
 						sshExecParam.Password = c.String("password")
+					}
+					if c.IsSet("selector") {
+						sshExecParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
 						sshExecParam.ParamTemplate = c.String("param-template")
@@ -4157,6 +4495,9 @@ func init() {
 					if c.IsSet("password") || command.IsEmpty(sshExecParam.Password) {
 						sshExecParam.Password = c.String("password")
 					}
+					if c.IsSet("selector") {
+						sshExecParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						sshExecParam.ParamTemplate = c.String("param-template")
 					}
@@ -4198,29 +4539,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), sshExecParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(sshExecParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, sshExecParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", sshExecParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(sshExecParam.Selector) == 0 || hasTags(&v, sshExecParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -4228,7 +4589,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -4515,6 +4876,10 @@ func init() {
 						Name:  "wait-for-boot",
 						Usage: "wait until the server starts up",
 					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -4562,6 +4927,9 @@ func init() {
 					// Set option values
 					if c.IsSet("wait-for-boot") {
 						vncParam.WaitForBoot = c.Bool("wait-for-boot")
+					}
+					if c.IsSet("selector") {
+						vncParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						vncParam.Assumeyes = c.Bool("assumeyes")
@@ -4659,6 +5027,9 @@ func init() {
 					if c.IsSet("wait-for-boot") {
 						vncParam.WaitForBoot = c.Bool("wait-for-boot")
 					}
+					if c.IsSet("selector") {
+						vncParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						vncParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -4700,29 +5071,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), vncParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(vncParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, vncParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vncParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(vncParam.Selector) == 0 || hasTags(&v, vncParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -4730,7 +5121,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -4767,6 +5158,10 @@ func init() {
 					&cli.BoolFlag{
 						Name:  "wait-for-boot",
 						Usage: "wait until the server starts up",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -4834,6 +5229,9 @@ func init() {
 					// Set option values
 					if c.IsSet("wait-for-boot") {
 						vncInfoParam.WaitForBoot = c.Bool("wait-for-boot")
+					}
+					if c.IsSet("selector") {
+						vncInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
 						vncInfoParam.ParamTemplate = c.String("param-template")
@@ -4943,6 +5341,9 @@ func init() {
 					if c.IsSet("wait-for-boot") {
 						vncInfoParam.WaitForBoot = c.Bool("wait-for-boot")
 					}
+					if c.IsSet("selector") {
+						vncInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						vncInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -4996,29 +5397,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), vncInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(vncInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, vncInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vncInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(vncInfoParam.Selector) == 0 || hasTags(&v, vncInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -5026,7 +5447,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -5081,6 +5502,10 @@ func init() {
 					&cli.BoolFlag{
 						Name:  "wait-for-boot",
 						Usage: "wait until the server starts up",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -5165,6 +5590,9 @@ func init() {
 					}
 					if c.IsSet("wait-for-boot") {
 						vncSendParam.WaitForBoot = c.Bool("wait-for-boot")
+					}
+					if c.IsSet("selector") {
+						vncSendParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						vncSendParam.Assumeyes = c.Bool("assumeyes")
@@ -5289,6 +5717,9 @@ func init() {
 					if c.IsSet("wait-for-boot") {
 						vncSendParam.WaitForBoot = c.Bool("wait-for-boot")
 					}
+					if c.IsSet("selector") {
+						vncSendParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						vncSendParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -5345,29 +5776,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), vncSendParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(vncSendParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, vncSendParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vncSendParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(vncSendParam.Selector) == 0 || hasTags(&v, vncSendParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -5375,7 +5826,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -5414,6 +5865,10 @@ func init() {
 				Usage:     "Show information of disk(s) connected to server",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -5478,6 +5933,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, diskInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						diskInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						diskInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -5583,6 +6041,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						diskInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						diskInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -5636,29 +6097,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), diskInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(diskInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, diskInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", diskInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(diskInfoParam.Selector) == 0 || hasTags(&v, diskInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -5666,7 +6147,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -5702,6 +6183,10 @@ func init() {
 					&cli.Int64Flag{
 						Name:  "disk-id",
 						Usage: "[Required] set target disk ID",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -5750,6 +6235,9 @@ func init() {
 					// Set option values
 					if c.IsSet("disk-id") {
 						diskConnectParam.DiskId = c.Int64("disk-id")
+					}
+					if c.IsSet("selector") {
+						diskConnectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						diskConnectParam.Assumeyes = c.Bool("assumeyes")
@@ -5847,6 +6335,9 @@ func init() {
 					if c.IsSet("disk-id") {
 						diskConnectParam.DiskId = c.Int64("disk-id")
 					}
+					if c.IsSet("selector") {
+						diskConnectParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						diskConnectParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -5888,29 +6379,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), diskConnectParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(diskConnectParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, diskConnectParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", diskConnectParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(diskConnectParam.Selector) == 0 || hasTags(&v, diskConnectParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -5918,7 +6429,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -5959,6 +6470,10 @@ func init() {
 					&cli.Int64Flag{
 						Name:  "disk-id",
 						Usage: "[Required] set target disk ID",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -6007,6 +6522,9 @@ func init() {
 					// Set option values
 					if c.IsSet("disk-id") {
 						diskDisconnectParam.DiskId = c.Int64("disk-id")
+					}
+					if c.IsSet("selector") {
+						diskDisconnectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						diskDisconnectParam.Assumeyes = c.Bool("assumeyes")
@@ -6104,6 +6622,9 @@ func init() {
 					if c.IsSet("disk-id") {
 						diskDisconnectParam.DiskId = c.Int64("disk-id")
 					}
+					if c.IsSet("selector") {
+						diskDisconnectParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						diskDisconnectParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -6145,29 +6666,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), diskDisconnectParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(diskDisconnectParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, diskDisconnectParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", diskDisconnectParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(diskDisconnectParam.Selector) == 0 || hasTags(&v, diskDisconnectParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -6175,7 +6716,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -6214,6 +6755,10 @@ func init() {
 				Usage:     "Show information of NIC(s) connected to server",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -6278,6 +6823,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, interfaceInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						interfaceInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						interfaceInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -6383,6 +6931,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						interfaceInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						interfaceInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -6436,29 +6987,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), interfaceInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(interfaceInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, interfaceInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(interfaceInfoParam.Selector) == 0 || hasTags(&v, interfaceInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -6466,7 +7037,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -6502,6 +7073,10 @@ func init() {
 					&cli.BoolFlag{
 						Name:  "without-disk-edit",
 						Usage: "set skip edit-disk flag. if true, don't call DiskEdit API after interface added",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -6550,6 +7125,9 @@ func init() {
 					// Set option values
 					if c.IsSet("without-disk-edit") {
 						interfaceAddForInternetParam.WithoutDiskEdit = c.Bool("without-disk-edit")
+					}
+					if c.IsSet("selector") {
+						interfaceAddForInternetParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						interfaceAddForInternetParam.Assumeyes = c.Bool("assumeyes")
@@ -6647,6 +7225,9 @@ func init() {
 					if c.IsSet("without-disk-edit") {
 						interfaceAddForInternetParam.WithoutDiskEdit = c.Bool("without-disk-edit")
 					}
+					if c.IsSet("selector") {
+						interfaceAddForInternetParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						interfaceAddForInternetParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -6688,29 +7269,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), interfaceAddForInternetParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(interfaceAddForInternetParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, interfaceAddForInternetParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceAddForInternetParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(interfaceAddForInternetParam.Selector) == 0 || hasTags(&v, interfaceAddForInternetParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -6718,7 +7319,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -6780,6 +7381,10 @@ func init() {
 						Usage:   "set ipaddress  prefix",
 						Value:   24,
 					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -6839,6 +7444,9 @@ func init() {
 					}
 					if c.IsSet("nw-masklen") {
 						interfaceAddForRouterParam.NwMasklen = c.Int("nw-masklen")
+					}
+					if c.IsSet("selector") {
+						interfaceAddForRouterParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						interfaceAddForRouterParam.Assumeyes = c.Bool("assumeyes")
@@ -6948,6 +7556,9 @@ func init() {
 					if c.IsSet("nw-masklen") {
 						interfaceAddForRouterParam.NwMasklen = c.Int("nw-masklen")
 					}
+					if c.IsSet("selector") {
+						interfaceAddForRouterParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						interfaceAddForRouterParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -6989,29 +7600,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), interfaceAddForRouterParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(interfaceAddForRouterParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, interfaceAddForRouterParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceAddForRouterParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(interfaceAddForRouterParam.Selector) == 0 || hasTags(&v, interfaceAddForRouterParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -7019,7 +7650,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -7081,6 +7712,10 @@ func init() {
 						Usage:   "set ipaddress  prefix",
 						Value:   24,
 					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -7140,6 +7775,9 @@ func init() {
 					}
 					if c.IsSet("nw-masklen") {
 						interfaceAddForSwitchParam.NwMasklen = c.Int("nw-masklen")
+					}
+					if c.IsSet("selector") {
+						interfaceAddForSwitchParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						interfaceAddForSwitchParam.Assumeyes = c.Bool("assumeyes")
@@ -7249,6 +7887,9 @@ func init() {
 					if c.IsSet("nw-masklen") {
 						interfaceAddForSwitchParam.NwMasklen = c.Int("nw-masklen")
 					}
+					if c.IsSet("selector") {
+						interfaceAddForSwitchParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						interfaceAddForSwitchParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -7290,29 +7931,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), interfaceAddForSwitchParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(interfaceAddForSwitchParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, interfaceAddForSwitchParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceAddForSwitchParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(interfaceAddForSwitchParam.Selector) == 0 || hasTags(&v, interfaceAddForSwitchParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -7320,7 +7981,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -7358,6 +8019,10 @@ func init() {
 				Usage:     "Create and connect a disconnected NIC",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -7403,6 +8068,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, interfaceAddDisconnectedParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						interfaceAddDisconnectedParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						interfaceAddDisconnectedParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -7496,6 +8164,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						interfaceAddDisconnectedParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						interfaceAddDisconnectedParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -7537,29 +8208,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), interfaceAddDisconnectedParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(interfaceAddDisconnectedParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, interfaceAddDisconnectedParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceAddDisconnectedParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(interfaceAddDisconnectedParam.Selector) == 0 || hasTags(&v, interfaceAddDisconnectedParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -7567,7 +8258,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -7605,6 +8296,10 @@ func init() {
 				Usage:     "Show information of ISO-Image inserted to server",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -7669,6 +8364,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, isoInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						isoInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						isoInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -7774,6 +8472,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						isoInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						isoInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -7827,29 +8528,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), isoInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(isoInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, isoInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(isoInfoParam.Selector) == 0 || hasTags(&v, isoInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -7857,7 +8578,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -7919,6 +8640,10 @@ func init() {
 					&cli.Int64Flag{
 						Name:  "icon-id",
 						Usage: "set Icon ID",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -7985,6 +8710,9 @@ func init() {
 					}
 					if c.IsSet("icon-id") {
 						isoInsertParam.IconId = c.Int64("icon-id")
+					}
+					if c.IsSet("selector") {
+						isoInsertParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						isoInsertParam.Assumeyes = c.Bool("assumeyes")
@@ -8100,6 +8828,9 @@ func init() {
 					if c.IsSet("icon-id") {
 						isoInsertParam.IconId = c.Int64("icon-id")
 					}
+					if c.IsSet("selector") {
+						isoInsertParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						isoInsertParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -8141,29 +8872,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), isoInsertParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(isoInsertParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, isoInsertParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoInsertParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(isoInsertParam.Selector) == 0 || hasTags(&v, isoInsertParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -8171,7 +8922,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -8209,6 +8960,10 @@ func init() {
 				Usage:     "Eject ISO-Image from server",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -8254,6 +9009,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, isoEjectParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						isoEjectParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						isoEjectParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -8347,6 +9105,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						isoEjectParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						isoEjectParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -8388,29 +9149,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), isoEjectParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(isoEjectParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, isoEjectParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", isoEjectParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(isoEjectParam.Selector) == 0 || hasTags(&v, isoEjectParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -8418,7 +9199,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -8468,6 +9249,10 @@ func init() {
 						Name:  "key-format",
 						Usage: "[Required] set monitoring value key-format",
 						Value: "sakuracloud.{{.ID}}.cpu",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -8541,6 +9326,9 @@ func init() {
 					}
 					if c.IsSet("key-format") {
 						monitorCpuParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorCpuParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
 						monitorCpuParam.ParamTemplate = c.String("param-template")
@@ -8656,6 +9444,9 @@ func init() {
 					if c.IsSet("key-format") {
 						monitorCpuParam.KeyFormat = c.String("key-format")
 					}
+					if c.IsSet("selector") {
+						monitorCpuParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						monitorCpuParam.ParamTemplate = c.String("param-template")
 					}
@@ -8709,29 +9500,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), monitorCpuParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(monitorCpuParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, monitorCpuParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorCpuParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(monitorCpuParam.Selector) == 0 || hasTags(&v, monitorCpuParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -8739,7 +9550,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -8788,6 +9599,10 @@ func init() {
 						Name:  "key-format",
 						Usage: "[Required] set monitoring value key-format",
 						Value: "sakuracloud.{{.ID}}.nic.{{.Index}}",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -8864,6 +9679,9 @@ func init() {
 					}
 					if c.IsSet("key-format") {
 						monitorNicParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorNicParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
 						monitorNicParam.ParamTemplate = c.String("param-template")
@@ -8982,6 +9800,9 @@ func init() {
 					if c.IsSet("key-format") {
 						monitorNicParam.KeyFormat = c.String("key-format")
 					}
+					if c.IsSet("selector") {
+						monitorNicParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						monitorNicParam.ParamTemplate = c.String("param-template")
 					}
@@ -9035,29 +9856,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), monitorNicParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(monitorNicParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, monitorNicParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorNicParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(monitorNicParam.Selector) == 0 || hasTags(&v, monitorNicParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -9065,7 +9906,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -9114,6 +9955,10 @@ func init() {
 						Name:  "key-format",
 						Usage: "[Required] set monitoring value key-format",
 						Value: "sakuracloud.{{.ID}}.disk.{{.Index}}",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -9190,6 +10035,9 @@ func init() {
 					}
 					if c.IsSet("key-format") {
 						monitorDiskParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorDiskParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
 						monitorDiskParam.ParamTemplate = c.String("param-template")
@@ -9308,6 +10156,9 @@ func init() {
 					if c.IsSet("key-format") {
 						monitorDiskParam.KeyFormat = c.String("key-format")
 					}
+					if c.IsSet("selector") {
+						monitorDiskParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						monitorDiskParam.ParamTemplate = c.String("param-template")
 					}
@@ -9361,29 +10212,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), monitorDiskParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Server
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Servers {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(monitorDiskParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, monitorDiskParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorDiskParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(monitorDiskParam.Selector) == 0 || hasTags(&v, monitorDiskParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -9391,7 +10262,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -9844,6 +10715,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "boot", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "build", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -10144,6 +11020,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("server", "delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "delete", "without-disk", &schema.Category{
 		Key:         "operation",
 		DisplayName: "Operation options",
@@ -10179,6 +11060,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "disk-connect", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "disk-disconnect", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -10208,6 +11094,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "disk-disconnect", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "disk-info", "column", &schema.Category{
 		Key:         "output",
@@ -10254,6 +11145,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("server", "disk-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "interface-add-disconnected", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -10279,6 +11175,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "interface-add-disconnected", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "interface-add-for-internet", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -10303,6 +11204,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "interface-add-for-internet", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "interface-add-for-internet", "without-disk-edit", &schema.Category{
 		Key:         "disk-edit",
@@ -10348,6 +11254,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "interface-add-for-router", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "interface-add-for-router", "switch-id", &schema.Category{
 		Key:         "connect",
@@ -10398,6 +11309,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "interface-add-for-switch", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "interface-add-for-switch", "switch-id", &schema.Category{
 		Key:         "connect",
@@ -10454,6 +11370,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("server", "interface-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "iso-eject", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -10478,6 +11399,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "iso-eject", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "iso-info", "column", &schema.Category{
 		Key:         "output",
@@ -10523,6 +11449,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "iso-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "iso-insert", "assumeyes", &schema.Category{
 		Key:         "Input",
@@ -10573,6 +11504,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "iso-insert", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "iso-insert", "size", &schema.Category{
 		Key:         "ISO-upload",
@@ -10749,6 +11685,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("server", "monitor-cpu", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "monitor-cpu", "start", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitor options",
@@ -10813,6 +11754,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "monitor-disk", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "monitor-disk", "start", &schema.Category{
 		Key:         "monitor",
@@ -10879,6 +11825,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("server", "monitor-nic", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "monitor-nic", "start", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitor options",
@@ -10944,6 +11895,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("server", "plan-change", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "read", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -10989,6 +11945,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("server", "read", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "reset", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -11013,6 +11974,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "reset", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "scp", "assumeyes", &schema.Category{
 		Key:         "Input",
@@ -11089,6 +12055,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "shutdown", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "shutdown-force", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -11113,6 +12084,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "shutdown-force", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "ssh", "generate-skeleton", &schema.Category{
 		Key:         "Input",
@@ -11153,6 +12129,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "ssh", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "ssh", "user", &schema.Category{
 		Key:         "auth",
@@ -11198,6 +12179,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "ssh-exec", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "ssh-exec", "user", &schema.Category{
 		Key:         "auth",
@@ -11269,6 +12255,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("server", "update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "update", "tags", &schema.Category{
 		Key:         "common",
 		DisplayName: "Common options",
@@ -11298,6 +12289,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "vnc", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "vnc", "wait-for-boot", &schema.Category{
 		Key:         "VNC",
@@ -11348,6 +12344,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "vnc-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("server", "vnc-info", "wait-for-boot", &schema.Category{
 		Key:         "VNC",
@@ -11419,6 +12420,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("server", "vnc-send", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "vnc-send", "use-us-keyboard", &schema.Category{
 		Key:         "VNC",
 		DisplayName: "VNC options",
@@ -11449,6 +12455,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("server", "wait-for-boot", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("server", "wait-for-down", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -11468,6 +12479,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "wait-for-down", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 
 	// append command to GlobalContext

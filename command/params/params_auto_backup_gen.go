@@ -593,6 +593,7 @@ func (p *CreateAutoBackupParam) GetFormatFile() string {
 
 // ReadAutoBackupParam is input parameters for the sacloud API
 type ReadAutoBackupParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -611,6 +612,9 @@ func NewReadAutoBackupParam() *ReadAutoBackupParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ReadAutoBackupParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -703,6 +707,13 @@ func (p *ReadAutoBackupParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadAutoBackupParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadAutoBackupParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReadAutoBackupParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -771,6 +782,7 @@ func (p *ReadAutoBackupParam) GetId() int64 {
 type UpdateAutoBackupParam struct {
 	Weekdays          []string `json:"weekdays"`
 	Generation        int      `json:"generation"`
+	Selector          []string `json:"selector"`
 	Name              string   `json:"name"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
@@ -799,6 +811,9 @@ func (p *UpdateAutoBackupParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Generation) {
 		p.Generation = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -963,6 +978,13 @@ func (p *UpdateAutoBackupParam) SetGeneration(v int) {
 func (p *UpdateAutoBackupParam) GetGeneration() int {
 	return p.Generation
 }
+func (p *UpdateAutoBackupParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateAutoBackupParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateAutoBackupParam) SetName(v string) {
 	p.Name = v
 }
@@ -1064,6 +1086,7 @@ func (p *UpdateAutoBackupParam) GetId() int64 {
 
 // DeleteAutoBackupParam is input parameters for the sacloud API
 type DeleteAutoBackupParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1083,6 +1106,9 @@ func NewDeleteAutoBackupParam() *DeleteAutoBackupParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DeleteAutoBackupParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1178,6 +1204,13 @@ func (p *DeleteAutoBackupParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DeleteAutoBackupParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteAutoBackupParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DeleteAutoBackupParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }

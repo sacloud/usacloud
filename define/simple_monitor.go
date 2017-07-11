@@ -10,7 +10,7 @@ func SimpleMonitorResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
+			Aliases:            []string{"ls", "find", "selector"},
 			Params:             simpleMonitorListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: simpleMonitorListColumns(),

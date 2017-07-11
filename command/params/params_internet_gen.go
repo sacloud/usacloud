@@ -269,6 +269,7 @@ type MonitorInternetParam struct {
 	Start             string   `json:"start"`
 	End               string   `json:"end"`
 	KeyFormat         string   `json:"key-format"`
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -298,6 +299,9 @@ func (p *MonitorInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
@@ -433,6 +437,13 @@ func (p *MonitorInternetParam) SetKeyFormat(v string) {
 func (p *MonitorInternetParam) GetKeyFormat() string {
 	return p.KeyFormat
 }
+func (p *MonitorInternetParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorInternetParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *MonitorInternetParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -500,6 +511,7 @@ func (p *MonitorInternetParam) GetId() int64 {
 // UpdateBandwidthInternetParam is input parameters for the sacloud API
 type UpdateBandwidthInternetParam struct {
 	BandWidth         int      `json:"band-width"`
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -524,6 +536,9 @@ func NewUpdateBandwidthInternetParam() *UpdateBandwidthInternetParam {
 func (p *UpdateBandwidthInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.BandWidth) {
 		p.BandWidth = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -640,6 +655,13 @@ func (p *UpdateBandwidthInternetParam) SetBandWidth(v int) {
 
 func (p *UpdateBandwidthInternetParam) GetBandWidth() int {
 	return p.BandWidth
+}
+func (p *UpdateBandwidthInternetParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateBandwidthInternetParam) GetSelector() []string {
+	return p.Selector
 }
 func (p *UpdateBandwidthInternetParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
@@ -1016,6 +1038,7 @@ func (p *CreateInternetParam) GetFormatFile() string {
 
 // ReadInternetParam is input parameters for the sacloud API
 type ReadInternetParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -1034,6 +1057,9 @@ func NewReadInternetParam() *ReadInternetParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ReadInternetParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -1126,6 +1152,13 @@ func (p *ReadInternetParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadInternetParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadInternetParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReadInternetParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -1193,6 +1226,7 @@ func (p *ReadInternetParam) GetId() int64 {
 // UpdateInternetParam is input parameters for the sacloud API
 type UpdateInternetParam struct {
 	BandWidth         int      `json:"band-width"`
+	Selector          []string `json:"selector"`
 	Name              string   `json:"name"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
@@ -1218,6 +1252,9 @@ func NewUpdateInternetParam() *UpdateInternetParam {
 func (p *UpdateInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.BandWidth) {
 		p.BandWidth = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -1368,6 +1405,13 @@ func (p *UpdateInternetParam) SetBandWidth(v int) {
 func (p *UpdateInternetParam) GetBandWidth() int {
 	return p.BandWidth
 }
+func (p *UpdateInternetParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateInternetParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateInternetParam) SetName(v string) {
 	p.Name = v
 }
@@ -1469,6 +1513,7 @@ func (p *UpdateInternetParam) GetId() int64 {
 
 // DeleteInternetParam is input parameters for the sacloud API
 type DeleteInternetParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1488,6 +1533,9 @@ func NewDeleteInternetParam() *DeleteInternetParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DeleteInternetParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1583,6 +1631,13 @@ func (p *DeleteInternetParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DeleteInternetParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteInternetParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DeleteInternetParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }

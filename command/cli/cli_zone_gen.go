@@ -537,6 +537,7 @@ func init() {
 						return fmt.Errorf("ID argument is required")
 					}
 					c.Set("id", c.Args().First())
+					readParam.SetId(c.Int64("id"))
 
 					// Validate specific for each command params
 					if errors := readParam.Validate(); len(errors) > 0 {

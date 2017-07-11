@@ -15,15 +15,30 @@ func PriceListCompleteFlags(ctx command.Context, params *params.ListPriceParam, 
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["Price"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["Price"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Price"].Commands["list"].Params["id"].CompleteFunc
+		param := define.Resources["Price"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["Price"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["Price"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["Price"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["Price"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["Price"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["Price"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

@@ -15,17 +15,35 @@ func AutoBackupListCompleteFlags(ctx command.Context, params *params.ListAutoBac
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["AutoBackup"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["AutoBackup"].Commands["list"].Params["id"].CompleteFunc
-	case "tags":
-		comp = define.Resources["AutoBackup"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["AutoBackup"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["AutoBackup"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["AutoBackup"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["AutoBackup"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -43,19 +61,40 @@ func AutoBackupCreateCompleteFlags(ctx command.Context, params *params.CreateAut
 
 	switch flagName {
 	case "disk-id":
-		comp = define.Resources["AutoBackup"].Commands["create"].Params["disk-id"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["create"].BuildedParams().Get("disk-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "weekdays":
-		comp = define.Resources["AutoBackup"].Commands["create"].Params["weekdays"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["create"].BuildedParams().Get("weekdays")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "generation":
-		comp = define.Resources["AutoBackup"].Commands["create"].Params["generation"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["create"].BuildedParams().Get("generation")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["AutoBackup"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["AutoBackup"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["AutoBackup"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["AutoBackup"].Commands["create"].Params["icon-id"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["create"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -72,8 +111,16 @@ func AutoBackupReadCompleteFlags(ctx command.Context, params *params.ReadAutoBac
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["AutoBackup"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["AutoBackup"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -91,19 +138,45 @@ func AutoBackupUpdateCompleteFlags(ctx command.Context, params *params.UpdateAut
 
 	switch flagName {
 	case "weekdays":
-		comp = define.Resources["AutoBackup"].Commands["update"].Params["weekdays"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["update"].BuildedParams().Get("weekdays")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "generation":
-		comp = define.Resources["AutoBackup"].Commands["update"].Params["generation"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["update"].BuildedParams().Get("generation")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["AutoBackup"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["AutoBackup"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["AutoBackup"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["AutoBackup"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["AutoBackup"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["AutoBackup"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -120,8 +193,16 @@ func AutoBackupDeleteCompleteFlags(ctx command.Context, params *params.DeleteAut
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["AutoBackup"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["AutoBackup"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["AutoBackup"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

@@ -15,19 +15,40 @@ func StartupScriptListCompleteFlags(ctx command.Context, params *params.ListStar
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["StartupScript"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["StartupScript"].Commands["list"].Params["id"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "scope":
-		comp = define.Resources["StartupScript"].Commands["list"].Params["scope"].CompleteFunc
-	case "tags":
-		comp = define.Resources["StartupScript"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["list"].BuildedParams().Get("scope")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["StartupScript"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["StartupScript"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["StartupScript"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["StartupScript"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -45,15 +66,30 @@ func StartupScriptCreateCompleteFlags(ctx command.Context, params *params.Create
 
 	switch flagName {
 	case "script", "note":
-		comp = define.Resources["StartupScript"].Commands["create"].Params["script"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["create"].BuildedParams().Get("script")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "script-content", "note-content":
-		comp = define.Resources["StartupScript"].Commands["create"].Params["script-content"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["create"].BuildedParams().Get("script-content")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["StartupScript"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["StartupScript"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["StartupScript"].Commands["create"].Params["icon-id"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["create"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -70,8 +106,16 @@ func StartupScriptReadCompleteFlags(ctx command.Context, params *params.ReadStar
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["StartupScript"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["StartupScript"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -89,17 +133,40 @@ func StartupScriptUpdateCompleteFlags(ctx command.Context, params *params.Update
 
 	switch flagName {
 	case "script", "note":
-		comp = define.Resources["StartupScript"].Commands["update"].Params["script"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["update"].BuildedParams().Get("script")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "script-content", "note-content":
-		comp = define.Resources["StartupScript"].Commands["update"].Params["script-content"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["update"].BuildedParams().Get("script-content")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["StartupScript"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["StartupScript"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["StartupScript"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["StartupScript"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["StartupScript"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -116,8 +183,16 @@ func StartupScriptDeleteCompleteFlags(ctx command.Context, params *params.Delete
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["StartupScript"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["StartupScript"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["StartupScript"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

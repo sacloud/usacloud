@@ -37,7 +37,7 @@ func init() {
 		Subcommands: []*cli.Command{
 			{
 				Name:    "list",
-				Aliases: []string{"ls", "find"},
+				Aliases: []string{"ls", "find", "selector"},
 				Usage:   "List Disk",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -53,8 +53,9 @@ func init() {
 						Usage: "set filter by scope('user' or 'shared')",
 					},
 					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set filter by tags(AND)",
+						Name:    "tags",
+						Aliases: []string{"selector"},
+						Usage:   "set filter by tags(AND)",
 					},
 					&cli.Int64Flag{
 						Name:  "source-archive-id",
@@ -693,6 +694,10 @@ func init() {
 				Usage:     "Read Disk",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -757,6 +762,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, readParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						readParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						readParam.ParamTemplate = c.String("param-template")
 					}
@@ -862,6 +870,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						readParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						readParam.ParamTemplate = c.String("param-template")
 					}
@@ -915,29 +926,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), readParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Disk
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Disks {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(readParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Disks {
+							if hasTags(&v, readParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Disks {
+										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -945,7 +976,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -981,6 +1012,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "connection",
 						Usage: "set disk connection('virtio' or 'ide')",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.StringFlag{
 						Name:  "name",
@@ -1070,6 +1105,9 @@ func init() {
 					// Set option values
 					if c.IsSet("connection") {
 						updateParam.Connection = c.String("connection")
+					}
+					if c.IsSet("selector") {
+						updateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
 						updateParam.Name = c.String("name")
@@ -1194,6 +1232,9 @@ func init() {
 					if c.IsSet("connection") {
 						updateParam.Connection = c.String("connection")
 					}
+					if c.IsSet("selector") {
+						updateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("name") {
 						updateParam.Name = c.String("name")
 					}
@@ -1262,29 +1303,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Disk
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Disks {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(updateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Disks {
+							if hasTags(&v, updateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Disks {
+										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -1292,7 +1353,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -1327,6 +1388,10 @@ func init() {
 				Usage:     "Delete Disk",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -1396,6 +1461,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, deleteParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						deleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						deleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -1504,6 +1572,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						deleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						deleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -1560,29 +1631,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Disk
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Disks {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(deleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Disks {
+							if hasTags(&v, deleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Disks {
+										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -1590,7 +1681,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -1662,6 +1753,10 @@ func init() {
 						Name:    "startup-script-ids",
 						Aliases: []string{"note-ids"},
 						Usage:   "set startup-script ID(s)",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -1755,6 +1850,9 @@ func init() {
 					}
 					if c.IsSet("startup-script-ids") {
 						editParam.StartupScriptIds = c.Int64Slice("startup-script-ids")
+					}
+					if c.IsSet("selector") {
+						editParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						editParam.Assumeyes = c.Bool("assumeyes")
@@ -1888,6 +1986,9 @@ func init() {
 					if c.IsSet("startup-script-ids") {
 						editParam.StartupScriptIds = c.Int64Slice("startup-script-ids")
 					}
+					if c.IsSet("selector") {
+						editParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						editParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -1944,29 +2045,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), editParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Disk
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Disks {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(editParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Disks {
+							if hasTags(&v, editParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", editParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Disks {
+										if len(editParam.Selector) == 0 || hasTags(&v, editParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -1974,7 +2095,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -2015,6 +2136,10 @@ func init() {
 					&cli.Int64SliceFlag{
 						Name:  "distant-from",
 						Usage: "set distant from disk IDs",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -2066,6 +2191,9 @@ func init() {
 					}
 					if c.IsSet("distant-from") {
 						reinstallFromArchiveParam.DistantFrom = c.Int64Slice("distant-from")
+					}
+					if c.IsSet("selector") {
+						reinstallFromArchiveParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						reinstallFromArchiveParam.Assumeyes = c.Bool("assumeyes")
@@ -2166,6 +2294,9 @@ func init() {
 					if c.IsSet("distant-from") {
 						reinstallFromArchiveParam.DistantFrom = c.Int64Slice("distant-from")
 					}
+					if c.IsSet("selector") {
+						reinstallFromArchiveParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						reinstallFromArchiveParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2207,29 +2338,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), reinstallFromArchiveParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Disk
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Disks {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(reinstallFromArchiveParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Disks {
+							if hasTags(&v, reinstallFromArchiveParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", reinstallFromArchiveParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Disks {
+										if len(reinstallFromArchiveParam.Selector) == 0 || hasTags(&v, reinstallFromArchiveParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2237,7 +2388,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -2278,6 +2429,10 @@ func init() {
 					&cli.Int64SliceFlag{
 						Name:  "distant-from",
 						Usage: "set distant from disk IDs",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -2329,6 +2484,9 @@ func init() {
 					}
 					if c.IsSet("distant-from") {
 						reinstallFromDiskParam.DistantFrom = c.Int64Slice("distant-from")
+					}
+					if c.IsSet("selector") {
+						reinstallFromDiskParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						reinstallFromDiskParam.Assumeyes = c.Bool("assumeyes")
@@ -2429,6 +2587,9 @@ func init() {
 					if c.IsSet("distant-from") {
 						reinstallFromDiskParam.DistantFrom = c.Int64Slice("distant-from")
 					}
+					if c.IsSet("selector") {
+						reinstallFromDiskParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						reinstallFromDiskParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2470,29 +2631,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), reinstallFromDiskParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Disk
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Disks {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(reinstallFromDiskParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Disks {
+							if hasTags(&v, reinstallFromDiskParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", reinstallFromDiskParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Disks {
+										if len(reinstallFromDiskParam.Selector) == 0 || hasTags(&v, reinstallFromDiskParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2500,7 +2681,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -2537,6 +2718,10 @@ func init() {
 					&cli.Int64SliceFlag{
 						Name:  "distant-from",
 						Usage: "set distant from disk IDs",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -2585,6 +2770,9 @@ func init() {
 					// Set option values
 					if c.IsSet("distant-from") {
 						reinstallToBlankParam.DistantFrom = c.Int64Slice("distant-from")
+					}
+					if c.IsSet("selector") {
+						reinstallToBlankParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						reinstallToBlankParam.Assumeyes = c.Bool("assumeyes")
@@ -2682,6 +2870,9 @@ func init() {
 					if c.IsSet("distant-from") {
 						reinstallToBlankParam.DistantFrom = c.Int64Slice("distant-from")
 					}
+					if c.IsSet("selector") {
+						reinstallToBlankParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						reinstallToBlankParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2723,29 +2914,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), reinstallToBlankParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Disk
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Disks {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(reinstallToBlankParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Disks {
+							if hasTags(&v, reinstallToBlankParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", reinstallToBlankParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Disks {
+										if len(reinstallToBlankParam.Selector) == 0 || hasTags(&v, reinstallToBlankParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2753,7 +2964,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -2790,6 +3001,10 @@ func init() {
 					&cli.Int64Flag{
 						Name:  "server-id",
 						Usage: "[Required] set target server ID",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -2838,6 +3053,9 @@ func init() {
 					// Set option values
 					if c.IsSet("server-id") {
 						serverConnectParam.ServerId = c.Int64("server-id")
+					}
+					if c.IsSet("selector") {
+						serverConnectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						serverConnectParam.Assumeyes = c.Bool("assumeyes")
@@ -2935,6 +3153,9 @@ func init() {
 					if c.IsSet("server-id") {
 						serverConnectParam.ServerId = c.Int64("server-id")
 					}
+					if c.IsSet("selector") {
+						serverConnectParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						serverConnectParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2976,29 +3197,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), serverConnectParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Disk
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Disks {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(serverConnectParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Disks {
+							if hasTags(&v, serverConnectParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverConnectParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Disks {
+										if len(serverConnectParam.Selector) == 0 || hasTags(&v, serverConnectParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -3006,7 +3247,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -3040,6 +3281,10 @@ func init() {
 				Usage:     "ServerDisconnect Disk",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -3085,6 +3330,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, serverDisconnectParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						serverDisconnectParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						serverDisconnectParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -3178,6 +3426,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						serverDisconnectParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						serverDisconnectParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -3219,29 +3470,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), serverDisconnectParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Disk
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Disks {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(serverDisconnectParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Disks {
+							if hasTags(&v, serverDisconnectParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverDisconnectParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Disks {
+										if len(serverDisconnectParam.Selector) == 0 || hasTags(&v, serverDisconnectParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -3249,7 +3520,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -3283,6 +3554,10 @@ func init() {
 				Usage:     "Monitor Disk",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -3360,6 +3635,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, monitorParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						monitorParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						monitorParam.ParamTemplate = c.String("param-template")
 					}
@@ -3474,6 +3752,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						monitorParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						monitorParam.ParamTemplate = c.String("param-template")
 					}
@@ -3536,29 +3817,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), monitorParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Disk
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Disks {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(monitorParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Disks {
+							if hasTags(&v, monitorParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Disks {
+										if len(monitorParam.Selector) == 0 || hasTags(&v, monitorParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -3566,7 +3867,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -3600,6 +3901,10 @@ func init() {
 				Usage:     "WaitForCopy Disk",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -3640,6 +3945,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, waitForCopyParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						waitForCopyParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						waitForCopyParam.ParamTemplate = c.String("param-template")
 					}
@@ -3730,6 +4038,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						waitForCopyParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						waitForCopyParam.ParamTemplate = c.String("param-template")
 					}
@@ -3768,29 +4079,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), waitForCopyParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Disk
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Disks {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(waitForCopyParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Disks {
+							if hasTags(&v, waitForCopyParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForCopyParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Disks {
+										if len(waitForCopyParam.Selector) == 0 || hasTags(&v, waitForCopyParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -3798,7 +4129,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					wg := sync.WaitGroup{}
@@ -4047,6 +4378,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("disk", "delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("disk", "edit", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -4126,6 +4462,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("disk", "edit", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("disk", "edit", "ssh-key-ids", &schema.Category{
 		Key:         "edit",
@@ -4277,6 +4618,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("disk", "monitor", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("disk", "monitor", "start", &schema.Category{
 		Key:         "default",
 		DisplayName: "Other options",
@@ -4327,6 +4673,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("disk", "read", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("disk", "reinstall-from-archive", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -4356,6 +4707,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("disk", "reinstall-from-archive", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("disk", "reinstall-from-archive", "source-archive-id", &schema.Category{
 		Key:         "install",
@@ -4392,6 +4748,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("disk", "reinstall-from-disk", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("disk", "reinstall-from-disk", "source-disk-id", &schema.Category{
 		Key:         "install",
 		DisplayName: "Install options",
@@ -4427,6 +4788,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("disk", "reinstall-to-blank", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("disk", "server-connect", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -4451,6 +4817,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("disk", "server-connect", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("disk", "server-connect", "server-id", &schema.Category{
 		Key:         "connect",
@@ -4481,6 +4852,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("disk", "server-disconnect", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("disk", "update", "assumeyes", &schema.Category{
 		Key:         "Input",
@@ -4552,6 +4928,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("disk", "update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("disk", "update", "tags", &schema.Category{
 		Key:         "common",
 		DisplayName: "Common options",
@@ -4576,6 +4957,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("disk", "wait-for-copy", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 
 	// append command to GlobalContext

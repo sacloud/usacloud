@@ -694,6 +694,7 @@ func (p *CreateSimpleMonitorParam) GetFormatFile() string {
 
 // ReadSimpleMonitorParam is input parameters for the sacloud API
 type ReadSimpleMonitorParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -712,6 +713,9 @@ func NewReadSimpleMonitorParam() *ReadSimpleMonitorParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ReadSimpleMonitorParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -804,6 +808,13 @@ func (p *ReadSimpleMonitorParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadSimpleMonitorParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadSimpleMonitorParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReadSimpleMonitorParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -882,6 +893,7 @@ type UpdateSimpleMonitorParam struct {
 	NotifyEmail       bool     `json:"notify-email"`
 	EmailType         string   `json:"email-type"`
 	SlackWebhook      string   `json:"slack-webhook"`
+	Selector          []string `json:"selector"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
 	IconId            int64    `json:"icon-id"`
@@ -939,6 +951,9 @@ func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.SlackWebhook) {
 		p.SlackWebhook = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Description) {
 		p.Description = ""
@@ -1177,6 +1192,13 @@ func (p *UpdateSimpleMonitorParam) SetSlackWebhook(v string) {
 func (p *UpdateSimpleMonitorParam) GetSlackWebhook() string {
 	return p.SlackWebhook
 }
+func (p *UpdateSimpleMonitorParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateSimpleMonitorParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -1271,6 +1293,7 @@ func (p *UpdateSimpleMonitorParam) GetId() int64 {
 
 // DeleteSimpleMonitorParam is input parameters for the sacloud API
 type DeleteSimpleMonitorParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1290,6 +1313,9 @@ func NewDeleteSimpleMonitorParam() *DeleteSimpleMonitorParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DeleteSimpleMonitorParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1385,6 +1411,13 @@ func (p *DeleteSimpleMonitorParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DeleteSimpleMonitorParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteSimpleMonitorParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DeleteSimpleMonitorParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }

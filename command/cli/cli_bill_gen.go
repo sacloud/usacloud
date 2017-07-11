@@ -220,6 +220,7 @@ func init() {
 						return fmt.Errorf("ID argument is required")
 					}
 					c.Set("id", c.Args().First())
+					csvParam.SetId(c.Int64("id"))
 
 					// Validate specific for each command params
 					if errors := csvParam.Validate(); len(errors) > 0 {

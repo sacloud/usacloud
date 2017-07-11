@@ -11,7 +11,7 @@ func InternetResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
+			Aliases:            []string{"ls", "find", "selector"},
 			Params:             internetListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: internetListColumns(),

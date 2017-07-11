@@ -514,6 +514,7 @@ func (p *CreateSwitchParam) GetFormatFile() string {
 
 // ReadSwitchParam is input parameters for the sacloud API
 type ReadSwitchParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -532,6 +533,9 @@ func NewReadSwitchParam() *ReadSwitchParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ReadSwitchParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -624,6 +628,13 @@ func (p *ReadSwitchParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadSwitchParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadSwitchParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReadSwitchParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -690,6 +701,7 @@ func (p *ReadSwitchParam) GetId() int64 {
 
 // UpdateSwitchParam is input parameters for the sacloud API
 type UpdateSwitchParam struct {
+	Selector          []string `json:"selector"`
 	Name              string   `json:"name"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
@@ -713,6 +725,9 @@ func NewUpdateSwitchParam() *UpdateSwitchParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *UpdateSwitchParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -848,6 +863,13 @@ func (p *UpdateSwitchParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *UpdateSwitchParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateSwitchParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateSwitchParam) SetName(v string) {
 	p.Name = v
 }
@@ -949,6 +971,7 @@ func (p *UpdateSwitchParam) GetId() int64 {
 
 // DeleteSwitchParam is input parameters for the sacloud API
 type DeleteSwitchParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -968,6 +991,9 @@ func NewDeleteSwitchParam() *DeleteSwitchParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DeleteSwitchParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1063,6 +1089,13 @@ func (p *DeleteSwitchParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DeleteSwitchParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteSwitchParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DeleteSwitchParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1136,12 +1169,13 @@ func (p *DeleteSwitchParam) GetId() int64 {
 
 // BridgeConnectSwitchParam is input parameters for the sacloud API
 type BridgeConnectSwitchParam struct {
-	BridgeId          int64  `json:"bridge-id"`
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	BridgeId          int64    `json:"bridge-id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewBridgeConnectSwitchParam return new BridgeConnectSwitchParam
@@ -1153,6 +1187,9 @@ func NewBridgeConnectSwitchParam() *BridgeConnectSwitchParam {
 func (p *BridgeConnectSwitchParam) FillValueToSkeleton() {
 	if isEmpty(p.BridgeId) {
 		p.BridgeId = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1235,6 +1272,13 @@ func (p *BridgeConnectSwitchParam) SetBridgeId(v int64) {
 func (p *BridgeConnectSwitchParam) GetBridgeId() int64 {
 	return p.BridgeId
 }
+func (p *BridgeConnectSwitchParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *BridgeConnectSwitchParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *BridgeConnectSwitchParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1273,11 +1317,12 @@ func (p *BridgeConnectSwitchParam) GetId() int64 {
 
 // BridgeDisconnectSwitchParam is input parameters for the sacloud API
 type BridgeDisconnectSwitchParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewBridgeDisconnectSwitchParam return new BridgeDisconnectSwitchParam
@@ -1287,6 +1332,9 @@ func NewBridgeDisconnectSwitchParam() *BridgeDisconnectSwitchParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *BridgeDisconnectSwitchParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1347,6 +1395,13 @@ func (p *BridgeDisconnectSwitchParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *BridgeDisconnectSwitchParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *BridgeDisconnectSwitchParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *BridgeDisconnectSwitchParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }

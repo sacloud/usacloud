@@ -521,6 +521,7 @@ func (p *CreateIconParam) GetFormatFile() string {
 
 // ReadIconParam is input parameters for the sacloud API
 type ReadIconParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -539,6 +540,9 @@ func NewReadIconParam() *ReadIconParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ReadIconParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -631,6 +635,13 @@ func (p *ReadIconParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadIconParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadIconParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReadIconParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -697,6 +708,7 @@ func (p *ReadIconParam) GetId() int64 {
 
 // UpdateIconParam is input parameters for the sacloud API
 type UpdateIconParam struct {
+	Selector          []string `json:"selector"`
 	Name              string   `json:"name"`
 	Tags              []string `json:"tags"`
 	Assumeyes         bool     `json:"assumeyes"`
@@ -718,6 +730,9 @@ func NewUpdateIconParam() *UpdateIconParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *UpdateIconParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -833,6 +848,13 @@ func (p *UpdateIconParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *UpdateIconParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateIconParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateIconParam) SetName(v string) {
 	p.Name = v
 }
@@ -920,6 +942,7 @@ func (p *UpdateIconParam) GetId() int64 {
 
 // DeleteIconParam is input parameters for the sacloud API
 type DeleteIconParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -939,6 +962,9 @@ func NewDeleteIconParam() *DeleteIconParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DeleteIconParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1034,6 +1060,13 @@ func (p *DeleteIconParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DeleteIconParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteIconParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DeleteIconParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }

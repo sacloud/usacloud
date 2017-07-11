@@ -15,19 +15,40 @@ func IconListCompleteFlags(ctx command.Context, params *params.ListIconParam, fl
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["Icon"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["Icon"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Icon"].Commands["list"].Params["id"].CompleteFunc
+		param := define.Resources["Icon"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "scope":
-		comp = define.Resources["Icon"].Commands["list"].Params["scope"].CompleteFunc
-	case "tags":
-		comp = define.Resources["Icon"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["Icon"].Commands["list"].BuildedParams().Get("scope")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["Icon"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["Icon"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["Icon"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["Icon"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["Icon"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["Icon"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["Icon"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -45,11 +66,20 @@ func IconCreateCompleteFlags(ctx command.Context, params *params.CreateIconParam
 
 	switch flagName {
 	case "image":
-		comp = define.Resources["Icon"].Commands["create"].Params["image"].CompleteFunc
+		param := define.Resources["Icon"].Commands["create"].BuildedParams().Get("image")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Icon"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["Icon"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Icon"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["Icon"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -66,8 +96,16 @@ func IconReadCompleteFlags(ctx command.Context, params *params.ReadIconParam, fl
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Icon"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Icon"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["Icon"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -84,12 +122,26 @@ func IconUpdateCompleteFlags(ctx command.Context, params *params.UpdateIconParam
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Icon"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Icon"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["Icon"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Icon"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["Icon"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Icon"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["Icon"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -106,8 +158,16 @@ func IconDeleteCompleteFlags(ctx command.Context, params *params.DeleteIconParam
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Icon"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Icon"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["Icon"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

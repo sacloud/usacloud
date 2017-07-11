@@ -682,6 +682,7 @@ func (p *CreateArchiveParam) GetFormatFile() string {
 
 // ReadArchiveParam is input parameters for the sacloud API
 type ReadArchiveParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -700,6 +701,9 @@ func NewReadArchiveParam() *ReadArchiveParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ReadArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -792,6 +796,13 @@ func (p *ReadArchiveParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadArchiveParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReadArchiveParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -858,6 +869,7 @@ func (p *ReadArchiveParam) GetId() int64 {
 
 // UpdateArchiveParam is input parameters for the sacloud API
 type UpdateArchiveParam struct {
+	Selector          []string `json:"selector"`
 	Name              string   `json:"name"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
@@ -881,6 +893,9 @@ func NewUpdateArchiveParam() *UpdateArchiveParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *UpdateArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Name) {
 		p.Name = ""
 	}
@@ -1016,6 +1031,13 @@ func (p *UpdateArchiveParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *UpdateArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateArchiveParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateArchiveParam) SetName(v string) {
 	p.Name = v
 }
@@ -1117,6 +1139,7 @@ func (p *UpdateArchiveParam) GetId() int64 {
 
 // DeleteArchiveParam is input parameters for the sacloud API
 type DeleteArchiveParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1136,6 +1159,9 @@ func NewDeleteArchiveParam() *DeleteArchiveParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DeleteArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1231,6 +1257,13 @@ func (p *DeleteArchiveParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DeleteArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteArchiveParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DeleteArchiveParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1305,6 +1338,7 @@ func (p *DeleteArchiveParam) GetId() int64 {
 // UploadArchiveParam is input parameters for the sacloud API
 type UploadArchiveParam struct {
 	ArchiveFile       string   `json:"archive-file"`
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1326,6 +1360,9 @@ func NewUploadArchiveParam() *UploadArchiveParam {
 func (p *UploadArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.ArchiveFile) {
 		p.ArchiveFile = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1443,6 +1480,13 @@ func (p *UploadArchiveParam) SetArchiveFile(v string) {
 func (p *UploadArchiveParam) GetArchiveFile() string {
 	return p.ArchiveFile
 }
+func (p *UploadArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UploadArchiveParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UploadArchiveParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1516,12 +1560,13 @@ func (p *UploadArchiveParam) GetId() int64 {
 
 // DownloadArchiveParam is input parameters for the sacloud API
 type DownloadArchiveParam struct {
-	FileDestination   string `json:"file-destination"`
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	FileDestination   string   `json:"file-destination"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewDownloadArchiveParam return new DownloadArchiveParam
@@ -1533,6 +1578,9 @@ func NewDownloadArchiveParam() *DownloadArchiveParam {
 func (p *DownloadArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.FileDestination) {
 		p.FileDestination = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1608,6 +1656,13 @@ func (p *DownloadArchiveParam) SetFileDestination(v string) {
 func (p *DownloadArchiveParam) GetFileDestination() string {
 	return p.FileDestination
 }
+func (p *DownloadArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DownloadArchiveParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DownloadArchiveParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1646,6 +1701,7 @@ func (p *DownloadArchiveParam) GetId() int64 {
 
 // FtpOpenArchiveParam is input parameters for the sacloud API
 type FtpOpenArchiveParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1665,6 +1721,9 @@ func NewFtpOpenArchiveParam() *FtpOpenArchiveParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *FtpOpenArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1760,6 +1819,13 @@ func (p *FtpOpenArchiveParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *FtpOpenArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *FtpOpenArchiveParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *FtpOpenArchiveParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1833,11 +1899,12 @@ func (p *FtpOpenArchiveParam) GetId() int64 {
 
 // FtpCloseArchiveParam is input parameters for the sacloud API
 type FtpCloseArchiveParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewFtpCloseArchiveParam return new FtpCloseArchiveParam
@@ -1847,6 +1914,9 @@ func NewFtpCloseArchiveParam() *FtpCloseArchiveParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *FtpCloseArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1907,6 +1977,13 @@ func (p *FtpCloseArchiveParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *FtpCloseArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *FtpCloseArchiveParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *FtpCloseArchiveParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1945,10 +2022,11 @@ func (p *FtpCloseArchiveParam) GetId() int64 {
 
 // WaitForCopyArchiveParam is input parameters for the sacloud API
 type WaitForCopyArchiveParam struct {
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewWaitForCopyArchiveParam return new WaitForCopyArchiveParam
@@ -1958,6 +2036,9 @@ func NewWaitForCopyArchiveParam() *WaitForCopyArchiveParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *WaitForCopyArchiveParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -2015,6 +2096,13 @@ func (p *WaitForCopyArchiveParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForCopyArchiveParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForCopyArchiveParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *WaitForCopyArchiveParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }

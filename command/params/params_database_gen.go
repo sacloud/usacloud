@@ -782,6 +782,7 @@ func (p *CreateDatabaseParam) GetFormatFile() string {
 
 // ReadDatabaseParam is input parameters for the sacloud API
 type ReadDatabaseParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -800,6 +801,9 @@ func NewReadDatabaseParam() *ReadDatabaseParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ReadDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -892,6 +896,13 @@ func (p *ReadDatabaseParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReadDatabaseParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -963,6 +974,7 @@ type UpdateDatabaseParam struct {
 	SourceNetworks    []string `json:"source-networks"`
 	EnableWebUi       bool     `json:"enable-web-ui"`
 	BackupTime        string   `json:"backup-time"`
+	Selector          []string `json:"selector"`
 	Name              string   `json:"name"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
@@ -1000,6 +1012,9 @@ func (p *UpdateDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.BackupTime) {
 		p.BackupTime = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -1199,6 +1214,13 @@ func (p *UpdateDatabaseParam) SetBackupTime(v string) {
 func (p *UpdateDatabaseParam) GetBackupTime() string {
 	return p.BackupTime
 }
+func (p *UpdateDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateDatabaseParam) SetName(v string) {
 	p.Name = v
 }
@@ -1300,6 +1322,7 @@ func (p *UpdateDatabaseParam) GetId() int64 {
 
 // DeleteDatabaseParam is input parameters for the sacloud API
 type DeleteDatabaseParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1320,6 +1343,9 @@ func NewDeleteDatabaseParam() *DeleteDatabaseParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DeleteDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1418,6 +1444,13 @@ func (p *DeleteDatabaseParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DeleteDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DeleteDatabaseParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1498,11 +1531,12 @@ func (p *DeleteDatabaseParam) GetId() int64 {
 
 // BootDatabaseParam is input parameters for the sacloud API
 type BootDatabaseParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewBootDatabaseParam return new BootDatabaseParam
@@ -1512,6 +1546,9 @@ func NewBootDatabaseParam() *BootDatabaseParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *BootDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1572,6 +1609,13 @@ func (p *BootDatabaseParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *BootDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *BootDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *BootDatabaseParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1610,11 +1654,12 @@ func (p *BootDatabaseParam) GetId() int64 {
 
 // ShutdownDatabaseParam is input parameters for the sacloud API
 type ShutdownDatabaseParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewShutdownDatabaseParam return new ShutdownDatabaseParam
@@ -1624,6 +1669,9 @@ func NewShutdownDatabaseParam() *ShutdownDatabaseParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ShutdownDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1684,6 +1732,13 @@ func (p *ShutdownDatabaseParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ShutdownDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ShutdownDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ShutdownDatabaseParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1722,11 +1777,12 @@ func (p *ShutdownDatabaseParam) GetId() int64 {
 
 // ShutdownForceDatabaseParam is input parameters for the sacloud API
 type ShutdownForceDatabaseParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewShutdownForceDatabaseParam return new ShutdownForceDatabaseParam
@@ -1736,6 +1792,9 @@ func NewShutdownForceDatabaseParam() *ShutdownForceDatabaseParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ShutdownForceDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1796,6 +1855,13 @@ func (p *ShutdownForceDatabaseParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ShutdownForceDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ShutdownForceDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ShutdownForceDatabaseParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1834,11 +1900,12 @@ func (p *ShutdownForceDatabaseParam) GetId() int64 {
 
 // ResetDatabaseParam is input parameters for the sacloud API
 type ResetDatabaseParam struct {
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewResetDatabaseParam return new ResetDatabaseParam
@@ -1848,6 +1915,9 @@ func NewResetDatabaseParam() *ResetDatabaseParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ResetDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -1908,6 +1978,13 @@ func (p *ResetDatabaseParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ResetDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ResetDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ResetDatabaseParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1946,10 +2023,11 @@ func (p *ResetDatabaseParam) GetId() int64 {
 
 // WaitForBootDatabaseParam is input parameters for the sacloud API
 type WaitForBootDatabaseParam struct {
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewWaitForBootDatabaseParam return new WaitForBootDatabaseParam
@@ -1959,6 +2037,9 @@ func NewWaitForBootDatabaseParam() *WaitForBootDatabaseParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *WaitForBootDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -2016,6 +2097,13 @@ func (p *WaitForBootDatabaseParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForBootDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForBootDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *WaitForBootDatabaseParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -2047,10 +2135,11 @@ func (p *WaitForBootDatabaseParam) GetId() int64 {
 
 // WaitForDownDatabaseParam is input parameters for the sacloud API
 type WaitForDownDatabaseParam struct {
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
 }
 
 // NewWaitForDownDatabaseParam return new WaitForDownDatabaseParam
@@ -2060,6 +2149,9 @@ func NewWaitForDownDatabaseParam() *WaitForDownDatabaseParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *WaitForDownDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -2117,6 +2209,13 @@ func (p *WaitForDownDatabaseParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *WaitForDownDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *WaitForDownDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *WaitForDownDatabaseParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }

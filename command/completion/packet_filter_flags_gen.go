@@ -15,15 +15,30 @@ func PacketFilterListCompleteFlags(ctx command.Context, params *params.ListPacke
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["PacketFilter"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["PacketFilter"].Commands["list"].Params["id"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["PacketFilter"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["PacketFilter"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["PacketFilter"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -41,9 +56,15 @@ func PacketFilterCreateCompleteFlags(ctx command.Context, params *params.CreateP
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["PacketFilter"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["PacketFilter"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -61,7 +82,10 @@ func PacketFilterReadCompleteFlags(ctx command.Context, params *params.ReadPacke
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["PacketFilter"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -79,11 +103,20 @@ func PacketFilterUpdateCompleteFlags(ctx command.Context, params *params.UpdateP
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["PacketFilter"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["PacketFilter"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["PacketFilter"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -101,7 +134,10 @@ func PacketFilterDeleteCompleteFlags(ctx command.Context, params *params.DeleteP
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["PacketFilter"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -119,7 +155,10 @@ func PacketFilterRuleInfoCompleteFlags(ctx command.Context, params *params.RuleI
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["PacketFilter"].Commands["rule-info"].Params["id"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -137,21 +176,45 @@ func PacketFilterRuleAddCompleteFlags(ctx command.Context, params *params.RuleAd
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["index"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-add"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "protocol":
-		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["protocol"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-add"].BuildedParams().Get("protocol")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-network":
-		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["source-network"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-add"].BuildedParams().Get("source-network")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-port":
-		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["source-port"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-add"].BuildedParams().Get("source-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "destination-port", "dest-port":
-		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["destination-port"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-add"].BuildedParams().Get("destination-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "action":
-		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["action"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-add"].BuildedParams().Get("action")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["description"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-add"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["PacketFilter"].Commands["rule-add"].Params["id"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -169,21 +232,45 @@ func PacketFilterRuleUpdateCompleteFlags(ctx command.Context, params *params.Rul
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["PacketFilter"].Commands["rule-update"].Params["index"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "protocol":
-		comp = define.Resources["PacketFilter"].Commands["rule-update"].Params["protocol"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-update"].BuildedParams().Get("protocol")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-network":
-		comp = define.Resources["PacketFilter"].Commands["rule-update"].Params["source-network"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-update"].BuildedParams().Get("source-network")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-port":
-		comp = define.Resources["PacketFilter"].Commands["rule-update"].Params["source-port"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-update"].BuildedParams().Get("source-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "destination-port", "dest-port":
-		comp = define.Resources["PacketFilter"].Commands["rule-update"].Params["destination-port"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-update"].BuildedParams().Get("destination-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "action":
-		comp = define.Resources["PacketFilter"].Commands["rule-update"].Params["action"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-update"].BuildedParams().Get("action")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["PacketFilter"].Commands["rule-update"].Params["description"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["PacketFilter"].Commands["rule-update"].Params["id"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -201,9 +288,15 @@ func PacketFilterRuleDeleteCompleteFlags(ctx command.Context, params *params.Rul
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["PacketFilter"].Commands["rule-delete"].Params["index"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["PacketFilter"].Commands["rule-delete"].Params["id"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["rule-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -221,9 +314,15 @@ func PacketFilterInterfaceConnectCompleteFlags(ctx command.Context, params *para
 
 	switch flagName {
 	case "interface-id":
-		comp = define.Resources["PacketFilter"].Commands["interface-connect"].Params["interface-id"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["interface-connect"].BuildedParams().Get("interface-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["PacketFilter"].Commands["interface-connect"].Params["id"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["interface-connect"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -239,9 +338,15 @@ func PacketFilterInterfaceDisconnectCompleteFlags(ctx command.Context, params *p
 
 	switch flagName {
 	case "interface-id":
-		comp = define.Resources["PacketFilter"].Commands["interface-disconnect"].Params["interface-id"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["interface-disconnect"].BuildedParams().Get("interface-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["PacketFilter"].Commands["interface-disconnect"].Params["id"].CompleteFunc
+		param := define.Resources["PacketFilter"].Commands["interface-disconnect"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {

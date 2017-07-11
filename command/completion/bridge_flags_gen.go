@@ -15,15 +15,30 @@ func BridgeListCompleteFlags(ctx command.Context, params *params.ListBridgeParam
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["Bridge"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["Bridge"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Bridge"].Commands["list"].Params["id"].CompleteFunc
+		param := define.Resources["Bridge"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["Bridge"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["Bridge"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["Bridge"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["Bridge"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["Bridge"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["Bridge"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -41,9 +56,15 @@ func BridgeCreateCompleteFlags(ctx command.Context, params *params.CreateBridgeP
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["Bridge"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["Bridge"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Bridge"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["Bridge"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -61,7 +82,10 @@ func BridgeReadCompleteFlags(ctx command.Context, params *params.ReadBridgeParam
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["Bridge"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["Bridge"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -79,11 +103,20 @@ func BridgeUpdateCompleteFlags(ctx command.Context, params *params.UpdateBridgeP
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["Bridge"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["Bridge"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Bridge"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["Bridge"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Bridge"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["Bridge"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -101,7 +134,10 @@ func BridgeDeleteCompleteFlags(ctx command.Context, params *params.DeleteBridgeP
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["Bridge"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["Bridge"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

@@ -15,15 +15,30 @@ func ProductInternetListCompleteFlags(ctx command.Context, params *params.ListPr
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["ProductInternet"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["ProductInternet"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["ProductInternet"].Commands["list"].Params["id"].CompleteFunc
+		param := define.Resources["ProductInternet"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["ProductInternet"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["ProductInternet"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["ProductInternet"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["ProductInternet"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["ProductInternet"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["ProductInternet"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -41,7 +56,10 @@ func ProductInternetReadCompleteFlags(ctx command.Context, params *params.ReadPr
 
 	switch flagName {
 	case "id":
-		comp = define.Resources["ProductInternet"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["ProductInternet"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

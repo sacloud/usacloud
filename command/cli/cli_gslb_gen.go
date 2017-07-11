@@ -33,7 +33,7 @@ func init() {
 		Subcommands: []*cli.Command{
 			{
 				Name:    "list",
-				Aliases: []string{"ls", "find"},
+				Aliases: []string{"ls", "find", "selector"},
 				Usage:   "List GSLB",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -45,8 +45,9 @@ func init() {
 						Usage: "set filter by id(s)",
 					},
 					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set filter by tags(AND)",
+						Name:    "tags",
+						Aliases: []string{"selector"},
+						Usage:   "set filter by tags(AND)",
 					},
 					&cli.IntFlag{
 						Name:    "from",
@@ -320,6 +321,10 @@ func init() {
 				Usage:     "ServerInfo GSLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -384,6 +389,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, serverInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						serverInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						serverInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -489,6 +497,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						serverInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						serverInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -542,29 +553,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), serverInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().GSLB
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.CommonServiceGSLBItems {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(serverInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceGSLBItems {
+							if hasTags(&v, serverInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceGSLBItems {
+										if len(serverInfoParam.Selector) == 0 || hasTags(&v, serverInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -572,7 +603,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -980,6 +1011,10 @@ func init() {
 						Name:  "weight",
 						Usage: "set weight",
 					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -1057,6 +1092,9 @@ func init() {
 					}
 					if c.IsSet("weight") {
 						serverAddParam.Weight = c.Int("weight")
+					}
+					if c.IsSet("selector") {
+						serverAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						serverAddParam.Assumeyes = c.Bool("assumeyes")
@@ -1175,6 +1213,9 @@ func init() {
 					if c.IsSet("weight") {
 						serverAddParam.Weight = c.Int("weight")
 					}
+					if c.IsSet("selector") {
+						serverAddParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						serverAddParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -1231,29 +1272,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), serverAddParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().GSLB
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.CommonServiceGSLBItems {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(serverAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceGSLBItems {
+							if hasTags(&v, serverAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverAddParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceGSLBItems {
+										if len(serverAddParam.Selector) == 0 || hasTags(&v, serverAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -1261,7 +1322,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -1299,6 +1360,10 @@ func init() {
 				Usage:     "Read GSLB",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -1363,6 +1428,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, readParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						readParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						readParam.ParamTemplate = c.String("param-template")
 					}
@@ -1468,6 +1536,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						readParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						readParam.ParamTemplate = c.String("param-template")
 					}
@@ -1521,29 +1592,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), readParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().GSLB
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.CommonServiceGSLBItems {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(readParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceGSLBItems {
+							if hasTags(&v, readParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceGSLBItems {
+										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -1551,7 +1642,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -1599,6 +1690,10 @@ func init() {
 					&cli.IntFlag{
 						Name:  "weight",
 						Usage: "set weight",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -1680,6 +1775,9 @@ func init() {
 					}
 					if c.IsSet("weight") {
 						serverUpdateParam.Weight = c.Int("weight")
+					}
+					if c.IsSet("selector") {
+						serverUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						serverUpdateParam.Assumeyes = c.Bool("assumeyes")
@@ -1801,6 +1899,9 @@ func init() {
 					if c.IsSet("weight") {
 						serverUpdateParam.Weight = c.Int("weight")
 					}
+					if c.IsSet("selector") {
+						serverUpdateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						serverUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -1857,29 +1958,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), serverUpdateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().GSLB
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.CommonServiceGSLBItems {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(serverUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceGSLBItems {
+							if hasTags(&v, serverUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverUpdateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceGSLBItems {
+										if len(serverUpdateParam.Selector) == 0 || hasTags(&v, serverUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -1887,7 +2008,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -1928,6 +2049,10 @@ func init() {
 					&cli.IntFlag{
 						Name:  "index",
 						Usage: "[Required] index of target server",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -2000,6 +2125,9 @@ func init() {
 					// Set option values
 					if c.IsSet("index") {
 						serverDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						serverDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						serverDeleteParam.Assumeyes = c.Bool("assumeyes")
@@ -2112,6 +2240,9 @@ func init() {
 					if c.IsSet("index") {
 						serverDeleteParam.Index = c.Int("index")
 					}
+					if c.IsSet("selector") {
+						serverDeleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						serverDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2168,29 +2299,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), serverDeleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().GSLB
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.CommonServiceGSLBItems {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(serverDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceGSLBItems {
+							if hasTags(&v, serverDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverDeleteParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceGSLBItems {
+										if len(serverDeleteParam.Selector) == 0 || hasTags(&v, serverDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2198,7 +2349,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -2267,6 +2418,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "sorry-server",
 						Usage: "set sorry-server hostname/ipaddress",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.StringFlag{
 						Name:  "name",
@@ -2377,6 +2532,9 @@ func init() {
 					}
 					if c.IsSet("sorry-server") {
 						updateParam.SorryServer = c.String("sorry-server")
+					}
+					if c.IsSet("selector") {
+						updateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
 						updateParam.Name = c.String("name")
@@ -2522,6 +2680,9 @@ func init() {
 					if c.IsSet("sorry-server") {
 						updateParam.SorryServer = c.String("sorry-server")
 					}
+					if c.IsSet("selector") {
+						updateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("name") {
 						updateParam.Name = c.String("name")
 					}
@@ -2590,29 +2751,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().GSLB
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.CommonServiceGSLBItems {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(updateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceGSLBItems {
+							if hasTags(&v, updateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceGSLBItems {
+										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2620,7 +2801,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -2655,6 +2836,10 @@ func init() {
 				Usage:     "Delete GSLB",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -2724,6 +2909,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, deleteParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						deleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						deleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2832,6 +3020,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						deleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						deleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2888,29 +3079,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().GSLB
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.CommonServiceGSLBItems {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(deleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceGSLBItems {
+							if hasTags(&v, deleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceGSLBItems {
+										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2918,7 +3129,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -3162,6 +3373,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("gslb", "delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("gslb", "list", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3277,6 +3493,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("gslb", "read", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("gslb", "server-add", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -3336,6 +3557,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("gslb", "server-add", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("gslb", "server-add", "weight", &schema.Category{
 		Key:         "server",
@@ -3397,6 +3623,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("gslb", "server-delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("gslb", "server-info", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3441,6 +3672,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("gslb", "server-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("gslb", "server-update", "assumeyes", &schema.Category{
 		Key:         "Input",
@@ -3506,6 +3742,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("gslb", "server-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("gslb", "server-update", "weight", &schema.Category{
 		Key:         "server",
@@ -3606,6 +3847,11 @@ func init() {
 		Key:         "GSLB",
 		DisplayName: "GSLB options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("gslb", "update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("gslb", "update", "sorry-server", &schema.Category{
 		Key:         "GSLB",

@@ -15,17 +15,35 @@ func InternetListCompleteFlags(ctx command.Context, params *params.ListInternetP
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["Internet"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["Internet"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Internet"].Commands["list"].Params["id"].CompleteFunc
-	case "tags":
-		comp = define.Resources["Internet"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["Internet"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["Internet"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["Internet"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["Internet"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["Internet"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["Internet"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["Internet"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["Internet"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -43,13 +61,30 @@ func InternetMonitorCompleteFlags(ctx command.Context, params *params.MonitorInt
 
 	switch flagName {
 	case "start":
-		comp = define.Resources["Internet"].Commands["monitor"].Params["start"].CompleteFunc
+		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "end":
-		comp = define.Resources["Internet"].Commands["monitor"].Params["end"].CompleteFunc
+		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "key-format":
-		comp = define.Resources["Internet"].Commands["monitor"].Params["key-format"].CompleteFunc
+		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Internet"].Commands["monitor"].Params["id"].CompleteFunc
+		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -67,9 +102,20 @@ func InternetUpdateBandwidthCompleteFlags(ctx command.Context, params *params.Up
 
 	switch flagName {
 	case "band-width":
-		comp = define.Resources["Internet"].Commands["update-bandwidth"].Params["band-width"].CompleteFunc
+		param := define.Resources["Internet"].Commands["update-bandwidth"].BuildedParams().Get("band-width")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Internet"].Commands["update-bandwidth"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Internet"].Commands["update-bandwidth"].Params["id"].CompleteFunc
+		param := define.Resources["Internet"].Commands["update-bandwidth"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -87,17 +133,35 @@ func InternetCreateCompleteFlags(ctx command.Context, params *params.CreateInter
 
 	switch flagName {
 	case "nw-masklen", "network-masklen":
-		comp = define.Resources["Internet"].Commands["create"].Params["nw-masklen"].CompleteFunc
+		param := define.Resources["Internet"].Commands["create"].BuildedParams().Get("nw-masklen")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "band-width":
-		comp = define.Resources["Internet"].Commands["create"].Params["band-width"].CompleteFunc
+		param := define.Resources["Internet"].Commands["create"].BuildedParams().Get("band-width")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Internet"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["Internet"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Internet"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["Internet"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Internet"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["Internet"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["Internet"].Commands["create"].Params["icon-id"].CompleteFunc
+		param := define.Resources["Internet"].Commands["create"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -114,8 +178,16 @@ func InternetReadCompleteFlags(ctx command.Context, params *params.ReadInternetP
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Internet"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Internet"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["Internet"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -133,17 +205,40 @@ func InternetUpdateCompleteFlags(ctx command.Context, params *params.UpdateInter
 
 	switch flagName {
 	case "band-width":
-		comp = define.Resources["Internet"].Commands["update"].Params["band-width"].CompleteFunc
+		param := define.Resources["Internet"].Commands["update"].BuildedParams().Get("band-width")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Internet"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Internet"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["Internet"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Internet"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["Internet"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Internet"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["Internet"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["Internet"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["Internet"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Internet"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["Internet"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -160,8 +255,16 @@ func InternetDeleteCompleteFlags(ctx command.Context, params *params.DeleteInter
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Internet"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Internet"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["Internet"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

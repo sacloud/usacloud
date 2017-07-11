@@ -496,29 +496,34 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), packetFilterConnectParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Interface
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Interfaces {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						return fmt.Errorf("ID or Name argument is required")
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Interfaces {
+
+										ids = append(ids, v.GetID())
+
+									}
 								}
 							}
 						}
@@ -526,7 +531,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -995,29 +1000,34 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), packetFilterDisconnectParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Interface
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Interfaces {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						return fmt.Errorf("ID or Name argument is required")
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Interfaces {
+
+										ids = append(ids, v.GetID())
+
+									}
 								}
 							}
 						}
@@ -1025,7 +1035,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -1281,29 +1291,34 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), readParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Interface
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Interfaces {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						return fmt.Errorf("ID or Name argument is required")
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Interfaces {
+
+										ids = append(ids, v.GetID())
+
+									}
 								}
 							}
 						}
@@ -1311,7 +1326,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -1587,29 +1602,34 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Interface
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Interfaces {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						return fmt.Errorf("ID or Name argument is required")
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Interfaces {
+
+										ids = append(ids, v.GetID())
+
+									}
 								}
 							}
 						}
@@ -1617,7 +1637,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -1885,29 +1905,34 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().Interface
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.Interfaces {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						return fmt.Errorf("ID or Name argument is required")
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Interfaces {
+
+										ids = append(ids, v.GetID())
+
+									}
 								}
 							}
 						}
@@ -1915,7 +1940,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm

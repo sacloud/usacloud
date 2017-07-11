@@ -76,7 +76,7 @@ func init() {
 		Subcommands: []*cli.Command{
 			{
 				Name:    "list",
-				Aliases: []string{"ls", "find"},
+				Aliases: []string{"ls", "find", "selector"},
 				Usage:   "List VPCRouter",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
@@ -88,8 +88,9 @@ func init() {
 						Usage: "set filter by id(s)",
 					},
 					&cli.StringSliceFlag{
-						Name:  "tags",
-						Usage: "set filter by tags(AND)",
+						Name:    "tags",
+						Aliases: []string{"selector"},
+						Usage:   "set filter by tags(AND)",
 					},
 					&cli.IntFlag{
 						Name:    "from",
@@ -715,6 +716,10 @@ func init() {
 				Usage:     "Read VPCRouter",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -779,6 +784,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, readParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						readParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						readParam.ParamTemplate = c.String("param-template")
 					}
@@ -884,6 +892,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						readParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						readParam.ParamTemplate = c.String("param-template")
 					}
@@ -937,29 +948,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), readParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(readParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, readParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", readParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(readParam.Selector) == 0 || hasTags(&v, readParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -967,7 +998,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -1003,6 +1034,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "syslog-host",
 						Usage: "set syslog host IPAddress",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.StringFlag{
 						Name:  "name",
@@ -1092,6 +1127,9 @@ func init() {
 					// Set option values
 					if c.IsSet("syslog-host") {
 						updateParam.SyslogHost = c.String("syslog-host")
+					}
+					if c.IsSet("selector") {
+						updateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("name") {
 						updateParam.Name = c.String("name")
@@ -1216,6 +1254,9 @@ func init() {
 					if c.IsSet("syslog-host") {
 						updateParam.SyslogHost = c.String("syslog-host")
 					}
+					if c.IsSet("selector") {
+						updateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("name") {
 						updateParam.Name = c.String("name")
 					}
@@ -1284,29 +1325,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(updateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, updateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(updateParam.Selector) == 0 || hasTags(&v, updateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -1314,7 +1375,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -1353,6 +1414,10 @@ func init() {
 						Name:    "force",
 						Aliases: []string{"f"},
 						Usage:   "forced-shutdown flag if server is running",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -1425,6 +1490,9 @@ func init() {
 					// Set option values
 					if c.IsSet("force") {
 						deleteParam.Force = c.Bool("force")
+					}
+					if c.IsSet("selector") {
+						deleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						deleteParam.Assumeyes = c.Bool("assumeyes")
@@ -1537,6 +1605,9 @@ func init() {
 					if c.IsSet("force") {
 						deleteParam.Force = c.Bool("force")
 					}
+					if c.IsSet("selector") {
+						deleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						deleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -1593,29 +1664,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(deleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, deleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", deleteParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(deleteParam.Selector) == 0 || hasTags(&v, deleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -1623,7 +1714,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -1658,6 +1749,10 @@ func init() {
 				Usage:     "Boot VPCRouter",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -1703,6 +1798,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, bootParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						bootParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						bootParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -1796,6 +1894,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						bootParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						bootParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -1837,29 +1938,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), bootParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(bootParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, bootParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bootParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(bootParam.Selector) == 0 || hasTags(&v, bootParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -1867,7 +1988,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -1902,6 +2023,10 @@ func init() {
 				Usage:     "Shutdown VPCRouter",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -1947,6 +2072,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, shutdownParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						shutdownParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						shutdownParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2040,6 +2168,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						shutdownParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						shutdownParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2081,29 +2212,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), shutdownParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(shutdownParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, shutdownParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", shutdownParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(shutdownParam.Selector) == 0 || hasTags(&v, shutdownParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2111,7 +2262,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -2146,6 +2297,10 @@ func init() {
 				Usage:     "ShutdownForce VPCRouter",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -2191,6 +2346,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, shutdownForceParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						shutdownForceParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						shutdownForceParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2284,6 +2442,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						shutdownForceParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						shutdownForceParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2325,29 +2486,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), shutdownForceParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(shutdownForceParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, shutdownForceParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", shutdownForceParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(shutdownForceParam.Selector) == 0 || hasTags(&v, shutdownForceParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2355,7 +2536,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -2389,6 +2570,10 @@ func init() {
 				Usage:     "Reset VPCRouter",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -2434,6 +2619,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, resetParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						resetParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						resetParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2527,6 +2715,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						resetParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						resetParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -2568,29 +2759,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), resetParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(resetParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, resetParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", resetParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(resetParam.Selector) == 0 || hasTags(&v, resetParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2598,7 +2809,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					// confirm
@@ -2632,6 +2843,10 @@ func init() {
 				Usage:     "Wait until boot is completed",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -2672,6 +2887,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, waitForBootParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						waitForBootParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						waitForBootParam.ParamTemplate = c.String("param-template")
 					}
@@ -2762,6 +2980,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						waitForBootParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						waitForBootParam.ParamTemplate = c.String("param-template")
 					}
@@ -2800,29 +3021,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), waitForBootParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(waitForBootParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, waitForBootParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForBootParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(waitForBootParam.Selector) == 0 || hasTags(&v, waitForBootParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -2830,7 +3071,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					wg := sync.WaitGroup{}
@@ -2859,6 +3100,10 @@ func init() {
 				Usage:     "Wait until shutdown is completed",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -2899,6 +3144,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, waitForDownParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						waitForDownParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						waitForDownParam.ParamTemplate = c.String("param-template")
 					}
@@ -2989,6 +3237,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						waitForDownParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						waitForDownParam.ParamTemplate = c.String("param-template")
 					}
@@ -3027,29 +3278,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), waitForDownParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(waitForDownParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, waitForDownParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", waitForDownParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(waitForDownParam.Selector) == 0 || hasTags(&v, waitForDownParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -3057,7 +3328,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					wg := sync.WaitGroup{}
@@ -3087,6 +3358,10 @@ func init() {
 				Usage:     "Show information of NIC(s) connected to vpc-router",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -3151,6 +3426,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, interfaceInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						interfaceInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						interfaceInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -3256,6 +3534,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						interfaceInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						interfaceInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -3309,29 +3590,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), interfaceInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(interfaceInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, interfaceInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(interfaceInfoParam.Selector) == 0 || hasTags(&v, interfaceInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -3339,7 +3640,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -3404,6 +3705,10 @@ func init() {
 						Aliases: []string{"network-masklen"},
 						Usage:   "set ipaddress prefix",
 						Value:   24,
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -3470,6 +3775,9 @@ func init() {
 					}
 					if c.IsSet("nw-masklen") {
 						interfaceConnectParam.NwMasklen = c.Int("nw-masklen")
+					}
+					if c.IsSet("selector") {
+						interfaceConnectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						interfaceConnectParam.Assumeyes = c.Bool("assumeyes")
@@ -3585,6 +3893,9 @@ func init() {
 					if c.IsSet("nw-masklen") {
 						interfaceConnectParam.NwMasklen = c.Int("nw-masklen")
 					}
+					if c.IsSet("selector") {
+						interfaceConnectParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						interfaceConnectParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -3626,29 +3937,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), interfaceConnectParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(interfaceConnectParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, interfaceConnectParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceConnectParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(interfaceConnectParam.Selector) == 0 || hasTags(&v, interfaceConnectParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -3656,7 +3987,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -3731,6 +4062,10 @@ func init() {
 						Usage:   "set ipaddress prefix",
 						Value:   24,
 					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -3799,6 +4134,9 @@ func init() {
 					}
 					if c.IsSet("nw-masklen") {
 						interfaceUpdateParam.NwMasklen = c.Int("nw-masklen")
+					}
+					if c.IsSet("selector") {
+						interfaceUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						interfaceUpdateParam.Assumeyes = c.Bool("assumeyes")
@@ -3917,6 +4255,9 @@ func init() {
 					if c.IsSet("nw-masklen") {
 						interfaceUpdateParam.NwMasklen = c.Int("nw-masklen")
 					}
+					if c.IsSet("selector") {
+						interfaceUpdateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						interfaceUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -3958,29 +4299,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), interfaceUpdateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(interfaceUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, interfaceUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceUpdateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(interfaceUpdateParam.Selector) == 0 || hasTags(&v, interfaceUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -3988,7 +4349,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -4033,6 +4394,10 @@ func init() {
 					&cli.BoolFlag{
 						Name:  "with-reboot",
 						Usage: "reboot after connect",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -4084,6 +4449,9 @@ func init() {
 					}
 					if c.IsSet("with-reboot") {
 						interfaceDisconnectParam.WithReboot = c.Bool("with-reboot")
+					}
+					if c.IsSet("selector") {
+						interfaceDisconnectParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						interfaceDisconnectParam.Assumeyes = c.Bool("assumeyes")
@@ -4184,6 +4552,9 @@ func init() {
 					if c.IsSet("with-reboot") {
 						interfaceDisconnectParam.WithReboot = c.Bool("with-reboot")
 					}
+					if c.IsSet("selector") {
+						interfaceDisconnectParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						interfaceDisconnectParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -4225,29 +4596,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), interfaceDisconnectParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(interfaceDisconnectParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, interfaceDisconnectParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", interfaceDisconnectParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(interfaceDisconnectParam.Selector) == 0 || hasTags(&v, interfaceDisconnectParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -4255,7 +4646,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -4294,6 +4685,10 @@ func init() {
 				Usage:     "Show information of static NAT settings",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -4358,6 +4753,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, staticNatInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						staticNatInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						staticNatInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -4463,6 +4861,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						staticNatInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						staticNatInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -4516,29 +4917,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), staticNatInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(staticNatInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, staticNatInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticNatInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(staticNatInfoParam.Selector) == 0 || hasTags(&v, staticNatInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -4546,7 +4967,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -4593,6 +5014,10 @@ func init() {
 						Name:    "description",
 						Aliases: []string{"desc"},
 						Usage:   "set description",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -4647,6 +5072,9 @@ func init() {
 					}
 					if c.IsSet("description") {
 						staticNatAddParam.Description = c.String("description")
+					}
+					if c.IsSet("selector") {
+						staticNatAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						staticNatAddParam.Assumeyes = c.Bool("assumeyes")
@@ -4750,6 +5178,9 @@ func init() {
 					if c.IsSet("description") {
 						staticNatAddParam.Description = c.String("description")
 					}
+					if c.IsSet("selector") {
+						staticNatAddParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						staticNatAddParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -4791,29 +5222,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), staticNatAddParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(staticNatAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, staticNatAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticNatAddParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(staticNatAddParam.Selector) == 0 || hasTags(&v, staticNatAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -4821,7 +5272,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -4877,6 +5328,10 @@ func init() {
 						Name:    "description",
 						Aliases: []string{"desc"},
 						Usage:   "set description",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -4934,6 +5389,9 @@ func init() {
 					}
 					if c.IsSet("description") {
 						staticNatUpdateParam.Description = c.String("description")
+					}
+					if c.IsSet("selector") {
+						staticNatUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						staticNatUpdateParam.Assumeyes = c.Bool("assumeyes")
@@ -5040,6 +5498,9 @@ func init() {
 					if c.IsSet("description") {
 						staticNatUpdateParam.Description = c.String("description")
 					}
+					if c.IsSet("selector") {
+						staticNatUpdateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						staticNatUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -5081,29 +5542,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), staticNatUpdateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(staticNatUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, staticNatUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticNatUpdateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(staticNatUpdateParam.Selector) == 0 || hasTags(&v, staticNatUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -5111,7 +5592,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -5152,6 +5633,10 @@ func init() {
 					&cli.IntFlag{
 						Name:  "index",
 						Usage: "[Required] index of target static NAT",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -5200,6 +5685,9 @@ func init() {
 					// Set option values
 					if c.IsSet("index") {
 						staticNatDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						staticNatDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						staticNatDeleteParam.Assumeyes = c.Bool("assumeyes")
@@ -5297,6 +5785,9 @@ func init() {
 					if c.IsSet("index") {
 						staticNatDeleteParam.Index = c.Int("index")
 					}
+					if c.IsSet("selector") {
+						staticNatDeleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						staticNatDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -5338,29 +5829,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), staticNatDeleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(staticNatDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, staticNatDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticNatDeleteParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(staticNatDeleteParam.Selector) == 0 || hasTags(&v, staticNatDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -5368,7 +5879,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -5407,6 +5918,10 @@ func init() {
 				Usage:     "Show information of port-forwarding settings",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -5471,6 +5986,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, portForwardingInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						portForwardingInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						portForwardingInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -5576,6 +6094,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						portForwardingInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						portForwardingInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -5629,29 +6150,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), portForwardingInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(portForwardingInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, portForwardingInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", portForwardingInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(portForwardingInfoParam.Selector) == 0 || hasTags(&v, portForwardingInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -5659,7 +6200,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -5713,6 +6254,10 @@ func init() {
 						Name:    "description",
 						Aliases: []string{"desc"},
 						Usage:   "set description",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -5773,6 +6318,9 @@ func init() {
 					}
 					if c.IsSet("description") {
 						portForwardingAddParam.Description = c.String("description")
+					}
+					if c.IsSet("selector") {
+						portForwardingAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						portForwardingAddParam.Assumeyes = c.Bool("assumeyes")
@@ -5882,6 +6430,9 @@ func init() {
 					if c.IsSet("description") {
 						portForwardingAddParam.Description = c.String("description")
 					}
+					if c.IsSet("selector") {
+						portForwardingAddParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						portForwardingAddParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -5923,29 +6474,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), portForwardingAddParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(portForwardingAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, portForwardingAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", portForwardingAddParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(portForwardingAddParam.Selector) == 0 || hasTags(&v, portForwardingAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -5953,7 +6524,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -6017,6 +6588,10 @@ func init() {
 						Aliases: []string{"desc"},
 						Usage:   "set description",
 					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -6079,6 +6654,9 @@ func init() {
 					}
 					if c.IsSet("description") {
 						portForwardingUpdateParam.Description = c.String("description")
+					}
+					if c.IsSet("selector") {
+						portForwardingUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						portForwardingUpdateParam.Assumeyes = c.Bool("assumeyes")
@@ -6191,6 +6769,9 @@ func init() {
 					if c.IsSet("description") {
 						portForwardingUpdateParam.Description = c.String("description")
 					}
+					if c.IsSet("selector") {
+						portForwardingUpdateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						portForwardingUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -6232,29 +6813,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), portForwardingUpdateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(portForwardingUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, portForwardingUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", portForwardingUpdateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(portForwardingUpdateParam.Selector) == 0 || hasTags(&v, portForwardingUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -6262,7 +6863,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -6303,6 +6904,10 @@ func init() {
 					&cli.IntFlag{
 						Name:  "index",
 						Usage: "[Required] index of target static NAT",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -6351,6 +6956,9 @@ func init() {
 					// Set option values
 					if c.IsSet("index") {
 						portForwardingDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						portForwardingDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						portForwardingDeleteParam.Assumeyes = c.Bool("assumeyes")
@@ -6448,6 +7056,9 @@ func init() {
 					if c.IsSet("index") {
 						portForwardingDeleteParam.Index = c.Int("index")
 					}
+					if c.IsSet("selector") {
+						portForwardingDeleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						portForwardingDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -6489,29 +7100,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), portForwardingDeleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(portForwardingDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, portForwardingDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", portForwardingDeleteParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(portForwardingDeleteParam.Selector) == 0 || hasTags(&v, portForwardingDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -6519,7 +7150,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -6562,6 +7193,10 @@ func init() {
 						Name:  "direction",
 						Usage: "[Required] set target direction[send/receive]",
 						Value: "receive",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -6629,6 +7264,9 @@ func init() {
 					// Set option values
 					if c.IsSet("direction") {
 						firewallInfoParam.Direction = c.String("direction")
+					}
+					if c.IsSet("selector") {
+						firewallInfoParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
 						firewallInfoParam.ParamTemplate = c.String("param-template")
@@ -6738,6 +7376,9 @@ func init() {
 					if c.IsSet("direction") {
 						firewallInfoParam.Direction = c.String("direction")
 					}
+					if c.IsSet("selector") {
+						firewallInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						firewallInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -6791,29 +7432,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), firewallInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(firewallInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, firewallInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", firewallInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(firewallInfoParam.Selector) == 0 || hasTags(&v, firewallInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -6821,7 +7482,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -6895,6 +7556,10 @@ func init() {
 						Aliases: []string{"desc"},
 						Usage:   "set description",
 					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -6966,6 +7631,9 @@ func init() {
 					}
 					if c.IsSet("description") {
 						firewallAddParam.Description = c.String("description")
+					}
+					if c.IsSet("selector") {
+						firewallAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						firewallAddParam.Assumeyes = c.Bool("assumeyes")
@@ -7087,6 +7755,9 @@ func init() {
 					if c.IsSet("description") {
 						firewallAddParam.Description = c.String("description")
 					}
+					if c.IsSet("selector") {
+						firewallAddParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						firewallAddParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -7128,29 +7799,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), firewallAddParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(firewallAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, firewallAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", firewallAddParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(firewallAddParam.Selector) == 0 || hasTags(&v, firewallAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -7158,7 +7849,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -7241,6 +7932,10 @@ func init() {
 						Aliases: []string{"desc"},
 						Usage:   "set description",
 					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
 						Aliases: []string{"y"},
@@ -7315,6 +8010,9 @@ func init() {
 					}
 					if c.IsSet("description") {
 						firewallUpdateParam.Description = c.String("description")
+					}
+					if c.IsSet("selector") {
+						firewallUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						firewallUpdateParam.Assumeyes = c.Bool("assumeyes")
@@ -7439,6 +8137,9 @@ func init() {
 					if c.IsSet("description") {
 						firewallUpdateParam.Description = c.String("description")
 					}
+					if c.IsSet("selector") {
+						firewallUpdateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						firewallUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -7480,29 +8181,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), firewallUpdateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(firewallUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, firewallUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", firewallUpdateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(firewallUpdateParam.Selector) == 0 || hasTags(&v, firewallUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -7510,7 +8231,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -7556,6 +8277,10 @@ func init() {
 					&cli.IntFlag{
 						Name:  "index",
 						Usage: "[Required] index of target static NAT",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -7607,6 +8332,9 @@ func init() {
 					}
 					if c.IsSet("index") {
 						firewallDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						firewallDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						firewallDeleteParam.Assumeyes = c.Bool("assumeyes")
@@ -7707,6 +8435,9 @@ func init() {
 					if c.IsSet("index") {
 						firewallDeleteParam.Index = c.Int("index")
 					}
+					if c.IsSet("selector") {
+						firewallDeleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						firewallDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -7748,29 +8479,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), firewallDeleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(firewallDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, firewallDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", firewallDeleteParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(firewallDeleteParam.Selector) == 0 || hasTags(&v, firewallDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -7778,7 +8529,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -7817,6 +8568,10 @@ func init() {
 				Usage:     "Show information of DHCP servers",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -7881,6 +8636,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, dhcpServerInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						dhcpServerInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						dhcpServerInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -7986,6 +8744,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						dhcpServerInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						dhcpServerInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -8039,29 +8800,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dhcpServerInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(dhcpServerInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, dhcpServerInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dhcpServerInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(dhcpServerInfoParam.Selector) == 0 || hasTags(&v, dhcpServerInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -8069,7 +8850,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -8114,6 +8895,10 @@ func init() {
 						Name:    "range-stop",
 						Aliases: []string{"range-end"},
 						Usage:   "[Required] set DHCP IPAddress Range(stop)",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -8168,6 +8953,9 @@ func init() {
 					}
 					if c.IsSet("range-stop") {
 						dhcpServerAddParam.RangeStop = c.String("range-stop")
+					}
+					if c.IsSet("selector") {
+						dhcpServerAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						dhcpServerAddParam.Assumeyes = c.Bool("assumeyes")
@@ -8271,6 +9059,9 @@ func init() {
 					if c.IsSet("range-stop") {
 						dhcpServerAddParam.RangeStop = c.String("range-stop")
 					}
+					if c.IsSet("selector") {
+						dhcpServerAddParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						dhcpServerAddParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -8312,29 +9103,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dhcpServerAddParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(dhcpServerAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, dhcpServerAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dhcpServerAddParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(dhcpServerAddParam.Selector) == 0 || hasTags(&v, dhcpServerAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -8342,7 +9153,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -8392,6 +9203,10 @@ func init() {
 						Name:    "range-stop",
 						Aliases: []string{"range-end"},
 						Usage:   "set DHCP IPAddress Range(stop)",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -8446,6 +9261,9 @@ func init() {
 					}
 					if c.IsSet("range-stop") {
 						dhcpServerUpdateParam.RangeStop = c.String("range-stop")
+					}
+					if c.IsSet("selector") {
+						dhcpServerUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						dhcpServerUpdateParam.Assumeyes = c.Bool("assumeyes")
@@ -8549,6 +9367,9 @@ func init() {
 					if c.IsSet("range-stop") {
 						dhcpServerUpdateParam.RangeStop = c.String("range-stop")
 					}
+					if c.IsSet("selector") {
+						dhcpServerUpdateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						dhcpServerUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -8590,29 +9411,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dhcpServerUpdateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(dhcpServerUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, dhcpServerUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dhcpServerUpdateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(dhcpServerUpdateParam.Selector) == 0 || hasTags(&v, dhcpServerUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -8620,7 +9461,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -8661,6 +9502,10 @@ func init() {
 					&cli.IntFlag{
 						Name:  "index",
 						Usage: "[Required] set target NIC(private NIC index)",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -8709,6 +9554,9 @@ func init() {
 					// Set option values
 					if c.IsSet("index") {
 						dhcpServerDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						dhcpServerDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						dhcpServerDeleteParam.Assumeyes = c.Bool("assumeyes")
@@ -8806,6 +9654,9 @@ func init() {
 					if c.IsSet("index") {
 						dhcpServerDeleteParam.Index = c.Int("index")
 					}
+					if c.IsSet("selector") {
+						dhcpServerDeleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						dhcpServerDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -8847,29 +9698,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dhcpServerDeleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(dhcpServerDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, dhcpServerDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dhcpServerDeleteParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(dhcpServerDeleteParam.Selector) == 0 || hasTags(&v, dhcpServerDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -8877,7 +9748,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -8916,6 +9787,10 @@ func init() {
 				Usage:     "Show information of DHCP static mapping",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -8980,6 +9855,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, dhcpStaticMappingInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						dhcpStaticMappingInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						dhcpStaticMappingInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -9085,6 +9963,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						dhcpStaticMappingInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						dhcpStaticMappingInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -9138,29 +10019,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dhcpStaticMappingInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(dhcpStaticMappingInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, dhcpStaticMappingInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dhcpStaticMappingInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(dhcpStaticMappingInfoParam.Selector) == 0 || hasTags(&v, dhcpStaticMappingInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -9168,7 +10069,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -9210,6 +10111,10 @@ func init() {
 						Name:    "ipaddress",
 						Aliases: []string{"ip"},
 						Usage:   "[Required] set ipaddress",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -9261,6 +10166,9 @@ func init() {
 					}
 					if c.IsSet("ipaddress") {
 						dhcpStaticMappingAddParam.Ipaddress = c.String("ipaddress")
+					}
+					if c.IsSet("selector") {
+						dhcpStaticMappingAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						dhcpStaticMappingAddParam.Assumeyes = c.Bool("assumeyes")
@@ -9361,6 +10269,9 @@ func init() {
 					if c.IsSet("ipaddress") {
 						dhcpStaticMappingAddParam.Ipaddress = c.String("ipaddress")
 					}
+					if c.IsSet("selector") {
+						dhcpStaticMappingAddParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						dhcpStaticMappingAddParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -9402,29 +10313,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dhcpStaticMappingAddParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(dhcpStaticMappingAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, dhcpStaticMappingAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dhcpStaticMappingAddParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(dhcpStaticMappingAddParam.Selector) == 0 || hasTags(&v, dhcpStaticMappingAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -9432,7 +10363,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -9483,6 +10414,10 @@ func init() {
 						Name:    "ipaddress",
 						Aliases: []string{"ip"},
 						Usage:   "set ipaddress",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -9537,6 +10472,9 @@ func init() {
 					}
 					if c.IsSet("ipaddress") {
 						dhcpStaticMappingUpdateParam.Ipaddress = c.String("ipaddress")
+					}
+					if c.IsSet("selector") {
+						dhcpStaticMappingUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						dhcpStaticMappingUpdateParam.Assumeyes = c.Bool("assumeyes")
@@ -9640,6 +10578,9 @@ func init() {
 					if c.IsSet("ipaddress") {
 						dhcpStaticMappingUpdateParam.Ipaddress = c.String("ipaddress")
 					}
+					if c.IsSet("selector") {
+						dhcpStaticMappingUpdateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						dhcpStaticMappingUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -9681,29 +10622,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dhcpStaticMappingUpdateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(dhcpStaticMappingUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, dhcpStaticMappingUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dhcpStaticMappingUpdateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(dhcpStaticMappingUpdateParam.Selector) == 0 || hasTags(&v, dhcpStaticMappingUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -9711,7 +10672,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -9752,6 +10713,10 @@ func init() {
 					&cli.IntFlag{
 						Name:  "index",
 						Usage: "[Required] index of target DHCP static mapping",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -9800,6 +10765,9 @@ func init() {
 					// Set option values
 					if c.IsSet("index") {
 						dhcpStaticMappingDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						dhcpStaticMappingDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						dhcpStaticMappingDeleteParam.Assumeyes = c.Bool("assumeyes")
@@ -9897,6 +10865,9 @@ func init() {
 					if c.IsSet("index") {
 						dhcpStaticMappingDeleteParam.Index = c.Int("index")
 					}
+					if c.IsSet("selector") {
+						dhcpStaticMappingDeleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						dhcpStaticMappingDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -9938,29 +10909,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), dhcpStaticMappingDeleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(dhcpStaticMappingDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, dhcpStaticMappingDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dhcpStaticMappingDeleteParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(dhcpStaticMappingDeleteParam.Selector) == 0 || hasTags(&v, dhcpStaticMappingDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -9968,7 +10959,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -10006,6 +10997,10 @@ func init() {
 				Usage:     "Show information of PPTP server",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -10070,6 +11065,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, pptpServerInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						pptpServerInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						pptpServerInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -10175,6 +11173,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						pptpServerInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						pptpServerInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -10228,29 +11229,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), pptpServerInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(pptpServerInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, pptpServerInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", pptpServerInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(pptpServerInfoParam.Selector) == 0 || hasTags(&v, pptpServerInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -10258,7 +11279,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -10303,6 +11324,10 @@ func init() {
 						Name:    "range-stop",
 						Aliases: []string{"range-end"},
 						Usage:   "set IPAddress Range(stop)",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -10357,6 +11382,9 @@ func init() {
 					}
 					if c.IsSet("range-stop") {
 						pptpServerUpdateParam.RangeStop = c.String("range-stop")
+					}
+					if c.IsSet("selector") {
+						pptpServerUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						pptpServerUpdateParam.Assumeyes = c.Bool("assumeyes")
@@ -10460,6 +11488,9 @@ func init() {
 					if c.IsSet("range-stop") {
 						pptpServerUpdateParam.RangeStop = c.String("range-stop")
 					}
+					if c.IsSet("selector") {
+						pptpServerUpdateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						pptpServerUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -10501,29 +11532,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), pptpServerUpdateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(pptpServerUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, pptpServerUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", pptpServerUpdateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(pptpServerUpdateParam.Selector) == 0 || hasTags(&v, pptpServerUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -10531,7 +11582,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -10569,6 +11620,10 @@ func init() {
 				Usage:     "Show information of L2TP/IPSec server",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -10633,6 +11688,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, l2tpServerInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						l2tpServerInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						l2tpServerInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -10738,6 +11796,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						l2tpServerInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						l2tpServerInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -10791,29 +11852,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), l2tpServerInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(l2tpServerInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, l2tpServerInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", l2tpServerInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(l2tpServerInfoParam.Selector) == 0 || hasTags(&v, l2tpServerInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -10821,7 +11902,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -10870,6 +11951,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "pre-shared-secret",
 						Usage: "set PreSharedSecret",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -10927,6 +12012,9 @@ func init() {
 					}
 					if c.IsSet("pre-shared-secret") {
 						l2tpServerUpdateParam.PreSharedSecret = c.String("pre-shared-secret")
+					}
+					if c.IsSet("selector") {
+						l2tpServerUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						l2tpServerUpdateParam.Assumeyes = c.Bool("assumeyes")
@@ -11033,6 +12121,9 @@ func init() {
 					if c.IsSet("pre-shared-secret") {
 						l2tpServerUpdateParam.PreSharedSecret = c.String("pre-shared-secret")
 					}
+					if c.IsSet("selector") {
+						l2tpServerUpdateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						l2tpServerUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -11074,29 +12165,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), l2tpServerUpdateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(l2tpServerUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, l2tpServerUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", l2tpServerUpdateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(l2tpServerUpdateParam.Selector) == 0 || hasTags(&v, l2tpServerUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -11104,7 +12215,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -11143,6 +12254,10 @@ func init() {
 				Usage:     "Show information of remote-access users",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -11207,6 +12322,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, userInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						userInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						userInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -11312,6 +12430,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						userInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						userInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -11365,29 +12486,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), userInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(userInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, userInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", userInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(userInfoParam.Selector) == 0 || hasTags(&v, userInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -11395,7 +12536,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -11437,6 +12578,10 @@ func init() {
 						Name:    "password",
 						Aliases: []string{"pass"},
 						Usage:   "[Required] set remote-access password",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -11488,6 +12633,9 @@ func init() {
 					}
 					if c.IsSet("password") {
 						userAddParam.Password = c.String("password")
+					}
+					if c.IsSet("selector") {
+						userAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						userAddParam.Assumeyes = c.Bool("assumeyes")
@@ -11588,6 +12736,9 @@ func init() {
 					if c.IsSet("password") {
 						userAddParam.Password = c.String("password")
 					}
+					if c.IsSet("selector") {
+						userAddParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						userAddParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -11629,29 +12780,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), userAddParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(userAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, userAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", userAddParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(userAddParam.Selector) == 0 || hasTags(&v, userAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -11659,7 +12830,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -11710,6 +12881,10 @@ func init() {
 						Name:    "password",
 						Aliases: []string{"pass"},
 						Usage:   "set remote-access password",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -11764,6 +12939,9 @@ func init() {
 					}
 					if c.IsSet("password") {
 						userUpdateParam.Password = c.String("password")
+					}
+					if c.IsSet("selector") {
+						userUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						userUpdateParam.Assumeyes = c.Bool("assumeyes")
@@ -11867,6 +13045,9 @@ func init() {
 					if c.IsSet("password") {
 						userUpdateParam.Password = c.String("password")
 					}
+					if c.IsSet("selector") {
+						userUpdateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						userUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -11908,29 +13089,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), userUpdateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(userUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, userUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", userUpdateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(userUpdateParam.Selector) == 0 || hasTags(&v, userUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -11938,7 +13139,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -11979,6 +13180,10 @@ func init() {
 					&cli.IntFlag{
 						Name:  "index",
 						Usage: "[Required] index of target remote-access user",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -12027,6 +13232,9 @@ func init() {
 					// Set option values
 					if c.IsSet("index") {
 						userDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						userDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						userDeleteParam.Assumeyes = c.Bool("assumeyes")
@@ -12124,6 +13332,9 @@ func init() {
 					if c.IsSet("index") {
 						userDeleteParam.Index = c.Int("index")
 					}
+					if c.IsSet("selector") {
+						userDeleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						userDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -12165,29 +13376,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), userDeleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(userDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, userDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", userDeleteParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(userDeleteParam.Selector) == 0 || hasTags(&v, userDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -12195,7 +13426,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -12234,6 +13465,10 @@ func init() {
 				Usage:     "Show information of site-to-site IPSec VPN settings",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -12298,6 +13533,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, siteToSiteVpnInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						siteToSiteVpnInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						siteToSiteVpnInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -12403,6 +13641,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						siteToSiteVpnInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						siteToSiteVpnInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -12456,29 +13697,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), siteToSiteVpnInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(siteToSiteVpnInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, siteToSiteVpnInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", siteToSiteVpnInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(siteToSiteVpnInfoParam.Selector) == 0 || hasTags(&v, siteToSiteVpnInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -12486,7 +13747,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -12538,6 +13799,10 @@ func init() {
 					&cli.StringSliceFlag{
 						Name:  "local-prefix",
 						Usage: "[Required] set local prefix list",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -12598,6 +13863,9 @@ func init() {
 					}
 					if c.IsSet("local-prefix") {
 						siteToSiteVpnAddParam.LocalPrefix = c.StringSlice("local-prefix")
+					}
+					if c.IsSet("selector") {
+						siteToSiteVpnAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						siteToSiteVpnAddParam.Assumeyes = c.Bool("assumeyes")
@@ -12707,6 +13975,9 @@ func init() {
 					if c.IsSet("local-prefix") {
 						siteToSiteVpnAddParam.LocalPrefix = c.StringSlice("local-prefix")
 					}
+					if c.IsSet("selector") {
+						siteToSiteVpnAddParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						siteToSiteVpnAddParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -12748,29 +14019,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), siteToSiteVpnAddParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(siteToSiteVpnAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, siteToSiteVpnAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", siteToSiteVpnAddParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(siteToSiteVpnAddParam.Selector) == 0 || hasTags(&v, siteToSiteVpnAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -12778,7 +14069,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -12839,6 +14130,10 @@ func init() {
 					&cli.StringSliceFlag{
 						Name:  "local-prefix",
 						Usage: "set local prefix list",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -12902,6 +14197,9 @@ func init() {
 					}
 					if c.IsSet("local-prefix") {
 						siteToSiteVpnUpdateParam.LocalPrefix = c.StringSlice("local-prefix")
+					}
+					if c.IsSet("selector") {
+						siteToSiteVpnUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						siteToSiteVpnUpdateParam.Assumeyes = c.Bool("assumeyes")
@@ -13014,6 +14312,9 @@ func init() {
 					if c.IsSet("local-prefix") {
 						siteToSiteVpnUpdateParam.LocalPrefix = c.StringSlice("local-prefix")
 					}
+					if c.IsSet("selector") {
+						siteToSiteVpnUpdateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						siteToSiteVpnUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -13055,29 +14356,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), siteToSiteVpnUpdateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(siteToSiteVpnUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, siteToSiteVpnUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", siteToSiteVpnUpdateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(siteToSiteVpnUpdateParam.Selector) == 0 || hasTags(&v, siteToSiteVpnUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -13085,7 +14406,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -13126,6 +14447,10 @@ func init() {
 					&cli.IntFlag{
 						Name:  "index",
 						Usage: "[Required] index of target remote-access user",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -13174,6 +14499,9 @@ func init() {
 					// Set option values
 					if c.IsSet("index") {
 						siteToSiteVpnDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						siteToSiteVpnDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						siteToSiteVpnDeleteParam.Assumeyes = c.Bool("assumeyes")
@@ -13271,6 +14599,9 @@ func init() {
 					if c.IsSet("index") {
 						siteToSiteVpnDeleteParam.Index = c.Int("index")
 					}
+					if c.IsSet("selector") {
+						siteToSiteVpnDeleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						siteToSiteVpnDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -13312,29 +14643,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), siteToSiteVpnDeleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(siteToSiteVpnDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, siteToSiteVpnDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", siteToSiteVpnDeleteParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(siteToSiteVpnDeleteParam.Selector) == 0 || hasTags(&v, siteToSiteVpnDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -13342,7 +14693,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -13381,6 +14732,10 @@ func init() {
 				Usage:     "Show information of static-routes",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -13445,6 +14800,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, staticRouteInfoParam)
 
 					// Set option values
+					if c.IsSet("selector") {
+						staticRouteInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						staticRouteInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -13550,6 +14908,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("selector") {
+						staticRouteInfoParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						staticRouteInfoParam.ParamTemplate = c.String("param-template")
 					}
@@ -13603,29 +14964,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), staticRouteInfoParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(staticRouteInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, staticRouteInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticRouteInfoParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(staticRouteInfoParam.Selector) == 0 || hasTags(&v, staticRouteInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -13633,7 +15014,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -13673,6 +15054,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "next-hop",
 						Usage: "[Required] set next-hop",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -13724,6 +15109,9 @@ func init() {
 					}
 					if c.IsSet("next-hop") {
 						staticRouteAddParam.NextHop = c.String("next-hop")
+					}
+					if c.IsSet("selector") {
+						staticRouteAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						staticRouteAddParam.Assumeyes = c.Bool("assumeyes")
@@ -13824,6 +15212,9 @@ func init() {
 					if c.IsSet("next-hop") {
 						staticRouteAddParam.NextHop = c.String("next-hop")
 					}
+					if c.IsSet("selector") {
+						staticRouteAddParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						staticRouteAddParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -13865,29 +15256,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), staticRouteAddParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(staticRouteAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, staticRouteAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticRouteAddParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(staticRouteAddParam.Selector) == 0 || hasTags(&v, staticRouteAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -13895,7 +15306,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -13944,6 +15355,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "next-hop",
 						Usage: "set next-hop",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -13998,6 +15413,9 @@ func init() {
 					}
 					if c.IsSet("next-hop") {
 						staticRouteUpdateParam.NextHop = c.String("next-hop")
+					}
+					if c.IsSet("selector") {
+						staticRouteUpdateParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						staticRouteUpdateParam.Assumeyes = c.Bool("assumeyes")
@@ -14101,6 +15519,9 @@ func init() {
 					if c.IsSet("next-hop") {
 						staticRouteUpdateParam.NextHop = c.String("next-hop")
 					}
+					if c.IsSet("selector") {
+						staticRouteUpdateParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						staticRouteUpdateParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -14142,29 +15563,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), staticRouteUpdateParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(staticRouteUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, staticRouteUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticRouteUpdateParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(staticRouteUpdateParam.Selector) == 0 || hasTags(&v, staticRouteUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -14172,7 +15613,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -14213,6 +15654,10 @@ func init() {
 					&cli.IntFlag{
 						Name:  "index",
 						Usage: "[Required] index of target static-route",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.BoolFlag{
 						Name:    "assumeyes",
@@ -14261,6 +15706,9 @@ func init() {
 					// Set option values
 					if c.IsSet("index") {
 						staticRouteDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						staticRouteDeleteParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
 						staticRouteDeleteParam.Assumeyes = c.Bool("assumeyes")
@@ -14358,6 +15806,9 @@ func init() {
 					if c.IsSet("index") {
 						staticRouteDeleteParam.Index = c.Int("index")
 					}
+					if c.IsSet("selector") {
+						staticRouteDeleteParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("assumeyes") {
 						staticRouteDeleteParam.Assumeyes = c.Bool("assumeyes")
 					}
@@ -14399,29 +15850,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), staticRouteDeleteParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(staticRouteDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, staticRouteDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticRouteDeleteParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(staticRouteDeleteParam.Selector) == 0 || hasTags(&v, staticRouteDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -14429,7 +15900,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -14484,6 +15955,10 @@ func init() {
 						Name:  "key-format",
 						Usage: "[Required] set monitoring value key-format",
 						Value: "sakuracloud.{{.ID}}.vpcrouter",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
 					},
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -14560,6 +16035,9 @@ func init() {
 					}
 					if c.IsSet("key-format") {
 						monitorParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("param-template") {
 						monitorParam.ParamTemplate = c.String("param-template")
@@ -14678,6 +16156,9 @@ func init() {
 					if c.IsSet("key-format") {
 						monitorParam.KeyFormat = c.String("key-format")
 					}
+					if c.IsSet("selector") {
+						monitorParam.Selector = c.StringSlice("selector")
+					}
 					if c.IsSet("param-template") {
 						monitorParam.ParamTemplate = c.String("param-template")
 					}
@@ -14731,29 +16212,49 @@ func init() {
 					// create command context
 					ctx := command.NewContext(c, c.Args().Slice(), monitorParam)
 
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID or Name argument is required")
-					}
 					apiClient := ctx.GetAPIClient().VPCRouter
 					ids := []int64{}
 
-					for _, arg := range c.Args().Slice() {
-						for _, a := range strings.Split(arg, "\n") {
-							idOrName := a
-							if id, ok := toSakuraID(idOrName); ok {
-								ids = append(ids, id)
-							} else {
-								apiClient.Reset()
-								apiClient.SetFilterBy("Name", idOrName)
-								res, err := apiClient.Find()
-								if err != nil {
-									return fmt.Errorf("Find ID is failed: %s", err)
-								}
-								if res.Count == 0 {
-									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-								}
-								for _, v := range res.VPCRouters {
-									ids = append(ids, v.GetID())
+					if c.NArg() == 0 {
+
+						if len(monitorParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, monitorParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorParam.Selector)
+						}
+
+					} else {
+						for _, arg := range c.Args().Slice() {
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(monitorParam.Selector) == 0 || hasTags(&v, monitorParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
 								}
 							}
 						}
@@ -14761,7 +16262,7 @@ func init() {
 
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
-						return fmt.Errorf("ID or Name argument is required")
+						return fmt.Errorf("Target resource is not found")
 					}
 
 					if len(ids) != 1 {
@@ -15089,6 +16590,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "boot", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "create", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -15244,6 +16750,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-server-add", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -15284,6 +16795,11 @@ func init() {
 		DisplayName: "DHCP-Server options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-add", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-server-delete", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -15313,6 +16829,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-server-info", "column", &schema.Category{
 		Key:         "output",
@@ -15359,6 +16880,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-server-update", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -15399,6 +16925,11 @@ func init() {
 		DisplayName: "DHCP-Server options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-add", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -15434,6 +16965,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-add", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-delete", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -15463,6 +16999,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-info", "column", &schema.Category{
 		Key:         "output",
@@ -15509,6 +17050,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-update", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -15548,6 +17094,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "firewall-add", "action", &schema.Category{
 		Key:         "Firewall",
@@ -15609,6 +17160,11 @@ func init() {
 		DisplayName: "Firewall options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "firewall-add", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "firewall-add", "source-network", &schema.Category{
 		Key:         "Firewall",
 		DisplayName: "Firewall options",
@@ -15653,6 +17209,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "firewall-delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "firewall-info", "column", &schema.Category{
 		Key:         "output",
@@ -15703,6 +17264,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("vpc-router", "firewall-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "firewall-update", "action", &schema.Category{
 		Key:         "Firewall",
@@ -15769,6 +17335,11 @@ func init() {
 		DisplayName: "Firewall options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "firewall-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "firewall-update", "source-network", &schema.Category{
 		Key:         "Firewall",
 		DisplayName: "Firewall options",
@@ -15829,6 +17400,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "interface-connect", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "interface-connect", "switch-id", &schema.Category{
 		Key:         "interface",
 		DisplayName: "Interface options",
@@ -15868,6 +17444,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "interface-disconnect", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "interface-disconnect", "with-reboot", &schema.Category{
 		Key:         "operation",
@@ -15918,6 +17499,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("vpc-router", "interface-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "interface-update", "alias", &schema.Category{
 		Key:         "network",
@@ -15974,6 +17560,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "interface-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "interface-update", "switch-id", &schema.Category{
 		Key:         "interface",
 		DisplayName: "Interface options",
@@ -16029,6 +17620,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "l2tp-server-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "l2tp-server-update", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -16073,6 +17669,11 @@ func init() {
 		Key:         "L2TP-IPSec",
 		DisplayName: "L2TP-IPSec options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("vpc-router", "l2tp-server-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "list", "column", &schema.Category{
 		Key:         "output",
@@ -16204,6 +17805,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "monitor", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "monitor", "start", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitor options",
@@ -16259,6 +17865,11 @@ func init() {
 		DisplayName: "Port-Forwarding options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "port-forwarding-add", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "port-forwarding-delete", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -16288,6 +17899,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "port-forwarding-delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "port-forwarding-info", "column", &schema.Category{
 		Key:         "output",
@@ -16333,6 +17949,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("vpc-router", "port-forwarding-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "port-forwarding-update", "assumeyes", &schema.Category{
 		Key:         "Input",
@@ -16389,6 +18010,11 @@ func init() {
 		DisplayName: "Port-Forwarding options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "port-forwarding-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "pptp-server-info", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -16434,6 +18060,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "pptp-server-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "pptp-server-update", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -16473,6 +18104,11 @@ func init() {
 		Key:         "PPTP",
 		DisplayName: "PPTP options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("vpc-router", "pptp-server-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "read", "column", &schema.Category{
 		Key:         "output",
@@ -16519,6 +18155,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "read", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "reset", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -16543,6 +18184,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "reset", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "shutdown", "assumeyes", &schema.Category{
 		Key:         "Input",
@@ -16569,6 +18215,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "shutdown", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "shutdown-force", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -16593,6 +18244,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "shutdown-force", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-add", "assumeyes", &schema.Category{
 		Key:         "Input",
@@ -16644,6 +18300,11 @@ func init() {
 		DisplayName: "Site-To-Site IPSec VPN options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-add", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-delete", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -16673,6 +18334,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-info", "column", &schema.Category{
 		Key:         "output",
@@ -16718,6 +18384,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-update", "assumeyes", &schema.Category{
 		Key:         "Input",
@@ -16774,6 +18445,11 @@ func init() {
 		DisplayName: "Site-To-Site IPSec VPN options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "static-nat-add", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -16814,6 +18490,11 @@ func init() {
 		DisplayName: "Static-NAT options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "static-nat-add", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "static-nat-delete", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -16843,6 +18524,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "static-nat-delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "static-nat-info", "column", &schema.Category{
 		Key:         "output",
@@ -16889,6 +18575,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "static-nat-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "static-nat-update", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -16934,6 +18625,11 @@ func init() {
 		DisplayName: "Static-NAT options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "static-nat-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "static-route-add", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -16969,6 +18665,11 @@ func init() {
 		DisplayName: "Static-Route options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "static-route-add", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "static-route-delete", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -16998,6 +18699,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "static-route-delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "static-route-info", "column", &schema.Category{
 		Key:         "output",
@@ -17044,6 +18750,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "static-route-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "static-route-update", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -17083,6 +18794,11 @@ func init() {
 		Key:         "Static-Route",
 		DisplayName: "Static-Route options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("vpc-router", "static-route-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "update", "assumeyes", &schema.Category{
 		Key:         "Input",
@@ -17149,6 +18865,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "update", "syslog-host", &schema.Category{
 		Key:         "router",
 		DisplayName: "VPCRouter options",
@@ -17189,6 +18910,11 @@ func init() {
 		DisplayName: "User options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "user-add", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "user-add", "username", &schema.Category{
 		Key:         "user",
 		DisplayName: "User options",
@@ -17223,6 +18949,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "user-delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("vpc-router", "user-info", "column", &schema.Category{
 		Key:         "output",
@@ -17269,6 +19000,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("vpc-router", "user-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "user-update", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -17304,6 +19040,11 @@ func init() {
 		DisplayName: "User options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "user-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "user-update", "username", &schema.Category{
 		Key:         "user",
 		DisplayName: "User options",
@@ -17329,6 +19070,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "wait-for-boot", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("vpc-router", "wait-for-down", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -17348,6 +19094,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "wait-for-down", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 
 	// append command to GlobalContext

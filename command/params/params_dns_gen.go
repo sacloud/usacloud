@@ -266,6 +266,7 @@ func (p *ListDNSParam) GetFormatFile() string {
 
 // RecordInfoDNSParam is input parameters for the sacloud API
 type RecordInfoDNSParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -284,6 +285,9 @@ func NewRecordInfoDNSParam() *RecordInfoDNSParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *RecordInfoDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -376,6 +380,13 @@ func (p *RecordInfoDNSParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *RecordInfoDNSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *RecordInfoDNSParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *RecordInfoDNSParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -699,6 +710,7 @@ type RecordAddDNSParam struct {
 	SrvWeight         int      `json:"srv-weight"`
 	SrvPort           int      `json:"srv-port"`
 	SrvTarget         string   `json:"srv-target"`
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -748,6 +760,9 @@ func (p *RecordAddDNSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.SrvTarget) {
 		p.SrvTarget = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -977,6 +992,13 @@ func (p *RecordAddDNSParam) SetSrvTarget(v string) {
 func (p *RecordAddDNSParam) GetSrvTarget() string {
 	return p.SrvTarget
 }
+func (p *RecordAddDNSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *RecordAddDNSParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *RecordAddDNSParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1050,6 +1072,7 @@ func (p *RecordAddDNSParam) GetId() int64 {
 
 // ReadDNSParam is input parameters for the sacloud API
 type ReadDNSParam struct {
+	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -1068,6 +1091,9 @@ func NewReadDNSParam() *ReadDNSParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *ReadDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -1160,6 +1186,13 @@ func (p *ReadDNSParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *ReadDNSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ReadDNSParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *ReadDNSParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -1236,6 +1269,7 @@ type RecordUpdateDNSParam struct {
 	SrvWeight         int      `json:"srv-weight"`
 	SrvPort           int      `json:"srv-port"`
 	SrvTarget         string   `json:"srv-target"`
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1284,6 +1318,9 @@ func (p *RecordUpdateDNSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.SrvTarget) {
 		p.SrvTarget = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1513,6 +1550,13 @@ func (p *RecordUpdateDNSParam) SetSrvTarget(v string) {
 func (p *RecordUpdateDNSParam) GetSrvTarget() string {
 	return p.SrvTarget
 }
+func (p *RecordUpdateDNSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *RecordUpdateDNSParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *RecordUpdateDNSParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1587,6 +1631,7 @@ func (p *RecordUpdateDNSParam) GetId() int64 {
 // RecordDeleteDNSParam is input parameters for the sacloud API
 type RecordDeleteDNSParam struct {
 	Index             int      `json:"index"`
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -1608,6 +1653,9 @@ func NewRecordDeleteDNSParam() *RecordDeleteDNSParam {
 func (p *RecordDeleteDNSParam) FillValueToSkeleton() {
 	if isEmpty(p.Index) {
 		p.Index = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1718,6 +1766,13 @@ func (p *RecordDeleteDNSParam) SetIndex(v int) {
 func (p *RecordDeleteDNSParam) GetIndex() int {
 	return p.Index
 }
+func (p *RecordDeleteDNSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *RecordDeleteDNSParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *RecordDeleteDNSParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -1791,6 +1846,7 @@ func (p *RecordDeleteDNSParam) GetId() int64 {
 
 // UpdateDNSParam is input parameters for the sacloud API
 type UpdateDNSParam struct {
+	Selector          []string `json:"selector"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
 	IconId            int64    `json:"icon-id"`
@@ -1813,6 +1869,9 @@ func NewUpdateDNSParam() *UpdateDNSParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *UpdateDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Description) {
 		p.Description = ""
 	}
@@ -1938,6 +1997,13 @@ func (p *UpdateDNSParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *UpdateDNSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *UpdateDNSParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *UpdateDNSParam) SetDescription(v string) {
 	p.Description = v
 }
@@ -2032,6 +2098,7 @@ func (p *UpdateDNSParam) GetId() int64 {
 
 // DeleteDNSParam is input parameters for the sacloud API
 type DeleteDNSParam struct {
+	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -2051,6 +2118,9 @@ func NewDeleteDNSParam() *DeleteDNSParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DeleteDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
 	}
@@ -2146,6 +2216,13 @@ func (p *DeleteDNSParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *DeleteDNSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DeleteDNSParam) GetSelector() []string {
+	return p.Selector
+}
 func (p *DeleteDNSParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }

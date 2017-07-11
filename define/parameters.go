@@ -136,6 +136,7 @@ var paramScopeCond = map[string]*schema.Schema{
 var paramTagsCond = map[string]*schema.Schema{
 	"tags": {
 		Type:         schema.TypeStringList,
+		Aliases:      []string{"selector"},
 		HandlerType:  schema.HandlerFilterFunc,
 		FilterFunc:   filterListByTags,
 		Description:  "set filter by tags(AND)",
@@ -204,7 +205,12 @@ func filterBySourceArchiveID(_ []interface{}, item interface{}, param interface{
 		return false
 	}
 
-	return archiveIDHolder.GetSourceArchiveID() == param.(int64)
+	id := param.(int64)
+	if id == 0 {
+		return true
+	}
+
+	return archiveIDHolder.GetSourceArchiveID() == id
 }
 
 func filterBySourceDiskID(_ []interface{}, item interface{}, param interface{}) bool {
@@ -218,5 +224,10 @@ func filterBySourceDiskID(_ []interface{}, item interface{}, param interface{}) 
 		return false
 	}
 
-	return diskIDHolder.GetSourceDiskID() == param.(int64)
+	id := param.(int64)
+	if id == 0 {
+		return true
+	}
+
+	return diskIDHolder.GetSourceDiskID() == id
 }

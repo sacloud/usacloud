@@ -10,7 +10,7 @@ func SwitchResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
+			Aliases:            []string{"ls", "find", "selector"},
 			Params:             switchListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: switchListColumns(),

@@ -11,7 +11,7 @@ func DatabaseResource() *schema.Resource {
 	commands := map[string]*schema.Command{
 		"list": {
 			Type:               schema.CommandList,
-			Aliases:            []string{"ls", "find"},
+			Aliases:            []string{"ls", "find", "selector"},
 			Params:             databaseListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: databaseListColumns(),

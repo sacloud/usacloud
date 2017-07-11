@@ -15,17 +15,35 @@ func SwitchListCompleteFlags(ctx command.Context, params *params.ListSwitchParam
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["Switch"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["Switch"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Switch"].Commands["list"].Params["id"].CompleteFunc
-	case "tags":
-		comp = define.Resources["Switch"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["Switch"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["Switch"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["Switch"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["Switch"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["Switch"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["Switch"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["Switch"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["Switch"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -43,13 +61,25 @@ func SwitchCreateCompleteFlags(ctx command.Context, params *params.CreateSwitchP
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["Switch"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["Switch"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Switch"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["Switch"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Switch"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["Switch"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["Switch"].Commands["create"].Params["icon-id"].CompleteFunc
+		param := define.Resources["Switch"].Commands["create"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -66,8 +96,16 @@ func SwitchReadCompleteFlags(ctx command.Context, params *params.ReadSwitchParam
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Switch"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Switch"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["Switch"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -84,16 +122,36 @@ func SwitchUpdateCompleteFlags(ctx command.Context, params *params.UpdateSwitchP
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Switch"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Switch"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["Switch"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Switch"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["Switch"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Switch"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["Switch"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["Switch"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["Switch"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Switch"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["Switch"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -110,8 +168,16 @@ func SwitchDeleteCompleteFlags(ctx command.Context, params *params.DeleteSwitchP
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Switch"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Switch"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["Switch"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -129,9 +195,20 @@ func SwitchBridgeConnectCompleteFlags(ctx command.Context, params *params.Bridge
 
 	switch flagName {
 	case "bridge-id":
-		comp = define.Resources["Switch"].Commands["bridge-connect"].Params["bridge-id"].CompleteFunc
+		param := define.Resources["Switch"].Commands["bridge-connect"].BuildedParams().Get("bridge-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Switch"].Commands["bridge-connect"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Switch"].Commands["bridge-connect"].Params["id"].CompleteFunc
+		param := define.Resources["Switch"].Commands["bridge-connect"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -146,8 +223,16 @@ func SwitchBridgeDisconnectCompleteFlags(ctx command.Context, params *params.Bri
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Switch"].Commands["bridge-disconnect"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Switch"].Commands["bridge-disconnect"].Params["id"].CompleteFunc
+		param := define.Resources["Switch"].Commands["bridge-disconnect"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {

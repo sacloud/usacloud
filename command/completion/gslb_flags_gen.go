@@ -15,17 +15,35 @@ func GSLBListCompleteFlags(ctx command.Context, params *params.ListGSLBParam, fl
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["GSLB"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["GSLB"].Commands["list"].Params["id"].CompleteFunc
-	case "tags":
-		comp = define.Resources["GSLB"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["GSLB"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["GSLB"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["GSLB"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["GSLB"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -42,8 +60,16 @@ func GSLBServerInfoCompleteFlags(ctx command.Context, params *params.ServerInfoG
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["GSLB"].Commands["server-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["GSLB"].Commands["server-info"].Params["id"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["server-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -61,29 +87,65 @@ func GSLBCreateCompleteFlags(ctx command.Context, params *params.CreateGSLBParam
 
 	switch flagName {
 	case "protocol":
-		comp = define.Resources["GSLB"].Commands["create"].Params["protocol"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["create"].BuildedParams().Get("protocol")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "host-header":
-		comp = define.Resources["GSLB"].Commands["create"].Params["host-header"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["create"].BuildedParams().Get("host-header")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "path":
-		comp = define.Resources["GSLB"].Commands["create"].Params["path"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["create"].BuildedParams().Get("path")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "response-code":
-		comp = define.Resources["GSLB"].Commands["create"].Params["response-code"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["create"].BuildedParams().Get("response-code")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port":
-		comp = define.Resources["GSLB"].Commands["create"].Params["port"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["create"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "delay-loop":
-		comp = define.Resources["GSLB"].Commands["create"].Params["delay-loop"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["create"].BuildedParams().Get("delay-loop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "weighted":
-		comp = define.Resources["GSLB"].Commands["create"].Params["weighted"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["create"].BuildedParams().Get("weighted")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sorry-server":
-		comp = define.Resources["GSLB"].Commands["create"].Params["sorry-server"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["create"].BuildedParams().Get("sorry-server")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["GSLB"].Commands["create"].Params["name"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["create"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["GSLB"].Commands["create"].Params["description"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["create"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["GSLB"].Commands["create"].Params["tags"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["create"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["GSLB"].Commands["create"].Params["icon-id"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["create"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -101,13 +163,30 @@ func GSLBServerAddCompleteFlags(ctx command.Context, params *params.ServerAddGSL
 
 	switch flagName {
 	case "ipaddress":
-		comp = define.Resources["GSLB"].Commands["server-add"].Params["ipaddress"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["server-add"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "enabled":
-		comp = define.Resources["GSLB"].Commands["server-add"].Params["enabled"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["server-add"].BuildedParams().Get("enabled")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "weight":
-		comp = define.Resources["GSLB"].Commands["server-add"].Params["weight"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["server-add"].BuildedParams().Get("weight")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["GSLB"].Commands["server-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["GSLB"].Commands["server-add"].Params["id"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["server-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -124,8 +203,16 @@ func GSLBReadCompleteFlags(ctx command.Context, params *params.ReadGSLBParam, fl
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["GSLB"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["GSLB"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -143,15 +230,35 @@ func GSLBServerUpdateCompleteFlags(ctx command.Context, params *params.ServerUpd
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["GSLB"].Commands["server-update"].Params["index"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["server-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress":
-		comp = define.Resources["GSLB"].Commands["server-update"].Params["ipaddress"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["server-update"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "enabled":
-		comp = define.Resources["GSLB"].Commands["server-update"].Params["enabled"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["server-update"].BuildedParams().Get("enabled")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "weight":
-		comp = define.Resources["GSLB"].Commands["server-update"].Params["weight"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["server-update"].BuildedParams().Get("weight")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["GSLB"].Commands["server-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["GSLB"].Commands["server-update"].Params["id"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["server-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -169,9 +276,20 @@ func GSLBServerDeleteCompleteFlags(ctx command.Context, params *params.ServerDel
 
 	switch flagName {
 	case "index":
-		comp = define.Resources["GSLB"].Commands["server-delete"].Params["index"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["server-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["GSLB"].Commands["server-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["GSLB"].Commands["server-delete"].Params["id"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["server-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -189,31 +307,75 @@ func GSLBUpdateCompleteFlags(ctx command.Context, params *params.UpdateGSLBParam
 
 	switch flagName {
 	case "protocol":
-		comp = define.Resources["GSLB"].Commands["update"].Params["protocol"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("protocol")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "host-header":
-		comp = define.Resources["GSLB"].Commands["update"].Params["host-header"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("host-header")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "path":
-		comp = define.Resources["GSLB"].Commands["update"].Params["path"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("path")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "response-code":
-		comp = define.Resources["GSLB"].Commands["update"].Params["response-code"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("response-code")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port":
-		comp = define.Resources["GSLB"].Commands["update"].Params["port"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "delay-loop":
-		comp = define.Resources["GSLB"].Commands["update"].Params["delay-loop"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("delay-loop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "weighted":
-		comp = define.Resources["GSLB"].Commands["update"].Params["weighted"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("weighted")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sorry-server":
-		comp = define.Resources["GSLB"].Commands["update"].Params["sorry-server"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("sorry-server")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["GSLB"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["GSLB"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["GSLB"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["GSLB"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["GSLB"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -230,8 +392,16 @@ func GSLBDeleteCompleteFlags(ctx command.Context, params *params.DeleteGSLBParam
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["GSLB"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["GSLB"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["GSLB"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}

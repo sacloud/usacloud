@@ -15,17 +15,35 @@ func ServerListCompleteFlags(ctx command.Context, params *params.ListServerParam
 
 	switch flagName {
 	case "name":
-		comp = define.Resources["Server"].Commands["list"].Params["name"].CompleteFunc
+		param := define.Resources["Server"].Commands["list"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["list"].Params["id"].CompleteFunc
-	case "tags":
-		comp = define.Resources["Server"].Commands["list"].Params["tags"].CompleteFunc
+		param := define.Resources["Server"].Commands["list"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "tags", "selector":
+		param := define.Resources["Server"].Commands["list"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
-		comp = define.Resources["Server"].Commands["list"].Params["from"].CompleteFunc
+		param := define.Resources["Server"].Commands["list"].BuildedParams().Get("from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "max", "limit":
-		comp = define.Resources["Server"].Commands["list"].Params["max"].CompleteFunc
+		param := define.Resources["Server"].Commands["list"].BuildedParams().Get("max")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sort":
-		comp = define.Resources["Server"].Commands["list"].Params["sort"].CompleteFunc
+		param := define.Resources["Server"].Commands["list"].BuildedParams().Get("sort")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -43,85 +61,205 @@ func ServerBuildCompleteFlags(ctx command.Context, params *params.BuildServerPar
 
 	switch flagName {
 	case "core":
-		comp = define.Resources["Server"].Commands["build"].Params["core"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("core")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "memory":
-		comp = define.Resources["Server"].Commands["build"].Params["memory"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("memory")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "disk-mode":
-		comp = define.Resources["Server"].Commands["build"].Params["disk-mode"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("disk-mode")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "os-type":
-		comp = define.Resources["Server"].Commands["build"].Params["os-type"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("os-type")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "disk-plan":
-		comp = define.Resources["Server"].Commands["build"].Params["disk-plan"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("disk-plan")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "disk-connection":
-		comp = define.Resources["Server"].Commands["build"].Params["disk-connection"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("disk-connection")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "disk-size":
-		comp = define.Resources["Server"].Commands["build"].Params["disk-size"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("disk-size")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-archive-id":
-		comp = define.Resources["Server"].Commands["build"].Params["source-archive-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("source-archive-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "source-disk-id":
-		comp = define.Resources["Server"].Commands["build"].Params["source-disk-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("source-disk-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "distant-from":
-		comp = define.Resources["Server"].Commands["build"].Params["distant-from"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("distant-from")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "disk-id":
-		comp = define.Resources["Server"].Commands["build"].Params["disk-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("disk-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "iso-image-id":
-		comp = define.Resources["Server"].Commands["build"].Params["iso-image-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("iso-image-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "network-mode":
-		comp = define.Resources["Server"].Commands["build"].Params["network-mode"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("network-mode")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "use-nic-virtio":
-		comp = define.Resources["Server"].Commands["build"].Params["use-nic-virtio"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("use-nic-virtio")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "packet-filter-id":
-		comp = define.Resources["Server"].Commands["build"].Params["packet-filter-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("packet-filter-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "switch-id":
-		comp = define.Resources["Server"].Commands["build"].Params["switch-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("switch-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "hostname":
-		comp = define.Resources["Server"].Commands["build"].Params["hostname"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("hostname")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "password":
-		comp = define.Resources["Server"].Commands["build"].Params["password"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("password")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "disable-password-auth", "disable-pw-auth":
-		comp = define.Resources["Server"].Commands["build"].Params["disable-password-auth"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("disable-password-auth")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress", "ip":
-		comp = define.Resources["Server"].Commands["build"].Params["ipaddress"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "nw-masklen", "network-masklen":
-		comp = define.Resources["Server"].Commands["build"].Params["nw-masklen"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("nw-masklen")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "default-route", "gateway":
-		comp = define.Resources["Server"].Commands["build"].Params["default-route"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("default-route")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "startup-scripts", "notes":
-		comp = define.Resources["Server"].Commands["build"].Params["startup-scripts"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("startup-scripts")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "startup-script-ids", "note-ids":
-		comp = define.Resources["Server"].Commands["build"].Params["startup-script-ids"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("startup-script-ids")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "startup-scripts-ephemeral":
-		comp = define.Resources["Server"].Commands["build"].Params["startup-scripts-ephemeral"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("startup-scripts-ephemeral")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ssh-key-mode":
-		comp = define.Resources["Server"].Commands["build"].Params["ssh-key-mode"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("ssh-key-mode")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ssh-key-name":
-		comp = define.Resources["Server"].Commands["build"].Params["ssh-key-name"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("ssh-key-name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ssh-key-ids":
-		comp = define.Resources["Server"].Commands["build"].Params["ssh-key-ids"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("ssh-key-ids")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ssh-key-pass-phrase":
-		comp = define.Resources["Server"].Commands["build"].Params["ssh-key-pass-phrase"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("ssh-key-pass-phrase")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ssh-key-description":
-		comp = define.Resources["Server"].Commands["build"].Params["ssh-key-description"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("ssh-key-description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ssh-key-private-key-output":
-		comp = define.Resources["Server"].Commands["build"].Params["ssh-key-private-key-output"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("ssh-key-private-key-output")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ssh-key-public-keys":
-		comp = define.Resources["Server"].Commands["build"].Params["ssh-key-public-keys"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("ssh-key-public-keys")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ssh-key-public-key-files":
-		comp = define.Resources["Server"].Commands["build"].Params["ssh-key-public-key-files"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("ssh-key-public-key-files")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ssh-key-ephemeral":
-		comp = define.Resources["Server"].Commands["build"].Params["ssh-key-ephemeral"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("ssh-key-ephemeral")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Server"].Commands["build"].Params["name"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Server"].Commands["build"].Params["description"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Server"].Commands["build"].Params["tags"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["Server"].Commands["build"].Params["icon-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "us-keyboard":
-		comp = define.Resources["Server"].Commands["build"].Params["us-keyboard"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("us-keyboard")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "disable-boot-after-create":
-		comp = define.Resources["Server"].Commands["build"].Params["disable-boot-after-create"].CompleteFunc
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("disable-boot-after-create")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -138,8 +276,16 @@ func ServerReadCompleteFlags(ctx command.Context, params *params.ReadServerParam
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Server"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["read"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -156,16 +302,36 @@ func ServerUpdateCompleteFlags(ctx command.Context, params *params.UpdateServerP
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Server"].Commands["update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Server"].Commands["update"].Params["name"].CompleteFunc
+		param := define.Resources["Server"].Commands["update"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Server"].Commands["update"].Params["description"].CompleteFunc
+		param := define.Resources["Server"].Commands["update"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Server"].Commands["update"].Params["tags"].CompleteFunc
+		param := define.Resources["Server"].Commands["update"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["Server"].Commands["update"].Params["icon-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["update"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["update"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -183,11 +349,25 @@ func ServerDeleteCompleteFlags(ctx command.Context, params *params.DeleteServerP
 
 	switch flagName {
 	case "force", "f":
-		comp = define.Resources["Server"].Commands["delete"].Params["force"].CompleteFunc
+		param := define.Resources["Server"].Commands["delete"].BuildedParams().Get("force")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "without-disk":
-		comp = define.Resources["Server"].Commands["delete"].Params["without-disk"].CompleteFunc
+		param := define.Resources["Server"].Commands["delete"].BuildedParams().Get("without-disk")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["delete"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -205,11 +385,25 @@ func ServerPlanChangeCompleteFlags(ctx command.Context, params *params.PlanChang
 
 	switch flagName {
 	case "core":
-		comp = define.Resources["Server"].Commands["plan-change"].Params["core"].CompleteFunc
+		param := define.Resources["Server"].Commands["plan-change"].BuildedParams().Get("core")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "memory":
-		comp = define.Resources["Server"].Commands["plan-change"].Params["memory"].CompleteFunc
+		param := define.Resources["Server"].Commands["plan-change"].BuildedParams().Get("memory")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["plan-change"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["plan-change"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["plan-change"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -226,8 +420,16 @@ func ServerBootCompleteFlags(ctx command.Context, params *params.BootServerParam
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Server"].Commands["boot"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["boot"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["boot"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -242,8 +444,16 @@ func ServerShutdownCompleteFlags(ctx command.Context, params *params.ShutdownSer
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Server"].Commands["shutdown"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["shutdown"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["shutdown"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -258,8 +468,16 @@ func ServerShutdownForceCompleteFlags(ctx command.Context, params *params.Shutdo
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Server"].Commands["shutdown-force"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["shutdown-force"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["shutdown-force"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -274,8 +492,16 @@ func ServerResetCompleteFlags(ctx command.Context, params *params.ResetServerPar
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Server"].Commands["reset"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["reset"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["reset"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -290,8 +516,16 @@ func ServerWaitForBootCompleteFlags(ctx command.Context, params *params.WaitForB
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Server"].Commands["wait-for-boot"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["wait-for-boot"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["wait-for-boot"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -306,8 +540,16 @@ func ServerWaitForDownCompleteFlags(ctx command.Context, params *params.WaitForD
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Server"].Commands["wait-for-down"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["wait-for-down"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["wait-for-down"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -323,15 +565,35 @@ func ServerSshCompleteFlags(ctx command.Context, params *params.SshServerParam, 
 
 	switch flagName {
 	case "key", "i":
-		comp = define.Resources["Server"].Commands["ssh"].Params["key"].CompleteFunc
+		param := define.Resources["Server"].Commands["ssh"].BuildedParams().Get("key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "user", "l":
-		comp = define.Resources["Server"].Commands["ssh"].Params["user"].CompleteFunc
+		param := define.Resources["Server"].Commands["ssh"].BuildedParams().Get("user")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port", "p":
-		comp = define.Resources["Server"].Commands["ssh"].Params["port"].CompleteFunc
+		param := define.Resources["Server"].Commands["ssh"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "password":
-		comp = define.Resources["Server"].Commands["ssh"].Params["password"].CompleteFunc
+		param := define.Resources["Server"].Commands["ssh"].BuildedParams().Get("password")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["ssh"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["ssh"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["ssh"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -349,15 +611,35 @@ func ServerSshExecCompleteFlags(ctx command.Context, params *params.SshExecServe
 
 	switch flagName {
 	case "key", "i":
-		comp = define.Resources["Server"].Commands["ssh-exec"].Params["key"].CompleteFunc
+		param := define.Resources["Server"].Commands["ssh-exec"].BuildedParams().Get("key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "user", "l":
-		comp = define.Resources["Server"].Commands["ssh-exec"].Params["user"].CompleteFunc
+		param := define.Resources["Server"].Commands["ssh-exec"].BuildedParams().Get("user")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port", "p":
-		comp = define.Resources["Server"].Commands["ssh-exec"].Params["port"].CompleteFunc
+		param := define.Resources["Server"].Commands["ssh-exec"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "password":
-		comp = define.Resources["Server"].Commands["ssh-exec"].Params["password"].CompleteFunc
+		param := define.Resources["Server"].Commands["ssh-exec"].BuildedParams().Get("password")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["ssh-exec"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["ssh-exec"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["ssh-exec"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -375,15 +657,30 @@ func ServerScpCompleteFlags(ctx command.Context, params *params.ScpServerParam, 
 
 	switch flagName {
 	case "key", "i":
-		comp = define.Resources["Server"].Commands["scp"].Params["key"].CompleteFunc
+		param := define.Resources["Server"].Commands["scp"].BuildedParams().Get("key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "recursive", "r":
-		comp = define.Resources["Server"].Commands["scp"].Params["recursive"].CompleteFunc
+		param := define.Resources["Server"].Commands["scp"].BuildedParams().Get("recursive")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "user", "l":
-		comp = define.Resources["Server"].Commands["scp"].Params["user"].CompleteFunc
+		param := define.Resources["Server"].Commands["scp"].BuildedParams().Get("user")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "port", "p":
-		comp = define.Resources["Server"].Commands["scp"].Params["port"].CompleteFunc
+		param := define.Resources["Server"].Commands["scp"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "password":
-		comp = define.Resources["Server"].Commands["scp"].Params["password"].CompleteFunc
+		param := define.Resources["Server"].Commands["scp"].BuildedParams().Get("password")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -401,9 +698,20 @@ func ServerVncCompleteFlags(ctx command.Context, params *params.VncServerParam, 
 
 	switch flagName {
 	case "wait-for-boot":
-		comp = define.Resources["Server"].Commands["vnc"].Params["wait-for-boot"].CompleteFunc
+		param := define.Resources["Server"].Commands["vnc"].BuildedParams().Get("wait-for-boot")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["vnc"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["vnc"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["vnc"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -419,9 +727,20 @@ func ServerVncInfoCompleteFlags(ctx command.Context, params *params.VncInfoServe
 
 	switch flagName {
 	case "wait-for-boot":
-		comp = define.Resources["Server"].Commands["vnc-info"].Params["wait-for-boot"].CompleteFunc
+		param := define.Resources["Server"].Commands["vnc-info"].BuildedParams().Get("wait-for-boot")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["vnc-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["vnc-info"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["vnc-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -439,17 +758,40 @@ func ServerVncSendCompleteFlags(ctx command.Context, params *params.VncSendServe
 
 	switch flagName {
 	case "command", "c":
-		comp = define.Resources["Server"].Commands["vnc-send"].Params["command"].CompleteFunc
+		param := define.Resources["Server"].Commands["vnc-send"].BuildedParams().Get("command")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "command-file", "f":
-		comp = define.Resources["Server"].Commands["vnc-send"].Params["command-file"].CompleteFunc
+		param := define.Resources["Server"].Commands["vnc-send"].BuildedParams().Get("command-file")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "use-us-keyboard":
-		comp = define.Resources["Server"].Commands["vnc-send"].Params["use-us-keyboard"].CompleteFunc
+		param := define.Resources["Server"].Commands["vnc-send"].BuildedParams().Get("use-us-keyboard")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "debug", "d":
-		comp = define.Resources["Server"].Commands["vnc-send"].Params["debug"].CompleteFunc
+		param := define.Resources["Server"].Commands["vnc-send"].BuildedParams().Get("debug")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "wait-for-boot":
-		comp = define.Resources["Server"].Commands["vnc-send"].Params["wait-for-boot"].CompleteFunc
+		param := define.Resources["Server"].Commands["vnc-send"].BuildedParams().Get("wait-for-boot")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["vnc-send"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["vnc-send"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["vnc-send"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -466,8 +808,16 @@ func ServerDiskInfoCompleteFlags(ctx command.Context, params *params.DiskInfoSer
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Server"].Commands["disk-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["disk-info"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["disk-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -485,9 +835,20 @@ func ServerDiskConnectCompleteFlags(ctx command.Context, params *params.DiskConn
 
 	switch flagName {
 	case "disk-id":
-		comp = define.Resources["Server"].Commands["disk-connect"].Params["disk-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["disk-connect"].BuildedParams().Get("disk-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["disk-connect"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["disk-connect"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["disk-connect"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -503,9 +864,20 @@ func ServerDiskDisconnectCompleteFlags(ctx command.Context, params *params.DiskD
 
 	switch flagName {
 	case "disk-id":
-		comp = define.Resources["Server"].Commands["disk-disconnect"].Params["disk-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["disk-disconnect"].BuildedParams().Get("disk-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["disk-disconnect"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["disk-disconnect"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["disk-disconnect"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -520,8 +892,16 @@ func ServerInterfaceInfoCompleteFlags(ctx command.Context, params *params.Interf
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Server"].Commands["interface-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["interface-info"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -539,9 +919,20 @@ func ServerInterfaceAddForInternetCompleteFlags(ctx command.Context, params *par
 
 	switch flagName {
 	case "without-disk-edit":
-		comp = define.Resources["Server"].Commands["interface-add-for-internet"].Params["without-disk-edit"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-internet"].BuildedParams().Get("without-disk-edit")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["interface-add-for-internet"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["interface-add-for-internet"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-internet"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -557,17 +948,40 @@ func ServerInterfaceAddForRouterCompleteFlags(ctx command.Context, params *param
 
 	switch flagName {
 	case "switch-id":
-		comp = define.Resources["Server"].Commands["interface-add-for-router"].Params["switch-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-router"].BuildedParams().Get("switch-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "without-disk-edit":
-		comp = define.Resources["Server"].Commands["interface-add-for-router"].Params["without-disk-edit"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-router"].BuildedParams().Get("without-disk-edit")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress", "ip":
-		comp = define.Resources["Server"].Commands["interface-add-for-router"].Params["ipaddress"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-router"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "default-route", "gateway":
-		comp = define.Resources["Server"].Commands["interface-add-for-router"].Params["default-route"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-router"].BuildedParams().Get("default-route")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "nw-masklen", "network-masklen":
-		comp = define.Resources["Server"].Commands["interface-add-for-router"].Params["nw-masklen"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-router"].BuildedParams().Get("nw-masklen")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["interface-add-for-router"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["interface-add-for-router"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-router"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -583,17 +997,40 @@ func ServerInterfaceAddForSwitchCompleteFlags(ctx command.Context, params *param
 
 	switch flagName {
 	case "switch-id":
-		comp = define.Resources["Server"].Commands["interface-add-for-switch"].Params["switch-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-switch"].BuildedParams().Get("switch-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "without-disk-edit":
-		comp = define.Resources["Server"].Commands["interface-add-for-switch"].Params["without-disk-edit"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-switch"].BuildedParams().Get("without-disk-edit")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress", "ip":
-		comp = define.Resources["Server"].Commands["interface-add-for-switch"].Params["ipaddress"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-switch"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "default-route", "gateway":
-		comp = define.Resources["Server"].Commands["interface-add-for-switch"].Params["default-route"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-switch"].BuildedParams().Get("default-route")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "nw-masklen", "network-masklen":
-		comp = define.Resources["Server"].Commands["interface-add-for-switch"].Params["nw-masklen"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-switch"].BuildedParams().Get("nw-masklen")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["interface-add-for-switch"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["interface-add-for-switch"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-for-switch"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -608,8 +1045,16 @@ func ServerInterfaceAddDisconnectedCompleteFlags(ctx command.Context, params *pa
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Server"].Commands["interface-add-disconnected"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["interface-add-disconnected"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["interface-add-disconnected"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -624,8 +1069,16 @@ func ServerIsoInfoCompleteFlags(ctx command.Context, params *params.IsoInfoServe
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Server"].Commands["iso-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["iso-info"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["iso-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -643,21 +1096,50 @@ func ServerIsoInsertCompleteFlags(ctx command.Context, params *params.IsoInsertS
 
 	switch flagName {
 	case "iso-image-id":
-		comp = define.Resources["Server"].Commands["iso-insert"].Params["iso-image-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["iso-insert"].BuildedParams().Get("iso-image-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "size":
-		comp = define.Resources["Server"].Commands["iso-insert"].Params["size"].CompleteFunc
+		param := define.Resources["Server"].Commands["iso-insert"].BuildedParams().Get("size")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "iso-file":
-		comp = define.Resources["Server"].Commands["iso-insert"].Params["iso-file"].CompleteFunc
+		param := define.Resources["Server"].Commands["iso-insert"].BuildedParams().Get("iso-file")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
-		comp = define.Resources["Server"].Commands["iso-insert"].Params["name"].CompleteFunc
+		param := define.Resources["Server"].Commands["iso-insert"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
-		comp = define.Resources["Server"].Commands["iso-insert"].Params["description"].CompleteFunc
+		param := define.Resources["Server"].Commands["iso-insert"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "tags":
-		comp = define.Resources["Server"].Commands["iso-insert"].Params["tags"].CompleteFunc
+		param := define.Resources["Server"].Commands["iso-insert"].BuildedParams().Get("tags")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "icon-id":
-		comp = define.Resources["Server"].Commands["iso-insert"].Params["icon-id"].CompleteFunc
+		param := define.Resources["Server"].Commands["iso-insert"].BuildedParams().Get("icon-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["iso-insert"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["iso-insert"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["iso-insert"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -672,8 +1154,16 @@ func ServerIsoEjectCompleteFlags(ctx command.Context, params *params.IsoEjectSer
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "selector":
+		param := define.Resources["Server"].Commands["iso-eject"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["iso-eject"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["iso-eject"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {
@@ -689,13 +1179,30 @@ func ServerMonitorCpuCompleteFlags(ctx command.Context, params *params.MonitorCp
 
 	switch flagName {
 	case "start":
-		comp = define.Resources["Server"].Commands["monitor-cpu"].Params["start"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-cpu"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "end":
-		comp = define.Resources["Server"].Commands["monitor-cpu"].Params["end"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-cpu"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "key-format":
-		comp = define.Resources["Server"].Commands["monitor-cpu"].Params["key-format"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-cpu"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["monitor-cpu"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["monitor-cpu"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-cpu"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -713,15 +1220,35 @@ func ServerMonitorNicCompleteFlags(ctx command.Context, params *params.MonitorNi
 
 	switch flagName {
 	case "start":
-		comp = define.Resources["Server"].Commands["monitor-nic"].Params["start"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-nic"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "end":
-		comp = define.Resources["Server"].Commands["monitor-nic"].Params["end"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-nic"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "index":
-		comp = define.Resources["Server"].Commands["monitor-nic"].Params["index"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-nic"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "key-format":
-		comp = define.Resources["Server"].Commands["monitor-nic"].Params["key-format"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-nic"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["monitor-nic"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["monitor-nic"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-nic"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -739,15 +1266,35 @@ func ServerMonitorDiskCompleteFlags(ctx command.Context, params *params.MonitorD
 
 	switch flagName {
 	case "start":
-		comp = define.Resources["Server"].Commands["monitor-disk"].Params["start"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-disk"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "end":
-		comp = define.Resources["Server"].Commands["monitor-disk"].Params["end"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-disk"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "index":
-		comp = define.Resources["Server"].Commands["monitor-disk"].Params["index"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-disk"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "key-format":
-		comp = define.Resources["Server"].Commands["monitor-disk"].Params["key-format"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-disk"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["monitor-disk"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "id":
-		comp = define.Resources["Server"].Commands["monitor-disk"].Params["id"].CompleteFunc
+		param := define.Resources["Server"].Commands["monitor-disk"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
