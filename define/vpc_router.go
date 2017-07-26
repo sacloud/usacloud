@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
+	"math"
 	"strings"
 )
 
@@ -510,7 +511,16 @@ func VPCRouterResource() *schema.Resource {
 			TableType:          output.TableSimple,
 			TableColumnDefines: vpcRouterMonitorColumns(),
 			UseCustomCommand:   true,
+			Order:              10,
 			Category:           "monitor",
+		},
+		"logs": {
+			Type:             schema.CommandRead,
+			Params:           vpcRouterLogParam(),
+			UseCustomCommand: true,
+			Order:            20,
+			Category:         "monitor",
+			NoOutput:         true,
 		},
 	}
 
@@ -2137,6 +2147,48 @@ func vpcRouterMonitorParam() map[string]*schema.Schema {
 			Required:     true,
 			Category:     "monitor",
 			Order:        40,
+		},
+	}
+}
+
+var AllowVPCRouterLogNames = []string{"all", "vpn", "firewall-send", "firewall-receive"}
+
+func vpcRouterLogParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"log-name": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Aliases:      []string{"name"},
+			Description:  "set target logfile name",
+			DefaultValue: "all",
+			ValidateFunc: validateInStrValues(AllowVPCRouterLogNames...),
+			CompleteFunc: completeInStrValues(AllowVPCRouterLogNames...),
+			Category:     "monitor",
+			Order:        10,
+		},
+		"follow": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "follow log output",
+			Aliases:     []string{"f"},
+			Category:    "monitor",
+			Order:       20,
+		},
+		"refresh-interval": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			ValidateFunc: validateIntRange(1, math.MaxInt32),
+			DefaultValue: int64(3),
+			Description:  "log refresh interval second",
+			Category:     "monitor",
+			Order:        30,
+		},
+		"list-log-names": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "show log-name list",
+			Category:    "monitor",
+			Order:       40,
 		},
 	}
 }

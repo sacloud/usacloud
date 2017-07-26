@@ -1563,3 +1563,34 @@ func VPCRouterMonitorCompleteArgs(ctx command.Context, params *params.MonitorVPC
 	}
 
 }
+
+func VPCRouterLogsCompleteArgs(ctx command.Context, params *params.LogsVPCRouterParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetVPCRouterAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.VPCRouters {
+		fmt.Println(res.VPCRouters[i].ID)
+		var target interface{} = &res.VPCRouters[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
