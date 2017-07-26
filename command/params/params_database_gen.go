@@ -2244,3 +2244,170 @@ func (p *WaitForDownDatabaseParam) SetId(v int64) {
 func (p *WaitForDownDatabaseParam) GetId() int64 {
 	return p.Id
 }
+
+// LogsDatabaseParam is input parameters for the sacloud API
+type LogsDatabaseParam struct {
+	LogName           string   `json:"log-name"`
+	Follow            bool     `json:"follow"`
+	RefreshInterval   int64    `json:"refresh-interval"`
+	ListLogNames      bool     `json:"list-log-names"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
+}
+
+// NewLogsDatabaseParam return new LogsDatabaseParam
+func NewLogsDatabaseParam() *LogsDatabaseParam {
+	return &LogsDatabaseParam{
+
+		LogName:         "all",
+		RefreshInterval: 3,
+	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *LogsDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.LogName) {
+		p.LogName = ""
+	}
+	if isEmpty(p.Follow) {
+		p.Follow = false
+	}
+	if isEmpty(p.RefreshInterval) {
+		p.RefreshInterval = 0
+	}
+	if isEmpty(p.ListLogNames) {
+		p.ListLogNames = false
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *LogsDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Database"].Commands["logs"].Params["refresh-interval"].ValidateFunc
+		errs := validator("--refresh-interval", p.RefreshInterval)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *LogsDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *LogsDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["logs"]
+}
+
+func (p *LogsDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *LogsDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *LogsDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *LogsDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *LogsDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *LogsDatabaseParam) SetLogName(v string) {
+	p.LogName = v
+}
+
+func (p *LogsDatabaseParam) GetLogName() string {
+	return p.LogName
+}
+func (p *LogsDatabaseParam) SetFollow(v bool) {
+	p.Follow = v
+}
+
+func (p *LogsDatabaseParam) GetFollow() bool {
+	return p.Follow
+}
+func (p *LogsDatabaseParam) SetRefreshInterval(v int64) {
+	p.RefreshInterval = v
+}
+
+func (p *LogsDatabaseParam) GetRefreshInterval() int64 {
+	return p.RefreshInterval
+}
+func (p *LogsDatabaseParam) SetListLogNames(v bool) {
+	p.ListLogNames = v
+}
+
+func (p *LogsDatabaseParam) GetListLogNames() bool {
+	return p.ListLogNames
+}
+func (p *LogsDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *LogsDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *LogsDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *LogsDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *LogsDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *LogsDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *LogsDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *LogsDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *LogsDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *LogsDatabaseParam) GetId() int64 {
+	return p.Id
+}

@@ -4,6 +4,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
+	"math"
 )
 
 func DatabaseResource() *schema.Resource {
@@ -110,6 +111,23 @@ func DatabaseResource() *schema.Resource {
 			NoOutput:         true,
 			NeedlessConfirm:  true,
 		},
+		//"monitor": {
+		//	Type:               schema.CommandRead,
+		//	Params:             databaseMonitorParam(),
+		//	TableType:          output.TableSimple,
+		//	TableColumnDefines: databaseMonitorColumns(),
+		//	UseCustomCommand:   true,
+		//	Order:              10,
+		//	Category:           "monitor",
+		//},
+		"logs": {
+			Type:             schema.CommandRead,
+			Params:           databaseLogParam(),
+			UseCustomCommand: true,
+			Order:            20,
+			Category:         "monitor",
+			NoOutput:         true,
+		},
 	}
 
 	return &schema.Resource{
@@ -131,9 +149,14 @@ var DatabaseCommandCategories = []schema.Category{
 		Order:       20,
 	},
 	{
+		Key:         "backup",
+		DisplayName: "Backup Management",
+		Order:       30,
+	},
+	{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       30,
+		Order:       40,
 	},
 	{
 		Key:         "other",
@@ -510,5 +533,57 @@ func databaseMonitorColumns() []output.ColumnDef {
 		{Name: "UnixTime"},
 		{Name: "Receive"},
 		{Name: "Send"},
+	}
+}
+
+var databaseLogNameCompletions = []string{
+	"all",
+	"systemctl",
+	"mariadb.log",
+	"postgresql-Mon.log",
+	"postgresql-Tue.log",
+	"postgresql-Wed.log",
+	"postgresql-Thu.log",
+	"postgresql-Fri.log",
+	"postgresql-Sat.log",
+	"postgresql-Sun.log",
+}
+
+func databaseLogParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"log-name": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Aliases:      []string{"name"},
+			Description:  "set target logfile name",
+			DefaultValue: "all",
+			CompleteFunc: completeInStrValues(databaseLogNameCompletions...),
+			Category:     "monitor",
+			Order:        10,
+		},
+		"follow": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "follow log output",
+			Aliases:     []string{"f"},
+			Category:    "monitor",
+			Order:       20,
+		},
+		"refresh-interval": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			ValidateFunc: validateIntRange(1, math.MaxInt32),
+			DefaultValue: int64(3),
+			Description:  "log refresh interval second",
+			Category:     "monitor",
+			Order:        30,
+		},
+		"list-log-names": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "show log-name list",
+			Category:    "monitor",
+			Order:       40,
+		},
 	}
 }
