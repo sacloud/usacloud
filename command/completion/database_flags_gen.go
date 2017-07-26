@@ -423,3 +423,47 @@ func DatabaseWaitForDownCompleteFlags(ctx command.Context, params *params.WaitFo
 		}
 	}
 }
+
+func DatabaseLogsCompleteFlags(ctx command.Context, params *params.LogsDatabaseParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "log-name", "name":
+		param := define.Resources["Database"].Commands["logs"].BuildedParams().Get("log-name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "follow", "f":
+		param := define.Resources["Database"].Commands["logs"].BuildedParams().Get("follow")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "refresh-interval":
+		param := define.Resources["Database"].Commands["logs"].BuildedParams().Get("refresh-interval")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "list-log-names":
+		param := define.Resources["Database"].Commands["logs"].BuildedParams().Get("list-log-names")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Database"].Commands["logs"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Database"].Commands["logs"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
