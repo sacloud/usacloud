@@ -10005,3 +10005,177 @@ func (p *MonitorVPCRouterParam) SetId(v int64) {
 func (p *MonitorVPCRouterParam) GetId() int64 {
 	return p.Id
 }
+
+// LogsVPCRouterParam is input parameters for the sacloud API
+type LogsVPCRouterParam struct {
+	LogName           string   `json:"log-name"`
+	Follow            bool     `json:"follow"`
+	RefreshInterval   int64    `json:"refresh-interval"`
+	ListLogNames      bool     `json:"list-log-names"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
+}
+
+// NewLogsVPCRouterParam return new LogsVPCRouterParam
+func NewLogsVPCRouterParam() *LogsVPCRouterParam {
+	return &LogsVPCRouterParam{
+
+		LogName:         "all",
+		RefreshInterval: 3,
+	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *LogsVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.LogName) {
+		p.LogName = ""
+	}
+	if isEmpty(p.Follow) {
+		p.Follow = false
+	}
+	if isEmpty(p.RefreshInterval) {
+		p.RefreshInterval = 0
+	}
+	if isEmpty(p.ListLogNames) {
+		p.ListLogNames = false
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *LogsVPCRouterParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["VPCRouter"].Commands["logs"].Params["log-name"].ValidateFunc
+		errs := validator("--log-name", p.LogName)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["logs"].Params["refresh-interval"].ValidateFunc
+		errs := validator("--refresh-interval", p.RefreshInterval)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *LogsVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *LogsVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["logs"]
+}
+
+func (p *LogsVPCRouterParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *LogsVPCRouterParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *LogsVPCRouterParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *LogsVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *LogsVPCRouterParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *LogsVPCRouterParam) SetLogName(v string) {
+	p.LogName = v
+}
+
+func (p *LogsVPCRouterParam) GetLogName() string {
+	return p.LogName
+}
+func (p *LogsVPCRouterParam) SetFollow(v bool) {
+	p.Follow = v
+}
+
+func (p *LogsVPCRouterParam) GetFollow() bool {
+	return p.Follow
+}
+func (p *LogsVPCRouterParam) SetRefreshInterval(v int64) {
+	p.RefreshInterval = v
+}
+
+func (p *LogsVPCRouterParam) GetRefreshInterval() int64 {
+	return p.RefreshInterval
+}
+func (p *LogsVPCRouterParam) SetListLogNames(v bool) {
+	p.ListLogNames = v
+}
+
+func (p *LogsVPCRouterParam) GetListLogNames() bool {
+	return p.ListLogNames
+}
+func (p *LogsVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *LogsVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *LogsVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *LogsVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *LogsVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *LogsVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *LogsVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *LogsVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *LogsVPCRouterParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *LogsVPCRouterParam) GetId() int64 {
+	return p.Id
+}

@@ -310,4 +310,5 @@ var (
 	TagVirtIONetPCI = "@virtio-net-pci"
 )
 
+// DatetimeLayout さくらのクラウドAPIで利用される日付型のレイアウト(RFC3339)
 var DatetimeLayout = "2006-01-02T15:04:05-07:00"

@@ -69,6 +69,7 @@ func init() {
 	staticRouteUpdateParam := params.NewStaticRouteUpdateVPCRouterParam()
 	staticRouteDeleteParam := params.NewStaticRouteDeleteVPCRouterParam()
 	monitorParam := params.NewMonitorVPCRouterParam()
+	logsParam := params.NewLogsVPCRouterParam()
 
 	cliCommand := &cli.Command{
 		Name:  "vpc-router",
@@ -16490,6 +16491,315 @@ func init() {
 
 				},
 			},
+			{
+				Name:      "logs",
+				Usage:     "Logs VPCRouter",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "log-name",
+						Aliases: []string{"name"},
+						Usage:   "set target logfile name",
+						Value:   "all",
+					},
+					&cli.BoolFlag{
+						Name:    "follow",
+						Aliases: []string{"f"},
+						Usage:   "follow log output",
+					},
+					&cli.Int64Flag{
+						Name:  "refresh-interval",
+						Usage: "log refresh interval second",
+						Value: 3,
+					},
+					&cli.BoolFlag{
+						Name:  "list-log-names",
+						Usage: "show log-name list",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, logsParam)
+
+					// Set option values
+					if c.IsSet("log-name") {
+						logsParam.LogName = c.String("log-name")
+					}
+					if c.IsSet("follow") {
+						logsParam.Follow = c.Bool("follow")
+					}
+					if c.IsSet("refresh-interval") {
+						logsParam.RefreshInterval = c.Int64("refresh-interval")
+					}
+					if c.IsSet("list-log-names") {
+						logsParam.ListLogNames = c.Bool("list-log-names")
+					}
+					if c.IsSet("selector") {
+						logsParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						logsParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						logsParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						logsParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						logsParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.VPCRouterLogsCompleteArgs(ctx, logsParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.VPCRouterLogsCompleteArgs(ctx, logsParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.VPCRouterLogsCompleteFlags(ctx, logsParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.VPCRouterLogsCompleteArgs(ctx, logsParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					logsParam.ParamTemplate = c.String("param-template")
+					logsParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(logsParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewLogsVPCRouterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(logsParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("log-name") {
+						logsParam.LogName = c.String("log-name")
+					}
+					if c.IsSet("follow") {
+						logsParam.Follow = c.Bool("follow")
+					}
+					if c.IsSet("refresh-interval") {
+						logsParam.RefreshInterval = c.Int64("refresh-interval")
+					}
+					if c.IsSet("list-log-names") {
+						logsParam.ListLogNames = c.Bool("list-log-names")
+					}
+					if c.IsSet("selector") {
+						logsParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						logsParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						logsParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						logsParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						logsParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if logsParam.GenerateSkeleton {
+						logsParam.GenerateSkeleton = false
+						logsParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(logsParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := logsParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), logsParam)
+
+					apiClient := ctx.GetAPIClient().VPCRouter
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(logsParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, logsParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", logsParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(logsParam.Selector) == 0 || hasTags(&v, logsParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						logsParam.SetId(id)
+						p := *logsParam // copy struct value
+						logsParam := &p
+						go func() {
+							err := funcs.VPCRouterLogs(ctx, logsParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
 		},
 	}
 
@@ -16611,6 +16921,11 @@ func init() {
 		Key:         "basics",
 		DisplayName: "Basics",
 		Order:       10,
+	})
+	AppendCommandCategoryMap("vpc-router", "logs", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       500,
 	})
 	AppendCommandCategoryMap("vpc-router", "monitor", &schema.Category{
 		Key:         "monitor",
@@ -17941,6 +18256,51 @@ func init() {
 		Order:       2147483607,
 	})
 	AppendFlagCategoryMap("vpc-router", "list", "tags", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("vpc-router", "logs", "follow", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("vpc-router", "logs", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "logs", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("vpc-router", "logs", "list-log-names", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("vpc-router", "logs", "log-name", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("vpc-router", "logs", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "logs", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "logs", "refresh-interval", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("vpc-router", "logs", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
