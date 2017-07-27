@@ -293,6 +293,192 @@ func DatabaseWaitForDownCompleteArgs(ctx command.Context, params *params.WaitFor
 
 }
 
+func DatabaseBackupInfoCompleteArgs(ctx command.Context, params *params.BackupInfoDatabaseParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetDatabaseAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.Databases {
+		fmt.Println(res.Databases[i].ID)
+		var target interface{} = &res.Databases[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func DatabaseBackupCreateCompleteArgs(ctx command.Context, params *params.BackupCreateDatabaseParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetDatabaseAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.Databases {
+		fmt.Println(res.Databases[i].ID)
+		var target interface{} = &res.Databases[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func DatabaseBackupRestoreCompleteArgs(ctx command.Context, params *params.BackupRestoreDatabaseParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetDatabaseAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.Databases {
+		fmt.Println(res.Databases[i].ID)
+		var target interface{} = &res.Databases[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func DatabaseBackupLockCompleteArgs(ctx command.Context, params *params.BackupLockDatabaseParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetDatabaseAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.Databases {
+		fmt.Println(res.Databases[i].ID)
+		var target interface{} = &res.Databases[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func DatabaseBackupUnlockCompleteArgs(ctx command.Context, params *params.BackupUnlockDatabaseParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetDatabaseAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.Databases {
+		fmt.Println(res.Databases[i].ID)
+		var target interface{} = &res.Databases[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func DatabaseBackupRemoveCompleteArgs(ctx command.Context, params *params.BackupRemoveDatabaseParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetDatabaseAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.Databases {
+		fmt.Println(res.Databases[i].ID)
+		var target interface{} = &res.Databases[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
 func DatabaseLogsCompleteArgs(ctx command.Context, params *params.LogsDatabaseParam, cur, prev, commandName string) {
 
 	if !command.GlobalOption.Valid {

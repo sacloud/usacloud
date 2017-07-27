@@ -28,6 +28,12 @@ func init() {
 	resetParam := params.NewResetDatabaseParam()
 	waitForBootParam := params.NewWaitForBootDatabaseParam()
 	waitForDownParam := params.NewWaitForDownDatabaseParam()
+	backupInfoParam := params.NewBackupInfoDatabaseParam()
+	backupCreateParam := params.NewBackupCreateDatabaseParam()
+	backupRestoreParam := params.NewBackupRestoreDatabaseParam()
+	backupLockParam := params.NewBackupLockDatabaseParam()
+	backupUnlockParam := params.NewBackupUnlockDatabaseParam()
+	backupRemoveParam := params.NewBackupRemoveDatabaseParam()
 	logsParam := params.NewLogsDatabaseParam()
 
 	cliCommand := &cli.Command{
@@ -3438,6 +3444,1916 @@ func init() {
 				},
 			},
 			{
+				Name:      "backup-info",
+				Aliases:   []string{"backups", "backup-list"},
+				Usage:     "Show information of backup",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, backupInfoParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						backupInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						backupInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						backupInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						backupInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						backupInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						backupInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						backupInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						backupInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						backupInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						backupInfoParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseBackupInfoCompleteArgs(ctx, backupInfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseBackupInfoCompleteArgs(ctx, backupInfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseBackupInfoCompleteFlags(ctx, backupInfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseBackupInfoCompleteArgs(ctx, backupInfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					backupInfoParam.ParamTemplate = c.String("param-template")
+					backupInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(backupInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewBackupInfoDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(backupInfoParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						backupInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						backupInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						backupInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						backupInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						backupInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						backupInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						backupInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						backupInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						backupInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						backupInfoParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if backupInfoParam.GenerateSkeleton {
+						backupInfoParam.GenerateSkeleton = false
+						backupInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(backupInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := backupInfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), backupInfoParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(backupInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Databases {
+							if hasTags(&v, backupInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", backupInfoParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+										if len(backupInfoParam.Selector) == 0 || hasTags(&v, backupInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						backupInfoParam.SetId(id)
+						p := *backupInfoParam // copy struct value
+						backupInfoParam := &p
+						go func() {
+							err := funcs.DatabaseBackupInfo(ctx, backupInfoParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "backup-create",
+				Usage:     "Make new database backup",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, backupCreateParam)
+
+					// Set option values
+					if c.IsSet("assumeyes") {
+						backupCreateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						backupCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						backupCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						backupCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						backupCreateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						backupCreateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						backupCreateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						backupCreateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						backupCreateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						backupCreateParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseBackupCreateCompleteArgs(ctx, backupCreateParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseBackupCreateCompleteArgs(ctx, backupCreateParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseBackupCreateCompleteFlags(ctx, backupCreateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseBackupCreateCompleteArgs(ctx, backupCreateParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					backupCreateParam.ParamTemplate = c.String("param-template")
+					backupCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(backupCreateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewBackupCreateDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(backupCreateParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("assumeyes") {
+						backupCreateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						backupCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						backupCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						backupCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						backupCreateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						backupCreateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						backupCreateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						backupCreateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						backupCreateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						backupCreateParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if backupCreateParam.GenerateSkeleton {
+						backupCreateParam.GenerateSkeleton = false
+						backupCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(backupCreateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := backupCreateParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), backupCreateParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						return fmt.Errorf("ID or Name argument is required")
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+
+										ids = append(ids, v.GetID())
+
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !backupCreateParam.Assumeyes && !command.ConfirmContinue("backup-create", ids...) {
+						return nil
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						backupCreateParam.SetId(id)
+						p := *backupCreateParam // copy struct value
+						backupCreateParam := &p
+						go func() {
+							err := funcs.DatabaseBackupCreate(ctx, backupCreateParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "backup-restore",
+				Usage:     "Restore database from backup",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target backup",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, backupRestoreParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						backupRestoreParam.Index = c.Int("index")
+					}
+					if c.IsSet("assumeyes") {
+						backupRestoreParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						backupRestoreParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						backupRestoreParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						backupRestoreParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						backupRestoreParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						backupRestoreParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						backupRestoreParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						backupRestoreParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						backupRestoreParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						backupRestoreParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseBackupRestoreCompleteArgs(ctx, backupRestoreParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseBackupRestoreCompleteArgs(ctx, backupRestoreParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseBackupRestoreCompleteFlags(ctx, backupRestoreParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseBackupRestoreCompleteArgs(ctx, backupRestoreParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					backupRestoreParam.ParamTemplate = c.String("param-template")
+					backupRestoreParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(backupRestoreParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewBackupRestoreDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(backupRestoreParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						backupRestoreParam.Index = c.Int("index")
+					}
+					if c.IsSet("assumeyes") {
+						backupRestoreParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						backupRestoreParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						backupRestoreParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						backupRestoreParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						backupRestoreParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						backupRestoreParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						backupRestoreParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						backupRestoreParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						backupRestoreParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						backupRestoreParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if backupRestoreParam.GenerateSkeleton {
+						backupRestoreParam.GenerateSkeleton = false
+						backupRestoreParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(backupRestoreParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := backupRestoreParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), backupRestoreParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						return fmt.Errorf("ID or Name argument is required")
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+
+										ids = append(ids, v.GetID())
+
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !backupRestoreParam.Assumeyes && !command.ConfirmContinue("backup-restore", ids...) {
+						return nil
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						backupRestoreParam.SetId(id)
+						p := *backupRestoreParam // copy struct value
+						backupRestoreParam := &p
+						go func() {
+							err := funcs.DatabaseBackupRestore(ctx, backupRestoreParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "backup-lock",
+				Usage:     "Lock backup",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target backup",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, backupLockParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						backupLockParam.Index = c.Int("index")
+					}
+					if c.IsSet("assumeyes") {
+						backupLockParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						backupLockParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						backupLockParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						backupLockParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						backupLockParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						backupLockParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						backupLockParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						backupLockParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						backupLockParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						backupLockParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseBackupLockCompleteArgs(ctx, backupLockParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseBackupLockCompleteArgs(ctx, backupLockParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseBackupLockCompleteFlags(ctx, backupLockParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseBackupLockCompleteArgs(ctx, backupLockParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					backupLockParam.ParamTemplate = c.String("param-template")
+					backupLockParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(backupLockParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewBackupLockDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(backupLockParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						backupLockParam.Index = c.Int("index")
+					}
+					if c.IsSet("assumeyes") {
+						backupLockParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						backupLockParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						backupLockParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						backupLockParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						backupLockParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						backupLockParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						backupLockParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						backupLockParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						backupLockParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						backupLockParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if backupLockParam.GenerateSkeleton {
+						backupLockParam.GenerateSkeleton = false
+						backupLockParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(backupLockParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := backupLockParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), backupLockParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						return fmt.Errorf("ID or Name argument is required")
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+
+										ids = append(ids, v.GetID())
+
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !backupLockParam.Assumeyes && !command.ConfirmContinue("backup-lock", ids...) {
+						return nil
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						backupLockParam.SetId(id)
+						p := *backupLockParam // copy struct value
+						backupLockParam := &p
+						go func() {
+							err := funcs.DatabaseBackupLock(ctx, backupLockParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "backup-unlock",
+				Usage:     "Unlock backup",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target backup",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, backupUnlockParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						backupUnlockParam.Index = c.Int("index")
+					}
+					if c.IsSet("assumeyes") {
+						backupUnlockParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						backupUnlockParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						backupUnlockParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						backupUnlockParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						backupUnlockParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						backupUnlockParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						backupUnlockParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						backupUnlockParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						backupUnlockParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						backupUnlockParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseBackupUnlockCompleteArgs(ctx, backupUnlockParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseBackupUnlockCompleteArgs(ctx, backupUnlockParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseBackupUnlockCompleteFlags(ctx, backupUnlockParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseBackupUnlockCompleteArgs(ctx, backupUnlockParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					backupUnlockParam.ParamTemplate = c.String("param-template")
+					backupUnlockParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(backupUnlockParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewBackupUnlockDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(backupUnlockParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						backupUnlockParam.Index = c.Int("index")
+					}
+					if c.IsSet("assumeyes") {
+						backupUnlockParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						backupUnlockParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						backupUnlockParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						backupUnlockParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						backupUnlockParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						backupUnlockParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						backupUnlockParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						backupUnlockParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						backupUnlockParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						backupUnlockParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if backupUnlockParam.GenerateSkeleton {
+						backupUnlockParam.GenerateSkeleton = false
+						backupUnlockParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(backupUnlockParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := backupUnlockParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), backupUnlockParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						return fmt.Errorf("ID or Name argument is required")
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+
+										ids = append(ids, v.GetID())
+
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !backupUnlockParam.Assumeyes && !command.ConfirmContinue("backup-unlock", ids...) {
+						return nil
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						backupUnlockParam.SetId(id)
+						p := *backupUnlockParam // copy struct value
+						backupUnlockParam := &p
+						go func() {
+							err := funcs.DatabaseBackupUnlock(ctx, backupUnlockParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "backup-remove",
+				Usage:     "Remove backup",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target backup",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, backupRemoveParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						backupRemoveParam.Index = c.Int("index")
+					}
+					if c.IsSet("assumeyes") {
+						backupRemoveParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						backupRemoveParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						backupRemoveParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						backupRemoveParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						backupRemoveParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						backupRemoveParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						backupRemoveParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						backupRemoveParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						backupRemoveParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						backupRemoveParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseBackupRemoveCompleteArgs(ctx, backupRemoveParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseBackupRemoveCompleteArgs(ctx, backupRemoveParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseBackupRemoveCompleteFlags(ctx, backupRemoveParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseBackupRemoveCompleteArgs(ctx, backupRemoveParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					backupRemoveParam.ParamTemplate = c.String("param-template")
+					backupRemoveParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(backupRemoveParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewBackupRemoveDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(backupRemoveParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						backupRemoveParam.Index = c.Int("index")
+					}
+					if c.IsSet("assumeyes") {
+						backupRemoveParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						backupRemoveParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						backupRemoveParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						backupRemoveParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						backupRemoveParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						backupRemoveParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						backupRemoveParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						backupRemoveParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						backupRemoveParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						backupRemoveParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if backupRemoveParam.GenerateSkeleton {
+						backupRemoveParam.GenerateSkeleton = false
+						backupRemoveParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(backupRemoveParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := backupRemoveParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), backupRemoveParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						return fmt.Errorf("ID or Name argument is required")
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+
+										ids = append(ids, v.GetID())
+
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !backupRemoveParam.Assumeyes && !command.ConfirmContinue("backup-remove", ids...) {
+						return nil
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						backupRemoveParam.SetId(id)
+						p := *backupRemoveParam // copy struct value
+						backupRemoveParam := &p
+						go func() {
+							err := funcs.DatabaseBackupRemove(ctx, backupRemoveParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
 				Name:      "logs",
 				Usage:     "Logs Database",
 				ArgsUsage: "<ID or Name(only single target)>",
@@ -3758,6 +5674,36 @@ func init() {
 
 	// build Category-Command mapping
 
+	AppendCommandCategoryMap("database", "backup-create", &schema.Category{
+		Key:         "backup",
+		DisplayName: "Backup Management",
+		Order:       30,
+	})
+	AppendCommandCategoryMap("database", "backup-info", &schema.Category{
+		Key:         "backup",
+		DisplayName: "Backup Management",
+		Order:       30,
+	})
+	AppendCommandCategoryMap("database", "backup-lock", &schema.Category{
+		Key:         "backup",
+		DisplayName: "Backup Management",
+		Order:       30,
+	})
+	AppendCommandCategoryMap("database", "backup-remove", &schema.Category{
+		Key:         "backup",
+		DisplayName: "Backup Management",
+		Order:       30,
+	})
+	AppendCommandCategoryMap("database", "backup-restore", &schema.Category{
+		Key:         "backup",
+		DisplayName: "Backup Management",
+		Order:       30,
+	})
+	AppendCommandCategoryMap("database", "backup-unlock", &schema.Category{
+		Key:         "backup",
+		DisplayName: "Backup Management",
+		Order:       30,
+	})
 	AppendCommandCategoryMap("database", "boot", &schema.Category{
 		Key:         "power",
 		DisplayName: "Power Management",
@@ -3821,6 +5767,326 @@ func init() {
 
 	// build Category-Param mapping
 
+	AppendFlagCategoryMap("database", "backup-create", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-create", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-create", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-create", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-create", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-create", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "backup-create", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-create", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-create", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-create", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("database", "backup-lock", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-lock", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-lock", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-lock", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-lock", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-lock", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "backup-lock", "index", &schema.Category{
+		Key:         "backup",
+		DisplayName: "Backup options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "backup-lock", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-lock", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-lock", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-lock", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "index", &schema.Category{
+		Key:         "backup",
+		DisplayName: "Backup options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-restore", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-restore", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-restore", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-restore", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-restore", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-restore", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "backup-restore", "index", &schema.Category{
+		Key:         "backup",
+		DisplayName: "Backup options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "backup-restore", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-restore", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-restore", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-restore", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "index", &schema.Category{
+		Key:         "backup",
+		DisplayName: "Backup options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "boot", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
