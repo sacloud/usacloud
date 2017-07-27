@@ -6034,7 +6034,7 @@ func init() {
 					&cli.StringFlag{
 						Name:  "key-format",
 						Usage: "[Required] set monitoring value key-format",
-						Value: "sakuracloud.{{.ID}}.loadbalancer",
+						Value: "sakuracloud.loadbalancer.{{.ID}}.nic",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",

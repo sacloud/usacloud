@@ -2143,7 +2143,7 @@ func vpcRouterMonitorParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set monitoring value key-format",
-			DefaultValue: "sakuracloud.{{.ID}}.vpcrouter",
+			DefaultValue: "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}",
 			Required:     true,
 			Category:     "monitor",
 			Order:        40,

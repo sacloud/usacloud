@@ -9319,7 +9319,7 @@ func init() {
 					&cli.StringFlag{
 						Name:  "key-format",
 						Usage: "[Required] set monitoring value key-format",
-						Value: "sakuracloud.{{.ID}}.cpu",
+						Value: "sakuracloud.server.{{.ID}}.cpu",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
@@ -9673,7 +9673,7 @@ func init() {
 					&cli.StringFlag{
 						Name:  "key-format",
 						Usage: "[Required] set monitoring value key-format",
-						Value: "sakuracloud.{{.ID}}.nic.{{.Index}}",
+						Value: "sakuracloud.server.{{.ID}}.nic.{{.Index}}",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
@@ -10033,7 +10033,7 @@ func init() {
 					&cli.StringFlag{
 						Name:  "key-format",
 						Usage: "[Required] set monitoring value key-format",
-						Value: "sakuracloud.{{.ID}}.disk.{{.Index}}",
+						Value: "sakuracloud.server.{{.ID}}.disk.{{.Index}}",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",

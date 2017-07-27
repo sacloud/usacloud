@@ -2466,7 +2466,7 @@ type MonitorDiskParam struct {
 func NewMonitorDiskParam() *MonitorDiskParam {
 	return &MonitorDiskParam{
 
-		KeyFormat: "sakuracloud.{{.ID}}.disk",
+		KeyFormat: "sakuracloud.disk.{{.ID}}.disk",
 	}
 }
 

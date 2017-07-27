@@ -58,7 +58,8 @@ func VPCRouterMonitor(ctx command.Context, params *params.MonitorVPCRouterParam)
 	t := template.New("t")
 	template.Must(t.Parse(params.KeyFormat))
 	err = t.Execute(buf, map[string]interface{}{
-		"ID": params.Id,
+		"ID":    params.Id,
+		"Index": nicIndex,
 	})
 	if err != nil {
 		return fmt.Errorf("VPCRouterMonitor is failed: %s", err)

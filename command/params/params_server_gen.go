@@ -5793,7 +5793,7 @@ type MonitorCpuServerParam struct {
 func NewMonitorCpuServerParam() *MonitorCpuServerParam {
 	return &MonitorCpuServerParam{
 
-		KeyFormat: "sakuracloud.{{.ID}}.cpu",
+		KeyFormat: "sakuracloud.server.{{.ID}}.cpu",
 	}
 }
 
@@ -6038,7 +6038,7 @@ type MonitorNicServerParam struct {
 func NewMonitorNicServerParam() *MonitorNicServerParam {
 	return &MonitorNicServerParam{
 
-		KeyFormat: "sakuracloud.{{.ID}}.nic.{{.Index}}",
+		KeyFormat: "sakuracloud.server.{{.ID}}.nic.{{.Index}}",
 	}
 }
 
@@ -6293,7 +6293,7 @@ type MonitorDiskServerParam struct {
 func NewMonitorDiskServerParam() *MonitorDiskServerParam {
 	return &MonitorDiskServerParam{
 
-		KeyFormat: "sakuracloud.{{.ID}}.disk.{{.Index}}",
+		KeyFormat: "sakuracloud.server.{{.ID}}.disk.{{.Index}}",
 	}
 }
 

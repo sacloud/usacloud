@@ -3884,7 +3884,7 @@ type MonitorLoadBalancerParam struct {
 func NewMonitorLoadBalancerParam() *MonitorLoadBalancerParam {
 	return &MonitorLoadBalancerParam{
 
-		KeyFormat: "sakuracloud.{{.ID}}.loadbalancer",
+		KeyFormat: "sakuracloud.loadbalancer.{{.ID}}.nic",
 	}
 }
 

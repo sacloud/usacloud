@@ -9759,7 +9759,7 @@ func NewMonitorVPCRouterParam() *MonitorVPCRouterParam {
 	return &MonitorVPCRouterParam{
 
 		Index:     "0",
-		KeyFormat: "sakuracloud.{{.ID}}.vpcrouter",
+		KeyFormat: "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}",
 	}
 }
 
