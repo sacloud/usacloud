@@ -515,7 +515,7 @@ func diskMonitorParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set monitoring value key-format",
-			DefaultValue: "sakuracloud.{{.ID}}.disk",
+			DefaultValue: "sakuracloud.disk.{{.ID}}.disk",
 			Required:     true,
 		},
 	}

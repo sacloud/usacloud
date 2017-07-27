@@ -16151,7 +16151,7 @@ func init() {
 					&cli.StringFlag{
 						Name:  "key-format",
 						Usage: "[Required] set monitoring value key-format",
-						Value: "sakuracloud.{{.ID}}.vpcrouter",
+						Value: "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",

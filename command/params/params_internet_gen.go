@@ -285,7 +285,7 @@ type MonitorInternetParam struct {
 func NewMonitorInternetParam() *MonitorInternetParam {
 	return &MonitorInternetParam{
 
-		KeyFormat: "sakuracloud.{{.ID}}.internet",
+		KeyFormat: "sakuracloud.internet.{{.ID}}.nic",
 	}
 }
 

@@ -3642,7 +3642,7 @@ func init() {
 					&cli.StringFlag{
 						Name:  "key-format",
 						Usage: "[Required] set monitoring value key-format",
-						Value: "sakuracloud.{{.ID}}.disk",
+						Value: "sakuracloud.disk.{{.ID}}.disk",
 					},
 					&cli.StringFlag{
 						Name:  "start",
