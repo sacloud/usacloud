@@ -34,6 +34,13 @@ func init() {
 	backupLockParam := params.NewBackupLockDatabaseParam()
 	backupUnlockParam := params.NewBackupUnlockDatabaseParam()
 	backupRemoveParam := params.NewBackupRemoveDatabaseParam()
+	monitorCpuParam := params.NewMonitorCpuDatabaseParam()
+	monitorMemoryParam := params.NewMonitorMemoryDatabaseParam()
+	monitorNicParam := params.NewMonitorNicDatabaseParam()
+	monitorSystemDiskParam := params.NewMonitorSystemDiskDatabaseParam()
+	monitorBackupDiskParam := params.NewMonitorBackupDiskDatabaseParam()
+	monitorSystemDiskSizeParam := params.NewMonitorSystemDiskSizeDatabaseParam()
+	monitorBackupDiskSizeParam := params.NewMonitorBackupDiskSizeDatabaseParam()
 	logsParam := params.NewLogsDatabaseParam()
 
 	cliCommand := &cli.Command{
@@ -5354,6 +5361,2456 @@ func init() {
 				},
 			},
 			{
+				Name:      "monitor-cpu",
+				Usage:     "Collect CPU monitor values",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "start",
+						Usage: "set start-time",
+					},
+					&cli.StringFlag{
+						Name:  "end",
+						Usage: "set end-time",
+					},
+					&cli.StringFlag{
+						Name:  "key-format",
+						Usage: "[Required] set monitoring value key-format",
+						Value: "sakuracloud.database.{{.ID}}.cpu",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, monitorCpuParam)
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorCpuParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorCpuParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorCpuParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorCpuParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorCpuParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorCpuParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorCpuParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorCpuParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorCpuParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorCpuParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorCpuParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorCpuParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorCpuParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseMonitorCpuCompleteArgs(ctx, monitorCpuParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseMonitorCpuCompleteArgs(ctx, monitorCpuParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseMonitorCpuCompleteFlags(ctx, monitorCpuParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseMonitorCpuCompleteArgs(ctx, monitorCpuParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					monitorCpuParam.ParamTemplate = c.String("param-template")
+					monitorCpuParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(monitorCpuParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewMonitorCpuDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(monitorCpuParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorCpuParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorCpuParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorCpuParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorCpuParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorCpuParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorCpuParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorCpuParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorCpuParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorCpuParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorCpuParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorCpuParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorCpuParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorCpuParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if monitorCpuParam.GenerateSkeleton {
+						monitorCpuParam.GenerateSkeleton = false
+						monitorCpuParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(monitorCpuParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := monitorCpuParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), monitorCpuParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(monitorCpuParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Databases {
+							if hasTags(&v, monitorCpuParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorCpuParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+										if len(monitorCpuParam.Selector) == 0 || hasTags(&v, monitorCpuParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						monitorCpuParam.SetId(id)
+						p := *monitorCpuParam // copy struct value
+						monitorCpuParam := &p
+						go func() {
+							err := funcs.DatabaseMonitorCpu(ctx, monitorCpuParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "monitor-memory",
+				Usage:     "Collect Disk(s) monitor values",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "start",
+						Usage: "set start-time",
+					},
+					&cli.StringFlag{
+						Name:  "end",
+						Usage: "set end-time",
+					},
+					&cli.StringFlag{
+						Name:  "key-format",
+						Usage: "[Required] set monitoring value key-format",
+						Value: "sakuracloud.database.{{.ID}}.memory",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, monitorMemoryParam)
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorMemoryParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorMemoryParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorMemoryParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorMemoryParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorMemoryParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorMemoryParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorMemoryParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorMemoryParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorMemoryParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorMemoryParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorMemoryParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorMemoryParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorMemoryParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseMonitorMemoryCompleteArgs(ctx, monitorMemoryParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseMonitorMemoryCompleteArgs(ctx, monitorMemoryParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseMonitorMemoryCompleteFlags(ctx, monitorMemoryParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseMonitorMemoryCompleteArgs(ctx, monitorMemoryParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					monitorMemoryParam.ParamTemplate = c.String("param-template")
+					monitorMemoryParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(monitorMemoryParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewMonitorMemoryDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(monitorMemoryParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorMemoryParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorMemoryParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorMemoryParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorMemoryParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorMemoryParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorMemoryParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorMemoryParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorMemoryParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorMemoryParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorMemoryParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorMemoryParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorMemoryParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorMemoryParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if monitorMemoryParam.GenerateSkeleton {
+						monitorMemoryParam.GenerateSkeleton = false
+						monitorMemoryParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(monitorMemoryParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := monitorMemoryParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), monitorMemoryParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(monitorMemoryParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Databases {
+							if hasTags(&v, monitorMemoryParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorMemoryParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+										if len(monitorMemoryParam.Selector) == 0 || hasTags(&v, monitorMemoryParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						monitorMemoryParam.SetId(id)
+						p := *monitorMemoryParam // copy struct value
+						monitorMemoryParam := &p
+						go func() {
+							err := funcs.DatabaseMonitorMemory(ctx, monitorMemoryParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "monitor-nic",
+				Usage:     "Collect NIC(s) monitor values",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "start",
+						Usage: "set start-time",
+					},
+					&cli.StringFlag{
+						Name:  "end",
+						Usage: "set end-time",
+					},
+					&cli.StringFlag{
+						Name:  "key-format",
+						Usage: "[Required] set monitoring value key-format",
+						Value: "sakuracloud.database.{{.ID}}.nic",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, monitorNicParam)
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorNicParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorNicParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorNicParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorNicParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorNicParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorNicParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorNicParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorNicParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorNicParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorNicParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorNicParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorNicParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorNicParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseMonitorNicCompleteArgs(ctx, monitorNicParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseMonitorNicCompleteArgs(ctx, monitorNicParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseMonitorNicCompleteFlags(ctx, monitorNicParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseMonitorNicCompleteArgs(ctx, monitorNicParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					monitorNicParam.ParamTemplate = c.String("param-template")
+					monitorNicParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(monitorNicParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewMonitorNicDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(monitorNicParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorNicParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorNicParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorNicParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorNicParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorNicParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorNicParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorNicParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorNicParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorNicParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorNicParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorNicParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorNicParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorNicParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if monitorNicParam.GenerateSkeleton {
+						monitorNicParam.GenerateSkeleton = false
+						monitorNicParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(monitorNicParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := monitorNicParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), monitorNicParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(monitorNicParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Databases {
+							if hasTags(&v, monitorNicParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorNicParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+										if len(monitorNicParam.Selector) == 0 || hasTags(&v, monitorNicParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						monitorNicParam.SetId(id)
+						p := *monitorNicParam // copy struct value
+						monitorNicParam := &p
+						go func() {
+							err := funcs.DatabaseMonitorNic(ctx, monitorNicParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "monitor-system-disk",
+				Usage:     "Collect Disk(s) monitor values",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "start",
+						Usage: "set start-time",
+					},
+					&cli.StringFlag{
+						Name:  "end",
+						Usage: "set end-time",
+					},
+					&cli.StringFlag{
+						Name:  "key-format",
+						Usage: "[Required] set monitoring value key-format",
+						Value: "sakuracloud.database.{{.ID}}.disk1",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, monitorSystemDiskParam)
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorSystemDiskParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorSystemDiskParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorSystemDiskParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorSystemDiskParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorSystemDiskParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorSystemDiskParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorSystemDiskParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorSystemDiskParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorSystemDiskParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorSystemDiskParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorSystemDiskParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorSystemDiskParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorSystemDiskParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseMonitorSystemDiskCompleteArgs(ctx, monitorSystemDiskParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseMonitorSystemDiskCompleteArgs(ctx, monitorSystemDiskParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseMonitorSystemDiskCompleteFlags(ctx, monitorSystemDiskParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseMonitorSystemDiskCompleteArgs(ctx, monitorSystemDiskParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					monitorSystemDiskParam.ParamTemplate = c.String("param-template")
+					monitorSystemDiskParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(monitorSystemDiskParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewMonitorSystemDiskDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(monitorSystemDiskParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorSystemDiskParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorSystemDiskParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorSystemDiskParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorSystemDiskParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorSystemDiskParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorSystemDiskParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorSystemDiskParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorSystemDiskParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorSystemDiskParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorSystemDiskParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorSystemDiskParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorSystemDiskParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorSystemDiskParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if monitorSystemDiskParam.GenerateSkeleton {
+						monitorSystemDiskParam.GenerateSkeleton = false
+						monitorSystemDiskParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(monitorSystemDiskParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := monitorSystemDiskParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), monitorSystemDiskParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(monitorSystemDiskParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Databases {
+							if hasTags(&v, monitorSystemDiskParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorSystemDiskParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+										if len(monitorSystemDiskParam.Selector) == 0 || hasTags(&v, monitorSystemDiskParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						monitorSystemDiskParam.SetId(id)
+						p := *monitorSystemDiskParam // copy struct value
+						monitorSystemDiskParam := &p
+						go func() {
+							err := funcs.DatabaseMonitorSystemDisk(ctx, monitorSystemDiskParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "monitor-backup-disk",
+				Usage:     "Collect Disk(s) monitor values",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "start",
+						Usage: "set start-time",
+					},
+					&cli.StringFlag{
+						Name:  "end",
+						Usage: "set end-time",
+					},
+					&cli.StringFlag{
+						Name:  "key-format",
+						Usage: "[Required] set monitoring value key-format",
+						Value: "sakuracloud.database.{{.ID}}.disk2",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, monitorBackupDiskParam)
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorBackupDiskParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorBackupDiskParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorBackupDiskParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorBackupDiskParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorBackupDiskParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorBackupDiskParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorBackupDiskParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorBackupDiskParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorBackupDiskParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorBackupDiskParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorBackupDiskParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorBackupDiskParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorBackupDiskParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseMonitorBackupDiskCompleteArgs(ctx, monitorBackupDiskParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseMonitorBackupDiskCompleteArgs(ctx, monitorBackupDiskParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseMonitorBackupDiskCompleteFlags(ctx, monitorBackupDiskParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseMonitorBackupDiskCompleteArgs(ctx, monitorBackupDiskParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					monitorBackupDiskParam.ParamTemplate = c.String("param-template")
+					monitorBackupDiskParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(monitorBackupDiskParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewMonitorBackupDiskDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(monitorBackupDiskParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorBackupDiskParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorBackupDiskParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorBackupDiskParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorBackupDiskParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorBackupDiskParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorBackupDiskParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorBackupDiskParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorBackupDiskParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorBackupDiskParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorBackupDiskParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorBackupDiskParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorBackupDiskParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorBackupDiskParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if monitorBackupDiskParam.GenerateSkeleton {
+						monitorBackupDiskParam.GenerateSkeleton = false
+						monitorBackupDiskParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(monitorBackupDiskParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := monitorBackupDiskParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), monitorBackupDiskParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(monitorBackupDiskParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Databases {
+							if hasTags(&v, monitorBackupDiskParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorBackupDiskParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+										if len(monitorBackupDiskParam.Selector) == 0 || hasTags(&v, monitorBackupDiskParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						monitorBackupDiskParam.SetId(id)
+						p := *monitorBackupDiskParam // copy struct value
+						monitorBackupDiskParam := &p
+						go func() {
+							err := funcs.DatabaseMonitorBackupDisk(ctx, monitorBackupDiskParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "monitor-system-disk-size",
+				Usage:     "Collect Disk(s) monitor values",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "start",
+						Usage: "set start-time",
+					},
+					&cli.StringFlag{
+						Name:  "end",
+						Usage: "set end-time",
+					},
+					&cli.StringFlag{
+						Name:  "key-format",
+						Usage: "[Required] set monitoring value key-format",
+						Value: "sakuracloud.database.{{.ID}}.disk1",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, monitorSystemDiskSizeParam)
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorSystemDiskSizeParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorSystemDiskSizeParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorSystemDiskSizeParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorSystemDiskSizeParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorSystemDiskSizeParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorSystemDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorSystemDiskSizeParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorSystemDiskSizeParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorSystemDiskSizeParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorSystemDiskSizeParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorSystemDiskSizeParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorSystemDiskSizeParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorSystemDiskSizeParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseMonitorSystemDiskSizeCompleteArgs(ctx, monitorSystemDiskSizeParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseMonitorSystemDiskSizeCompleteArgs(ctx, monitorSystemDiskSizeParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseMonitorSystemDiskSizeCompleteFlags(ctx, monitorSystemDiskSizeParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseMonitorSystemDiskSizeCompleteArgs(ctx, monitorSystemDiskSizeParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					monitorSystemDiskSizeParam.ParamTemplate = c.String("param-template")
+					monitorSystemDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(monitorSystemDiskSizeParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewMonitorSystemDiskSizeDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(monitorSystemDiskSizeParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorSystemDiskSizeParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorSystemDiskSizeParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorSystemDiskSizeParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorSystemDiskSizeParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorSystemDiskSizeParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorSystemDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorSystemDiskSizeParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorSystemDiskSizeParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorSystemDiskSizeParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorSystemDiskSizeParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorSystemDiskSizeParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorSystemDiskSizeParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorSystemDiskSizeParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if monitorSystemDiskSizeParam.GenerateSkeleton {
+						monitorSystemDiskSizeParam.GenerateSkeleton = false
+						monitorSystemDiskSizeParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(monitorSystemDiskSizeParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := monitorSystemDiskSizeParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), monitorSystemDiskSizeParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(monitorSystemDiskSizeParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Databases {
+							if hasTags(&v, monitorSystemDiskSizeParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorSystemDiskSizeParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+										if len(monitorSystemDiskSizeParam.Selector) == 0 || hasTags(&v, monitorSystemDiskSizeParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						monitorSystemDiskSizeParam.SetId(id)
+						p := *monitorSystemDiskSizeParam // copy struct value
+						monitorSystemDiskSizeParam := &p
+						go func() {
+							err := funcs.DatabaseMonitorSystemDiskSize(ctx, monitorSystemDiskSizeParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "monitor-backup-disk-size",
+				Usage:     "Collect Disk(s) monitor values",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "start",
+						Usage: "set start-time",
+					},
+					&cli.StringFlag{
+						Name:  "end",
+						Usage: "set end-time",
+					},
+					&cli.StringFlag{
+						Name:  "key-format",
+						Usage: "[Required] set monitoring value key-format",
+						Value: "sakuracloud.database.{{.ID}}.disk2",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, monitorBackupDiskSizeParam)
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorBackupDiskSizeParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorBackupDiskSizeParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorBackupDiskSizeParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorBackupDiskSizeParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorBackupDiskSizeParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorBackupDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorBackupDiskSizeParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorBackupDiskSizeParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorBackupDiskSizeParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorBackupDiskSizeParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorBackupDiskSizeParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorBackupDiskSizeParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorBackupDiskSizeParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseMonitorBackupDiskSizeCompleteArgs(ctx, monitorBackupDiskSizeParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseMonitorBackupDiskSizeCompleteArgs(ctx, monitorBackupDiskSizeParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseMonitorBackupDiskSizeCompleteFlags(ctx, monitorBackupDiskSizeParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseMonitorBackupDiskSizeCompleteArgs(ctx, monitorBackupDiskSizeParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					monitorBackupDiskSizeParam.ParamTemplate = c.String("param-template")
+					monitorBackupDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(monitorBackupDiskSizeParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewMonitorBackupDiskSizeDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(monitorBackupDiskSizeParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorBackupDiskSizeParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorBackupDiskSizeParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorBackupDiskSizeParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorBackupDiskSizeParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorBackupDiskSizeParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorBackupDiskSizeParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorBackupDiskSizeParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorBackupDiskSizeParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorBackupDiskSizeParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorBackupDiskSizeParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorBackupDiskSizeParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorBackupDiskSizeParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorBackupDiskSizeParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if monitorBackupDiskSizeParam.GenerateSkeleton {
+						monitorBackupDiskSizeParam.GenerateSkeleton = false
+						monitorBackupDiskSizeParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(monitorBackupDiskSizeParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := monitorBackupDiskSizeParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), monitorBackupDiskSizeParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(monitorBackupDiskSizeParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Databases {
+							if hasTags(&v, monitorBackupDiskSizeParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorBackupDiskSizeParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+										if len(monitorBackupDiskSizeParam.Selector) == 0 || hasTags(&v, monitorBackupDiskSizeParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						monitorBackupDiskSizeParam.SetId(id)
+						p := *monitorBackupDiskSizeParam // copy struct value
+						monitorBackupDiskSizeParam := &p
+						go func() {
+							err := funcs.DatabaseMonitorBackupDiskSize(ctx, monitorBackupDiskSizeParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
 				Name:      "logs",
 				Usage:     "Logs Database",
 				ArgsUsage: "<ID or Name(only single target)>",
@@ -5725,6 +8182,41 @@ func init() {
 		Order:       10,
 	})
 	AppendCommandCategoryMap("database", "logs", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("database", "monitor-backup-disk", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("database", "monitor-backup-disk-size", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("database", "monitor-cpu", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("database", "monitor-memory", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("database", "monitor-nic", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("database", "monitor-system-disk", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("database", "monitor-system-disk-size", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
 		Order:       40,
@@ -6416,6 +8908,461 @@ func init() {
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "end", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "key-format", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "start", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "end", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "key-format", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "start", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "end", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "key-format", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "start", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "end", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "key-format", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "start", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "end", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "key-format", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("database", "monitor-nic", "start", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "end", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "key-format", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "start", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "end", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "key-format", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "start", &schema.Category{
+		Key:         "monitor",
+		DisplayName: "Monitor options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("database", "read", "column", &schema.Category{
 		Key:         "output",

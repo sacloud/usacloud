@@ -105,7 +105,7 @@ vet: golint gen
 .PHONY: golint
 golint: fmt
 	for pkg in $$(go list ./... | grep -v /vendor/ ) ; do \
-        test -z "$$(golint $$pkg | grep -v '_gen.go' | grep -v '_string.go' | grep -v 'should have comment' | grep -v 'func ServerMonitorCpu' | grep -v 'func ServerSsh' | tee /dev/stderr)" || RES=1; \
+        test -z "$$(golint $$pkg | grep -v '_gen.go' | grep -v '_string.go' | grep -v 'should have comment' | grep -v 'func ServerMonitorCpu' | grep -v 'func ServerSsh' | grep -v 'DatabaseMonitorCpu' | tee /dev/stderr)" || RES=1; \
     done ;exit $$RES
 
 .PHONY: fmt

@@ -1,6 +1,7 @@
 package define
 
 import (
+	"fmt"
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -178,20 +179,82 @@ func DatabaseResource() *schema.Resource {
 			Category:           "backup",
 			Order:              60,
 		},
-		//"monitor": {
-		//	Type:               schema.CommandRead,
-		//	Params:             databaseMonitorParam(),
-		//	TableType:          output.TableSimple,
-		//	TableColumnDefines: databaseMonitorColumns(),
-		//	UseCustomCommand:   true,
-		//	Order:              10,
-		//	Category:           "monitor",
-		//},
+		"monitor-cpu": {
+			Type:               schema.CommandRead,
+			Params:             databaseMonitorParam("cpu"),
+			Usage:              "Collect CPU monitor values",
+			TableType:          output.TableSimple,
+			TableColumnDefines: databaseMonitorCPUColumns(),
+			UseCustomCommand:   true,
+			Category:           "monitor",
+			Order:              10,
+		},
+		"monitor-memory": {
+			Type:               schema.CommandRead,
+			Params:             databaseMonitorParam("memory"),
+			Usage:              "Collect Disk(s) monitor values",
+			TableType:          output.TableSimple,
+			TableColumnDefines: databaseMonitorSizeColumns(),
+			UseCustomCommand:   true,
+			Category:           "monitor",
+			Order:              20,
+		},
+		"monitor-nic": {
+			Type:               schema.CommandRead,
+			Params:             databaseMonitorParam("nic"),
+			Usage:              "Collect NIC(s) monitor values",
+			TableType:          output.TableSimple,
+			TableColumnDefines: databaseMonitorNICColumns(),
+			UseCustomCommand:   true,
+			Category:           "monitor",
+			Order:              30,
+		},
+		"monitor-system-disk": {
+			Type:               schema.CommandRead,
+			Params:             databaseMonitorParam("disk1"),
+			Usage:              "Collect Disk(s) monitor values",
+			TableType:          output.TableSimple,
+			TableColumnDefines: databaseMonitorDiskColumns(),
+			UseCustomCommand:   true,
+			Category:           "monitor",
+			Order:              40,
+		},
+		"monitor-backup-disk": {
+			Type:               schema.CommandRead,
+			Params:             databaseMonitorParam("disk2"),
+			Usage:              "Collect Disk(s) monitor values",
+			TableType:          output.TableSimple,
+			TableColumnDefines: databaseMonitorDiskColumns(),
+			UseCustomCommand:   true,
+			Category:           "monitor",
+			Order:              50,
+		},
+
+		"monitor-system-disk-size": {
+			Type:               schema.CommandRead,
+			Params:             databaseMonitorParam("disk1"),
+			Usage:              "Collect Disk(s) monitor values",
+			TableType:          output.TableSimple,
+			TableColumnDefines: databaseMonitorSizeColumns(),
+			UseCustomCommand:   true,
+			Category:           "monitor",
+			Order:              60,
+		},
+		"monitor-backup-disk-size": {
+			Type:               schema.CommandRead,
+			Params:             databaseMonitorParam("disk2"),
+			Usage:              "Collect Disk(s) monitor values",
+			TableType:          output.TableSimple,
+			TableColumnDefines: databaseMonitorSizeColumns(),
+			UseCustomCommand:   true,
+			Category:           "monitor",
+			Order:              70,
+		},
 		"logs": {
 			Type:             schema.CommandRead,
 			Params:           databaseLogParam(),
 			UseCustomCommand: true,
-			Order:            20,
+			Order:            100,
 			Category:         "monitor",
 			NoOutput:         true,
 		},
@@ -627,37 +690,72 @@ func databaseBackupManipulateParam() map[string]*schema.Schema {
 	}
 }
 
-func databaseMonitorParam() map[string]*schema.Schema {
+func databaseMonitorParam(key string) map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"start": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set start-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        10,
 		},
 		"end": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set end-time",
 			ValidateFunc: validateDateTimeString(),
+			Category:     "monitor",
+			Order:        20,
 		},
 		"key-format": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set monitoring value key-format",
-			DefaultValue: "sakuracloud.{{.ID}}.database",
+			DefaultValue: fmt.Sprintf("sakuracloud.database.{{.ID}}.%s", key),
 			Required:     true,
+			Category:     "monitor",
+			Order:        30,
 		},
 	}
 }
 
-func databaseMonitorColumns() []output.ColumnDef {
+func databaseMonitorCPUColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "Key"},
+		{Name: "TimeStamp"},
+		{Name: "UnixTime"},
+		{Name: "CPUTime"},
+	}
+}
+
+func databaseMonitorNICColumns() []output.ColumnDef {
 	return []output.ColumnDef{
 		{Name: "Key"},
 		{Name: "TimeStamp"},
 		{Name: "UnixTime"},
 		{Name: "Receive"},
 		{Name: "Send"},
+	}
+}
+
+func databaseMonitorDiskColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "Key"},
+		{Name: "TimeStamp"},
+		{Name: "UnixTime"},
+		{Name: "Read"},
+		{Name: "Write"},
+	}
+}
+
+func databaseMonitorSizeColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "Key"},
+		{Name: "TimeStamp"},
+		{Name: "UnixTime"},
+		{Name: "Used"},
+		{Name: "Total"},
 	}
 }
 

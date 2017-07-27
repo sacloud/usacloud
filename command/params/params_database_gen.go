@@ -3467,6 +3467,1714 @@ func (p *BackupRemoveDatabaseParam) GetId() int64 {
 	return p.Id
 }
 
+// MonitorCpuDatabaseParam is input parameters for the sacloud API
+type MonitorCpuDatabaseParam struct {
+	Start             string   `json:"start"`
+	End               string   `json:"end"`
+	KeyFormat         string   `json:"key-format"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewMonitorCpuDatabaseParam return new MonitorCpuDatabaseParam
+func NewMonitorCpuDatabaseParam() *MonitorCpuDatabaseParam {
+	return &MonitorCpuDatabaseParam{
+
+		KeyFormat: "sakuracloud.database.{{.ID}}.cpu",
+	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorCpuDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *MonitorCpuDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Database"].Commands["monitor-cpu"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["monitor-cpu"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *MonitorCpuDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorCpuDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["monitor-cpu"]
+}
+
+func (p *MonitorCpuDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *MonitorCpuDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *MonitorCpuDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *MonitorCpuDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *MonitorCpuDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *MonitorCpuDatabaseParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetStart() string {
+	return p.Start
+}
+func (p *MonitorCpuDatabaseParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorCpuDatabaseParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorCpuDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorCpuDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorCpuDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorCpuDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorCpuDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorCpuDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorCpuDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorCpuDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorCpuDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorCpuDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetId() int64 {
+	return p.Id
+}
+
+// MonitorMemoryDatabaseParam is input parameters for the sacloud API
+type MonitorMemoryDatabaseParam struct {
+	Start             string   `json:"start"`
+	End               string   `json:"end"`
+	KeyFormat         string   `json:"key-format"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewMonitorMemoryDatabaseParam return new MonitorMemoryDatabaseParam
+func NewMonitorMemoryDatabaseParam() *MonitorMemoryDatabaseParam {
+	return &MonitorMemoryDatabaseParam{
+
+		KeyFormat: "sakuracloud.database.{{.ID}}.memory",
+	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorMemoryDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *MonitorMemoryDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Database"].Commands["monitor-memory"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["monitor-memory"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *MonitorMemoryDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorMemoryDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["monitor-memory"]
+}
+
+func (p *MonitorMemoryDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *MonitorMemoryDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *MonitorMemoryDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *MonitorMemoryDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *MonitorMemoryDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *MonitorMemoryDatabaseParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetStart() string {
+	return p.Start
+}
+func (p *MonitorMemoryDatabaseParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorMemoryDatabaseParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorMemoryDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorMemoryDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorMemoryDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorMemoryDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorMemoryDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorMemoryDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorMemoryDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorMemoryDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorMemoryDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorMemoryDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetId() int64 {
+	return p.Id
+}
+
+// MonitorNicDatabaseParam is input parameters for the sacloud API
+type MonitorNicDatabaseParam struct {
+	Start             string   `json:"start"`
+	End               string   `json:"end"`
+	KeyFormat         string   `json:"key-format"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewMonitorNicDatabaseParam return new MonitorNicDatabaseParam
+func NewMonitorNicDatabaseParam() *MonitorNicDatabaseParam {
+	return &MonitorNicDatabaseParam{
+
+		KeyFormat: "sakuracloud.database.{{.ID}}.nic",
+	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorNicDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *MonitorNicDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Database"].Commands["monitor-nic"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["monitor-nic"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *MonitorNicDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorNicDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["monitor-nic"]
+}
+
+func (p *MonitorNicDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *MonitorNicDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *MonitorNicDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *MonitorNicDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *MonitorNicDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *MonitorNicDatabaseParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorNicDatabaseParam) GetStart() string {
+	return p.Start
+}
+func (p *MonitorNicDatabaseParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorNicDatabaseParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorNicDatabaseParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorNicDatabaseParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorNicDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorNicDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorNicDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorNicDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorNicDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorNicDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorNicDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorNicDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorNicDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorNicDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorNicDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorNicDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorNicDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorNicDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorNicDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorNicDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorNicDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorNicDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorNicDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *MonitorNicDatabaseParam) GetId() int64 {
+	return p.Id
+}
+
+// MonitorSystemDiskDatabaseParam is input parameters for the sacloud API
+type MonitorSystemDiskDatabaseParam struct {
+	Start             string   `json:"start"`
+	End               string   `json:"end"`
+	KeyFormat         string   `json:"key-format"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewMonitorSystemDiskDatabaseParam return new MonitorSystemDiskDatabaseParam
+func NewMonitorSystemDiskDatabaseParam() *MonitorSystemDiskDatabaseParam {
+	return &MonitorSystemDiskDatabaseParam{
+
+		KeyFormat: "sakuracloud.database.{{.ID}}.disk1",
+	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorSystemDiskDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *MonitorSystemDiskDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Database"].Commands["monitor-system-disk"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["monitor-system-disk"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["monitor-system-disk"]
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *MonitorSystemDiskDatabaseParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetStart() string {
+	return p.Start
+}
+func (p *MonitorSystemDiskDatabaseParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorSystemDiskDatabaseParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorSystemDiskDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorSystemDiskDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorSystemDiskDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorSystemDiskDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorSystemDiskDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorSystemDiskDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorSystemDiskDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorSystemDiskDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorSystemDiskDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorSystemDiskDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetId() int64 {
+	return p.Id
+}
+
+// MonitorBackupDiskDatabaseParam is input parameters for the sacloud API
+type MonitorBackupDiskDatabaseParam struct {
+	Start             string   `json:"start"`
+	End               string   `json:"end"`
+	KeyFormat         string   `json:"key-format"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewMonitorBackupDiskDatabaseParam return new MonitorBackupDiskDatabaseParam
+func NewMonitorBackupDiskDatabaseParam() *MonitorBackupDiskDatabaseParam {
+	return &MonitorBackupDiskDatabaseParam{
+
+		KeyFormat: "sakuracloud.database.{{.ID}}.disk2",
+	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorBackupDiskDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *MonitorBackupDiskDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Database"].Commands["monitor-backup-disk"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["monitor-backup-disk"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["monitor-backup-disk"]
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *MonitorBackupDiskDatabaseParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetStart() string {
+	return p.Start
+}
+func (p *MonitorBackupDiskDatabaseParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorBackupDiskDatabaseParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorBackupDiskDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorBackupDiskDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorBackupDiskDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorBackupDiskDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorBackupDiskDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorBackupDiskDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorBackupDiskDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorBackupDiskDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorBackupDiskDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorBackupDiskDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetId() int64 {
+	return p.Id
+}
+
+// MonitorSystemDiskSizeDatabaseParam is input parameters for the sacloud API
+type MonitorSystemDiskSizeDatabaseParam struct {
+	Start             string   `json:"start"`
+	End               string   `json:"end"`
+	KeyFormat         string   `json:"key-format"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewMonitorSystemDiskSizeDatabaseParam return new MonitorSystemDiskSizeDatabaseParam
+func NewMonitorSystemDiskSizeDatabaseParam() *MonitorSystemDiskSizeDatabaseParam {
+	return &MonitorSystemDiskSizeDatabaseParam{
+
+		KeyFormat: "sakuracloud.database.{{.ID}}.disk1",
+	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorSystemDiskSizeDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *MonitorSystemDiskSizeDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Database"].Commands["monitor-system-disk-size"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["monitor-system-disk-size"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["monitor-system-disk-size"]
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetStart() string {
+	return p.Start
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorSystemDiskSizeDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetId() int64 {
+	return p.Id
+}
+
+// MonitorBackupDiskSizeDatabaseParam is input parameters for the sacloud API
+type MonitorBackupDiskSizeDatabaseParam struct {
+	Start             string   `json:"start"`
+	End               string   `json:"end"`
+	KeyFormat         string   `json:"key-format"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewMonitorBackupDiskSizeDatabaseParam return new MonitorBackupDiskSizeDatabaseParam
+func NewMonitorBackupDiskSizeDatabaseParam() *MonitorBackupDiskSizeDatabaseParam {
+	return &MonitorBackupDiskSizeDatabaseParam{
+
+		KeyFormat: "sakuracloud.database.{{.ID}}.disk2",
+	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *MonitorBackupDiskSizeDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Start) {
+		p.Start = ""
+	}
+	if isEmpty(p.End) {
+		p.End = ""
+	}
+	if isEmpty(p.KeyFormat) {
+		p.KeyFormat = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *MonitorBackupDiskSizeDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["Database"].Commands["monitor-backup-disk-size"].Params["start"].ValidateFunc
+		errs := validator("--start", p.Start)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["monitor-backup-disk-size"].Params["end"].ValidateFunc
+		errs := validator("--end", p.End)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--key-format", p.KeyFormat)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["monitor-backup-disk-size"]
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) SetStart(v string) {
+	p.Start = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetStart() string {
+	return p.Start
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetEnd(v string) {
+	p.End = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetEnd() string {
+	return p.End
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetKeyFormat(v string) {
+	p.KeyFormat = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetKeyFormat() string {
+	return p.KeyFormat
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetId() int64 {
+	return p.Id
+}
+
 // LogsDatabaseParam is input parameters for the sacloud API
 type LogsDatabaseParam struct {
 	LogName           string   `json:"log-name"`

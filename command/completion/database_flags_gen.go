@@ -575,6 +575,293 @@ func DatabaseBackupRemoveCompleteFlags(ctx command.Context, params *params.Backu
 	}
 }
 
+func DatabaseMonitorCpuCompleteFlags(ctx command.Context, params *params.MonitorCpuDatabaseParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "start":
+		param := define.Resources["Database"].Commands["monitor-cpu"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "end":
+		param := define.Resources["Database"].Commands["monitor-cpu"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "key-format":
+		param := define.Resources["Database"].Commands["monitor-cpu"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Database"].Commands["monitor-cpu"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Database"].Commands["monitor-cpu"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func DatabaseMonitorMemoryCompleteFlags(ctx command.Context, params *params.MonitorMemoryDatabaseParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "start":
+		param := define.Resources["Database"].Commands["monitor-memory"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "end":
+		param := define.Resources["Database"].Commands["monitor-memory"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "key-format":
+		param := define.Resources["Database"].Commands["monitor-memory"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Database"].Commands["monitor-memory"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Database"].Commands["monitor-memory"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func DatabaseMonitorNicCompleteFlags(ctx command.Context, params *params.MonitorNicDatabaseParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "start":
+		param := define.Resources["Database"].Commands["monitor-nic"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "end":
+		param := define.Resources["Database"].Commands["monitor-nic"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "key-format":
+		param := define.Resources["Database"].Commands["monitor-nic"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Database"].Commands["monitor-nic"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Database"].Commands["monitor-nic"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func DatabaseMonitorSystemDiskCompleteFlags(ctx command.Context, params *params.MonitorSystemDiskDatabaseParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "start":
+		param := define.Resources["Database"].Commands["monitor-system-disk"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "end":
+		param := define.Resources["Database"].Commands["monitor-system-disk"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "key-format":
+		param := define.Resources["Database"].Commands["monitor-system-disk"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Database"].Commands["monitor-system-disk"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Database"].Commands["monitor-system-disk"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func DatabaseMonitorBackupDiskCompleteFlags(ctx command.Context, params *params.MonitorBackupDiskDatabaseParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "start":
+		param := define.Resources["Database"].Commands["monitor-backup-disk"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "end":
+		param := define.Resources["Database"].Commands["monitor-backup-disk"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "key-format":
+		param := define.Resources["Database"].Commands["monitor-backup-disk"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Database"].Commands["monitor-backup-disk"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Database"].Commands["monitor-backup-disk"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func DatabaseMonitorSystemDiskSizeCompleteFlags(ctx command.Context, params *params.MonitorSystemDiskSizeDatabaseParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "start":
+		param := define.Resources["Database"].Commands["monitor-system-disk-size"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "end":
+		param := define.Resources["Database"].Commands["monitor-system-disk-size"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "key-format":
+		param := define.Resources["Database"].Commands["monitor-system-disk-size"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Database"].Commands["monitor-system-disk-size"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Database"].Commands["monitor-system-disk-size"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func DatabaseMonitorBackupDiskSizeCompleteFlags(ctx command.Context, params *params.MonitorBackupDiskSizeDatabaseParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "start":
+		param := define.Resources["Database"].Commands["monitor-backup-disk-size"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "end":
+		param := define.Resources["Database"].Commands["monitor-backup-disk-size"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "key-format":
+		param := define.Resources["Database"].Commands["monitor-backup-disk-size"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Database"].Commands["monitor-backup-disk-size"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Database"].Commands["monitor-backup-disk-size"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
 func DatabaseLogsCompleteFlags(ctx command.Context, params *params.LogsDatabaseParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 
