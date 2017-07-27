@@ -93,7 +93,7 @@ func DatabaseResource() *schema.Resource {
 		},
 		"wait-for-boot": {
 			Type:             schema.CommandManipulateMulti,
-			Params:           databaseWaitForParams(),
+			Params:           databaseWaitForParam(),
 			Usage:            "Wait until boot is completed",
 			UseCustomCommand: true,
 			Category:         "power",
@@ -103,13 +103,80 @@ func DatabaseResource() *schema.Resource {
 		},
 		"wait-for-down": {
 			Type:             schema.CommandManipulateMulti,
-			Params:           databaseWaitForParams(),
+			Params:           databaseWaitForParam(),
 			Usage:            "Wait until shutdown is completed",
 			UseCustomCommand: true,
 			Category:         "power",
 			Order:            50,
 			NoOutput:         true,
 			NeedlessConfirm:  true,
+		},
+		"backup-info": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             databaseBackupListParam(),
+			Aliases:            []string{"backups", "backup-list"},
+			Usage:              "Show information of backup",
+			TableType:          output.TableSimple,
+			TableColumnDefines: databaseBackupListColumns(),
+			UseCustomCommand:   true,
+			Category:           "backup",
+			Order:              10,
+			NeedlessConfirm:    true,
+		},
+		"backup-create": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             databaseBackupCreateParam(),
+			Usage:              "Make new database backup",
+			TableType:          output.TableSimple,
+			TableColumnDefines: databaseBackupListColumns(),
+			UseCustomCommand:   true,
+			NoSelector:         true,
+			Category:           "backup",
+			Order:              20,
+		},
+		"backup-restore": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             databaseBackupManipulateParam(),
+			Usage:              "Restore database from backup",
+			TableType:          output.TableSimple,
+			TableColumnDefines: databaseBackupListColumns(),
+			UseCustomCommand:   true,
+			NoSelector:         true,
+			Category:           "backup",
+			Order:              30,
+		},
+		"backup-lock": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             databaseBackupLockParam(),
+			Usage:              "Lock backup",
+			TableType:          output.TableSimple,
+			TableColumnDefines: databaseBackupListColumns(),
+			UseCustomCommand:   true,
+			NoSelector:         true,
+			Category:           "backup",
+			Order:              40,
+		},
+		"backup-unlock": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             databaseBackupLockParam(),
+			Usage:              "Unlock backup",
+			TableType:          output.TableSimple,
+			TableColumnDefines: databaseBackupListColumns(),
+			UseCustomCommand:   true,
+			NoSelector:         true,
+			Category:           "backup",
+			Order:              50,
+		},
+		"backup-remove": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             databaseBackupManipulateParam(),
+			Usage:              "Remove backup",
+			TableType:          output.TableSimple,
+			TableColumnDefines: databaseBackupListColumns(),
+			UseCustomCommand:   true,
+			NoSelector:         true,
+			Category:           "backup",
+			Order:              60,
 		},
 		//"monitor": {
 		//	Type:               schema.CommandRead,
@@ -227,6 +294,28 @@ func databaseListColumns() []output.ColumnDef {
 		{
 			Name:    "DefaultRoute",
 			Sources: []string{"Remark.Network.DefaultRoute"},
+		},
+	}
+}
+
+func databaseBackupListColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "__ORDER__"}, // magic column name(generated on demand)
+		{Name: "createdat"},
+		{Name: "recoveredat"},
+		{
+			Name:    "Size(MB)",
+			Sources: []string{"SizeMB"},
+		},
+		{
+			Name:    "Locked",
+			Sources: []string{"availability"},
+			ValueMapping: []map[string]string{
+				{
+					"available":    "true",
+					"discontinued": "false",
+				},
+			},
 		},
 	}
 }
@@ -498,8 +587,44 @@ func databaseResetParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
 }
 
-func databaseWaitForParams() map[string]*schema.Schema {
+func databaseWaitForParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
+}
+
+func databaseBackupListParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
+}
+
+func databaseBackupCreateParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
+}
+
+func databaseBackupLockParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"index": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "index of target backup",
+			Required:     true,
+			ValidateFunc: validateIntRange(1, 8),
+			Category:     "backup",
+			Order:        1,
+		},
+	}
+}
+
+func databaseBackupManipulateParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"index": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "index of target backup",
+			Required:     true,
+			ValidateFunc: validateIntRange(1, 16),
+			Category:     "backup",
+			Order:        1,
+		},
+	}
 }
 
 func databaseMonitorParam() map[string]*schema.Schema {

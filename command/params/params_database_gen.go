@@ -2245,6 +2245,1228 @@ func (p *WaitForDownDatabaseParam) GetId() int64 {
 	return p.Id
 }
 
+// BackupInfoDatabaseParam is input parameters for the sacloud API
+type BackupInfoDatabaseParam struct {
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewBackupInfoDatabaseParam return new BackupInfoDatabaseParam
+func NewBackupInfoDatabaseParam() *BackupInfoDatabaseParam {
+	return &BackupInfoDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *BackupInfoDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *BackupInfoDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *BackupInfoDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *BackupInfoDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["backup-info"]
+}
+
+func (p *BackupInfoDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *BackupInfoDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *BackupInfoDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *BackupInfoDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *BackupInfoDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *BackupInfoDatabaseParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *BackupInfoDatabaseParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *BackupInfoDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BackupInfoDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BackupInfoDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BackupInfoDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BackupInfoDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BackupInfoDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BackupInfoDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *BackupInfoDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *BackupInfoDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *BackupInfoDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *BackupInfoDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *BackupInfoDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *BackupInfoDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *BackupInfoDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *BackupInfoDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *BackupInfoDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *BackupInfoDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *BackupInfoDatabaseParam) GetId() int64 {
+	return p.Id
+}
+
+// BackupCreateDatabaseParam is input parameters for the sacloud API
+type BackupCreateDatabaseParam struct {
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewBackupCreateDatabaseParam return new BackupCreateDatabaseParam
+func NewBackupCreateDatabaseParam() *BackupCreateDatabaseParam {
+	return &BackupCreateDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *BackupCreateDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *BackupCreateDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *BackupCreateDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *BackupCreateDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["backup-create"]
+}
+
+func (p *BackupCreateDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *BackupCreateDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *BackupCreateDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *BackupCreateDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *BackupCreateDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *BackupCreateDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BackupCreateDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BackupCreateDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BackupCreateDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BackupCreateDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BackupCreateDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BackupCreateDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BackupCreateDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BackupCreateDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *BackupCreateDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *BackupCreateDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *BackupCreateDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *BackupCreateDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *BackupCreateDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *BackupCreateDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *BackupCreateDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *BackupCreateDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *BackupCreateDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *BackupCreateDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *BackupCreateDatabaseParam) GetId() int64 {
+	return p.Id
+}
+
+// BackupRestoreDatabaseParam is input parameters for the sacloud API
+type BackupRestoreDatabaseParam struct {
+	Index             int      `json:"index"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewBackupRestoreDatabaseParam return new BackupRestoreDatabaseParam
+func NewBackupRestoreDatabaseParam() *BackupRestoreDatabaseParam {
+	return &BackupRestoreDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *BackupRestoreDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *BackupRestoreDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["backup-restore"].Params["index"].ValidateFunc
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *BackupRestoreDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *BackupRestoreDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["backup-restore"]
+}
+
+func (p *BackupRestoreDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *BackupRestoreDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *BackupRestoreDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *BackupRestoreDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *BackupRestoreDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *BackupRestoreDatabaseParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetIndex() int {
+	return p.Index
+}
+func (p *BackupRestoreDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BackupRestoreDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BackupRestoreDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BackupRestoreDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BackupRestoreDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *BackupRestoreDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *BackupRestoreDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *BackupRestoreDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *BackupRestoreDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *BackupRestoreDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetId() int64 {
+	return p.Id
+}
+
+// BackupLockDatabaseParam is input parameters for the sacloud API
+type BackupLockDatabaseParam struct {
+	Index             int      `json:"index"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewBackupLockDatabaseParam return new BackupLockDatabaseParam
+func NewBackupLockDatabaseParam() *BackupLockDatabaseParam {
+	return &BackupLockDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *BackupLockDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *BackupLockDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["backup-lock"].Params["index"].ValidateFunc
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *BackupLockDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *BackupLockDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["backup-lock"]
+}
+
+func (p *BackupLockDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *BackupLockDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *BackupLockDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *BackupLockDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *BackupLockDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *BackupLockDatabaseParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *BackupLockDatabaseParam) GetIndex() int {
+	return p.Index
+}
+func (p *BackupLockDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BackupLockDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BackupLockDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BackupLockDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BackupLockDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BackupLockDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BackupLockDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BackupLockDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BackupLockDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *BackupLockDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *BackupLockDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *BackupLockDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *BackupLockDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *BackupLockDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *BackupLockDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *BackupLockDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *BackupLockDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *BackupLockDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *BackupLockDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *BackupLockDatabaseParam) GetId() int64 {
+	return p.Id
+}
+
+// BackupUnlockDatabaseParam is input parameters for the sacloud API
+type BackupUnlockDatabaseParam struct {
+	Index             int      `json:"index"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewBackupUnlockDatabaseParam return new BackupUnlockDatabaseParam
+func NewBackupUnlockDatabaseParam() *BackupUnlockDatabaseParam {
+	return &BackupUnlockDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *BackupUnlockDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *BackupUnlockDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["backup-unlock"].Params["index"].ValidateFunc
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *BackupUnlockDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *BackupUnlockDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["backup-unlock"]
+}
+
+func (p *BackupUnlockDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *BackupUnlockDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *BackupUnlockDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *BackupUnlockDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *BackupUnlockDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *BackupUnlockDatabaseParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetIndex() int {
+	return p.Index
+}
+func (p *BackupUnlockDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BackupUnlockDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BackupUnlockDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BackupUnlockDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BackupUnlockDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *BackupUnlockDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *BackupUnlockDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *BackupUnlockDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *BackupUnlockDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *BackupUnlockDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetId() int64 {
+	return p.Id
+}
+
+// BackupRemoveDatabaseParam is input parameters for the sacloud API
+type BackupRemoveDatabaseParam struct {
+	Index             int      `json:"index"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewBackupRemoveDatabaseParam return new BackupRemoveDatabaseParam
+func NewBackupRemoveDatabaseParam() *BackupRemoveDatabaseParam {
+	return &BackupRemoveDatabaseParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *BackupRemoveDatabaseParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *BackupRemoveDatabaseParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Database"].Commands["backup-remove"].Params["index"].ValidateFunc
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *BackupRemoveDatabaseParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Database"]
+}
+
+func (p *BackupRemoveDatabaseParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["backup-remove"]
+}
+
+func (p *BackupRemoveDatabaseParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *BackupRemoveDatabaseParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *BackupRemoveDatabaseParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *BackupRemoveDatabaseParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *BackupRemoveDatabaseParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *BackupRemoveDatabaseParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetIndex() int {
+	return p.Index
+}
+func (p *BackupRemoveDatabaseParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *BackupRemoveDatabaseParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *BackupRemoveDatabaseParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *BackupRemoveDatabaseParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *BackupRemoveDatabaseParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *BackupRemoveDatabaseParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetColumn() []string {
+	return p.Column
+}
+func (p *BackupRemoveDatabaseParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *BackupRemoveDatabaseParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetFormat() string {
+	return p.Format
+}
+func (p *BackupRemoveDatabaseParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *BackupRemoveDatabaseParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetId() int64 {
+	return p.Id
+}
+
 // LogsDatabaseParam is input parameters for the sacloud API
 type LogsDatabaseParam struct {
 	LogName           string   `json:"log-name"`
