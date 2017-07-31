@@ -182,6 +182,15 @@ func ServerResource() *schema.Resource {
 			Category:            "connect",
 			Order:               46,
 		},
+		"vnc-snapshot": {
+			Type:                schema.CommandRead,
+			Params:              serverVNCParam(),
+			Usage:               "Capture VNC snapshot",
+			UseCustomCommand:    true,
+			SkipAfterSecondArgs: true,
+			Category:            "connect",
+			Order:               47,
+		},
 		"disk-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             serverDiskInfoParam(),

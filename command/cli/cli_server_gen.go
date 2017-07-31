@@ -35,6 +35,7 @@ func init() {
 	vncParam := params.NewVncServerParam()
 	vncInfoParam := params.NewVncInfoServerParam()
 	vncSendParam := params.NewVncSendServerParam()
+	vncSnapshotParam := params.NewVncSnapshotServerParam()
 	diskInfoParam := params.NewDiskInfoServerParam()
 	diskConnectParam := params.NewDiskConnectServerParam()
 	diskDisconnectParam := params.NewDiskDisconnectServerParam()
@@ -6149,6 +6150,347 @@ func init() {
 				},
 			},
 			{
+				Name:      "vnc-snapshot",
+				Usage:     "Capture VNC snapshot",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:  "wait-for-boot",
+						Usage: "wait until the server starts up",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, vncSnapshotParam)
+
+					// Set option values
+					if c.IsSet("wait-for-boot") {
+						vncSnapshotParam.WaitForBoot = c.Bool("wait-for-boot")
+					}
+					if c.IsSet("selector") {
+						vncSnapshotParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						vncSnapshotParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						vncSnapshotParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						vncSnapshotParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						vncSnapshotParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						vncSnapshotParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						vncSnapshotParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						vncSnapshotParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						vncSnapshotParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						vncSnapshotParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ServerVncSnapshotCompleteArgs(ctx, vncSnapshotParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ServerVncSnapshotCompleteArgs(ctx, vncSnapshotParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ServerVncSnapshotCompleteFlags(ctx, vncSnapshotParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ServerVncSnapshotCompleteArgs(ctx, vncSnapshotParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					vncSnapshotParam.ParamTemplate = c.String("param-template")
+					vncSnapshotParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(vncSnapshotParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewVncSnapshotServerParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(vncSnapshotParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("wait-for-boot") {
+						vncSnapshotParam.WaitForBoot = c.Bool("wait-for-boot")
+					}
+					if c.IsSet("selector") {
+						vncSnapshotParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						vncSnapshotParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						vncSnapshotParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						vncSnapshotParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						vncSnapshotParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						vncSnapshotParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						vncSnapshotParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						vncSnapshotParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						vncSnapshotParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						vncSnapshotParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if vncSnapshotParam.GenerateSkeleton {
+						vncSnapshotParam.GenerateSkeleton = false
+						vncSnapshotParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(vncSnapshotParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := vncSnapshotParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), vncSnapshotParam)
+
+					apiClient := ctx.GetAPIClient().Server
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(vncSnapshotParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, vncSnapshotParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", vncSnapshotParam.Selector)
+						}
+
+					} else {
+
+						arg := c.Args().First()
+
+						for _, a := range strings.Split(arg, "\n") {
+							idOrName := a
+							if id, ok := toSakuraID(idOrName); ok {
+								ids = append(ids, id)
+							} else {
+								apiClient.Reset()
+								apiClient.SetFilterBy("Name", idOrName)
+								res, err := apiClient.Find()
+								if err != nil {
+									return fmt.Errorf("Find ID is failed: %s", err)
+								}
+								if res.Count == 0 {
+									return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+								}
+								for _, v := range res.Servers {
+									if len(vncSnapshotParam.Selector) == 0 || hasTags(&v, vncSnapshotParam.Selector) {
+										ids = append(ids, v.GetID())
+									}
+								}
+							}
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						vncSnapshotParam.SetId(id)
+						p := *vncSnapshotParam // copy struct value
+						vncSnapshotParam := &p
+						go func() {
+							err := funcs.ServerVncSnapshot(ctx, vncSnapshotParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
 				Name:      "disk-info",
 				Aliases:   []string{"disk-list"},
 				Usage:     "Show information of disk(s) connected to server",
@@ -11232,6 +11574,11 @@ func init() {
 		DisplayName: "SSH/SCP/VNC",
 		Order:       30,
 	})
+	AppendCommandCategoryMap("server", "vnc-snapshot", &schema.Category{
+		Key:         "connect",
+		DisplayName: "SSH/SCP/VNC",
+		Order:       30,
+	})
 	AppendCommandCategoryMap("server", "wait-for-boot", &schema.Category{
 		Key:         "power",
 		DisplayName: "Power Management",
@@ -12986,6 +13333,61 @@ func init() {
 		Order:       1,
 	})
 	AppendFlagCategoryMap("server", "vnc-send", "wait-for-boot", &schema.Category{
+		Key:         "VNC",
+		DisplayName: "VNC options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "wait-for-boot", &schema.Category{
 		Key:         "VNC",
 		DisplayName: "VNC options",
 		Order:       1,

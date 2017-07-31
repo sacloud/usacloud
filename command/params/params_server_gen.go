@@ -3886,6 +3886,204 @@ func (p *VncSendServerParam) GetId() int64 {
 	return p.Id
 }
 
+// VncSnapshotServerParam is input parameters for the sacloud API
+type VncSnapshotServerParam struct {
+	WaitForBoot       bool     `json:"wait-for-boot"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewVncSnapshotServerParam return new VncSnapshotServerParam
+func NewVncSnapshotServerParam() *VncSnapshotServerParam {
+	return &VncSnapshotServerParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *VncSnapshotServerParam) FillValueToSkeleton() {
+	if isEmpty(p.WaitForBoot) {
+		p.WaitForBoot = false
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *VncSnapshotServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *VncSnapshotServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *VncSnapshotServerParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["vnc-snapshot"]
+}
+
+func (p *VncSnapshotServerParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *VncSnapshotServerParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *VncSnapshotServerParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *VncSnapshotServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *VncSnapshotServerParam) GetOutputFormat() string {
+	return "table"
+}
+
+func (p *VncSnapshotServerParam) SetWaitForBoot(v bool) {
+	p.WaitForBoot = v
+}
+
+func (p *VncSnapshotServerParam) GetWaitForBoot() bool {
+	return p.WaitForBoot
+}
+func (p *VncSnapshotServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *VncSnapshotServerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *VncSnapshotServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *VncSnapshotServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *VncSnapshotServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *VncSnapshotServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *VncSnapshotServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *VncSnapshotServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *VncSnapshotServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *VncSnapshotServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *VncSnapshotServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *VncSnapshotServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *VncSnapshotServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *VncSnapshotServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *VncSnapshotServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *VncSnapshotServerParam) GetFormat() string {
+	return p.Format
+}
+func (p *VncSnapshotServerParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *VncSnapshotServerParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *VncSnapshotServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *VncSnapshotServerParam) GetId() int64 {
+	return p.Id
+}
+
 // DiskInfoServerParam is input parameters for the sacloud API
 type DiskInfoServerParam struct {
 	Selector          []string `json:"selector"`
