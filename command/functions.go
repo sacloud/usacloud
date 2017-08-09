@@ -1,15 +1,10 @@
 package command
 
 import (
-	"encoding/json"
 	"fmt"
-	"github.com/mitchellh/go-homedir"
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/version"
-	"io/ioutil"
-	"os"
-	"path/filepath"
 	"reflect"
 	"strings"
 	"time"
@@ -134,48 +129,6 @@ func StringIDs(ids []int64) []string {
 	}
 
 	return strIDs
-}
-
-func GetConfigFilePath() (string, error) {
-	homeDir, err := homedir.Dir()
-	if err != nil {
-		return "", fmt.Errorf("getting HomeDir is failed:%s", err)
-	}
-	return filepath.Join(homeDir, ".usacloud_config"), nil
-}
-
-type ConfigFileValue struct {
-	AccessToken       string
-	AccessTokenSecret string
-	Zone              string
-}
-
-func (p *ConfigFileValue) IsEmpty() bool {
-	return p.AccessToken == "" &&
-		p.AccessTokenSecret == "" &&
-		p.Zone == ""
-}
-
-func LoadConfigFile() (*ConfigFileValue, error) {
-	v := &ConfigFileValue{}
-	filePath, err := GetConfigFilePath()
-	if err != nil {
-		return v, err
-	}
-
-	// file exists?
-	if _, err := os.Stat(filePath); err == nil {
-		// read file
-		buf, err := ioutil.ReadFile(filePath)
-		if err != nil {
-			return v, err
-		}
-		if err := json.Unmarshal(buf, v); err != nil {
-			return v, err
-		}
-	}
-
-	return v, nil
 }
 
 func Confirm(msg string) bool {

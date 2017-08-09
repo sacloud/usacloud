@@ -89,7 +89,7 @@ deb: rpm
 	CURRENT_VERSION="$(CURRENT_VERSION)" sh -c "'$(CURDIR)/scripts/build_apt.sh'"
 
 .PHONY: test
-test: vet lint-docs
+test: vet
 	go test $(TEST) $(TESTARGS) -v -timeout=30m -parallel=4 ;
 
 .PHONY: vet

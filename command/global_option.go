@@ -3,6 +3,7 @@ package command
 import (
 	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-isatty"
+	"github.com/sacloud/usacloud/define"
 	"gopkg.in/urfave/cli.v2"
 	"io"
 	"io/ioutil"
@@ -13,6 +14,7 @@ type Option struct {
 	AccessToken       string
 	AccessTokenSecret string
 	Zone              string
+	ProfileName       string
 	TraceMode         bool
 	Format            string
 	In                io.Reader
@@ -30,6 +32,8 @@ var GlobalOption = &Option{
 	Progress: colorable.NewColorableStderr(),
 	Err:      colorable.NewColorableStderr(),
 }
+
+var DefaultZone = "tk1a"
 
 func init() {
 	if !(isatty.IsTerminal(os.Stderr.Fd()) || isatty.IsCygwinTerminal(os.Stderr.Fd())) {
@@ -56,9 +60,16 @@ var GlobalFlags = []cli.Flag{
 		Name:        "zone",
 		Usage:       "Target zone of SakuraCloud",
 		EnvVars:     []string{"SAKURACLOUD_ZONE"},
-		Value:       "tk1a",
-		DefaultText: "tk1a",
+		Value:       DefaultZone,
+		DefaultText: DefaultZone,
 		Destination: &GlobalOption.Zone,
+	},
+	&cli.StringFlag{
+		Name:        "config",
+		Aliases:     []string{"profile"},
+		Usage:       "Config(Profile) name",
+		EnvVars:     []string{"USACLOUD_PROFILE"},
+		Destination: &GlobalOption.ProfileName,
 	},
 	&cli.BoolFlag{
 		Name:        "trace",
@@ -70,8 +81,6 @@ var GlobalFlags = []cli.Flag{
 	},
 }
 
-var AllowZones = []string{"is1a", "is1b", "tk1a", "tk1v"}
-
 func (o *Option) Validate(skipAuth bool) []error {
 	var errs []error
 
@@ -81,7 +90,7 @@ func (o *Option) Validate(skipAuth bool) []error {
 		errs = append(errs, ValidateRequired("token", o.AccessToken)...)
 		errs = append(errs, ValidateRequired("secret", o.AccessTokenSecret)...)
 		errs = append(errs, ValidateRequired("zone", o.Zone)...)
-		errs = append(errs, ValidateInStrValues("zone", o.Zone, AllowZones...)...)
+		errs = append(errs, ValidateInStrValues("zone", o.Zone, define.AllowZones...)...)
 	}
 
 	o.Validated = true

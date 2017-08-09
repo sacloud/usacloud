@@ -28,7 +28,6 @@ func main() {
 		Copyright:             appCopyright,
 		EnableShellCompletion: true,
 		Version:               version.FullVersion(),
-		Before:                applyConfigFromFile,
 		CommandNotFound:       cmdNotFound,
 		Flags:                 command.GlobalFlags,
 		Commands:              usacloud_cli.Commands,
@@ -41,26 +40,6 @@ func main() {
 	cli.HelpPrinter = getHelpPrinter(app, cli.HelpPrinter)
 
 	app.Run(os.Args)
-}
-
-func applyConfigFromFile(c *cli.Context) error {
-	// load config file
-	v, err := command.LoadConfigFile()
-	if err != nil {
-		return err
-	}
-
-	if !c.IsSet("token") && v.AccessToken != "" {
-		c.Set("token", v.AccessToken)
-	}
-	if !c.IsSet("secreet") && v.AccessTokenSecret != "" {
-		c.Set("secret", v.AccessTokenSecret)
-	}
-	if !c.IsSet("zone") && v.Zone != "" {
-		c.Set("zone", v.Zone)
-	}
-
-	return nil
 }
 
 func getHelpPrinter(app *cli.App, currentHelpPrinter func(io.Writer, string, interface{})) func(io.Writer, string, interface{}) {

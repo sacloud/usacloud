@@ -120,11 +120,11 @@ func generateResource(resources sortableResources) (string, error) {
 var srcTemplate = `
 _usacloud() {
     COMPREPLY=();
-    local commands=({{range .Commands}}{{.}} {{end}}config)
+    local commands=({{range .Commands}}{{.}} {{end}})
 
     local flags=({{range .GlobalFlags}}{{.}} {{end}}--help --version)
     local wants_value=({{range .GlobalWantValues}}{{.}} {{end}})
-    local configflags=(--help --token --secret --zone --show)
+    local configflags=(--help --token --secret --zone --config --profile --show)
     local zones=(is1a is1b tk1a tk1v)
 
     local cur prev words cword
@@ -151,16 +151,11 @@ _usacloud() {
                 if [ "--zone" == "${prev}" ]; then
                     COMPREPLY=($(compgen -W "${zones[*]}" -- "${cur}"))
                 fi
+                if [ "--profile" == "${prev}" -o "--config" == "${prev}" ]; then
+                    COMPREPLY=($(compgen -W "$(${words[0]} config list)" -- "${cur}"))
+                fi
             else
                 COMPREPLY=($(compgen -W "${commands[*]}" -- "${cur}"))
-            fi
-        fi
-    elif [ "$command" == "config" ]; then
-        if [[ "$cur" == -* ]]; then
-            COMPREPLY=($(compgen -W "${configflags[*]}" -- "${cur}"))
-        else
-            if [ "--zone" == "${prev}" ]; then
-                   COMPREPLY=($(compgen -W "${zones[*]}" -- "${cur}"))
             fi
         fi
     else

@@ -15,6 +15,7 @@ type Resource struct {
 	ListResultFieldName string
 	CommandCategories   []Category
 	ResourceCategory    Category
+	SkipApplyConfigFile bool
 }
 
 func (r *Resource) CommandCategory(key string) *Category {

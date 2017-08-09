@@ -1,11 +1,11 @@
 
 _usacloud() {
     COMPREPLY=();
-    local commands=(archive auth-status auto-backup bill bridge dns database disk gslb iso-image icon interface internet license load-balancer object-storage ojs packet-filter price public-price product-disk disk-plan product-internet internet-plan product-license license-info product-server server-plan region ssh-key server simple-monitor startup-script note switch vpc-router web-accel zone config)
+    local commands=(archive auth-status auto-backup bill bridge config profile dns database disk gslb iso-image icon interface internet license load-balancer object-storage ojs packet-filter price public-price product-disk disk-plan product-internet internet-plan product-license license-info product-server server-plan region ssh-key server simple-monitor startup-script note switch vpc-router web-accel zone )
 
     local flags=(--trace --help --version)
-    local wants_value=(--token --secret --zone )
-    local configflags=(--help --token --secret --zone --show)
+    local wants_value=(--token --secret --zone --config --profile )
+    local configflags=(--help --token --secret --zone --config --profile --show)
     local zones=(is1a is1b tk1a tk1v)
 
     local cur prev words cword
@@ -32,16 +32,11 @@ _usacloud() {
                 if [ "--zone" == "${prev}" ]; then
                     COMPREPLY=($(compgen -W "${zones[*]}" -- "${cur}"))
                 fi
+                if [ "--profile" == "${prev}" -o "--config" == "${prev}" ]; then
+                    COMPREPLY=($(compgen -W "$(${words[0]} config list)" -- "${cur}"))
+                fi
             else
                 COMPREPLY=($(compgen -W "${commands[*]}" -- "${cur}"))
-            fi
-        fi
-    elif [ "$command" == "config" ]; then
-        if [[ "$cur" == -* ]]; then
-            COMPREPLY=($(compgen -W "${configflags[*]}" -- "${cur}"))
-        else
-            if [ "--zone" == "${prev}" ]; then
-                   COMPREPLY=($(compgen -W "${zones[*]}" -- "${cur}"))
             fi
         fi
     else

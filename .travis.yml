@@ -27,6 +27,7 @@ install:
 - make gen-force
 script:
 - make test
+- make lint-docs
 - make docker-build
 before_deploy:
 - docker pull sacloud/rpm-build:latest
