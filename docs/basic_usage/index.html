@@ -566,10 +566,19 @@ usacloud server ls -h
 <hr />
 <h2 id="_8">グローバルオプション</h2>
 <hr />
+<h4 id="-config">コンフィグ(<code>--config</code>)</h4>
+<p>利用するコンフィグ(プロファイル)の指定を行います。(エイリアス:<code>--profile</code>)<br />
+指定可能な値は<code>usacloud config list</code>コマンドで調べることが可能です。  </p>
+<blockquote>
+<p>通常この値は<code>~/.usacloud/current</code>の値が利用されます。<br />
+環境変数<code>USACLOUD_PROFILE</code>で指定することも可能です。<br />
+コマンド実行時に<code>--config</code>を指定することでこれらの設定を上書きすることが可能です。  </p>
+</blockquote>
+<hr />
 <h4 id="api-token">APIトークン(<code>--token</code>)</h4>
 <p>さくらのクラウドのAPIトークンを指定します。  </p>
 <blockquote>
-<p>通常この値は<code>~/.usacloud_config</code>の値が利用されます。<br />
+<p>通常この値は<code>~/.usacloud/[current-profile-nane]/config.json</code>の値が利用されます。<br />
 環境変数<code>SAKURACLOUD_ACCESS_TOKEN</code>で指定することも可能です。<br />
 コマンド実行時に<code>--token</code>を指定することでこれらの設定を上書きすることが可能です。  </p>
 </blockquote>
@@ -577,7 +586,7 @@ usacloud server ls -h
 <h4 id="api-secret">APIシークレット(<code>--secret</code>)</h4>
 <p>さくらのクラウドのAPIシークレットを指定します。  </p>
 <blockquote>
-<p>通常この値は<code>~/.usacloud_config</code>の値が利用されます。<br />
+<p>通常この値は<code>~/.usacloud/[current-profile-nane]/config.json</code>の値が利用されます。<br />
 環境変数<code>SAKURACLOUD_ACCESS_TOKEN_SECRET</code>で指定することも可能です。<br />
 コマンド実行時に<code>--secret</code>を指定することでこれらの設定を上書きすることが可能です。  </p>
 </blockquote>
@@ -592,7 +601,7 @@ usacloud server ls -h
 <li><code>tk1v</code> : サンドボックス</li>
 </ul>
 <blockquote>
-<p>通常この値は<code>~/.usacloud_config</code>の値が利用されます。<br />
+<p>通常この値は<code>~/.usacloud/[current-profile-nane]/config.json</code>の値が利用されます。<br />
 環境変数<code>SAKURACLOUD_ZONE</code>で指定することも可能です。<br />
 コマンド実行時に<code>--zone</code>を指定することでこれらの設定を上書きすることが可能です。  </p>
 </blockquote>
