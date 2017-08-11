@@ -53,6 +53,7 @@ func generateSource(resource *schema.Resource) (string, error) {
 	// build commands
 	var commands []map[string]interface{}
 	var parameters string
+	var defaultCommandFlags interface{}
 	for _, comm := range resource.SortedCommands() {
 		c := comm.Command
 		k := comm.CommandKey
@@ -69,6 +70,10 @@ func generateSource(resource *schema.Resource) (string, error) {
 		paramName := ctx.InputParamVariableName()
 		paramTypeName := ctx.InputModelTypeName()
 		parameters += fmt.Sprintf("%s := params.New%s()\n", paramName, paramTypeName)
+
+		if resource.DefaultCommand != "" && k == resource.DefaultCommand {
+			defaultCommandFlags = params["Flags"]
+		}
 	}
 
 	// parameters
@@ -146,6 +151,7 @@ func generateSource(resource *schema.Resource) (string, error) {
 		"Aliases":             tools.FlattenStringList(resource.Aliases),
 		"Usage":               usage,
 		"DefaultCommand":      resource.DefaultCommand,
+		"Flags":               defaultCommandFlags,
 		"Commands":            commands,
 		"Parameters":          parameters,
 		"CategoryResourceMap": categoryResourceMap,
@@ -169,6 +175,10 @@ func buildCommandsParams(command *schema.Command) (map[string]interface{}, error
 	if usage == "" {
 		usage = fmt.Sprintf("%s %s", ctx.CamelC(), ctx.CamelR())
 	}
+	if ctx.CurrentResource().DefaultCommand == ctx.C {
+		usage = fmt.Sprintf("%s (default)", usage)
+	}
+
 	argsUsage := command.ArgsUsage
 	if command.ArgsUsage == "" && command.Type.IsRequiredIDType() {
 		t := command.Type
@@ -185,11 +195,12 @@ func buildCommandsParams(command *schema.Command) (map[string]interface{}, error
 	}
 
 	res = map[string]interface{}{
-		"Name":      ctx.C,
-		"Aliases":   tools.FlattenStringList(command.Aliases),
-		"Usage":     usage,
-		"ArgsUsage": argsUsage,
-		"Flags":     flags,
+		"Name":            ctx.C,
+		"Aliases":         tools.FlattenStringList(command.Aliases),
+		"Usage":           usage,
+		"ArgsUsage":       argsUsage,
+		"Flags":           flags,
+		"ApplyConfigFile": !ctx.CurrentResource().SkipApplyConfigFile,
 	}
 
 	action, err := buildActionParams(command)
@@ -414,9 +425,28 @@ func init() {
 			Action: func(c *cli.Context) error {
 				comm := c.App.Command("{{.DefaultCommand}}")
 				if comm != nil {
-					return comm.Run(c)
+					return comm.Action(c)
 				}
 				return cli.ShowSubcommandHelp(c)
+			},
+			Flags: []cli.Flag{
+				{{ range .Flags -}}
+				&cli.{{.FlagType}}{
+					Name:        "{{.Name}}",
+					{{- if .Aliases}}
+						Aliases:     []string{ {{.Aliases}} },{{ end }}
+					{{- if .Usage}}
+						Usage:       "{{.Usage}}",{{ end }}
+					{{- if .EnvVars}}
+						EnvVars:     []string{ {{.EnvVars}} },{{ end }}
+					{{- if .DefaultValue}}
+						Value:       {{.DefaultValue}},{{ end }}
+					{{- if .DefaultText}}
+						DefaultText: "{{.DefaultText}}",{{ end }}
+				        {{- if .Hidden}}
+				        	Hidden: {{.Hidden}},{{ end }}
+				},
+				{{ end }}
 			},{{ end }}
 		Subcommands:[]*cli.Command{
 			{{ range .Commands -}}
@@ -453,6 +483,15 @@ func init() {
 					if c.NArg() < 3 { // invalid args
 						return
 					}
+
+					{{ if .ApplyConfigFile }}
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+					{{ end }}
 
 					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
 					args := c.Args().Slice()
@@ -533,7 +572,14 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
-
+					{{ if .ApplyConfigFile }}
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+					{{ end }}
 					{{.ParamName}}.ParamTemplate = c.String("param-template")
 					{{.ParamName}}.ParamTemplateFile = c.String("param-template-file")
 					strInput, err := command.GetParamTemplateValue({{.ParamName}})

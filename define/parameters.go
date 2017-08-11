@@ -120,6 +120,10 @@ var CommonListParam = map[string]*schema.Schema{
 	},
 }
 
+func emptyParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
+}
+
 var scopeCondStrings = []string{"user", "shared"}
 var paramScopeCond = map[string]*schema.Schema{
 	"scope": {

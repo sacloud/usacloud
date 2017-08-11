@@ -26,15 +26,75 @@ func init() {
 		Action: func(c *cli.Context) error {
 			comm := c.App.Command("list")
 			if comm != nil {
-				return comm.Run(c)
+				return comm.Action(c)
 			}
 			return cli.ShowSubcommandHelp(c)
+		},
+		Flags: []cli.Flag{
+			&cli.StringSliceFlag{
+				Name:  "name",
+				Usage: "set filter by name(s)",
+			},
+			&cli.Int64SliceFlag{
+				Name:  "id",
+				Usage: "set filter by id(s)",
+			},
+			&cli.IntFlag{
+				Name:    "from",
+				Aliases: []string{"offset"},
+				Usage:   "set offset",
+			},
+			&cli.IntFlag{
+				Name:    "max",
+				Aliases: []string{"limit"},
+				Usage:   "set limit",
+			},
+			&cli.StringSliceFlag{
+				Name:  "sort",
+				Usage: "set field(s) for sort",
+			},
+			&cli.StringFlag{
+				Name:  "param-template",
+				Usage: "Set input parameter from string(JSON)",
+			},
+			&cli.StringFlag{
+				Name:  "param-template-file",
+				Usage: "Set input parameter from file",
+			},
+			&cli.BoolFlag{
+				Name:  "generate-skeleton",
+				Usage: "Output skelton of parameter JSON",
+			},
+			&cli.StringFlag{
+				Name:    "output-type",
+				Aliases: []string{"out"},
+				Usage:   "Output type [json/csv/tsv]",
+			},
+			&cli.StringSliceFlag{
+				Name:    "column",
+				Aliases: []string{"col"},
+				Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+			},
+			&cli.BoolFlag{
+				Name:    "quiet",
+				Aliases: []string{"q"},
+				Usage:   "Only display IDs",
+			},
+			&cli.StringFlag{
+				Name:    "format",
+				Aliases: []string{"fmt"},
+				Usage:   "Output format(see text/template package document for detail)",
+			},
+			&cli.StringFlag{
+				Name:  "format-file",
+				Usage: "Output format from file(see text/template package document for detail)",
+			},
 		},
 		Subcommands: []*cli.Command{
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find"},
-				Usage:   "List ProductLicense",
+				Usage:   "List ProductLicense (default)",
 				Flags: []cli.Flag{
 					&cli.StringSliceFlag{
 						Name:  "name",
@@ -98,6 +158,13 @@ func init() {
 				ShellComplete: func(c *cli.Context) {
 
 					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
 						return
 					}
 
@@ -217,6 +284,13 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
 
 					listParam.ParamTemplate = c.String("param-template")
 					listParam.ParamTemplateFile = c.String("param-template-file")
@@ -362,6 +436,13 @@ func init() {
 						return
 					}
 
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
 					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
 					args := c.Args().Slice()
 					commandName := args[c.NArg()-1]
@@ -469,6 +550,13 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
 
 					readParam.ParamTemplate = c.String("param-template")
 					readParam.ParamTemplateFile = c.String("param-template-file")

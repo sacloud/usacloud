@@ -13,6 +13,7 @@ var Resources = map[string]*schema.Resource{
 	"AutoBackup":      AutoBackupResource(),
 	"Bill":            BillResource(),
 	"Bridge":          BridgeResource(),
+	"Config":          ConfigResource(),
 	"Database":        DatabaseResource(),
 	"Disk":            DiskResource(),
 	"DNS":             DNSResource(),

@@ -103,6 +103,13 @@ func init() {
 						return
 					}
 
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
 					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
 					args := c.Args().Slice()
 					commandName := args[c.NArg()-1]
@@ -219,6 +226,13 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
 
 					listParam.ParamTemplate = c.String("param-template")
 					listParam.ParamTemplateFile = c.String("param-template-file")
@@ -367,6 +381,13 @@ func init() {
 						return
 					}
 
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
 					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
 					args := c.Args().Slice()
 					commandName := args[c.NArg()-1]
@@ -477,6 +498,13 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
 
 					createParam.ParamTemplate = c.String("param-template")
 					createParam.ParamTemplateFile = c.String("param-template-file")
@@ -616,6 +644,13 @@ func init() {
 						return
 					}
 
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
 					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
 					args := c.Args().Slice()
 					commandName := args[c.NArg()-1]
@@ -720,6 +755,13 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
 
 					readParam.ParamTemplate = c.String("param-template")
 					readParam.ParamTemplateFile = c.String("param-template-file")
@@ -924,6 +966,13 @@ func init() {
 						return
 					}
 
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
 					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
 					args := c.Args().Slice()
 					commandName := args[c.NArg()-1]
@@ -1037,6 +1086,13 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
 
 					updateParam.ParamTemplate = c.String("param-template")
 					updateParam.ParamTemplateFile = c.String("param-template-file")
@@ -1243,6 +1299,13 @@ func init() {
 						return
 					}
 
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
 					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
 					args := c.Args().Slice()
 					commandName := args[c.NArg()-1]
@@ -1350,6 +1413,13 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
 
 					deleteParam.ParamTemplate = c.String("param-template")
 					deleteParam.ParamTemplateFile = c.String("param-template-file")
@@ -1545,6 +1615,13 @@ func init() {
 						return
 					}
 
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
 					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
 					args := c.Args().Slice()
 					commandName := args[c.NArg()-1]
@@ -1649,6 +1726,13 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
 
 					ruleInfoParam.ParamTemplate = c.String("param-template")
 					ruleInfoParam.ParamTemplateFile = c.String("param-template-file")
@@ -1871,6 +1955,13 @@ func init() {
 						return
 					}
 
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
 					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
 					args := c.Args().Slice()
 					commandName := args[c.NArg()-1]
@@ -1999,6 +2090,13 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
 
 					ruleAddParam.ParamTemplate = c.String("param-template")
 					ruleAddParam.ParamTemplateFile = c.String("param-template-file")
@@ -2253,6 +2351,13 @@ func init() {
 						return
 					}
 
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
 					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
 					args := c.Args().Slice()
 					commandName := args[c.NArg()-1]
@@ -2381,6 +2486,13 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
 
 					ruleUpdateParam.ParamTemplate = c.String("param-template")
 					ruleUpdateParam.ParamTemplateFile = c.String("param-template-file")
@@ -2609,6 +2721,13 @@ func init() {
 						return
 					}
 
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
 					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
 					args := c.Args().Slice()
 					commandName := args[c.NArg()-1]
@@ -2719,6 +2838,13 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
 
 					ruleDeleteParam.ParamTemplate = c.String("param-template")
 					ruleDeleteParam.ParamTemplateFile = c.String("param-template-file")
@@ -2905,6 +3031,13 @@ func init() {
 						return
 					}
 
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
 					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
 					args := c.Args().Slice()
 					commandName := args[c.NArg()-1]
@@ -3000,6 +3133,13 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
 
 					interfaceConnectParam.ParamTemplate = c.String("param-template")
 					interfaceConnectParam.ParamTemplateFile = c.String("param-template-file")
@@ -3171,6 +3311,13 @@ func init() {
 						return
 					}
 
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
 					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
 					args := c.Args().Slice()
 					commandName := args[c.NArg()-1]
@@ -3266,6 +3413,13 @@ func init() {
 					}
 				},
 				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
 
 					interfaceDisconnectParam.ParamTemplate = c.String("param-template")
 					interfaceDisconnectParam.ParamTemplateFile = c.String("param-template-file")

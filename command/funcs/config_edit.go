@@ -1,75 +1,43 @@
-package cli
+package funcs
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/params"
+	"github.com/sacloud/usacloud/command/profile"
 	"github.com/sacloud/usacloud/define"
-	"gopkg.in/urfave/cli.v2"
-	"io/ioutil"
 	"strings"
 )
 
-func init() {
-
-	// create config(APIKey) file command
-	initParam := &command.ConfigFileValue{}
-	command := &cli.Command{
-		Name:  "config",
-		Usage: "A manage command of APIKey settings",
-		Flags: []cli.Flag{
-			&cli.StringFlag{
-				Name:        "token",
-				Usage:       "API Token of SakuraCloud",
-				Destination: &initParam.AccessToken,
-			},
-			&cli.StringFlag{
-				Name:        "secret",
-				Usage:       "API Secret of SakuraCloud",
-				Destination: &initParam.AccessTokenSecret,
-			},
-			&cli.StringFlag{
-				Name:        "zone",
-				Usage:       "Target zone of SakuraCloud",
-				Destination: &initParam.Zone,
-			},
-			&cli.BoolFlag{
-				Name:  "show",
-				Usage: "Show current config",
-			},
-		},
-		Action: func(c *cli.Context) error {
-			return configAction(c, initParam)
-		},
+func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
+	inputParams := &profile.ConfigFileValue{
+		AccessToken:       params.Token,
+		AccessTokenSecret: params.Secret,
+		Zone:              params.Zone,
 	}
-	// build Category-Resource mapping
-	AppendResourceCategoryMap("config", &define.CategoryConfig)
-	Commands = append(Commands, command)
-}
-
-func configAction(c *cli.Context, inputParams *command.ConfigFileValue) error {
-
 	needAsk := inputParams.IsEmpty()
 	out := command.GlobalOption.Out
 
 	// load current config file
-	conf, err := command.LoadConfigFile()
+	profileName := ""
+	if ctx.NArgs() > 0 {
+		profileName = ctx.Args()[0]
+	}
+	if profileName == "" {
+		profileName = profile.DefaultProfileName
+	}
+
+	// validate
+	err := profile.ValidateProfileName(profileName)
 	if err != nil {
-		return fmt.Errorf("Config: Loading configFile is failed: %s", err)
+		return err
 	}
 
-	if c.Bool("show") {
-		fmt.Fprintf(out, "\n")
-		fmt.Fprintf(out, "token=%s\n", conf.AccessToken)
-		fmt.Fprintf(out, "secret=%s\n", conf.AccessTokenSecret)
-		fmt.Fprintf(out, "zone=%s\n", conf.Zone)
-		fmt.Fprintf(out, "\n")
-		return nil
+	conf, err := profile.LoadConfigFile(profileName)
+	if err != nil {
+		conf = &profile.ConfigFileValue{}
 	}
-
-	// config value errors
-	errs := []error{}
 
 	// token
 	if needAsk {
@@ -165,10 +133,10 @@ func configAction(c *cli.Context, inputParams *command.ConfigFileValue) error {
 			// read input
 			var input string
 			for {
-				fmt.Fprintf(out, "\n\t%s[%s](default:tk1a): ", "Enter zone", strings.Join(command.AllowZones, "/"))
+				fmt.Fprintf(out, "\n\t%s[%s]: ", "Enter zone", strings.Join(define.AllowZones, "/"))
 				fmt.Fscanln(command.GlobalOption.In, &input)
 
-				if errs := validateInStrValues("", input, command.AllowZones...); len(errs) == 0 {
+				if errs := validateInStrValues("", input, define.AllowZones...); len(errs) == 0 {
 					break
 				}
 
@@ -184,26 +152,23 @@ func configAction(c *cli.Context, inputParams *command.ConfigFileValue) error {
 		}
 	}
 
-	// validate zone
-	errs = append(errs, validateInStrValues("--zone", inputParams.Zone, command.AllowZones...)...)
-	if len(errs) > 0 {
-		return command.FlattenErrors(errs)
+	if inputParams.IsEmpty() {
+		color.New(color.FgCyan).Fprintf(out, "\nConfig: Values are empty, profile[%q] was not saved\n", profileName)
+		return nil
 	}
 
 	// write file
-	filePath, err := command.GetConfigFilePath()
-	if err != nil {
-		return fmt.Errorf("Config: Getting configFilePath is failed: %s", err)
-	}
-	rawBody, err := json.MarshalIndent(inputParams, "", "\t")
-	if err != nil {
-		return fmt.Errorf("Config: Creating configFile body is failed: %s", err)
-	}
-
-	err = ioutil.WriteFile(filePath, rawBody, 0600)
+	err = profile.SaveConfigFile(profileName, inputParams)
 	if err != nil {
 		return fmt.Errorf("Config: Writing configFile is failed: %s", err)
 	}
+
+	// get file path
+	filePath, err := profile.GetConfigFilePath(profileName)
+	if err != nil {
+		return fmt.Errorf("Config: GetConfigFilePath is failed: %s", err)
+	}
+
 	color.New(color.FgHiGreen).Fprintf(out, "\nWritten your settings to %s\n", filePath)
 	return nil
 }
