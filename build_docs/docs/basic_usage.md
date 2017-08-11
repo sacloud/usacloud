@@ -78,11 +78,22 @@ usacloud server ls -h
 
 ---
 
+#### コンフィグ(`--config`)
+
+利用するコンフィグ(プロファイル)の指定を行います。(エイリアス:`--profile`)  
+指定可能な値は`usacloud config list`コマンドで調べることが可能です。  
+
+> 通常この値は`~/.usacloud/current`の値が利用されます。  
+> 環境変数`USACLOUD_PROFILE`で指定することも可能です。  
+> コマンド実行時に`--config`を指定することでこれらの設定を上書きすることが可能です。  
+
+---
+
 #### APIトークン(`--token`)
 
 さくらのクラウドのAPIトークンを指定します。  
 
-> 通常この値は`~/.usacloud_config`の値が利用されます。  
+> 通常この値は`~/.usacloud/[current-profile-nane]/config.json`の値が利用されます。  
 > 環境変数`SAKURACLOUD_ACCESS_TOKEN`で指定することも可能です。  
 > コマンド実行時に`--token`を指定することでこれらの設定を上書きすることが可能です。  
 
@@ -92,7 +103,7 @@ usacloud server ls -h
 
 さくらのクラウドのAPIシークレットを指定します。  
 
-> 通常この値は`~/.usacloud_config`の値が利用されます。  
+> 通常この値は`~/.usacloud/[current-profile-nane]/config.json`の値が利用されます。  
 > 環境変数`SAKURACLOUD_ACCESS_TOKEN_SECRET`で指定することも可能です。  
 > コマンド実行時に`--secret`を指定することでこれらの設定を上書きすることが可能です。  
 
@@ -108,7 +119,7 @@ usacloud server ls -h
   * `tk1a` : 東京第1ゾーン
   * `tk1v` : サンドボックス
 
-> 通常この値は`~/.usacloud_config`の値が利用されます。  
+> 通常この値は`~/.usacloud/[current-profile-nane]/config.json`の値が利用されます。  
 > 環境変数`SAKURACLOUD_ZONE`で指定することも可能です。  
 > コマンド実行時に`--zone`を指定することでこれらの設定を上書きすることが可能です。  
 

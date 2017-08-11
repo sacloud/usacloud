@@ -168,7 +168,7 @@ usacloud config
   Setting SakuraCloud Zone => 
   	Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [ゾーンを入力]
  
-  Written your settings to ~/.usacloud_config
+  Written your settings to ~/.usacloud/default/config.json
 ```
 
 操作対象のゾーンは以下のいずれかを入力してください。
@@ -179,7 +179,7 @@ usacloud config
   * `tk1v` : サンドボックス
   
 > ※`is1a`は2016年7月1日以降に新規作成したアカウントでは[利用できません](http://cloud-news.sakura.ad.jp/2016/07/01/restric_account_is1a/)  
-> ※ここで入力した内容は`~/.usacloud_config`にJSONファイルとして保存されます
+> ※ここで入力した内容は`~/.usacloud/default/config.json`にJSONファイルとして保存されます
 
 
 ### その他のAPIキー設定方法
