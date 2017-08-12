@@ -73,11 +73,11 @@ curl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud 
 APIキーの設定は`usacloud config --show`コマンドで確認可能です。  
 
 ```bash
-   $ usacloud config --show
+   $ usacloud config show
    
-   token=[YOUR_API_TOKEN]
-   secret=[YOUR_API_SECRET]
-   zone=[YOUR_ZONE]
+   token  = [YOUR_API_TOKEN]
+   secret = [YOUR_API_SECRET]
+   zone   = [YOUR_ZONE]
    
 ```
 
@@ -106,7 +106,7 @@ VERSION:
    NN.NN.NN, build xxxxxx
 
 COMMANDS:
-   config                           A manage command of APIKey settings
+   config, profile                  A manage command of APIKey settings
    auth-status                      A manage commands of AuthStatus
    server                           A manage commands of Server
    archive                          A manage commands of Archive
@@ -140,11 +140,12 @@ COMMANDS:
    zone                             A manage commands of Zone
 
 GLOBAL OPTIONS:
-   --token value   API Token of SakuraCloud (default: none) [$SAKURACLOUD_ACCESS_TOKEN]
-   --secret value  API Secret of SakuraCloud (default: none) [$SAKURACLOUD_ACCESS_TOKEN_SECRET]
-   --zone value    Target zone of SakuraCloud (default: tk1a) [$SAKURACLOUD_ZONE]
-   --help, -h      show help (default: false)
-   --version, -v   print the version (default: false)
+   --token value                    API Token of SakuraCloud (default: none) [$SAKURACLOUD_ACCESS_TOKEN]
+   --secret value                   API Secret of SakuraCloud (default: none) [$SAKURACLOUD_ACCESS_TOKEN_SECRET]
+   --zone value                     Target zone of SakuraCloud (default: tk1a) [$SAKURACLOUD_ZONE]
+   --config value, --profile value  Config(Profile) name [$USACLOUD_PROFILE]
+   --help, -h                       show help (default: false)
+   --version, -v                    print the version (default: false)
 
 COPYRIGHT:
    Copyright (C) 2017 Kazumichi Yamamoto.
@@ -334,6 +335,30 @@ COPYRIGHT:
     $ usacloud internet monitor --format "$OUTPUT_FORMAT" 123456789012
 ```
 
+### Examples: 複数のAPIキーの利用(プロファイル機能)
+
+```bash
+    # 一覧
+    $ usacloud config list
+
+    # プロファイルの作成(対話形式)
+    $ usacloud config edit your-profile-name1
+
+    # プロファイルの作成(非対話形式)
+    $ usacloud config edit --zone "is1a" --token "token" --secret "secret" your-profile-name1
+    
+    # プロファイル内容の表示
+    $ usacloud config show your-profile-name1
+
+    #現在選択中のプロファイル名表示
+    $ usacloud config current
+
+    #プロファイル切り替え
+    $ usacloud config use your-profile-name1
+
+    #プロファイルの削除
+    $ usacloud config delete your-profile-name1
+```
 
 ## 開発
 
