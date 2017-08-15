@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/profile"
-	"github.com/sacloud/usacloud/migration"
+	"github.com/sacloud/usacloud/helper/migration"
 	"strconv"
 )
 

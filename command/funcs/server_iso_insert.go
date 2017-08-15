@@ -5,7 +5,7 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	usacloud_params "github.com/sacloud/usacloud/command/params"
-	"github.com/sacloud/usacloud/ftp"
+	"github.com/sacloud/usacloud/helper/ftp"
 )
 
 func ServerIsoInsert(ctx command.Context, params *usacloud_params.IsoInsertServerParam) error {

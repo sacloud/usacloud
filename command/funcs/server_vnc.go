@@ -5,7 +5,7 @@ import (
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
-	"github.com/sacloud/usacloud/vnc"
+	"github.com/sacloud/usacloud/helper/vnc"
 )
 
 func ServerVnc(ctx command.Context, params *params.VncServerParam) error {

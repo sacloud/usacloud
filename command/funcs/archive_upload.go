@@ -5,7 +5,7 @@ import (
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
-	"github.com/sacloud/usacloud/ftp"
+	"github.com/sacloud/usacloud/helper/ftp"
 )
 
 func ArchiveUpload(ctx command.Context, params *params.UploadArchiveParam) error {
