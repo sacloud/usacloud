@@ -64,3 +64,9 @@ var CategoryInformation = schema.Category{
 	DisplayName: "Service/Product informations",
 	Order:       90,
 }
+
+var CategorySummary = schema.Category{
+	Key:         "summary",
+	DisplayName: "Summary",
+	Order:       100,
+}

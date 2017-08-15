@@ -138,6 +138,7 @@ COMMANDS:
    product-server, server-plan      A manage commands of ProductServer
    region                           A manage commands of Region
    zone                             A manage commands of Zone
+   summary                          Show summary of resource usage
 
 GLOBAL OPTIONS:
    --token value                    API Token of SakuraCloud (default: none) [$SAKURACLOUD_ACCESS_TOKEN]

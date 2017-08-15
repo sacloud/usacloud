@@ -324,9 +324,9 @@ func init() {
 
 	// build Category-Resource mapping
 	AppendResourceCategoryMap("summary", &schema.Category{
-		Key:         "information",
-		DisplayName: "Service/Product informations",
-		Order:       90,
+		Key:         "summary",
+		DisplayName: "Summary",
+		Order:       100,
 	})
 
 	// build Category-Command mapping
