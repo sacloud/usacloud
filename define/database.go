@@ -763,13 +763,6 @@ var databaseLogNameCompletions = []string{
 	"all",
 	"systemctl",
 	"mariadb.log",
-	"postgresql-Mon.log",
-	"postgresql-Tue.log",
-	"postgresql-Wed.log",
-	"postgresql-Thu.log",
-	"postgresql-Fri.log",
-	"postgresql-Sat.log",
-	"postgresql-Sun.log",
 }
 
 func databaseLogParam() map[string]*schema.Schema {
