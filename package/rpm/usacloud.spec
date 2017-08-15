@@ -40,6 +40,18 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Aug 15 2017 <yamamoto.febc@gmail.com> - 0.1.0-1
+- VPCルータでのログ出力機能追加 (by yamamoto-febc)
+- データベースでのログ出力機能追加 (by yamamoto-febc)
+- データベースでのバックアップ機能追加 (by yamamoto-febc)
+- データベースでのモニター機能追加 (by yamamoto-febc)
+- モニター機能デフォルトキー変更 (by yamamoto-febc)
+- 複数のAPIキーの切り替え機能 (by yamamoto-febc)
+- summaryコマンドの追加 (by yamamoto-febc)
+- interface-driver項目の追加 (by yamamoto-febc)
+- 請求CSVでのデフォルトターゲット指定 (by yamamoto-febc)
+- パッケージレイアウトのリファクタリング (by yamamoto-febc)
+
 * Tue Jul 11 2017 <yamamoto.febc@gmail.com> - 0.0.13-1
 - textlint導入 (by yamamoto-febc)
 - Chocolateyでのインストール方法追記 (by yamamoto-febc)
