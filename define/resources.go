@@ -40,4 +40,5 @@ var Resources = map[string]*schema.Resource{
 	"VPCRouter":       VPCRouterResource(),
 	"WebAccel":        WebAccelResource(),
 	"Zone":            ZoneResource(),
+	"Summary":         SummaryResource(),
 }
