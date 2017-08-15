@@ -5964,7 +5964,7 @@ func init() {
 			},
 			{
 				Name:      "monitor-memory",
-				Usage:     "Collect Disk(s) monitor values",
+				Usage:     "Collect memory monitor values",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -6692,7 +6692,7 @@ func init() {
 			},
 			{
 				Name:      "monitor-system-disk",
-				Usage:     "Collect Disk(s) monitor values",
+				Usage:     "Collect system-disk monitor values(IO)",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -7056,7 +7056,7 @@ func init() {
 			},
 			{
 				Name:      "monitor-backup-disk",
-				Usage:     "Collect Disk(s) monitor values",
+				Usage:     "Collect backup-disk monitor values(IO)",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -7420,7 +7420,7 @@ func init() {
 			},
 			{
 				Name:      "monitor-system-disk-size",
-				Usage:     "Collect Disk(s) monitor values",
+				Usage:     "Collect system-disk monitor values(usage)",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
@@ -7784,7 +7784,7 @@ func init() {
 			},
 			{
 				Name:      "monitor-backup-disk-size",
-				Usage:     "Collect Disk(s) monitor values",
+				Usage:     "Collect backup-disk monitor values(usage)",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{

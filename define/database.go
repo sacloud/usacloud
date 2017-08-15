@@ -192,7 +192,7 @@ func DatabaseResource() *schema.Resource {
 		"monitor-memory": {
 			Type:               schema.CommandRead,
 			Params:             databaseMonitorParam("memory"),
-			Usage:              "Collect Disk(s) monitor values",
+			Usage:              "Collect memory monitor values",
 			TableType:          output.TableSimple,
 			TableColumnDefines: databaseMonitorSizeColumns(),
 			UseCustomCommand:   true,
@@ -212,7 +212,7 @@ func DatabaseResource() *schema.Resource {
 		"monitor-system-disk": {
 			Type:               schema.CommandRead,
 			Params:             databaseMonitorParam("disk1"),
-			Usage:              "Collect Disk(s) monitor values",
+			Usage:              "Collect system-disk monitor values(IO)",
 			TableType:          output.TableSimple,
 			TableColumnDefines: databaseMonitorDiskColumns(),
 			UseCustomCommand:   true,
@@ -222,7 +222,7 @@ func DatabaseResource() *schema.Resource {
 		"monitor-backup-disk": {
 			Type:               schema.CommandRead,
 			Params:             databaseMonitorParam("disk2"),
-			Usage:              "Collect Disk(s) monitor values",
+			Usage:              "Collect backup-disk monitor values(IO)",
 			TableType:          output.TableSimple,
 			TableColumnDefines: databaseMonitorDiskColumns(),
 			UseCustomCommand:   true,
@@ -233,7 +233,7 @@ func DatabaseResource() *schema.Resource {
 		"monitor-system-disk-size": {
 			Type:               schema.CommandRead,
 			Params:             databaseMonitorParam("disk1"),
-			Usage:              "Collect Disk(s) monitor values",
+			Usage:              "Collect system-disk monitor values(usage)",
 			TableType:          output.TableSimple,
 			TableColumnDefines: databaseMonitorSizeColumns(),
 			UseCustomCommand:   true,
@@ -243,7 +243,7 @@ func DatabaseResource() *schema.Resource {
 		"monitor-backup-disk-size": {
 			Type:               schema.CommandRead,
 			Params:             databaseMonitorParam("disk2"),
-			Usage:              "Collect Disk(s) monitor values",
+			Usage:              "Collect backup-disk monitor values(usage)",
 			TableType:          output.TableSimple,
 			TableColumnDefines: databaseMonitorSizeColumns(),
 			UseCustomCommand:   true,
