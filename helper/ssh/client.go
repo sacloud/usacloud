@@ -1,4 +1,4 @@
-package remote
+package ssh
 
 import (
 	"crypto/x509"
@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-type SSHParams struct {
+type ClientParams struct {
 	DisplayName    string
 	UserName       string
 	Password       string
@@ -25,11 +25,11 @@ type SSHParams struct {
 	Out            io.Writer
 }
 
-func (p *SSHParams) TargetHost() string {
+func (p *ClientParams) TargetHost() string {
 	return fmt.Sprintf("%s:%d", p.Host, p.Port)
 }
 
-func CreateSSHClient(params *SSHParams) (*ssh.Client, error) {
+func CreateSSHClient(params *ClientParams) (*ssh.Client, error) {
 
 	// collect file info
 	fileExists := false
