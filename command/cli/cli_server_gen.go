@@ -416,10 +416,10 @@ func init() {
 						Usage: "[Required] network connection mode[shared/switch/disconnect/none]",
 						Value: "shared",
 					},
-					&cli.BoolFlag{
-						Name:  "use-nic-virtio",
-						Usage: "use virtio on nic",
-						Value: true,
+					&cli.StringFlag{
+						Name:  "interface-driver",
+						Usage: "set interface driver[virtio/e1000]",
+						Value: "virtio",
 					},
 					&cli.Int64Flag{
 						Name:  "packet-filter-id",
@@ -647,8 +647,8 @@ func init() {
 					if c.IsSet("network-mode") {
 						buildParam.NetworkMode = c.String("network-mode")
 					}
-					if c.IsSet("use-nic-virtio") {
-						buildParam.UseNicVirtio = c.Bool("use-nic-virtio")
+					if c.IsSet("interface-driver") {
+						buildParam.InterfaceDriver = c.String("interface-driver")
 					}
 					if c.IsSet("packet-filter-id") {
 						buildParam.PacketFilterId = c.Int64("packet-filter-id")
@@ -879,8 +879,8 @@ func init() {
 					if c.IsSet("network-mode") {
 						buildParam.NetworkMode = c.String("network-mode")
 					}
-					if c.IsSet("use-nic-virtio") {
-						buildParam.UseNicVirtio = c.Bool("use-nic-virtio")
+					if c.IsSet("interface-driver") {
+						buildParam.InterfaceDriver = c.String("interface-driver")
 					}
 					if c.IsSet("packet-filter-id") {
 						buildParam.PacketFilterId = c.Int64("packet-filter-id")
@@ -1361,6 +1361,11 @@ func init() {
 				Usage:     "Update Server",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "interface-driver",
+						Usage: "set interface driver[virtio/e1000]",
+						Value: "virtio",
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
@@ -1458,6 +1463,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, updateParam)
 
 					// Set option values
+					if c.IsSet("interface-driver") {
+						updateParam.InterfaceDriver = c.String("interface-driver")
+					}
 					if c.IsSet("selector") {
 						updateParam.Selector = c.StringSlice("selector")
 					}
@@ -1588,6 +1596,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("interface-driver") {
+						updateParam.InterfaceDriver = c.String("interface-driver")
+					}
 					if c.IsSet("selector") {
 						updateParam.Selector = c.StringSlice("selector")
 					}
@@ -11355,6 +11366,11 @@ func init() {
 		DisplayName: "For server-info options",
 		Order:       50,
 	})
+	AppendFlagCategoryMap("server", "build", "interface-driver", &schema.Category{
+		Key:         "network",
+		DisplayName: "For network options",
+		Order:       30,
+	})
 	AppendFlagCategoryMap("server", "build", "ipaddress", &schema.Category{
 		Key:         "edit-disk-network",
 		DisplayName: "For edit-disk(network settings) options",
@@ -11504,11 +11520,6 @@ func init() {
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,
-	})
-	AppendFlagCategoryMap("server", "build", "use-nic-virtio", &schema.Category{
-		Key:         "network",
-		DisplayName: "For network options",
-		Order:       30,
 	})
 	AppendFlagCategoryMap("server", "delete", "assumeyes", &schema.Category{
 		Key:         "Input",
@@ -12769,6 +12780,11 @@ func init() {
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("server", "update", "interface-driver", &schema.Category{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("server", "update", "name", &schema.Category{
 		Key:         "common",

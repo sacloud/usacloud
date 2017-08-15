@@ -61,7 +61,7 @@ type serverBuilder struct {
 	serverName      string
 	core            int
 	memory          int
-	useVirtIONetPCI bool
+	interfaceDriver sacloud.EInterfaceDriver
 	description     string
 	iconID          int64
 	tags            []string
@@ -91,14 +91,17 @@ const (
 	DefaultCore = 1
 	// DefaultMemory メモリサイズ(デフォルト値)
 	DefaultMemory = 1
-	// DefaultUseVirtIONetCPI NIC準仮装化モード(virtio)利用フラグ(デフォルト値)
-	DefaultUseVirtIONetCPI = true
 	// DefaultDescription 説明 (デフォルト値)
 	DefaultDescription = ""
 	// DefaultIconID アイコンID(デフォルト値)
 	DefaultIconID = int64(0)
 	// DefaultBootAfterCreate サーバー作成後すぐに起動フラグ(デフォルト値)
 	DefaultBootAfterCreate = true
+)
+
+var (
+	// DefaultInterfaceDriver インターフェースドライバ(デフォルト値)
+	DefaultInterfaceDriver = sacloud.InterfaceDriverVirtIO
 )
 
 func newServerBuilder(client *api.Client, serverName string) *serverBuilder {
@@ -111,7 +114,7 @@ func newServerBuilder(client *api.Client, serverName string) *serverBuilder {
 		serverName:         serverName,
 		core:               DefaultCore,
 		memory:             DefaultMemory,
-		useVirtIONetPCI:    DefaultUseVirtIONetCPI,
+		interfaceDriver:    DefaultInterfaceDriver,
 		description:        DefaultDescription,
 		iconID:             DefaultIconID,
 		bootAfterCreate:    DefaultBootAfterCreate,
@@ -340,10 +343,8 @@ func (b *serverBuilder) buildServerParams() error {
 	s.Name = b.serverName
 	s.SetServerPlanByID(plan.GetStrID())
 	s.Description = b.description
+	s.InterfaceDriver = b.interfaceDriver
 	// tags
-	if b.useVirtIONetPCI {
-		s.AppendTag(sacloud.TagVirtIONetPCI)
-	}
 	for _, tag := range b.tags {
 		if !s.HasTag(tag) {
 			s.AppendTag(tag)

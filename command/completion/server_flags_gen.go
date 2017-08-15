@@ -125,8 +125,8 @@ func ServerBuildCompleteFlags(ctx command.Context, params *params.BuildServerPar
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "use-nic-virtio":
-		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("use-nic-virtio")
+	case "interface-driver":
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("interface-driver")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -302,6 +302,11 @@ func ServerUpdateCompleteFlags(ctx command.Context, params *params.UpdateServerP
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "interface-driver":
+		param := define.Resources["Server"].Commands["update"].BuildedParams().Get("interface-driver")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "selector":
 		param := define.Resources["Server"].Commands["update"].BuildedParams().Get("selector")
 		if param != nil {

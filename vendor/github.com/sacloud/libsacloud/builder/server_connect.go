@@ -1,5 +1,7 @@
 package builder
 
+import "github.com/sacloud/libsacloud/sacloud"
+
 // ConnectDiskServerBuilder ブランクディスクを利用して構築を行うサーバービルダー
 //
 // すでに存在するディスクを持ちます。ディスクの追加に対応していますが、ディスクの修正機能には非対応です。
@@ -59,19 +61,19 @@ func (b *ConnectDiskServerBuilder) WithMemory(memory int) *ConnectDiskServerBuil
 	return b
 }
 
-// IsUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 取得
-func (b *ConnectDiskServerBuilder) IsUseVirtIONetPCI() bool {
-	return b.useVirtIONetPCI
+// GetInterfaceDriver インターフェースドライバ 取得
+func (b *ConnectDiskServerBuilder) GetInterfaceDriver() sacloud.EInterfaceDriver {
+	return b.interfaceDriver
 }
 
-// SetUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 設定
-func (b *ConnectDiskServerBuilder) SetUseVirtIONetPCI(useVirtIONetPCI bool) {
-	b.useVirtIONetPCI = useVirtIONetPCI
+// SetInterfaceDriver インターフェースドライバ 設定
+func (b *ConnectDiskServerBuilder) SetInterfaceDriver(interfaceDriver sacloud.EInterfaceDriver) {
+	b.interfaceDriver = interfaceDriver
 }
 
-// WithUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 設定
-func (b *ConnectDiskServerBuilder) WithUseVirtIONetPCI(useVirtIONetPCI bool) *ConnectDiskServerBuilder {
-	b.SetUseVirtIONetPCI(useVirtIONetPCI)
+// WithInterfaceDriver インターフェースドライバ 設定
+func (b *ConnectDiskServerBuilder) WithInterfaceDriver(interfaceDriver sacloud.EInterfaceDriver) *ConnectDiskServerBuilder {
+	b.SetInterfaceDriver(interfaceDriver)
 	return b
 }
 

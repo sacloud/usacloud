@@ -140,7 +140,7 @@ func handleNetworkParams(sb interface{}, ctx command.Context, params *params.Bui
 			panic(fmt.Errorf("Unknown NetworkMode : %s", params.NetworkMode))
 		}
 
-		sb.SetUseVirtIONetPCI(params.UseNicVirtio)
+		sb.SetInterfaceDriver(sacloud.EInterfaceDriver(params.InterfaceDriver))
 		if params.PacketFilterId != sacloud.EmptyID {
 			sb.SetPacketFilterIDs([]int64{params.PacketFilterId})
 		}
@@ -406,7 +406,7 @@ func validateServerNetworkParams(sb interface{}, ctx command.Context, params *pa
 			validateIfCtxIsSet("network-mode", params.NetworkMode, "default-route", params.DefaultRoute)
 
 			if params.NetworkMode == "none" {
-				validateIfCtxIsSet("network-mode", params.NetworkMode, "use-nic-virtio", params.UseNicVirtio)
+				validateIfCtxIsSet("network-mode", params.NetworkMode, "interface-driver", params.InterfaceDriver)
 				validateIfCtxIsSet("network-mode", params.NetworkMode, "packet-filter-id", params.PacketFilterId)
 			}
 
@@ -431,7 +431,7 @@ func validateServerNetworkParams(sb interface{}, ctx command.Context, params *pa
 		validateProhibitedIfCtxIsSet("ipaddress", params.Ipaddress)
 		validateProhibitedIfCtxIsSet("nw-masklen", params.NwMasklen)
 		validateProhibitedIfCtxIsSet("default-route", params.DefaultRoute)
-		validateProhibitedIfCtxIsSet("use-nic-virtio", params.UseNicVirtio)
+		validateProhibitedIfCtxIsSet("interface-driver", params.DefaultRoute)
 		validateProhibitedIfCtxIsSet("packet-filter-id", params.PacketFilterId)
 	}
 
@@ -552,7 +552,7 @@ type serverDiskParams interface {
 }
 
 type serverNetworkParams interface {
-	SetUseVirtIONetPCI(bool)
+	SetInterfaceDriver(sacloud.EInterfaceDriver)
 	SetPacketFilterIDs([]int64)
 	AddPublicNWConnectedNIC()
 	AddDisconnectedNIC()

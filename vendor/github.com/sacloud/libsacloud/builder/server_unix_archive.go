@@ -61,19 +61,19 @@ func (b *PublicArchiveUnixServerBuilder) WithMemory(memory int) *PublicArchiveUn
 	return b
 }
 
-// IsUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 取得
-func (b *PublicArchiveUnixServerBuilder) IsUseVirtIONetPCI() bool {
-	return b.useVirtIONetPCI
+// GetInterfaceDriver インターフェースドライバ 取得
+func (b *PublicArchiveUnixServerBuilder) GetInterfaceDriver() sacloud.EInterfaceDriver {
+	return b.interfaceDriver
 }
 
-// SetUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 設定
-func (b *PublicArchiveUnixServerBuilder) SetUseVirtIONetPCI(useVirtIONetPCI bool) {
-	b.useVirtIONetPCI = useVirtIONetPCI
+// SetInterfaceDriver インターフェースドライバ 設定
+func (b *PublicArchiveUnixServerBuilder) SetInterfaceDriver(interfaceDriver sacloud.EInterfaceDriver) {
+	b.interfaceDriver = interfaceDriver
 }
 
-// WithUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 設定
-func (b *PublicArchiveUnixServerBuilder) WithUseVirtIONetPCI(useVirtIONetPCI bool) *PublicArchiveUnixServerBuilder {
-	b.SetUseVirtIONetPCI(useVirtIONetPCI)
+// WithInterfaceDriver インターフェースドライバ 設定
+func (b *PublicArchiveUnixServerBuilder) WithInterfaceDriver(interfaceDriver sacloud.EInterfaceDriver) *PublicArchiveUnixServerBuilder {
+	b.SetInterfaceDriver(interfaceDriver)
 	return b
 }
 
