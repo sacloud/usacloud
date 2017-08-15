@@ -2,6 +2,7 @@ package funcs
 
 import (
 	"fmt"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"os"
@@ -18,14 +19,31 @@ func BillCsv(ctx command.Context, params *params.CsvBillParam) error {
 	if err != nil {
 		return fmt.Errorf("BillCsv is failed: %s", err)
 	}
+	accountID := sacloud.NewResourceByStringID(auth.Account.ID).ID
+	if accountID == 0 {
+		return fmt.Errorf("BillCsv is failed: %s", "invalid account id")
+	}
 	memberCD := auth.Member.Code
 
 	if !strings.Contains(auth.ExternalPermission, "bill") {
 		return fmt.Errorf("Don't have permission to view bills")
 	}
 
+	// validate param
+	billID := params.BillId
+	if !ctx.IsSet("bill-id") {
+		bills, err := finder.ByContract(accountID)
+		if err != nil {
+			return fmt.Errorf("BillCsv is failed: %s", err)
+		}
+		if len(bills.Bills) == 0 {
+			return fmt.Errorf("BillCsv is failed: Empty result")
+		}
+		billID = bills.Bills[0].BillID
+	}
+
 	// call Find()
-	res, err := finder.GetDetailCSV(memberCD, params.Id)
+	res, err := finder.GetDetailCSV(memberCD, billID)
 	if err != nil {
 		return fmt.Errorf("BillCsv is failed: %s", err)
 	}

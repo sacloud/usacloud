@@ -21,7 +21,7 @@ func BillResource() *schema.Resource {
 			NeedlessConfirm:    true,
 		},
 		"csv": {
-			Type:                   schema.CommandManipulateIDOnly,
+			Type:                   schema.CommandCustom,
 			Params:                 billReadParam(),
 			UseCustomCommand:       true,
 			UseCustomArgCompletion: true,
@@ -81,9 +81,9 @@ func billListColumns() []output.ColumnDef {
 
 func billReadParam() map[string]*schema.Schema {
 	id := getParamResourceShortID("bill ID", 8)
-	id.Hidden = true
+	id.Required = false
 	return map[string]*schema.Schema{
-		"id": id,
+		"bill-id": id,
 		"no-header": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,

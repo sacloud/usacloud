@@ -77,9 +77,8 @@ func init() {
 		},
 		Subcommands: []*cli.Command{
 			{
-				Name:      "csv",
-				Usage:     "Csv Bill",
-				ArgsUsage: "<ID>",
+				Name:  "csv",
+				Usage: "Csv Bill",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "param-template",
@@ -103,9 +102,8 @@ func init() {
 						Usage:   "set bill-detail output path",
 					},
 					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "[Required] set bill ID",
-						Hidden: true,
+						Name:  "bill-id",
+						Usage: "set bill ID",
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -152,8 +150,8 @@ func init() {
 					if c.IsSet("bill-output") {
 						csvParam.BillOutput = c.String("bill-output")
 					}
-					if c.IsSet("id") {
-						csvParam.Id = c.Int64("id")
+					if c.IsSet("bill-id") {
+						csvParam.BillId = c.Int64("bill-id")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -255,8 +253,8 @@ func init() {
 					if c.IsSet("bill-output") {
 						csvParam.BillOutput = c.String("bill-output")
 					}
-					if c.IsSet("id") {
-						csvParam.Id = c.Int64("id")
+					if c.IsSet("bill-id") {
+						csvParam.BillId = c.Int64("bill-id")
 					}
 
 					// Validate global params
@@ -275,12 +273,6 @@ func init() {
 						fmt.Fprintln(command.GlobalOption.Out, string(d))
 						return nil
 					}
-
-					if c.NArg() == 0 {
-						return fmt.Errorf("ID argument is required")
-					}
-					c.Set("id", c.Args().First())
-					csvParam.SetId(c.Int64("id"))
 
 					// Validate specific for each command params
 					if errors := csvParam.Validate(); len(errors) > 0 {
@@ -575,6 +567,11 @@ func init() {
 
 	// build Category-Param mapping
 
+	AppendFlagCategoryMap("bill", "csv", "bill-id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
 	AppendFlagCategoryMap("bill", "csv", "bill-output", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -584,11 +581,6 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
-	})
-	AppendFlagCategoryMap("bill", "csv", "id", &schema.Category{
-		Key:         "default",
-		DisplayName: "Other options",
-		Order:       2147483647,
 	})
 	AppendFlagCategoryMap("bill", "csv", "no-header", &schema.Category{
 		Key:         "output",

@@ -15,7 +15,7 @@ type CsvBillParam struct {
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
 	NoHeader          bool   `json:"no-header"`
 	BillOutput        string `json:"bill-output"`
-	Id                int64  `json:"id"`
+	BillId            int64  `json:"bill-id"`
 }
 
 // NewCsvBillParam return new CsvBillParam
@@ -40,8 +40,8 @@ func (p *CsvBillParam) FillValueToSkeleton() {
 	if isEmpty(p.BillOutput) {
 		p.BillOutput = ""
 	}
-	if isEmpty(p.Id) {
-		p.Id = 0
+	if isEmpty(p.BillId) {
+		p.BillId = 0
 	}
 
 }
@@ -50,15 +50,8 @@ func (p *CsvBillParam) FillValueToSkeleton() {
 func (p *CsvBillParam) Validate() []error {
 	errors := []error{}
 	{
-		validator := validateRequired
-		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["Bill"].Commands["csv"].Params["id"].ValidateFunc
-		errs := validator("--id", p.Id)
+		validator := define.Resources["Bill"].Commands["csv"].Params["bill-id"].ValidateFunc
+		errs := validator("--bill-id", p.BillId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -130,12 +123,12 @@ func (p *CsvBillParam) SetBillOutput(v string) {
 func (p *CsvBillParam) GetBillOutput() string {
 	return p.BillOutput
 }
-func (p *CsvBillParam) SetId(v int64) {
-	p.Id = v
+func (p *CsvBillParam) SetBillId(v int64) {
+	p.BillId = v
 }
 
-func (p *CsvBillParam) GetId() int64 {
-	return p.Id
+func (p *CsvBillParam) GetBillId() int64 {
+	return p.BillId
 }
 
 // ListBillParam is input parameters for the sacloud API
