@@ -59,23 +59,23 @@ func (b *CommonServerBuilder) SetMemory(memory int) {
 
 // WithMemory メモリサイズ(GB単位) 設定
 func (b *CommonServerBuilder) WithMemory(memory int) *CommonServerBuilder {
-	b.WithMemory(memory)
+	b.SetMemory(memory)
 	return b
 }
 
-// IsUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 取得
-func (b *CommonServerBuilder) IsUseVirtIONetPCI() bool {
-	return b.useVirtIONetPCI
+// GetInterfaceDriver インターフェースドライバ 取得
+func (b *CommonServerBuilder) GetInterfaceDriver() sacloud.EInterfaceDriver {
+	return b.interfaceDriver
 }
 
-// SetUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 設定
-func (b *CommonServerBuilder) SetUseVirtIONetPCI(useVirtIONetPCI bool) {
-	b.useVirtIONetPCI = useVirtIONetPCI
+// SetInterfaceDriver インターフェースドライバ 設定
+func (b *CommonServerBuilder) SetInterfaceDriver(interfaceDriver sacloud.EInterfaceDriver) {
+	b.interfaceDriver = interfaceDriver
 }
 
-// WithUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 設定
-func (b *CommonServerBuilder) WithUseVirtIONetPCI(useVirtIONetPCI bool) *CommonServerBuilder {
-	b.SetUseVirtIONetPCI(useVirtIONetPCI)
+// WithInterfaceDriver インターフェースドライバ 設定
+func (b *CommonServerBuilder) WithInterfaceDriver(interfaceDriver sacloud.EInterfaceDriver) *CommonServerBuilder {
+	b.SetInterfaceDriver(interfaceDriver)
 	return b
 }
 

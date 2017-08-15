@@ -63,19 +63,19 @@ func (b *BlankDiskServerBuilder) WithMemory(memory int) *BlankDiskServerBuilder 
 	return b
 }
 
-// IsUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 取得
-func (b *BlankDiskServerBuilder) IsUseVirtIONetPCI() bool {
-	return b.useVirtIONetPCI
+// GetInterfaceDriver インターフェースドライバ 取得
+func (b *BlankDiskServerBuilder) GetInterfaceDriver() sacloud.EInterfaceDriver {
+	return b.interfaceDriver
 }
 
-// SetUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 設定
-func (b *BlankDiskServerBuilder) SetUseVirtIONetPCI(useVirtIONetPCI bool) {
-	b.useVirtIONetPCI = useVirtIONetPCI
+// SetInterfaceDriver インターフェースドライバ 設定
+func (b *BlankDiskServerBuilder) SetInterfaceDriver(interfaceDriver sacloud.EInterfaceDriver) {
+	b.interfaceDriver = interfaceDriver
 }
 
-// WithUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 設定
-func (b *BlankDiskServerBuilder) WithUseVirtIONetPCI(useVirtIONetPCI bool) *BlankDiskServerBuilder {
-	b.SetUseVirtIONetPCI(useVirtIONetPCI)
+// WithInterfaceDriver インターフェースドライバ 設定
+func (b *BlankDiskServerBuilder) WithInterfaceDriver(interfaceDriver sacloud.EInterfaceDriver) *BlankDiskServerBuilder {
+	b.SetInterfaceDriver(interfaceDriver)
 	return b
 }
 

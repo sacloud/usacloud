@@ -1,5 +1,7 @@
 package builder
 
+import "github.com/sacloud/libsacloud/sacloud"
+
 // DisklessServerBuilder ディスクレス サーバービルダー
 //
 // ディスクレスのサーバーを構築します。 ディスク関連の設定に非対応です。
@@ -59,19 +61,19 @@ func (b *DisklessServerBuilder) WithMemory(memory int) *DisklessServerBuilder {
 	return b
 }
 
-// IsUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 取得
-func (b *DisklessServerBuilder) IsUseVirtIONetPCI() bool {
-	return b.useVirtIONetPCI
+// GetInterfaceDriver インターフェースドライバ 取得
+func (b *DisklessServerBuilder) GetInterfaceDriver() sacloud.EInterfaceDriver {
+	return b.interfaceDriver
 }
 
-// SetUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 設定
-func (b *DisklessServerBuilder) SetUseVirtIONetPCI(useVirtIONetPCI bool) {
-	b.useVirtIONetPCI = useVirtIONetPCI
+// SetInterfaceDriver インターフェースドライバ 設定
+func (b *DisklessServerBuilder) SetInterfaceDriver(interfaceDriver sacloud.EInterfaceDriver) {
+	b.interfaceDriver = interfaceDriver
 }
 
-// WithUseVirtIONetPCI NIC準仮装化モード(virtio)利用フラグ 設定
-func (b *DisklessServerBuilder) WithUseVirtIONetPCI(useVirtIONetPCI bool) *DisklessServerBuilder {
-	b.SetUseVirtIONetPCI(useVirtIONetPCI)
+// WithInterfaceDriver インターフェースドライバ 設定
+func (b *DisklessServerBuilder) WithInterfaceDriver(interfaceDriver sacloud.EInterfaceDriver) *DisklessServerBuilder {
+	b.SetInterfaceDriver(interfaceDriver)
 	return b
 }
 

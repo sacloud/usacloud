@@ -89,6 +89,16 @@ func (e EAvailability) IsMigrating() bool {
 	return e == EAMigrating
 }
 
+// EInterfaceDriver インターフェースドライバ
+type EInterfaceDriver string
+
+var (
+	// InterfaceDriverVirtIO virtio
+	InterfaceDriverVirtIO = EInterfaceDriver("virtio")
+	// InterfaceDriverE1000 e1000
+	InterfaceDriverE1000 = EInterfaceDriver("e1000")
+)
+
 // EServerInstanceStatus サーバーインスタンスステータス
 type EServerInstanceStatus struct {
 	Status       string `json:",omitempty"` // 現在のステータス
@@ -305,9 +315,6 @@ var (
 	TagBootCDROM = "@boot-cdrom"
 	// TagBootNetwork 優先ブートデバイスをPXE bootに設定します
 	TagBootNetwork = "@boot-network"
-
-	// TagVirtIONetPCI サーバの仮想NICをvirtio-netに変更します
-	TagVirtIONetPCI = "@virtio-net-pci"
 )
 
 // DatetimeLayout さくらのクラウドAPIで利用される日付型のレイアウト(RFC3339)
