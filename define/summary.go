@@ -20,7 +20,7 @@ func SummaryResource() *schema.Resource {
 	return &schema.Resource{
 		Commands:         commands,
 		DefaultCommand:   "show",
-		ResourceCategory: CategoryInformation,
+		ResourceCategory: CategorySummary,
 		Usage:            "Show summary of resource usage",
 	}
 }
