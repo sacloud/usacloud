@@ -2,6 +2,7 @@ package define
 
 import (
 	"fmt"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/libsacloud/sacloud/ostype"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -38,12 +39,13 @@ func ServerResource() *schema.Resource {
 			Order:         30,
 		},
 		"update": {
-			Type:          schema.CommandUpdate,
-			Params:        serverUpdateParam(),
-			IncludeFields: serverDetailIncludes(),
-			ExcludeFields: serverDetailExcludes(),
-			Category:      "basics",
-			Order:         40,
+			Type:             schema.CommandUpdate,
+			Params:           serverUpdateParam(),
+			IncludeFields:    serverDetailIncludes(),
+			ExcludeFields:    serverDetailExcludes(),
+			UseCustomCommand: true,
+			Category:         "basics",
+			Order:            40,
 		},
 		"delete": {
 			Type:             schema.CommandDelete,
@@ -576,6 +578,8 @@ var serverBuildParamCategories = []schema.Category{
 	},
 }
 
+var AllowInterfaceDriver = []string{string(sacloud.InterfaceDriverVirtIO), string(sacloud.InterfaceDriverE1000)}
+
 func serverBuildParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		/*
@@ -719,11 +723,13 @@ func serverBuildParam() map[string]*schema.Schema {
 			Category:     "network",
 			Order:        10,
 		},
-		"use-nic-virtio": {
-			Type:         schema.TypeBool,
+		"interface-driver": {
+			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
-			Description:  "use virtio on nic",
-			DefaultValue: true,
+			Description:  "set interface driver[virtio/e1000]",
+			ValidateFunc: validateInStrValues(AllowInterfaceDriver...),
+			CompleteFunc: completeInStrValues(AllowInterfaceDriver...),
+			DefaultValue: string(sacloud.InterfaceDriverVirtIO),
 			Category:     "network",
 			Order:        20,
 		},
@@ -968,6 +974,16 @@ func serverUpdateParam() map[string]*schema.Schema {
 		"description": paramDescription,
 		"tags":        paramTags,
 		"icon-id":     paramIconResourceID,
+		"interface-driver": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set interface driver[virtio/e1000]",
+			ValidateFunc: validateInStrValues(AllowInterfaceDriver...),
+			CompleteFunc: completeInStrValues(AllowInterfaceDriver...),
+			DefaultValue: string(sacloud.InterfaceDriverVirtIO),
+			Category:     "network",
+			Order:        10,
+		},
 	}
 }
 

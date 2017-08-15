@@ -279,7 +279,7 @@ type BuildServerParam struct {
 	DiskId                  int64    `json:"disk-id"`
 	IsoImageId              int64    `json:"iso-image-id"`
 	NetworkMode             string   `json:"network-mode"`
-	UseNicVirtio            bool     `json:"use-nic-virtio"`
+	InterfaceDriver         string   `json:"interface-driver"`
 	PacketFilterId          int64    `json:"packet-filter-id"`
 	SwitchId                int64    `json:"switch-id"`
 	Hostname                string   `json:"hostname"`
@@ -328,7 +328,7 @@ func NewBuildServerParam() *BuildServerParam {
 		DiskConnection:          "virtio",
 		DiskSize:                20,
 		NetworkMode:             "shared",
-		UseNicVirtio:            true,
+		InterfaceDriver:         "virtio",
 		NwMasklen:               24,
 		StartupScriptsEphemeral: true,
 		SshKeyEphemeral:         true,
@@ -376,8 +376,8 @@ func (p *BuildServerParam) FillValueToSkeleton() {
 	if isEmpty(p.NetworkMode) {
 		p.NetworkMode = ""
 	}
-	if isEmpty(p.UseNicVirtio) {
-		p.UseNicVirtio = false
+	if isEmpty(p.InterfaceDriver) {
+		p.InterfaceDriver = ""
 	}
 	if isEmpty(p.PacketFilterId) {
 		p.PacketFilterId = 0
@@ -591,6 +591,13 @@ func (p *BuildServerParam) Validate() []error {
 	{
 		validator := define.Resources["Server"].Commands["build"].Params["network-mode"].ValidateFunc
 		errs := validator("--network-mode", p.NetworkMode)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["interface-driver"].ValidateFunc
+		errs := validator("--interface-driver", p.InterfaceDriver)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -843,12 +850,12 @@ func (p *BuildServerParam) SetNetworkMode(v string) {
 func (p *BuildServerParam) GetNetworkMode() string {
 	return p.NetworkMode
 }
-func (p *BuildServerParam) SetUseNicVirtio(v bool) {
-	p.UseNicVirtio = v
+func (p *BuildServerParam) SetInterfaceDriver(v string) {
+	p.InterfaceDriver = v
 }
 
-func (p *BuildServerParam) GetUseNicVirtio() bool {
-	return p.UseNicVirtio
+func (p *BuildServerParam) GetInterfaceDriver() string {
+	return p.InterfaceDriver
 }
 func (p *BuildServerParam) SetPacketFilterId(v int64) {
 	p.PacketFilterId = v
@@ -1285,6 +1292,7 @@ func (p *ReadServerParam) GetId() int64 {
 
 // UpdateServerParam is input parameters for the sacloud API
 type UpdateServerParam struct {
+	InterfaceDriver   string   `json:"interface-driver"`
 	Selector          []string `json:"selector"`
 	Name              string   `json:"name"`
 	Description       string   `json:"description"`
@@ -1304,11 +1312,17 @@ type UpdateServerParam struct {
 
 // NewUpdateServerParam return new UpdateServerParam
 func NewUpdateServerParam() *UpdateServerParam {
-	return &UpdateServerParam{}
+	return &UpdateServerParam{
+
+		InterfaceDriver: "virtio",
+	}
 }
 
 // FillValueToSkeleton fill values to empty fields
 func (p *UpdateServerParam) FillValueToSkeleton() {
+	if isEmpty(p.InterfaceDriver) {
+		p.InterfaceDriver = ""
+	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1360,6 +1374,13 @@ func (p *UpdateServerParam) FillValueToSkeleton() {
 // Validate checks current values in model
 func (p *UpdateServerParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["Server"].Commands["update"].Params["interface-driver"].ValidateFunc
+		errs := validator("--interface-driver", p.InterfaceDriver)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := define.Resources["Server"].Commands["update"].Params["name"].ValidateFunc
 		errs := validator("--name", p.Name)
@@ -1447,6 +1468,13 @@ func (p *UpdateServerParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *UpdateServerParam) SetInterfaceDriver(v string) {
+	p.InterfaceDriver = v
+}
+
+func (p *UpdateServerParam) GetInterfaceDriver() string {
+	return p.InterfaceDriver
+}
 func (p *UpdateServerParam) SetSelector(v []string) {
 	p.Selector = v
 }

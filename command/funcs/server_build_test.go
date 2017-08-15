@@ -108,7 +108,7 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 		DistantFrom:             []int64{999999999999},
 		IsoImageId:              999999999999,
 		NetworkMode:             "switch",
-		UseNicVirtio:            true,
+		InterfaceDriver:         "virtio",
 		PacketFilterId:          999999999999,
 		SwitchId:                999999999999,
 		Hostname:                "dummy_hostname",
@@ -172,7 +172,7 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 	}
 	{
 		b := i.(serverNetworkParams)
-		b.SetUseVirtIONetPCI(param.UseNicVirtio)
+		b.SetInterfaceDriver(sacloud.EInterfaceDriver(param.InterfaceDriver))
 		b.SetPacketFilterIDs([]int64{param.PacketFilterId})
 	}
 	{
