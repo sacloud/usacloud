@@ -14,8 +14,8 @@ func BillCsvCompleteFlags(ctx command.Context, params *params.CsvBillParam, flag
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "id":
-		param := define.Resources["Bill"].Commands["csv"].BuildedParams().Get("id")
+	case "bill-id":
+		param := define.Resources["Bill"].Commands["csv"].BuildedParams().Get("bill-id")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
