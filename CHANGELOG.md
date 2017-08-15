@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.1.0 (2017-08-15)
+
+* VPCルータでのログ出力機能追加 #179 (yamamoto-febc)
+* データベースでのログ出力機能追加 #181 (yamamoto-febc)
+* データベースでのバックアップ機能追加 #183 (yamamoto-febc)
+* データベースでのモニター機能追加 #185 (yamamoto-febc)
+* モニター機能デフォルトキー変更 #187 (yamamoto-febc)
+* 複数のAPIキーの切り替え機能 #188 (yamamoto-febc)
+* summaryコマンドの追加 #190 (yamamoto-febc)
+* interface-driver項目の追加 #192 (yamamoto-febc)
+* 請求CSVでのデフォルトターゲット指定 #194 (yamamoto-febc)
+* パッケージレイアウトのリファクタリング #195 (yamamoto-febc)
+
+
 ## 0.0.13 (2017-07-11)
 
 * textlint導入 #159 (yamamoto-febc)

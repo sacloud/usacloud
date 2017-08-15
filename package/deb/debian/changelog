@@ -1,3 +1,28 @@
+usacloud (0.1.0-1) stable; urgency=low
+
+  * VPCルータでのログ出力機能追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/179>
+  * データベースでのログ出力機能追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/181>
+  * データベースでのバックアップ機能追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/183>
+  * データベースでのモニター機能追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/185>
+  * モニター機能デフォルトキー変更 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/187>
+  * 複数のAPIキーの切り替え機能 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/188>
+  * summaryコマンドの追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/190>
+  * interface-driver項目の追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/192>
+  * 請求CSVでのデフォルトターゲット指定 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/194>
+  * パッケージレイアウトのリファクタリング (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/195>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Tue, 15 Aug 2017 11:47:38 +0000
+
 usacloud (0.0.13-1) stable; urgency=low
 
   * textlint導入 (by yamamoto-febc)
