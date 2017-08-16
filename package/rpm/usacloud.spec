@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Aug 16 2017 <yamamoto.febc@gmail.com> - 0.1.1-1
+- 0.1.1リリース (by yamamoto-febc)
+
 * Tue Aug 15 2017 <yamamoto.febc@gmail.com> - 0.1.0-1
 - VPCルータでのログ出力機能追加 (by yamamoto-febc)
 - データベースでのログ出力機能追加 (by yamamoto-febc)
