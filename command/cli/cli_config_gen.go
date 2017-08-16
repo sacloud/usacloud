@@ -94,9 +94,6 @@ func init() {
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
 
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
 					// build command context
 					ctx := command.NewContext(c, realArgs, currentParam)
 
@@ -198,11 +195,6 @@ func init() {
 						currentParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
 					// Generate skeleton
 					if currentParam.GenerateSkeleton {
 						currentParam.GenerateSkeleton = false
@@ -265,9 +257,6 @@ func init() {
 
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, deleteParam)
@@ -376,11 +365,6 @@ func init() {
 						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
 					// Generate skeleton
 					if deleteParam.GenerateSkeleton {
 						deleteParam.GenerateSkeleton = false
@@ -454,9 +438,6 @@ func init() {
 
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, editParam)
@@ -577,11 +558,6 @@ func init() {
 						editParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
 					// Generate skeleton
 					if editParam.GenerateSkeleton {
 						editParam.GenerateSkeleton = false
@@ -639,9 +615,6 @@ func init() {
 
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, listParam)
@@ -744,11 +717,6 @@ func init() {
 						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
 					// Generate skeleton
 					if listParam.GenerateSkeleton {
 						listParam.GenerateSkeleton = false
@@ -805,9 +773,6 @@ func init() {
 
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, migrateParam)
@@ -910,11 +875,6 @@ func init() {
 						migrateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
 					// Generate skeleton
 					if migrateParam.GenerateSkeleton {
 						migrateParam.GenerateSkeleton = false
@@ -971,9 +931,6 @@ func init() {
 
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, showParam)
@@ -1076,11 +1033,6 @@ func init() {
 						showParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
 					// Generate skeleton
 					if showParam.GenerateSkeleton {
 						showParam.GenerateSkeleton = false
@@ -1137,9 +1089,6 @@ func init() {
 
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, useParam)
@@ -1240,11 +1189,6 @@ func init() {
 					}
 					if c.IsSet("generate-skeleton") {
 						useParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
 					// Generate skeleton
