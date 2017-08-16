@@ -1,3 +1,10 @@
+usacloud (0.1.1-1) stable; urgency=low
+
+  * 0.1.1リリース (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/201>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Wed, 16 Aug 2017 07:14:13 +0000
+
 usacloud (0.1.0-1) stable; urgency=low
 
   * VPCルータでのログ出力機能追加 (by yamamoto-febc)
