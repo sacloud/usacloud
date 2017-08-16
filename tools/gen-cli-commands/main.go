@@ -502,8 +502,10 @@ func init() {
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
 
+					{{ if .ApplyConfigFile }}
 					// Validate global params
 					command.GlobalOption.Validate(false)
+					{{ end }}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, {{.ParamName}})
@@ -599,10 +601,12 @@ func init() {
 					// Set option values
 					{{.SetDefault}}{{ end }}
 
+					{{ if .ApplyConfigFile }}
 					// Validate global params
 					if errors := command.GlobalOption.Validate({{.SkipAuth}}); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors,"GlobalOptions")
 					}
+					{{ end }}
 
 					// Generate skeleton
 					if {{.ParamName}}.GenerateSkeleton {
