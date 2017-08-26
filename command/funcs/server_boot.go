@@ -5,7 +5,10 @@ import (
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
+	"time"
 )
+
+const maxErrorCount = 10
 
 func ServerBoot(ctx command.Context, params *params.BootServerParam) error {
 
@@ -26,11 +29,22 @@ func ServerBoot(ctx command.Context, params *params.BootServerParam) error {
 		command.GlobalOption.Progress,
 		func(compChan chan bool, errChan chan error) {
 			// call manipurate functions
-			_, err := api.Boot(params.Id)
+			errCount := 0
+			var err error
+
+			for errCount < maxErrorCount {
+				_, err = api.Boot(params.Id)
+				if err == nil {
+					break
+				}
+				errCount++
+				time.Sleep(1 * time.Second)
+			}
 			if err != nil {
 				errChan <- err
 				return
 			}
+
 			err = api.SleepUntilUp(params.Id, client.DefaultTimeoutDuration)
 			if err != nil {
 				errChan <- err
