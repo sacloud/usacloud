@@ -266,6 +266,8 @@ func (p *ListDNSParam) GetFormatFile() string {
 
 // RecordInfoDNSParam is input parameters for the sacloud API
 type RecordInfoDNSParam struct {
+	Name              string   `json:"name"`
+	Type              string   `json:"type"`
 	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
@@ -285,6 +287,12 @@ func NewRecordInfoDNSParam() *RecordInfoDNSParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *RecordInfoDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.Name) {
+		p.Name = ""
+	}
+	if isEmpty(p.Type) {
+		p.Type = ""
+	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -321,6 +329,20 @@ func (p *RecordInfoDNSParam) FillValueToSkeleton() {
 // Validate checks current values in model
 func (p *RecordInfoDNSParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["DNS"].Commands["record-info"].Params["name"].ValidateFunc
+		errs := validator("--name", p.Name)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-info"].Params["type"].ValidateFunc
+		errs := validator("--type", p.Type)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := validateSakuraID
 		errs := validator("--id", p.Id)
@@ -380,6 +402,20 @@ func (p *RecordInfoDNSParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *RecordInfoDNSParam) SetName(v string) {
+	p.Name = v
+}
+
+func (p *RecordInfoDNSParam) GetName() string {
+	return p.Name
+}
+func (p *RecordInfoDNSParam) SetType(v string) {
+	p.Type = v
+}
+
+func (p *RecordInfoDNSParam) GetType() string {
+	return p.Type
+}
 func (p *RecordInfoDNSParam) SetSelector(v []string) {
 	p.Selector = v
 }

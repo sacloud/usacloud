@@ -33,6 +33,10 @@ func DNSRecordAdd(ctx command.Context, params *params.RecordAddDNSParam) error {
 	default:
 		record = p.CreateNewRecord(params.Name, t, params.Value, params.Ttl)
 	}
+
+	// save current index
+	index := len(p.Settings.DNS.ResourceRecordSets)
+
 	p.AddRecord(record)
 
 	// update
@@ -42,10 +46,10 @@ func DNSRecordAdd(ctx command.Context, params *params.RecordAddDNSParam) error {
 	}
 
 	list := []interface{}{}
-	for i := range p.Settings.DNS.ResourceRecordSets {
-		list = append(list, &p.Settings.DNS.ResourceRecordSets[i])
-	}
-
+	list = append(list, &dnsRecordValueType{
+		DNSRecordSet: &p.Settings.DNS.ResourceRecordSets[index],
+		Index:        index + 1, // for display
+	})
 	return ctx.GetOutput().Print(list...)
 
 }
