@@ -24,6 +24,7 @@ var Resources = map[string]*schema.Resource{
 	"ISOImage":        ISOImageResource(),
 	"License":         LicenseResource(),
 	"LoadBalancer":    LoadBalancerResource(),
+	"NFS":             NFSResource(),
 	"ObjectStorage":   ObjectStorageResource(),
 	"PacketFilter":    PacketFilterResource(),
 	"Price":           PriceResource(),
