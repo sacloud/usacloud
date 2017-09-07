@@ -7,14 +7,14 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func LoadBalancerDelete(ctx command.Context, params *params.DeleteLoadBalancerParam) error {
+func NFSDelete(ctx command.Context, params *params.DeleteNFSParam) error {
 
 	client := ctx.GetAPIClient()
-	api := client.GetLoadBalancerAPI()
+	api := client.GetNFSAPI()
 
 	p, err := api.Read(params.Id)
 	if err != nil {
-		return fmt.Errorf("LoadBalancerDelete is failed: %s", err)
+		return fmt.Errorf("NFSDelete is failed: %s", err)
 	}
 
 	if p.IsUp() {
@@ -22,7 +22,7 @@ func LoadBalancerDelete(ctx command.Context, params *params.DeleteLoadBalancerPa
 
 			err = internal.ExecWithProgress(
 				fmt.Sprintf("Still waiting for delete[ID:%d]...", params.Id),
-				fmt.Sprintf("Delete load-balancer[ID:%d]", params.Id),
+				fmt.Sprintf("Delete nfs[ID:%d]", params.Id),
 				command.GlobalOption.Progress,
 				func(compChan chan bool, errChan chan error) {
 					// call manipurate functions
@@ -42,19 +42,20 @@ func LoadBalancerDelete(ctx command.Context, params *params.DeleteLoadBalancerPa
 				},
 			)
 			if err != nil {
-				return fmt.Errorf("LoadBalancerDelete is failed: %s", err)
+				return fmt.Errorf("NFSDelete is failed: %s", err)
 			}
 
 		} else {
-			return fmt.Errorf("LoadBalancer(%d) is still running", params.Id)
+			return fmt.Errorf("NFS(%d) is still running", params.Id)
 		}
 	}
 
 	// call Delete(id)
 	res, err := api.Delete(params.Id)
 	if err != nil {
-		return fmt.Errorf("LoadBalancerDelete is failed: %s", err)
+		return fmt.Errorf("NFSDelete is failed: %s", err)
 	}
 
 	return ctx.GetOutput().Print(res)
+
 }
