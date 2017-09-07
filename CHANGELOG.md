@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 (2017-09-07)
+
+* サーバ起動APIでのエラー時リトライ #204 (yamamoto-febc)
+* NFSアプライアンス #205 (yamamoto-febc)
+* DNSレコードのインデックスを特定しやすくする #206 (yamamoto-febc)
+* quietモードでのIndex列の表示 #207 (yamamoto-febc)
+
+
 ## 0.1.1 (2017-08-16)
 
 * 0.1.1リリース #201 (yamamoto-febc)

@@ -1,3 +1,16 @@
+usacloud (0.2.0-1) stable; urgency=low
+
+  * サーバ起動APIでのエラー時リトライ (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/204>
+  * NFSアプライアンス (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/205>
+  * DNSレコードのインデックスを特定しやすくする (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/206>
+  * quietモードでのIndex列の表示 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/207>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Thu, 07 Sep 2017 13:04:21 +0000
+
 usacloud (0.1.1-1) stable; urgency=low
 
   * 0.1.1リリース (by yamamoto-febc)

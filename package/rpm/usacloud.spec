@@ -40,6 +40,12 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu Sep 07 2017 <yamamoto.febc@gmail.com> - 0.2.0-1
+- サーバ起動APIでのエラー時リトライ (by yamamoto-febc)
+- NFSアプライアンス (by yamamoto-febc)
+- DNSレコードのインデックスを特定しやすくする (by yamamoto-febc)
+- quietモードでのIndex列の表示 (by yamamoto-febc)
+
 * Wed Aug 16 2017 <yamamoto.febc@gmail.com> - 0.1.1-1
 - 0.1.1リリース (by yamamoto-febc)
 
