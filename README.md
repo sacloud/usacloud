@@ -120,6 +120,7 @@ COMMANDS:
    switch                           A manage commands of Switch
    database                         A manage commands of Database
    load-balancer                    A manage commands of LoadBalancer
+   nfs                              A manage commands of NFS
    vpc-router                       A manage commands of VPCRouter
    dns                              A manage commands of DNS
    gslb                             A manage commands of GSLB
