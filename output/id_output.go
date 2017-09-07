@@ -14,7 +14,7 @@ type idOutput struct {
 	Err io.Writer
 }
 
-var idOutputTargetColumns = []string{"ID", "Key", "BillID", "RowNumber"}
+var idOutputTargetColumns = []string{"ID", "Key", "BillID", "Index", "RowNumber"}
 
 func NewIDOutput(out io.Writer, err io.Writer) Output {
 	return &idOutput{
