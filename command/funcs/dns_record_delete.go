@@ -2,6 +2,7 @@ package funcs
 
 import (
 	"fmt"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 )
@@ -27,8 +28,12 @@ func DNSRecordDelete(ctx command.Context, params *params.RecordDeleteDNSParam) e
 	// delete
 	recordSet := p.Settings.DNS.ResourceRecordSets
 	p.ClearRecords()
+
+	var targetRecord *sacloud.DNSRecordSet
 	for i, r := range recordSet {
-		if i != params.Index-1 {
+		if i == params.Index-1 {
+			targetRecord = &r
+		} else {
 			p.Settings.DNS.ResourceRecordSets = append(p.Settings.DNS.ResourceRecordSets, r)
 		}
 	}
@@ -40,9 +45,10 @@ func DNSRecordDelete(ctx command.Context, params *params.RecordDeleteDNSParam) e
 	}
 
 	list := []interface{}{}
-	for i := range p.Settings.DNS.ResourceRecordSets {
-		list = append(list, &p.Settings.DNS.ResourceRecordSets[i])
-	}
+	list = append(list, &dnsRecordValueType{
+		DNSRecordSet: targetRecord,
+		Index:        params.Index, // for display
+	})
 
 	return ctx.GetOutput().Print(list...)
 

@@ -129,9 +129,9 @@ func DNSRecordUpdate(ctx command.Context, params *params.RecordUpdateDNSParam) e
 	}
 
 	list := []interface{}{}
-	for i := range p.Settings.DNS.ResourceRecordSets {
-		list = append(list, &p.Settings.DNS.ResourceRecordSets[i])
-	}
-
+	list = append(list, &dnsRecordValueType{
+		DNSRecordSet: record,
+		Index:        params.Index, // for display
+	})
 	return ctx.GetOutput().Print(list...)
 }

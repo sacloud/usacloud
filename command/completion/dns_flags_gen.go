@@ -60,6 +60,16 @@ func DNSRecordInfoCompleteFlags(ctx command.Context, params *params.RecordInfoDN
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "name":
+		param := define.Resources["DNS"].Commands["record-info"].BuildedParams().Get("name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "type":
+		param := define.Resources["DNS"].Commands["record-info"].BuildedParams().Get("type")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "selector":
 		param := define.Resources["DNS"].Commands["record-info"].BuildedParams().Get("selector")
 		if param != nil {

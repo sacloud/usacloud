@@ -335,6 +335,14 @@ func init() {
 				Usage:     "RecordInfo DNS",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "name",
+						Usage: "set name",
+					},
+					&cli.StringFlag{
+						Name:  "type",
+						Usage: "set record type[A/AAAA/NS/CNAME/MX/TXT/SRV]",
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
@@ -410,6 +418,12 @@ func init() {
 					ctx := command.NewContext(c, realArgs, recordInfoParam)
 
 					// Set option values
+					if c.IsSet("name") {
+						recordInfoParam.Name = c.String("name")
+					}
+					if c.IsSet("type") {
+						recordInfoParam.Type = c.String("type")
+					}
 					if c.IsSet("selector") {
 						recordInfoParam.Selector = c.StringSlice("selector")
 					}
@@ -525,6 +539,12 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("name") {
+						recordInfoParam.Name = c.String("name")
+					}
+					if c.IsSet("type") {
+						recordInfoParam.Type = c.String("type")
+					}
 					if c.IsSet("selector") {
 						recordInfoParam.Selector = c.StringSlice("selector")
 					}
@@ -3746,6 +3766,11 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
+	AppendFlagCategoryMap("dns", "record-info", "name", &schema.Category{
+		Key:         "record",
+		DisplayName: "Record options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("dns", "record-info", "output-type", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3770,6 +3795,11 @@ func init() {
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("dns", "record-info", "type", &schema.Category{
+		Key:         "record",
+		DisplayName: "Record options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("dns", "record-update", "assumeyes", &schema.Category{
 		Key:         "Input",

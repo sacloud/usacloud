@@ -138,7 +138,7 @@ func dnsListColumns() []output.ColumnDef {
 
 func dnsRecordListColumns() []output.ColumnDef {
 	return []output.ColumnDef{
-		{Name: "__ORDER__"}, // magic column name(generated on demand)
+		{Name: "Index"},
 		{Name: "Type"},
 		{Name: "Name"},
 		{Name: "RData"},
@@ -187,7 +187,25 @@ func dnsDeleteParam() map[string]*schema.Schema {
 }
 
 func dnsRecordListParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{}
+	return map[string]*schema.Schema{
+		"name": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set name",
+			ValidateFunc: validateStrLen(1, 63),
+			Category:     "record",
+			Order:        10,
+		},
+		"type": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set record type[A/AAAA/NS/CNAME/MX/TXT/SRV]",
+			ValidateFunc: validateInStrValues(allowDNSTypes...),
+			CompleteFunc: completeInStrValues(allowDNSTypes...),
+			Category:     "record",
+			Order:        20,
+		},
+	}
 }
 
 var allowDNSTypes = []string{

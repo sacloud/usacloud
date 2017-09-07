@@ -21,8 +21,19 @@ func DNSRecordInfo(ctx command.Context, params *params.RecordInfoDNSParam) error
 	}
 
 	list := []interface{}{}
-	for i := range p.Settings.DNS.ResourceRecordSets {
-		list = append(list, &p.Settings.DNS.ResourceRecordSets[i])
+	for i, r := range p.Settings.DNS.ResourceRecordSets {
+		// filtering
+		if params.Name != "" && params.Name != r.Name {
+			continue
+		}
+		if params.Type != "" && params.Type != r.Type {
+			continue
+		}
+
+		list = append(list, &dnsRecordValueType{
+			DNSRecordSet: &p.Settings.DNS.ResourceRecordSets[i],
+			Index:        i + 1, // for display
+		})
 	}
 
 	return ctx.GetOutput().Print(list...)
