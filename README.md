@@ -21,11 +21,11 @@
 
 ### RHEL / CentOS
 
-    curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-yum.sh | sh
+    curl -fsSL http://releases.usacloud.jp/usacloud/repos/setup-yum.sh | sh
 
 ### Ubuntu / debian / bash on Windows(Ubuntu)
 
-    curl -fsSL https://usacloud.b.sakurastorage.jp/repos/setup-apt.sh | sh
+    curl -fsSL http://releases.usacloud.jp/usacloud/repos/setup-apt.sh | sh
 
 ### Windows(`chocolatey`)
 
@@ -38,14 +38,14 @@
 以下のリンクからバイナリーファイルをダウンロードして展開し、任意のフォルダー内に配置してください。  
 (PATHを通しておくと便利です)
 
-- Windows 64bit版 : [https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-amd64.zip](https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-amd64.zip)
-- Windows 32bit版 : [https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-386.zip](https://usacloud.b.sakurastorage.jp/repos/windows/usacloud_windows-386.zip)
+- Windows 64bit版 : [http://releases.usacloud.jp/usacloud/repos/windows/usacloud_windows-amd64.zip](http://releases.usacloud.jp/usacloud/repos/windows/usacloud_windows-amd64.zip)
+- Windows 32bit版 : [http://releases.usacloud.jp/usacloud/repos/windows/usacloud_windows-386.zip](http://releases.usacloud.jp/usacloud/repos/windows/usacloud_windows-386.zip)
 - その他の場合 : [https://github.com/sacloud/usacloud/releases/latest/](https://github.com/sacloud/usacloud/releases/latest/)
 
 `bash_completion`が利用できる場合は、以下のコマンドで`usacloud`用の`bash_completion`を導入することが出来ます。
 
 ```bash
-curl -s -L https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud >> ~/.bashrc
+curl -s -L http://releases.usacloud.jp/usacloud/contrib/completion/bash/usacloud >> ~/.bashrc
 ```
 
 > ※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。
