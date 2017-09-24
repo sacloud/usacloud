@@ -3,7 +3,7 @@ services:
 - docker
 language: go
 go:
-- 1.8
+- 1.9
 env:
   global:
   - PATH=/home/travis/gopath/bin:$PATH DEBIAN_FRONTEND=noninteractive
@@ -30,11 +30,7 @@ script:
 - make lint-docs
 - make docker-build
 before_deploy:
-- docker pull sacloud/rpm-build:latest
-- docker pull sacloud/deb-build:latest
-- make rpm deb
 - go get github.com/aktau/github-release
-- go install github.com/sacloud/usacloud
 - mkdir -p ~/bin
 - git clone https://github.com/github/hub.git && cd hub && script/build -o ~/bin/hub
   && cd ..

@@ -38,7 +38,7 @@ class Usacloud < Formula
 
   option "without-completions", "Disable bash completions"
   resource "bash_completion" do
-    url "https://usacloud.b.sakurastorage.jp/contrib/completion/bash/usacloud"
+    url "https://releases.usacloud.jp/usacloud/contrib/completion/bash/usacloud"
     sha256 sha256_bash_completion
   end
 

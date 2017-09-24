@@ -137,31 +137,6 @@ sub github_release_with_exit_code {
     unshift  @_, _github_release; goto \&command_with_exit_code
 }
 
-sub _usacloud {
-    if($dry_run){
-        return
-    }
-    state $com = do {
-        chomp(my $c = `which usacloud`);
-        die "usacloud command is required\n" unless $c;
-        $c;
-    };
-}
-sub usacloud {
-    if($dry_run){
-        return
-    }
-    unshift  @_, _usacloud; goto \&command
-}
-
-sub usacloud_with_exit_code {
-    if($dry_run){
-        return
-    }
-    unshift  @_, _usacloud; goto \&command_with_exit_code
-}
-
-
 sub http_get {
     my $url = shift;
     my ($ok, $err, undef, $stdout, $stderr) = run(command => [qw{curl -sf}, $url]);
@@ -451,7 +426,7 @@ sub upload_to_github_release {
         git qw/push/, "https://$ENV{GITHUB_TOKEN}\@github.com/$REPO_NAME.git" , qw/:staging/;
         $description = "This release includes latest commits with unreleased features";
     }
-    my @filepaths = glob("repos/centos/*/*.rpm repos/*/*.deb bin/*.zip");
+    my @filepaths = glob("bin/*.zip");
     infof "uploading following files:\n" . join("\n", @filepaths). "\n";
     for my $path (@filepaths){
         my $filename = basename($path);
@@ -469,11 +444,6 @@ sub upload_to_github_release {
     push @args, "--pre-release" if $erase_if_exist;
     github_release @args;
 
-    # upload to ojs
-    usacloud qw/object-storage put -y -r repos repos/ unless $is_staging;
-    usacloud qw/object-storage put -y -r contrib contrib/ unless $is_staging;
-    usacloud qw/object-storage put -y /, "bin/usacloud_windows-386.zip" , "repos/windows/" unless $is_staging;
-    usacloud qw/object-storage put -y /, "bin/usacloud_windows-amd64.zip", "repos/windows/" unless $is_staging;
 }
 
 sub create_pull_request {
