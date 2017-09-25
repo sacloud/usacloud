@@ -348,9 +348,8 @@ func init() {
 						Value: 1,
 					},
 					&cli.BoolFlag{
-						Name:  "enabled",
-						Usage: "[Required] set monitoring enable/disable",
-						Value: true,
+						Name:  "disabled",
+						Usage: "set monitoring disable",
 					},
 					&cli.StringFlag{
 						Name:  "host-header",
@@ -481,8 +480,8 @@ func init() {
 					if c.IsSet("delay-loop") {
 						createParam.DelayLoop = c.Int("delay-loop")
 					}
-					if c.IsSet("enabled") {
-						createParam.Enabled = c.Bool("enabled")
+					if c.IsSet("disabled") {
+						createParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("host-header") {
 						createParam.HostHeader = c.String("host-header")
@@ -641,8 +640,8 @@ func init() {
 					if c.IsSet("delay-loop") {
 						createParam.DelayLoop = c.Int("delay-loop")
 					}
-					if c.IsSet("enabled") {
-						createParam.Enabled = c.Bool("enabled")
+					if c.IsSet("disabled") {
+						createParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("host-header") {
 						createParam.HostHeader = c.String("host-header")
@@ -1091,7 +1090,7 @@ func init() {
 						Usage: "set delay-loop of monitoring(minute)",
 					},
 					&cli.BoolFlag{
-						Name:  "enabled",
+						Name:  "disabled",
 						Usage: "set monitoring enable/disable",
 					},
 					&cli.StringFlag{
@@ -1228,8 +1227,8 @@ func init() {
 					if c.IsSet("delay-loop") {
 						updateParam.DelayLoop = c.Int("delay-loop")
 					}
-					if c.IsSet("enabled") {
-						updateParam.Enabled = c.Bool("enabled")
+					if c.IsSet("disabled") {
+						updateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("host-header") {
 						updateParam.HostHeader = c.String("host-header")
@@ -1391,8 +1390,8 @@ func init() {
 					if c.IsSet("delay-loop") {
 						updateParam.DelayLoop = c.Int("delay-loop")
 					}
-					if c.IsSet("enabled") {
-						updateParam.Enabled = c.Bool("enabled")
+					if c.IsSet("disabled") {
+						updateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("host-header") {
 						updateParam.HostHeader = c.String("host-header")
@@ -1975,6 +1974,11 @@ func init() {
 		DisplayName: "Common options",
 		Order:       2147483617,
 	})
+	AppendFlagCategoryMap("simple-monitor", "create", "disabled", &schema.Category{
+		Key:         "health-check",
+		DisplayName: "Health-Check(Common) options",
+		Order:       20,
+	})
 	AppendFlagCategoryMap("simple-monitor", "create", "dns-excepted", &schema.Category{
 		Key:         "dns-check",
 		DisplayName: "Health-Check(DNS) options",
@@ -1989,11 +1993,6 @@ func init() {
 		Key:         "notify",
 		DisplayName: "Notify options",
 		Order:       30,
-	})
-	AppendFlagCategoryMap("simple-monitor", "create", "enabled", &schema.Category{
-		Key:         "health-check",
-		DisplayName: "Health-Check(Common) options",
-		Order:       20,
 	})
 	AppendFlagCategoryMap("simple-monitor", "create", "format", &schema.Category{
 		Key:         "output",
@@ -2275,6 +2274,11 @@ func init() {
 		DisplayName: "Common options",
 		Order:       2147483617,
 	})
+	AppendFlagCategoryMap("simple-monitor", "update", "disabled", &schema.Category{
+		Key:         "health-check",
+		DisplayName: "Health-Check(Common) options",
+		Order:       20,
+	})
 	AppendFlagCategoryMap("simple-monitor", "update", "dns_excepted", &schema.Category{
 		Key:         "dns-check",
 		DisplayName: "Health-Check(DNS) options",
@@ -2289,11 +2293,6 @@ func init() {
 		Key:         "notify",
 		DisplayName: "Notify options",
 		Order:       30,
-	})
-	AppendFlagCategoryMap("simple-monitor", "update", "enabled", &schema.Category{
-		Key:         "health-check",
-		DisplayName: "Health-Check(Common) options",
-		Order:       20,
 	})
 	AppendFlagCategoryMap("simple-monitor", "update", "format", &schema.Category{
 		Key:         "output",

@@ -1049,9 +1049,8 @@ func init() {
 						Usage: "set target ipaddress",
 					},
 					&cli.BoolFlag{
-						Name:  "enabled",
-						Usage: "set enabled",
-						Value: true,
+						Name:  "disabled",
+						Usage: "set disabled",
 					},
 					&cli.IntFlag{
 						Name:  "weight",
@@ -1140,8 +1139,8 @@ func init() {
 					if c.IsSet("ipaddress") {
 						serverAddParam.Ipaddress = c.String("ipaddress")
 					}
-					if c.IsSet("enabled") {
-						serverAddParam.Enabled = c.Bool("enabled")
+					if c.IsSet("disabled") {
+						serverAddParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("weight") {
 						serverAddParam.Weight = c.Int("weight")
@@ -1267,8 +1266,8 @@ func init() {
 					if c.IsSet("ipaddress") {
 						serverAddParam.Ipaddress = c.String("ipaddress")
 					}
-					if c.IsSet("enabled") {
-						serverAddParam.Enabled = c.Bool("enabled")
+					if c.IsSet("disabled") {
+						serverAddParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("weight") {
 						serverAddParam.Weight = c.Int("weight")
@@ -1766,8 +1765,8 @@ func init() {
 						Usage: "set target ipaddress",
 					},
 					&cli.BoolFlag{
-						Name:  "enabled",
-						Usage: "set enabled",
+						Name:  "disabled",
+						Usage: "set disabled",
 					},
 					&cli.IntFlag{
 						Name:  "weight",
@@ -1859,8 +1858,8 @@ func init() {
 					if c.IsSet("ipaddress") {
 						serverUpdateParam.Ipaddress = c.String("ipaddress")
 					}
-					if c.IsSet("enabled") {
-						serverUpdateParam.Enabled = c.Bool("enabled")
+					if c.IsSet("disabled") {
+						serverUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("weight") {
 						serverUpdateParam.Weight = c.Int("weight")
@@ -1989,8 +1988,8 @@ func init() {
 					if c.IsSet("ipaddress") {
 						serverUpdateParam.Ipaddress = c.String("ipaddress")
 					}
-					if c.IsSet("enabled") {
-						serverUpdateParam.Enabled = c.Bool("enabled")
+					if c.IsSet("disabled") {
+						serverUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("weight") {
 						serverUpdateParam.Weight = c.Int("weight")
@@ -3662,7 +3661,7 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("gslb", "server-add", "enabled", &schema.Category{
+	AppendFlagCategoryMap("gslb", "server-add", "disabled", &schema.Category{
 		Key:         "server",
 		DisplayName: "Server options",
 		Order:       1,
@@ -3842,7 +3841,7 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
-	AppendFlagCategoryMap("gslb", "server-update", "enabled", &schema.Category{
+	AppendFlagCategoryMap("gslb", "server-update", "disabled", &schema.Category{
 		Key:         "server",
 		DisplayName: "Server options",
 		Order:       1,

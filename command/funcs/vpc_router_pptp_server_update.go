@@ -15,7 +15,7 @@ func VPCRouterPptpServerUpdate(ctx command.Context, params *params.PptpServerUpd
 		return fmt.Errorf("VPCRouterPptpServerUpdate is failed: %s", e)
 	}
 
-	if params.Enabled == "true" {
+	if !params.Disabled {
 		// validate
 		targets := []string{"range-start", "range-stop"}
 		for _, t := range targets {

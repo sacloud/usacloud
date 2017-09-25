@@ -7016,7 +7016,7 @@ func (p *PptpServerInfoVPCRouterParam) GetId() int64 {
 
 // PptpServerUpdateVPCRouterParam is input parameters for the sacloud API
 type PptpServerUpdateVPCRouterParam struct {
-	Enabled           string   `json:"enabled"`
+	Disabled          bool     `json:"disabled"`
 	RangeStart        string   `json:"range-start"`
 	RangeStop         string   `json:"range-stop"`
 	Selector          []string `json:"selector"`
@@ -7034,8 +7034,8 @@ func NewPptpServerUpdateVPCRouterParam() *PptpServerUpdateVPCRouterParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *PptpServerUpdateVPCRouterParam) FillValueToSkeleton() {
-	if isEmpty(p.Enabled) {
-		p.Enabled = ""
+	if isEmpty(p.Disabled) {
+		p.Disabled = false
 	}
 	if isEmpty(p.RangeStart) {
 		p.RangeStart = ""
@@ -7067,20 +7067,6 @@ func (p *PptpServerUpdateVPCRouterParam) FillValueToSkeleton() {
 // Validate checks current values in model
 func (p *PptpServerUpdateVPCRouterParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--enabled", p.Enabled)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["pptp-server-update"].Params["enabled"].ValidateFunc
-		errs := validator("--enabled", p.Enabled)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := define.Resources["VPCRouter"].Commands["pptp-server-update"].Params["range-start"].ValidateFunc
 		errs := validator("--range-start", p.RangeStart)
@@ -7134,12 +7120,12 @@ func (p *PptpServerUpdateVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
-func (p *PptpServerUpdateVPCRouterParam) SetEnabled(v string) {
-	p.Enabled = v
+func (p *PptpServerUpdateVPCRouterParam) SetDisabled(v bool) {
+	p.Disabled = v
 }
 
-func (p *PptpServerUpdateVPCRouterParam) GetEnabled() string {
-	return p.Enabled
+func (p *PptpServerUpdateVPCRouterParam) GetDisabled() bool {
+	return p.Disabled
 }
 func (p *PptpServerUpdateVPCRouterParam) SetRangeStart(v string) {
 	p.RangeStart = v
@@ -7387,7 +7373,7 @@ func (p *L2tpServerInfoVPCRouterParam) GetId() int64 {
 
 // L2tpServerUpdateVPCRouterParam is input parameters for the sacloud API
 type L2tpServerUpdateVPCRouterParam struct {
-	Enabled           string   `json:"enabled"`
+	Disabled          bool     `json:"disabled"`
 	RangeStart        string   `json:"range-start"`
 	RangeStop         string   `json:"range-stop"`
 	PreSharedSecret   string   `json:"pre-shared-secret"`
@@ -7406,8 +7392,8 @@ func NewL2tpServerUpdateVPCRouterParam() *L2tpServerUpdateVPCRouterParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *L2tpServerUpdateVPCRouterParam) FillValueToSkeleton() {
-	if isEmpty(p.Enabled) {
-		p.Enabled = ""
+	if isEmpty(p.Disabled) {
+		p.Disabled = false
 	}
 	if isEmpty(p.RangeStart) {
 		p.RangeStart = ""
@@ -7442,20 +7428,6 @@ func (p *L2tpServerUpdateVPCRouterParam) FillValueToSkeleton() {
 // Validate checks current values in model
 func (p *L2tpServerUpdateVPCRouterParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--enabled", p.Enabled)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["enabled"].ValidateFunc
-		errs := validator("--enabled", p.Enabled)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := define.Resources["VPCRouter"].Commands["l2tp-server-update"].Params["range-start"].ValidateFunc
 		errs := validator("--range-start", p.RangeStart)
@@ -7516,12 +7488,12 @@ func (p *L2tpServerUpdateVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
-func (p *L2tpServerUpdateVPCRouterParam) SetEnabled(v string) {
-	p.Enabled = v
+func (p *L2tpServerUpdateVPCRouterParam) SetDisabled(v bool) {
+	p.Disabled = v
 }
 
-func (p *L2tpServerUpdateVPCRouterParam) GetEnabled() string {
-	return p.Enabled
+func (p *L2tpServerUpdateVPCRouterParam) GetDisabled() bool {
+	return p.Disabled
 }
 func (p *L2tpServerUpdateVPCRouterParam) SetRangeStart(v string) {
 	p.RangeStart = v

@@ -69,7 +69,6 @@ func init() {
 				Name:    "paid-resources-only",
 				Aliases: []string{"paid"},
 				Usage:   "Show paid-resource only",
-				Value:   false,
 			},
 		},
 		Subcommands: []*cli.Command{
@@ -117,7 +116,6 @@ func init() {
 						Name:    "paid-resources-only",
 						Aliases: []string{"paid"},
 						Usage:   "Show paid-resource only",
-						Value:   false,
 					},
 				},
 				ShellComplete: func(c *cli.Context) {

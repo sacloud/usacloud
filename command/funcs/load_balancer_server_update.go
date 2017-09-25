@@ -53,10 +53,10 @@ func LoadBalancerServerUpdate(ctx command.Context, params *params.ServerUpdateLo
 		return fmt.Errorf("server(%s) is not found", params.Ipaddress)
 	}
 
-	if ctx.IsSet("enabled") {
-		server.Enabled = "False"
-		if params.Enabled {
-			server.Enabled = "True"
+	if ctx.IsSet("disabled") {
+		server.Enabled = "True"
+		if params.Disabled {
+			server.Enabled = "False"
 		}
 	}
 

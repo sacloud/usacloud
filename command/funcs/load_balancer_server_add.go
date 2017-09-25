@@ -63,9 +63,9 @@ func LoadBalancerServerAdd(ctx command.Context, params *params.ServerAddLoadBala
 	var server = &sacloud.LoadBalancerServer{}
 	server.IPAddress = params.Ipaddress
 	server.Port = vip.Port
-	server.Enabled = "False"
-	if params.Enabled {
-		server.Enabled = "True"
+	server.Enabled = "True"
+	if params.Disabled {
+		server.Enabled = "False"
 	}
 	server.HealthCheck = &sacloud.LoadBalancerHealthCheck{}
 

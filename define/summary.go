@@ -28,11 +28,10 @@ func SummaryResource() *schema.Resource {
 func showSummaryParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"paid-resources-only": {
-			Type:         schema.TypeBool,
-			HandlerType:  schema.HandlerNoop,
-			Aliases:      []string{"paid"},
-			Description:  "Show paid-resource only",
-			DefaultValue: false,
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"paid"},
+			Description: "Show paid-resource only",
 		},
 	}
 }

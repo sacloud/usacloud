@@ -167,8 +167,8 @@ func GSLBServerAddCompleteFlags(ctx command.Context, params *params.ServerAddGSL
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "enabled":
-		param := define.Resources["GSLB"].Commands["server-add"].BuildedParams().Get("enabled")
+	case "disabled":
+		param := define.Resources["GSLB"].Commands["server-add"].BuildedParams().Get("disabled")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -239,8 +239,8 @@ func GSLBServerUpdateCompleteFlags(ctx command.Context, params *params.ServerUpd
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "enabled":
-		param := define.Resources["GSLB"].Commands["server-update"].BuildedParams().Get("enabled")
+	case "disabled":
+		param := define.Resources["GSLB"].Commands["server-update"].BuildedParams().Get("disabled")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

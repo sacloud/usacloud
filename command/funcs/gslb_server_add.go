@@ -29,9 +29,9 @@ func GSLBServerAdd(ctx command.Context, params *params.ServerAddGSLBParam) error
 	}
 
 	// add
-	enabled := "False"
-	if params.Enabled {
-		enabled = "True"
+	enabled := "True"
+	if params.Disabled {
+		enabled = "False"
 	}
 
 	server := &sacloud.GSLBServer{

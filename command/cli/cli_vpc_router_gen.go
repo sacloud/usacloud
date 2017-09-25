@@ -409,7 +409,6 @@ func init() {
 					&cli.BoolFlag{
 						Name:  "boot-after-create",
 						Usage: "boot after create",
-						Value: false,
 					},
 					&cli.StringFlag{
 						Name:  "name",
@@ -11953,9 +11952,9 @@ func init() {
 				Usage:     "Update PPTP server setting",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:  "enabled",
-						Usage: "[Required] enable/disable PPTP server",
+					&cli.BoolFlag{
+						Name:  "disabled",
+						Usage: "enable/disable PPTP server",
 					},
 					&cli.StringFlag{
 						Name:  "range-start",
@@ -12022,8 +12021,8 @@ func init() {
 					ctx := command.NewContext(c, realArgs, pptpServerUpdateParam)
 
 					// Set option values
-					if c.IsSet("enabled") {
-						pptpServerUpdateParam.Enabled = c.String("enabled")
+					if c.IsSet("disabled") {
+						pptpServerUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("range-start") {
 						pptpServerUpdateParam.RangeStart = c.String("range-start")
@@ -12134,8 +12133,8 @@ func init() {
 					}
 
 					// Set option values
-					if c.IsSet("enabled") {
-						pptpServerUpdateParam.Enabled = c.String("enabled")
+					if c.IsSet("disabled") {
+						pptpServerUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("range-start") {
 						pptpServerUpdateParam.RangeStart = c.String("range-start")
@@ -12612,9 +12611,9 @@ func init() {
 				Usage:     "Update L2TP/IPSec server setting",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:  "enabled",
-						Usage: "[Required] enable/disable PPTP server",
+					&cli.BoolFlag{
+						Name:  "disabled",
+						Usage: "enable/disable PPTP server",
 					},
 					&cli.StringFlag{
 						Name:  "range-start",
@@ -12685,8 +12684,8 @@ func init() {
 					ctx := command.NewContext(c, realArgs, l2tpServerUpdateParam)
 
 					// Set option values
-					if c.IsSet("enabled") {
-						l2tpServerUpdateParam.Enabled = c.String("enabled")
+					if c.IsSet("disabled") {
+						l2tpServerUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("range-start") {
 						l2tpServerUpdateParam.RangeStart = c.String("range-start")
@@ -12800,8 +12799,8 @@ func init() {
 					}
 
 					// Set option values
-					if c.IsSet("enabled") {
-						l2tpServerUpdateParam.Enabled = c.String("enabled")
+					if c.IsSet("disabled") {
+						l2tpServerUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("range-start") {
 						l2tpServerUpdateParam.RangeStart = c.String("range-start")
@@ -18887,7 +18886,7 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("vpc-router", "l2tp-server-update", "enabled", &schema.Category{
+	AppendFlagCategoryMap("vpc-router", "l2tp-server-update", "disabled", &schema.Category{
 		Key:         "L2TP-IPSec",
 		DisplayName: "L2TP-IPSec options",
 		Order:       1,
@@ -19372,7 +19371,7 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("vpc-router", "pptp-server-update", "enabled", &schema.Category{
+	AppendFlagCategoryMap("vpc-router", "pptp-server-update", "disabled", &schema.Category{
 		Key:         "PPTP",
 		DisplayName: "PPTP options",
 		Order:       1,

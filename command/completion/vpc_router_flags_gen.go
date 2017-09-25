@@ -1357,8 +1357,8 @@ func VPCRouterPptpServerUpdateCompleteFlags(ctx command.Context, params *params.
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "enabled":
-		param := define.Resources["VPCRouter"].Commands["pptp-server-update"].BuildedParams().Get("enabled")
+	case "disabled":
+		param := define.Resources["VPCRouter"].Commands["pptp-server-update"].BuildedParams().Get("disabled")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -1422,8 +1422,8 @@ func VPCRouterL2tpServerUpdateCompleteFlags(ctx command.Context, params *params.
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "enabled":
-		param := define.Resources["VPCRouter"].Commands["l2tp-server-update"].BuildedParams().Get("enabled")
+	case "disabled":
+		param := define.Resources["VPCRouter"].Commands["l2tp-server-update"].BuildedParams().Get("disabled")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

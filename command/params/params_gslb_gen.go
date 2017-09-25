@@ -832,7 +832,7 @@ func (p *CreateGSLBParam) GetFormatFile() string {
 // ServerAddGSLBParam is input parameters for the sacloud API
 type ServerAddGSLBParam struct {
 	Ipaddress         string   `json:"ipaddress"`
-	Enabled           bool     `json:"enabled"`
+	Disabled          bool     `json:"disabled"`
 	Weight            int      `json:"weight"`
 	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
@@ -849,10 +849,7 @@ type ServerAddGSLBParam struct {
 
 // NewServerAddGSLBParam return new ServerAddGSLBParam
 func NewServerAddGSLBParam() *ServerAddGSLBParam {
-	return &ServerAddGSLBParam{
-
-		Enabled: true,
-	}
+	return &ServerAddGSLBParam{}
 }
 
 // FillValueToSkeleton fill values to empty fields
@@ -860,8 +857,8 @@ func (p *ServerAddGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if isEmpty(p.Enabled) {
-		p.Enabled = false
+	if isEmpty(p.Disabled) {
+		p.Disabled = false
 	}
 	if isEmpty(p.Weight) {
 		p.Weight = 0
@@ -985,12 +982,12 @@ func (p *ServerAddGSLBParam) SetIpaddress(v string) {
 func (p *ServerAddGSLBParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *ServerAddGSLBParam) SetEnabled(v bool) {
-	p.Enabled = v
+func (p *ServerAddGSLBParam) SetDisabled(v bool) {
+	p.Disabled = v
 }
 
-func (p *ServerAddGSLBParam) GetEnabled() bool {
-	return p.Enabled
+func (p *ServerAddGSLBParam) GetDisabled() bool {
+	return p.Disabled
 }
 func (p *ServerAddGSLBParam) SetWeight(v int) {
 	p.Weight = v
@@ -1268,7 +1265,7 @@ func (p *ReadGSLBParam) GetId() int64 {
 type ServerUpdateGSLBParam struct {
 	Index             int      `json:"index"`
 	Ipaddress         string   `json:"ipaddress"`
-	Enabled           bool     `json:"enabled"`
+	Disabled          bool     `json:"disabled"`
 	Weight            int      `json:"weight"`
 	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
@@ -1296,8 +1293,8 @@ func (p *ServerUpdateGSLBParam) FillValueToSkeleton() {
 	if isEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
 	}
-	if isEmpty(p.Enabled) {
-		p.Enabled = false
+	if isEmpty(p.Disabled) {
+		p.Disabled = false
 	}
 	if isEmpty(p.Weight) {
 		p.Weight = 0
@@ -1435,12 +1432,12 @@ func (p *ServerUpdateGSLBParam) SetIpaddress(v string) {
 func (p *ServerUpdateGSLBParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *ServerUpdateGSLBParam) SetEnabled(v bool) {
-	p.Enabled = v
+func (p *ServerUpdateGSLBParam) SetDisabled(v bool) {
+	p.Disabled = v
 }
 
-func (p *ServerUpdateGSLBParam) GetEnabled() bool {
-	return p.Enabled
+func (p *ServerUpdateGSLBParam) GetDisabled() bool {
+	return p.Disabled
 }
 func (p *ServerUpdateGSLBParam) SetWeight(v int) {
 	p.Weight = v

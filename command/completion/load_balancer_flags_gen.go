@@ -607,8 +607,8 @@ func LoadBalancerServerAddCompleteFlags(ctx command.Context, params *params.Serv
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "enabled":
-		param := define.Resources["LoadBalancer"].Commands["server-add"].BuildedParams().Get("enabled")
+	case "disabled":
+		param := define.Resources["LoadBalancer"].Commands["server-add"].BuildedParams().Get("disabled")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -671,8 +671,8 @@ func LoadBalancerServerUpdateCompleteFlags(ctx command.Context, params *params.S
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "enabled":
-		param := define.Resources["LoadBalancer"].Commands["server-update"].BuildedParams().Get("enabled")
+	case "disabled":
+		param := define.Resources["LoadBalancer"].Commands["server-update"].BuildedParams().Get("disabled")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

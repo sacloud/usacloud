@@ -308,13 +308,12 @@ func gslbServerAddParam() map[string]*schema.Schema {
 			Category:     "server",
 			Order:        10,
 		},
-		"enabled": {
-			Type:         schema.TypeBool,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "set enabled",
-			DefaultValue: true,
-			Category:     "server",
-			Order:        20,
+		"disabled": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "set disabled",
+			Category:    "server",
+			Order:       20,
 		},
 		"weight": {
 			Type:         schema.TypeInt,
@@ -344,10 +343,10 @@ func gslbServerUpdateParam() map[string]*schema.Schema {
 			Category:     "server",
 			Order:        10,
 		},
-		"enabled": {
+		"disabled": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
-			Description: "set enabled",
+			Description: "set disabled",
 			Category:    "server",
 			Order:       20,
 		},

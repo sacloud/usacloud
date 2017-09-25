@@ -5230,9 +5230,8 @@ func init() {
 						Usage: "set expect response-code of http/https health check request",
 					},
 					&cli.BoolFlag{
-						Name:  "enabled",
-						Usage: "[Required] set enable/disable",
-						Value: true,
+						Name:  "disabled",
+						Usage: "set disable",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
@@ -5311,8 +5310,8 @@ func init() {
 					if c.IsSet("response-code") {
 						serverAddParam.ResponseCode = c.Int("response-code")
 					}
-					if c.IsSet("enabled") {
-						serverAddParam.Enabled = c.Bool("enabled")
+					if c.IsSet("disabled") {
+						serverAddParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("selector") {
 						serverAddParam.Selector = c.StringSlice("selector")
@@ -5438,8 +5437,8 @@ func init() {
 					if c.IsSet("response-code") {
 						serverAddParam.ResponseCode = c.Int("response-code")
 					}
-					if c.IsSet("enabled") {
-						serverAddParam.Enabled = c.Bool("enabled")
+					if c.IsSet("disabled") {
+						serverAddParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("selector") {
 						serverAddParam.Selector = c.StringSlice("selector")
@@ -5607,7 +5606,7 @@ func init() {
 						Usage: "set expect response-code of http/https health check request",
 					},
 					&cli.BoolFlag{
-						Name:  "enabled",
+						Name:  "disabled",
 						Usage: "set enable/disable",
 					},
 					&cli.StringSliceFlag{
@@ -5687,8 +5686,8 @@ func init() {
 					if c.IsSet("response-code") {
 						serverUpdateParam.ResponseCode = c.Int("response-code")
 					}
-					if c.IsSet("enabled") {
-						serverUpdateParam.Enabled = c.Bool("enabled")
+					if c.IsSet("disabled") {
+						serverUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("selector") {
 						serverUpdateParam.Selector = c.StringSlice("selector")
@@ -5814,8 +5813,8 @@ func init() {
 					if c.IsSet("response-code") {
 						serverUpdateParam.ResponseCode = c.Int("response-code")
 					}
-					if c.IsSet("enabled") {
-						serverUpdateParam.Enabled = c.Bool("enabled")
+					if c.IsSet("disabled") {
+						serverUpdateParam.Disabled = c.Bool("disabled")
 					}
 					if c.IsSet("selector") {
 						serverUpdateParam.Selector = c.StringSlice("selector")
@@ -7178,7 +7177,7 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("load-balancer", "server-add", "enabled", &schema.Category{
+	AppendFlagCategoryMap("load-balancer", "server-add", "disabled", &schema.Category{
 		Key:         "server",
 		DisplayName: "Server options",
 		Order:       1,
@@ -7363,7 +7362,7 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
-	AppendFlagCategoryMap("load-balancer", "server-update", "enabled", &schema.Category{
+	AppendFlagCategoryMap("load-balancer", "server-update", "disabled", &schema.Category{
 		Key:         "server",
 		DisplayName: "Server options",
 		Order:       1,
