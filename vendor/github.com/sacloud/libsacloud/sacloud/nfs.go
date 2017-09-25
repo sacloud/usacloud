@@ -41,6 +41,7 @@ type CreateNFSValue struct {
 	Icon         *Resource // アイコン
 }
 
+// NewCreateNFSValue NFS作成用パラメーター
 func NewCreateNFSValue() *CreateNFSValue {
 	return &CreateNFSValue{
 		Plan: NFSPlan100G,

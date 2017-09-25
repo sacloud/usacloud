@@ -858,7 +858,7 @@ func (b *DiskBuilder) createSSHKey(strKey string) (*sacloud.SSHKey, error) {
 	b.callEventHandlerIfExists(DiskBuildOnCreateSSHKeyBefore)
 
 	keyReq := b.client.SSHKey.New()
-	keyReq.Name = fmt.Sprintf("publickey-%s", time.Now())
+	keyReq.Name = fmt.Sprintf("publickey-%s", time.Now().Format(time.RFC3339))
 	keyReq.PublicKey = strKey
 
 	key, err := b.client.SSHKey.Create(keyReq)
@@ -904,7 +904,7 @@ func (b *DiskBuilder) createNote(strNote string) (*sacloud.Note, error) {
 	b.callEventHandlerIfExists(DiskBuildOnCreateNoteBefore)
 
 	noteReq := b.client.Note.New()
-	noteReq.Name = fmt.Sprintf("note-%s", time.Now())
+	noteReq.Name = fmt.Sprintf("note-%s", time.Now().Format(time.RFC3339))
 	noteReq.Content = strNote
 
 	note, err := b.client.Note.Create(noteReq)

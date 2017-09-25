@@ -28,7 +28,7 @@ func DatabaseBackupRemove(ctx command.Context, params *params.BackupRemoveDataba
 		return fmt.Errorf("index(%d) is out of range", params.Index)
 	}
 
-	backupID := info.DBConf.Backup.History[params.Index-1].Id()
+	backupID := info.DBConf.Backup.History[params.Index-1].ID()
 	_, err := api.DeleteBackup(params.Id, backupID)
 	if err != nil {
 		return fmt.Errorf("DatabaseBackupRemove is failed: %s", e)

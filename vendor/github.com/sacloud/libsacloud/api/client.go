@@ -14,8 +14,8 @@ import (
 	"time"
 )
 
-const (
-	sakuraCloudAPIRoot = "https://secure.sakura.ad.jp/cloud/zone"
+var (
+	SakuraCloudAPIRoot = "https://secure.sakura.ad.jp/cloud/zone"
 )
 
 // Client APIクライアント
@@ -68,7 +68,7 @@ func (c *Client) Clone() *Client {
 }
 
 func (c *Client) getEndpoint() string {
-	return fmt.Sprintf("%s/%s", sakuraCloudAPIRoot, c.Zone)
+	return fmt.Sprintf("%s/%s", SakuraCloudAPIRoot, c.Zone)
 }
 
 func (c *Client) isOkStatus(code int) bool {

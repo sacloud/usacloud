@@ -58,7 +58,7 @@ func GSLBUpdate(ctx command.Context, params *params.UpdateGSLBParam) error {
 			if err != nil {
 				return fmt.Errorf("GSLBUpdate is failed: %s", e)
 			}
-			p.SetHttpHealthCheck(hostHeader, path, code)
+			p.SetHTTPHealthCheck(hostHeader, path, code)
 		case "https":
 
 			if p.Settings.GSLB.HealthCheck.Protocol != "https" && (params.Path == "" || params.ResponseCode == 0) {
@@ -83,7 +83,7 @@ func GSLBUpdate(ctx command.Context, params *params.UpdateGSLBParam) error {
 			if err != nil {
 				return fmt.Errorf("GSLBUpdate is failed: %s", e)
 			}
-			p.SetHttpsHealthCheck(hostHeader, path, code)
+			p.SetHTTPSHealthCheck(hostHeader, path, code)
 		case "ping":
 			p.SetPingHealthCheck()
 		case "tcp":
