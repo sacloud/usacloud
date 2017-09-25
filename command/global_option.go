@@ -15,6 +15,8 @@ type Option struct {
 	AccessTokenSecret string
 	Zone              string
 	ProfileName       string
+	Zones             []string
+	APIRootURL        string
 	TraceMode         bool
 	Format            string
 	In                io.Reader
@@ -70,6 +72,16 @@ var GlobalFlags = []cli.Flag{
 		Usage:       "Config(Profile) name",
 		EnvVars:     []string{"USACLOUD_PROFILE"},
 		Destination: &GlobalOption.ProfileName,
+	},
+	&cli.StringFlag{
+		Name:        "api-root-url",
+		Hidden:      true,
+		EnvVars:     []string{"USACLOUD_API_ROOT_URL"},
+		Destination: &GlobalOption.APIRootURL,
+	},
+	&cli.StringSliceFlag{
+		Name:   "zones",
+		Hidden: true,
 	},
 	&cli.BoolFlag{
 		Name:        "trace",
