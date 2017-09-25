@@ -70,9 +70,9 @@ func SimpleMonitorCreate(ctx command.Context, params *params.CreateSimpleMonitor
 
 	p.SetDelayLoop(params.DelayLoop * 60)
 
-	enabled := "False"
-	if params.Enabled {
-		enabled = "True"
+	enabled := "True"
+	if params.Disabled {
+		enabled = "False"
 	}
 	p.Settings.SimpleMonitor.Enabled = enabled
 

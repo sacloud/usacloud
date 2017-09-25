@@ -199,14 +199,12 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 			Category:     "health-check",
 			Order:        30,
 		},
-		"enabled": {
-			Type:         schema.TypeBool,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "set monitoring enable/disable",
-			DefaultValue: true,
-			Required:     true,
-			Category:     "health-check",
-			Order:        40,
+		"disabled": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "set monitoring disable",
+			Category:    "health-check",
+			Order:       40,
 		},
 		"host-header": {
 			Type:        schema.TypeString,
@@ -306,7 +304,7 @@ func simpleMonitorUpdateParam() map[string]*schema.Schema {
 			Category:     "health-check",
 			Order:        30,
 		},
-		"enabled": {
+		"disabled": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "set monitoring enable/disable",

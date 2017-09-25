@@ -39,11 +39,11 @@ func GSLBServerUpdate(ctx command.Context, params *params.ServerUpdateGSLBParam)
 		server.IPAddress = params.Ipaddress
 	}
 
-	if ctx.IsSet("enabled") {
+	if ctx.IsSet("disalbed") {
 		// update
-		enabled := "False"
-		if params.Enabled {
-			enabled = "True"
+		enabled := "True"
+		if params.Disabled {
+			enabled = "False"
 		}
 		server.Enabled = enabled
 

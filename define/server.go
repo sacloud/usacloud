@@ -955,11 +955,10 @@ func serverBuildParam() map[string]*schema.Schema {
 			Order:       10,
 		},
 		"disable-boot-after-create": {
-			Type:         schema.TypeBool,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "boot after create",
-			DefaultValue: false,
-			Order:        20,
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "boot after create",
+			Order:       20,
 		},
 	}
 }

@@ -107,11 +107,11 @@ func SimpleMonitorUpdate(ctx command.Context, params *params.UpdateSimpleMonitor
 		p.SetDelayLoop(params.DelayLoop * 60)
 	}
 
-	if ctx.IsSet("enabled") {
+	if ctx.IsSet("disabled") {
 
-		enabled := "False"
-		if params.Enabled {
-			enabled = "True"
+		enabled := "True"
+		if params.Disabled {
+			enabled = "False"
 		}
 		p.Settings.SimpleMonitor.Enabled = enabled
 	}

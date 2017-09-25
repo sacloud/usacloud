@@ -15,7 +15,7 @@ func VPCRouterL2tpServerUpdate(ctx command.Context, params *params.L2tpServerUpd
 		return fmt.Errorf("VPCRouterL2tpServerUpdate is failed: %s", e)
 	}
 
-	if params.Enabled == "true" {
+	if !params.Disabled {
 		// validate
 		targets := []string{"range-start", "range-stop", "pre-shared-secret"}
 		for _, t := range targets {

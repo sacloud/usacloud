@@ -270,7 +270,7 @@ type CreateSimpleMonitorParam struct {
 	Protocol          string   `json:"protocol"`
 	Port              int      `json:"port"`
 	DelayLoop         int      `json:"delay-loop"`
-	Enabled           bool     `json:"enabled"`
+	Disabled          bool     `json:"disabled"`
 	HostHeader        string   `json:"host-header"`
 	Path              string   `json:"path"`
 	ResponseCode      int      `json:"response-code"`
@@ -299,7 +299,6 @@ func NewCreateSimpleMonitorParam() *CreateSimpleMonitorParam {
 
 		Protocol:    "ping",
 		DelayLoop:   1,
-		Enabled:     true,
 		NotifyEmail: true,
 	}
 }
@@ -318,8 +317,8 @@ func (p *CreateSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.DelayLoop) {
 		p.DelayLoop = 0
 	}
-	if isEmpty(p.Enabled) {
-		p.Enabled = false
+	if isEmpty(p.Disabled) {
+		p.Disabled = false
 	}
 	if isEmpty(p.HostHeader) {
 		p.HostHeader = ""
@@ -425,13 +424,6 @@ func (p *CreateSimpleMonitorParam) Validate() []error {
 	{
 		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["delay-loop"].ValidateFunc
 		errs := validator("--delay-loop", p.DelayLoop)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		validator := validateRequired
-		errs := validator("--enabled", p.Enabled)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -544,12 +536,12 @@ func (p *CreateSimpleMonitorParam) SetDelayLoop(v int) {
 func (p *CreateSimpleMonitorParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
-func (p *CreateSimpleMonitorParam) SetEnabled(v bool) {
-	p.Enabled = v
+func (p *CreateSimpleMonitorParam) SetDisabled(v bool) {
+	p.Disabled = v
 }
 
-func (p *CreateSimpleMonitorParam) GetEnabled() bool {
-	return p.Enabled
+func (p *CreateSimpleMonitorParam) GetDisabled() bool {
+	return p.Disabled
 }
 func (p *CreateSimpleMonitorParam) SetHostHeader(v string) {
 	p.HostHeader = v
@@ -884,7 +876,7 @@ type UpdateSimpleMonitorParam struct {
 	Protocol          string   `json:"protocol"`
 	Port              int      `json:"port"`
 	DelayLoop         int      `json:"delay-loop"`
-	Enabled           bool     `json:"enabled"`
+	Disabled          bool     `json:"disabled"`
 	HostHeader        string   `json:"host-header"`
 	Path              string   `json:"path"`
 	ResponseCode      int      `json:"response-code"`
@@ -925,8 +917,8 @@ func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 	if isEmpty(p.DelayLoop) {
 		p.DelayLoop = 0
 	}
-	if isEmpty(p.Enabled) {
-		p.Enabled = false
+	if isEmpty(p.Disabled) {
+		p.Disabled = false
 	}
 	if isEmpty(p.HostHeader) {
 		p.HostHeader = ""
@@ -1129,12 +1121,12 @@ func (p *UpdateSimpleMonitorParam) SetDelayLoop(v int) {
 func (p *UpdateSimpleMonitorParam) GetDelayLoop() int {
 	return p.DelayLoop
 }
-func (p *UpdateSimpleMonitorParam) SetEnabled(v bool) {
-	p.Enabled = v
+func (p *UpdateSimpleMonitorParam) SetDisabled(v bool) {
+	p.Disabled = v
 }
 
-func (p *UpdateSimpleMonitorParam) GetEnabled() bool {
-	return p.Enabled
+func (p *UpdateSimpleMonitorParam) GetDisabled() bool {
+	return p.Disabled
 }
 func (p *UpdateSimpleMonitorParam) SetHostHeader(v string) {
 	p.HostHeader = v

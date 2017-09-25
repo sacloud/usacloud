@@ -80,8 +80,8 @@ func SimpleMonitorCreateCompleteFlags(ctx command.Context, params *params.Create
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "enabled":
-		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("enabled")
+	case "disabled":
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("disabled")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -197,8 +197,8 @@ func SimpleMonitorUpdateCompleteFlags(ctx command.Context, params *params.Update
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "enabled":
-		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("enabled")
+	case "disabled":
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("disabled")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

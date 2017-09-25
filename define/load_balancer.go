@@ -735,14 +735,12 @@ func loadBalancerServerAddParam() map[string]*schema.Schema {
 			Category:    "server",
 			Order:       40,
 		},
-		"enabled": {
-			Type:         schema.TypeBool,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "set enable/disable",
-			DefaultValue: true,
-			Required:     true,
-			Category:     "server",
-			Order:        50,
+		"disabled": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "set disable",
+			Category:    "server",
+			Order:       50,
 		},
 	}
 }
@@ -808,7 +806,7 @@ func loadBalancerServerUpdateParam() map[string]*schema.Schema {
 			Category:    "server",
 			Order:       40,
 		},
-		"enabled": {
+		"disabled": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Description: "set enable/disable",

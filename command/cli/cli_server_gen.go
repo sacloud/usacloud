@@ -576,7 +576,6 @@ func init() {
 					&cli.BoolFlag{
 						Name:  "disable-boot-after-create",
 						Usage: "boot after create",
-						Value: false,
 					},
 				},
 				ShellComplete: func(c *cli.Context) {

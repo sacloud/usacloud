@@ -3083,7 +3083,7 @@ type ServerAddLoadBalancerParam struct {
 	Protocol          string   `json:"protocol"`
 	Path              string   `json:"path"`
 	ResponseCode      int      `json:"response-code"`
-	Enabled           bool     `json:"enabled"`
+	Disabled          bool     `json:"disabled"`
 	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
@@ -3097,7 +3097,6 @@ func NewServerAddLoadBalancerParam() *ServerAddLoadBalancerParam {
 	return &ServerAddLoadBalancerParam{
 
 		Protocol: "ping",
-		Enabled:  true,
 	}
 }
 
@@ -3124,8 +3123,8 @@ func (p *ServerAddLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ResponseCode) {
 		p.ResponseCode = 0
 	}
-	if isEmpty(p.Enabled) {
-		p.Enabled = false
+	if isEmpty(p.Disabled) {
+		p.Disabled = false
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -3222,13 +3221,6 @@ func (p *ServerAddLoadBalancerParam) Validate() []error {
 		}
 	}
 	{
-		validator := validateRequired
-		errs := validator("--enabled", p.Enabled)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := validateSakuraID
 		errs := validator("--id", p.Id)
 		if errs != nil {
@@ -3316,12 +3308,12 @@ func (p *ServerAddLoadBalancerParam) SetResponseCode(v int) {
 func (p *ServerAddLoadBalancerParam) GetResponseCode() int {
 	return p.ResponseCode
 }
-func (p *ServerAddLoadBalancerParam) SetEnabled(v bool) {
-	p.Enabled = v
+func (p *ServerAddLoadBalancerParam) SetDisabled(v bool) {
+	p.Disabled = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetEnabled() bool {
-	return p.Enabled
+func (p *ServerAddLoadBalancerParam) GetDisabled() bool {
+	return p.Disabled
 }
 func (p *ServerAddLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
@@ -3375,7 +3367,7 @@ type ServerUpdateLoadBalancerParam struct {
 	Protocol          string   `json:"protocol"`
 	Path              string   `json:"path"`
 	ResponseCode      int      `json:"response-code"`
-	Enabled           bool     `json:"enabled"`
+	Disabled          bool     `json:"disabled"`
 	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
@@ -3412,8 +3404,8 @@ func (p *ServerUpdateLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.ResponseCode) {
 		p.ResponseCode = 0
 	}
-	if isEmpty(p.Enabled) {
-		p.Enabled = false
+	if isEmpty(p.Disabled) {
+		p.Disabled = false
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -3590,12 +3582,12 @@ func (p *ServerUpdateLoadBalancerParam) SetResponseCode(v int) {
 func (p *ServerUpdateLoadBalancerParam) GetResponseCode() int {
 	return p.ResponseCode
 }
-func (p *ServerUpdateLoadBalancerParam) SetEnabled(v bool) {
-	p.Enabled = v
+func (p *ServerUpdateLoadBalancerParam) SetDisabled(v bool) {
+	p.Disabled = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetEnabled() bool {
-	return p.Enabled
+func (p *ServerUpdateLoadBalancerParam) GetDisabled() bool {
+	return p.Disabled
 }
 func (p *ServerUpdateLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v

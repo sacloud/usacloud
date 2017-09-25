@@ -916,12 +916,11 @@ func vpcRouterCreateParam() map[string]*schema.Schema {
 			Order:        30,
 		},
 		"boot-after-create": {
-			Type:         schema.TypeBool,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "boot after create",
-			DefaultValue: false,
-			Category:     "operation",
-			Order:        10,
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "boot after create",
+			Category:    "operation",
+			Order:       10,
 		},
 		"name": {
 			Type:         schema.TypeString,
@@ -1777,15 +1776,12 @@ func vpcRouterPPTPServerInfoParam() map[string]*schema.Schema {
 
 func vpcRouterPPTPServerUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"enabled": {
-			Type:         schema.TypeString,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "enable/disable PPTP server",
-			ValidateFunc: validateInStrValues("true", "false"),
-			CompleteFunc: completeInStrValues("true", "false"),
-			Required:     true,
-			Category:     "PPTP",
-			Order:        10,
+		"disabled": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "enable/disable PPTP server",
+			Category:    "PPTP",
+			Order:       10,
 		},
 		"range-start": {
 			Type:         schema.TypeString,
@@ -1813,15 +1809,12 @@ func vpcRouterL2TPServerInfoParam() map[string]*schema.Schema {
 
 func vpcRouterL2TPServerUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"enabled": {
-			Type:         schema.TypeString,
-			HandlerType:  schema.HandlerNoop,
-			Description:  "enable/disable PPTP server",
-			ValidateFunc: validateInStrValues("true", "false"),
-			CompleteFunc: completeInStrValues("true", "false"),
-			Required:     true,
-			Category:     "L2TP-IPSec",
-			Order:        10,
+		"disabled": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "enable/disable PPTP server",
+			Category:    "L2TP-IPSec",
+			Order:       10,
 		},
 		"range-start": {
 			Type:         schema.TypeString,
