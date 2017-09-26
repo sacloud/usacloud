@@ -93,6 +93,9 @@ func generateResource(resources sortableResources) (string, error) {
 	}
 
 	for _, f := range command.GlobalFlags {
+		if f.Names()[0] == "zones" || f.Names()[0] == "api-root-url" {
+			continue
+		}
 		switch f.(type) {
 		case *cli.BoolFlag:
 			globalFlags = append(globalFlags, toFlagNames(f.Names())...)

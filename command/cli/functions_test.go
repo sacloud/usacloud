@@ -9,8 +9,8 @@ import (
 )
 
 type mockFlagHandler struct {
-	val     map[string]string
-	initVal map[string]string
+	val     map[string]interface{}
+	initVal map[string]interface{}
 }
 
 var envKeyValMap = map[string]string{
@@ -19,10 +19,10 @@ var envKeyValMap = map[string]string{
 	"SAKURACLOUD_ZONE":                "zone",
 }
 
-func newMockFlagHandler(val map[string]string) *mockFlagHandler {
+func newMockFlagHandler(val map[string]interface{}) *mockFlagHandler {
 	h := &mockFlagHandler{
 		val:     val,
-		initVal: map[string]string{},
+		initVal: map[string]interface{}{},
 	}
 	for k, v := range val {
 		h.initVal[k] = v
@@ -30,7 +30,7 @@ func newMockFlagHandler(val map[string]string) *mockFlagHandler {
 
 	for key, valKey := range envKeyValMap {
 		if v, ok := os.LookupEnv(key); ok {
-			if h.val[valKey] == "" {
+			if s, ok := h.val[valKey]; !ok || s.(string) == "" {
 				h.val[valKey] = v
 			}
 		}
@@ -48,7 +48,16 @@ func (h *mockFlagHandler) Set(name, value string) error {
 }
 
 func (h *mockFlagHandler) String(name string) string {
-	return h.val[name]
+	if v, ok := h.val[name]; ok {
+		return v.(string)
+	}
+	return ""
+}
+func (h *mockFlagHandler) StringSlice(name string) []string {
+	if v, ok := h.val[name]; ok {
+		return v.([]string)
+	}
+	return []string{}
 }
 
 func TestApplyConfigFromFile(t *testing.T) {
@@ -72,7 +81,7 @@ func TestApplyConfigFromFile(t *testing.T) {
 		defer initFunc()()
 
 		flagHandler := newMockFlagHandler(
-			map[string]string{
+			map[string]interface{}{
 				"token":  "test-token",
 				"secret": "test-secret",
 				"zone":   "tk1v",
@@ -98,7 +107,7 @@ func TestApplyConfigFromFile(t *testing.T) {
 		})
 
 		flagHandler := newMockFlagHandler(
-			map[string]string{
+			map[string]interface{}{
 				"profile": testProfileName,
 			},
 		)
@@ -117,7 +126,7 @@ func TestApplyConfigFromFile(t *testing.T) {
 		os.Setenv("SAKURACLOUD_ACCESS_TOKEN_SECRET", "test-secret")
 		os.Setenv("SAKURACLOUD_ZONE", "tk1v")
 
-		flagHandler := newMockFlagHandler(map[string]string{})
+		flagHandler := newMockFlagHandler(map[string]interface{}{})
 
 		err := applyConfigFromFile(flagHandler)
 		assert.NoError(t, err)
@@ -138,7 +147,7 @@ func TestApplyConfigFromFile(t *testing.T) {
 		})
 
 		flagHandler := newMockFlagHandler(
-			map[string]string{
+			map[string]interface{}{
 				"token":   "test-token",
 				"secret":  "test-secret",
 				"zone":    "tk1v",
@@ -162,7 +171,7 @@ func TestApplyConfigFromFile(t *testing.T) {
 		os.Setenv("SAKURACLOUD_ZONE", "fromEnv")
 
 		flagHandler := newMockFlagHandler(
-			map[string]string{
+			map[string]interface{}{
 				"token":  "test-token",
 				"secret": "test-secret",
 				"zone":   "tk1v",
@@ -190,7 +199,7 @@ func TestApplyConfigFromFile(t *testing.T) {
 		os.Setenv("SAKURACLOUD_ZONE", "fromEnv")
 
 		flagHandler := newMockFlagHandler(
-			map[string]string{
+			map[string]interface{}{
 				"profile": testProfileName,
 			},
 		)
@@ -216,7 +225,7 @@ func TestApplyConfigFromFile(t *testing.T) {
 		})
 
 		flagHandler := newMockFlagHandler(
-			map[string]string{
+			map[string]interface{}{
 				"token":   "test-token",
 				"secret":  "test-secret",
 				"zone":    "tk1v",

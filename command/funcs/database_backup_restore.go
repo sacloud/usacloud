@@ -29,7 +29,7 @@ func DatabaseBackupRestore(ctx command.Context, params *params.BackupRestoreData
 		return fmt.Errorf("index(%d) is out of range", params.Index)
 	}
 
-	backupID := info.DBConf.Backup.History[params.Index-1].Id()
+	backupID := info.DBConf.Backup.History[params.Index-1].ID()
 	err := internal.ExecWithProgress(
 		fmt.Sprintf("Still restoring from backup[ID:%d:%s]...", params.Id, backupID),
 		fmt.Sprintf("Restore Database[ID:%d]", params.Id),

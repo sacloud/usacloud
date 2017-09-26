@@ -72,6 +72,8 @@ type ConfigFileValue struct {
 	AccessToken       string
 	AccessTokenSecret string
 	Zone              string
+	Zones             []string `json:",omitempty"`
+	APIRootURL        string   `json:",omitempty"`
 }
 
 func (p *ConfigFileValue) IsEmpty() bool {

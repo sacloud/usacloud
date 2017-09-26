@@ -24,12 +24,12 @@ func GSLBCreate(ctx command.Context, params *params.CreateGSLBParam) error {
 		if params.Path == "" || params.ResponseCode == 0 {
 			return fmt.Errorf("path and response-code is required when protocol is http")
 		}
-		p.SetHttpHealthCheck(params.HostHeader, params.Path, params.ResponseCode)
+		p.SetHTTPHealthCheck(params.HostHeader, params.Path, params.ResponseCode)
 	case "https":
 		if params.Path == "" || params.ResponseCode == 0 {
 			return fmt.Errorf("path and response-code is required when protocol is https")
 		}
-		p.SetHttpsHealthCheck(params.HostHeader, params.Path, params.ResponseCode)
+		p.SetHTTPSHealthCheck(params.HostHeader, params.Path, params.ResponseCode)
 	case "ping":
 		p.SetPingHealthCheck()
 	case "tcp":

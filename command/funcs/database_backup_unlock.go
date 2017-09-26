@@ -28,7 +28,7 @@ func DatabaseBackupUnlock(ctx command.Context, params *params.BackupUnlockDataba
 		return fmt.Errorf("index(%d) is out of range", params.Index)
 	}
 
-	backupID := info.DBConf.Backup.History[params.Index-1].Id()
+	backupID := info.DBConf.Backup.History[params.Index-1].ID()
 	_, err := api.HistoryUnlock(params.Id, backupID)
 	if err != nil {
 		return fmt.Errorf("DatabaseBackupUnlock is failed: %s", e)
