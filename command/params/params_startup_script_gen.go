@@ -286,6 +286,7 @@ func (p *ListStartupScriptParam) GetFormatFile() string {
 type CreateStartupScriptParam struct {
 	Script            string   `json:"script"`
 	ScriptContent     string   `json:"script-content"`
+	Class             string   `json:"class"`
 	Name              string   `json:"name"`
 	Tags              []string `json:"tags"`
 	IconId            int64    `json:"icon-id"`
@@ -302,7 +303,10 @@ type CreateStartupScriptParam struct {
 
 // NewCreateStartupScriptParam return new CreateStartupScriptParam
 func NewCreateStartupScriptParam() *CreateStartupScriptParam {
-	return &CreateStartupScriptParam{}
+	return &CreateStartupScriptParam{
+
+		Class: "shell",
+	}
 }
 
 // FillValueToSkeleton fill values to empty fields
@@ -312,6 +316,9 @@ func (p *CreateStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.ScriptContent) {
 		p.ScriptContent = ""
+	}
+	if isEmpty(p.Class) {
+		p.Class = ""
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -367,6 +374,20 @@ func (p *CreateStartupScriptParam) Validate() []error {
 
 			"--script": p.Script,
 		})
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--class", p.Class)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["StartupScript"].Commands["create"].Params["class"].ValidateFunc
+		errs := validator("--class", p.Class)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -464,6 +485,13 @@ func (p *CreateStartupScriptParam) SetScriptContent(v string) {
 
 func (p *CreateStartupScriptParam) GetScriptContent() string {
 	return p.ScriptContent
+}
+func (p *CreateStartupScriptParam) SetClass(v string) {
+	p.Class = v
+}
+
+func (p *CreateStartupScriptParam) GetClass() string {
+	return p.Class
 }
 func (p *CreateStartupScriptParam) SetName(v string) {
 	p.Name = v
@@ -741,6 +769,7 @@ func (p *ReadStartupScriptParam) GetId() int64 {
 type UpdateStartupScriptParam struct {
 	Script            string   `json:"script"`
 	ScriptContent     string   `json:"script-content"`
+	Class             string   `json:"class"`
 	Selector          []string `json:"selector"`
 	Name              string   `json:"name"`
 	Tags              []string `json:"tags"`
@@ -769,6 +798,9 @@ func (p *UpdateStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.ScriptContent) {
 		p.ScriptContent = ""
+	}
+	if isEmpty(p.Class) {
+		p.Class = ""
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -835,8 +867,8 @@ func (p *UpdateStartupScriptParam) Validate() []error {
 		}
 	}
 	{
-		validator := validateRequired
-		errs := validator("--name", p.Name)
+		validator := define.Resources["StartupScript"].Commands["update"].Params["class"].ValidateFunc
+		errs := validator("--class", p.Class)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -934,6 +966,13 @@ func (p *UpdateStartupScriptParam) SetScriptContent(v string) {
 
 func (p *UpdateStartupScriptParam) GetScriptContent() string {
 	return p.ScriptContent
+}
+func (p *UpdateStartupScriptParam) SetClass(v string) {
+	p.Class = v
+}
+
+func (p *UpdateStartupScriptParam) GetClass() string {
+	return p.Class
 }
 func (p *UpdateStartupScriptParam) SetSelector(v []string) {
 	p.Selector = v

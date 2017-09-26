@@ -351,6 +351,11 @@ func init() {
 						Usage:   "set script content",
 					},
 					&cli.StringFlag{
+						Name:  "class",
+						Usage: "[Required] set script class[shell/cloud-config-yaml]",
+						Value: "shell",
+					},
+					&cli.StringFlag{
 						Name:  "name",
 						Usage: "[Required] set resource display name",
 					},
@@ -438,6 +443,9 @@ func init() {
 					}
 					if c.IsSet("script-content") {
 						createParam.ScriptContent = c.String("script-content")
+					}
+					if c.IsSet("class") {
+						createParam.Class = c.String("class")
 					}
 					if c.IsSet("name") {
 						createParam.Name = c.String("name")
@@ -565,6 +573,9 @@ func init() {
 					}
 					if c.IsSet("script-content") {
 						createParam.ScriptContent = c.String("script-content")
+					}
+					if c.IsSet("class") {
+						createParam.Class = c.String("class")
 					}
 					if c.IsSet("name") {
 						createParam.Name = c.String("name")
@@ -986,13 +997,17 @@ func init() {
 						Aliases: []string{"note-content"},
 						Usage:   "set script content",
 					},
+					&cli.StringFlag{
+						Name:  "class",
+						Usage: "set script class[shell/cloud-config-yaml]",
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
 					},
 					&cli.StringFlag{
 						Name:  "name",
-						Usage: "[Required] set resource display name",
+						Usage: "set resource display name",
 					},
 					&cli.StringSliceFlag{
 						Name:  "tags",
@@ -1083,6 +1098,9 @@ func init() {
 					}
 					if c.IsSet("script-content") {
 						updateParam.ScriptContent = c.String("script-content")
+					}
+					if c.IsSet("class") {
+						updateParam.Class = c.String("class")
 					}
 					if c.IsSet("selector") {
 						updateParam.Selector = c.StringSlice("selector")
@@ -1216,6 +1234,9 @@ func init() {
 					}
 					if c.IsSet("script-content") {
 						updateParam.ScriptContent = c.String("script-content")
+					}
+					if c.IsSet("class") {
+						updateParam.Class = c.String("class")
 					}
 					if c.IsSet("selector") {
 						updateParam.Selector = c.StringSlice("selector")
@@ -1759,6 +1780,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("startup-script", "create", "class", &schema.Category{
+		Key:         "basic",
+		DisplayName: "Basic options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("startup-script", "create", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2008,6 +2034,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("startup-script", "update", "class", &schema.Category{
+		Key:         "basic",
+		DisplayName: "Basic options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("startup-script", "update", "column", &schema.Category{
 		Key:         "output",

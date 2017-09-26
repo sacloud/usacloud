@@ -27,6 +27,9 @@ func StartupScriptUpdate(ctx command.Context, params *params.UpdateStartupScript
 	if ctx.IsSet("name") {
 		p.SetName(params.Name)
 	}
+	if ctx.IsSet("class") {
+		p.SetClassByStr(params.Class)
+	}
 
 	if ctx.IsSet("script") {
 		b, err := ioutil.ReadFile(params.Script)
