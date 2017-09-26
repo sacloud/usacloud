@@ -15,6 +15,7 @@ func StartupScriptCreate(ctx command.Context, params *params.CreateStartupScript
 
 	// set params
 	p.SetName(params.Name)
+	p.SetClassByStr(params.Class)
 	p.SetTags(params.Tags)
 	p.SetIconByID(params.IconId)
 

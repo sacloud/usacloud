@@ -1,6 +1,7 @@
 package define
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
 )
@@ -71,6 +72,7 @@ func startupScriptListParam() map[string]*schema.Schema {
 func startupScriptListColumns() []output.ColumnDef {
 	return []output.ColumnDef{
 		{Name: "ID"},
+		{Name: "Class"},
 		{Name: "Name"},
 		{Name: "Scope"},
 	}
@@ -82,6 +84,11 @@ func startupScriptDetailIncludes() []string {
 
 func startupScriptDetailExcludes() []string {
 	return []string{}
+}
+
+var allowNoteClasses = []string{
+	string(sacloud.NoteClassShell),
+	string(sacloud.NoteClassYAMLCloudConfig),
 }
 
 func startupScriptCreateParam() map[string]*schema.Schema {
@@ -103,6 +110,17 @@ func startupScriptCreateParam() map[string]*schema.Schema {
 			ValidateFunc: validateFileExists(),
 			Category:     "script-upload",
 			Order:        10,
+		},
+		"class": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set script class[shell/cloud-config-yaml]",
+			ValidateFunc: validateInStrValues(allowNoteClasses...),
+			CompleteFunc: completeInStrValues(allowNoteClasses...),
+			Required:     true,
+			DefaultValue: string(sacloud.NoteClassShell),
+			Category:     "basic",
+			Order:        20,
 		},
 		"name":    paramRequiredName,
 		"tags":    paramTags,
@@ -134,7 +152,16 @@ func startupScriptUpdateParam() map[string]*schema.Schema {
 			Category:     "script-upload",
 			Order:        10,
 		},
-		"name":    paramRequiredName,
+		"class": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set script class[shell/cloud-config-yaml]",
+			ValidateFunc: validateInStrValues(allowNoteClasses...),
+			CompleteFunc: completeInStrValues(allowNoteClasses...),
+			Category:     "basic",
+			Order:        20,
+		},
+		"name":    paramName,
 		"tags":    paramTags,
 		"icon-id": paramIconResourceID,
 	}

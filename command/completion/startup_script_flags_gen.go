@@ -75,6 +75,11 @@ func StartupScriptCreateCompleteFlags(ctx command.Context, params *params.Create
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "class":
+		param := define.Resources["StartupScript"].Commands["create"].BuildedParams().Get("class")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
 		param := define.Resources["StartupScript"].Commands["create"].BuildedParams().Get("name")
 		if param != nil {
@@ -139,6 +144,11 @@ func StartupScriptUpdateCompleteFlags(ctx command.Context, params *params.Update
 		}
 	case "script-content", "note-content":
 		param := define.Resources["StartupScript"].Commands["update"].BuildedParams().Get("script-content")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "class":
+		param := define.Resources["StartupScript"].Commands["update"].BuildedParams().Get("class")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
