@@ -40,6 +40,11 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Sep 26 2017 <yamamoto.febc@gmail.com> - 0.2.1-1
+- フラグ名変更 enabled -> disabled (by yamamoto-febc)
+- 対象ゾーンとAPIのルートURL設定用グローバルオプション追加 (by yamamoto-febc)
+- スタートアップスクリプトへClass属性追加 (by yamamoto-febc)
+
 * Thu Sep 07 2017 <yamamoto.febc@gmail.com> - 0.2.0-1
 - サーバ起動APIでのエラー時リトライ (by yamamoto-febc)
 - NFSアプライアンス (by yamamoto-febc)

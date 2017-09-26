@@ -1,3 +1,14 @@
+usacloud (0.2.1-1) stable; urgency=low
+
+  * フラグ名変更 enabled -> disabled (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/215>
+  * 対象ゾーンとAPIのルートURL設定用グローバルオプション追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/216>
+  * スタートアップスクリプトへClass属性追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/218>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Tue, 26 Sep 2017 03:51:17 +0000
+
 usacloud (0.2.0-1) stable; urgency=low
 
   * サーバ起動APIでのエラー時リトライ (by yamamoto-febc)
