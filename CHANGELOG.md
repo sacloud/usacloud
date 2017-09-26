@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.2.1 (2017-09-26)
+
+* フラグ名変更 enabled -> disabled #215 (yamamoto-febc)
+* 対象ゾーンとAPIのルートURL設定用グローバルオプション追加 #216 (yamamoto-febc)
+* スタートアップスクリプトへClass属性追加 #218 (yamamoto-febc)
+
+
 ## 0.2.0 (2017-09-07)
 
 * サーバ起動APIでのエラー時リトライ #204 (yamamoto-febc)
