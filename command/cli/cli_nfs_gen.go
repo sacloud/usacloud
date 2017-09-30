@@ -339,12 +339,12 @@ func init() {
 				Flags: []cli.Flag{
 					&cli.Int64Flag{
 						Name:  "switch-id",
-						Usage: "set connect switch ID",
+						Usage: "[Required] set connect switch ID",
 					},
-					&cli.StringFlag{
+					&cli.IntFlag{
 						Name:  "plan",
-						Usage: "[Required] set plan[100g]",
-						Value: "100g",
+						Usage: "[Required] set plan[100/500/1024/2048/4096]",
+						Value: 100,
 					},
 					&cli.StringFlag{
 						Name:    "ipaddress",
@@ -451,7 +451,7 @@ func init() {
 						createParam.SwitchId = c.Int64("switch-id")
 					}
 					if c.IsSet("plan") {
-						createParam.Plan = c.String("plan")
+						createParam.Plan = c.Int("plan")
 					}
 					if c.IsSet("ipaddress") {
 						createParam.Ipaddress = c.String("ipaddress")
@@ -590,7 +590,7 @@ func init() {
 						createParam.SwitchId = c.Int64("switch-id")
 					}
 					if c.IsSet("plan") {
-						createParam.Plan = c.String("plan")
+						createParam.Plan = c.Int("plan")
 					}
 					if c.IsSet("ipaddress") {
 						createParam.Ipaddress = c.String("ipaddress")

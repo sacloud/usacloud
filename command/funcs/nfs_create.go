@@ -24,10 +24,7 @@ func NFSCreate(ctx command.Context, params *params.CreateNFSParam) error {
 		Icon:         sacloud.NewResource(params.IconId),
 	}
 
-	switch params.Plan {
-	case "100g":
-		p.Plan = sacloud.NFSPlan100G
-	}
+	p.Plan = sacloud.NFSPlan(params.Plan)
 
 	nfs := sacloud.NewNFS(p)
 
