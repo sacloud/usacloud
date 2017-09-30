@@ -740,10 +740,7 @@ func (b *DiskBuilder) buildDiskParams() error {
 		return nil
 	}
 
-	if err := b.buildDiskEditParam(); err != nil {
-		return err
-	}
-	return nil
+	return b.buildDiskEditParam()
 }
 
 func (b *DiskBuilder) buildDiskParam() error {
@@ -928,11 +925,7 @@ func (b *DiskBuilder) createDisk(diskReq *sacloud.Disk) error {
 
 	b.currentDiskBuildResult.Disk = disk
 	//wait
-	if err := b.client.Disk.SleepWhileCopying(disk.ID, b.client.DefaultTimeoutDuration); err != nil {
-		return err
-	}
-
-	return nil
+	return b.client.Disk.SleepWhileCopying(disk.ID, b.client.DefaultTimeoutDuration)
 }
 
 func (b *DiskBuilder) editDisk(editReq *sacloud.DiskEditValue) error {

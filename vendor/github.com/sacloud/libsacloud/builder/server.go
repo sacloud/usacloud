@@ -319,10 +319,7 @@ func (b *serverBuilder) buildParams() error {
 
 	v := b.currentBuildValue
 	v.Server = b.client.Server.New()
-	if err := b.buildServerParams(); err != nil {
-		return err
-	}
-	return nil
+	return b.buildServerParams()
 }
 
 func (b *serverBuilder) buildServerParams() error {
