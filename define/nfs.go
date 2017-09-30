@@ -2,6 +2,7 @@ package define
 
 import (
 	"fmt"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
 )
@@ -200,11 +201,7 @@ func nfsListColumns() []output.ColumnDef {
 		{
 			Name:    "Plan",
 			Sources: []string{"Plan.ID"},
-			ValueMapping: []map[string]string{
-				{
-					"100": "100g",
-				},
-			},
+			Format:  "%sGB",
 		},
 		{
 			Name: "IPAddress",
@@ -240,6 +237,7 @@ func nfsCreateParam() map[string]*schema.Schema {
 		"switch-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
+			Required:     true,
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeSwitchID(),
@@ -247,13 +245,13 @@ func nfsCreateParam() map[string]*schema.Schema {
 			Order:        10,
 		},
 		"plan": {
-			Type:         schema.TypeString,
+			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Required:     true,
-			DefaultValue: "100g",
-			Description:  "set plan[100g]",
-			ValidateFunc: validateInStrValues("100g"),
-			CompleteFunc: completeInStrValues("100g"),
+			DefaultValue: 100,
+			Description:  "set plan[100/500/1024/2048/4096]",
+			ValidateFunc: validateInIntValues(sacloud.AllowNFSPlans()...),
+			CompleteFunc: completeInIntValues(sacloud.AllowNFSPlans()...),
 			Category:     "nfs",
 			Order:        40,
 		},

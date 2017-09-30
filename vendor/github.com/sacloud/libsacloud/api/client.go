@@ -15,6 +15,7 @@ import (
 )
 
 var (
+	// SakuraCloudAPIRoot APIリクエスト送信先ルートURL(末尾にスラッシュを含まない)
 	SakuraCloudAPIRoot = "https://secure.sakura.ad.jp/cloud/zone"
 )
 
