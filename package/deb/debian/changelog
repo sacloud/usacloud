@@ -1,3 +1,12 @@
+usacloud (0.2.2-1) stable; urgency=low
+
+  * NFSアプライアンス プラン追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/220>
+  * ドキュメント更新 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/221>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Sun, 01 Oct 2017 12:23:09 +0000
+
 usacloud (0.2.1-1) stable; urgency=low
 
   * フラグ名変更 enabled -> disabled (by yamamoto-febc)

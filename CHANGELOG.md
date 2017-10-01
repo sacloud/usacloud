@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.2 (2017-10-01)
+
+* NFSアプライアンス プラン追加 #220 (yamamoto-febc)
+* ドキュメント更新 #221 (yamamoto-febc)
+
+
 ## 0.2.1 (2017-09-26)
 
 * フラグ名変更 enabled -> disabled #215 (yamamoto-febc)
