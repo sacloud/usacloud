@@ -1,10 +1,10 @@
 # Usacloud
 
-[![Build Status](https://travis-ci.org/sacloud/usacloud.svg?branch=master)](https://travis-ci.org/sacloud/usacloud)
+![usacloud_logo_h.png](build_docs/docs/images/usacloud_logo_h.png)
 
-## 概要
+[`usacloud`](https://github.com/sacloud/usacloud)は[さくらのクラウド](http://cloud.sakura.ad.jp/index.html)用のCLIクライアントです。  
 
-:rabbit:[`usacloud`](https://github.com/sacloud/usacloud)は[さくらのクラウド](http://cloud.sakura.ad.jp/index.html)用のCLIクライアントです。  
+[![Build Status](https://travis-ci.org/sacloud/usacloud.svg?branch=master)](https://travis-ci.org/sacloud/usacloud)  
 
 ## 主な特徴
 
@@ -97,7 +97,7 @@ Note: APIキーは環境変数を用いて設定することも可能です。
 
 ```bash
 NAME:
-   usacloud - Unofficial 'sacloud' - CLI client of the SakuraCloud
+   usacloud - CLI client for SakuraCloud
 
 USAGE:
    usacloud [global options] resource command [command options] [arguments...]
