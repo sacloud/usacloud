@@ -15,7 +15,7 @@ import (
 
 var (
 	appName      = "usacloud"
-	appUsage     = "Unofficial 'sacloud' - CLI client of the SakuraCloud"
+	appUsage     = "CLI client for SakuraCloud"
 	appCopyright = "Copyright (C) 2017 Kazumichi Yamamoto."
 )
 
