@@ -40,6 +40,10 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Sun Oct 01 2017 <yamamoto.febc@gmail.com> - 0.2.2-1
+- NFSアプライアンス プラン追加 (by yamamoto-febc)
+- ドキュメント更新 (by yamamoto-febc)
+
 * Tue Sep 26 2017 <yamamoto.febc@gmail.com> - 0.2.1-1
 - フラグ名変更 enabled -> disabled (by yamamoto-febc)
 - 対象ゾーンとAPIのルートURL設定用グローバルオプション追加 (by yamamoto-febc)
