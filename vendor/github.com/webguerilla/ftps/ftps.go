@@ -298,7 +298,17 @@ func (ftps *FTPS) parseEntryLine(line string) (entry *Entry, err error) {
 	return
 }
 
-func (ftps *FTPS) StoreFile(remoteFilepath string, data []byte) (err error) {
+func (ftps *FTPS) StoreFile(remoteFilepath string, srcFilepath string) (err error) {
+	f, err := os.Open(srcFilepath)
+	if err != nil {
+		return
+	}
+	defer f.Close()
+
+	fileinfo, err := f.Stat()
+	if err != nil {
+		return
+	}
 
 	dataConn, err := ftps.requestDataConn(fmt.Sprintf("STOR %s", remoteFilepath), 150)
 	if err != nil {
@@ -306,13 +316,12 @@ func (ftps *FTPS) StoreFile(remoteFilepath string, data []byte) (err error) {
 	}
 	defer dataConn.Close()
 
-	count, err := dataConn.Write(data)
+	count, err := io.Copy(dataConn, f)
 	if err != nil {
 		return
 	}
-	dataConn.Close()
 
-	if len(data) != count {
+	if fileinfo.Size() != count {
 		return errors.New("file transfer not complete")
 	}
 
