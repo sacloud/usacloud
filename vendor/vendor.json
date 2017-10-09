@@ -105,6 +105,12 @@
 			"revisionTime": "2016-01-10T10:55:54Z"
 		},
 		{
+			"checksumSHA1": "xg8+kRcpFQCq/X/cL9E8tcD0xaI=",
+			"path": "github.com/sacloud/ftps",
+			"revision": "7d34a46896d3d92390731f47f69c74acc3387b1e",
+			"revisionTime": "2017-10-09T13:42:42Z"
+		},
+		{
 			"checksumSHA1": "6SUOCG4pJYli/d6+mjpIomTUCms=",
 			"path": "github.com/sacloud/libsacloud",
 			"revision": "e610e01db6511415a2e422b2637e5d7970ace303",
@@ -151,12 +157,6 @@
 			"path": "github.com/vaughan0/go-ini",
 			"revision": "a98ad7ee00ec53921f08832bc06ecf7fd600e6a1",
 			"revisionTime": "2013-09-23T14:52:12Z"
-		},
-		{
-			"checksumSHA1": "UHGJnJ4wrdMqimTN1U1DiEesi74=",
-			"path": "github.com/webguerilla/ftps",
-			"revision": "166035d4757922d70bb9747556298c802b410f35",
-			"revisionTime": "2014-08-12T21:16:33Z"
 		},
 		{
 			"checksumSHA1": "C1KKOxFoW7/W/NFNpiXK+boguNo=",
