@@ -1,12 +1,10 @@
 package ftp
 
 import (
-	"bufio"
 	"errors"
 	"fmt"
-	"github.com/webguerilla/ftps"
-	"io/ioutil"
-	"os"
+	"github.com/sacloud/ftps"
+	"path/filepath"
 	"strings"
 )
 
@@ -38,19 +36,7 @@ func (c *Client) Upload(filePath string) error {
 		return fmt.Errorf("Auth FTP failed: %#v", err)
 	}
 
-	file, err := os.Open(filePath)
-	if err != nil {
-		return fmt.Errorf("Open file failed: %#v", err)
-	}
-	defer file.Close()
-
-	reader := bufio.NewReader(file)
-	fileBytes, err := ioutil.ReadAll(reader) // TODO implements append mode
-	if err != nil {
-		return fmt.Errorf("Read file failed: %#v", err)
-	}
-
-	err = ftpsClient.StoreFile("usacloud_upload_image.iso", fileBytes)
+	err = ftpsClient.StoreFile(filepath.Base(filePath), filePath)
 	if err != nil {
 		return fmt.Errorf("Storefile FTP failed: %#v", err)
 	}
