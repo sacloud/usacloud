@@ -19,6 +19,9 @@ func ServerVncSnapshot(ctx command.Context, params *params.VncSnapshotServerPara
 	if e != nil {
 		return fmt.Errorf("ServerVncSnapshot is failed: %s", e)
 	}
+	if !p.IsUp() {
+		return fmt.Errorf("ServerVncSnapshot is failed: %s", "server is not running")
+	}
 
 	if !p.IsUp() && params.WaitForBoot {
 
