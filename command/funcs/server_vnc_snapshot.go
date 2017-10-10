@@ -71,7 +71,7 @@ func ServerVncSnapshot(ctx command.Context, params *params.VncSnapshotServerPara
 		return fmt.Errorf("ServerVncSnapshot is failed: %s", err)
 	}
 
-	out := command.GlobalOption.Out
+	out := command.GlobalOption.Err
 	fmt.Fprintln(out, "Snapshot created:", filename)
 
 	return nil
