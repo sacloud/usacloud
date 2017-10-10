@@ -804,6 +804,42 @@ func ServerVncSendCompleteFlags(ctx command.Context, params *params.VncSendServe
 	}
 }
 
+func ServerVncSnapshotCompleteFlags(ctx command.Context, params *params.VncSnapshotServerParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "wait-for-boot":
+		param := define.Resources["Server"].Commands["vnc-snapshot"].BuildedParams().Get("wait-for-boot")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-path", "o":
+		param := define.Resources["Server"].Commands["vnc-snapshot"].BuildedParams().Get("output-path")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["vnc-snapshot"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Server"].Commands["vnc-snapshot"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
 func ServerDiskInfoCompleteFlags(ctx command.Context, params *params.DiskInfoServerParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 
