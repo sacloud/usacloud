@@ -53,7 +53,13 @@ func ServerVncSnapshot(ctx command.Context, params *params.VncSnapshotServerPara
 	if err != nil {
 		return fmt.Errorf("ServerVncSnapshot is failed: %s", err)
 	}
-	filename := fmt.Sprintf("%d_%s.gif", params.Id, time.Now().Format("20060102-150405"))
+
+	var filename string
+	if len(params.OutputPath) > 0 {
+		filename = params.OutputPath
+	} else {
+		filename = fmt.Sprintf("%d_%s.gif", params.Id, time.Now().Format("20060102-150405"))
+	}
 	file, err := os.Create(filename)
 	if err != nil {
 		return fmt.Errorf("ServerVncSnapshot is failed: %s", err)

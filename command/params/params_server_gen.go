@@ -3889,6 +3889,7 @@ func (p *VncSendServerParam) GetId() int64 {
 // VncSnapshotServerParam is input parameters for the sacloud API
 type VncSnapshotServerParam struct {
 	WaitForBoot       bool     `json:"wait-for-boot"`
+	OutputPath        string   `json:"output-path"`
 	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
@@ -3911,6 +3912,9 @@ func NewVncSnapshotServerParam() *VncSnapshotServerParam {
 func (p *VncSnapshotServerParam) FillValueToSkeleton() {
 	if isEmpty(p.WaitForBoot) {
 		p.WaitForBoot = false
+	}
+	if isEmpty(p.OutputPath) {
+		p.OutputPath = ""
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -4016,6 +4020,13 @@ func (p *VncSnapshotServerParam) SetWaitForBoot(v bool) {
 
 func (p *VncSnapshotServerParam) GetWaitForBoot() bool {
 	return p.WaitForBoot
+}
+func (p *VncSnapshotServerParam) SetOutputPath(v string) {
+	p.OutputPath = v
+}
+
+func (p *VncSnapshotServerParam) GetOutputPath() string {
+	return p.OutputPath
 }
 func (p *VncSnapshotServerParam) SetSelector(v []string) {
 	p.Selector = v

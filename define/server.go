@@ -2,6 +2,7 @@ package define
 
 import (
 	"fmt"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/libsacloud/sacloud/ostype"
 	"github.com/sacloud/usacloud/output"
@@ -184,7 +185,7 @@ func ServerResource() *schema.Resource {
 		},
 		"vnc-snapshot": {
 			Type:                schema.CommandManipulateSingle,
-			Params:              serverVNCParam(),
+			Params:              serverVNCSnapshotParam(),
 			Usage:               "Capture VNC snapshot",
 			UseCustomCommand:    true,
 			SkipAfterSecondArgs: true,
@@ -1171,6 +1172,26 @@ func serverVNCSendParam() map[string]*schema.Schema {
 			Description: "wait until the server starts up",
 			Category:    "VNC",
 			Order:       50,
+		},
+	}
+}
+
+func serverVNCSnapshotParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"wait-for-boot": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "wait until the server starts up",
+			Category:    "VNC",
+			Order:       10,
+		},
+		"output-path": {
+			Type:        schema.TypeString,
+			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"o"},
+			Description: "snapshot output filepath",
+			Category:    "VNC",
+			Order:       20,
 		},
 	}
 }

@@ -813,6 +813,11 @@ func ServerVncSnapshotCompleteFlags(ctx command.Context, params *params.VncSnaps
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "output-path", "o":
+		param := define.Resources["Server"].Commands["vnc-snapshot"].BuildedParams().Get("output-path")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "selector":
 		param := define.Resources["Server"].Commands["vnc-snapshot"].BuildedParams().Get("selector")
 		if param != nil {

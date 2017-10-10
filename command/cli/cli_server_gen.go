@@ -6158,6 +6158,11 @@ func init() {
 						Name:  "wait-for-boot",
 						Usage: "wait until the server starts up",
 					},
+					&cli.StringFlag{
+						Name:    "output-path",
+						Aliases: []string{"o"},
+						Usage:   "snapshot output filepath",
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
@@ -6240,6 +6245,9 @@ func init() {
 					// Set option values
 					if c.IsSet("wait-for-boot") {
 						vncSnapshotParam.WaitForBoot = c.Bool("wait-for-boot")
+					}
+					if c.IsSet("output-path") {
+						vncSnapshotParam.OutputPath = c.String("output-path")
 					}
 					if c.IsSet("selector") {
 						vncSnapshotParam.Selector = c.StringSlice("selector")
@@ -6361,6 +6369,9 @@ func init() {
 					// Set option values
 					if c.IsSet("wait-for-boot") {
 						vncSnapshotParam.WaitForBoot = c.Bool("wait-for-boot")
+					}
+					if c.IsSet("output-path") {
+						vncSnapshotParam.OutputPath = c.String("output-path")
 					}
 					if c.IsSet("selector") {
 						vncSnapshotParam.Selector = c.StringSlice("selector")
@@ -13382,6 +13393,11 @@ func init() {
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "output-path", &schema.Category{
+		Key:         "VNC",
+		DisplayName: "VNC options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("server", "vnc-snapshot", "output-type", &schema.Category{
 		Key:         "output",
