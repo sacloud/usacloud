@@ -183,7 +183,7 @@ func ServerResource() *schema.Resource {
 			Order:               46,
 		},
 		"vnc-snapshot": {
-			Type:                schema.CommandRead,
+			Type:                schema.CommandManipulateSingle,
 			Params:              serverVNCParam(),
 			Usage:               "Capture VNC snapshot",
 			UseCustomCommand:    true,

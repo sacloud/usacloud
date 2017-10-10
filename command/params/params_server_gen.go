@@ -3890,6 +3890,7 @@ func (p *VncSendServerParam) GetId() int64 {
 type VncSnapshotServerParam struct {
 	WaitForBoot       bool     `json:"wait-for-boot"`
 	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -3913,6 +3914,9 @@ func (p *VncSnapshotServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
@@ -4019,6 +4023,13 @@ func (p *VncSnapshotServerParam) SetSelector(v []string) {
 
 func (p *VncSnapshotServerParam) GetSelector() []string {
 	return p.Selector
+}
+func (p *VncSnapshotServerParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *VncSnapshotServerParam) GetAssumeyes() bool {
+	return p.Assumeyes
 }
 func (p *VncSnapshotServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v

@@ -42,7 +42,10 @@ func ServerVncSnapshot(ctx command.Context, params *params.VncSnapshotServerPara
 	}
 
 	snapshotReq := api.NewVNCSnapshotRequest()
-	vncSnapshotResponse, _ := api.GetVNCSnapshot(params.Id, snapshotReq)
+	vncSnapshotResponse, err := api.GetVNCSnapshot(params.Id, snapshotReq)
+	if err != nil {
+		return fmt.Errorf("ServerVncSnapshot is failed: %s", err)
+	}
 	vncImage, err := base64.StdEncoding.DecodeString(vncSnapshotResponse.Image)
 	if err != nil {
 		return fmt.Errorf("ServerVncSnapshot is failed: %s", err)
@@ -54,7 +57,10 @@ func ServerVncSnapshot(ctx command.Context, params *params.VncSnapshotServerPara
 	}
 	defer file.Close()
 
-	file.Write(vncImage)
+	_, err = file.Write(vncImage)
+	if err != nil {
+		return fmt.Errorf("ServerVncSnapshot is failed: %s", err)
+	}
 
 	out := command.GlobalOption.Out
 	fmt.Fprintln(out, "Snapshot created:", filename)

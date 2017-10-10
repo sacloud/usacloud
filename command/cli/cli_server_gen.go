@@ -6162,6 +6162,11 @@ func init() {
 						Name:  "selector",
 						Usage: "Set target filter by tag",
 					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -6238,6 +6243,9 @@ func init() {
 					}
 					if c.IsSet("selector") {
 						vncSnapshotParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						vncSnapshotParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
 						vncSnapshotParam.ParamTemplate = c.String("param-template")
@@ -6357,6 +6365,9 @@ func init() {
 					if c.IsSet("selector") {
 						vncSnapshotParam.Selector = c.StringSlice("selector")
 					}
+					if c.IsSet("assumeyes") {
+						vncSnapshotParam.Assumeyes = c.Bool("assumeyes")
+					}
 					if c.IsSet("param-template") {
 						vncSnapshotParam.ParamTemplate = c.String("param-template")
 					}
@@ -6467,6 +6478,11 @@ func init() {
 
 					if len(ids) != 1 {
 						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !vncSnapshotParam.Assumeyes && !command.ConfirmContinue("vnc-snapshot", ids...) {
+						return nil
 					}
 
 					wg := sync.WaitGroup{}
@@ -13336,6 +13352,11 @@ func init() {
 		Key:         "VNC",
 		DisplayName: "VNC options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("server", "vnc-snapshot", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "vnc-snapshot", "column", &schema.Category{
 		Key:         "output",
