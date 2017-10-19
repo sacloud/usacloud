@@ -536,16 +536,16 @@ func cleanupAllProfiles() {
 	if err != nil {
 		panic(err)
 	}
-	entries, err := ioutil.ReadDir(filepath.Join(dir, configDirName))
-	if err != nil {
-		panic(err)
-	}
-	for _, fi := range entries {
-		err = os.RemoveAll(filepath.Join(dir, configDirName, fi.Name()))
+
+	// dir is exists?
+	configDirPath := filepath.Join(dir, configDirName)
+	if _, err := os.Stat(configDirPath); err == nil {
+		err := os.RemoveAll(configDirPath)
 		if err != nil {
 			panic(err)
 		}
 	}
+
 }
 
 func TestList(t *testing.T) {

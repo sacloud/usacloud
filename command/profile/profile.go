@@ -266,6 +266,10 @@ func List() ([]string, error) {
 	if err != nil {
 		return []string{}, fmt.Errorf("List profiles is failed: %s", err)
 	}
+	configDirPath := filepath.Join(baseDir, configDirName)
+	if _, err := os.Stat(configDirPath); err != nil {
+		return res, nil
+	}
 	entries, err := ioutil.ReadDir(filepath.Join(baseDir, configDirName))
 	if err != nil {
 		return []string{}, fmt.Errorf("List profiles is failed: %s", err)
