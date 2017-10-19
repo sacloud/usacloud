@@ -4,7 +4,7 @@ GOFMT_FILES?=$$(find . -name '*.go' | grep -v vendor)
 GOGEN_FILES?=$$(go list ./... | grep -v vendor)
 BIN_NAME?=usacloud
 CURRENT_VERSION = $(shell git log --merges --oneline | perl -ne 'if(m/^.+Merge pull request \#[0-9]+ from .+\/bump-version-([0-9\.]+)/){print $$1;exit}')
-GO_FILES?=$(find . -name '*.go' | grep -v vendor | grep -v tools | grep -v contrib)
+GO_FILES?=$(shell find . -name '*.go')
 
 BUILD_LDFLAGS = "-s -w \
 	  -X github.com/sacloud/usacloud/version.Revision=`git rev-parse --short HEAD` \
