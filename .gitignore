@@ -12,3 +12,5 @@ rpmbuild/
 repos/centos
 repos/debian
 package/*.tar.gz
+
+bats.log
