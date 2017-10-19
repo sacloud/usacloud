@@ -66,6 +66,8 @@ func SimpleMonitorCreate(ctx command.Context, params *params.CreateSimpleMonitor
 			return fmt.Errorf("dns-qname is required when protocol is dns")
 		}
 		p.SetHealthCheckDNS(params.DnsQname, params.DnsExcepted)
+	case "ssl-certificate":
+		p.SetHealthCheckSSLCertificate(params.RemainingDays)
 	}
 
 	p.SetDelayLoop(params.DelayLoop * 60)

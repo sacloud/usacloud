@@ -276,6 +276,7 @@ type CreateSimpleMonitorParam struct {
 	ResponseCode      int      `json:"response-code"`
 	DnsQname          string   `json:"dns-qname"`
 	DnsExcepted       string   `json:"dns-excepted"`
+	RemainingDays     int      `json:"remaining-days"`
 	NotifyEmail       bool     `json:"notify-email"`
 	EmailType         string   `json:"email-type"`
 	SlackWebhook      string   `json:"slack-webhook"`
@@ -297,9 +298,11 @@ type CreateSimpleMonitorParam struct {
 func NewCreateSimpleMonitorParam() *CreateSimpleMonitorParam {
 	return &CreateSimpleMonitorParam{
 
-		Protocol:    "ping",
-		DelayLoop:   1,
-		NotifyEmail: true,
+		Protocol:      "ping",
+		DelayLoop:     1,
+		RemainingDays: 30,
+		NotifyEmail:   true,
+		EmailType:     "text",
 	}
 }
 
@@ -334,6 +337,9 @@ func (p *CreateSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.DnsExcepted) {
 		p.DnsExcepted = ""
+	}
+	if isEmpty(p.RemainingDays) {
+		p.RemainingDays = 0
 	}
 	if isEmpty(p.NotifyEmail) {
 		p.NotifyEmail = false
@@ -424,6 +430,13 @@ func (p *CreateSimpleMonitorParam) Validate() []error {
 	{
 		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["delay-loop"].ValidateFunc
 		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["remaining-days"].ValidateFunc
+		errs := validator("--remaining-days", p.RemainingDays)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -577,6 +590,13 @@ func (p *CreateSimpleMonitorParam) SetDnsExcepted(v string) {
 
 func (p *CreateSimpleMonitorParam) GetDnsExcepted() string {
 	return p.DnsExcepted
+}
+func (p *CreateSimpleMonitorParam) SetRemainingDays(v int) {
+	p.RemainingDays = v
+}
+
+func (p *CreateSimpleMonitorParam) GetRemainingDays() int {
+	return p.RemainingDays
 }
 func (p *CreateSimpleMonitorParam) SetNotifyEmail(v bool) {
 	p.NotifyEmail = v
@@ -882,6 +902,7 @@ type UpdateSimpleMonitorParam struct {
 	ResponseCode      int      `json:"response-code"`
 	DnsQname          string   `json:"dns-qname"`
 	DnsExcepted       string   `json:"dns-excepted"`
+	RemainingDays     int      `json:"remaining-days"`
 	NotifyEmail       bool     `json:"notify-email"`
 	EmailType         string   `json:"email-type"`
 	SlackWebhook      string   `json:"slack-webhook"`
@@ -934,6 +955,9 @@ func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.DnsExcepted) {
 		p.DnsExcepted = ""
+	}
+	if isEmpty(p.RemainingDays) {
+		p.RemainingDays = 0
 	}
 	if isEmpty(p.NotifyEmail) {
 		p.NotifyEmail = false
@@ -1009,6 +1033,13 @@ func (p *UpdateSimpleMonitorParam) Validate() []error {
 	{
 		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["delay-loop"].ValidateFunc
 		errs := validator("--delay-loop", p.DelayLoop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["remaining-days"].ValidateFunc
+		errs := validator("--remaining-days", p.RemainingDays)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1162,6 +1193,13 @@ func (p *UpdateSimpleMonitorParam) SetDnsExcepted(v string) {
 
 func (p *UpdateSimpleMonitorParam) GetDnsExcepted() string {
 	return p.DnsExcepted
+}
+func (p *UpdateSimpleMonitorParam) SetRemainingDays(v int) {
+	p.RemainingDays = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetRemainingDays() int {
+	return p.RemainingDays
 }
 func (p *UpdateSimpleMonitorParam) SetNotifyEmail(v bool) {
 	p.NotifyEmail = v

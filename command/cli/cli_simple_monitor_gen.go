@@ -335,7 +335,7 @@ func init() {
 					},
 					&cli.StringFlag{
 						Name:  "protocol",
-						Usage: "[Required] set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
+						Usage: "[Required] set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3/ssl-certificate]",
 						Value: "ping",
 					},
 					&cli.IntFlag{
@@ -371,6 +371,11 @@ func init() {
 						Name:  "dns-excepted",
 						Usage: "set DNS query excepted value",
 					},
+					&cli.IntFlag{
+						Name:  "remaining-days",
+						Usage: "set SSL-Certificate remaining days",
+						Value: 30,
+					},
 					&cli.BoolFlag{
 						Name:  "notify-email",
 						Usage: "enable e-mail notification",
@@ -379,6 +384,7 @@ func init() {
 					&cli.StringFlag{
 						Name:  "email-type",
 						Usage: "set e-mail type",
+						Value: "text",
 					},
 					&cli.StringFlag{
 						Name:  "slack-webhook",
@@ -497,6 +503,9 @@ func init() {
 					}
 					if c.IsSet("dns-excepted") {
 						createParam.DnsExcepted = c.String("dns-excepted")
+					}
+					if c.IsSet("remaining-days") {
+						createParam.RemainingDays = c.Int("remaining-days")
 					}
 					if c.IsSet("notify-email") {
 						createParam.NotifyEmail = c.Bool("notify-email")
@@ -657,6 +666,9 @@ func init() {
 					}
 					if c.IsSet("dns-excepted") {
 						createParam.DnsExcepted = c.String("dns-excepted")
+					}
+					if c.IsSet("remaining-days") {
+						createParam.RemainingDays = c.Int("remaining-days")
 					}
 					if c.IsSet("notify-email") {
 						createParam.NotifyEmail = c.Bool("notify-email")
@@ -1079,7 +1091,7 @@ func init() {
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "protocol",
-						Usage: "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
+						Usage: "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3/ssl-certificate]",
 					},
 					&cli.IntFlag{
 						Name:  "port",
@@ -1112,6 +1124,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "dns-excepted",
 						Usage: "set DNS query excepted value",
+					},
+					&cli.IntFlag{
+						Name:  "remaining-days",
+						Usage: "set SSL-Certificate remaining days",
 					},
 					&cli.BoolFlag{
 						Name:  "notify-email",
@@ -1244,6 +1260,9 @@ func init() {
 					}
 					if c.IsSet("dns-excepted") {
 						updateParam.DnsExcepted = c.String("dns-excepted")
+					}
+					if c.IsSet("remaining-days") {
+						updateParam.RemainingDays = c.Int("remaining-days")
 					}
 					if c.IsSet("notify-email") {
 						updateParam.NotifyEmail = c.Bool("notify-email")
@@ -1407,6 +1426,9 @@ func init() {
 					}
 					if c.IsSet("dns-excepted") {
 						updateParam.DnsExcepted = c.String("dns-excepted")
+					}
+					if c.IsSet("remaining-days") {
+						updateParam.RemainingDays = c.Int("remaining-days")
 					}
 					if c.IsSet("notify-email") {
 						updateParam.NotifyEmail = c.Bool("notify-email")
@@ -2059,6 +2081,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("simple-monitor", "create", "remaining-days", &schema.Category{
+		Key:         "ssl-check",
+		DisplayName: "Health-Check(SSL Certificate) options",
+		Order:       26,
+	})
 	AppendFlagCategoryMap("simple-monitor", "create", "response-code", &schema.Category{
 		Key:         "http-check",
 		DisplayName: "Health-Check(HTTP/HTTPS) options",
@@ -2363,6 +2390,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("simple-monitor", "update", "remaining-days", &schema.Category{
+		Key:         "ssl-check",
+		DisplayName: "Health-Check(SSL Certificate) options",
+		Order:       26,
 	})
 	AppendFlagCategoryMap("simple-monitor", "update", "response-code", &schema.Category{
 		Key:         "http-check",

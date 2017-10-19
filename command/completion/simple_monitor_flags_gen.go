@@ -110,6 +110,11 @@ func SimpleMonitorCreateCompleteFlags(ctx command.Context, params *params.Create
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "remaining-days":
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("remaining-days")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "notify-email":
 		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("notify-email")
 		if param != nil {
@@ -224,6 +229,11 @@ func SimpleMonitorUpdateCompleteFlags(ctx command.Context, params *params.Update
 		}
 	case "dns_excepted":
 		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("dns_excepted")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "remaining-days":
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("remaining-days")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
