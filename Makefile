@@ -4,13 +4,14 @@ GOFMT_FILES?=$$(find . -name '*.go' | grep -v vendor)
 GOGEN_FILES?=$$(go list ./... | grep -v vendor)
 BIN_NAME?=usacloud
 CURRENT_VERSION = $(shell git log --merges --oneline | perl -ne 'if(m/^.+Merge pull request \#[0-9]+ from .+\/bump-version-([0-9\.]+)/){print $$1;exit}')
+GO_FILES?=$(find . -name '*.go' | grep -v vendor | grep -v tools | grep -v contrib)
 
 BUILD_LDFLAGS = "-s -w \
 	  -X github.com/sacloud/usacloud/version.Revision=`git rev-parse --short HEAD` \
 	  -X github.com/sacloud/usacloud/version.Version=$(CURRENT_VERSION)"
 
 .PHONY: default
-default: test vet
+default: test build
 
 .PHONY: run
 run:
@@ -35,24 +36,23 @@ deps:
 	go get -u github.com/golang/lint/golint
 
 
-.PHONY: gen-bash-completion
-gen-bash-completion: gen
+contrib/completion/bash/usacloud: define/*.go
 	go run tools/gen-bash-completion/main.go
 
-contrib/completion/bash/usacloud: define/*.go gen-bash-completion
-
 .PHONY: gen
-gen: tools command/cli/*_gen.go command/completion/*_gen.go command/funcs/*_gen.go command/params/*_gen.go
+gen: command/cli/*_gen.go command/completion/*_gen.go command/funcs/*_gen.go command/params/*_gen.go
 
 .PHONY: gen-force
-gen-force: clean-all tools
+gen-force: clean-all
 	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
 
 command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-funcs/*.go tools/gen-input-models/*.go
 	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
 
 .PHONY: build build-x build-darwin build-windows build-linux
-build: clean gen vet contrib/completion/bash/usacloud
+build: bin/usacloud
+
+bin/usacloud: contrib/completion/bash/usacloud $(GO_FILES)
 	OS="`go env GOOS`" ARCH="`go env GOARCH`" ARCHIVE= BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
 build-x: build-darwin build-windows build-linux
@@ -92,6 +92,10 @@ deb: rpm
 test: vet
 	go test $(TEST) $(TESTARGS) -v -timeout=30m -parallel=4 ;
 
+.PHONY: integration-test
+integration-test: bin/usacloud
+	test/integration/run-bats.sh test/integration/bats ;
+
 .PHONY: vet
 vet: golint gen
 	@echo "go tool vet $(VETARGS) ."
@@ -129,6 +133,9 @@ docker-run:
 
 docker-test:
 	sh -c "'$(CURDIR)/scripts/build_on_docker.sh' 'test'"
+
+docker-integration-test:
+	sh -c "'$(CURDIR)/scripts/run_integration_test.sh'"
 
 docker-build: clean
 	sh -c "'$(CURDIR)/scripts/build_on_docker.sh' 'build-x'"
