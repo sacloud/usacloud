@@ -84,6 +84,11 @@ var simpleMonitorCreateParamCategories = []schema.Category{
 		Order:       24,
 	},
 	{
+		Key:         "ssl-check",
+		DisplayName: "Health-Check(SSL Certificate) options",
+		Order:       26,
+	},
+	{
 		Key:         "notify",
 		DisplayName: "Notify options",
 		Order:       30,
@@ -110,6 +115,11 @@ var simpleMonitorUpdateParamCategories = []schema.Category{
 		Key:         "dns-check",
 		DisplayName: "Health-Check(DNS) options",
 		Order:       24,
+	},
+	{
+		Key:         "ssl-check",
+		DisplayName: "Health-Check(SSL Certificate) options",
+		Order:       26,
 	},
 	{
 		Key:         "notify",
@@ -157,7 +167,7 @@ func simpleMonitorDetailExcludes() []string {
 	return []string{}
 }
 
-var allowSimpleMonitorProtocol = []string{"http", "https", "ping", "tcp", "dns", "ssh", "smtp", "pop3"}
+var allowSimpleMonitorProtocol = []string{"http", "https", "ping", "tcp", "dns", "ssh", "smtp", "pop3", "ssl-certificate"}
 
 func simpleMonitorCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
@@ -172,7 +182,7 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 		"protocol": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
-			Description: "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
+			Description: "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3/ssl-certificate]",
 			// TODO SNMP is not supported on current version.
 			ValidateFunc: validateInStrValues(allowSimpleMonitorProtocol...),
 			CompleteFunc: completeInStrValues(allowSimpleMonitorProtocol...),
@@ -242,6 +252,15 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 			Category:    "dns-check",
 			Order:       20,
 		},
+		"remaining-days": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set SSL-Certificate remaining days",
+			ValidateFunc: validateIntRange(1, 9999),
+			DefaultValue: 30,
+			Category:     "ssl-check",
+			Order:        10,
+		},
 		"notify-email": {
 			Type:         schema.TypeBool,
 			HandlerType:  schema.HandlerNoop,
@@ -256,6 +275,7 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 			Description:  "set e-mail type",
 			ValidateFunc: validateInStrValues("text", "html"),
 			CompleteFunc: completeInStrValues("text", "html"),
+			DefaultValue: "text",
 			Category:     "notify",
 			Order:        20,
 		},
@@ -281,7 +301,7 @@ func simpleMonitorUpdateParam() map[string]*schema.Schema {
 		"protocol": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
-			Description: "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3]",
+			Description: "set monitoring protocol[http/https/ping/tcp/dns/ssh/smtp/pop3/ssl-certificate]",
 			// TODO SNMP is not supported on current version.
 			ValidateFunc: validateInStrValues(allowSimpleMonitorProtocol...),
 			CompleteFunc: completeInStrValues(allowSimpleMonitorProtocol...),
@@ -345,6 +365,14 @@ func simpleMonitorUpdateParam() map[string]*schema.Schema {
 			Description: "set DNS query excepted value",
 			Category:    "dns-check",
 			Order:       20,
+		},
+		"remaining-days": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set SSL-Certificate remaining days",
+			ValidateFunc: validateIntRange(1, 9999),
+			Category:     "ssl-check",
+			Order:        10,
 		},
 		"notify-email": {
 			Type:        schema.TypeBool,
