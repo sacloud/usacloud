@@ -10,6 +10,11 @@ usacloudの統合テストには[bats](https://github.com/sstephenson/bats)を�
 - `SAKURACLOUD_ACCESS_TOKEN_SECRET`
 - `SAKURACLOUD_ZONE`
 
+また、Docker上ではなくローカルマシン上でテストを実行する場合は以下のコマンドが必要です。
+
+- `jq`
+- `mkisofs` or `genisoimage` or `hdiutil`
+
 ```bash
 # ローカルマシン上で実行する場合(bats/jqが必要)
 $ make integration-test
@@ -63,6 +68,7 @@ usacloudコマンドの実行にはヘルパー関数`usacloud_run`(標準エラ
 現在は以下のライブラリをテスト内で利用可能です。
 
 - `jq`
+- `genisoimage`(利用する場合は`helpers.bash`で定義されている`MK_ISO_CMD`環境変数経由で利用してください)
 
 ライブラリを追加したい場合は[scripts/Dockerfile.bats](/scripts/Dockerfile.bats)を編集してインストールするようにしてください。
 

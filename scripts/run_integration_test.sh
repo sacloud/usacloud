@@ -16,5 +16,5 @@ docker run --rm --name $DOCKER_CONTAINER_NAME \
        -e SAKURACLOUD_ACCESS_TOKEN_SECRET \
        -e SAKURACLOUD_ZONE \
        -e USACLOUD_PROFILE \
-       $DOCKER_IMAGE_NAME
+       $DOCKER_IMAGE_NAME make integration-test
 
