@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# define environment variables
 export USACLOUD_BIN_NAME="usacloud"
 export TEST_TARGET_NAME="usacloud-integration-test"
 export TEST_TARGET_TAG="usacloud-integration-test"
@@ -10,6 +11,16 @@ ZONES=(is1a is1b tk1a tk1v)
 if [ -n "${USACLOUD_ZONES}" ]; then
     ZONES=(`echo ${USACLOUD_ZONES} | tr ',' ' '`)
 fi
+
+MK_ISO_CMD=""
+if type mkisofs > /dev/null 2>&1; then
+    MK_ISO_CMD="mkisofs -R -V config-2 "
+elif type genisoimage > /dev/null 2>&1; then
+    MK_ISO_CMD="genisoimage -R -V config-2 "
+else
+    MK_ISO_CMD="hdiutil makehybrid -iso -joliet -default-volume-name config-2 "
+fi
+export MK_ISO_CMD
 
 function usacloud_run() {
     usacloud "$@" 2>/dev/null

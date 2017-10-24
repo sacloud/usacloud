@@ -8,11 +8,11 @@ RUN  apt-get update && apt-get -y install \
         zip  \
         bats  \
         jq \
+        genisoimage \
       && apt-get clean \
       && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 
 ADD . /go/src/github.com/sacloud/usacloud
 WORKDIR /go/src/github.com/sacloud/usacloud
-RUN [ "make", "integration-test" ]
 
 
