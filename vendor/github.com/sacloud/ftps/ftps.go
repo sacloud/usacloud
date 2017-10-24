@@ -325,6 +325,10 @@ func (ftps *FTPS) StoreFile(remoteFilepath string, srcFilepath string) (err erro
 		return errors.New("file transfer not complete")
 	}
 
+	if err = dataConn.Close(); err != nil {
+		return
+	}
+
 	_, err = ftps.response(226)
 	if err != nil {
 		return
