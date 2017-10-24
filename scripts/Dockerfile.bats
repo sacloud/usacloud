@@ -7,6 +7,7 @@ RUN  apt-get update && apt-get -y install \
         make \
         zip  \
         bats  \
+        jq \
       && apt-get clean \
       && rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/*
 

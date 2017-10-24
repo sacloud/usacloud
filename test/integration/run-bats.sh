@@ -4,34 +4,15 @@ set -e
 
 # Usage: ./run-bats.sh [subtest]
 
-function quiet_run () {
-    if [[ "$VERBOSE" == "1" ]]; then
-        "$@"
-    else
-        "$@" &>/dev/null
-    fi
-}
-
-function cleanup_resources() {
-    if [[ "$1" == "ALL" ]]; then
-        echo "[TODO] cleanup_resources is not implements yet"
-        # quiet_run run_usacloud_bin rm -f $MACHINE_NAME
-    fi
-}
-
-function cleanup_config_store() {
-    if [[ -d "$USACLOUD_PROFILE_DIR" ]]; then
-        rm -r "$USACLOUD_PROFILE_DIR"
-    fi
-}
-
-
-function run_usacloud() {
-    "$USACLOUD_BIN_NAME" "$@"
-}
+source $(cd $(dirname $0); pwd)/helpers.bash
 
 function run_bats() {
-    for bats_file in $(find "$1" -name \*.bats); do
+    bats_files=("$1")
+    if [ -d "$1" ]; then
+        bats_files=$(find "$1" -name \*.bats)
+    fi
+
+    for bats_file in ${bats_files[@]}; do
         echo "=> $bats_file"
         # BATS returns non-zero to indicate the tests have failed, we shouldn't
         # necessarily bail in this case, so that's the reason for the e toggle.
@@ -71,14 +52,13 @@ fi
 export BASE_TEST_DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 export USACLOUD_PROFILE_DIR="/tmp/usacloud_test_profile"
 export PROJECT_ROOT="$BASE_TEST_DIR/../.."
-export USACLOUD_BIN_NAME="usacloud"
 export BATS_LOG="$PROJECT_ROOT/bats.log"
+export TMP_PASSWORD=$(cat /dev/urandom | base64 | tr -dc 'a-zA-Z0-9' | fold -w 16 | head -n 1)
 
 # Local builded binary (./bin/) takes precedence
 export PATH="$PROJECT_ROOT"/bin:$PATH
 
 # This function gets used in the integration tests, so export it.
-export -f run_usacloud
 
 > "$BATS_LOG"
 

@@ -375,6 +375,26 @@ COPYRIGHT:
 #### テスト
     
     $ make test
+    
+#### 統合テスト
+
+統合テストの実行には以下の環境変数の設定が必要です。
+
+- `SAKURACLOUD_ACCESS_TOKEN`
+- `SAKURACLOUD_ACCESS_TOKEN_SECRET`
+- `SAKURACLOUD_ZONE`
+
+```bash
+# ローカルマシン上で実行する場合(bats/jqが必要)
+$ make integration-test
+# 個別のテストだけ実行したい場合(ディレクトリ単位、またはファイル単位でも可)
+$ test/integration/run_bats.sh test/integration/bats/対象ディレクトリor対象ファイル名
+
+# Docker上で実行する場合(bats/jq不要)
+$ make docker-integration-test    
+```
+        
+テストを追加したい場合は[test/integration/README.md](test/integration/README.md)を参照してください。  
         
 #### 各コマンドのソース生成
 
