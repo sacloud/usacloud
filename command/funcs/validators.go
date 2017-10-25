@@ -36,3 +36,11 @@ func validateBetween(fieldName string, object interface{}, min int, max int) []e
 func validateOutputOption(o output.Option) []error {
 	return command.ValidateOutputOption(o)
 }
+
+func validateIPv4AddressArgs(ipaddr string) []error {
+	return command.ValidateIPv4Address("Args", ipaddr)
+}
+
+func validateIPv6AddressArgs(ipaddr string) []error {
+	return command.ValidateIPv6Address("Args", ipaddr)
+}

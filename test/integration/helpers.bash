@@ -5,7 +5,8 @@ export USACLOUD_BIN_NAME="usacloud"
 export TEST_TARGET_NAME="usacloud-integration-test"
 export TEST_TARGET_TAG="usacloud-integration-test"
 
-ALL_RESOURCE_TYPES=(dns gslb simple-monitor icon license ssh-key startup-script server database load-balancer nfs vpc-router archive auto-backup disk iso-image internet packet-filter switch bridge)
+#ALL_RESOURCE_TYPES=(dns gslb simple-monitor icon license ssh-key startup-script server database load-balancer nfs vpc-router archive auto-backup disk iso-image internet packet-filter switch bridge)
+ALL_RESOURCE_TYPES=(internet)
 GLOBAL_RESOURCE_TYPES=(dns gslb simple-monitor icon license ssh-key startup-script bridge)
 ZONES=(is1a is1b tk1a tk1v)
 if [ -n "${USACLOUD_ZONES}" ]; then
@@ -73,7 +74,34 @@ function cleanup_resources() {
                 for id in ${IDs[@]}; do
                      case "$resource_type" in
                          "internet" )
-                             # TODO ipv6関連コマンド実装後にipv6状態確認&無効化処理
+                             ipv6nets=$(usacloud_run --zone $zone internet read --out json $id | jq ".[].Switch.IPv6Nets[] | .ID")
+                             if [ -n "$(echo $ipv6nets)" ]; then
+                                 for ipv6net_id in $(echo $ipv6nets); do
+                                    # ipv6 prt record registered?
+                                    ipv6addrs=$(usacloud_run --zone $zone ipv6 list --ipv6net-id $ipv6net_id --out json | jq -r ".[].IPv6Addr")
+                                    if [ -n "$(echo $ipv6addrs)" ]; then
+                                        for ipv6addr in $(echo $ipv6addrs); do
+                                            # delete ipv6 prt record
+                                            quiet_run usacloud_run --zone $zone ipv6 ptr-delete -y $ipv6addr
+                                        done
+                                    fi
+                                 done
+                                 # disable ipv6
+                                 quiet_run usacloud_run --zone $zone internet ipv6-disable -y $id
+                             fi
+
+                             subnets=$(usacloud_run --zone $zone internet read --out json $id | jq ".[].Switch.Subnets[] | .ID")
+                             if [ -n "$(echo $subnets)" ]; then
+                                 i=0
+                                 for subnet_id in $(echo $subnets); do
+                                    if [ $i -gt 0 ]; then
+                                        # delete subnets
+                                        quiet_run usacloud_run --zone $zone internet subnet-delete -y --subnet-id $subnet_id $id
+                                    fi
+                                    i=$( expr $i + 1 )
+                                 done
+                             fi
+
                              ;;
                          "switch" )
                              # is connected to bridge?

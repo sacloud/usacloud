@@ -24,10 +24,11 @@ clean:
 .PHONY: clean-all
 clean-all:
 	rm -Rf bin/* ; rm -Rf tools/bin/* ; rm -f command/*_gen.go; \
-	rm -f command/cli/*_gen.go; \
-	rm -f command/completion/*_gen.go; \
-	rm -f command/funcs/*_gen.go; \
-	rm -f command/params/*_gen.go
+	rm -f command/cli/*_gen.go \
+	rm -f command/completion/*_gen.go \
+	rm -f command/funcs/*_gen.go \
+	rm -f command/params/*_gen.go \
+	rm -f contrib/completion/bash/usacloud
 
 
 .PHONY: deps
@@ -43,7 +44,7 @@ contrib/completion/bash/usacloud: define/*.go
 gen: command/cli/*_gen.go command/completion/*_gen.go command/funcs/*_gen.go command/params/*_gen.go
 
 .PHONY: gen-force
-gen-force: clean-all
+gen-force: clean-all contrib/completion/bash/usacloud
 	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
 
 command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-funcs/*.go tools/gen-input-models/*.go

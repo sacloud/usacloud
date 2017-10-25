@@ -256,6 +256,24 @@ func completeInterfaceID() schema.CompletionFunc {
 	}
 }
 
+func completeSubnetID() schema.CompletionFunc {
+	return func(ctx schema.CompletionContext, currentValue string) []string {
+
+		api := ctx.GetAPIClient().GetSubnetAPI()
+		res := []string{}
+
+		result, err := api.Reset().Find()
+		if err != nil {
+			return res
+		}
+
+		for _, v := range result.Subnets {
+			res = append(res, fmt.Sprintf("%d", v.ID))
+		}
+		return res
+	}
+}
+
 func completeServerCore() schema.CompletionFunc {
 	return func(ctx schema.CompletionContext, currentValue string) []string {
 
