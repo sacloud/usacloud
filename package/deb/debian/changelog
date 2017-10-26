@@ -1,3 +1,27 @@
+usacloud (0.3.0-1) stable; urgency=low
+
+  * アーカイブアップロード時のout of memory対応 (by higebu)
+    <https://github.com/sacloud/usacloud/pull/225>
+    <https://github.com/sacloud/usacloud/pull/227>
+  * VNCスナップショット機能の追加 (by misodengaku)
+    <https://github.com/sacloud/usacloud/pull/226>
+  * Pleskパブリックアーカイブを除去 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/230>
+  * ostypeパラメータによるCentOS6パブリックアーカイブの指定 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/231>
+  * シンプル監視でのSSLサーバ証明書 有効期限監視 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/232>
+  * configディレクトリが存在しない場合のconfig listコマンドエラー修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/233>
+  * 統合テスト(初期実装) (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/235>
+  * FTPSアップロードでレスポンス226が応答されない問題の修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/236>
+  * IPv4/IPv6関連コマンドの追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/237>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Thu, 26 Oct 2017 13:21:18 +0000
+
 usacloud (0.2.2-1) stable; urgency=low
 
   * NFSアプライアンス プラン追加 (by yamamoto-febc)
