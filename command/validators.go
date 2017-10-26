@@ -29,6 +29,14 @@ func ValidateSetProhibited(fieldName string, object interface{}) []error {
 	return []error{}
 }
 
+func ValidateIPv4Address(fieldName string, object interface{}) []error {
+	return schema.ValidateIPv4Address()(fieldName, object)
+}
+
+func ValidateIPv6Address(fieldName string, object interface{}) []error {
+	return schema.ValidateIPv6Address()(fieldName, object)
+}
+
 func ValidateConflicts(fieldName string, object interface{}, values map[string]interface{}) []error {
 
 	if !IsEmpty(object) {

@@ -18,12 +18,19 @@ import (
 
 func init() {
 	listParam := params.NewListInternetParam()
-	monitorParam := params.NewMonitorInternetParam()
-	updateBandwidthParam := params.NewUpdateBandwidthInternetParam()
 	createParam := params.NewCreateInternetParam()
 	readParam := params.NewReadInternetParam()
 	updateParam := params.NewUpdateInternetParam()
 	deleteParam := params.NewDeleteInternetParam()
+	updateBandwidthParam := params.NewUpdateBandwidthInternetParam()
+	subnetInfoParam := params.NewSubnetInfoInternetParam()
+	subnetAddParam := params.NewSubnetAddInternetParam()
+	subnetDeleteParam := params.NewSubnetDeleteInternetParam()
+	subnetUpdateParam := params.NewSubnetUpdateInternetParam()
+	ipv6InfoParam := params.NewIpv6InfoInternetParam()
+	ipv6EnableParam := params.NewIpv6EnableInternetParam()
+	ipv6DisableParam := params.NewIpv6DisableInternetParam()
+	monitorParam := params.NewMonitorInternetParam()
 
 	cliCommand := &cli.Command{
 		Name:  "internet",
@@ -324,726 +331,6 @@ func init() {
 
 					// Run command with params
 					return funcs.InternetList(ctx, listParam)
-
-				},
-			},
-			{
-				Name:      "monitor",
-				Usage:     "Monitor Internet",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:  "start",
-						Usage: "set start-time",
-					},
-					&cli.StringFlag{
-						Name:  "end",
-						Usage: "set end-time",
-					},
-					&cli.StringFlag{
-						Name:  "key-format",
-						Usage: "[Required] set monitoring value key-format",
-						Value: "sakuracloud.internet.{{.ID}}.nic",
-					},
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, monitorParam)
-
-					// Set option values
-					if c.IsSet("start") {
-						monitorParam.Start = c.String("start")
-					}
-					if c.IsSet("end") {
-						monitorParam.End = c.String("end")
-					}
-					if c.IsSet("key-format") {
-						monitorParam.KeyFormat = c.String("key-format")
-					}
-					if c.IsSet("selector") {
-						monitorParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("param-template") {
-						monitorParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						monitorParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						monitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						monitorParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						monitorParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						monitorParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						monitorParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						monitorParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("id") {
-						monitorParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.InternetMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.InternetMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.InternetMonitorCompleteFlags(ctx, monitorParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.InternetMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					monitorParam.ParamTemplate = c.String("param-template")
-					monitorParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewMonitorInternetParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.MergeWithOverwrite(monitorParam, p)
-					}
-
-					// Set option values
-					if c.IsSet("start") {
-						monitorParam.Start = c.String("start")
-					}
-					if c.IsSet("end") {
-						monitorParam.End = c.String("end")
-					}
-					if c.IsSet("key-format") {
-						monitorParam.KeyFormat = c.String("key-format")
-					}
-					if c.IsSet("selector") {
-						monitorParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("param-template") {
-						monitorParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						monitorParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						monitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						monitorParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						monitorParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						monitorParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						monitorParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						monitorParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("id") {
-						monitorParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Generate skeleton
-					if monitorParam.GenerateSkeleton {
-						monitorParam.GenerateSkeleton = false
-						monitorParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := monitorParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorParam)
-
-					apiClient := ctx.GetAPIClient().Internet
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(monitorParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.Internet {
-							if hasTags(&v, monitorParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.Internet {
-										if len(monitorParam.Selector) == 0 || hasTags(&v, monitorParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						monitorParam.SetId(id)
-						p := *monitorParam // copy struct value
-						monitorParam := &p
-						go func() {
-							err := funcs.InternetMonitor(ctx, monitorParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
-
-				},
-			},
-			{
-				Name:      "update-bandwidth",
-				Usage:     "UpdateBandwidth Internet",
-				ArgsUsage: "<ID or Name(allow multiple target)>",
-				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:  "band-width",
-						Usage: "[Required] set band-width(Mbpm)",
-						Value: 100,
-					},
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.BoolFlag{
-						Name:    "assumeyes",
-						Aliases: []string{"y"},
-						Usage:   "Assume that the answer to any question which would be asked is yes",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, updateBandwidthParam)
-
-					// Set option values
-					if c.IsSet("band-width") {
-						updateBandwidthParam.BandWidth = c.Int("band-width")
-					}
-					if c.IsSet("selector") {
-						updateBandwidthParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						updateBandwidthParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						updateBandwidthParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						updateBandwidthParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						updateBandwidthParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						updateBandwidthParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						updateBandwidthParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						updateBandwidthParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						updateBandwidthParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						updateBandwidthParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("id") {
-						updateBandwidthParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.InternetUpdateBandwidthCompleteFlags(ctx, updateBandwidthParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					updateBandwidthParam.ParamTemplate = c.String("param-template")
-					updateBandwidthParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(updateBandwidthParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewUpdateBandwidthInternetParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.MergeWithOverwrite(updateBandwidthParam, p)
-					}
-
-					// Set option values
-					if c.IsSet("band-width") {
-						updateBandwidthParam.BandWidth = c.Int("band-width")
-					}
-					if c.IsSet("selector") {
-						updateBandwidthParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						updateBandwidthParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						updateBandwidthParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						updateBandwidthParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						updateBandwidthParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						updateBandwidthParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						updateBandwidthParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						updateBandwidthParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						updateBandwidthParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						updateBandwidthParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("id") {
-						updateBandwidthParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					// Generate skeleton
-					if updateBandwidthParam.GenerateSkeleton {
-						updateBandwidthParam.GenerateSkeleton = false
-						updateBandwidthParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(updateBandwidthParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := updateBandwidthParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), updateBandwidthParam)
-
-					apiClient := ctx.GetAPIClient().Internet
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(updateBandwidthParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.Internet {
-							if hasTags(&v, updateBandwidthParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateBandwidthParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.Internet {
-										if len(updateBandwidthParam.Selector) == 0 || hasTags(&v, updateBandwidthParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					// confirm
-					if !updateBandwidthParam.Assumeyes && !command.ConfirmContinue("update-bandwidth", ids...) {
-						return nil
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						updateBandwidthParam.SetId(id)
-						p := *updateBandwidthParam // copy struct value
-						updateBandwidthParam := &p
-						go func() {
-							err := funcs.InternetUpdateBandwidth(ctx, updateBandwidthParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
 
 				},
 			},
@@ -2436,6 +1723,3053 @@ func init() {
 
 				},
 			},
+			{
+				Name:      "update-bandwidth",
+				Usage:     "UpdateBandwidth Internet",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "band-width",
+						Usage: "[Required] set band-width(Mbpm)",
+						Value: 100,
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, updateBandwidthParam)
+
+					// Set option values
+					if c.IsSet("band-width") {
+						updateBandwidthParam.BandWidth = c.Int("band-width")
+					}
+					if c.IsSet("selector") {
+						updateBandwidthParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						updateBandwidthParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						updateBandwidthParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						updateBandwidthParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						updateBandwidthParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						updateBandwidthParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						updateBandwidthParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						updateBandwidthParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						updateBandwidthParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						updateBandwidthParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						updateBandwidthParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.InternetUpdateBandwidthCompleteFlags(ctx, updateBandwidthParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.InternetUpdateBandwidthCompleteArgs(ctx, updateBandwidthParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					updateBandwidthParam.ParamTemplate = c.String("param-template")
+					updateBandwidthParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(updateBandwidthParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewUpdateBandwidthInternetParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(updateBandwidthParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("band-width") {
+						updateBandwidthParam.BandWidth = c.Int("band-width")
+					}
+					if c.IsSet("selector") {
+						updateBandwidthParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						updateBandwidthParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						updateBandwidthParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						updateBandwidthParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						updateBandwidthParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						updateBandwidthParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						updateBandwidthParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						updateBandwidthParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						updateBandwidthParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						updateBandwidthParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						updateBandwidthParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if updateBandwidthParam.GenerateSkeleton {
+						updateBandwidthParam.GenerateSkeleton = false
+						updateBandwidthParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(updateBandwidthParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := updateBandwidthParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), updateBandwidthParam)
+
+					apiClient := ctx.GetAPIClient().Internet
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(updateBandwidthParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Internet {
+							if hasTags(&v, updateBandwidthParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", updateBandwidthParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Internet {
+										if len(updateBandwidthParam.Selector) == 0 || hasTags(&v, updateBandwidthParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					// confirm
+					if !updateBandwidthParam.Assumeyes && !command.ConfirmContinue("update-bandwidth", ids...) {
+						return nil
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						updateBandwidthParam.SetId(id)
+						p := *updateBandwidthParam // copy struct value
+						updateBandwidthParam := &p
+						go func() {
+							err := funcs.InternetUpdateBandwidth(ctx, updateBandwidthParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "subnet-info",
+				Usage:     "SubnetInfo Internet",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, subnetInfoParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						subnetInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						subnetInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						subnetInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						subnetInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						subnetInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						subnetInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						subnetInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						subnetInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						subnetInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						subnetInfoParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.InternetSubnetInfoCompleteArgs(ctx, subnetInfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.InternetSubnetInfoCompleteArgs(ctx, subnetInfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.InternetSubnetInfoCompleteFlags(ctx, subnetInfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.InternetSubnetInfoCompleteArgs(ctx, subnetInfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					subnetInfoParam.ParamTemplate = c.String("param-template")
+					subnetInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(subnetInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewSubnetInfoInternetParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(subnetInfoParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						subnetInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						subnetInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						subnetInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						subnetInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						subnetInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						subnetInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						subnetInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						subnetInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						subnetInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						subnetInfoParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if subnetInfoParam.GenerateSkeleton {
+						subnetInfoParam.GenerateSkeleton = false
+						subnetInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(subnetInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := subnetInfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), subnetInfoParam)
+
+					apiClient := ctx.GetAPIClient().Internet
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(subnetInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Internet {
+							if hasTags(&v, subnetInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", subnetInfoParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Internet {
+										if len(subnetInfoParam.Selector) == 0 || hasTags(&v, subnetInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						subnetInfoParam.SetId(id)
+						p := *subnetInfoParam // copy struct value
+						subnetInfoParam := &p
+						go func() {
+							err := funcs.InternetSubnetInfo(ctx, subnetInfoParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "subnet-add",
+				Usage:     "SubnetAdd Internet",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "next-hop",
+						Usage: "[Required] set NextHop IPAddress",
+					},
+					&cli.IntFlag{
+						Name:    "nw-masklen",
+						Aliases: []string{"network-masklen"},
+						Usage:   "[Required] set Global-IPAddress(subnet) prefix",
+						Value:   28,
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, subnetAddParam)
+
+					// Set option values
+					if c.IsSet("next-hop") {
+						subnetAddParam.NextHop = c.String("next-hop")
+					}
+					if c.IsSet("nw-masklen") {
+						subnetAddParam.NwMasklen = c.Int("nw-masklen")
+					}
+					if c.IsSet("selector") {
+						subnetAddParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						subnetAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						subnetAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						subnetAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						subnetAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						subnetAddParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						subnetAddParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						subnetAddParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						subnetAddParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						subnetAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						subnetAddParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.InternetSubnetAddCompleteArgs(ctx, subnetAddParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.InternetSubnetAddCompleteArgs(ctx, subnetAddParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.InternetSubnetAddCompleteFlags(ctx, subnetAddParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.InternetSubnetAddCompleteArgs(ctx, subnetAddParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					subnetAddParam.ParamTemplate = c.String("param-template")
+					subnetAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(subnetAddParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewSubnetAddInternetParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(subnetAddParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("next-hop") {
+						subnetAddParam.NextHop = c.String("next-hop")
+					}
+					if c.IsSet("nw-masklen") {
+						subnetAddParam.NwMasklen = c.Int("nw-masklen")
+					}
+					if c.IsSet("selector") {
+						subnetAddParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						subnetAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						subnetAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						subnetAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						subnetAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						subnetAddParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						subnetAddParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						subnetAddParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						subnetAddParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						subnetAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						subnetAddParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if subnetAddParam.GenerateSkeleton {
+						subnetAddParam.GenerateSkeleton = false
+						subnetAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(subnetAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := subnetAddParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), subnetAddParam)
+
+					apiClient := ctx.GetAPIClient().Internet
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(subnetAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Internet {
+							if hasTags(&v, subnetAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", subnetAddParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Internet {
+										if len(subnetAddParam.Selector) == 0 || hasTags(&v, subnetAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					// confirm
+					if !subnetAddParam.Assumeyes && !command.ConfirmContinue("subnet-add", ids...) {
+						return nil
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						subnetAddParam.SetId(id)
+						p := *subnetAddParam // copy struct value
+						subnetAddParam := &p
+						go func() {
+							err := funcs.InternetSubnetAdd(ctx, subnetAddParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "subnet-delete",
+				Usage:     "SubnetDelete Internet",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:  "subnet-id",
+						Usage: "set Target Subnet ID",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, subnetDeleteParam)
+
+					// Set option values
+					if c.IsSet("subnet-id") {
+						subnetDeleteParam.SubnetId = c.Int64("subnet-id")
+					}
+					if c.IsSet("selector") {
+						subnetDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						subnetDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						subnetDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						subnetDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						subnetDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						subnetDeleteParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.InternetSubnetDeleteCompleteArgs(ctx, subnetDeleteParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.InternetSubnetDeleteCompleteArgs(ctx, subnetDeleteParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.InternetSubnetDeleteCompleteFlags(ctx, subnetDeleteParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.InternetSubnetDeleteCompleteArgs(ctx, subnetDeleteParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					subnetDeleteParam.ParamTemplate = c.String("param-template")
+					subnetDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(subnetDeleteParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewSubnetDeleteInternetParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(subnetDeleteParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("subnet-id") {
+						subnetDeleteParam.SubnetId = c.Int64("subnet-id")
+					}
+					if c.IsSet("selector") {
+						subnetDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						subnetDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						subnetDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						subnetDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						subnetDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						subnetDeleteParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if subnetDeleteParam.GenerateSkeleton {
+						subnetDeleteParam.GenerateSkeleton = false
+						subnetDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(subnetDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := subnetDeleteParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), subnetDeleteParam)
+
+					apiClient := ctx.GetAPIClient().Internet
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(subnetDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Internet {
+							if hasTags(&v, subnetDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", subnetDeleteParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Internet {
+										if len(subnetDeleteParam.Selector) == 0 || hasTags(&v, subnetDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					// confirm
+					if !subnetDeleteParam.Assumeyes && !command.ConfirmContinue("subnet-delete", ids...) {
+						return nil
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						subnetDeleteParam.SetId(id)
+						p := *subnetDeleteParam // copy struct value
+						subnetDeleteParam := &p
+						go func() {
+							err := funcs.InternetSubnetDelete(ctx, subnetDeleteParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "subnet-update",
+				Usage:     "SubnetUpdate Internet",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "next-hop",
+						Usage: "[Required] set NextHop IPAddress",
+					},
+					&cli.Int64Flag{
+						Name:  "subnet-id",
+						Usage: "set Target Subnet ID",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, subnetUpdateParam)
+
+					// Set option values
+					if c.IsSet("next-hop") {
+						subnetUpdateParam.NextHop = c.String("next-hop")
+					}
+					if c.IsSet("subnet-id") {
+						subnetUpdateParam.SubnetId = c.Int64("subnet-id")
+					}
+					if c.IsSet("selector") {
+						subnetUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						subnetUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						subnetUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						subnetUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						subnetUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						subnetUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						subnetUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						subnetUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						subnetUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						subnetUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						subnetUpdateParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.InternetSubnetUpdateCompleteArgs(ctx, subnetUpdateParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.InternetSubnetUpdateCompleteArgs(ctx, subnetUpdateParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.InternetSubnetUpdateCompleteFlags(ctx, subnetUpdateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.InternetSubnetUpdateCompleteArgs(ctx, subnetUpdateParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					subnetUpdateParam.ParamTemplate = c.String("param-template")
+					subnetUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(subnetUpdateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewSubnetUpdateInternetParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(subnetUpdateParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("next-hop") {
+						subnetUpdateParam.NextHop = c.String("next-hop")
+					}
+					if c.IsSet("subnet-id") {
+						subnetUpdateParam.SubnetId = c.Int64("subnet-id")
+					}
+					if c.IsSet("selector") {
+						subnetUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						subnetUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						subnetUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						subnetUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						subnetUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						subnetUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						subnetUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						subnetUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						subnetUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						subnetUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						subnetUpdateParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if subnetUpdateParam.GenerateSkeleton {
+						subnetUpdateParam.GenerateSkeleton = false
+						subnetUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(subnetUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := subnetUpdateParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), subnetUpdateParam)
+
+					apiClient := ctx.GetAPIClient().Internet
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(subnetUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Internet {
+							if hasTags(&v, subnetUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", subnetUpdateParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Internet {
+										if len(subnetUpdateParam.Selector) == 0 || hasTags(&v, subnetUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					// confirm
+					if !subnetUpdateParam.Assumeyes && !command.ConfirmContinue("subnet-update", ids...) {
+						return nil
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						subnetUpdateParam.SetId(id)
+						p := *subnetUpdateParam // copy struct value
+						subnetUpdateParam := &p
+						go func() {
+							err := funcs.InternetSubnetUpdate(ctx, subnetUpdateParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "ipv6-info",
+				Usage:     "Ipv6Info Internet",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, ipv6InfoParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						ipv6InfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						ipv6InfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ipv6InfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						ipv6InfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						ipv6InfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						ipv6InfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						ipv6InfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						ipv6InfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						ipv6InfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						ipv6InfoParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.InternetIpv6InfoCompleteArgs(ctx, ipv6InfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.InternetIpv6InfoCompleteArgs(ctx, ipv6InfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.InternetIpv6InfoCompleteFlags(ctx, ipv6InfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.InternetIpv6InfoCompleteArgs(ctx, ipv6InfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					ipv6InfoParam.ParamTemplate = c.String("param-template")
+					ipv6InfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ipv6InfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewIpv6InfoInternetParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(ipv6InfoParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						ipv6InfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						ipv6InfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ipv6InfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						ipv6InfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						ipv6InfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						ipv6InfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						ipv6InfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						ipv6InfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						ipv6InfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						ipv6InfoParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if ipv6InfoParam.GenerateSkeleton {
+						ipv6InfoParam.GenerateSkeleton = false
+						ipv6InfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(ipv6InfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := ipv6InfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), ipv6InfoParam)
+
+					apiClient := ctx.GetAPIClient().Internet
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(ipv6InfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Internet {
+							if hasTags(&v, ipv6InfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", ipv6InfoParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Internet {
+										if len(ipv6InfoParam.Selector) == 0 || hasTags(&v, ipv6InfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						ipv6InfoParam.SetId(id)
+						p := *ipv6InfoParam // copy struct value
+						ipv6InfoParam := &p
+						go func() {
+							err := funcs.InternetIpv6Info(ctx, ipv6InfoParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "ipv6-enable",
+				Usage:     "Ipv6Enable Internet",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, ipv6EnableParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						ipv6EnableParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						ipv6EnableParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						ipv6EnableParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ipv6EnableParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						ipv6EnableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						ipv6EnableParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						ipv6EnableParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						ipv6EnableParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						ipv6EnableParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						ipv6EnableParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						ipv6EnableParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.InternetIpv6EnableCompleteArgs(ctx, ipv6EnableParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.InternetIpv6EnableCompleteArgs(ctx, ipv6EnableParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.InternetIpv6EnableCompleteFlags(ctx, ipv6EnableParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.InternetIpv6EnableCompleteArgs(ctx, ipv6EnableParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					ipv6EnableParam.ParamTemplate = c.String("param-template")
+					ipv6EnableParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ipv6EnableParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewIpv6EnableInternetParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(ipv6EnableParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						ipv6EnableParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						ipv6EnableParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						ipv6EnableParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ipv6EnableParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						ipv6EnableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						ipv6EnableParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						ipv6EnableParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						ipv6EnableParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						ipv6EnableParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						ipv6EnableParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						ipv6EnableParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if ipv6EnableParam.GenerateSkeleton {
+						ipv6EnableParam.GenerateSkeleton = false
+						ipv6EnableParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(ipv6EnableParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := ipv6EnableParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), ipv6EnableParam)
+
+					apiClient := ctx.GetAPIClient().Internet
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(ipv6EnableParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Internet {
+							if hasTags(&v, ipv6EnableParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", ipv6EnableParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Internet {
+										if len(ipv6EnableParam.Selector) == 0 || hasTags(&v, ipv6EnableParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					// confirm
+					if !ipv6EnableParam.Assumeyes && !command.ConfirmContinue("ipv6-enable", ids...) {
+						return nil
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						ipv6EnableParam.SetId(id)
+						p := *ipv6EnableParam // copy struct value
+						ipv6EnableParam := &p
+						go func() {
+							err := funcs.InternetIpv6Enable(ctx, ipv6EnableParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "ipv6-disable",
+				Usage:     "Ipv6Disable Internet",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, ipv6DisableParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						ipv6DisableParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						ipv6DisableParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						ipv6DisableParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ipv6DisableParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						ipv6DisableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						ipv6DisableParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.InternetIpv6DisableCompleteArgs(ctx, ipv6DisableParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.InternetIpv6DisableCompleteArgs(ctx, ipv6DisableParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.InternetIpv6DisableCompleteFlags(ctx, ipv6DisableParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.InternetIpv6DisableCompleteArgs(ctx, ipv6DisableParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					ipv6DisableParam.ParamTemplate = c.String("param-template")
+					ipv6DisableParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(ipv6DisableParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewIpv6DisableInternetParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(ipv6DisableParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						ipv6DisableParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						ipv6DisableParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						ipv6DisableParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						ipv6DisableParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						ipv6DisableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						ipv6DisableParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if ipv6DisableParam.GenerateSkeleton {
+						ipv6DisableParam.GenerateSkeleton = false
+						ipv6DisableParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(ipv6DisableParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := ipv6DisableParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), ipv6DisableParam)
+
+					apiClient := ctx.GetAPIClient().Internet
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(ipv6DisableParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Internet {
+							if hasTags(&v, ipv6DisableParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", ipv6DisableParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Internet {
+										if len(ipv6DisableParam.Selector) == 0 || hasTags(&v, ipv6DisableParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					// confirm
+					if !ipv6DisableParam.Assumeyes && !command.ConfirmContinue("ipv6-disable", ids...) {
+						return nil
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						ipv6DisableParam.SetId(id)
+						p := *ipv6DisableParam // copy struct value
+						ipv6DisableParam := &p
+						go func() {
+							err := funcs.InternetIpv6Disable(ctx, ipv6DisableParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "monitor",
+				Usage:     "Monitor Internet",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "start",
+						Usage: "set start-time",
+					},
+					&cli.StringFlag{
+						Name:  "end",
+						Usage: "set end-time",
+					},
+					&cli.StringFlag{
+						Name:  "key-format",
+						Usage: "[Required] set monitoring value key-format",
+						Value: "sakuracloud.internet.{{.ID}}.nic",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, monitorParam)
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.InternetMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.InternetMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.InternetMonitorCompleteFlags(ctx, monitorParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.InternetMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					monitorParam.ParamTemplate = c.String("param-template")
+					monitorParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(monitorParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewMonitorInternetParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(monitorParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						monitorParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					// Generate skeleton
+					if monitorParam.GenerateSkeleton {
+						monitorParam.GenerateSkeleton = false
+						monitorParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(monitorParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := monitorParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), monitorParam)
+
+					apiClient := ctx.GetAPIClient().Internet
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(monitorParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Internet {
+							if hasTags(&v, monitorParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Internet {
+										if len(monitorParam.Selector) == 0 || hasTags(&v, monitorParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						monitorParam.SetId(id)
+						p := *monitorParam // copy struct value
+						monitorParam := &p
+						go func() {
+							err := funcs.InternetMonitor(ctx, monitorParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
 		},
 	}
 
@@ -2449,39 +4783,74 @@ func init() {
 	// build Category-Command mapping
 
 	AppendCommandCategoryMap("internet", "create", &schema.Category{
-		Key:         "basics",
+		Key:         "basic",
 		DisplayName: "Basics",
-		Order:       1,
+		Order:       10,
 	})
 	AppendCommandCategoryMap("internet", "delete", &schema.Category{
-		Key:         "basics",
+		Key:         "basic",
 		DisplayName: "Basics",
-		Order:       1,
+		Order:       10,
+	})
+	AppendCommandCategoryMap("internet", "ipv6-disable", &schema.Category{
+		Key:         "ipv6",
+		DisplayName: "Router IPv6 Network Management",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("internet", "ipv6-enable", &schema.Category{
+		Key:         "ipv6",
+		DisplayName: "Router IPv6 Network Management",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("internet", "ipv6-info", &schema.Category{
+		Key:         "ipv6",
+		DisplayName: "Router IPv6 Network Management",
+		Order:       40,
 	})
 	AppendCommandCategoryMap("internet", "list", &schema.Category{
-		Key:         "basics",
+		Key:         "basic",
 		DisplayName: "Basics",
-		Order:       1,
+		Order:       10,
 	})
 	AppendCommandCategoryMap("internet", "monitor", &schema.Category{
 		Key:         "monitor",
-		DisplayName: "Monitor",
-		Order:       1,
+		DisplayName: "Monitoring",
+		Order:       90,
 	})
 	AppendCommandCategoryMap("internet", "read", &schema.Category{
-		Key:         "basics",
+		Key:         "basic",
 		DisplayName: "Basics",
-		Order:       1,
+		Order:       10,
+	})
+	AppendCommandCategoryMap("internet", "subnet-add", &schema.Category{
+		Key:         "subnet",
+		DisplayName: "Router Subnet Management",
+		Order:       30,
+	})
+	AppendCommandCategoryMap("internet", "subnet-delete", &schema.Category{
+		Key:         "subnet",
+		DisplayName: "Router Subnet Management",
+		Order:       30,
+	})
+	AppendCommandCategoryMap("internet", "subnet-info", &schema.Category{
+		Key:         "subnet",
+		DisplayName: "Router Subnet Management",
+		Order:       30,
+	})
+	AppendCommandCategoryMap("internet", "subnet-update", &schema.Category{
+		Key:         "subnet",
+		DisplayName: "Router Subnet Management",
+		Order:       30,
 	})
 	AppendCommandCategoryMap("internet", "update", &schema.Category{
-		Key:         "basics",
+		Key:         "basic",
 		DisplayName: "Basics",
-		Order:       1,
+		Order:       10,
 	})
 	AppendCommandCategoryMap("internet", "update-bandwidth", &schema.Category{
 		Key:         "spec",
-		DisplayName: "Spec",
-		Order:       1,
+		DisplayName: "Router spec",
+		Order:       20,
 	})
 
 	// build Category-Param mapping
@@ -2612,6 +4981,141 @@ func init() {
 		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("internet", "delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-disable", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-disable", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-disable", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-disable", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-disable", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-disable", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-enable", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-enable", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-enable", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-enable", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-enable", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-enable", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-enable", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-enable", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-enable", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-enable", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-enable", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-info", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-info", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-info", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-info", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-info", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-info", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-info", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "ipv6-info", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
@@ -2800,6 +5304,221 @@ func init() {
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "next-hop", &schema.Category{
+		Key:         "router",
+		DisplayName: "Router options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "nw-masklen", &schema.Category{
+		Key:         "router",
+		DisplayName: "Router options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-add", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("internet", "subnet-delete", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-delete", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-delete", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("internet", "subnet-delete", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("internet", "subnet-delete", "subnet-id", &schema.Category{
+		Key:         "router",
+		DisplayName: "Router options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("internet", "subnet-info", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-info", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-info", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-info", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("internet", "subnet-info", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-info", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-info", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "next-hop", &schema.Category{
+		Key:         "router",
+		DisplayName: "Router options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("internet", "subnet-update", "subnet-id", &schema.Category{
+		Key:         "router",
+		DisplayName: "Router options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("internet", "update", "assumeyes", &schema.Category{
 		Key:         "Input",

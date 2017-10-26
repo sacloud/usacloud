@@ -21,21 +21,36 @@ func Sformat(buf []byte) []byte {
 	return src
 }
 
+var normalizationWords = map[string]string{
+	"IP": "ip",
+}
+
+func NormalizeResourceName(name string) string {
+	n := name
+	for k, v := range normalizationWords {
+		if strings.HasPrefix(name, k) {
+			n = strings.Replace(name, k, v, -1)
+			break
+		}
+	}
+	return n
+}
+
 func ToSnakeCaseName(name string) string {
-	return strings.Replace(xstrings.ToSnakeCase(name), "-", "_", -1)
+	return strings.Replace(xstrings.ToSnakeCase(NormalizeResourceName(name)), "-", "_", -1)
 }
 
 func ToDashedName(name string) string {
 	// From "CamelCase" to "dash-case"
-	return strings.Replace(xstrings.ToSnakeCase(name), "_", "-", -1)
+	return strings.Replace(xstrings.ToSnakeCase(NormalizeResourceName(name)), "_", "-", -1)
 }
 
 func ToCamelCaseName(name string) string {
-	return xstrings.ToCamelCase(strings.Replace(name, "-", "_", -1))
+	return xstrings.ToCamelCase(strings.Replace(NormalizeResourceName(name), "-", "_", -1))
 }
 
 func ToCamelWithFirstLower(name string) string {
-	return xstrings.FirstRuneToLower(xstrings.ToCamelCase(strings.Replace(name, "-", "_", -1)))
+	return xstrings.FirstRuneToLower(xstrings.ToCamelCase(strings.Replace(NormalizeResourceName(name), "-", "_", -1)))
 }
 
 func ToCLIFlagName(name string) string {

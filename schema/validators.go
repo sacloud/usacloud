@@ -313,8 +313,32 @@ func ValidateIPv4Address() ValidateFunc {
 			}
 
 			ip := net.ParseIP(value)
-			if ip == nil || ip.To4() == nil {
+			if ip == nil || !strings.Contains(value, ".") {
 				res = append(res, fmt.Errorf("%q: Invalid IPv4 address format", fieldName))
+			}
+		}
+
+		return res
+	}
+}
+
+func ValidateIPv6Address() ValidateFunc {
+	return func(fieldName string, object interface{}) []error {
+		res := []error{}
+
+		// if target is nil , return OK(Use required attr if necessary)
+		if object == nil {
+			return res
+		}
+
+		if value, ok := object.(string); ok {
+			if value == "" {
+				return res
+			}
+
+			ip := net.ParseIP(value)
+			if ip == nil || !strings.Contains(value, ":") {
+				res = append(res, fmt.Errorf("%q: Invalid IPv6 address format", fieldName))
 			}
 		}
 

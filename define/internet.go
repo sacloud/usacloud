@@ -15,7 +15,7 @@ func InternetResource() *schema.Resource {
 			Params:             internetListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: internetListColumns(),
-			Category:           "basics",
+			Category:           "basic",
 			Order:              10,
 		},
 		"create": {
@@ -23,7 +23,7 @@ func InternetResource() *schema.Resource {
 			Params:        internetCreateParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),
-			Category:      "basics",
+			Category:      "basic",
 			Order:         20,
 		},
 		"read": {
@@ -31,7 +31,7 @@ func InternetResource() *schema.Resource {
 			Params:        internetReadParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),
-			Category:      "basics",
+			Category:      "basic",
 			Order:         30,
 		},
 		"update": {
@@ -39,7 +39,7 @@ func InternetResource() *schema.Resource {
 			Params:        internetUpdateParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),
-			Category:      "basics",
+			Category:      "basic",
 			Order:         40,
 		},
 		"delete": {
@@ -48,7 +48,7 @@ func InternetResource() *schema.Resource {
 			Params:        internetDeleteParam(),
 			IncludeFields: internetDetailIncludes(),
 			ExcludeFields: internetDetailExcludes(),
-			Category:      "basics",
+			Category:      "basic",
 			Order:         50,
 		},
 		"update-bandwidth": {
@@ -59,6 +59,83 @@ func InternetResource() *schema.Resource {
 			UseCustomCommand: true,
 			Category:         "spec",
 			Order:            10,
+		},
+		"subnet-info": {
+			Type:               schema.CommandManipulateMulti,
+			Params:             internetSubnetInfoParam(),
+			IncludeFields:      internetDetailIncludes(),
+			ExcludeFields:      internetDetailExcludes(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: internetSubnetInfoColumns(),
+			UseCustomCommand:   true,
+			Category:           "subnet",
+			NeedlessConfirm:    true,
+			Order:              10,
+		},
+		"subnet-add": {
+			Type:               schema.CommandManipulateMulti,
+			Params:             internetSubnetAddParam(),
+			IncludeFields:      internetDetailIncludes(),
+			ExcludeFields:      internetDetailExcludes(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: internetSubnetInfoColumns(),
+			UseCustomCommand:   true,
+			Category:           "subnet",
+			Order:              20,
+		},
+		"subnet-update": {
+			Type:               schema.CommandManipulateMulti,
+			Params:             internetSubnetUpdateParam(),
+			IncludeFields:      internetDetailIncludes(),
+			ExcludeFields:      internetDetailExcludes(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: internetSubnetInfoColumns(),
+			UseCustomCommand:   true,
+			Category:           "subnet",
+			Order:              20,
+		},
+		"subnet-delete": {
+			Type:             schema.CommandManipulateMulti,
+			Params:           internetSubnetDeleteParam(),
+			IncludeFields:    internetDetailIncludes(),
+			ExcludeFields:    internetDetailExcludes(),
+			UseCustomCommand: true,
+			NoOutput:         true,
+			Category:         "subnet",
+			Order:            20,
+		},
+		"ipv6-info": {
+			Type:               schema.CommandManipulateMulti,
+			Params:             internetIPv6EnableParam(),
+			IncludeFields:      internetDetailIncludes(),
+			ExcludeFields:      internetDetailExcludes(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: internetIPv6NetInfoColumns(),
+			UseCustomCommand:   true,
+			Category:           "ipv6",
+			NeedlessConfirm:    true,
+			Order:              10,
+		},
+		"ipv6-enable": {
+			Type:               schema.CommandManipulateMulti,
+			Params:             internetIPv6EnableParam(),
+			IncludeFields:      internetDetailIncludes(),
+			ExcludeFields:      internetDetailExcludes(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: internetIPv6NetInfoColumns(),
+			UseCustomCommand:   true,
+			Category:           "ipv6",
+			Order:              20,
+		},
+		"ipv6-disable": {
+			Type:             schema.CommandManipulateMulti,
+			Params:           internetIPv6EnableParam(),
+			IncludeFields:    internetDetailIncludes(),
+			ExcludeFields:    internetDetailExcludes(),
+			UseCustomCommand: true,
+			Category:         "ipv6",
+			NoOutput:         true,
+			Order:            30,
 		},
 		"monitor": {
 			Type:               schema.CommandRead,
@@ -74,6 +151,7 @@ func InternetResource() *schema.Resource {
 	return &schema.Resource{
 		Commands:            commands,
 		ResourceCategory:    CategoryNetworking,
+		CommandCategories:   internetCommandCategories,
 		ListResultFieldName: "Internet",
 	}
 }
@@ -90,9 +168,19 @@ var internetCommandCategories = []schema.Category{
 		Order:       20,
 	},
 	{
+		Key:         "subnet",
+		DisplayName: "Router Subnet Management",
+		Order:       30,
+	},
+	{
+		Key:         "ipv6",
+		DisplayName: "Router IPv6 Network Management",
+		Order:       40,
+	},
+	{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       30,
+		Order:       90,
 	},
 }
 
@@ -128,6 +216,38 @@ func internetListColumns() []output.ColumnDef {
 				"Switch.IPv6Nets.0.IPv6PrefixLen",
 			},
 			Format: "%s/%s",
+		},
+	}
+}
+
+func internetSubnetInfoColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "ID"},
+		{
+			Name:    "NetworkAddress",
+			Sources: []string{"NetworkAddress", "NetworkMaskLen"},
+			Format:  "%s/%s",
+		},
+		{Name: "DefaultRoute"},
+		{Name: "NextHop"},
+		{
+			Name:    "IPAddress-Range",
+			Sources: []string{"IPAddressRangeStart", "IPAddressRangeEnd"},
+			Format:  "%s - %s",
+		},
+	}
+}
+
+func internetIPv6NetInfoColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "ID"},
+		{
+			Name:    "Prefix",
+			Sources: []string{"IPv6Prefix"},
+		},
+		{
+			Name:    "PrefixLen",
+			Sources: []string{"IPv6PrefixLen"},
 		},
 	}
 }
@@ -217,6 +337,76 @@ func internetUpdateBandWidthParam() map[string]*schema.Schema {
 			Order:           20,
 		},
 	}
+}
+
+func internetSubnetInfoParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
+}
+
+func internetSubnetAddParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"nw-masklen": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Aliases:      []string{"network-masklen"},
+			Description:  "set Global-IPAddress(subnet) prefix",
+			Required:     true,
+			DefaultValue: 28,
+			ValidateFunc: validateInIntValues(sacloud.AllowInternetNetworkMaskLen()...),
+			Category:     "router",
+			Order:        10,
+		},
+		"next-hop": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set NextHop IPAddress",
+			ValidateFunc: validateIPv4Address(),
+			Required:     true,
+			Category:     "router",
+			Order:        10,
+		},
+	}
+}
+
+func internetSubnetUpdateParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"subnet-id": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set Target Subnet ID",
+			ValidateFunc: validateSakuraShortID(12),
+			CompleteFunc: completeSubnetID(),
+			Category:     "router",
+			Order:        10,
+		},
+		"next-hop": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set NextHop IPAddress",
+			ValidateFunc: validateIPv4Address(),
+			Required:     true,
+			Category:     "router",
+			Order:        10,
+		},
+	}
+}
+
+func internetSubnetDeleteParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"subnet-id": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set Target Subnet ID",
+			ValidateFunc: validateSakuraShortID(12),
+			CompleteFunc: completeSubnetID(),
+			Category:     "router",
+			Order:        10,
+		},
+	}
+}
+
+func internetIPv6EnableParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
 }
 
 func internetMonitorParam() map[string]*schema.Schema {

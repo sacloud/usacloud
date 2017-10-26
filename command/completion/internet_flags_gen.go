@@ -56,78 +56,6 @@ func InternetListCompleteFlags(ctx command.Context, params *params.ListInternetP
 	}
 }
 
-func InternetMonitorCompleteFlags(ctx command.Context, params *params.MonitorInternetParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "start":
-		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("start")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "end":
-		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("end")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "key-format":
-		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("key-format")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "selector":
-		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
-func InternetUpdateBandwidthCompleteFlags(ctx command.Context, params *params.UpdateBandwidthInternetParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "band-width":
-		param := define.Resources["Internet"].Commands["update-bandwidth"].BuildedParams().Get("band-width")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "selector":
-		param := define.Resources["Internet"].Commands["update-bandwidth"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["Internet"].Commands["update-bandwidth"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
 func InternetCreateCompleteFlags(ctx command.Context, params *params.CreateInternetParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 
@@ -262,6 +190,281 @@ func InternetDeleteCompleteFlags(ctx command.Context, params *params.DeleteInter
 		}
 	case "id":
 		param := define.Resources["Internet"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func InternetUpdateBandwidthCompleteFlags(ctx command.Context, params *params.UpdateBandwidthInternetParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "band-width":
+		param := define.Resources["Internet"].Commands["update-bandwidth"].BuildedParams().Get("band-width")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Internet"].Commands["update-bandwidth"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Internet"].Commands["update-bandwidth"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func InternetSubnetInfoCompleteFlags(ctx command.Context, params *params.SubnetInfoInternetParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["Internet"].Commands["subnet-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Internet"].Commands["subnet-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func InternetSubnetAddCompleteFlags(ctx command.Context, params *params.SubnetAddInternetParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "next-hop":
+		param := define.Resources["Internet"].Commands["subnet-add"].BuildedParams().Get("next-hop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "nw-masklen", "network-masklen":
+		param := define.Resources["Internet"].Commands["subnet-add"].BuildedParams().Get("nw-masklen")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Internet"].Commands["subnet-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Internet"].Commands["subnet-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func InternetSubnetDeleteCompleteFlags(ctx command.Context, params *params.SubnetDeleteInternetParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "subnet-id":
+		param := define.Resources["Internet"].Commands["subnet-delete"].BuildedParams().Get("subnet-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Internet"].Commands["subnet-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Internet"].Commands["subnet-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func InternetSubnetUpdateCompleteFlags(ctx command.Context, params *params.SubnetUpdateInternetParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "next-hop":
+		param := define.Resources["Internet"].Commands["subnet-update"].BuildedParams().Get("next-hop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "subnet-id":
+		param := define.Resources["Internet"].Commands["subnet-update"].BuildedParams().Get("subnet-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Internet"].Commands["subnet-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Internet"].Commands["subnet-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func InternetIpv6InfoCompleteFlags(ctx command.Context, params *params.Ipv6InfoInternetParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["Internet"].Commands["ipv6-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Internet"].Commands["ipv6-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func InternetIpv6EnableCompleteFlags(ctx command.Context, params *params.Ipv6EnableInternetParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["Internet"].Commands["ipv6-enable"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Internet"].Commands["ipv6-enable"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func InternetIpv6DisableCompleteFlags(ctx command.Context, params *params.Ipv6DisableInternetParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["Internet"].Commands["ipv6-disable"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Internet"].Commands["ipv6-disable"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func InternetMonitorCompleteFlags(ctx command.Context, params *params.MonitorInternetParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "start":
+		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "end":
+		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "key-format":
+		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Internet"].Commands["monitor"].BuildedParams().Get("id")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
