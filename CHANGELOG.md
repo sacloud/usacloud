@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.3.0 (2017-10-26)
+
+* アーカイブアップロード時のout of memory対応 #225, #227 (higebu)
+* VNCスナップショット機能の追加 #226 (misodengaku)
+* Pleskパブリックアーカイブを除去 #230 (yamamoto-febc)
+* ostypeパラメータによるCentOS6パブリックアーカイブの指定 #231 (yamamoto-febc)
+* シンプル監視でのSSLサーバ証明書 有効期限監視 #232 (yamamoto-febc)
+* configディレクトリが存在しない場合のconfig listコマンドエラー修正 #233 (yamamoto-febc)
+* 統合テスト(初期実装) #235 (yamamoto-febc)
+* FTPSアップロードでレスポンス226が応答されない問題の修正 #236 (yamamoto-febc)
+* IPv4/IPv6関連コマンドの追加 #237 (yamamoto-febc)
+
+
 ## 0.2.2 (2017-10-01)
 
 * NFSアプライアンス プラン追加 #220 (yamamoto-febc)

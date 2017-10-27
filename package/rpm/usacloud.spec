@@ -40,6 +40,17 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu Oct 26 2017 <yamamoto.febc@gmail.com> - 0.3.0-1
+- アーカイブアップロード時のout of memory対応 (by higebu)
+- VNCスナップショット機能の追加 (by misodengaku)
+- Pleskパブリックアーカイブを除去 (by yamamoto-febc)
+- ostypeパラメータによるCentOS6パブリックアーカイブの指定 (by yamamoto-febc)
+- シンプル監視でのSSLサーバ証明書 有効期限監視 (by yamamoto-febc)
+- configディレクトリが存在しない場合のconfig listコマンドエラー修正 (by yamamoto-febc)
+- 統合テスト(初期実装) (by yamamoto-febc)
+- FTPSアップロードでレスポンス226が応答されない問題の修正 (by yamamoto-febc)
+- IPv4/IPv6関連コマンドの追加 (by yamamoto-febc)
+
 * Sun Oct 01 2017 <yamamoto.febc@gmail.com> - 0.2.2-1
 - NFSアプライアンス プラン追加 (by yamamoto-febc)
 - ドキュメント更新 (by yamamoto-febc)
