@@ -18,7 +18,7 @@ func ArchiveWaitForCopy(ctx command.Context, params *params.WaitForCopyArchivePa
 
 	// wait for copy with progress
 	err := internal.ExecWithProgress(
-		fmt.Sprintf("Still coping[ID:%d]...", params.Id),
+		fmt.Sprintf("Still copying[ID:%d]...", params.Id),
 		fmt.Sprintf("Copy archive[ID:%d]", params.Id),
 		command.GlobalOption.Progress,
 		func(compChan chan bool, errChan chan error) {
