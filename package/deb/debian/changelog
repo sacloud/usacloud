@@ -1,3 +1,12 @@
+usacloud (0.3.1-1) stable; urgency=low
+
+  * Fix typo on messages (by ariarijp)
+    <https://github.com/sacloud/usacloud/pull/239>
+  * VPC APIのレスポンス処理修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/240>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Thu, 02 Nov 2017 06:11:50 +0000
+
 usacloud (0.3.0-1) stable; urgency=low
 
   * アーカイブアップロード時のout of memory対応 (by higebu)

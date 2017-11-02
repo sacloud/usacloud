@@ -40,6 +40,10 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu Nov 02 2017 <yamamoto.febc@gmail.com> - 0.3.1-1
+- Fix typo on messages (by ariarijp)
+- VPC APIのレスポンス処理修正 (by yamamoto-febc)
+
 * Thu Oct 26 2017 <yamamoto.febc@gmail.com> - 0.3.0-1
 - アーカイブアップロード時のout of memory対応 (by higebu)
 - VNCスナップショット機能の追加 (by misodengaku)

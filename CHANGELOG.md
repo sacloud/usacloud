@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 (2017-11-02)
+
+* Fix typo on messages #239 (ariarijp)
+* VPC APIのレスポンス処理修正 #240 (yamamoto-febc)
+
+
 ## 0.3.0 (2017-10-26)
 
 * アーカイブアップロード時のout of memory対応 #225, #227 (higebu)
