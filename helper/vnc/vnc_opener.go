@@ -9,9 +9,10 @@ import (
 )
 
 func OpenVNCClient(vncProxyInfo *sacloud.VNCProxyResponse) error {
+	host := vncProxyInfo.ActualHost()
 	uri := fmt.Sprintf("vnc://:%s@%s:%s",
 		vncProxyInfo.Password,
-		vncProxyInfo.Host,
+		host,
 		vncProxyInfo.Port)
 	return open.Start(uri)
 }

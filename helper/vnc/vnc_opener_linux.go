@@ -26,9 +26,9 @@ func OpenVNCClient(vncProxyInfo *sacloud.VNCProxyResponse) error {
 			uri = ""
 		}
 	}
-
+	host := vncProxyInfo.ActualHost()
 	body := fmt.Sprintf(vncFileFormat,
-		vncProxyInfo.Host,
+		host,
 		vncProxyInfo.Port,
 		vncProxyInfo.Password,
 	)
