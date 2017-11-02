@@ -54,9 +54,11 @@ func (c *vncClientConnWrapper) log(format string, a ...interface{}) {
 }
 
 func SendCommand(vncProxyInfo *sacloud.VNCProxyResponse, command string, option *SendCommandOption) error {
+	host := vncProxyInfo.ActualHost()
+
 	fmt.Fprintf(option.ProgressWriter, "Connecting to VM via VNC...\n")
 	// Connect to VNC
-	nc, err := net.Dial("tcp", fmt.Sprintf("%s:%s", vncProxyInfo.Host, vncProxyInfo.Port))
+	nc, err := net.Dial("tcp", fmt.Sprintf("%s:%s", host, vncProxyInfo.Port))
 	if err != nil {
 		return fmt.Errorf("Error connecting to VNC: %s", err)
 	}
