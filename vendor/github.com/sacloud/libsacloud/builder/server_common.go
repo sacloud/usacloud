@@ -111,6 +111,22 @@ func (b *CommonServerBuilder) WithIconID(iconID int64) *CommonServerBuilder {
 	return b
 }
 
+// GetPrivateHostID 専有ホストID 取得
+func (b *CommonServerBuilder) GetPrivateHostID() int64 {
+	return b.privateHostID
+}
+
+// SetPrivateHostID 専有ホストID 設定
+func (b *CommonServerBuilder) SetPrivateHostID(privateHostID int64) {
+	b.privateHostID = privateHostID
+}
+
+// WithPrivateHostID 専有ホストID 設定
+func (b *CommonServerBuilder) WithPrivateHostID(privateHostID int64) *CommonServerBuilder {
+	b.privateHostID = privateHostID
+	return b
+}
+
 // IsBootAfterCreate サーバー作成後すぐに起動フラグ 取得
 func (b *CommonServerBuilder) IsBootAfterCreate() bool {
 	return b.bootAfterCreate

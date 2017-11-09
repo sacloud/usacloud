@@ -748,6 +748,11 @@ func vpcRouterPortForwardingListColumns() []output.ColumnDef {
 
 func vpcRouterFirewallListColumns() []output.ColumnDef {
 	return []output.ColumnDef{
+		{
+			Name:    "NIC",
+			Sources: []string{"Interface"},
+			Format:  "eth%s",
+		},
 		{Name: "__ORDER__"}, // magic column name(generated on demand)
 		{Name: "Protocol"},
 		{Name: "SourceNetwork"},
@@ -774,6 +779,7 @@ func vpcRouterDHCPServerListColumns() []output.ColumnDef {
 		{Name: "Interface"},
 		{Name: "RangeStart"},
 		{Name: "RangeStop"},
+		{Name: "DNSServerList"},
 	}
 }
 
@@ -1016,7 +1022,7 @@ func vpcRouterInterfaceInfoParam() map[string]*schema.Schema {
 
 func vpcRouterInterfaceConnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"index": {
+		"interface": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "index of target private-interface",
@@ -1085,7 +1091,7 @@ func vpcRouterInterfaceConnectParam() map[string]*schema.Schema {
 
 func vpcRouterInterfaceUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"index": {
+		"interface": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "index of target interface",
@@ -1160,7 +1166,7 @@ func vpcRouterInterfaceUpdateParam() map[string]*schema.Schema {
 
 func vpcRouterInterfaceDisconnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"index": {
+		"interface": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "index of target private-interface",
@@ -1331,7 +1337,7 @@ func vpcRouterPortForwardingUpdateParam() map[string]*schema.Schema {
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
-			Description: "index of target static NAT",
+			Description: "index of target PortForward",
 			Required:    true,
 			Category:    "Port-Forwarding",
 			Order:       1,
@@ -1387,7 +1393,7 @@ func vpcRouterPortForwardingDeleteParam() map[string]*schema.Schema {
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
-			Description: "index of target static NAT",
+			Description: "index of target PortForward",
 			Required:    true,
 			Category:    "Port-Forwarding",
 			Order:       1,
@@ -1397,6 +1403,15 @@ func vpcRouterPortForwardingDeleteParam() map[string]*schema.Schema {
 
 func vpcRouterFirewallInfoParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
+		"interface": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set target NIC index",
+			ValidateFunc: validateIntRange(0, 7),
+			DefaultValue: 0,
+			Category:     "Firewall",
+			Order:        1,
+		},
 		"direction": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1406,13 +1421,22 @@ func vpcRouterFirewallInfoParam() map[string]*schema.Schema {
 			Required:     true,
 			DefaultValue: "receive",
 			Category:     "Firewall",
-			Order:        1,
+			Order:        2,
 		},
 	}
 }
 
 func vpcRouterFirewallAddParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
+		"interface": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set target NIC index",
+			ValidateFunc: validateIntRange(0, 7),
+			DefaultValue: 0,
+			Category:     "Firewall",
+			Order:        1,
+		},
 		"direction": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1422,7 +1446,7 @@ func vpcRouterFirewallAddParam() map[string]*schema.Schema {
 			Required:     true,
 			DefaultValue: "receive",
 			Category:     "Firewall",
-			Order:        1,
+			Order:        2,
 		},
 		"protocol": {
 			Type:         schema.TypeString,
@@ -1500,6 +1524,15 @@ func vpcRouterFirewallAddParam() map[string]*schema.Schema {
 
 func vpcRouterFirewallUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
+		"interface": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set target NIC index",
+			ValidateFunc: validateIntRange(0, 7),
+			DefaultValue: 0,
+			Category:     "Firewall",
+			Order:        1,
+		},
 		"direction": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1509,15 +1542,15 @@ func vpcRouterFirewallUpdateParam() map[string]*schema.Schema {
 			Required:     true,
 			DefaultValue: "receive",
 			Category:     "Firewall",
-			Order:        1,
+			Order:        2,
 		},
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
-			Description: "index of target static NAT",
+			Description: "index of target Firewall rule",
 			Required:    true,
 			Category:    "Firewall",
-			Order:       2,
+			Order:       3,
 		},
 		"protocol": {
 			Type:         schema.TypeString,
@@ -1593,6 +1626,15 @@ func vpcRouterFirewallUpdateParam() map[string]*schema.Schema {
 
 func vpcRouterFirewallDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
+		"interface": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set target NIC index",
+			ValidateFunc: validateIntRange(0, 7),
+			DefaultValue: 0,
+			Category:     "Firewall",
+			Order:        1,
+		},
 		"direction": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -1602,15 +1644,15 @@ func vpcRouterFirewallDeleteParam() map[string]*schema.Schema {
 			Required:     true,
 			DefaultValue: "receive",
 			Category:     "Firewall",
-			Order:        1,
+			Order:        2,
 		},
 		"index": {
 			Type:        schema.TypeInt,
 			HandlerType: schema.HandlerNoop,
-			Description: "index of target static NAT",
+			Description: "index of target Firewall rule",
 			Required:    true,
 			Category:    "Firewall",
-			Order:       2,
+			Order:       3,
 		},
 	}
 }
@@ -1621,7 +1663,7 @@ func vpcRouterDHCPServerInfoParam() map[string]*schema.Schema {
 
 func vpcRouterDHCPServerAddParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"index": {
+		"interface": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set target NIC(private NIC index)",
@@ -1648,13 +1690,21 @@ func vpcRouterDHCPServerAddParam() map[string]*schema.Schema {
 			Required:     true,
 			Category:     "DHCP-Server",
 			Order:        20,
+		},
+		"dns-servers": {
+			Type:         schema.TypeStringList,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set DNS Server IPAddress",
+			ValidateFunc: validateStringSlice(validateIPv4Address()),
+			Category:     "DHCP-Server",
+			Order:        30,
 		},
 	}
 }
 
 func vpcRouterDHCPServerUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"index": {
+		"interface": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set target NIC(private NIC index)",
@@ -1680,12 +1730,20 @@ func vpcRouterDHCPServerUpdateParam() map[string]*schema.Schema {
 			Category:     "DHCP-Server",
 			Order:        20,
 		},
+		"dns-servers": {
+			Type:         schema.TypeStringList,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set DNS Server IPAddress",
+			ValidateFunc: validateStringSlice(validateIPv4Address()),
+			Category:     "DHCP-Server",
+			Order:        30,
+		},
 	}
 }
 
 func vpcRouterDHCPServerDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"index": {
+		"interface": {
 			Type:         schema.TypeInt,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set target NIC(private NIC index)",
@@ -2106,7 +2164,7 @@ func vpcRouterStaticRouteDeleteParam() map[string]*schema.Schema {
 
 func vpcRouterMonitorParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"index": {
+		"interface": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "index of target interface",

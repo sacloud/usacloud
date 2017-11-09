@@ -16,7 +16,7 @@ func VPCRouterInterfaceUpdate(ctx command.Context, params *params.InterfaceUpdat
 	if e != nil {
 		return fmt.Errorf("VPCRouterInterfaceUpdate is failed: %s", e)
 	}
-	index, _ := strconv.Atoi(params.Index)
+	index, _ := strconv.Atoi(params.Interface)
 
 	// validation
 	if p.Interfaces[index].GetSwitch() == nil {

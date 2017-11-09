@@ -45,7 +45,7 @@ func VPCRouterFirewallAdd(ctx command.Context, params *params.FirewallAddVPCRout
 		}
 	}
 
-	var f func(isAllow bool, protocol string, sourceNetwork string, sourcePort string, destNetwork string, destPort string, logging bool, description string)
+	var f func(ifIndex int, isAllow bool, protocol string, sourceNetwork string, sourcePort string, destNetwork string, destPort string, logging bool, description string)
 	switch params.Direction {
 	case "send":
 		f = p.Settings.Router.AddFirewallRuleSend
@@ -54,6 +54,7 @@ func VPCRouterFirewallAdd(ctx command.Context, params *params.FirewallAddVPCRout
 	}
 	// add
 	f(
+		params.Interface,
 		isAllow,
 		params.Protocol,
 		params.SourceNetwork,

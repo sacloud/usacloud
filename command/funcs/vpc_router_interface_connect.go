@@ -16,7 +16,7 @@ func VPCRouterInterfaceConnect(ctx command.Context, params *params.InterfaceConn
 	if e != nil {
 		return fmt.Errorf("VPCRouterInterfaceConnect is failed: %s", e)
 	}
-	index, _ := strconv.Atoi(params.Index)
+	index, _ := strconv.Atoi(params.Interface)
 
 	// validation
 	if !p.IsStandardPlan() {

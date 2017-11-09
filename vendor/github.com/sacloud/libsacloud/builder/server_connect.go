@@ -109,6 +109,22 @@ func (b *ConnectDiskServerBuilder) WithIconID(iconID int64) *ConnectDiskServerBu
 	return b
 }
 
+// GetPrivateHostID 専有ホストID 取得
+func (b *ConnectDiskServerBuilder) GetPrivateHostID() int64 {
+	return b.privateHostID
+}
+
+// SetPrivateHostID 専有ホストID 設定
+func (b *ConnectDiskServerBuilder) SetPrivateHostID(privateHostID int64) {
+	b.privateHostID = privateHostID
+}
+
+// WithPrivateHostID 専有ホストID 設定
+func (b *ConnectDiskServerBuilder) WithPrivateHostID(privateHostID int64) *ConnectDiskServerBuilder {
+	b.privateHostID = privateHostID
+	return b
+}
+
 // IsBootAfterCreate サーバー作成後すぐに起動フラグ 取得
 func (b *ConnectDiskServerBuilder) IsBootAfterCreate() bool {
 	return b.bootAfterCreate

@@ -2231,7 +2231,7 @@ func (p *InterfaceInfoVPCRouterParam) GetId() int64 {
 
 // InterfaceConnectVPCRouterParam is input parameters for the sacloud API
 type InterfaceConnectVPCRouterParam struct {
-	Index             string   `json:"index"`
+	Interface         string   `json:"interface"`
 	Ipaddress         string   `json:"ipaddress"`
 	WithReboot        bool     `json:"with-reboot"`
 	Ipaddress1        string   `json:"ipaddress1"`
@@ -2256,8 +2256,8 @@ func NewInterfaceConnectVPCRouterParam() *InterfaceConnectVPCRouterParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *InterfaceConnectVPCRouterParam) FillValueToSkeleton() {
-	if isEmpty(p.Index) {
-		p.Index = ""
+	if isEmpty(p.Interface) {
+		p.Interface = ""
 	}
 	if isEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
@@ -2303,14 +2303,14 @@ func (p *InterfaceConnectVPCRouterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--index", p.Index)
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["index"].ValidateFunc
-		errs := validator("--index", p.Index)
+		validator := define.Resources["VPCRouter"].Commands["interface-connect"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2403,12 +2403,12 @@ func (p *InterfaceConnectVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
-func (p *InterfaceConnectVPCRouterParam) SetIndex(v string) {
-	p.Index = v
+func (p *InterfaceConnectVPCRouterParam) SetInterface(v string) {
+	p.Interface = v
 }
 
-func (p *InterfaceConnectVPCRouterParam) GetIndex() string {
-	return p.Index
+func (p *InterfaceConnectVPCRouterParam) GetInterface() string {
+	return p.Interface
 }
 func (p *InterfaceConnectVPCRouterParam) SetIpaddress(v string) {
 	p.Ipaddress = v
@@ -2497,7 +2497,7 @@ func (p *InterfaceConnectVPCRouterParam) GetId() int64 {
 
 // InterfaceUpdateVPCRouterParam is input parameters for the sacloud API
 type InterfaceUpdateVPCRouterParam struct {
-	Index             string   `json:"index"`
+	Interface         string   `json:"interface"`
 	Ipaddress         string   `json:"ipaddress"`
 	WithReboot        bool     `json:"with-reboot"`
 	Ipaddress1        string   `json:"ipaddress1"`
@@ -2523,8 +2523,8 @@ func NewInterfaceUpdateVPCRouterParam() *InterfaceUpdateVPCRouterParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *InterfaceUpdateVPCRouterParam) FillValueToSkeleton() {
-	if isEmpty(p.Index) {
-		p.Index = ""
+	if isEmpty(p.Interface) {
+		p.Interface = ""
 	}
 	if isEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
@@ -2573,14 +2573,14 @@ func (p *InterfaceUpdateVPCRouterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--index", p.Index)
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["index"].ValidateFunc
-		errs := validator("--index", p.Index)
+		validator := define.Resources["VPCRouter"].Commands["interface-update"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2666,12 +2666,12 @@ func (p *InterfaceUpdateVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
-func (p *InterfaceUpdateVPCRouterParam) SetIndex(v string) {
-	p.Index = v
+func (p *InterfaceUpdateVPCRouterParam) SetInterface(v string) {
+	p.Interface = v
 }
 
-func (p *InterfaceUpdateVPCRouterParam) GetIndex() string {
-	return p.Index
+func (p *InterfaceUpdateVPCRouterParam) GetInterface() string {
+	return p.Interface
 }
 func (p *InterfaceUpdateVPCRouterParam) SetIpaddress(v string) {
 	p.Ipaddress = v
@@ -2767,7 +2767,7 @@ func (p *InterfaceUpdateVPCRouterParam) GetId() int64 {
 
 // InterfaceDisconnectVPCRouterParam is input parameters for the sacloud API
 type InterfaceDisconnectVPCRouterParam struct {
-	Index             string   `json:"index"`
+	Interface         string   `json:"interface"`
 	WithReboot        bool     `json:"with-reboot"`
 	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
@@ -2784,8 +2784,8 @@ func NewInterfaceDisconnectVPCRouterParam() *InterfaceDisconnectVPCRouterParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *InterfaceDisconnectVPCRouterParam) FillValueToSkeleton() {
-	if isEmpty(p.Index) {
-		p.Index = ""
+	if isEmpty(p.Interface) {
+		p.Interface = ""
 	}
 	if isEmpty(p.WithReboot) {
 		p.WithReboot = false
@@ -2816,14 +2816,14 @@ func (p *InterfaceDisconnectVPCRouterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--index", p.Index)
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["VPCRouter"].Commands["interface-disconnect"].Params["index"].ValidateFunc
-		errs := validator("--index", p.Index)
+		validator := define.Resources["VPCRouter"].Commands["interface-disconnect"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2867,12 +2867,12 @@ func (p *InterfaceDisconnectVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
-func (p *InterfaceDisconnectVPCRouterParam) SetIndex(v string) {
-	p.Index = v
+func (p *InterfaceDisconnectVPCRouterParam) SetInterface(v string) {
+	p.Interface = v
 }
 
-func (p *InterfaceDisconnectVPCRouterParam) GetIndex() string {
-	return p.Index
+func (p *InterfaceDisconnectVPCRouterParam) GetInterface() string {
+	return p.Interface
 }
 func (p *InterfaceDisconnectVPCRouterParam) SetWithReboot(v bool) {
 	p.WithReboot = v
@@ -4440,6 +4440,7 @@ func (p *PortForwardingDeleteVPCRouterParam) GetId() int64 {
 
 // FirewallInfoVPCRouterParam is input parameters for the sacloud API
 type FirewallInfoVPCRouterParam struct {
+	Interface         int      `json:"interface"`
 	Direction         string   `json:"direction"`
 	Selector          []string `json:"selector"`
 	ParamTemplate     string   `json:"param-template"`
@@ -4463,6 +4464,9 @@ func NewFirewallInfoVPCRouterParam() *FirewallInfoVPCRouterParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *FirewallInfoVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Interface) {
+		p.Interface = 0
+	}
 	if isEmpty(p.Direction) {
 		p.Direction = ""
 	}
@@ -4502,6 +4506,13 @@ func (p *FirewallInfoVPCRouterParam) FillValueToSkeleton() {
 // Validate checks current values in model
 func (p *FirewallInfoVPCRouterParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-info"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := validateRequired
 		errs := validator("--direction", p.Direction)
@@ -4575,6 +4586,13 @@ func (p *FirewallInfoVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *FirewallInfoVPCRouterParam) SetInterface(v int) {
+	p.Interface = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetInterface() int {
+	return p.Interface
+}
 func (p *FirewallInfoVPCRouterParam) SetDirection(v string) {
 	p.Direction = v
 }
@@ -4655,6 +4673,7 @@ func (p *FirewallInfoVPCRouterParam) GetId() int64 {
 
 // FirewallAddVPCRouterParam is input parameters for the sacloud API
 type FirewallAddVPCRouterParam struct {
+	Interface          int      `json:"interface"`
 	Direction          string   `json:"direction"`
 	Protocol           string   `json:"protocol"`
 	SourceNetwork      string   `json:"source-network"`
@@ -4683,6 +4702,9 @@ func NewFirewallAddVPCRouterParam() *FirewallAddVPCRouterParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *FirewallAddVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Interface) {
+		p.Interface = 0
+	}
 	if isEmpty(p.Direction) {
 		p.Direction = ""
 	}
@@ -4734,6 +4756,13 @@ func (p *FirewallAddVPCRouterParam) FillValueToSkeleton() {
 // Validate checks current values in model
 func (p *FirewallAddVPCRouterParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-add"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := validateRequired
 		errs := validator("--direction", p.Direction)
@@ -4850,6 +4879,13 @@ func (p *FirewallAddVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *FirewallAddVPCRouterParam) SetInterface(v int) {
+	p.Interface = v
+}
+
+func (p *FirewallAddVPCRouterParam) GetInterface() int {
+	return p.Interface
+}
 func (p *FirewallAddVPCRouterParam) SetDirection(v string) {
 	p.Direction = v
 }
@@ -4958,6 +4994,7 @@ func (p *FirewallAddVPCRouterParam) GetId() int64 {
 
 // FirewallUpdateVPCRouterParam is input parameters for the sacloud API
 type FirewallUpdateVPCRouterParam struct {
+	Interface          int      `json:"interface"`
 	Direction          string   `json:"direction"`
 	Index              int      `json:"index"`
 	Protocol           string   `json:"protocol"`
@@ -4987,6 +5024,9 @@ func NewFirewallUpdateVPCRouterParam() *FirewallUpdateVPCRouterParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *FirewallUpdateVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Interface) {
+		p.Interface = 0
+	}
 	if isEmpty(p.Direction) {
 		p.Direction = ""
 	}
@@ -5041,6 +5081,13 @@ func (p *FirewallUpdateVPCRouterParam) FillValueToSkeleton() {
 // Validate checks current values in model
 func (p *FirewallUpdateVPCRouterParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-update"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := validateRequired
 		errs := validator("--direction", p.Direction)
@@ -5150,6 +5197,13 @@ func (p *FirewallUpdateVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *FirewallUpdateVPCRouterParam) SetInterface(v int) {
+	p.Interface = v
+}
+
+func (p *FirewallUpdateVPCRouterParam) GetInterface() int {
+	return p.Interface
+}
 func (p *FirewallUpdateVPCRouterParam) SetDirection(v string) {
 	p.Direction = v
 }
@@ -5265,6 +5319,7 @@ func (p *FirewallUpdateVPCRouterParam) GetId() int64 {
 
 // FirewallDeleteVPCRouterParam is input parameters for the sacloud API
 type FirewallDeleteVPCRouterParam struct {
+	Interface         int      `json:"interface"`
 	Direction         string   `json:"direction"`
 	Index             int      `json:"index"`
 	Selector          []string `json:"selector"`
@@ -5285,6 +5340,9 @@ func NewFirewallDeleteVPCRouterParam() *FirewallDeleteVPCRouterParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *FirewallDeleteVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Interface) {
+		p.Interface = 0
+	}
 	if isEmpty(p.Direction) {
 		p.Direction = ""
 	}
@@ -5315,6 +5373,13 @@ func (p *FirewallDeleteVPCRouterParam) FillValueToSkeleton() {
 // Validate checks current values in model
 func (p *FirewallDeleteVPCRouterParam) Validate() []error {
 	errors := []error{}
+	{
+		validator := define.Resources["VPCRouter"].Commands["firewall-delete"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 	{
 		validator := validateRequired
 		errs := validator("--direction", p.Direction)
@@ -5375,6 +5440,13 @@ func (p *FirewallDeleteVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
+func (p *FirewallDeleteVPCRouterParam) SetInterface(v int) {
+	p.Interface = v
+}
+
+func (p *FirewallDeleteVPCRouterParam) GetInterface() int {
+	return p.Interface
+}
 func (p *FirewallDeleteVPCRouterParam) SetDirection(v string) {
 	p.Direction = v
 }
@@ -5621,9 +5693,10 @@ func (p *DhcpServerInfoVPCRouterParam) GetId() int64 {
 
 // DhcpServerAddVPCRouterParam is input parameters for the sacloud API
 type DhcpServerAddVPCRouterParam struct {
-	Index             int      `json:"index"`
+	Interface         int      `json:"interface"`
 	RangeStart        string   `json:"range-start"`
 	RangeStop         string   `json:"range-stop"`
+	DnsServers        []string `json:"dns-servers"`
 	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
@@ -5639,14 +5712,17 @@ func NewDhcpServerAddVPCRouterParam() *DhcpServerAddVPCRouterParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DhcpServerAddVPCRouterParam) FillValueToSkeleton() {
-	if isEmpty(p.Index) {
-		p.Index = 0
+	if isEmpty(p.Interface) {
+		p.Interface = 0
 	}
 	if isEmpty(p.RangeStart) {
 		p.RangeStart = ""
 	}
 	if isEmpty(p.RangeStop) {
 		p.RangeStop = ""
+	}
+	if isEmpty(p.DnsServers) {
+		p.DnsServers = []string{""}
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -5674,14 +5750,14 @@ func (p *DhcpServerAddVPCRouterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--index", p.Index)
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["VPCRouter"].Commands["dhcp-server-add"].Params["index"].ValidateFunc
-		errs := validator("--index", p.Index)
+		validator := define.Resources["VPCRouter"].Commands["dhcp-server-add"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5710,6 +5786,13 @@ func (p *DhcpServerAddVPCRouterParam) Validate() []error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["dhcp-server-add"].Params["range-stop"].ValidateFunc
 		errs := validator("--range-stop", p.RangeStop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["dhcp-server-add"].Params["dns-servers"].ValidateFunc
+		errs := validator("--dns-servers", p.DnsServers)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5753,12 +5836,12 @@ func (p *DhcpServerAddVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
-func (p *DhcpServerAddVPCRouterParam) SetIndex(v int) {
-	p.Index = v
+func (p *DhcpServerAddVPCRouterParam) SetInterface(v int) {
+	p.Interface = v
 }
 
-func (p *DhcpServerAddVPCRouterParam) GetIndex() int {
-	return p.Index
+func (p *DhcpServerAddVPCRouterParam) GetInterface() int {
+	return p.Interface
 }
 func (p *DhcpServerAddVPCRouterParam) SetRangeStart(v string) {
 	p.RangeStart = v
@@ -5773,6 +5856,13 @@ func (p *DhcpServerAddVPCRouterParam) SetRangeStop(v string) {
 
 func (p *DhcpServerAddVPCRouterParam) GetRangeStop() string {
 	return p.RangeStop
+}
+func (p *DhcpServerAddVPCRouterParam) SetDnsServers(v []string) {
+	p.DnsServers = v
+}
+
+func (p *DhcpServerAddVPCRouterParam) GetDnsServers() []string {
+	return p.DnsServers
 }
 func (p *DhcpServerAddVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
@@ -5819,9 +5909,10 @@ func (p *DhcpServerAddVPCRouterParam) GetId() int64 {
 
 // DhcpServerUpdateVPCRouterParam is input parameters for the sacloud API
 type DhcpServerUpdateVPCRouterParam struct {
-	Index             int      `json:"index"`
+	Interface         int      `json:"interface"`
 	RangeStart        string   `json:"range-start"`
 	RangeStop         string   `json:"range-stop"`
+	DnsServers        []string `json:"dns-servers"`
 	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
@@ -5837,14 +5928,17 @@ func NewDhcpServerUpdateVPCRouterParam() *DhcpServerUpdateVPCRouterParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DhcpServerUpdateVPCRouterParam) FillValueToSkeleton() {
-	if isEmpty(p.Index) {
-		p.Index = 0
+	if isEmpty(p.Interface) {
+		p.Interface = 0
 	}
 	if isEmpty(p.RangeStart) {
 		p.RangeStart = ""
 	}
 	if isEmpty(p.RangeStop) {
 		p.RangeStop = ""
+	}
+	if isEmpty(p.DnsServers) {
+		p.DnsServers = []string{""}
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -5872,14 +5966,14 @@ func (p *DhcpServerUpdateVPCRouterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--index", p.Index)
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["index"].ValidateFunc
-		errs := validator("--index", p.Index)
+		validator := define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5894,6 +5988,13 @@ func (p *DhcpServerUpdateVPCRouterParam) Validate() []error {
 	{
 		validator := define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["range-stop"].ValidateFunc
 		errs := validator("--range-stop", p.RangeStop)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["VPCRouter"].Commands["dhcp-server-update"].Params["dns-servers"].ValidateFunc
+		errs := validator("--dns-servers", p.DnsServers)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -5937,12 +6038,12 @@ func (p *DhcpServerUpdateVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
-func (p *DhcpServerUpdateVPCRouterParam) SetIndex(v int) {
-	p.Index = v
+func (p *DhcpServerUpdateVPCRouterParam) SetInterface(v int) {
+	p.Interface = v
 }
 
-func (p *DhcpServerUpdateVPCRouterParam) GetIndex() int {
-	return p.Index
+func (p *DhcpServerUpdateVPCRouterParam) GetInterface() int {
+	return p.Interface
 }
 func (p *DhcpServerUpdateVPCRouterParam) SetRangeStart(v string) {
 	p.RangeStart = v
@@ -5957,6 +6058,13 @@ func (p *DhcpServerUpdateVPCRouterParam) SetRangeStop(v string) {
 
 func (p *DhcpServerUpdateVPCRouterParam) GetRangeStop() string {
 	return p.RangeStop
+}
+func (p *DhcpServerUpdateVPCRouterParam) SetDnsServers(v []string) {
+	p.DnsServers = v
+}
+
+func (p *DhcpServerUpdateVPCRouterParam) GetDnsServers() []string {
+	return p.DnsServers
 }
 func (p *DhcpServerUpdateVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
@@ -6003,7 +6111,7 @@ func (p *DhcpServerUpdateVPCRouterParam) GetId() int64 {
 
 // DhcpServerDeleteVPCRouterParam is input parameters for the sacloud API
 type DhcpServerDeleteVPCRouterParam struct {
-	Index             int      `json:"index"`
+	Interface         int      `json:"interface"`
 	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
@@ -6019,8 +6127,8 @@ func NewDhcpServerDeleteVPCRouterParam() *DhcpServerDeleteVPCRouterParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DhcpServerDeleteVPCRouterParam) FillValueToSkeleton() {
-	if isEmpty(p.Index) {
-		p.Index = 0
+	if isEmpty(p.Interface) {
+		p.Interface = 0
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -6048,14 +6156,14 @@ func (p *DhcpServerDeleteVPCRouterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--index", p.Index)
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["VPCRouter"].Commands["dhcp-server-delete"].Params["index"].ValidateFunc
-		errs := validator("--index", p.Index)
+		validator := define.Resources["VPCRouter"].Commands["dhcp-server-delete"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -6099,12 +6207,12 @@ func (p *DhcpServerDeleteVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
-func (p *DhcpServerDeleteVPCRouterParam) SetIndex(v int) {
-	p.Index = v
+func (p *DhcpServerDeleteVPCRouterParam) SetInterface(v int) {
+	p.Interface = v
 }
 
-func (p *DhcpServerDeleteVPCRouterParam) GetIndex() int {
-	return p.Index
+func (p *DhcpServerDeleteVPCRouterParam) GetInterface() int {
+	return p.Interface
 }
 func (p *DhcpServerDeleteVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
@@ -9710,7 +9818,7 @@ func (p *StaticRouteDeleteVPCRouterParam) GetId() int64 {
 
 // MonitorVPCRouterParam is input parameters for the sacloud API
 type MonitorVPCRouterParam struct {
-	Index             string   `json:"index"`
+	Interface         string   `json:"interface"`
 	Start             string   `json:"start"`
 	End               string   `json:"end"`
 	KeyFormat         string   `json:"key-format"`
@@ -9730,15 +9838,15 @@ type MonitorVPCRouterParam struct {
 func NewMonitorVPCRouterParam() *MonitorVPCRouterParam {
 	return &MonitorVPCRouterParam{
 
-		Index:     "0",
+		Interface: "0",
 		KeyFormat: "sakuracloud.vpcrouter.{{.ID}}.nic.{{.Index}}",
 	}
 }
 
 // FillValueToSkeleton fill values to empty fields
 func (p *MonitorVPCRouterParam) FillValueToSkeleton() {
-	if isEmpty(p.Index) {
-		p.Index = ""
+	if isEmpty(p.Interface) {
+		p.Interface = ""
 	}
 	if isEmpty(p.Start) {
 		p.Start = ""
@@ -9787,14 +9895,14 @@ func (p *MonitorVPCRouterParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
-		errs := validator("--index", p.Index)
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
 	}
 	{
-		validator := define.Resources["VPCRouter"].Commands["monitor"].Params["index"].ValidateFunc
-		errs := validator("--index", p.Index)
+		validator := define.Resources["VPCRouter"].Commands["monitor"].Params["interface"].ValidateFunc
+		errs := validator("--interface", p.Interface)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -9879,12 +9987,12 @@ func (p *MonitorVPCRouterParam) GetOutputFormat() string {
 	return "table"
 }
 
-func (p *MonitorVPCRouterParam) SetIndex(v string) {
-	p.Index = v
+func (p *MonitorVPCRouterParam) SetInterface(v string) {
+	p.Interface = v
 }
 
-func (p *MonitorVPCRouterParam) GetIndex() string {
-	return p.Index
+func (p *MonitorVPCRouterParam) GetInterface() string {
+	return p.Interface
 }
 func (p *MonitorVPCRouterParam) SetStart(v string) {
 	p.Start = v

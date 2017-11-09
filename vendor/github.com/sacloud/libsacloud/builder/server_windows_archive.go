@@ -109,6 +109,22 @@ func (b *PublicArchiveWindowsServerBuilder) WithIconID(iconID int64) *PublicArch
 	return b
 }
 
+// GetPrivateHostID 専有ID 取得
+func (b *PublicArchiveWindowsServerBuilder) GetPrivateHostID() int64 {
+	return b.privateHostID
+}
+
+// SetPrivateHostID 専有ホストID 設定
+func (b *PublicArchiveWindowsServerBuilder) SetPrivateHostID(privateHostID int64) {
+	b.privateHostID = privateHostID
+}
+
+// WithPrivateHostID 専有ホストID 設定
+func (b *PublicArchiveWindowsServerBuilder) WithPrivateHostID(privateHostID int64) *PublicArchiveWindowsServerBuilder {
+	b.privateHostID = privateHostID
+	return b
+}
+
 // IsBootAfterCreate サーバー作成後すぐに起動フラグ 取得
 func (b *PublicArchiveWindowsServerBuilder) IsBootAfterCreate() bool {
 	return b.bootAfterCreate

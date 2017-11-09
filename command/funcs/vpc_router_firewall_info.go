@@ -2,6 +2,7 @@ package funcs
 
 import (
 	"fmt"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 )
@@ -20,12 +21,12 @@ func VPCRouterFirewallInfo(ctx command.Context, params *params.FirewallInfoVPCRo
 		return nil
 	}
 
-	ruleList := p.Settings.Router.Firewall.Config[0].Receive
+	ruleList := p.Settings.Router.Firewall.Config[params.Interface].Receive
 	switch params.Direction {
 	case "send":
-		ruleList = p.Settings.Router.Firewall.Config[0].Send
+		ruleList = p.Settings.Router.Firewall.Config[params.Interface].Send
 	case "receive":
-		ruleList = p.Settings.Router.Firewall.Config[0].Receive
+		ruleList = p.Settings.Router.Firewall.Config[params.Interface].Receive
 	}
 
 	if len(ruleList) == 0 {
@@ -36,7 +37,13 @@ func VPCRouterFirewallInfo(ctx command.Context, params *params.FirewallInfoVPCRo
 	// build parameters to display table
 	list := []interface{}{}
 	for i := range ruleList {
-		list = append(list, &ruleList[i])
+		list = append(list, &struct {
+			*sacloud.VPCRouterFirewallRule
+			Interface int
+		}{
+			VPCRouterFirewallRule: ruleList[i],
+			Interface:             params.Interface,
+		})
 	}
 
 	return ctx.GetOutput().Print(list...)

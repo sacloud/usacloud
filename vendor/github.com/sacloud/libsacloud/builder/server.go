@@ -70,6 +70,9 @@ type serverBuilder struct {
 	// CDROM
 	isoImageID int64
 
+	// privateHost
+	privateHostID int64
+
 	// for nic
 	nicConnections []string
 
@@ -349,6 +352,10 @@ func (b *serverBuilder) buildServerParams() error {
 	}
 	if b.iconID > 0 {
 		s.SetIconByID(b.iconID)
+	}
+
+	if b.privateHostID > 0 {
+		s.SetPrivateHostByID(b.privateHostID)
 	}
 
 	// NIC
