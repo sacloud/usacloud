@@ -31,23 +31,21 @@ func VPCRouterFirewallUpdate(ctx command.Context, params *params.FirewallUpdateV
 	}
 
 	// validate
-	if params.Index <= 0 {
-		cnt := len(p.Settings.Router.Firewall.Config[0].Receive)
-		if params.Direction == "send" {
-			cnt = len(p.Settings.Router.Firewall.Config[0].Send)
-		}
+	cnt := len(p.Settings.Router.Firewall.Config[params.Interface].Receive)
+	if params.Direction == "send" {
+		cnt = len(p.Settings.Router.Firewall.Config[params.Interface].Send)
+	}
 
-		if params.Index-1 >= cnt {
-			return fmt.Errorf("index(%d) is out of range", params.Index)
-		}
+	if params.Index <= 0 || params.Index-1 >= cnt {
+		return fmt.Errorf("index(%d) is out of range", params.Index)
 	}
 
 	var rule *sacloud.VPCRouterFirewallRule
 	switch params.Direction {
 	case "send":
-		rule = p.Settings.Router.Firewall.Config[0].Send[params.Index-1]
+		rule = p.Settings.Router.Firewall.Config[params.Interface].Send[params.Index-1]
 	case "receive":
-		rule = p.Settings.Router.Firewall.Config[0].Receive[params.Index-1]
+		rule = p.Settings.Router.Firewall.Config[params.Interface].Receive[params.Index-1]
 	}
 
 	if ctx.IsSet("protocol") {

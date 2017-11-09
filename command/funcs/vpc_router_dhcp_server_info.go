@@ -2,8 +2,10 @@ package funcs
 
 import (
 	"fmt"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
+	"strings"
 )
 
 func VPCRouterDhcpServerInfo(ctx command.Context, params *params.DhcpServerInfoVPCRouterParam) error {
@@ -24,7 +26,13 @@ func VPCRouterDhcpServerInfo(ctx command.Context, params *params.DhcpServerInfoV
 	// build parameters to display table
 	list := []interface{}{}
 	for i := range confList {
-		list = append(list, &confList[i])
+		list = append(list, &struct {
+			*sacloud.VPCRouterDHCPServerConfig
+			DNSServerList string
+		}{
+			VPCRouterDHCPServerConfig: confList[i],
+			DNSServerList:             strings.Join(confList[i].DNSServers, ","),
+		})
 	}
 
 	return ctx.GetOutput().Print(list...)

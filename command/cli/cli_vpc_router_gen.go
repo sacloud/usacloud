@@ -3882,7 +3882,7 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:  "index",
+						Name:  "interface",
 						Usage: "[Required] index of target private-interface",
 					},
 					&cli.StringFlag{
@@ -3970,8 +3970,8 @@ func init() {
 					ctx := command.NewContext(c, realArgs, interfaceConnectParam)
 
 					// Set option values
-					if c.IsSet("index") {
-						interfaceConnectParam.Index = c.String("index")
+					if c.IsSet("interface") {
+						interfaceConnectParam.Interface = c.String("interface")
 					}
 					if c.IsSet("ipaddress") {
 						interfaceConnectParam.Ipaddress = c.String("ipaddress")
@@ -4094,8 +4094,8 @@ func init() {
 					}
 
 					// Set option values
-					if c.IsSet("index") {
-						interfaceConnectParam.Index = c.String("index")
+					if c.IsSet("interface") {
+						interfaceConnectParam.Interface = c.String("interface")
 					}
 					if c.IsSet("ipaddress") {
 						interfaceConnectParam.Ipaddress = c.String("ipaddress")
@@ -4252,7 +4252,7 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:  "index",
+						Name:  "interface",
 						Usage: "[Required] index of target interface",
 					},
 					&cli.StringFlag{
@@ -4344,8 +4344,8 @@ func init() {
 					ctx := command.NewContext(c, realArgs, interfaceUpdateParam)
 
 					// Set option values
-					if c.IsSet("index") {
-						interfaceUpdateParam.Index = c.String("index")
+					if c.IsSet("interface") {
+						interfaceUpdateParam.Interface = c.String("interface")
 					}
 					if c.IsSet("ipaddress") {
 						interfaceUpdateParam.Ipaddress = c.String("ipaddress")
@@ -4471,8 +4471,8 @@ func init() {
 					}
 
 					// Set option values
-					if c.IsSet("index") {
-						interfaceUpdateParam.Index = c.String("index")
+					if c.IsSet("interface") {
+						interfaceUpdateParam.Interface = c.String("interface")
 					}
 					if c.IsSet("ipaddress") {
 						interfaceUpdateParam.Ipaddress = c.String("ipaddress")
@@ -4632,7 +4632,7 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:  "index",
+						Name:  "interface",
 						Usage: "[Required] index of target private-interface",
 					},
 					&cli.BoolFlag{
@@ -4695,8 +4695,8 @@ func init() {
 					ctx := command.NewContext(c, realArgs, interfaceDisconnectParam)
 
 					// Set option values
-					if c.IsSet("index") {
-						interfaceDisconnectParam.Index = c.String("index")
+					if c.IsSet("interface") {
+						interfaceDisconnectParam.Interface = c.String("interface")
 					}
 					if c.IsSet("with-reboot") {
 						interfaceDisconnectParam.WithReboot = c.Bool("with-reboot")
@@ -4804,8 +4804,8 @@ func init() {
 					}
 
 					// Set option values
-					if c.IsSet("index") {
-						interfaceDisconnectParam.Index = c.String("index")
+					if c.IsSet("interface") {
+						interfaceDisconnectParam.Interface = c.String("interface")
 					}
 					if c.IsSet("with-reboot") {
 						interfaceDisconnectParam.WithReboot = c.Bool("with-reboot")
@@ -6934,7 +6934,7 @@ func init() {
 				Flags: []cli.Flag{
 					&cli.IntFlag{
 						Name:  "index",
-						Usage: "[Required] index of target static NAT",
+						Usage: "[Required] index of target PortForward",
 					},
 					&cli.StringFlag{
 						Name:  "protocol",
@@ -7291,7 +7291,7 @@ func init() {
 				Flags: []cli.Flag{
 					&cli.IntFlag{
 						Name:  "index",
-						Usage: "[Required] index of target static NAT",
+						Usage: "[Required] index of target PortForward",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
@@ -7595,6 +7595,11 @@ func init() {
 				Usage:     "Show information of firewall rules",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "interface",
+						Usage: "set target NIC index",
+						Value: 0,
+					},
 					&cli.StringFlag{
 						Name:  "direction",
 						Usage: "[Required] set target direction[send/receive]",
@@ -7675,6 +7680,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, firewallInfoParam)
 
 					// Set option values
+					if c.IsSet("interface") {
+						firewallInfoParam.Interface = c.Int("interface")
+					}
 					if c.IsSet("direction") {
 						firewallInfoParam.Direction = c.String("direction")
 					}
@@ -7793,6 +7801,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("interface") {
+						firewallInfoParam.Interface = c.Int("interface")
+					}
 					if c.IsSet("direction") {
 						firewallInfoParam.Direction = c.String("direction")
 					}
@@ -7939,6 +7950,11 @@ func init() {
 				Usage:     "Add firewall rule",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "interface",
+						Usage: "set target NIC index",
+						Value: 0,
+					},
 					&cli.StringFlag{
 						Name:  "direction",
 						Usage: "[Required] set target direction[send/receive]",
@@ -8036,6 +8052,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, firewallAddParam)
 
 					// Set option values
+					if c.IsSet("interface") {
+						firewallAddParam.Interface = c.Int("interface")
+					}
 					if c.IsSet("direction") {
 						firewallAddParam.Direction = c.String("direction")
 					}
@@ -8166,6 +8185,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("interface") {
+						firewallAddParam.Interface = c.Int("interface")
+					}
 					if c.IsSet("direction") {
 						firewallAddParam.Direction = c.String("direction")
 					}
@@ -8329,6 +8351,11 @@ func init() {
 				Usage:     "Update firewall rule",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "interface",
+						Usage: "set target NIC index",
+						Value: 0,
+					},
 					&cli.StringFlag{
 						Name:  "direction",
 						Usage: "[Required] set target direction[send/receive]",
@@ -8336,7 +8363,7 @@ func init() {
 					},
 					&cli.IntFlag{
 						Name:  "index",
-						Usage: "[Required] index of target static NAT",
+						Usage: "[Required] index of target Firewall rule",
 					},
 					&cli.StringFlag{
 						Name:  "protocol",
@@ -8430,6 +8457,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, firewallUpdateParam)
 
 					// Set option values
+					if c.IsSet("interface") {
+						firewallUpdateParam.Interface = c.Int("interface")
+					}
 					if c.IsSet("direction") {
 						firewallUpdateParam.Direction = c.String("direction")
 					}
@@ -8563,6 +8593,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("interface") {
+						firewallUpdateParam.Interface = c.Int("interface")
+					}
 					if c.IsSet("direction") {
 						firewallUpdateParam.Direction = c.String("direction")
 					}
@@ -8729,6 +8762,11 @@ func init() {
 				Usage:     "Delete firewall rule",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "interface",
+						Usage: "set target NIC index",
+						Value: 0,
+					},
 					&cli.StringFlag{
 						Name:  "direction",
 						Usage: "[Required] set target direction[send/receive]",
@@ -8736,7 +8774,7 @@ func init() {
 					},
 					&cli.IntFlag{
 						Name:  "index",
-						Usage: "[Required] index of target static NAT",
+						Usage: "[Required] index of target Firewall rule",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
@@ -8794,6 +8832,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, firewallDeleteParam)
 
 					// Set option values
+					if c.IsSet("interface") {
+						firewallDeleteParam.Interface = c.Int("interface")
+					}
 					if c.IsSet("direction") {
 						firewallDeleteParam.Direction = c.String("direction")
 					}
@@ -8903,6 +8944,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("interface") {
+						firewallDeleteParam.Interface = c.Int("interface")
+					}
 					if c.IsSet("direction") {
 						firewallDeleteParam.Direction = c.String("direction")
 					}
@@ -9380,7 +9424,7 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
-						Name:  "index",
+						Name:  "interface",
 						Usage: "[Required] set target NIC(private NIC index)",
 					},
 					&cli.StringFlag{
@@ -9391,6 +9435,10 @@ func init() {
 						Name:    "range-stop",
 						Aliases: []string{"range-end"},
 						Usage:   "[Required] set DHCP IPAddress Range(stop)",
+					},
+					&cli.StringSliceFlag{
+						Name:  "dns-servers",
+						Usage: "set DNS Server IPAddress",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
@@ -9448,14 +9496,17 @@ func init() {
 					ctx := command.NewContext(c, realArgs, dhcpServerAddParam)
 
 					// Set option values
-					if c.IsSet("index") {
-						dhcpServerAddParam.Index = c.Int("index")
+					if c.IsSet("interface") {
+						dhcpServerAddParam.Interface = c.Int("interface")
 					}
 					if c.IsSet("range-start") {
 						dhcpServerAddParam.RangeStart = c.String("range-start")
 					}
 					if c.IsSet("range-stop") {
 						dhcpServerAddParam.RangeStop = c.String("range-stop")
+					}
+					if c.IsSet("dns-servers") {
+						dhcpServerAddParam.DnsServers = c.StringSlice("dns-servers")
 					}
 					if c.IsSet("selector") {
 						dhcpServerAddParam.Selector = c.StringSlice("selector")
@@ -9560,14 +9611,17 @@ func init() {
 					}
 
 					// Set option values
-					if c.IsSet("index") {
-						dhcpServerAddParam.Index = c.Int("index")
+					if c.IsSet("interface") {
+						dhcpServerAddParam.Interface = c.Int("interface")
 					}
 					if c.IsSet("range-start") {
 						dhcpServerAddParam.RangeStart = c.String("range-start")
 					}
 					if c.IsSet("range-stop") {
 						dhcpServerAddParam.RangeStop = c.String("range-stop")
+					}
+					if c.IsSet("dns-servers") {
+						dhcpServerAddParam.DnsServers = c.StringSlice("dns-servers")
 					}
 					if c.IsSet("selector") {
 						dhcpServerAddParam.Selector = c.StringSlice("selector")
@@ -9706,7 +9760,7 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
-						Name:  "index",
+						Name:  "interface",
 						Usage: "[Required] set target NIC(private NIC index)",
 					},
 					&cli.StringFlag{
@@ -9717,6 +9771,10 @@ func init() {
 						Name:    "range-stop",
 						Aliases: []string{"range-end"},
 						Usage:   "set DHCP IPAddress Range(stop)",
+					},
+					&cli.StringSliceFlag{
+						Name:  "dns-servers",
+						Usage: "set DNS Server IPAddress",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
@@ -9774,14 +9832,17 @@ func init() {
 					ctx := command.NewContext(c, realArgs, dhcpServerUpdateParam)
 
 					// Set option values
-					if c.IsSet("index") {
-						dhcpServerUpdateParam.Index = c.Int("index")
+					if c.IsSet("interface") {
+						dhcpServerUpdateParam.Interface = c.Int("interface")
 					}
 					if c.IsSet("range-start") {
 						dhcpServerUpdateParam.RangeStart = c.String("range-start")
 					}
 					if c.IsSet("range-stop") {
 						dhcpServerUpdateParam.RangeStop = c.String("range-stop")
+					}
+					if c.IsSet("dns-servers") {
+						dhcpServerUpdateParam.DnsServers = c.StringSlice("dns-servers")
 					}
 					if c.IsSet("selector") {
 						dhcpServerUpdateParam.Selector = c.StringSlice("selector")
@@ -9886,14 +9947,17 @@ func init() {
 					}
 
 					// Set option values
-					if c.IsSet("index") {
-						dhcpServerUpdateParam.Index = c.Int("index")
+					if c.IsSet("interface") {
+						dhcpServerUpdateParam.Interface = c.Int("interface")
 					}
 					if c.IsSet("range-start") {
 						dhcpServerUpdateParam.RangeStart = c.String("range-start")
 					}
 					if c.IsSet("range-stop") {
 						dhcpServerUpdateParam.RangeStop = c.String("range-stop")
+					}
+					if c.IsSet("dns-servers") {
+						dhcpServerUpdateParam.DnsServers = c.StringSlice("dns-servers")
 					}
 					if c.IsSet("selector") {
 						dhcpServerUpdateParam.Selector = c.StringSlice("selector")
@@ -10032,7 +10096,7 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.IntFlag{
-						Name:  "index",
+						Name:  "interface",
 						Usage: "[Required] set target NIC(private NIC index)",
 					},
 					&cli.StringSliceFlag{
@@ -10091,8 +10155,8 @@ func init() {
 					ctx := command.NewContext(c, realArgs, dhcpServerDeleteParam)
 
 					// Set option values
-					if c.IsSet("index") {
-						dhcpServerDeleteParam.Index = c.Int("index")
+					if c.IsSet("interface") {
+						dhcpServerDeleteParam.Interface = c.Int("interface")
 					}
 					if c.IsSet("selector") {
 						dhcpServerDeleteParam.Selector = c.StringSlice("selector")
@@ -10197,8 +10261,8 @@ func init() {
 					}
 
 					// Set option values
-					if c.IsSet("index") {
-						dhcpServerDeleteParam.Index = c.Int("index")
+					if c.IsSet("interface") {
+						dhcpServerDeleteParam.Interface = c.Int("interface")
 					}
 					if c.IsSet("selector") {
 						dhcpServerDeleteParam.Selector = c.StringSlice("selector")
@@ -16849,7 +16913,7 @@ func init() {
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:  "index",
+						Name:  "interface",
 						Usage: "[Required] index of target interface",
 						Value: "0",
 					},
@@ -16941,8 +17005,8 @@ func init() {
 					ctx := command.NewContext(c, realArgs, monitorParam)
 
 					// Set option values
-					if c.IsSet("index") {
-						monitorParam.Index = c.String("index")
+					if c.IsSet("interface") {
+						monitorParam.Interface = c.String("interface")
 					}
 					if c.IsSet("start") {
 						monitorParam.Start = c.String("start")
@@ -17068,8 +17132,8 @@ func init() {
 					}
 
 					// Set option values
-					if c.IsSet("index") {
-						monitorParam.Index = c.String("index")
+					if c.IsSet("interface") {
+						monitorParam.Interface = c.String("interface")
 					}
 					if c.IsSet("start") {
 						monitorParam.Start = c.String("start")
@@ -18016,6 +18080,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-add", "dns-servers", &schema.Category{
+		Key:         "DHCP-Server",
+		DisplayName: "DHCP-Server options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-server-add", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -18026,7 +18095,7 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
-	AppendFlagCategoryMap("vpc-router", "dhcp-server-add", "index", &schema.Category{
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-add", "interface", &schema.Category{
 		Key:         "DHCP-Server",
 		DisplayName: "DHCP-Server options",
 		Order:       1,
@@ -18071,7 +18140,7 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
-	AppendFlagCategoryMap("vpc-router", "dhcp-server-delete", "index", &schema.Category{
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-delete", "interface", &schema.Category{
 		Key:         "DHCP-Server",
 		DisplayName: "DHCP-Server options",
 		Order:       1,
@@ -18146,6 +18215,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-update", "dns-servers", &schema.Category{
+		Key:         "DHCP-Server",
+		DisplayName: "DHCP-Server options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-server-update", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -18156,7 +18230,7 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
-	AppendFlagCategoryMap("vpc-router", "dhcp-server-update", "index", &schema.Category{
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-update", "interface", &schema.Category{
 		Key:         "DHCP-Server",
 		DisplayName: "DHCP-Server options",
 		Order:       1,
@@ -18401,6 +18475,11 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
+	AppendFlagCategoryMap("vpc-router", "firewall-add", "interface", &schema.Category{
+		Key:         "Firewall",
+		DisplayName: "Firewall options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("vpc-router", "firewall-add", "param-template", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -18456,6 +18535,11 @@ func init() {
 		DisplayName: "Firewall options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "firewall-delete", "interface", &schema.Category{
+		Key:         "Firewall",
+		DisplayName: "Firewall options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("vpc-router", "firewall-delete", "param-template", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -18500,6 +18584,11 @@ func init() {
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("vpc-router", "firewall-info", "interface", &schema.Category{
+		Key:         "Firewall",
+		DisplayName: "Firewall options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("vpc-router", "firewall-info", "output-type", &schema.Category{
 		Key:         "output",
@@ -18576,6 +18665,11 @@ func init() {
 		DisplayName: "Firewall options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("vpc-router", "firewall-update", "interface", &schema.Category{
+		Key:         "Firewall",
+		DisplayName: "Firewall options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("vpc-router", "firewall-update", "param-template", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -18621,7 +18715,7 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
-	AppendFlagCategoryMap("vpc-router", "interface-connect", "index", &schema.Category{
+	AppendFlagCategoryMap("vpc-router", "interface-connect", "interface", &schema.Category{
 		Key:         "interface",
 		DisplayName: "Interface options",
 		Order:       1,
@@ -18686,7 +18780,7 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
-	AppendFlagCategoryMap("vpc-router", "interface-disconnect", "index", &schema.Category{
+	AppendFlagCategoryMap("vpc-router", "interface-disconnect", "interface", &schema.Category{
 		Key:         "interface",
 		DisplayName: "Interface options",
 		Order:       1,
@@ -18781,7 +18875,7 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
-	AppendFlagCategoryMap("vpc-router", "interface-update", "index", &schema.Category{
+	AppendFlagCategoryMap("vpc-router", "interface-update", "interface", &schema.Category{
 		Key:         "interface",
 		DisplayName: "Interface options",
 		Order:       1,
@@ -19076,7 +19170,7 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
-	AppendFlagCategoryMap("vpc-router", "monitor", "index", &schema.Category{
+	AppendFlagCategoryMap("vpc-router", "monitor", "interface", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitor options",
 		Order:       1,

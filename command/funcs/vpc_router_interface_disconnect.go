@@ -16,7 +16,7 @@ func VPCRouterInterfaceDisconnect(ctx command.Context, params *params.InterfaceD
 	if e != nil {
 		return fmt.Errorf("VPCRouterInterfaceDisconnect is failed: %s", e)
 	}
-	index, _ := strconv.Atoi(params.Index)
+	index, _ := strconv.Atoi(params.Interface)
 
 	// validation
 	if p.Interfaces[index].GetSwitch() == nil {

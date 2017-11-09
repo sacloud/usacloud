@@ -109,6 +109,22 @@ func (b *PublicArchiveUnixServerBuilder) WithIconID(iconID int64) *PublicArchive
 	return b
 }
 
+// GetPrivateHostID 専有ホストID 取得
+func (b *PublicArchiveUnixServerBuilder) GetPrivateHostID() int64 {
+	return b.privateHostID
+}
+
+// SetPrivateHostID 専有ホストID 設定
+func (b *PublicArchiveUnixServerBuilder) SetPrivateHostID(privateHostID int64) {
+	b.privateHostID = privateHostID
+}
+
+// WithPrivateHostID 専有ホストID 設定
+func (b *PublicArchiveUnixServerBuilder) WithPrivateHostID(privateHostID int64) *PublicArchiveUnixServerBuilder {
+	b.privateHostID = privateHostID
+	return b
+}
+
 // IsBootAfterCreate サーバー作成後すぐに起動フラグ 取得
 func (b *PublicArchiveUnixServerBuilder) IsBootAfterCreate() bool {
 	return b.bootAfterCreate

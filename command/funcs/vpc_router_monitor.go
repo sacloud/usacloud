@@ -29,7 +29,7 @@ func VPCRouterMonitor(ctx command.Context, params *params.MonitorVPCRouterParam)
 	}
 
 	req := sacloud.NewResourceMonitorRequest(&start, &end)
-	nicIndex, _ := strconv.Atoi(params.Index)
+	nicIndex, _ := strconv.Atoi(params.Interface)
 	var nicType string
 	if nicIndex == 0 {
 		nicType = "Global"
@@ -70,7 +70,7 @@ func VPCRouterMonitor(ctx command.Context, params *params.MonitorVPCRouterParam)
 	list := MonitorValues{}
 	for i := range receiveValues {
 		list = append(list, MonitorValue{
-			"Index":     params.Index,
+			"Index":     params.Interface,
 			"Type":      nicType,
 			"Key":       key,
 			"TimeStamp": fmt.Sprintf("%s", receiveValues[i].Time),

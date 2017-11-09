@@ -409,8 +409,8 @@ func VPCRouterInterfaceConnectCompleteFlags(ctx command.Context, params *params.
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "index":
-		param := define.Resources["VPCRouter"].Commands["interface-connect"].BuildedParams().Get("index")
+	case "interface":
+		param := define.Resources["VPCRouter"].Commands["interface-connect"].BuildedParams().Get("interface")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -468,8 +468,8 @@ func VPCRouterInterfaceUpdateCompleteFlags(ctx command.Context, params *params.I
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "index":
-		param := define.Resources["VPCRouter"].Commands["interface-update"].BuildedParams().Get("index")
+	case "interface":
+		param := define.Resources["VPCRouter"].Commands["interface-update"].BuildedParams().Get("interface")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -532,8 +532,8 @@ func VPCRouterInterfaceDisconnectCompleteFlags(ctx command.Context, params *para
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "index":
-		param := define.Resources["VPCRouter"].Commands["interface-disconnect"].BuildedParams().Get("index")
+	case "interface":
+		param := define.Resources["VPCRouter"].Commands["interface-disconnect"].BuildedParams().Get("interface")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -862,6 +862,11 @@ func VPCRouterFirewallInfoCompleteFlags(ctx command.Context, params *params.Fire
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "interface":
+		param := define.Resources["VPCRouter"].Commands["firewall-info"].BuildedParams().Get("interface")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "direction":
 		param := define.Resources["VPCRouter"].Commands["firewall-info"].BuildedParams().Get("direction")
 		if param != nil {
@@ -893,6 +898,11 @@ func VPCRouterFirewallAddCompleteFlags(ctx command.Context, params *params.Firew
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "interface":
+		param := define.Resources["VPCRouter"].Commands["firewall-add"].BuildedParams().Get("interface")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "direction":
 		param := define.Resources["VPCRouter"].Commands["firewall-add"].BuildedParams().Get("direction")
 		if param != nil {
@@ -962,6 +972,11 @@ func VPCRouterFirewallUpdateCompleteFlags(ctx command.Context, params *params.Fi
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "interface":
+		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("interface")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "direction":
 		param := define.Resources["VPCRouter"].Commands["firewall-update"].BuildedParams().Get("direction")
 		if param != nil {
@@ -1036,6 +1051,11 @@ func VPCRouterFirewallDeleteCompleteFlags(ctx command.Context, params *params.Fi
 	var comp schema.CompletionFunc
 
 	switch flagName {
+	case "interface":
+		param := define.Resources["VPCRouter"].Commands["firewall-delete"].BuildedParams().Get("interface")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "direction":
 		param := define.Resources["VPCRouter"].Commands["firewall-delete"].BuildedParams().Get("direction")
 		if param != nil {
@@ -1096,8 +1116,8 @@ func VPCRouterDhcpServerAddCompleteFlags(ctx command.Context, params *params.Dhc
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "index":
-		param := define.Resources["VPCRouter"].Commands["dhcp-server-add"].BuildedParams().Get("index")
+	case "interface":
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-add"].BuildedParams().Get("interface")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -1108,6 +1128,11 @@ func VPCRouterDhcpServerAddCompleteFlags(ctx command.Context, params *params.Dhc
 		}
 	case "range-stop", "range-end":
 		param := define.Resources["VPCRouter"].Commands["dhcp-server-add"].BuildedParams().Get("range-stop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "dns-servers":
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-add"].BuildedParams().Get("dns-servers")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -1135,8 +1160,8 @@ func VPCRouterDhcpServerUpdateCompleteFlags(ctx command.Context, params *params.
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "index":
-		param := define.Resources["VPCRouter"].Commands["dhcp-server-update"].BuildedParams().Get("index")
+	case "interface":
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-update"].BuildedParams().Get("interface")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -1147,6 +1172,11 @@ func VPCRouterDhcpServerUpdateCompleteFlags(ctx command.Context, params *params.
 		}
 	case "range-stop", "range-end":
 		param := define.Resources["VPCRouter"].Commands["dhcp-server-update"].BuildedParams().Get("range-stop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "dns-servers":
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-update"].BuildedParams().Get("dns-servers")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -1174,8 +1204,8 @@ func VPCRouterDhcpServerDeleteCompleteFlags(ctx command.Context, params *params.
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "index":
-		param := define.Resources["VPCRouter"].Commands["dhcp-server-delete"].BuildedParams().Get("index")
+	case "interface":
+		param := define.Resources["VPCRouter"].Commands["dhcp-server-delete"].BuildedParams().Get("interface")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -1880,8 +1910,8 @@ func VPCRouterMonitorCompleteFlags(ctx command.Context, params *params.MonitorVP
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "index":
-		param := define.Resources["VPCRouter"].Commands["monitor"].BuildedParams().Get("index")
+	case "interface":
+		param := define.Resources["VPCRouter"].Commands["monitor"].BuildedParams().Get("interface")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

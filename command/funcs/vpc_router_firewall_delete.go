@@ -20,22 +20,20 @@ func VPCRouterFirewallDelete(ctx command.Context, params *params.FirewallDeleteV
 	}
 
 	// validate
-	if params.Index <= 0 {
-		cnt := len(p.Settings.Router.Firewall.Config[0].Receive)
-		if params.Direction == "send" {
-			cnt = len(p.Settings.Router.Firewall.Config[0].Send)
-		}
+	cnt := len(p.Settings.Router.Firewall.Config[params.Interface].Receive)
+	if params.Direction == "send" {
+		cnt = len(p.Settings.Router.Firewall.Config[params.Interface].Send)
+	}
 
-		if params.Index-1 >= cnt {
-			return fmt.Errorf("index(%d) is out of range", params.Index)
-		}
+	if params.Index <= 0 || params.Index-1 >= cnt {
+		return fmt.Errorf("index(%d) is out of range", params.Index)
 	}
 
 	switch params.Direction {
 	case "send":
-		p.Settings.Router.RemoveFirewallRuleSendAt(params.Index - 1)
+		p.Settings.Router.RemoveFirewallRuleSendAt(params.Interface, params.Index-1)
 	case "receive":
-		p.Settings.Router.RemoveFirewallRuleReceiveAt(params.Index - 1)
+		p.Settings.Router.RemoveFirewallRuleReceiveAt(params.Interface, params.Index-1)
 	}
 
 	_, err := api.UpdateSetting(params.Id, p)

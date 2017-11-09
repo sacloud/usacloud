@@ -20,9 +20,10 @@ func VPCRouterDhcpServerAdd(ctx command.Context, params *params.DhcpServerAddVPC
 	}
 
 	p.Settings.Router.AddDHCPServer(
-		params.Index,
+		params.Interface,
 		params.RangeStart,
 		params.RangeStop,
+		params.DnsServers...,
 	)
 
 	_, err := api.UpdateSetting(params.Id, p)

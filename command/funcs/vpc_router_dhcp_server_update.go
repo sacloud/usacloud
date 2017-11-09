@@ -19,9 +19,9 @@ func VPCRouterDhcpServerUpdate(ctx command.Context, params *params.DhcpServerUpd
 		return fmt.Errorf("VPCRouter[%d] don't have any DHCP servers", params.Id)
 	}
 
-	cnf := p.Settings.Router.FindDHCPServerAt(params.Index)
+	cnf := p.Settings.Router.FindDHCPServerAt(params.Interface)
 	if cnf == nil {
-		return fmt.Errorf("DHCP server is not found on eth%d", params.Index)
+		return fmt.Errorf("DHCP server is not found on eth%d", params.Interface)
 	}
 
 	if ctx.IsSet("range-start") {
@@ -29,6 +29,9 @@ func VPCRouterDhcpServerUpdate(ctx command.Context, params *params.DhcpServerUpd
 	}
 	if ctx.IsSet("range-stop") {
 		cnf.RangeStop = params.RangeStop
+	}
+	if ctx.IsSet("dns_servers") {
+		cnf.DNSServers = params.DnsServers
 	}
 
 	_, err := api.UpdateSetting(params.Id, p)

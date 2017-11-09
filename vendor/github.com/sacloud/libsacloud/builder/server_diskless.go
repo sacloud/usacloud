@@ -109,6 +109,22 @@ func (b *DisklessServerBuilder) WithIconID(iconID int64) *DisklessServerBuilder 
 	return b
 }
 
+// GetPrivateHostID 専有ホストID 取得
+func (b *DisklessServerBuilder) GetPrivateHostID() int64 {
+	return b.privateHostID
+}
+
+// SetPrivateHostID 専有ホストID 設定
+func (b *DisklessServerBuilder) SetPrivateHostID(privateHostID int64) {
+	b.privateHostID = privateHostID
+}
+
+// WithPrivateHostID 専有ホストID 設定
+func (b *DisklessServerBuilder) WithPrivateHostID(privateHostID int64) *DisklessServerBuilder {
+	b.privateHostID = privateHostID
+	return b
+}
+
 // IsBootAfterCreate サーバー作成後すぐに起動フラグ 取得
 func (b *DisklessServerBuilder) IsBootAfterCreate() bool {
 	return b.bootAfterCreate
