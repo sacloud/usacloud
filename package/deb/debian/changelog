@@ -1,3 +1,10 @@
+usacloud (0.4.0-1) stable; urgency=low
+
+  * VPCルータへの機能追加(DHCPでのDNSサーバ配布/NICごとのファイアウォール)  (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/242>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Thu, 09 Nov 2017 11:02:31 +0000
+
 usacloud (0.3.1-1) stable; urgency=low
 
   * Fix typo on messages (by ariarijp)
