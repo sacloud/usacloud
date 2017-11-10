@@ -14,3 +14,5 @@ repos/debian
 package/*.tar.gz
 
 bats.log
+
+usacloud-docker
