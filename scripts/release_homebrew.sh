@@ -12,7 +12,7 @@ cd homebrew-usacloud
 # check version
 CURRENT_VERSION=`git log --oneline | perl -ne 'if(/^.+ v([0-9\.]+)/){print $1;exit}'`
 if [ "$CURRENT_VERSION" = "$VERSION" ] ; then
-    echo "v$VERSION is already released."
+    echo "homebrew-usacloud v$VERSION is already released."
     exit 0
 fi
 

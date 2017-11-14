@@ -16,3 +16,4 @@ package/*.tar.gz
 bats.log
 
 usacloud-docker
+releases-usacloud
