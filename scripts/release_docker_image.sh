@@ -8,9 +8,9 @@ cd usacloud-docker
 git fetch origin
 
 # check version
-CURRENT_VERSION=`git tag -l --sort=-v:refname | perl -ne 'if(/^v([0-9\.]+)$/){print $1;exit}'`
+CURRENT_VERSION=`git tag -l --sort=-v:refname | perl -ne 'if(/^([0-9\.]+)$/){print $1;exit}'`
 if [ "$CURRENT_VERSION" = "$VERSION" ] ; then
-    echo "v$VERSION is already released."
+    echo "usacloud-docker v$VERSION is already released."
     exit 0
 fi
 
@@ -46,6 +46,5 @@ echo "Cleanup tag ${VERSION} on github.com/sacloud/usacloud-docker.git"
 git push --quiet -u "https://${GITHUB_TOKEN}@github.com/sacloud/usacloud-docker.git" :${VERSION} >& /dev/null
 
 echo "Tagging ${VERSION} on github.com/sacloud/usacloud-docker.git"
-git tag ${VERSION} 2>&1 >/dev/null
 git push --quiet -u "https://${GITHUB_TOKEN}@github.com/sacloud/usacloud-docker.git" ${VERSION} >& /dev/null
 exit 0

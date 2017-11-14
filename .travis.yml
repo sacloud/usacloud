@@ -30,6 +30,9 @@ script:
 - make lint-docs
 - make docker-build
 before_deploy:
+- docker pull sacloud/rpm-build:latest
+- docker pull sacloud/deb-build:latest
+- make rpm deb
 - go get github.com/aktau/github-release
 - mkdir -p ~/bin
 - git clone https://github.com/github/hub.git && cd hub && script/build -o ~/bin/hub
@@ -44,7 +47,7 @@ before_deploy:
 deploy:
 - provider: script
   script: scripts/usacloud-release.pl --task=upload-to-github-release && scripts/usacloud-release.pl
-    --task=upload-master-to-github-release && scripts/release_homebrew.sh && scripts/release_docker_image.sh
+    --task=upload-master-to-github-release && scripts/release_homebrew.sh && scripts/release_docker_image.sh && scripts/release_website.sh
   skip_cleanup: true
   on:
     branch: master
