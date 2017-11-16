@@ -70,6 +70,11 @@ func ServerBuildCompleteFlags(ctx command.Context, params *params.BuildServerPar
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "private-host-id":
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("private-host-id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "disk-mode":
 		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("disk-mode")
 		if param != nil {

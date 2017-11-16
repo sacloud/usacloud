@@ -368,6 +368,10 @@ func init() {
 						Usage: "[Required] set memory size(GB)",
 						Value: 1,
 					},
+					&cli.Int64Flag{
+						Name:  "private-host-id",
+						Usage: "set private-host-id",
+					},
 					&cli.StringFlag{
 						Name:  "disk-mode",
 						Usage: "[Required] disk create mode[create/connect/diskless]",
@@ -614,6 +618,9 @@ func init() {
 					if c.IsSet("memory") {
 						buildParam.Memory = c.Int("memory")
 					}
+					if c.IsSet("private-host-id") {
+						buildParam.PrivateHostId = c.Int64("private-host-id")
+					}
 					if c.IsSet("disk-mode") {
 						buildParam.DiskMode = c.String("disk-mode")
 					}
@@ -845,6 +852,9 @@ func init() {
 					}
 					if c.IsSet("memory") {
 						buildParam.Memory = c.Int("memory")
+					}
+					if c.IsSet("private-host-id") {
+						buildParam.PrivateHostId = c.Int64("private-host-id")
 					}
 					if c.IsSet("disk-mode") {
 						buildParam.DiskMode = c.String("disk-mode")
@@ -11803,6 +11813,11 @@ func init() {
 		Key:         "edit-disk",
 		DisplayName: "For edit-disk options",
 		Order:       40,
+	})
+	AppendFlagCategoryMap("server", "build", "private-host-id", &schema.Category{
+		Key:         "server-plan",
+		DisplayName: "For server-plan options",
+		Order:       10,
 	})
 	AppendFlagCategoryMap("server", "build", "quiet", &schema.Category{
 		Key:         "output",

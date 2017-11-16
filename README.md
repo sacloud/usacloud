@@ -108,6 +108,7 @@ VERSION:
 COMMANDS:
    config, profile                  A manage command of APIKey settings
    auth-status                      A manage commands of AuthStatus
+   private-host                     A manage commands of PrivateHost
    server                           A manage commands of Server
    archive                          A manage commands of Archive
    auto-backup                      A manage commands of AutoBackup
@@ -116,6 +117,8 @@ COMMANDS:
    bridge                           A manage commands of Bridge
    interface                        A manage commands of Interface
    internet                         A manage commands of Internet
+   ipv4                             A manage commands of IPv4
+   ipv6                             A manage commands of IPv6
    packet-filter                    A manage commands of PacketFilter
    switch                           A manage commands of Switch
    database                         A manage commands of Database

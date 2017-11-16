@@ -30,6 +30,7 @@ var Resources = map[string]*schema.Resource{
 	"ObjectStorage":   ObjectStorageResource(),
 	"PacketFilter":    PacketFilterResource(),
 	"Price":           PriceResource(),
+	"PrivateHost":     PrivateHostResource(),
 	"ProductDisk":     ProductDiskResource(),
 	"ProductInternet": ProductInternetResource(),
 	"ProductLicense":  ProductLicenseResource(),

@@ -402,6 +402,16 @@ func serverListColumns() []output.ColumnDef {
 			Name:    "Status",
 			Sources: []string{"Instance.Status"},
 		},
+		{
+			Name: "Host",
+			FormatFunc: func(values map[string]string) string {
+				pHost := ""
+				if id, ok := values["PrivateHost.ID"]; ok {
+					pHost = fmt.Sprintf("(PrivateHost:%s)", id)
+				}
+				return fmt.Sprintf("%s%s", values["Instance.Host.Name"], pHost)
+			},
+		},
 	}
 }
 
@@ -614,6 +624,15 @@ func serverBuildParam() map[string]*schema.Schema {
 			Required:     true,
 			Category:     "server-plan",
 			Order:        20,
+		},
+		"private-host-id": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set private-host-id",
+			ValidateFunc: validateSakuraID(),
+			CompleteFunc: completePrivateHostID(),
+			Category:     "server-plan",
+			Order:        30,
 		},
 		/*
 		 === disk ===
