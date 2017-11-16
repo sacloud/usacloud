@@ -268,6 +268,7 @@ func (p *ListServerParam) GetFormatFile() string {
 type BuildServerParam struct {
 	Core                    int      `json:"core"`
 	Memory                  int      `json:"memory"`
+	PrivateHostId           int64    `json:"private-host-id"`
 	DiskMode                string   `json:"disk-mode"`
 	OsType                  string   `json:"os-type"`
 	DiskPlan                string   `json:"disk-plan"`
@@ -342,6 +343,9 @@ func (p *BuildServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Memory) {
 		p.Memory = 0
+	}
+	if isEmpty(p.PrivateHostId) {
+		p.PrivateHostId = 0
 	}
 	if isEmpty(p.DiskMode) {
 		p.DiskMode = ""
@@ -500,6 +504,13 @@ func (p *BuildServerParam) Validate() []error {
 	{
 		validator := validateRequired
 		errs := validator("--memory", p.Memory)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["private-host-id"].ValidateFunc
+		errs := validator("--private-host-id", p.PrivateHostId)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -772,6 +783,13 @@ func (p *BuildServerParam) SetMemory(v int) {
 
 func (p *BuildServerParam) GetMemory() int {
 	return p.Memory
+}
+func (p *BuildServerParam) SetPrivateHostId(v int64) {
+	p.PrivateHostId = v
+}
+
+func (p *BuildServerParam) GetPrivateHostId() int64 {
+	return p.PrivateHostId
 }
 func (p *BuildServerParam) SetDiskMode(v string) {
 	p.DiskMode = v

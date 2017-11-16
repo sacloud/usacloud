@@ -5,8 +5,8 @@ export USACLOUD_BIN_NAME="usacloud"
 export TEST_TARGET_NAME="usacloud-integration-test"
 export TEST_TARGET_TAG="usacloud-integration-test"
 
-#ALL_RESOURCE_TYPES=(dns gslb simple-monitor icon license ssh-key startup-script server database load-balancer nfs vpc-router archive auto-backup disk iso-image internet packet-filter switch bridge)
-ALL_RESOURCE_TYPES=(internet)
+ALL_RESOURCE_TYPES=(dns gslb simple-monitor icon license ssh-key startup-script server private-host database load-balancer nfs vpc-router archive auto-backup disk iso-image internet packet-filter switch bridge)
+#ALL_RESOURCE_TYPES=(internet)
 GLOBAL_RESOURCE_TYPES=(dns gslb simple-monitor icon license ssh-key startup-script bridge)
 ZONES=(is1a is1b tk1a tk1v)
 if [ -n "${USACLOUD_ZONES}" ]; then

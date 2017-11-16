@@ -321,6 +321,24 @@ func completeServerMemory() schema.CompletionFunc {
 	}
 }
 
+func completePrivateHostID() schema.CompletionFunc {
+	return func(ctx schema.CompletionContext, currentValue string) []string {
+
+		api := ctx.GetAPIClient().GetPrivateHostAPI()
+		res := []string{}
+
+		result, err := api.Find()
+		if err != nil {
+			return res
+		}
+
+		for _, v := range result.PrivateHosts {
+			res = append(res, v.GetStrID())
+		}
+		return res
+	}
+}
+
 func completeBackupTime() schema.CompletionFunc {
 	timeStrings := []string{}
 

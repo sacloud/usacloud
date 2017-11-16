@@ -62,7 +62,7 @@ func ServerBuild(ctx command.Context, params *params.BuildServerParam) error {
 		}
 	}
 
-	return ctx.GetOutput().Print(res)
+	return ctx.GetOutput().Print(res.Server)
 }
 
 func createServerBuilder(ctx command.Context, params *params.BuildServerParam) interface{} {
@@ -230,6 +230,7 @@ func handleServerCommonParams(sb interface{}, ctx command.Context, params *param
 
 	b.SetCore(params.GetCore())
 	b.SetMemory(params.GetMemory())
+	b.SetPrivateHostID(params.PrivateHostId)
 	b.SetServerName(params.GetName())
 	b.SetDescription(params.GetDescription())
 	if params.UsKeyboard {
@@ -534,6 +535,7 @@ func strToOSType(strOSType string) ostype.ArchiveOSTypes {
 type serverBuilder interface {
 	SetCore(int)
 	SetMemory(int)
+	SetPrivateHostID(int64)
 	SetServerName(string)
 	SetDescription(string)
 	SetTags([]string)
