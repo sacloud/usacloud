@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.5.0 (2017-11-16)
+
+* 配布サイト用に静的コンテンツのビルドを実行 #244 (yamamoto-febc)
+* リリースサイトのHTTPS対応 #245 (yamamoto-febc)
+* 専有ホスト対応 #246 (yamamoto-febc)
+
+
 ## 0.4.0 (2017-11-09)
 
 * VPCルータへの機能追加(DHCPでのDNSサーバ配布/NICごとのファイアウォール)  #242 (yamamoto-febc)
