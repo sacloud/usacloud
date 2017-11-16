@@ -1,3 +1,14 @@
+usacloud (0.5.0-1) stable; urgency=low
+
+  * 配布サイト用に静的コンテンツのビルドを実行 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/244>
+  * リリースサイトのHTTPS対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/245>
+  * 専有ホスト対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/246>
+
+ -- usacloud <yamamoto.febc@gmail.com>  Thu, 16 Nov 2017 06:41:45 +0000
+
 usacloud (0.4.0-1) stable; urgency=low
 
   * VPCルータへの機能追加(DHCPでのDNSサーバ配布/NICごとのファイアウォール)  (by yamamoto-febc)

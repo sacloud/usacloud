@@ -40,6 +40,11 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu Nov 16 2017 <yamamoto.febc@gmail.com> - 0.5.0-1
+- 配布サイト用に静的コンテンツのビルドを実行 (by yamamoto-febc)
+- リリースサイトのHTTPS対応 (by yamamoto-febc)
+- 専有ホスト対応 (by yamamoto-febc)
+
 * Thu Nov 09 2017 <yamamoto.febc@gmail.com> - 0.4.0-1
 - VPCルータへの機能追加(DHCPでのDNSサーバ配布/NICごとのファイアウォール)  (by yamamoto-febc)
 
