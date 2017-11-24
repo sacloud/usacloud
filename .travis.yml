@@ -21,7 +21,9 @@ addons:
     - devscripts
     - debhelper
 before_install:
-- 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then openssl aes-256-cbc -K $encrypted_7a84e1e19ced_key -iv $encrypted_7a84e1e19ced_iv -in usacloud_gpg_key.enc -out usacloud_gpg_key -d; fi'
+- if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then openssl aes-256-cbc -K $encrypted_7a84e1e19ced_key
+  -iv $encrypted_7a84e1e19ced_iv -in usacloud_gpg_key.enc -out usacloud_gpg_key -d;
+  fi
 - go get -u github.com/golang/lint/golint
 install:
 - make gen-force
@@ -47,7 +49,8 @@ before_deploy:
 deploy:
 - provider: script
   script: scripts/usacloud-release.pl --task=upload-to-github-release && scripts/usacloud-release.pl
-    --task=upload-master-to-github-release && scripts/release_homebrew.sh && scripts/release_docker_image.sh && scripts/release_website.sh
+    --task=upload-master-to-github-release && scripts/release_homebrew.sh && scripts/release_docker_image.sh
+    && scripts/release_website.sh
   skip_cleanup: true
   on:
     branch: master
@@ -57,3 +60,6 @@ deploy:
   on:
     all_branches: true
     condition: "$TRAVIS_BRANCH =~ ^bump-version-.*$"
+notifications:
+  slack:
+    secure: HXcmuKet1AgRIlgLZk8ERedRse6zF0a0nqxEpo0CysFqLm+/Gv4FljH4WTIcRYqvCicTnd0ULp8A8/b40ZO6eScQ/CQqTMUWvA2wDh5hFstOwFQAVYsE0tQ1f2R55PnapWZ+fXJNlvTWt2qNPaVtBWAcZO8yYBAvayzU6ye3QsB5Youe3nCyvTru8hmaidjfSFb7nf5pB945Zmr3iiSWTTsYIYWRO5OXk46kQMMx7uRjjVrFkHJfQjQXCXtRaeq8VyT3L1zpmdqeJboA/ds8M6cndV3YccVd6dGrRa009b4+pFiOX/kXqGjBzcjS3j17d1ZN5cX5rFdZFyBJSCbggVXmLOOQjJVwylVv1BayWnWxUCYnKLun1vGRj+OQWt+TGZ6lNMB7GBdxuYf+JRXNGW7V4H9weYANo/ueTe37Q36nzilHDw9k0WBVT3o04EZuU7lfUt9Gkegd3FkHUcLE58fUf/owPBKeGM8vwmwfi2jaJsME1qr9iGakgnr13HIbRL7DQW0H7tWaKV+AjtzgUdw5htMhHMqjlMpA+6VJSu0UgMs/+504cDiwjA7/VeMYf1GlG/hRwUMLwcaifxqbdxax/Qklvz+eBL0h0Z6JLKcreaqd2shlszvo+n6lbTQS5OywU3uhBPpeNr5Km4SbVX6+1wbhdeOHWrQ/3lXneik=
