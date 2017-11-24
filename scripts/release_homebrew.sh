@@ -60,8 +60,8 @@ end
 EOL
 
 git config --global push.default matching
-git config user.email 'yamamoto.febc@gmail.com'
-git config user.name 'usacloud'
+git config user.email 'sacloud.users@gmail.com'
+git config user.name 'sacloud-bot'
 git commit -am "v${VERSION}"
 
 echo "Push ${VERSION} to github.com/sacloud/homebrew-usacloud.git"
