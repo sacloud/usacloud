@@ -101,6 +101,12 @@ func createAPIClient() *api.Client {
 
 func getOutputWriter(formatter output.Formatter) output.Output {
 	o := GlobalOption
+	if formatter.GetQuiet() {
+		return output.NewIDOutput(o.Out, o.Err)
+	}
+	if formatter.GetFormat() != "" || formatter.GetFormatFile() != "" {
+		return output.NewFreeOutput(o.Out, o.Err, formatter)
+	}
 	switch formatter.GetOutputType() {
 	case "csv":
 		return output.NewRowOutput(o.Out, o.Err, ',', formatter)
@@ -109,13 +115,7 @@ func getOutputWriter(formatter output.Formatter) output.Output {
 	case "json":
 		return output.NewJSONOutput(o.Out, o.Err)
 	default:
-		if formatter.GetQuiet() {
-			return output.NewIDOutput(o.Out, o.Err)
-		}
-		if formatter.GetFormat() == "" && formatter.GetFormatFile() == "" {
-			return output.NewTableOutput(o.Out, o.Err, formatter)
-		}
-		return output.NewFreeOutput(o.Out, o.Err, formatter)
+		return output.NewTableOutput(o.Out, o.Err, formatter)
 	}
 }
 

@@ -507,6 +507,15 @@ func init() {
 					command.GlobalOption.Validate(false)
 					{{ end }}
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = {{.ParamName}}
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, {{.ParamName}})
 					{{ if .SetDefault }}
@@ -607,6 +616,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors,"GlobalOptions")
 					}
 					{{ end }}
+
+					var outputTypeHolder interface{} = {{.ParamName}}
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// Generate skeleton
 					if {{.ParamName}}.GenerateSkeleton {

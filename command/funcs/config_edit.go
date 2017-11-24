@@ -15,6 +15,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 		AccessToken:       params.Token,
 		AccessTokenSecret: params.Secret,
 		Zone:              params.Zone,
+		DefaultOutputType: params.DefaultOutputType,
 	}
 	needAsk := inputParams.IsEmpty()
 	out := command.GlobalOption.Out
@@ -149,6 +150,49 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 	} else {
 		if inputParams.Zone == "" {
 			inputParams.Zone = conf.Zone
+		}
+	}
+
+	// default output type
+	if needAsk {
+		msg := "\nSetting Default Output Type => "
+		fmt.Fprintf(out, "%s", msg)
+
+		exists := conf.DefaultOutputType != ""
+		if exists {
+			fmt.Fprintf(out, "(Current = ")
+			color.New(color.FgCyan).Fprintf(out, "%q", conf.DefaultOutputType)
+			fmt.Fprintf(out, ")")
+		}
+
+		// if value is exists on config file , confirm whether to change value
+		doChange := true
+		if exists {
+			doChange = command.ConfirmContinue("change output setting")
+		} else {
+			fmt.Fprintf(out, "\n")
+		}
+
+		if doChange {
+			// read input
+			var input string
+			for {
+				fmt.Fprintf(out, "\n\t%s[%s]: ", "Enter default-output-type", strings.Join(define.AllowOutputTypes, "/"))
+				fmt.Fscanln(command.GlobalOption.In, &input)
+
+				if errs := validateInStrValues("", input, define.AllowOutputTypes...); len(errs) == 0 {
+					break
+				}
+
+				fmt.Fprintf(out, "Invalid value. Please input again\n")
+			}
+			inputParams.DefaultOutputType = input
+		} else {
+			inputParams.DefaultOutputType = conf.DefaultOutputType
+		}
+	} else {
+		if inputParams.DefaultOutputType == "" {
+			inputParams.DefaultOutputType = conf.DefaultOutputType
 		}
 	}
 

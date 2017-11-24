@@ -115,7 +115,7 @@ func (p *ListDNSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -159,10 +159,6 @@ func (p *ListDNSParam) GetTableType() output.TableType {
 
 func (p *ListDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListDNSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListDNSParam) SetName(v []string) {
@@ -352,7 +348,7 @@ func (p *RecordInfoDNSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -396,10 +392,6 @@ func (p *RecordInfoDNSParam) GetTableType() output.TableType {
 
 func (p *RecordInfoDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *RecordInfoDNSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *RecordInfoDNSParam) SetName(v string) {
@@ -593,7 +585,7 @@ func (p *CreateDNSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -637,10 +629,6 @@ func (p *CreateDNSParam) GetTableType() output.TableType {
 
 func (p *CreateDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateDNSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateDNSParam) SetName(v string) {
@@ -915,7 +903,7 @@ func (p *RecordAddDNSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -959,10 +947,6 @@ func (p *RecordAddDNSParam) GetTableType() output.TableType {
 
 func (p *RecordAddDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *RecordAddDNSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *RecordAddDNSParam) SetName(v string) {
@@ -1172,7 +1156,7 @@ func (p *ReadDNSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1216,10 +1200,6 @@ func (p *ReadDNSParam) GetTableType() output.TableType {
 
 func (p *ReadDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadDNSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadDNSParam) SetSelector(v []string) {
@@ -1466,7 +1446,7 @@ func (p *RecordUpdateDNSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1510,10 +1490,6 @@ func (p *RecordUpdateDNSParam) GetTableType() output.TableType {
 
 func (p *RecordUpdateDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *RecordUpdateDNSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *RecordUpdateDNSParam) SetIndex(v int) {
@@ -1745,7 +1721,7 @@ func (p *RecordDeleteDNSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1789,10 +1765,6 @@ func (p *RecordDeleteDNSParam) GetTableType() output.TableType {
 
 func (p *RecordDeleteDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *RecordDeleteDNSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *RecordDeleteDNSParam) SetIndex(v int) {
@@ -1983,7 +1955,7 @@ func (p *UpdateDNSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2027,10 +1999,6 @@ func (p *UpdateDNSParam) GetTableType() output.TableType {
 
 func (p *UpdateDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateDNSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateDNSParam) SetSelector(v []string) {
@@ -2202,7 +2170,7 @@ func (p *DeleteDNSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2246,10 +2214,6 @@ func (p *DeleteDNSParam) GetTableType() output.TableType {
 
 func (p *DeleteDNSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteDNSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteDNSParam) SetSelector(v []string) {

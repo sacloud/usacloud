@@ -115,7 +115,7 @@ func (p *ListSimpleMonitorParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -159,10 +159,6 @@ func (p *ListSimpleMonitorParam) GetTableType() output.TableType {
 
 func (p *ListSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListSimpleMonitorParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListSimpleMonitorParam) SetName(v []string) {
@@ -471,7 +467,7 @@ func (p *CreateSimpleMonitorParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -515,10 +511,6 @@ func (p *CreateSimpleMonitorParam) GetTableType() output.TableType {
 
 func (p *CreateSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateSimpleMonitorParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateSimpleMonitorParam) SetTarget(v string) {
@@ -770,7 +762,7 @@ func (p *ReadSimpleMonitorParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -814,10 +806,6 @@ func (p *ReadSimpleMonitorParam) GetTableType() output.TableType {
 
 func (p *ReadSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadSimpleMonitorParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadSimpleMonitorParam) SetSelector(v []string) {
@@ -1081,7 +1069,7 @@ func (p *UpdateSimpleMonitorParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1125,10 +1113,6 @@ func (p *UpdateSimpleMonitorParam) GetTableType() output.TableType {
 
 func (p *UpdateSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateSimpleMonitorParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateSimpleMonitorParam) SetProtocol(v string) {
@@ -1391,7 +1375,7 @@ func (p *DeleteSimpleMonitorParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1435,10 +1419,6 @@ func (p *DeleteSimpleMonitorParam) GetTableType() output.TableType {
 
 func (p *DeleteSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteSimpleMonitorParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteSimpleMonitorParam) SetSelector(v []string) {

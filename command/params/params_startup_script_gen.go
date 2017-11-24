@@ -126,7 +126,7 @@ func (p *ListStartupScriptParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -170,10 +170,6 @@ func (p *ListStartupScriptParam) GetTableType() output.TableType {
 
 func (p *ListStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListStartupScriptParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListStartupScriptParam) SetName(v []string) {
@@ -422,7 +418,7 @@ func (p *CreateStartupScriptParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -466,10 +462,6 @@ func (p *CreateStartupScriptParam) GetTableType() output.TableType {
 
 func (p *CreateStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateStartupScriptParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateStartupScriptParam) SetScript(v string) {
@@ -644,7 +636,7 @@ func (p *ReadStartupScriptParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -688,10 +680,6 @@ func (p *ReadStartupScriptParam) GetTableType() output.TableType {
 
 func (p *ReadStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadStartupScriptParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadStartupScriptParam) SetSelector(v []string) {
@@ -903,7 +891,7 @@ func (p *UpdateStartupScriptParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -947,10 +935,6 @@ func (p *UpdateStartupScriptParam) GetTableType() output.TableType {
 
 func (p *UpdateStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateStartupScriptParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateStartupScriptParam) SetScript(v string) {
@@ -1143,7 +1127,7 @@ func (p *DeleteStartupScriptParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1187,10 +1171,6 @@ func (p *DeleteStartupScriptParam) GetTableType() output.TableType {
 
 func (p *DeleteStartupScriptParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteStartupScriptParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteStartupScriptParam) SetSelector(v []string) {

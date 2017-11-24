@@ -115,7 +115,7 @@ func (p *ListVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -159,10 +159,6 @@ func (p *ListVPCRouterParam) GetTableType() output.TableType {
 
 func (p *ListVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListVPCRouterParam) SetName(v []string) {
@@ -451,7 +447,7 @@ func (p *CreateVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -495,10 +491,6 @@ func (p *CreateVPCRouterParam) GetTableType() output.TableType {
 
 func (p *CreateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateVPCRouterParam) SetPlan(v string) {
@@ -708,7 +700,7 @@ func (p *ReadVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -752,10 +744,6 @@ func (p *ReadVPCRouterParam) GetTableType() output.TableType {
 
 func (p *ReadVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadVPCRouterParam) SetSelector(v []string) {
@@ -954,7 +942,7 @@ func (p *UpdateVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -998,10 +986,6 @@ func (p *UpdateVPCRouterParam) GetTableType() output.TableType {
 
 func (p *UpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateVPCRouterParam) SetSyslogHost(v string) {
@@ -1191,7 +1175,7 @@ func (p *DeleteVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1235,10 +1219,6 @@ func (p *DeleteVPCRouterParam) GetTableType() output.TableType {
 
 func (p *DeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteVPCRouterParam) SetForce(v bool) {
@@ -1402,10 +1382,6 @@ func (p *BootVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *BootVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *BootVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1523,10 +1499,6 @@ func (p *ShutdownVPCRouterParam) GetTableType() output.TableType {
 
 func (p *ShutdownVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ShutdownVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ShutdownVPCRouterParam) SetSelector(v []string) {
@@ -1648,10 +1620,6 @@ func (p *ShutdownForceVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ShutdownForceVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ShutdownForceVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1771,10 +1739,6 @@ func (p *ResetVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ResetVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ResetVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1890,10 +1854,6 @@ func (p *WaitForBootVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *WaitForBootVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *WaitForBootVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2002,10 +1962,6 @@ func (p *WaitForDownVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *WaitForDownVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *WaitForDownVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2108,7 +2064,7 @@ func (p *InterfaceInfoVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2152,10 +2108,6 @@ func (p *InterfaceInfoVPCRouterParam) GetTableType() output.TableType {
 
 func (p *InterfaceInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *InterfaceInfoVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *InterfaceInfoVPCRouterParam) SetSelector(v []string) {
@@ -2397,10 +2349,6 @@ func (p *InterfaceConnectVPCRouterParam) GetTableType() output.TableType {
 
 func (p *InterfaceConnectVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *InterfaceConnectVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *InterfaceConnectVPCRouterParam) SetInterface(v string) {
@@ -2662,10 +2610,6 @@ func (p *InterfaceUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *InterfaceUpdateVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *InterfaceUpdateVPCRouterParam) SetInterface(v string) {
 	p.Interface = v
 }
@@ -2863,10 +2807,6 @@ func (p *InterfaceDisconnectVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *InterfaceDisconnectVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *InterfaceDisconnectVPCRouterParam) SetInterface(v string) {
 	p.Interface = v
 }
@@ -2990,7 +2930,7 @@ func (p *StaticNatInfoVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3034,10 +2974,6 @@ func (p *StaticNatInfoVPCRouterParam) GetTableType() output.TableType {
 
 func (p *StaticNatInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *StaticNatInfoVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *StaticNatInfoVPCRouterParam) SetSelector(v []string) {
@@ -3234,10 +3170,6 @@ func (p *StaticNatAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *StaticNatAddVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *StaticNatAddVPCRouterParam) SetGlobal(v string) {
 	p.Global = v
 }
@@ -3422,10 +3354,6 @@ func (p *StaticNatUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *StaticNatUpdateVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *StaticNatUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -3584,10 +3512,6 @@ func (p *StaticNatDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *StaticNatDeleteVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *StaticNatDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -3704,7 +3628,7 @@ func (p *PortForwardingInfoVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3748,10 +3672,6 @@ func (p *PortForwardingInfoVPCRouterParam) GetTableType() output.TableType {
 
 func (p *PortForwardingInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *PortForwardingInfoVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *PortForwardingInfoVPCRouterParam) SetSelector(v []string) {
@@ -3984,10 +3904,6 @@ func (p *PortForwardingAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *PortForwardingAddVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *PortForwardingAddVPCRouterParam) SetProtocol(v string) {
 	p.Protocol = v
 }
@@ -4208,10 +4124,6 @@ func (p *PortForwardingUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef 
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *PortForwardingUpdateVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *PortForwardingUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -4384,10 +4296,6 @@ func (p *PortForwardingDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef 
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *PortForwardingDeleteVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *PortForwardingDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -4536,7 +4444,7 @@ func (p *FirewallInfoVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4580,10 +4488,6 @@ func (p *FirewallInfoVPCRouterParam) GetTableType() output.TableType {
 
 func (p *FirewallInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *FirewallInfoVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *FirewallInfoVPCRouterParam) SetInterface(v int) {
@@ -4873,10 +4777,6 @@ func (p *FirewallAddVPCRouterParam) GetTableType() output.TableType {
 
 func (p *FirewallAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *FirewallAddVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *FirewallAddVPCRouterParam) SetInterface(v int) {
@@ -5193,10 +5093,6 @@ func (p *FirewallUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *FirewallUpdateVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *FirewallUpdateVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
@@ -5436,10 +5332,6 @@ func (p *FirewallDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *FirewallDeleteVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *FirewallDeleteVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
@@ -5570,7 +5462,7 @@ func (p *DhcpServerInfoVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5614,10 +5506,6 @@ func (p *DhcpServerInfoVPCRouterParam) GetTableType() output.TableType {
 
 func (p *DhcpServerInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DhcpServerInfoVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DhcpServerInfoVPCRouterParam) SetSelector(v []string) {
@@ -5832,10 +5720,6 @@ func (p *DhcpServerAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DhcpServerAddVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *DhcpServerAddVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
@@ -6034,10 +5918,6 @@ func (p *DhcpServerUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DhcpServerUpdateVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *DhcpServerUpdateVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
@@ -6203,10 +6083,6 @@ func (p *DhcpServerDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DhcpServerDeleteVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *DhcpServerDeleteVPCRouterParam) SetInterface(v int) {
 	p.Interface = v
 }
@@ -6323,7 +6199,7 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6367,10 +6243,6 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) GetTableType() output.TableType {
 
 func (p *DhcpStaticMappingInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DhcpStaticMappingInfoVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DhcpStaticMappingInfoVPCRouterParam) SetSelector(v []string) {
@@ -6556,10 +6428,6 @@ func (p *DhcpStaticMappingAddVPCRouterParam) GetColumnDefs() []output.ColumnDef 
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DhcpStaticMappingAddVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *DhcpStaticMappingAddVPCRouterParam) SetMacaddress(v string) {
 	p.Macaddress = v
 }
@@ -6726,10 +6594,6 @@ func (p *DhcpStaticMappingUpdateVPCRouterParam) GetColumnDefs() []output.ColumnD
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DhcpStaticMappingUpdateVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *DhcpStaticMappingUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -6881,10 +6745,6 @@ func (p *DhcpStaticMappingDeleteVPCRouterParam) GetColumnDefs() []output.ColumnD
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DhcpStaticMappingDeleteVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *DhcpStaticMappingDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -7001,7 +6861,7 @@ func (p *PptpServerInfoVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7045,10 +6905,6 @@ func (p *PptpServerInfoVPCRouterParam) GetTableType() output.TableType {
 
 func (p *PptpServerInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *PptpServerInfoVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *PptpServerInfoVPCRouterParam) SetSelector(v []string) {
@@ -7224,10 +7080,6 @@ func (p *PptpServerUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *PptpServerUpdateVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *PptpServerUpdateVPCRouterParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
@@ -7358,7 +7210,7 @@ func (p *L2tpServerInfoVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7402,10 +7254,6 @@ func (p *L2tpServerInfoVPCRouterParam) GetTableType() output.TableType {
 
 func (p *L2tpServerInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *L2tpServerInfoVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *L2tpServerInfoVPCRouterParam) SetSelector(v []string) {
@@ -7592,10 +7440,6 @@ func (p *L2tpServerUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *L2tpServerUpdateVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *L2tpServerUpdateVPCRouterParam) SetDisabled(v bool) {
 	p.Disabled = v
 }
@@ -7733,7 +7577,7 @@ func (p *UserInfoVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -7777,10 +7621,6 @@ func (p *UserInfoVPCRouterParam) GetTableType() output.TableType {
 
 func (p *UserInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UserInfoVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UserInfoVPCRouterParam) SetSelector(v []string) {
@@ -7966,10 +7806,6 @@ func (p *UserAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UserAddVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *UserAddVPCRouterParam) SetUsername(v string) {
 	p.Username = v
 }
@@ -8136,10 +7972,6 @@ func (p *UserUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UserUpdateVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *UserUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -8291,10 +8123,6 @@ func (p *UserDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *UserDeleteVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *UserDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -8411,7 +8239,7 @@ func (p *SiteToSiteVpnInfoVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -8455,10 +8283,6 @@ func (p *SiteToSiteVpnInfoVPCRouterParam) GetTableType() output.TableType {
 
 func (p *SiteToSiteVpnInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *SiteToSiteVpnInfoVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *SiteToSiteVpnInfoVPCRouterParam) SetSelector(v []string) {
@@ -8691,10 +8515,6 @@ func (p *SiteToSiteVpnAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *SiteToSiteVpnAddVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *SiteToSiteVpnAddVPCRouterParam) SetPeer(v string) {
 	p.Peer = v
 }
@@ -8908,10 +8728,6 @@ func (p *SiteToSiteVpnUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *SiteToSiteVpnUpdateVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *SiteToSiteVpnUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -9084,10 +8900,6 @@ func (p *SiteToSiteVpnDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *SiteToSiteVpnDeleteVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *SiteToSiteVpnDeleteVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -9204,7 +9016,7 @@ func (p *StaticRouteInfoVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -9248,10 +9060,6 @@ func (p *StaticRouteInfoVPCRouterParam) GetTableType() output.TableType {
 
 func (p *StaticRouteInfoVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *StaticRouteInfoVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *StaticRouteInfoVPCRouterParam) SetSelector(v []string) {
@@ -9437,10 +9245,6 @@ func (p *StaticRouteAddVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *StaticRouteAddVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *StaticRouteAddVPCRouterParam) SetPrefix(v string) {
 	p.Prefix = v
 }
@@ -9607,10 +9411,6 @@ func (p *StaticRouteUpdateVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *StaticRouteUpdateVPCRouterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *StaticRouteUpdateVPCRouterParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -9760,10 +9560,6 @@ func (p *StaticRouteDeleteVPCRouterParam) GetTableType() output.TableType {
 
 func (p *StaticRouteDeleteVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *StaticRouteDeleteVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *StaticRouteDeleteVPCRouterParam) SetIndex(v int) {
@@ -9937,7 +9733,7 @@ func (p *MonitorVPCRouterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -9981,10 +9777,6 @@ func (p *MonitorVPCRouterParam) GetTableType() output.TableType {
 
 func (p *MonitorVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorVPCRouterParam) SetInterface(v string) {
@@ -10190,10 +9982,6 @@ func (p *LogsVPCRouterParam) GetTableType() output.TableType {
 
 func (p *LogsVPCRouterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *LogsVPCRouterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *LogsVPCRouterParam) SetLogName(v string) {

@@ -104,7 +104,7 @@ func (p *ListRegionParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -148,10 +148,6 @@ func (p *ListRegionParam) GetTableType() output.TableType {
 
 func (p *ListRegionParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListRegionParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListRegionParam) SetName(v []string) {
@@ -319,7 +315,7 @@ func (p *ReadRegionParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -363,10 +359,6 @@ func (p *ReadRegionParam) GetTableType() output.TableType {
 
 func (p *ReadRegionParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadRegionParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadRegionParam) SetAssumeyes(v bool) {

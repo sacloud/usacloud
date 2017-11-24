@@ -59,7 +59,7 @@ func (p *ShowAuthStatusParam) Validate() []error {
 	errors := []error{}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -103,10 +103,6 @@ func (p *ShowAuthStatusParam) GetTableType() output.TableType {
 
 func (p *ShowAuthStatusParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ShowAuthStatusParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ShowAuthStatusParam) SetParamTemplate(v string) {

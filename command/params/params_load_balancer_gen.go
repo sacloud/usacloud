@@ -115,7 +115,7 @@ func (p *ListLoadBalancerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -159,10 +159,6 @@ func (p *ListLoadBalancerParam) GetTableType() output.TableType {
 
 func (p *ListLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListLoadBalancerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListLoadBalancerParam) SetName(v []string) {
@@ -476,7 +472,7 @@ func (p *CreateLoadBalancerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -520,10 +516,6 @@ func (p *CreateLoadBalancerParam) GetTableType() output.TableType {
 
 func (p *CreateLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateLoadBalancerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateLoadBalancerParam) SetSwitchId(v int64) {
@@ -740,7 +732,7 @@ func (p *ReadLoadBalancerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -784,10 +776,6 @@ func (p *ReadLoadBalancerParam) GetTableType() output.TableType {
 
 func (p *ReadLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadLoadBalancerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadLoadBalancerParam) SetSelector(v []string) {
@@ -975,7 +963,7 @@ func (p *UpdateLoadBalancerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1019,10 +1007,6 @@ func (p *UpdateLoadBalancerParam) GetTableType() output.TableType {
 
 func (p *UpdateLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateLoadBalancerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateLoadBalancerParam) SetSelector(v []string) {
@@ -1205,7 +1189,7 @@ func (p *DeleteLoadBalancerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1249,10 +1233,6 @@ func (p *DeleteLoadBalancerParam) GetTableType() output.TableType {
 
 func (p *DeleteLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteLoadBalancerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteLoadBalancerParam) SetForce(v bool) {
@@ -1416,10 +1396,6 @@ func (p *BootLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *BootLoadBalancerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *BootLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1537,10 +1513,6 @@ func (p *ShutdownLoadBalancerParam) GetTableType() output.TableType {
 
 func (p *ShutdownLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ShutdownLoadBalancerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ShutdownLoadBalancerParam) SetSelector(v []string) {
@@ -1662,10 +1634,6 @@ func (p *ShutdownForceLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ShutdownForceLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1785,10 +1753,6 @@ func (p *ResetLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ResetLoadBalancerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ResetLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1904,10 +1868,6 @@ func (p *WaitForBootLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *WaitForBootLoadBalancerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *WaitForBootLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2016,10 +1976,6 @@ func (p *WaitForDownLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *WaitForDownLoadBalancerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *WaitForDownLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2122,7 +2078,7 @@ func (p *VipInfoLoadBalancerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2166,10 +2122,6 @@ func (p *VipInfoLoadBalancerParam) GetTableType() output.TableType {
 
 func (p *VipInfoLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *VipInfoLoadBalancerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *VipInfoLoadBalancerParam) SetSelector(v []string) {
@@ -2380,10 +2332,6 @@ func (p *VipAddLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *VipAddLoadBalancerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *VipAddLoadBalancerParam) SetVip(v string) {
 	p.Vip = v
 }
@@ -2589,10 +2537,6 @@ func (p *VipUpdateLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *VipUpdateLoadBalancerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *VipUpdateLoadBalancerParam) SetIndex(v int) {
 	p.Index = v
 }
@@ -2756,10 +2700,6 @@ func (p *VipDeleteLoadBalancerParam) GetTableType() output.TableType {
 
 func (p *VipDeleteLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *VipDeleteLoadBalancerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *VipDeleteLoadBalancerParam) SetIndex(v int) {
@@ -2932,7 +2872,7 @@ func (p *ServerInfoLoadBalancerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2976,10 +2916,6 @@ func (p *ServerInfoLoadBalancerParam) GetTableType() output.TableType {
 
 func (p *ServerInfoLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ServerInfoLoadBalancerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ServerInfoLoadBalancerParam) SetVipIndex(v int) {
@@ -3255,10 +3191,6 @@ func (p *ServerAddLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerAddLoadBalancerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ServerAddLoadBalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
@@ -3529,10 +3461,6 @@ func (p *ServerUpdateLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ServerUpdateLoadBalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
@@ -3780,10 +3708,6 @@ func (p *ServerDeleteLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ServerDeleteLoadBalancerParam) SetVipIndex(v int) {
 	p.VipIndex = v
 }
@@ -3957,7 +3881,7 @@ func (p *MonitorLoadBalancerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4001,10 +3925,6 @@ func (p *MonitorLoadBalancerParam) GetTableType() output.TableType {
 
 func (p *MonitorLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorLoadBalancerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorLoadBalancerParam) SetStart(v string) {

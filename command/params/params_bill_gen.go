@@ -84,10 +84,6 @@ func (p *CsvBillParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CsvBillParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *CsvBillParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -204,7 +200,7 @@ func (p *ListBillParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -248,10 +244,6 @@ func (p *ListBillParam) GetTableType() output.TableType {
 
 func (p *ListBillParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListBillParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListBillParam) SetYear(v int) {

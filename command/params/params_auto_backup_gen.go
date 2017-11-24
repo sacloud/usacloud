@@ -115,7 +115,7 @@ func (p *ListAutoBackupParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -159,10 +159,6 @@ func (p *ListAutoBackupParam) GetTableType() output.TableType {
 
 func (p *ListAutoBackupParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListAutoBackupParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListAutoBackupParam) SetName(v []string) {
@@ -428,7 +424,7 @@ func (p *CreateAutoBackupParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -472,10 +468,6 @@ func (p *CreateAutoBackupParam) GetTableType() output.TableType {
 
 func (p *CreateAutoBackupParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateAutoBackupParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateAutoBackupParam) SetDiskId(v int64) {
@@ -657,7 +649,7 @@ func (p *ReadAutoBackupParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -701,10 +693,6 @@ func (p *ReadAutoBackupParam) GetTableType() output.TableType {
 
 func (p *ReadAutoBackupParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadAutoBackupParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadAutoBackupParam) SetSelector(v []string) {
@@ -914,7 +902,7 @@ func (p *UpdateAutoBackupParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -958,10 +946,6 @@ func (p *UpdateAutoBackupParam) GetTableType() output.TableType {
 
 func (p *UpdateAutoBackupParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateAutoBackupParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateAutoBackupParam) SetWeekdays(v []string) {
@@ -1154,7 +1138,7 @@ func (p *DeleteAutoBackupParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1198,10 +1182,6 @@ func (p *DeleteAutoBackupParam) GetTableType() output.TableType {
 
 func (p *DeleteAutoBackupParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteAutoBackupParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteAutoBackupParam) SetSelector(v []string) {

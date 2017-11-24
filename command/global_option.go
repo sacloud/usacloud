@@ -19,6 +19,7 @@ type Option struct {
 	APIRootURL        string
 	TraceMode         bool
 	Format            string
+	DefaultOutputType string
 	In                io.Reader
 	Out               io.Writer
 	Progress          io.Writer
@@ -35,7 +36,10 @@ var GlobalOption = &Option{
 	Err:      colorable.NewColorableStderr(),
 }
 
-var DefaultZone = "tk1a"
+var (
+	DefaultZone       = "tk1a"
+	DefaultOutputType = "table"
+)
 
 func init() {
 	if !(isatty.IsTerminal(os.Stderr.Fd()) || isatty.IsCygwinTerminal(os.Stderr.Fd())) {
@@ -79,6 +83,13 @@ var GlobalFlags = []cli.Flag{
 		EnvVars:     []string{"USACLOUD_API_ROOT_URL"},
 		Destination: &GlobalOption.APIRootURL,
 	},
+	&cli.StringFlag{
+		Name:        "default-output-type",
+		EnvVars:     []string{"USACLOUD_DEFAULT_OUTPUT_TYPE"},
+		Destination: &GlobalOption.DefaultOutputType,
+		Value:       DefaultOutputType,
+		Hidden:      true,
+	},
 	&cli.StringSliceFlag{
 		Name:   "zones",
 		Hidden: true,
@@ -103,6 +114,7 @@ func (o *Option) Validate(skipAuth bool) []error {
 		errs = append(errs, ValidateRequired("secret", o.AccessTokenSecret)...)
 		errs = append(errs, ValidateRequired("zone", o.Zone)...)
 		errs = append(errs, ValidateInStrValues("zone", o.Zone, define.AllowZones...)...)
+		errs = append(errs, ValidateInStrValues("default-output-type", o.DefaultOutputType, define.AllowOutputTypes...)...)
 	}
 
 	o.Validated = true

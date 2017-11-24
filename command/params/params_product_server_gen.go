@@ -104,7 +104,7 @@ func (p *ListProductServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -148,10 +148,6 @@ func (p *ListProductServerParam) GetTableType() output.TableType {
 
 func (p *ListProductServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListProductServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListProductServerParam) SetName(v []string) {
@@ -319,7 +315,7 @@ func (p *ReadProductServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -363,10 +359,6 @@ func (p *ReadProductServerParam) GetTableType() output.TableType {
 
 func (p *ReadProductServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadProductServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadProductServerParam) SetAssumeyes(v bool) {

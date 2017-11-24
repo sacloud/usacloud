@@ -328,7 +328,7 @@ func (p *{{.Name}}) Validate() []error{
 	{{.Validators}}
 	{{ if .OutputExists }}
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type" , p.OutputType )
 		if errs != nil {
 			errors = append(errors , errs...)
@@ -372,10 +372,6 @@ func (p *{{.Name}}) GetTableType() output.TableType {
 
 func (p *{{.Name}}) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *{{.Name}}) GetOutputFormat() string {
-	return "table"
 }
 
 {{ range .Fields -}}

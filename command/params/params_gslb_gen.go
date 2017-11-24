@@ -115,7 +115,7 @@ func (p *ListGSLBParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -159,10 +159,6 @@ func (p *ListGSLBParam) GetTableType() output.TableType {
 
 func (p *ListGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListGSLBParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListGSLBParam) SetName(v []string) {
@@ -330,7 +326,7 @@ func (p *ServerInfoGSLBParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -374,10 +370,6 @@ func (p *ServerInfoGSLBParam) GetTableType() output.TableType {
 
 func (p *ServerInfoGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ServerInfoGSLBParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ServerInfoGSLBParam) SetSelector(v []string) {
@@ -631,7 +623,7 @@ func (p *CreateGSLBParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -675,10 +667,6 @@ func (p *CreateGSLBParam) GetTableType() output.TableType {
 
 func (p *CreateGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateGSLBParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateGSLBParam) SetProtocol(v string) {
@@ -925,7 +913,7 @@ func (p *ServerAddGSLBParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -969,10 +957,6 @@ func (p *ServerAddGSLBParam) GetTableType() output.TableType {
 
 func (p *ServerAddGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ServerAddGSLBParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ServerAddGSLBParam) SetIpaddress(v string) {
@@ -1140,7 +1124,7 @@ func (p *ReadGSLBParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1184,10 +1168,6 @@ func (p *ReadGSLBParam) GetTableType() output.TableType {
 
 func (p *ReadGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadGSLBParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadGSLBParam) SetSelector(v []string) {
@@ -1368,7 +1348,7 @@ func (p *ServerUpdateGSLBParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1412,10 +1392,6 @@ func (p *ServerUpdateGSLBParam) GetTableType() output.TableType {
 
 func (p *ServerUpdateGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ServerUpdateGSLBParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ServerUpdateGSLBParam) SetIndex(v int) {
@@ -1605,7 +1581,7 @@ func (p *ServerDeleteGSLBParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1649,10 +1625,6 @@ func (p *ServerDeleteGSLBParam) GetTableType() output.TableType {
 
 func (p *ServerDeleteGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ServerDeleteGSLBParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ServerDeleteGSLBParam) SetIndex(v int) {
@@ -1907,7 +1879,7 @@ func (p *UpdateGSLBParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1951,10 +1923,6 @@ func (p *UpdateGSLBParam) GetTableType() output.TableType {
 
 func (p *UpdateGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateGSLBParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateGSLBParam) SetProtocol(v string) {
@@ -2189,7 +2157,7 @@ func (p *DeleteGSLBParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2233,10 +2201,6 @@ func (p *DeleteGSLBParam) GetTableType() output.TableType {
 
 func (p *DeleteGSLBParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteGSLBParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteGSLBParam) SetSelector(v []string) {

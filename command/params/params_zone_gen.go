@@ -104,7 +104,7 @@ func (p *ListZoneParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -148,10 +148,6 @@ func (p *ListZoneParam) GetTableType() output.TableType {
 
 func (p *ListZoneParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListZoneParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListZoneParam) SetName(v []string) {
@@ -319,7 +315,7 @@ func (p *ReadZoneParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -363,10 +359,6 @@ func (p *ReadZoneParam) GetTableType() output.TableType {
 
 func (p *ReadZoneParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadZoneParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadZoneParam) SetAssumeyes(v bool) {

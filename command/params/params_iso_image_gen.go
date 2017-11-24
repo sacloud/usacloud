@@ -126,7 +126,7 @@ func (p *ListISOImageParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -170,10 +170,6 @@ func (p *ListISOImageParam) GetTableType() output.TableType {
 
 func (p *ListISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListISOImageParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListISOImageParam) SetName(v []string) {
@@ -427,7 +423,7 @@ func (p *CreateISOImageParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -471,10 +467,6 @@ func (p *CreateISOImageParam) GetTableType() output.TableType {
 
 func (p *CreateISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateISOImageParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateISOImageParam) SetSize(v int) {
@@ -649,7 +641,7 @@ func (p *ReadISOImageParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -693,10 +685,6 @@ func (p *ReadISOImageParam) GetTableType() output.TableType {
 
 func (p *ReadISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadISOImageParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadISOImageParam) SetSelector(v []string) {
@@ -884,7 +872,7 @@ func (p *UpdateISOImageParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -928,10 +916,6 @@ func (p *UpdateISOImageParam) GetTableType() output.TableType {
 
 func (p *UpdateISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateISOImageParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateISOImageParam) SetSelector(v []string) {
@@ -1110,7 +1094,7 @@ func (p *DeleteISOImageParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1154,10 +1138,6 @@ func (p *DeleteISOImageParam) GetTableType() output.TableType {
 
 func (p *DeleteISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteISOImageParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteISOImageParam) SetSelector(v []string) {
@@ -1326,7 +1306,7 @@ func (p *UploadISOImageParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1370,10 +1350,6 @@ func (p *UploadISOImageParam) GetTableType() output.TableType {
 
 func (p *UploadISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UploadISOImageParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UploadISOImageParam) SetIsoFile(v string) {
@@ -1548,10 +1524,6 @@ func (p *DownloadISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DownloadISOImageParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *DownloadISOImageParam) SetFileDestination(v string) {
 	p.FileDestination = v
 }
@@ -1672,7 +1644,7 @@ func (p *FtpOpenISOImageParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1716,10 +1688,6 @@ func (p *FtpOpenISOImageParam) GetTableType() output.TableType {
 
 func (p *FtpOpenISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *FtpOpenISOImageParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *FtpOpenISOImageParam) SetSelector(v []string) {
@@ -1874,10 +1842,6 @@ func (p *FtpCloseISOImageParam) GetTableType() output.TableType {
 
 func (p *FtpCloseISOImageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *FtpCloseISOImageParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *FtpCloseISOImageParam) SetSelector(v []string) {

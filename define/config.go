@@ -74,6 +74,7 @@ func ConfigResource() *schema.Resource {
 }
 
 var AllowZones = []string{"is1a", "is1b", "tk1a", "tk1v"}
+var AllowOutputTypes = []string{"table", "json", "csv", "tsv"}
 
 func configEditParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
@@ -99,6 +100,15 @@ func configEditParam() map[string]*schema.Schema {
 			CompleteFunc: completeInStrValues(AllowZones...),
 			Category:     "config",
 			Order:        30,
+		},
+		"default-output-type": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "Default output format type",
+			ValidateFunc: validateInStrValues(AllowOutputTypes...),
+			CompleteFunc: completeInStrValues(AllowOutputTypes...),
+			Category:     "config",
+			Order:        40,
 		},
 	}
 }

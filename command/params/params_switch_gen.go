@@ -115,7 +115,7 @@ func (p *ListSwitchParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -159,10 +159,6 @@ func (p *ListSwitchParam) GetTableType() output.TableType {
 
 func (p *ListSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListSwitchParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListSwitchParam) SetName(v []string) {
@@ -370,7 +366,7 @@ func (p *CreateSwitchParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -414,10 +410,6 @@ func (p *CreateSwitchParam) GetTableType() output.TableType {
 
 func (p *CreateSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateSwitchParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateSwitchParam) SetName(v string) {
@@ -578,7 +570,7 @@ func (p *ReadSwitchParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -622,10 +614,6 @@ func (p *ReadSwitchParam) GetTableType() output.TableType {
 
 func (p *ReadSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadSwitchParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadSwitchParam) SetSelector(v []string) {
@@ -813,7 +801,7 @@ func (p *UpdateSwitchParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -857,10 +845,6 @@ func (p *UpdateSwitchParam) GetTableType() output.TableType {
 
 func (p *UpdateSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateSwitchParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateSwitchParam) SetSelector(v []string) {
@@ -1039,7 +1023,7 @@ func (p *DeleteSwitchParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1083,10 +1067,6 @@ func (p *DeleteSwitchParam) GetTableType() output.TableType {
 
 func (p *DeleteSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteSwitchParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteSwitchParam) SetSelector(v []string) {
@@ -1261,10 +1241,6 @@ func (p *BridgeConnectSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *BridgeConnectSwitchParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *BridgeConnectSwitchParam) SetBridgeId(v int64) {
 	p.BridgeId = v
 }
@@ -1389,10 +1365,6 @@ func (p *BridgeDisconnectSwitchParam) GetTableType() output.TableType {
 
 func (p *BridgeDisconnectSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *BridgeDisconnectSwitchParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *BridgeDisconnectSwitchParam) SetSelector(v []string) {

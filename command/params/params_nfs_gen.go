@@ -115,7 +115,7 @@ func (p *ListNFSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -159,10 +159,6 @@ func (p *ListNFSParam) GetTableType() output.TableType {
 
 func (p *ListNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListNFSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListNFSParam) SetName(v []string) {
@@ -456,7 +452,7 @@ func (p *CreateNFSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -500,10 +496,6 @@ func (p *CreateNFSParam) GetTableType() output.TableType {
 
 func (p *CreateNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateNFSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateNFSParam) SetSwitchId(v int64) {
@@ -699,7 +691,7 @@ func (p *ReadNFSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -743,10 +735,6 @@ func (p *ReadNFSParam) GetTableType() output.TableType {
 
 func (p *ReadNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadNFSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadNFSParam) SetSelector(v []string) {
@@ -934,7 +922,7 @@ func (p *UpdateNFSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -978,10 +966,6 @@ func (p *UpdateNFSParam) GetTableType() output.TableType {
 
 func (p *UpdateNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateNFSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateNFSParam) SetSelector(v []string) {
@@ -1164,7 +1148,7 @@ func (p *DeleteNFSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1208,10 +1192,6 @@ func (p *DeleteNFSParam) GetTableType() output.TableType {
 
 func (p *DeleteNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteNFSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteNFSParam) SetForce(v bool) {
@@ -1375,10 +1355,6 @@ func (p *BootNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *BootNFSParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *BootNFSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1496,10 +1472,6 @@ func (p *ShutdownNFSParam) GetTableType() output.TableType {
 
 func (p *ShutdownNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ShutdownNFSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ShutdownNFSParam) SetSelector(v []string) {
@@ -1621,10 +1593,6 @@ func (p *ShutdownForceNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ShutdownForceNFSParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ShutdownForceNFSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1744,10 +1712,6 @@ func (p *ResetNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ResetNFSParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ResetNFSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1863,10 +1827,6 @@ func (p *WaitForBootNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *WaitForBootNFSParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *WaitForBootNFSParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1973,10 +1933,6 @@ func (p *WaitForDownNFSParam) GetTableType() output.TableType {
 
 func (p *WaitForDownNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *WaitForDownNFSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *WaitForDownNFSParam) SetSelector(v []string) {
@@ -2117,7 +2073,7 @@ func (p *MonitorNicNFSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2161,10 +2117,6 @@ func (p *MonitorNicNFSParam) GetTableType() output.TableType {
 
 func (p *MonitorNicNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorNicNFSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorNicNFSParam) SetStart(v string) {
@@ -2361,7 +2313,7 @@ func (p *MonitorFreeDiskSizeNFSParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2405,10 +2357,6 @@ func (p *MonitorFreeDiskSizeNFSParam) GetTableType() output.TableType {
 
 func (p *MonitorFreeDiskSizeNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorFreeDiskSizeNFSParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorFreeDiskSizeNFSParam) SetStart(v string) {

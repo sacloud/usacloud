@@ -126,7 +126,7 @@ func (p *ListIpv6Param) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -170,10 +170,6 @@ func (p *ListIpv6Param) GetTableType() output.TableType {
 
 func (p *ListIpv6Param) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListIpv6Param) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListIpv6Param) SetName(v []string) {
@@ -348,7 +344,7 @@ func (p *PtrAddIpv6Param) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -392,10 +388,6 @@ func (p *PtrAddIpv6Param) GetTableType() output.TableType {
 
 func (p *PtrAddIpv6Param) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *PtrAddIpv6Param) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *PtrAddIpv6Param) SetHostname(v string) {
@@ -520,7 +512,7 @@ func (p *PtrReadIpv6Param) Validate() []error {
 	errors := []error{}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -564,10 +556,6 @@ func (p *PtrReadIpv6Param) GetTableType() output.TableType {
 
 func (p *PtrReadIpv6Param) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *PtrReadIpv6Param) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *PtrReadIpv6Param) SetParamTemplate(v string) {
@@ -693,7 +681,7 @@ func (p *PtrUpdateIpv6Param) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -737,10 +725,6 @@ func (p *PtrUpdateIpv6Param) GetTableType() output.TableType {
 
 func (p *PtrUpdateIpv6Param) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *PtrUpdateIpv6Param) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *PtrUpdateIpv6Param) SetHostname(v string) {
@@ -869,7 +853,7 @@ func (p *PtrDeleteIpv6Param) Validate() []error {
 	errors := []error{}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -913,10 +897,6 @@ func (p *PtrDeleteIpv6Param) GetTableType() output.TableType {
 
 func (p *PtrDeleteIpv6Param) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *PtrDeleteIpv6Param) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *PtrDeleteIpv6Param) SetAssumeyes(v bool) {

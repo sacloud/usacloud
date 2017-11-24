@@ -49,6 +49,10 @@ func init() {
 				Usage: "Target zone of SakuraCloud",
 			},
 			&cli.StringFlag{
+				Name:  "default-output-type",
+				Usage: "Default output format type",
+			},
+			&cli.StringFlag{
 				Name:  "param-template",
 				Usage: "Set input parameter from string(JSON)",
 			},
@@ -93,6 +97,15 @@ func init() {
 
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = currentParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, currentParam)
@@ -195,6 +208,13 @@ func init() {
 						currentParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
+					var outputTypeHolder interface{} = currentParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if currentParam.GenerateSkeleton {
 						currentParam.GenerateSkeleton = false
@@ -257,6 +277,15 @@ func init() {
 
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = deleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, deleteParam)
@@ -365,6 +394,13 @@ func init() {
 						deleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
+					var outputTypeHolder interface{} = deleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if deleteParam.GenerateSkeleton {
 						deleteParam.GenerateSkeleton = false
@@ -412,6 +448,10 @@ func init() {
 						Usage: "Target zone of SakuraCloud",
 					},
 					&cli.StringFlag{
+						Name:  "default-output-type",
+						Usage: "Default output format type",
+					},
+					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
 					},
@@ -439,6 +479,15 @@ func init() {
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = editParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, editParam)
 
@@ -451,6 +500,9 @@ func init() {
 					}
 					if c.IsSet("zone") {
 						editParam.Zone = c.String("zone")
+					}
+					if c.IsSet("default-output-type") {
+						editParam.DefaultOutputType = c.String("default-output-type")
 					}
 					if c.IsSet("param-template") {
 						editParam.ParamTemplate = c.String("param-template")
@@ -548,6 +600,9 @@ func init() {
 					if c.IsSet("zone") {
 						editParam.Zone = c.String("zone")
 					}
+					if c.IsSet("default-output-type") {
+						editParam.DefaultOutputType = c.String("default-output-type")
+					}
 					if c.IsSet("param-template") {
 						editParam.ParamTemplate = c.String("param-template")
 					}
@@ -556,6 +611,13 @@ func init() {
 					}
 					if c.IsSet("generate-skeleton") {
 						editParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+
+					var outputTypeHolder interface{} = editParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -615,6 +677,15 @@ func init() {
 
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = listParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, listParam)
@@ -717,6 +788,13 @@ func init() {
 						listParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
+					var outputTypeHolder interface{} = listParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if listParam.GenerateSkeleton {
 						listParam.GenerateSkeleton = false
@@ -773,6 +851,15 @@ func init() {
 
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = migrateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, migrateParam)
@@ -875,6 +962,13 @@ func init() {
 						migrateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
+					var outputTypeHolder interface{} = migrateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if migrateParam.GenerateSkeleton {
 						migrateParam.GenerateSkeleton = false
@@ -931,6 +1025,15 @@ func init() {
 
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = showParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, showParam)
@@ -1033,6 +1136,13 @@ func init() {
 						showParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 
+					var outputTypeHolder interface{} = showParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if showParam.GenerateSkeleton {
 						showParam.GenerateSkeleton = false
@@ -1089,6 +1199,15 @@ func init() {
 
 					// set real args
 					realArgs := args[0 : c.NArg()-3]
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = useParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, useParam)
@@ -1189,6 +1308,13 @@ func init() {
 					}
 					if c.IsSet("generate-skeleton") {
 						useParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+
+					var outputTypeHolder interface{} = useParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -1300,6 +1426,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("config", "edit", "default-output-type", &schema.Category{
+		Key:         "config",
+		DisplayName: "Config options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("config", "edit", "generate-skeleton", &schema.Category{
 		Key:         "Input",

@@ -104,7 +104,7 @@ func (p *ListProductLicenseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -148,10 +148,6 @@ func (p *ListProductLicenseParam) GetTableType() output.TableType {
 
 func (p *ListProductLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListProductLicenseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListProductLicenseParam) SetName(v []string) {
@@ -319,7 +315,7 @@ func (p *ReadProductLicenseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -363,10 +359,6 @@ func (p *ReadProductLicenseParam) GetTableType() output.TableType {
 
 func (p *ReadProductLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadProductLicenseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadProductLicenseParam) SetAssumeyes(v bool) {

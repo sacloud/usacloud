@@ -125,6 +125,24 @@ usacloud server ls -h
 
 ---
 
+#### デフォルト出力形式(`--default-output-type`)
+
+デフォルトの出力形式を指定します。
+指定可能な値は以下のいずれかです。
+
+  * `table` : テーブル形式(デフォルト)
+  * `json`  : JSON形式
+  * `csv`   : CSV形式
+  * `tsv`   : TSV形式
+
+> 通常この値は`~/.usacloud/[current-profile-nane]/config.json`の値が利用されます。  
+> 環境変数`USACLOUD_DEFAULT_OUTPUT_TYPE`で指定することも可能です。  
+> コマンド実行時に`--output-type`(エイリアス:`--out`)を指定することでこの設定を上書きすることが可能です。  
+
+---
+
+
+
 #### ヘルプ表示(`--help` or `-h`)
 
 ヘルプ表示を行います。詳細は[help表示](#help)を参照してください。
@@ -154,10 +172,12 @@ usacloudのバージョン情報を表示します。
 
 出力形式を選択します。指定可能な値は以下のいずれかです。  
 
-  * `json` : JSON
-  * `csv` : CSV形式
-  * `tsv` : TSV形式
-  * 未指定(デフォルト) : テーブル形式
+  * `table` : テーブル形式
+  * `json`  : JSON
+  * `csv`   : CSV形式
+  * `tsv`   : TSV形式
+
+未指定の場合はグローバルオプション`--default-output-type`の設定が利用されます。
 
 ---
  
