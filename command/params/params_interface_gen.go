@@ -104,7 +104,7 @@ func (p *ListInterfaceParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -148,10 +148,6 @@ func (p *ListInterfaceParam) GetTableType() output.TableType {
 
 func (p *ListInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListInterfaceParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListInterfaceParam) SetName(v []string) {
@@ -336,10 +332,6 @@ func (p *PacketFilterConnectInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *PacketFilterConnectInterfaceParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *PacketFilterConnectInterfaceParam) SetPacketFilterId(v int64) {
 	p.PacketFilterId = v
 }
@@ -456,7 +448,7 @@ func (p *CreateInterfaceParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -500,10 +492,6 @@ func (p *CreateInterfaceParam) GetTableType() output.TableType {
 
 func (p *CreateInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateInterfaceParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateInterfaceParam) SetServerId(v int64) {
@@ -667,10 +655,6 @@ func (p *PacketFilterDisconnectInterfaceParam) GetColumnDefs() []output.ColumnDe
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *PacketFilterDisconnectInterfaceParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *PacketFilterDisconnectInterfaceParam) SetPacketFilterId(v int64) {
 	p.PacketFilterId = v
 }
@@ -776,7 +760,7 @@ func (p *ReadInterfaceParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -820,10 +804,6 @@ func (p *ReadInterfaceParam) GetTableType() output.TableType {
 
 func (p *ReadInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadInterfaceParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadInterfaceParam) SetParamTemplate(v string) {
@@ -967,7 +947,7 @@ func (p *UpdateInterfaceParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1011,10 +991,6 @@ func (p *UpdateInterfaceParam) GetTableType() output.TableType {
 
 func (p *UpdateInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateInterfaceParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateInterfaceParam) SetUserIpaddress(v string) {
@@ -1161,7 +1137,7 @@ func (p *DeleteInterfaceParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1205,10 +1181,6 @@ func (p *DeleteInterfaceParam) GetTableType() output.TableType {
 
 func (p *DeleteInterfaceParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteInterfaceParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteInterfaceParam) SetAssumeyes(v bool) {

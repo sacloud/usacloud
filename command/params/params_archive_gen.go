@@ -148,7 +148,7 @@ func (p *ListArchiveParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -192,10 +192,6 @@ func (p *ListArchiveParam) GetTableType() output.TableType {
 
 func (p *ListArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListArchiveParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListArchiveParam) SetName(v []string) {
@@ -510,7 +506,7 @@ func (p *CreateArchiveParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -554,10 +550,6 @@ func (p *CreateArchiveParam) GetTableType() output.TableType {
 
 func (p *CreateArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateArchiveParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateArchiveParam) SetSourceDiskId(v int64) {
@@ -746,7 +738,7 @@ func (p *ReadArchiveParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -790,10 +782,6 @@ func (p *ReadArchiveParam) GetTableType() output.TableType {
 
 func (p *ReadArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadArchiveParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadArchiveParam) SetSelector(v []string) {
@@ -981,7 +969,7 @@ func (p *UpdateArchiveParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1025,10 +1013,6 @@ func (p *UpdateArchiveParam) GetTableType() output.TableType {
 
 func (p *UpdateArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateArchiveParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateArchiveParam) SetSelector(v []string) {
@@ -1207,7 +1191,7 @@ func (p *DeleteArchiveParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1251,10 +1235,6 @@ func (p *DeleteArchiveParam) GetTableType() output.TableType {
 
 func (p *DeleteArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteArchiveParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteArchiveParam) SetSelector(v []string) {
@@ -1423,7 +1403,7 @@ func (p *UploadArchiveParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1467,10 +1447,6 @@ func (p *UploadArchiveParam) GetTableType() output.TableType {
 
 func (p *UploadArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UploadArchiveParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UploadArchiveParam) SetArchiveFile(v string) {
@@ -1645,10 +1621,6 @@ func (p *DownloadArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DownloadArchiveParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *DownloadArchiveParam) SetFileDestination(v string) {
 	p.FileDestination = v
 }
@@ -1769,7 +1741,7 @@ func (p *FtpOpenArchiveParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1813,10 +1785,6 @@ func (p *FtpOpenArchiveParam) GetTableType() output.TableType {
 
 func (p *FtpOpenArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *FtpOpenArchiveParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *FtpOpenArchiveParam) SetSelector(v []string) {
@@ -1973,10 +1941,6 @@ func (p *FtpCloseArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *FtpCloseArchiveParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *FtpCloseArchiveParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2090,10 +2054,6 @@ func (p *WaitForCopyArchiveParam) GetTableType() output.TableType {
 
 func (p *WaitForCopyArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *WaitForCopyArchiveParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *WaitForCopyArchiveParam) SetSelector(v []string) {

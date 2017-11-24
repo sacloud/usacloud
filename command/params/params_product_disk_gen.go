@@ -104,7 +104,7 @@ func (p *ListProductDiskParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -148,10 +148,6 @@ func (p *ListProductDiskParam) GetTableType() output.TableType {
 
 func (p *ListProductDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListProductDiskParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListProductDiskParam) SetName(v []string) {
@@ -319,7 +315,7 @@ func (p *ReadProductDiskParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -363,10 +359,6 @@ func (p *ReadProductDiskParam) GetTableType() output.TableType {
 
 func (p *ReadProductDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadProductDiskParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadProductDiskParam) SetAssumeyes(v bool) {

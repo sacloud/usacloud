@@ -152,7 +152,7 @@ func (c *Command) BuildedParams() SortableParams {
 				Type:        TypeString,
 				HandlerType: HandlerNoop,
 				Aliases:     []string{"out"},
-				Description: "Output type [json/csv/tsv]",
+				Description: "Output type [table/json/csv/tsv]",
 				Category:    "output",
 				Order:       10,
 			}

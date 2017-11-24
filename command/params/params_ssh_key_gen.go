@@ -104,7 +104,7 @@ func (p *ListSSHKeyParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -148,10 +148,6 @@ func (p *ListSSHKeyParam) GetTableType() output.TableType {
 
 func (p *ListSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListSSHKeyParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListSSHKeyParam) SetName(v []string) {
@@ -354,7 +350,7 @@ func (p *CreateSSHKeyParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -398,10 +394,6 @@ func (p *CreateSSHKeyParam) GetTableType() output.TableType {
 
 func (p *CreateSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateSSHKeyParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateSSHKeyParam) SetPublicKey(v string) {
@@ -558,7 +550,7 @@ func (p *ReadSSHKeyParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -602,10 +594,6 @@ func (p *ReadSSHKeyParam) GetTableType() output.TableType {
 
 func (p *ReadSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadSSHKeyParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadSSHKeyParam) SetParamTemplate(v string) {
@@ -760,7 +748,7 @@ func (p *UpdateSSHKeyParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -804,10 +792,6 @@ func (p *UpdateSSHKeyParam) GetTableType() output.TableType {
 
 func (p *UpdateSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateSSHKeyParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateSSHKeyParam) SetName(v string) {
@@ -961,7 +945,7 @@ func (p *DeleteSSHKeyParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1005,10 +989,6 @@ func (p *DeleteSSHKeyParam) GetTableType() output.TableType {
 
 func (p *DeleteSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteSSHKeyParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteSSHKeyParam) SetAssumeyes(v bool) {
@@ -1181,7 +1161,7 @@ func (p *GenerateSSHKeyParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1225,10 +1205,6 @@ func (p *GenerateSSHKeyParam) GetTableType() output.TableType {
 
 func (p *GenerateSSHKeyParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *GenerateSSHKeyParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *GenerateSSHKeyParam) SetPassPhrase(v string) {

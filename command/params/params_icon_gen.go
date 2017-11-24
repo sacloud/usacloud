@@ -126,7 +126,7 @@ func (p *ListIconParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -170,10 +170,6 @@ func (p *ListIconParam) GetTableType() output.TableType {
 
 func (p *ListIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListIconParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListIconParam) SetName(v []string) {
@@ -384,7 +380,7 @@ func (p *CreateIconParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -428,10 +424,6 @@ func (p *CreateIconParam) GetTableType() output.TableType {
 
 func (p *CreateIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateIconParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateIconParam) SetImage(v string) {
@@ -585,7 +577,7 @@ func (p *ReadIconParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -629,10 +621,6 @@ func (p *ReadIconParam) GetTableType() output.TableType {
 
 func (p *ReadIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadIconParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadIconParam) SetSelector(v []string) {
@@ -798,7 +786,7 @@ func (p *UpdateIconParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -842,10 +830,6 @@ func (p *UpdateIconParam) GetTableType() output.TableType {
 
 func (p *UpdateIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateIconParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateIconParam) SetSelector(v []string) {
@@ -1010,7 +994,7 @@ func (p *DeleteIconParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1054,10 +1038,6 @@ func (p *DeleteIconParam) GetTableType() output.TableType {
 
 func (p *DeleteIconParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteIconParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteIconParam) SetSelector(v []string) {

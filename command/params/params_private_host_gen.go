@@ -115,7 +115,7 @@ func (p *ListPrivateHostParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -159,10 +159,6 @@ func (p *ListPrivateHostParam) GetTableType() output.TableType {
 
 func (p *ListPrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListPrivateHostParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListPrivateHostParam) SetName(v []string) {
@@ -370,7 +366,7 @@ func (p *CreatePrivateHostParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -414,10 +410,6 @@ func (p *CreatePrivateHostParam) GetTableType() output.TableType {
 
 func (p *CreatePrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreatePrivateHostParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreatePrivateHostParam) SetName(v string) {
@@ -578,7 +570,7 @@ func (p *ReadPrivateHostParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -622,10 +614,6 @@ func (p *ReadPrivateHostParam) GetTableType() output.TableType {
 
 func (p *ReadPrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadPrivateHostParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadPrivateHostParam) SetSelector(v []string) {
@@ -813,7 +801,7 @@ func (p *UpdatePrivateHostParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -857,10 +845,6 @@ func (p *UpdatePrivateHostParam) GetTableType() output.TableType {
 
 func (p *UpdatePrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdatePrivateHostParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdatePrivateHostParam) SetSelector(v []string) {
@@ -1039,7 +1023,7 @@ func (p *DeletePrivateHostParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1083,10 +1067,6 @@ func (p *DeletePrivateHostParam) GetTableType() output.TableType {
 
 func (p *DeletePrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeletePrivateHostParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeletePrivateHostParam) SetSelector(v []string) {
@@ -1233,7 +1213,7 @@ func (p *ServerInfoPrivateHostParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1277,10 +1257,6 @@ func (p *ServerInfoPrivateHostParam) GetTableType() output.TableType {
 
 func (p *ServerInfoPrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ServerInfoPrivateHostParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ServerInfoPrivateHostParam) SetSelector(v []string) {
@@ -1442,7 +1418,7 @@ func (p *ServerAddPrivateHostParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1486,10 +1462,6 @@ func (p *ServerAddPrivateHostParam) GetTableType() output.TableType {
 
 func (p *ServerAddPrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ServerAddPrivateHostParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ServerAddPrivateHostParam) SetServerId(v int64) {
@@ -1665,7 +1637,7 @@ func (p *ServerDeletePrivateHostParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1709,10 +1681,6 @@ func (p *ServerDeletePrivateHostParam) GetTableType() output.TableType {
 
 func (p *ServerDeletePrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ServerDeletePrivateHostParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ServerDeletePrivateHostParam) SetServerId(v int64) {

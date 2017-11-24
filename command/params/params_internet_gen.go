@@ -115,7 +115,7 @@ func (p *ListInternetParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -159,10 +159,6 @@ func (p *ListInternetParam) GetTableType() output.TableType {
 
 func (p *ListInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListInternetParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListInternetParam) SetName(v []string) {
@@ -410,7 +406,7 @@ func (p *CreateInternetParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -454,10 +450,6 @@ func (p *CreateInternetParam) GetTableType() output.TableType {
 
 func (p *CreateInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateInternetParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateInternetParam) SetNwMasklen(v int) {
@@ -632,7 +624,7 @@ func (p *ReadInternetParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -676,10 +668,6 @@ func (p *ReadInternetParam) GetTableType() output.TableType {
 
 func (p *ReadInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadInternetParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadInternetParam) SetSelector(v []string) {
@@ -878,7 +866,7 @@ func (p *UpdateInternetParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -922,10 +910,6 @@ func (p *UpdateInternetParam) GetTableType() output.TableType {
 
 func (p *UpdateInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateInternetParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateInternetParam) SetBandWidth(v int) {
@@ -1111,7 +1095,7 @@ func (p *DeleteInternetParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1155,10 +1139,6 @@ func (p *DeleteInternetParam) GetTableType() output.TableType {
 
 func (p *DeleteInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteInternetParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteInternetParam) SetSelector(v []string) {
@@ -1330,7 +1310,7 @@ func (p *UpdateBandwidthInternetParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1374,10 +1354,6 @@ func (p *UpdateBandwidthInternetParam) GetTableType() output.TableType {
 
 func (p *UpdateBandwidthInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateBandwidthInternetParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateBandwidthInternetParam) SetBandWidth(v int) {
@@ -1531,7 +1507,7 @@ func (p *SubnetInfoInternetParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1575,10 +1551,6 @@ func (p *SubnetInfoInternetParam) GetTableType() output.TableType {
 
 func (p *SubnetInfoInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *SubnetInfoInternetParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *SubnetInfoInternetParam) SetSelector(v []string) {
@@ -1761,7 +1733,7 @@ func (p *SubnetAddInternetParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1805,10 +1777,6 @@ func (p *SubnetAddInternetParam) GetTableType() output.TableType {
 
 func (p *SubnetAddInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *SubnetAddInternetParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *SubnetAddInternetParam) SetNextHop(v string) {
@@ -1990,10 +1958,6 @@ func (p *SubnetDeleteInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *SubnetDeleteInternetParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *SubnetDeleteInternetParam) SetSubnetId(v int64) {
 	p.SubnetId = v
 }
@@ -2143,7 +2107,7 @@ func (p *SubnetUpdateInternetParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2187,10 +2151,6 @@ func (p *SubnetUpdateInternetParam) GetTableType() output.TableType {
 
 func (p *SubnetUpdateInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *SubnetUpdateInternetParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *SubnetUpdateInternetParam) SetNextHop(v string) {
@@ -2351,7 +2311,7 @@ func (p *Ipv6InfoInternetParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2395,10 +2355,6 @@ func (p *Ipv6InfoInternetParam) GetTableType() output.TableType {
 
 func (p *Ipv6InfoInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *Ipv6InfoInternetParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *Ipv6InfoInternetParam) SetSelector(v []string) {
@@ -2542,7 +2498,7 @@ func (p *Ipv6EnableInternetParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2586,10 +2542,6 @@ func (p *Ipv6EnableInternetParam) GetTableType() output.TableType {
 
 func (p *Ipv6EnableInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *Ipv6EnableInternetParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *Ipv6EnableInternetParam) SetSelector(v []string) {
@@ -2746,10 +2698,6 @@ func (p *Ipv6DisableInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *Ipv6DisableInternetParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *Ipv6DisableInternetParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2895,7 +2843,7 @@ func (p *MonitorInternetParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2939,10 +2887,6 @@ func (p *MonitorInternetParam) GetTableType() output.TableType {
 
 func (p *MonitorInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorInternetParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorInternetParam) SetStart(v string) {

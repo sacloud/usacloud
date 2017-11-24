@@ -104,7 +104,7 @@ func (p *ListPriceParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -148,10 +148,6 @@ func (p *ListPriceParam) GetTableType() output.TableType {
 
 func (p *ListPriceParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListPriceParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListPriceParam) SetName(v []string) {

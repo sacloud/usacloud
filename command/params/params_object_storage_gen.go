@@ -85,7 +85,7 @@ func (p *ListObjectStorageParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -129,10 +129,6 @@ func (p *ListObjectStorageParam) GetTableType() output.TableType {
 
 func (p *ListObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListObjectStorageParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListObjectStorageParam) SetAccessKey(v string) {
@@ -311,10 +307,6 @@ func (p *PutObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *PutObjectStorageParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *PutObjectStorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
@@ -466,10 +458,6 @@ func (p *GetObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *GetObjectStorageParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *GetObjectStorageParam) SetAccessKey(v string) {
 	p.AccessKey = v
 }
@@ -609,10 +597,6 @@ func (p *DeleteObjectStorageParam) GetTableType() output.TableType {
 
 func (p *DeleteObjectStorageParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteObjectStorageParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteObjectStorageParam) SetAccessKey(v string) {

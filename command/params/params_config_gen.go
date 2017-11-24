@@ -65,10 +65,6 @@ func (p *CurrentConfigParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CurrentConfigParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *CurrentConfigParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -152,10 +148,6 @@ func (p *DeleteConfigParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DeleteConfigParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *DeleteConfigParam) SetAssumeyes(v bool) {
 	p.Assumeyes = v
 }
@@ -190,6 +182,7 @@ type EditConfigParam struct {
 	Token             string `json:"token"`
 	Secret            string `json:"secret"`
 	Zone              string `json:"zone"`
+	DefaultOutputType string `json:"default-output-type"`
 	ParamTemplate     string `json:"param-template"`
 	ParamTemplateFile string `json:"param-template-file"`
 	GenerateSkeleton  bool   `json:"generate-skeleton"`
@@ -211,6 +204,9 @@ func (p *EditConfigParam) FillValueToSkeleton() {
 	if isEmpty(p.Zone) {
 		p.Zone = ""
 	}
+	if isEmpty(p.DefaultOutputType) {
+		p.DefaultOutputType = ""
+	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
 	}
@@ -229,6 +225,13 @@ func (p *EditConfigParam) Validate() []error {
 	{
 		validator := define.Resources["Config"].Commands["edit"].Params["zone"].ValidateFunc
 		errs := validator("--zone", p.Zone)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Config"].Commands["edit"].Params["default-output-type"].ValidateFunc
+		errs := validator("--default-output-type", p.DefaultOutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -261,10 +264,6 @@ func (p *EditConfigParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *EditConfigParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *EditConfigParam) SetToken(v string) {
 	p.Token = v
 }
@@ -285,6 +284,13 @@ func (p *EditConfigParam) SetZone(v string) {
 
 func (p *EditConfigParam) GetZone() string {
 	return p.Zone
+}
+func (p *EditConfigParam) SetDefaultOutputType(v string) {
+	p.DefaultOutputType = v
+}
+
+func (p *EditConfigParam) GetDefaultOutputType() string {
+	return p.DefaultOutputType
 }
 func (p *EditConfigParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
@@ -363,10 +369,6 @@ func (p *ListConfigParam) GetTableType() output.TableType {
 
 func (p *ListConfigParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListConfigParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListConfigParam) SetParamTemplate(v string) {
@@ -448,10 +450,6 @@ func (p *MigrateConfigParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *MigrateConfigParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *MigrateConfigParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -531,10 +529,6 @@ func (p *ShowConfigParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ShowConfigParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ShowConfigParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
@@ -612,10 +606,6 @@ func (p *UseConfigParam) GetTableType() output.TableType {
 
 func (p *UseConfigParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UseConfigParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UseConfigParam) SetParamTemplate(v string) {

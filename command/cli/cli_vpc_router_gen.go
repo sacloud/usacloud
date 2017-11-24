@@ -122,7 +122,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -168,6 +168,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = listParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, listParam)
@@ -348,6 +357,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = listParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if listParam.GenerateSkeleton {
 						listParam.GenerateSkeleton = false
@@ -447,7 +463,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -493,6 +509,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = createParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, createParam)
@@ -709,6 +734,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = createParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if createParam.GenerateSkeleton {
 						createParam.GenerateSkeleton = false
@@ -763,7 +795,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -814,6 +846,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = readParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, readParam)
@@ -970,6 +1011,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = readParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if readParam.GenerateSkeleton {
 						readParam.GenerateSkeleton = false
@@ -1122,7 +1170,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -1173,6 +1221,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = updateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, updateParam)
@@ -1365,6 +1422,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = updateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if updateParam.GenerateSkeleton {
 						updateParam.GenerateSkeleton = false
@@ -1503,7 +1567,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -1554,6 +1618,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = deleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, deleteParam)
@@ -1722,6 +1795,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = deleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if deleteParam.GenerateSkeleton {
 						deleteParam.GenerateSkeleton = false
@@ -1883,6 +1963,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = bootParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, bootParam)
 
@@ -2012,6 +2101,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = bootParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -2175,6 +2271,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = shutdownParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, shutdownParam)
 
@@ -2304,6 +2409,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = shutdownParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -2467,6 +2579,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = shutdownForceParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, shutdownForceParam)
 
@@ -2596,6 +2717,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = shutdownForceParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -2758,6 +2886,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = resetParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, resetParam)
 
@@ -2887,6 +3024,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = resetParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -3044,6 +3188,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = waitForBootParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, waitForBootParam)
 
@@ -3167,6 +3320,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = waitForBootParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -3319,6 +3479,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = waitForDownParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, waitForDownParam)
 
@@ -3444,6 +3613,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = waitForDownParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if waitForDownParam.GenerateSkeleton {
 						waitForDownParam.GenerateSkeleton = false
@@ -3567,7 +3743,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -3618,6 +3794,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = interfaceInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, interfaceInfoParam)
@@ -3772,6 +3957,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = interfaceInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -3966,6 +4158,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = interfaceConnectParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, interfaceConnectParam)
 
@@ -4137,6 +4338,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = interfaceConnectParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -4340,6 +4548,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = interfaceUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, interfaceUpdateParam)
 
@@ -4519,6 +4736,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = interfaceUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if interfaceUpdateParam.GenerateSkeleton {
 						interfaceUpdateParam.GenerateSkeleton = false
@@ -4691,6 +4915,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = interfaceDisconnectParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, interfaceDisconnectParam)
 
@@ -4834,6 +5067,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = interfaceDisconnectParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if interfaceDisconnectParam.GenerateSkeleton {
 						interfaceDisconnectParam.GenerateSkeleton = false
@@ -4966,7 +5206,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -5017,6 +5257,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = staticNatInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, staticNatInfoParam)
@@ -5171,6 +5420,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = staticNatInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -5347,6 +5603,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = staticNatAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, staticNatAddParam)
 
@@ -5494,6 +5759,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = staticNatAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -5679,6 +5951,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = staticNatUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, staticNatUpdateParam)
 
@@ -5832,6 +6113,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = staticNatUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -6002,6 +6290,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = staticNatDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, staticNatDeleteParam)
 
@@ -6139,6 +6436,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = staticNatDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if staticNatDeleteParam.GenerateSkeleton {
 						staticNatDeleteParam.GenerateSkeleton = false
@@ -6271,7 +6575,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -6322,6 +6626,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = portForwardingInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, portForwardingInfoParam)
@@ -6476,6 +6789,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = portForwardingInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -6659,6 +6979,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = portForwardingAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, portForwardingAddParam)
 
@@ -6818,6 +7147,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = portForwardingAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -7010,6 +7346,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = portForwardingUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, portForwardingUpdateParam)
 
@@ -7175,6 +7520,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = portForwardingUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -7345,6 +7697,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = portForwardingDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, portForwardingDeleteParam)
 
@@ -7480,6 +7841,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = portForwardingDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -7624,7 +7992,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -7675,6 +8043,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = firewallInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, firewallInfoParam)
@@ -7841,6 +8218,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = firewallInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -8048,6 +8432,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = firewallAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, firewallAddParam)
 
@@ -8237,6 +8630,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = firewallAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -8453,6 +8853,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = firewallUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, firewallUpdateParam)
 
@@ -8650,6 +9059,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = firewallUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if firewallUpdateParam.GenerateSkeleton {
 						firewallUpdateParam.GenerateSkeleton = false
@@ -8828,6 +9244,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = firewallDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, firewallDeleteParam)
 
@@ -8977,6 +9402,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = firewallDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if firewallDeleteParam.GenerateSkeleton {
 						firewallDeleteParam.GenerateSkeleton = false
@@ -9109,7 +9541,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -9160,6 +9592,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = dhcpServerInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, dhcpServerInfoParam)
@@ -9314,6 +9755,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = dhcpServerInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -9492,6 +9940,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = dhcpServerAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, dhcpServerAddParam)
 
@@ -9645,6 +10102,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = dhcpServerAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -9828,6 +10292,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = dhcpServerUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, dhcpServerUpdateParam)
 
@@ -9981,6 +10454,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = dhcpServerUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -10151,6 +10631,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = dhcpServerDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, dhcpServerDeleteParam)
 
@@ -10288,6 +10777,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = dhcpServerDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if dhcpServerDeleteParam.GenerateSkeleton {
 						dhcpServerDeleteParam.GenerateSkeleton = false
@@ -10420,7 +10916,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -10471,6 +10967,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = dhcpStaticMappingInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, dhcpStaticMappingInfoParam)
@@ -10625,6 +11130,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = dhcpStaticMappingInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -10796,6 +11308,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = dhcpStaticMappingAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, dhcpStaticMappingAddParam)
 
@@ -10937,6 +11458,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = dhcpStaticMappingAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -11117,6 +11645,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = dhcpStaticMappingUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, dhcpStaticMappingUpdateParam)
 
@@ -11264,6 +11801,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = dhcpStaticMappingUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -11434,6 +11978,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = dhcpStaticMappingDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, dhcpStaticMappingDeleteParam)
 
@@ -11571,6 +12124,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = dhcpStaticMappingDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if dhcpStaticMappingDeleteParam.GenerateSkeleton {
 						dhcpStaticMappingDeleteParam.GenerateSkeleton = false
@@ -11702,7 +12262,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -11753,6 +12313,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = pptpServerInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, pptpServerInfoParam)
@@ -11907,6 +12476,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = pptpServerInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -12081,6 +12657,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = pptpServerUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, pptpServerUpdateParam)
 
@@ -12230,6 +12815,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = pptpServerUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if pptpServerUpdateParam.GenerateSkeleton {
 						pptpServerUpdateParam.GenerateSkeleton = false
@@ -12361,7 +12953,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -12412,6 +13004,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = l2tpServerInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, l2tpServerInfoParam)
@@ -12566,6 +13167,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = l2tpServerInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -12744,6 +13352,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = l2tpServerUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, l2tpServerUpdateParam)
 
@@ -12899,6 +13516,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = l2tpServerUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if l2tpServerUpdateParam.GenerateSkeleton {
 						l2tpServerUpdateParam.GenerateSkeleton = false
@@ -13031,7 +13655,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -13082,6 +13706,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = userInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, userInfoParam)
@@ -13236,6 +13869,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = userInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -13407,6 +14047,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = userAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, userAddParam)
 
@@ -13548,6 +14197,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = userAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -13728,6 +14384,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = userUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, userUpdateParam)
 
@@ -13875,6 +14540,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = userUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -14045,6 +14717,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = userDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, userDeleteParam)
 
@@ -14182,6 +14863,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = userDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if userDeleteParam.GenerateSkeleton {
 						userDeleteParam.GenerateSkeleton = false
@@ -14314,7 +15002,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -14365,6 +15053,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = siteToSiteVpnInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, siteToSiteVpnInfoParam)
@@ -14519,6 +15216,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = siteToSiteVpnInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -14700,6 +15404,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = siteToSiteVpnAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, siteToSiteVpnAddParam)
 
@@ -14859,6 +15572,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = siteToSiteVpnAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -15049,6 +15769,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = siteToSiteVpnUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, siteToSiteVpnUpdateParam)
 
@@ -15214,6 +15943,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = siteToSiteVpnUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -15384,6 +16120,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = siteToSiteVpnDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, siteToSiteVpnDeleteParam)
 
@@ -15521,6 +16266,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = siteToSiteVpnDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if siteToSiteVpnDeleteParam.GenerateSkeleton {
 						siteToSiteVpnDeleteParam.GenerateSkeleton = false
@@ -15653,7 +16405,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -15704,6 +16456,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = staticRouteInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, staticRouteInfoParam)
@@ -15858,6 +16619,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = staticRouteInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -16027,6 +16795,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = staticRouteAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, staticRouteAddParam)
 
@@ -16168,6 +16945,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = staticRouteAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -16346,6 +17130,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = staticRouteUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, staticRouteUpdateParam)
 
@@ -16493,6 +17286,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = staticRouteUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -16663,6 +17463,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = staticRouteDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, staticRouteDeleteParam)
 
@@ -16798,6 +17607,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = staticRouteDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton
@@ -16949,7 +17765,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "output-type",
 						Aliases: []string{"out"},
-						Usage:   "Output type [json/csv/tsv]",
+						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
 						Name:    "column",
@@ -17000,6 +17816,15 @@ func init() {
 
 					// Validate global params
 					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = monitorParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
 
 					// build command context
 					ctx := command.NewContext(c, realArgs, monitorParam)
@@ -17180,6 +18005,13 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
+					var outputTypeHolder interface{} = monitorParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// Generate skeleton
 					if monitorParam.GenerateSkeleton {
 						monitorParam.GenerateSkeleton = false
@@ -17354,6 +18186,15 @@ func init() {
 					// Validate global params
 					command.GlobalOption.Validate(false)
 
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = logsParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
 					// build command context
 					ctx := command.NewContext(c, realArgs, logsParam)
 
@@ -17501,6 +18342,13 @@ func init() {
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = logsParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
 					}
 
 					// Generate skeleton

@@ -57,6 +57,11 @@ func ConfigEditCompleteFlags(ctx command.Context, params *params.EditConfigParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "default-output-type":
+		param := define.Resources["Config"].Commands["edit"].BuildedParams().Get("default-output-type")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {

@@ -148,7 +148,7 @@ func (p *ListDiskParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -192,10 +192,6 @@ func (p *ListDiskParam) GetTableType() output.TableType {
 
 func (p *ListDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListDiskParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListDiskParam) SetName(v []string) {
@@ -534,7 +530,7 @@ func (p *CreateDiskParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -578,10 +574,6 @@ func (p *CreateDiskParam) GetTableType() output.TableType {
 
 func (p *CreateDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateDiskParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateDiskParam) SetPlan(v string) {
@@ -784,7 +776,7 @@ func (p *ReadDiskParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -828,10 +820,6 @@ func (p *ReadDiskParam) GetTableType() output.TableType {
 
 func (p *ReadDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadDiskParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadDiskParam) SetSelector(v []string) {
@@ -1030,7 +1018,7 @@ func (p *UpdateDiskParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1074,10 +1062,6 @@ func (p *UpdateDiskParam) GetTableType() output.TableType {
 
 func (p *UpdateDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateDiskParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateDiskParam) SetConnection(v string) {
@@ -1263,7 +1247,7 @@ func (p *DeleteDiskParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1307,10 +1291,6 @@ func (p *DeleteDiskParam) GetTableType() output.TableType {
 
 func (p *DeleteDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteDiskParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteDiskParam) SetSelector(v []string) {
@@ -1517,7 +1497,7 @@ func (p *EditDiskParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1561,10 +1541,6 @@ func (p *EditDiskParam) GetTableType() output.TableType {
 
 func (p *EditDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *EditDiskParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *EditDiskParam) SetHostname(v string) {
@@ -1806,10 +1782,6 @@ func (p *ReinstallFromArchiveDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReinstallFromArchiveDiskParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ReinstallFromArchiveDiskParam) SetSourceArchiveId(v int64) {
 	p.SourceArchiveId = v
 }
@@ -1972,10 +1944,6 @@ func (p *ReinstallFromDiskDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReinstallFromDiskDiskParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ReinstallFromDiskDiskParam) SetSourceDiskId(v int64) {
 	p.SourceDiskId = v
 }
@@ -2118,10 +2086,6 @@ func (p *ReinstallToBlankDiskParam) GetTableType() output.TableType {
 
 func (p *ReinstallToBlankDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReinstallToBlankDiskParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReinstallToBlankDiskParam) SetDistantFrom(v []int64) {
@@ -2268,10 +2232,6 @@ func (p *ServerConnectDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerConnectDiskParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ServerConnectDiskParam) SetServerId(v int64) {
 	p.ServerId = v
 }
@@ -2396,10 +2356,6 @@ func (p *ServerDisconnectDiskParam) GetTableType() output.TableType {
 
 func (p *ServerDisconnectDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ServerDisconnectDiskParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ServerDisconnectDiskParam) SetSelector(v []string) {
@@ -2547,7 +2503,7 @@ func (p *MonitorDiskParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2591,10 +2547,6 @@ func (p *MonitorDiskParam) GetTableType() output.TableType {
 
 func (p *MonitorDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorDiskParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorDiskParam) SetSelector(v []string) {
@@ -2759,10 +2711,6 @@ func (p *WaitForCopyDiskParam) GetTableType() output.TableType {
 
 func (p *WaitForCopyDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *WaitForCopyDiskParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *WaitForCopyDiskParam) SetSelector(v []string) {

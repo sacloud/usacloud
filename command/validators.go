@@ -110,6 +110,7 @@ func ValidateBetween(fieldName string, object interface{}, min int, max int) []e
 
 func ValidateOutputOption(o output.Option) []error {
 
+	defaultOutputType := GlobalOption.DefaultOutputType
 	outputType := o.GetOutputType()
 	columns := o.GetColumn()
 	format := o.GetFormat()
@@ -122,13 +123,19 @@ func ValidateOutputOption(o output.Option) []error {
 	}
 
 	// format(or format-file) with output-type
-	if outputType != "" && format != "" {
-		return []error{fmt.Errorf("%q: can't set with --output-type", "--format")}
-	}
-	if outputType != "" && formatFile != "" {
-		return []error{fmt.Errorf("%q: can't set with --output-type", "--format-file")}
+	if outputType != defaultOutputType {
+		cannotWith := map[string]string{
+			"--format":      format,
+			"--format-file": formatFile,
+		}
+		for k, v := range cannotWith {
+			if v != "" {
+				return []error{fmt.Errorf("%q: can't set with --output-type", k)}
+			}
+		}
 	}
 
+	// format-file is exists?
 	if formatFile != "" {
 		errs := schema.ValidateFileExists()("--format-file", formatFile)
 		if len(errs) > 0 {
@@ -136,10 +143,25 @@ func ValidateOutputOption(o output.Option) []error {
 		}
 	}
 
-	if outputType != "" && quiet {
-		return []error{fmt.Errorf("%q: can't set with --output-type", "--quiet")}
+	// with quiet
+	if quiet {
+		cannotWith := map[string]string{
+			"--format":      format,
+			"--format-file": formatFile,
+		}
+		for k, v := range cannotWith {
+			if v != "" {
+				return []error{fmt.Errorf("%q: can't set with %s", "--quiet", k)}
+			}
+		}
+
+		// quiet with output-type
+		if outputType != defaultOutputType {
+			return []error{fmt.Errorf("%q: can't set with %s", "--quiet", outputType)}
+		}
 	}
 
+	// columns only allow when outputType is tsv/csv
 	if outputType != "tsv" && outputType != "csv" && len(columns) > 0 {
 		return []error{fmt.Errorf("%q: can't set when --output-type is csv/tsv", "--column")}
 	}

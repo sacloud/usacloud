@@ -52,6 +52,10 @@ func applyConfigFromFile(c FlagHandler) error {
 		c.Set("zone", v.Zone)
 		command.GlobalOption.Zone = v.Zone
 	}
+	if !c.IsSet("default-output-type") && v.DefaultOutputType != "" {
+		c.Set("default-output-type", v.DefaultOutputType)
+		command.GlobalOption.DefaultOutputType = v.DefaultOutputType
+	}
 
 	// for string-slice
 	zones := []string{}

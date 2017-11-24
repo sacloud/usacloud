@@ -115,7 +115,7 @@ func (p *ListServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -159,10 +159,6 @@ func (p *ListServerParam) GetTableType() output.TableType {
 
 func (p *ListServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListServerParam) SetName(v []string) {
@@ -720,7 +716,7 @@ func (p *BuildServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -764,10 +760,6 @@ func (p *BuildServerParam) GetTableType() output.TableType {
 
 func (p *BuildServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *BuildServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *BuildServerParam) SetCore(v int) {
@@ -1187,7 +1179,7 @@ func (p *ReadServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1231,10 +1223,6 @@ func (p *ReadServerParam) GetTableType() output.TableType {
 
 func (p *ReadServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadServerParam) SetSelector(v []string) {
@@ -1436,7 +1424,7 @@ func (p *UpdateServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1480,10 +1468,6 @@ func (p *UpdateServerParam) GetTableType() output.TableType {
 
 func (p *UpdateServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateServerParam) SetInterfaceDriver(v string) {
@@ -1677,7 +1661,7 @@ func (p *DeleteServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1721,10 +1705,6 @@ func (p *DeleteServerParam) GetTableType() output.TableType {
 
 func (p *DeleteServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteServerParam) SetForce(v bool) {
@@ -1911,7 +1891,7 @@ func (p *PlanChangeServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1955,10 +1935,6 @@ func (p *PlanChangeServerParam) GetTableType() output.TableType {
 
 func (p *PlanChangeServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *PlanChangeServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *PlanChangeServerParam) SetCore(v int) {
@@ -2129,10 +2105,6 @@ func (p *BootServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *BootServerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *BootServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2250,10 +2222,6 @@ func (p *ShutdownServerParam) GetTableType() output.TableType {
 
 func (p *ShutdownServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ShutdownServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ShutdownServerParam) SetSelector(v []string) {
@@ -2375,10 +2343,6 @@ func (p *ShutdownForceServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ShutdownForceServerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ShutdownForceServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2498,10 +2462,6 @@ func (p *ResetServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ResetServerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ResetServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2617,10 +2577,6 @@ func (p *WaitForBootServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *WaitForBootServerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *WaitForBootServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2727,10 +2683,6 @@ func (p *WaitForDownServerParam) GetTableType() output.TableType {
 
 func (p *WaitForDownServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *WaitForDownServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *WaitForDownServerParam) SetSelector(v []string) {
@@ -2876,10 +2828,6 @@ func (p *SshServerParam) GetTableType() output.TableType {
 
 func (p *SshServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *SshServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *SshServerParam) SetKey(v string) {
@@ -3058,10 +3006,6 @@ func (p *SshExecServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *SshExecServerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *SshExecServerParam) SetKey(v string) {
 	p.Key = v
 }
@@ -3228,10 +3172,6 @@ func (p *ScpServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ScpServerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ScpServerParam) SetKey(v string) {
 	p.Key = v
 }
@@ -3383,10 +3323,6 @@ func (p *VncServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *VncServerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *VncServerParam) SetWaitForBoot(v bool) {
 	p.WaitForBoot = v
 }
@@ -3507,7 +3443,7 @@ func (p *VncInfoServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3551,10 +3487,6 @@ func (p *VncInfoServerParam) GetTableType() output.TableType {
 
 func (p *VncInfoServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *VncInfoServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *VncInfoServerParam) SetWaitForBoot(v bool) {
@@ -3741,7 +3673,7 @@ func (p *VncSendServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3785,10 +3717,6 @@ func (p *VncSendServerParam) GetTableType() output.TableType {
 
 func (p *VncSendServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *VncSendServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *VncSendServerParam) SetCommand(v string) {
@@ -3982,7 +3910,7 @@ func (p *VncSnapshotServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4026,10 +3954,6 @@ func (p *VncSnapshotServerParam) GetTableType() output.TableType {
 
 func (p *VncSnapshotServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *VncSnapshotServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *VncSnapshotServerParam) SetWaitForBoot(v bool) {
@@ -4190,7 +4114,7 @@ func (p *DiskInfoServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4234,10 +4158,6 @@ func (p *DiskInfoServerParam) GetTableType() output.TableType {
 
 func (p *DiskInfoServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DiskInfoServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DiskInfoServerParam) SetSelector(v []string) {
@@ -4405,10 +4325,6 @@ func (p *DiskConnectServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DiskConnectServerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *DiskConnectServerParam) SetDiskId(v int64) {
 	p.DiskId = v
 }
@@ -4553,10 +4469,6 @@ func (p *DiskDisconnectServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DiskDisconnectServerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *DiskDisconnectServerParam) SetDiskId(v int64) {
 	p.DiskId = v
 }
@@ -4673,7 +4585,7 @@ func (p *InterfaceInfoServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4717,10 +4629,6 @@ func (p *InterfaceInfoServerParam) GetTableType() output.TableType {
 
 func (p *InterfaceInfoServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *InterfaceInfoServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *InterfaceInfoServerParam) SetSelector(v []string) {
@@ -4872,10 +4780,6 @@ func (p *InterfaceAddForInternetServerParam) GetTableType() output.TableType {
 
 func (p *InterfaceAddForInternetServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *InterfaceAddForInternetServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *InterfaceAddForInternetServerParam) SetWithoutDiskEdit(v bool) {
@@ -5060,10 +4964,6 @@ func (p *InterfaceAddForRouterServerParam) GetTableType() output.TableType {
 
 func (p *InterfaceAddForRouterServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *InterfaceAddForRouterServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *InterfaceAddForRouterServerParam) SetSwitchId(v int64) {
@@ -5278,10 +5178,6 @@ func (p *InterfaceAddForSwitchServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *InterfaceAddForSwitchServerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *InterfaceAddForSwitchServerParam) SetSwitchId(v int64) {
 	p.SwitchId = v
 }
@@ -5436,10 +5332,6 @@ func (p *InterfaceAddDisconnectedServerParam) GetColumnDefs() []output.ColumnDef
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *InterfaceAddDisconnectedServerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *InterfaceAddDisconnectedServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -5549,7 +5441,7 @@ func (p *IsoInfoServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5593,10 +5485,6 @@ func (p *IsoInfoServerParam) GetTableType() output.TableType {
 
 func (p *IsoInfoServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *IsoInfoServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *IsoInfoServerParam) SetSelector(v []string) {
@@ -5819,10 +5707,6 @@ func (p *IsoInsertServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *IsoInsertServerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *IsoInsertServerParam) SetIsoImageId(v int64) {
 	p.IsoImageId = v
 }
@@ -5991,10 +5875,6 @@ func (p *IsoEjectServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *IsoEjectServerParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *IsoEjectServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -6140,7 +6020,7 @@ func (p *MonitorCpuServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6184,10 +6064,6 @@ func (p *MonitorCpuServerParam) GetTableType() output.TableType {
 
 func (p *MonitorCpuServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorCpuServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorCpuServerParam) SetStart(v string) {
@@ -6388,7 +6264,7 @@ func (p *MonitorNicServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6432,10 +6308,6 @@ func (p *MonitorNicServerParam) GetTableType() output.TableType {
 
 func (p *MonitorNicServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorNicServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorNicServerParam) SetStart(v string) {
@@ -6643,7 +6515,7 @@ func (p *MonitorDiskServerParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6687,10 +6559,6 @@ func (p *MonitorDiskServerParam) GetTableType() output.TableType {
 
 func (p *MonitorDiskServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorDiskServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorDiskServerParam) SetStart(v string) {
@@ -6843,7 +6711,7 @@ func (p *MaintenanceInfoServerParam) Validate() []error {
 	errors := []error{}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -6887,10 +6755,6 @@ func (p *MaintenanceInfoServerParam) GetTableType() output.TableType {
 
 func (p *MaintenanceInfoServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MaintenanceInfoServerParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MaintenanceInfoServerParam) SetParamTemplate(v string) {

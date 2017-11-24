@@ -104,7 +104,7 @@ func (p *ListBridgeParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -148,10 +148,6 @@ func (p *ListBridgeParam) GetTableType() output.TableType {
 
 func (p *ListBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListBridgeParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListBridgeParam) SetName(v []string) {
@@ -330,7 +326,7 @@ func (p *CreateBridgeParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -374,10 +370,6 @@ func (p *CreateBridgeParam) GetTableType() output.TableType {
 
 func (p *CreateBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateBridgeParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateBridgeParam) SetName(v string) {
@@ -520,7 +512,7 @@ func (p *ReadBridgeParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -564,10 +556,6 @@ func (p *ReadBridgeParam) GetTableType() output.TableType {
 
 func (p *ReadBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadBridgeParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadBridgeParam) SetParamTemplate(v string) {
@@ -722,7 +710,7 @@ func (p *UpdateBridgeParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -766,10 +754,6 @@ func (p *UpdateBridgeParam) GetTableType() output.TableType {
 
 func (p *UpdateBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateBridgeParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateBridgeParam) SetName(v string) {
@@ -923,7 +907,7 @@ func (p *DeleteBridgeParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -967,10 +951,6 @@ func (p *DeleteBridgeParam) GetTableType() output.TableType {
 
 func (p *DeleteBridgeParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteBridgeParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteBridgeParam) SetAssumeyes(v bool) {

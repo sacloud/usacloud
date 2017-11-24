@@ -24,6 +24,11 @@ type FlagContext interface {
 	IsSet(name string) bool
 }
 
+type OutputTypeHolder interface {
+	GetOutputType() string
+	SetOutputType(string)
+}
+
 func NewContext(flagContext FlagContext, args []string, formater interface{}) Context {
 
 	var out output.Output

@@ -104,7 +104,7 @@ func (p *ListPacketFilterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -148,10 +148,6 @@ func (p *ListPacketFilterParam) GetTableType() output.TableType {
 
 func (p *ListPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListPacketFilterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListPacketFilterParam) SetName(v []string) {
@@ -330,7 +326,7 @@ func (p *CreatePacketFilterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -374,10 +370,6 @@ func (p *CreatePacketFilterParam) GetTableType() output.TableType {
 
 func (p *CreatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreatePacketFilterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreatePacketFilterParam) SetName(v string) {
@@ -520,7 +512,7 @@ func (p *ReadPacketFilterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -564,10 +556,6 @@ func (p *ReadPacketFilterParam) GetTableType() output.TableType {
 
 func (p *ReadPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadPacketFilterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadPacketFilterParam) SetParamTemplate(v string) {
@@ -722,7 +710,7 @@ func (p *UpdatePacketFilterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -766,10 +754,6 @@ func (p *UpdatePacketFilterParam) GetTableType() output.TableType {
 
 func (p *UpdatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdatePacketFilterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdatePacketFilterParam) SetName(v string) {
@@ -923,7 +907,7 @@ func (p *DeletePacketFilterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -967,10 +951,6 @@ func (p *DeletePacketFilterParam) GetTableType() output.TableType {
 
 func (p *DeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeletePacketFilterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeletePacketFilterParam) SetAssumeyes(v bool) {
@@ -1106,7 +1086,7 @@ func (p *RuleInfoPacketFilterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1150,10 +1130,6 @@ func (p *RuleInfoPacketFilterParam) GetTableType() output.TableType {
 
 func (p *RuleInfoPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *RuleInfoPacketFilterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *RuleInfoPacketFilterParam) SetParamTemplate(v string) {
@@ -1359,7 +1335,7 @@ func (p *RuleAddPacketFilterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1403,10 +1379,6 @@ func (p *RuleAddPacketFilterParam) GetTableType() output.TableType {
 
 func (p *RuleAddPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *RuleAddPacketFilterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *RuleAddPacketFilterParam) SetIndex(v int) {
@@ -1672,7 +1644,7 @@ func (p *RuleUpdatePacketFilterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1716,10 +1688,6 @@ func (p *RuleUpdatePacketFilterParam) GetTableType() output.TableType {
 
 func (p *RuleUpdatePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *RuleUpdatePacketFilterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *RuleUpdatePacketFilterParam) SetIndex(v int) {
@@ -1919,7 +1887,7 @@ func (p *RuleDeletePacketFilterParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1963,10 +1931,6 @@ func (p *RuleDeletePacketFilterParam) GetTableType() output.TableType {
 
 func (p *RuleDeletePacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *RuleDeletePacketFilterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *RuleDeletePacketFilterParam) SetIndex(v int) {
@@ -2137,10 +2101,6 @@ func (p *InterfaceConnectPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *InterfaceConnectPacketFilterParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *InterfaceConnectPacketFilterParam) SetInterfaceId(v int64) {
 	p.InterfaceId = v
 }
@@ -2272,10 +2232,6 @@ func (p *InterfaceDisconnectPacketFilterParam) GetTableType() output.TableType {
 
 func (p *InterfaceDisconnectPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *InterfaceDisconnectPacketFilterParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *InterfaceDisconnectPacketFilterParam) SetInterfaceId(v int64) {

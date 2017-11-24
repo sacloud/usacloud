@@ -115,7 +115,7 @@ func (p *ListDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -159,10 +159,6 @@ func (p *ListDatabaseParam) GetTableType() output.TableType {
 
 func (p *ListDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListDatabaseParam) SetName(v []string) {
@@ -554,7 +550,7 @@ func (p *CreateDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -598,10 +594,6 @@ func (p *CreateDatabaseParam) GetTableType() output.TableType {
 
 func (p *CreateDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateDatabaseParam) SetSwitchId(v int64) {
@@ -846,7 +838,7 @@ func (p *ReadDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -890,10 +882,6 @@ func (p *ReadDatabaseParam) GetTableType() output.TableType {
 
 func (p *ReadDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadDatabaseParam) SetSelector(v []string) {
@@ -1129,7 +1117,7 @@ func (p *UpdateDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1173,10 +1161,6 @@ func (p *UpdateDatabaseParam) GetTableType() output.TableType {
 
 func (p *UpdateDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateDatabaseParam) SetPassword(v string) {
@@ -1394,7 +1378,7 @@ func (p *DeleteDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -1438,10 +1422,6 @@ func (p *DeleteDatabaseParam) GetTableType() output.TableType {
 
 func (p *DeleteDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteDatabaseParam) SetSelector(v []string) {
@@ -1605,10 +1585,6 @@ func (p *BootDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *BootDatabaseParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *BootDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1726,10 +1702,6 @@ func (p *ShutdownDatabaseParam) GetTableType() output.TableType {
 
 func (p *ShutdownDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ShutdownDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ShutdownDatabaseParam) SetSelector(v []string) {
@@ -1851,10 +1823,6 @@ func (p *ShutdownForceDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ShutdownForceDatabaseParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ShutdownForceDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1974,10 +1942,6 @@ func (p *ResetDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ResetDatabaseParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *ResetDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2093,10 +2057,6 @@ func (p *WaitForBootDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *WaitForBootDatabaseParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *WaitForBootDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2205,10 +2165,6 @@ func (p *WaitForDownDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *WaitForDownDatabaseParam) GetOutputFormat() string {
-	return "table"
-}
-
 func (p *WaitForDownDatabaseParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2311,7 +2267,7 @@ func (p *BackupInfoDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2355,10 +2311,6 @@ func (p *BackupInfoDatabaseParam) GetTableType() output.TableType {
 
 func (p *BackupInfoDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *BackupInfoDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *BackupInfoDatabaseParam) SetSelector(v []string) {
@@ -2498,7 +2450,7 @@ func (p *BackupCreateDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2542,10 +2494,6 @@ func (p *BackupCreateDatabaseParam) GetTableType() output.TableType {
 
 func (p *BackupCreateDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *BackupCreateDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *BackupCreateDatabaseParam) SetAssumeyes(v bool) {
@@ -2703,7 +2651,7 @@ func (p *BackupRestoreDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2747,10 +2695,6 @@ func (p *BackupRestoreDatabaseParam) GetTableType() output.TableType {
 
 func (p *BackupRestoreDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *BackupRestoreDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *BackupRestoreDatabaseParam) SetIndex(v int) {
@@ -2915,7 +2859,7 @@ func (p *BackupLockDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -2959,10 +2903,6 @@ func (p *BackupLockDatabaseParam) GetTableType() output.TableType {
 
 func (p *BackupLockDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *BackupLockDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *BackupLockDatabaseParam) SetIndex(v int) {
@@ -3127,7 +3067,7 @@ func (p *BackupUnlockDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3171,10 +3111,6 @@ func (p *BackupUnlockDatabaseParam) GetTableType() output.TableType {
 
 func (p *BackupUnlockDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *BackupUnlockDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *BackupUnlockDatabaseParam) SetIndex(v int) {
@@ -3339,7 +3275,7 @@ func (p *BackupRemoveDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3383,10 +3319,6 @@ func (p *BackupRemoveDatabaseParam) GetTableType() output.TableType {
 
 func (p *BackupRemoveDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *BackupRemoveDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *BackupRemoveDatabaseParam) SetIndex(v int) {
@@ -3569,7 +3501,7 @@ func (p *MonitorCpuDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3613,10 +3545,6 @@ func (p *MonitorCpuDatabaseParam) GetTableType() output.TableType {
 
 func (p *MonitorCpuDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorCpuDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorCpuDatabaseParam) SetStart(v string) {
@@ -3813,7 +3741,7 @@ func (p *MonitorMemoryDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -3857,10 +3785,6 @@ func (p *MonitorMemoryDatabaseParam) GetTableType() output.TableType {
 
 func (p *MonitorMemoryDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorMemoryDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorMemoryDatabaseParam) SetStart(v string) {
@@ -4057,7 +3981,7 @@ func (p *MonitorNicDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4101,10 +4025,6 @@ func (p *MonitorNicDatabaseParam) GetTableType() output.TableType {
 
 func (p *MonitorNicDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorNicDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorNicDatabaseParam) SetStart(v string) {
@@ -4301,7 +4221,7 @@ func (p *MonitorSystemDiskDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4345,10 +4265,6 @@ func (p *MonitorSystemDiskDatabaseParam) GetTableType() output.TableType {
 
 func (p *MonitorSystemDiskDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorSystemDiskDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorSystemDiskDatabaseParam) SetStart(v string) {
@@ -4545,7 +4461,7 @@ func (p *MonitorBackupDiskDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4589,10 +4505,6 @@ func (p *MonitorBackupDiskDatabaseParam) GetTableType() output.TableType {
 
 func (p *MonitorBackupDiskDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorBackupDiskDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorBackupDiskDatabaseParam) SetStart(v string) {
@@ -4789,7 +4701,7 @@ func (p *MonitorSystemDiskSizeDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -4833,10 +4745,6 @@ func (p *MonitorSystemDiskSizeDatabaseParam) GetTableType() output.TableType {
 
 func (p *MonitorSystemDiskSizeDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorSystemDiskSizeDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorSystemDiskSizeDatabaseParam) SetStart(v string) {
@@ -5033,7 +4941,7 @@ func (p *MonitorBackupDiskSizeDatabaseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -5077,10 +4985,6 @@ func (p *MonitorBackupDiskSizeDatabaseParam) GetTableType() output.TableType {
 
 func (p *MonitorBackupDiskSizeDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *MonitorBackupDiskSizeDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *MonitorBackupDiskSizeDatabaseParam) SetStart(v string) {
@@ -5272,10 +5176,6 @@ func (p *LogsDatabaseParam) GetTableType() output.TableType {
 
 func (p *LogsDatabaseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *LogsDatabaseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *LogsDatabaseParam) SetLogName(v string) {

@@ -63,7 +63,7 @@ func (p *ShowSummaryParam) Validate() []error {
 	errors := []error{}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -107,10 +107,6 @@ func (p *ShowSummaryParam) GetTableType() output.TableType {
 
 func (p *ShowSummaryParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ShowSummaryParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ShowSummaryParam) SetParamTemplate(v string) {

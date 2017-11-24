@@ -104,7 +104,7 @@ func (p *ListLicenseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -148,10 +148,6 @@ func (p *ListLicenseParam) GetTableType() output.TableType {
 
 func (p *ListLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ListLicenseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ListLicenseParam) SetName(v []string) {
@@ -323,7 +319,7 @@ func (p *CreateLicenseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -367,10 +363,6 @@ func (p *CreateLicenseParam) GetTableType() output.TableType {
 
 func (p *CreateLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *CreateLicenseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *CreateLicenseParam) SetLicenseInfoId(v int64) {
@@ -513,7 +505,7 @@ func (p *ReadLicenseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -557,10 +549,6 @@ func (p *ReadLicenseParam) GetTableType() output.TableType {
 
 func (p *ReadLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *ReadLicenseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *ReadLicenseParam) SetParamTemplate(v string) {
@@ -704,7 +692,7 @@ func (p *UpdateLicenseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -748,10 +736,6 @@ func (p *UpdateLicenseParam) GetTableType() output.TableType {
 
 func (p *UpdateLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *UpdateLicenseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *UpdateLicenseParam) SetName(v string) {
@@ -898,7 +882,7 @@ func (p *DeleteLicenseParam) Validate() []error {
 	}
 
 	{
-		validator := schema.ValidateInStrValues("json", "csv", "tsv")
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
 		errs := validator("--output-type", p.OutputType)
 		if errs != nil {
 			errors = append(errors, errs...)
@@ -942,10 +926,6 @@ func (p *DeleteLicenseParam) GetTableType() output.TableType {
 
 func (p *DeleteLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
-}
-
-func (p *DeleteLicenseParam) GetOutputFormat() string {
-	return "table"
 }
 
 func (p *DeleteLicenseParam) SetAssumeyes(v bool) {

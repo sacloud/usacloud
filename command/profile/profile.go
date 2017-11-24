@@ -72,6 +72,7 @@ type ConfigFileValue struct {
 	AccessToken       string
 	AccessTokenSecret string
 	Zone              string
+	DefaultOutputType string   `json:",omitempty"`
 	Zones             []string `json:",omitempty"`
 	APIRootURL        string   `json:",omitempty"`
 }
@@ -79,7 +80,7 @@ type ConfigFileValue struct {
 func (p *ConfigFileValue) IsEmpty() bool {
 	return p.AccessToken == "" &&
 		p.AccessTokenSecret == "" &&
-		p.Zone == ""
+		p.Zone == "" && p.DefaultOutputType == ""
 }
 
 func SaveConfigFile(profileName string, val *ConfigFileValue) error {
