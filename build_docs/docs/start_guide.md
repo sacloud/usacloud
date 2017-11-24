@@ -154,7 +154,7 @@ APIキーを作成したら、以下の値を控えておいてください。
 
 APIキーの取得を行ったら、`usacloud config`を実行してAPIキーを設定します。
 
-画面の指示に従い、アクセストークン(token)とシークレット(secret)、操作対象のゾーンの入力を行います。
+画面の指示に従い、アクセストークン(token)とシークレット(secret)、操作対象のゾーン、デフォルトの出力形式の入力を行います。
 
 ```bash
 usacloud config
@@ -167,7 +167,10 @@ usacloud config
     	
   Setting SakuraCloud Zone => 
   	Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [ゾーンを入力]
- 
+  
+  Setting Default Output Type => 
+	Enter default-output-type[table/json/csv/tsv]: [デフォルトの出力形式を入力]
+	
   Written your settings to ~/.usacloud/default/config.json
 ```
 

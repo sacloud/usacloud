@@ -606,6 +606,21 @@ usacloud server ls -h
 コマンド実行時に<code>--zone</code>を指定することでこれらの設定を上書きすることが可能です。  </p>
 </blockquote>
 <hr />
+<h4 id="-default-output-type">デフォルト出力形式(<code>--default-output-type</code>)</h4>
+<p>デフォルトの出力形式を指定します。
+指定可能な値は以下のいずれかです。</p>
+<ul>
+<li><code>table</code> : テーブル形式(デフォルト)</li>
+<li><code>json</code>  : JSON形式</li>
+<li><code>csv</code>   : CSV形式</li>
+<li><code>tsv</code>   : TSV形式</li>
+</ul>
+<blockquote>
+<p>通常この値は<code>~/.usacloud/[current-profile-nane]/config.json</code>の値が利用されます。<br />
+環境変数<code>USACLOUD_DEFAULT_OUTPUT_TYPE</code>で指定することも可能です。<br />
+コマンド実行時に<code>--output-type</code>(エイリアス:<code>--out</code>)を指定することでこの設定を上書きすることが可能です。  </p>
+</blockquote>
+<hr />
 <h4 id="-help-or-h">ヘルプ表示(<code>--help</code> or <code>-h</code>)</h4>
 <p>ヘルプ表示を行います。詳細は<a href="#help">help表示</a>を参照してください。</p>
 <hr />
@@ -622,11 +637,12 @@ usacloud server ls -h
 <h4 id="-output-type-or-out">出力タイプ(<code>--output-type</code> or <code>--out</code>)</h4>
 <p>出力形式を選択します。指定可能な値は以下のいずれかです。  </p>
 <ul>
-<li><code>json</code> : JSON</li>
-<li><code>csv</code> : CSV形式</li>
-<li><code>tsv</code> : TSV形式</li>
-<li>未指定(デフォルト) : テーブル形式</li>
+<li><code>table</code> : テーブル形式</li>
+<li><code>json</code>  : JSON</li>
+<li><code>csv</code>   : CSV形式</li>
+<li><code>tsv</code>   : TSV形式</li>
 </ul>
+<p>未指定の場合はグローバルオプション<code>--default-output-type</code>の設定が利用されます。</p>
 <hr />
 <h4 id="-column-or-col">出力カラム(<code>--column</code> or <code>--col</code>)</h4>
 <p>出力する列名を指定します。<br />

@@ -637,7 +637,7 @@ whalebrew install sacloud/usacloud
 <hr />
 <h2 id="api_1">APIキーの設定</h2>
 <p>APIキーの取得を行ったら、<code>usacloud config</code>を実行してAPIキーを設定します。</p>
-<p>画面の指示に従い、アクセストークン(token)とシークレット(secret)、操作対象のゾーンの入力を行います。</p>
+<p>画面の指示に従い、アクセストークン(token)とシークレット(secret)、操作対象のゾーン、デフォルトの出力形式の入力を行います。</p>
 <pre><code class="bash">usacloud config
 
   Setting SakuraCloud API Token =&gt; 
@@ -648,6 +648,9 @@ whalebrew install sacloud/usacloud
 
   Setting SakuraCloud Zone =&gt; 
     Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [ゾーンを入力]
+
+  Setting Default Output Type =&gt; 
+    Enter default-output-type[table/json/csv/tsv]: [デフォルトの出力形式を入力]
 
   Written your settings to ~/.usacloud/default/config.json
 </code></pre>
