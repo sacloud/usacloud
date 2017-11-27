@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.0 (2017-11-24)
+
+* デフォルト出力形式の設定オプション #249 (yamamoto-febc)
+* TravisCIからの通知設定追加 #250 (yamamoto-febc)
+* 外部連携用の資格情報更新 #251 (yamamoto-febc)
+
+
 ## 0.5.0 (2017-11-16)
 
 * 配布サイト用に静的コンテンツのビルドを実行 #244 (yamamoto-febc)

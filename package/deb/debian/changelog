@@ -1,3 +1,14 @@
+usacloud (0.6.0-1) stable; urgency=low
+
+  * デフォルト出力形式の設定オプション (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/249>
+  * TravisCIからの通知設定追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/250>
+  * 外部連携用の資格情報更新 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/251>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Fri, 24 Nov 2017 15:56:26 +0000
+
 usacloud (0.5.0-1) stable; urgency=low
 
   * 配布サイト用に静的コンテンツのビルドを実行 (by yamamoto-febc)

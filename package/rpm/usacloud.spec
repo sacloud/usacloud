@@ -40,6 +40,11 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Fri Nov 24 2017 <sacloud.users@gmail.com> - 0.6.0-1
+- デフォルト出力形式の設定オプション (by yamamoto-febc)
+- TravisCIからの通知設定追加 (by yamamoto-febc)
+- 外部連携用の資格情報更新 (by yamamoto-febc)
+
 * Thu Nov 16 2017 <yamamoto.febc@gmail.com> - 0.5.0-1
 - 配布サイト用に静的コンテンツのビルドを実行 (by yamamoto-febc)
 - リリースサイトのHTTPS対応 (by yamamoto-febc)
