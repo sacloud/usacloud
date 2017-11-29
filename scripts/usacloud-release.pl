@@ -476,6 +476,10 @@ sub create_pull_request {
     } else {
         infof "skip to update changelogs because no merged pull request is found after the last release.\n"
     }
+
+    infof "Update AUTHORS.\n";
+    system "scripts/generate-authors.sh";
+
     if($ret || git_with_exit_code qw/diff --exit-code/){
         git qw/config --global push.default matching/;
         git qw/config user.email/, 'sacloud.users@gmail.com';

@@ -432,4 +432,4 @@ $ make docker-integration-test
   
 ## Author
 
-  * Kazumichi Yamamoto ([@yamamoto-febc](https://github.com/yamamoto-febc))
+  * [Usacloud Authors](AUTHORS)
