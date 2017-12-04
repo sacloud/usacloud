@@ -1,3 +1,10 @@
+usacloud (0.6.2-1) stable; urgency=low
+
+  * ロードバランサVIPの重複確認にIPアドレスとポート番号の組み合わせを利用 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/261>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Mon, 04 Dec 2017 09:19:02 +0000
+
 usacloud (0.6.1-1) stable; urgency=low
 
   * AppVeyorでのCI (by yamamoto-febc)
