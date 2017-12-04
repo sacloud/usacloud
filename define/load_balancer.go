@@ -515,7 +515,7 @@ func loadBalancerDeleteParam() map[string]*schema.Schema {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
 			Aliases:     []string{"f"},
-			Description: "forced-shutdown flag if server is running",
+			Description: "forced-shutdown flag if load-balancer is running",
 			Category:    "load-balancer",
 			Order:       10,
 		},

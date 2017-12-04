@@ -16,6 +16,8 @@ func LoadBalancerVipAdd(ctx command.Context, params *params.VipAddLoadBalancerPa
 		return fmt.Errorf("LoadBalancerVipAdd is failed: %s", e)
 	}
 
+	initLoadBalancerSettings(p)
+
 	// validate
 	if len(p.Settings.LoadBalancer) >= 4 {
 		return fmt.Errorf("LoadBalancer already has maximum count of VIP")

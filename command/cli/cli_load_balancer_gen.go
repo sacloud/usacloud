@@ -1510,7 +1510,7 @@ func init() {
 					&cli.BoolFlag{
 						Name:    "force",
 						Aliases: []string{"f"},
-						Usage:   "forced-shutdown flag if server is running",
+						Usage:   "forced-shutdown flag if load-balancer is running",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",

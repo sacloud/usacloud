@@ -15,6 +15,8 @@ func LoadBalancerVipDelete(ctx command.Context, params *params.VipDeleteLoadBala
 		return fmt.Errorf("LoadBalancerVipDelete is failed: %s", e)
 	}
 
+	initLoadBalancerSettings(p)
+
 	// index
 	if params.Index <= 0 || params.Index-1 >= len(p.Settings.LoadBalancer) {
 		return fmt.Errorf("index(%d) is out of range", params.Index)

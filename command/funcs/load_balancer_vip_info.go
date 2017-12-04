@@ -14,6 +14,7 @@ func LoadBalancerVipInfo(ctx command.Context, params *params.VipInfoLoadBalancer
 	if e != nil {
 		return fmt.Errorf("LoadBalancerVipInfo is failed: %s", e)
 	}
+	initLoadBalancerSettings(p)
 
 	vips := p.Settings.LoadBalancer
 	if len(vips) == 0 {

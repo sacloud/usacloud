@@ -14,6 +14,7 @@ func LoadBalancerVipUpdate(ctx command.Context, params *params.VipUpdateLoadBala
 	if e != nil {
 		return fmt.Errorf("LoadBalancerVipUpdate is failed: %s", e)
 	}
+	initLoadBalancerSettings(p)
 
 	// validate
 
