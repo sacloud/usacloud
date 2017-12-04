@@ -4,7 +4,9 @@
 
 [`usacloud`](https://github.com/sacloud/usacloud)は[さくらのクラウド](http://cloud.sakura.ad.jp/index.html)用のCLIクライアントです。  
 
-[![Build Status](https://travis-ci.org/sacloud/usacloud.svg?branch=master)](https://travis-ci.org/sacloud/usacloud)  
+[![Build Status](https://travis-ci.org/sacloud/usacloud.svg?branch=master)](https://travis-ci.org/sacloud/usacloud)
+[![Build status](https://ci.appveyor.com/api/projects/status/pt8g7b9ht3t8ohox?svg=true)](https://ci.appveyor.com/project/sacloud-bot/usacloud)
+[![Slack](https://slack.usacloud.jp/badge.svg)](https://slack.usacloud.jp/)  
 
 ## 主な特徴
 
