@@ -40,6 +40,11 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Mon Dec 04 2017 <sacloud.users@gmail.com> - 0.6.1-1
+- AppVeyorでのCI (by yamamoto-febc)
+- AUTHORS出力処理の追加 (by yamamoto-febc)
+- ロードバランサでのVIP操作時にSIGSEGVが発生する問題の修正 (by yamamoto-febc)
+
 * Fri Nov 24 2017 <sacloud.users@gmail.com> - 0.6.0-1
 - デフォルト出力形式の設定オプション (by yamamoto-febc)
 - TravisCIからの通知設定追加 (by yamamoto-febc)
