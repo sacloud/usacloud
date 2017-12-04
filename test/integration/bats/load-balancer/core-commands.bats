@@ -24,7 +24,7 @@ resource_name=${TEST_TARGET_NAME}01
 
 }
 
-@test "Usacloud: should can add VIP" {
+@test "Usacloud: should can CRUD VIP" {
 
   lb_id=$(usacloud_run load-balancer read -q "$resource_name")
 
@@ -32,7 +32,14 @@ resource_name=${TEST_TARGET_NAME}01
   run usacloud_run load-balancer vip-add --vip 192.168.100.1 --port 80 -y "$resource_name"
   [ "${status}" -eq 0 ]
 
+  run usacloud_run load-balancer vip-add --vip 192.168.100.1 --port 443 -y "$resource_name"
+  [ "${status}" -eq 0 ]
+
   # run vip-update
+  # should error(duplicate ip:port)
+  run usacloud_run load-balancer vip-update --index 2 --port 80 -y "$resource_name"
+  [ "${status}" -eq 1 ]
+
   run usacloud_run load-balancer vip-update --index 1 --vip 192.168.100.2 -y "$resource_name"
   [ "${status}" -eq 0 ]
 
