@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.6.2 (2017-12-04)
+
+* ロードバランサVIPの重複確認にIPアドレスとポート番号の組み合わせを利用 #261 (yamamoto-febc)
+
+
 ## 0.6.1 (2017-12-04)
 
 * AppVeyorでのCI #255 (yamamoto-febc)
