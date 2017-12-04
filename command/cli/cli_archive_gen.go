@@ -714,8 +714,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), createParam)
 
 					// confirm
-					if !createParam.Assumeyes && !command.ConfirmContinue("create") {
-						return nil
+					if !createParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("create") {
+							return nil
+						}
 					}
 
 					// Run command with params
@@ -1449,8 +1454,13 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes && !command.ConfirmContinue("update", ids...) {
-						return nil
+					if !updateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("update") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -1811,8 +1821,13 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes && !command.ConfirmContinue("delete", ids...) {
-						return nil
+					if !deleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("delete") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -1843,7 +1858,7 @@ func init() {
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "archive-file",
-						Usage: "[Required] set archive image file",
+						Usage: "set archive image file",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
@@ -2186,8 +2201,13 @@ func init() {
 					}
 
 					// confirm
-					if !uploadParam.Assumeyes && !command.ConfirmContinue("upload", ids...) {
-						return nil
+					if !uploadParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("upload") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -2218,7 +2238,7 @@ func init() {
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "file-destination",
-						Usage: "[Required] set file destination path",
+						Usage: "set file destination path",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
@@ -2507,8 +2527,13 @@ func init() {
 					}
 
 					// confirm
-					if !downloadParam.Assumeyes && !command.ConfirmContinue("download", ids...) {
-						return nil
+					if !downloadParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("download") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -2868,8 +2893,13 @@ func init() {
 					}
 
 					// confirm
-					if !ftpOpenParam.Assumeyes && !command.ConfirmContinue("ftp-open", ids...) {
-						return nil
+					if !ftpOpenParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("ftp-open") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -3175,8 +3205,13 @@ func init() {
 					}
 
 					// confirm
-					if !ftpCloseParam.Assumeyes && !command.ConfirmContinue("ftp-close", ids...) {
-						return nil
+					if !ftpCloseParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("ftp-close") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}

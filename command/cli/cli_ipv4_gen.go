@@ -598,8 +598,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), ptrAddParam)
 
 					// confirm
-					if !ptrAddParam.Assumeyes && !command.ConfirmContinue("ptr-add") {
-						return nil
+					if !ptrAddParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("ptr-add") {
+							return nil
+						}
 					}
 
 					// Run command with params
@@ -1126,8 +1131,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), ptrUpdateParam)
 
 					// confirm
-					if !ptrUpdateParam.Assumeyes && !command.ConfirmContinue("ptr-update") {
-						return nil
+					if !ptrUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("ptr-update") {
+							return nil
+						}
 					}
 
 					// Run command with params
@@ -1393,8 +1403,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), ptrDeleteParam)
 
 					// confirm
-					if !ptrDeleteParam.Assumeyes && !command.ConfirmContinue("ptr-delete") {
-						return nil
+					if !ptrDeleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("ptr-delete") {
+							return nil
+						}
 					}
 
 					// Run command with params

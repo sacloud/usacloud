@@ -2,10 +2,10 @@ package funcs
 
 import (
 	"fmt"
+	"github.com/sacloud/ftps"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
-	"github.com/sacloud/usacloud/helper/ftp"
 )
 
 func ArchiveCreate(ctx command.Context, params *params.CreateArchiveParam) error {
@@ -31,8 +31,12 @@ func ArchiveCreate(ctx command.Context, params *params.CreateArchiveParam) error
 	}
 	// manual validation
 	if needUpload {
-		if params.ArchiveFile == "" || params.Size == 0 {
-			return fmt.Errorf("ArchiveCreate is required both of %q and %q if when source disk/archive is missing", "--archive-file", "--size")
+		if params.Size == 0 {
+			return fmt.Errorf("ArchiveCreate is required %q if when source disk/archive is missing", "--size")
+		}
+		errs := validateExistsFileOrStdIn("archive-file", params.ArchiveFile)
+		if len(errs) > 0 {
+			return errs[0]
 		}
 	}
 
@@ -49,16 +53,25 @@ func ArchiveCreate(ctx command.Context, params *params.CreateArchiveParam) error
 		}
 
 		// upload
-		ftpsClient := ftp.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
+		ftpsClient := ftps.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
 
 		err = internal.ExecWithProgress(
 			fmt.Sprintf("Still uploading[ID:%d]...", res.ID),
 			fmt.Sprintf("Upload archive[ID:%d]", res.ID),
 			command.GlobalOption.Progress,
 			func(compChan chan bool, errChan chan error) {
-				err = ftpsClient.Upload(params.GetArchiveFile())
+
+				file, df, err := fileOrStdin(params.GetArchiveFile())
 				if err != nil {
 					errChan <- err
+					return
+				}
+				defer df()
+
+				err = ftpsClient.UploadFile("upload.raw", file)
+				if err != nil {
+					errChan <- err
+					return
 				}
 				compChan <- true
 			},

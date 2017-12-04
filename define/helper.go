@@ -8,7 +8,9 @@ import (
 func validateMulti(validators ...schema.ValidateFunc) schema.ValidateFunc {
 	return schema.ValidateMulti(validators...)
 }
-
+func validateMultiOr(validators ...schema.ValidateFunc) schema.ValidateFunc {
+	return schema.ValidateMultiOr(validators...)
+}
 func validateStringSlice(validator schema.ValidateFunc) schema.ValidateFunc {
 	return schema.ValidateStringSlice(validator)
 }
@@ -47,6 +49,10 @@ func validateMemberCD() schema.ValidateFunc {
 
 func validateFileExists() schema.ValidateFunc {
 	return schema.ValidateFileExists()
+}
+
+func validateExistsFileOrStdIn() schema.ValidateFunc {
+	return schema.ValidateMultiOr(schema.ValidateFileExists(), schema.ValidateStdinExists())
 }
 
 func validateIPv4Address() schema.ValidateFunc {

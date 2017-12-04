@@ -44,3 +44,7 @@ func validateIPv4AddressArgs(ipaddr string) []error {
 func validateIPv6AddressArgs(ipaddr string) []error {
 	return command.ValidateIPv6Address("Args", ipaddr)
 }
+
+func validateExistsFileOrStdIn(fieldName string, filePath string) []error {
+	return command.ValidateExistsFileOrStdIn(fieldName, filePath)
+}

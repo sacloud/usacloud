@@ -2,10 +2,10 @@ package funcs
 
 import (
 	"fmt"
+	"github.com/sacloud/ftps"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
-	"github.com/sacloud/usacloud/helper/ftp"
 )
 
 func ArchiveUpload(ctx command.Context, params *params.UploadArchiveParam) error {
@@ -24,16 +24,24 @@ func ArchiveUpload(ctx command.Context, params *params.UploadArchiveParam) error
 	}
 
 	// upload
-	ftpsClient := ftp.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
+	ftpsClient := ftps.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
 
 	err = internal.ExecWithProgress(
 		fmt.Sprintf("Still uploading[ID:%d]...", params.Id),
 		fmt.Sprintf("Upload archive[ID:%d]", params.Id),
 		command.GlobalOption.Progress,
 		func(compChan chan bool, errChan chan error) {
-			err = ftpsClient.Upload(params.GetArchiveFile())
+			file, df, err := fileOrStdin(params.GetArchiveFile())
 			if err != nil {
 				errChan <- err
+				return
+			}
+			defer df()
+
+			err = ftpsClient.UploadFile("upload.raw", file)
+			if err != nil {
+				errChan <- err
+				return
 			}
 			compChan <- true
 		},

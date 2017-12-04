@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"github.com/mattn/go-isatty"
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/profile"
@@ -112,4 +113,11 @@ func hasTags(target interface{}, tags []string) bool {
 		}
 	}
 	return res
+}
+
+func isTerminal() bool {
+	is := func(fd uintptr) bool {
+		return isatty.IsTerminal(fd) || isatty.IsCygwinTerminal(fd)
+	}
+	return is(os.Stdin.Fd()) && is(os.Stdout.Fd())
 }
