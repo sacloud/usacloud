@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.6.1 (2017-12-04)
+
+* AppVeyorでのCI #255 (yamamoto-febc)
+* AUTHORS出力処理の追加 #256 (yamamoto-febc)
+* ロードバランサでのVIP操作時にSIGSEGVが発生する問題の修正 #258 (yamamoto-febc)
+
+
 ## 0.6.0 (2017-11-24)
 
 * デフォルト出力形式の設定オプション #249 (yamamoto-febc)
