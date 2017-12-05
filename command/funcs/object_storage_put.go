@@ -1,11 +1,14 @@
 package funcs
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/mitchellh/goamz/aws"
 	"github.com/mitchellh/goamz/s3"
 	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
+	"io"
 	"io/ioutil"
 	"mime"
 	"os"
@@ -77,33 +80,41 @@ func ObjectStoragePut(ctx command.Context, params *params.PutObjectStorageParam)
 
 	bucket := client.Bucket(params.Bucket)
 
+	var putFunc func() error
+
 	if useStdIn {
-		err := objectStoragePutReader(destPath, command.GlobalOption.In, bucket, params.ContentType)
-		if err != nil {
-			return fmt.Errorf("ObjectStoragePut is failed: %s", err)
+		putFunc = func() error {
+			return objectStoragePutReaderMultiNonSeeker(destPath, command.GlobalOption.In, bucket, params.ContentType)
 		}
 	} else {
-
 		if srcInfo.IsDir() {
 			if !params.Recursive {
 				return fmt.Errorf("%q is directory. Use -r or --recursive flag", srcPath)
 			}
 			params.ContentType = "" // when directory mode, set empty to content-type
-			err := objectStoragePutRecursive(destPath, srcPath, srcPath, params.Recursive, bucket, params.ContentType)
-			if err != nil {
-				return fmt.Errorf("ObjectStoragePut is failed: %s", err)
+			putFunc = func() error {
+				return objectStoragePutRecursive(destPath, srcPath, srcPath, params.Recursive, bucket, params.ContentType)
 			}
 
 		} else {
-			err := objectStoragePut(destPath, srcPath, bucket, params.ContentType)
-			if err != nil {
-				return fmt.Errorf("ObjectStoragePut is failed: %s", err)
+			putFunc = func() error {
+				return objectStoragePut(destPath, srcPath, bucket, params.ContentType)
 			}
-
 		}
 	}
 
-	return nil
+	return internal.ExecWithProgress(
+		fmt.Sprintf("Still uploading[%q]...", destPath),
+		fmt.Sprintf("Upload [%q]", destPath),
+		command.GlobalOption.Progress,
+		func(compChan chan bool, errChan chan error) {
+			if err := putFunc(); err != nil {
+				errChan <- err
+				return
+			}
+			compChan <- true
+		},
+	)
 }
 
 func objectStoragePutRecursive(remotePath, baseDir, targetDir string, rec bool, bucket *s3.Bucket, contentType string) error {
@@ -162,13 +173,103 @@ func objectStoragePutReader(destPath string, file *os.File, bucket *s3.Bucket, c
 	if err != nil {
 		return err
 	}
+	if fi.Size() > 8*1024*1024 { // over 8MB
+		return objectStoragePutReaderMulti(destPath, file, bucket, contentType)
+	}
 
 	// put file
 	err = bucket.PutReader(destPath, file, fi.Size(), contentType, s3.PublicRead)
 	if err != nil {
 		return err
 	}
-	fmt.Fprintf(command.GlobalOption.Progress, "Uploaded: %s\n", destPath)
 
 	return nil
+}
+
+func objectStoragePutReaderMulti(destPath string, file *os.File, bucket *s3.Bucket, contentType string) error {
+	partSize := int64(7 * 1024 * 1024) // chunk size = 7MB
+	fi, err := file.Stat()
+	if err != nil {
+		return err
+	}
+	size := fi.Size()
+	if size != 0 && size < partSize {
+		partSize = size
+	}
+
+	m, err := bucket.InitMulti(destPath, contentType, s3.PublicRead)
+	if err != nil {
+		return err
+	}
+
+	// put file
+	_, err = m.PutAll(file, partSize)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func objectStoragePutReaderMultiNonSeeker(destPath string, file *os.File, bucket *s3.Bucket, contentType string) error {
+	m, err := bucket.Multi(destPath, contentType, s3.PublicRead)
+	if err != nil {
+		return err
+	}
+	var (
+		parts      = make([]s3.Part, 0)
+		partSize   = 1024 * 1024 * 5       // 5MB
+		readBuffer = make([]byte, 1024*64) // 64KB
+		partBuffer bytes.Buffer
+		sendPart   = partSender(&partBuffer, m)
+	)
+	for {
+		n, err := file.Read(readBuffer)
+		if err != nil && err != io.EOF {
+			return err
+		}
+
+		if n == 0 {
+			if partBuffer.Len() > 0 {
+				part, err := sendPart()
+				if err != nil {
+					return err
+				}
+				parts = append(parts, part)
+			}
+
+			break
+		} else {
+			combined := partBuffer.Len() + n
+			if combined > partSize {
+				needed := partSize - partBuffer.Len()
+				partBuffer.Write(readBuffer[:needed])
+				part, err := sendPart()
+				if err != nil {
+					return err
+				}
+				parts = append(parts, part)
+				partBuffer.Write(readBuffer[needed:n])
+			} else {
+				partBuffer.Write(readBuffer[:n])
+			}
+		}
+	}
+
+	err = m.Complete(parts)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func partSender(partBuffer *bytes.Buffer, multi *s3.Multi) func() (s3.Part, error) {
+	var partNr int
+	return func() (s3.Part, error) {
+		partNr++
+		defer partBuffer.Reset()
+		reader := bytes.NewReader(partBuffer.Bytes())
+		return multi.PutPart(partNr, reader)
+	}
 }
