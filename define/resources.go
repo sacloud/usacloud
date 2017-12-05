@@ -36,6 +36,7 @@ var Resources = map[string]*schema.Resource{
 	"ProductLicense":  ProductLicenseResource(),
 	"ProductServer":   ProductServerResource(),
 	"Region":          RegionResource(),
+	"Self":            SelfResource(),
 	"Server":          ServerResource(),
 	"SimpleMonitor":   SimpleMonitorResource(),
 	"SSHKey":          SSHKeyResource(),
