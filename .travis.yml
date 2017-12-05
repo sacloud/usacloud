@@ -15,13 +15,8 @@ env:
   - secure: uIRxQNFiv2/SV69WPtClnOIkm/0swWvggYcvEI4bT8/zWnCvBeGIGRFI3rCeaNZwF8wuRMh/4sMkxZkyxeLbnY+jQMG9H8fNe7g5+D2qxh33q6zTrx3LeaZ94BN7OFywjqH+nABEFNWQk6tdVaoAzK7/tTS0xebId5WJeCP1TIzVak7LTJt0Xm9De/NWUWYb3VxC+4zktcQZl4kpXEkCv3EX1UzqZV6lY5onVnfCzvGWozjofJlr4iADqMYKUV2XicuDvjv5BELNSsh8OsNf/eNlixTZ8inAXuYBuuu/1Ax8o82Mjdf2W6tCOz8CbBXG9BkvT5iM/zLNKbzNbql4hgEBPAyF887AcirOvRXeXgMGOe0qAx9SPYWjKphWVtvk2iQbp2YZ1FDKmLsq52sPb9rrbyAj7xO/OIteTwlIsisEc6VSK2O0GiJBttY+cr/9/pJFajaJmz9+XLZjPCD0EL7QPt5rzEEGzelwZAzAgr3s4xYNipHueZPk86711HWX3iXdV8OYpeA5ZdFm7MsZYT4m3m0sYOapVZedmbH9gQOiVEO/MLc1AXxS/tp+265JvP7VrTEDk5oDARydujTLvfx94m7q1I0s/BZ6uEJg7mDhXw6OJQOpAWnHXrG3trhUQ5pTWcnqxHhFXVIkV8itBKgdFLsCnDfSGdeTrjWqsSI=
   - secure: jQ5kAHTNpbXgLH9xtrFnuu8wH1BnxbTp5HBtOhwG+kH2eLXxT53RkBNdkL9F7UYuicSoKU9maFvg9Ql5IFqKAucjOhFIjrMa3IfhNUhHdyLqeA2TN01QqH2902HAsrqhfQt+6hTYTueTYWBNZ5ZoOgb7HEanLliTR5NZgMO8xoj9cgBHiYCd4Em8JmqrwKvKZ0kVs6j98b0VR87zQziUXcS3aJHacqtVsgHjfO0upLIB5S6in3PjpaXEXsp4KGMM0Lq+htLJR4IRcrRkEajuSxTa28IxIlbUKUu1hmc2SdDfntkQeAA7AJ4Ww4WUSo3Wi95LshgT4o19fIdKp9OMj5bHacAfSZQgtZsKZ3C/ZS6GGfRHtgHtLisNB42XVfCRCTCBWTeR0YgszzlogTcM2KBHSNMMohvubjkMIMJlIONtXi921Jx7ea4HJOnaaH636ceL4bcYOFkW9i9+O9dFq18O5Nm0i3DorCOwUVH8t5TP1d+o3f0MqlOKXDphHE+qyQDv6EwXbv2tlxc9ieMV4nIKMRGmp1cJAjgYfL9kFptb7m7hrZaD6Y0cGJK7/7D+P0D0AahnF+7AEaxXZ3E2nt2UsNc+DfCf/vw6VHTfKbNd8xAU2qjHFGbIMDILDnREr6qYe7lF3+CtSJw3lVD8sjaimm4bT9+pG8+DbOIwTGk=
   - secure: Pdai1dDHd2peSy8t05tQIatuSniSo0toMEY8s5wPaXkHUWmG4VgFx7h79Hf0k2YrUysT4n8mvklbAYkjvccaVJi59cEOrG7wfD+YCXts3lMF4Nq/8oZ6OQT2MsB3dR7/Nb+PZX/jCPkqFuFRY2Fu7pcA8XvDEJIr19r8wucuhoqKXx5HVPGQBGW7HFM0PpI3TLmKEtlPsy9w/iIzNcW8F6dAYNODgjWHNDBfXMigJi65C6j/ATWUE6jN9MqOrFP1gqI6D0gjUw+Sd/yAjD4xBgxQ5X0IVQ0Li9257DiJX1RPApDAqBdlsDt4XquvhSzwh/u29C4o1oC+igP8pX6EmLfQ2wyh8DBZZfSn93XbJCZpliCsjxY86z5KlVELhispoXgT2BqojCGsDP2W/U0pzaN+vRzXWznr5hoCfJ1FVwYdwGIL54cJOVaYQWgpXL5QlrHOXznG2hupE935Q+bKKKZ7HCRZkIbC2C1jlM75ZrNrs+16jwrUfyH/kfHGRyfENkVoUDzSuMOgXRLbE1O973epQRFcZz712GlYiJwVllaZ+zDGtNbMfFsFykFsisSXQkj7t9OHMUrMKONG8oen5GStNkGkslDiQ8GCNPHc+FGdCEdzSVqdVVGdpZSBy9gT+kCD9/1NhD6QWFm5BlzqIvwjtk6I3qRu2iC94mJ65gc=
-addons:
-  apt:
-    packages:
-    - devscripts
-    - debhelper
 before_install:
-- if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then openssl aes-256-cbc -K $encrypted_7a84e1e19ced_key
+- if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then openssl aes-256-cbc -K $encrypted_7a84e1e19ced_key
   -iv $encrypted_7a84e1e19ced_iv -in usacloud_gpg_key.enc -out usacloud_gpg_key -d;
   fi
 - go get -u github.com/golang/lint/golint
@@ -30,22 +25,22 @@ install:
 script:
 - make test
 - make lint-docs
-- make docker-build
 before_deploy:
-- docker pull sacloud/rpm-build:latest
-- docker pull sacloud/deb-build:latest
-- make rpm deb
+- if [ "$TRAVIS_BRANCH" == "master" ]; then
+    make docker-build;
+    docker pull sacloud/rpm-build:latest;
+    docker pull sacloud/deb-build:latest;
+    make rpm deb;
+  fi
 - go get github.com/aktau/github-release
 - mkdir -p ~/bin
-- git clone https://github.com/github/hub.git && cd hub && script/build -o ~/bin/hub
-  && cd ..
+- git clone https://github.com/github/hub.git && cd hub && script/build -o ~/bin/hub; && cd ..
 - echo $TRAVIS_BRANCH
 - git config --add remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
 - git fetch
 - git checkout master || git checkout -b master origin/master
 - git checkout $TRAVIS_BRANCH
 - git fetch --depth=1000
-- git fetch --tags --depth=1000 || true
 deploy:
 - provider: script
   script: scripts/usacloud-release.pl --task=upload-to-github-release && scripts/usacloud-release.pl
