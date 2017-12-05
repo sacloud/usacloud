@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Dec 05 2017 <sacloud.users@gmail.com> - 0.6.3-1
+- summaryコマンドでの件数集計でTotalフィールドを利用 (by yamamoto-febc)
+
 * Mon Dec 04 2017 <sacloud.users@gmail.com> - 0.6.2-1
 - ロードバランサVIPの重複確認にIPアドレスとポート番号の組み合わせを利用 (by yamamoto-febc)
 
