@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.7.0 (2017-12-05)
+
+* 標準入出力の取り扱い改善 #267 (yamamoto-febc)
+* オブジェクトストレージへのマルチパートアップロード #269 (yamamoto-febc)
+* TravisCI上でのCI/CD改善 #270 (yamamoto-febc)
+* selfコマンドの追加 #271 (yamamoto-febc)
+
+
 ## 0.6.3 (2017-12-05)
 
 * summaryコマンドでの件数集計でTotalフィールドを利用 #264 (yamamoto-febc)
