@@ -131,7 +131,7 @@ func countServer(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.Servers), nil
+	return int(res.Total), nil
 }
 
 func countDisk(client *api.Client) (int, error) {
@@ -139,7 +139,7 @@ func countDisk(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.Disks), nil
+	return int(res.Total), nil
 }
 
 func countArchive(client *api.Client) (int, error) {
@@ -147,7 +147,7 @@ func countArchive(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.Archives), nil
+	return int(res.Total), nil
 }
 
 func countISOImage(client *api.Client) (int, error) {
@@ -155,7 +155,7 @@ func countISOImage(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.CDROMs), nil
+	return int(res.Total), nil
 }
 
 func countSwitch(client *api.Client) (int, error) {
@@ -163,7 +163,7 @@ func countSwitch(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.Switches), nil
+	return int(res.Total), nil
 }
 
 func countInternet(client *api.Client) (int, error) {
@@ -171,7 +171,7 @@ func countInternet(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.Internet), nil
+	return int(res.Total), nil
 }
 
 func countPacketFilter(client *api.Client) (int, error) {
@@ -179,7 +179,7 @@ func countPacketFilter(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.PacketFilters), nil
+	return int(res.Total), nil
 }
 
 func countBridge(client *api.Client) (int, error) {
@@ -187,7 +187,7 @@ func countBridge(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.Bridges), nil
+	return int(res.Total), nil
 }
 
 func countAutoBackup(client *api.Client) (int, error) {
@@ -195,7 +195,7 @@ func countAutoBackup(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.CommonServiceAutoBackupItems), nil
+	return int(res.Total), nil
 }
 
 func countLoadBalancer(client *api.Client) (int, error) {
@@ -203,7 +203,7 @@ func countLoadBalancer(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.LoadBalancers), nil
+	return int(res.Total), nil
 }
 
 func countVPCRouter(client *api.Client) (int, error) {
@@ -211,7 +211,7 @@ func countVPCRouter(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.VPCRouters), nil
+	return int(res.Total), nil
 }
 
 func countDatabase(client *api.Client) (int, error) {
@@ -219,7 +219,7 @@ func countDatabase(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.Databases), nil
+	return int(res.Total), nil
 }
 
 func countGSLB(client *api.Client) (int, error) {
@@ -227,7 +227,7 @@ func countGSLB(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.CommonServiceGSLBItems), nil
+	return int(res.Total), nil
 }
 
 func countDNS(client *api.Client) (int, error) {
@@ -235,7 +235,7 @@ func countDNS(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.CommonServiceDNSItems), nil
+	return int(res.Total), nil
 }
 
 func countSimpleMonitor(client *api.Client) (int, error) {
@@ -243,7 +243,7 @@ func countSimpleMonitor(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.SimpleMonitors), nil
+	return int(res.Total), nil
 }
 
 func countLicense(client *api.Client) (int, error) {
@@ -251,7 +251,7 @@ func countLicense(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.Licenses), nil
+	return int(res.Total), nil
 }
 
 func countSSHKey(client *api.Client) (int, error) {
@@ -259,7 +259,7 @@ func countSSHKey(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.SSHKeys), nil
+	return int(res.Total), nil
 }
 
 func countNote(client *api.Client) (int, error) {
@@ -267,7 +267,7 @@ func countNote(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.Notes), nil
+	return int(res.Total), nil
 }
 
 func countIcon(client *api.Client) (int, error) {
@@ -275,5 +275,5 @@ func countIcon(client *api.Client) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	return len(res.Icons), nil
+	return int(res.Total), nil
 }
