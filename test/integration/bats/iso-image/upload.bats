@@ -28,8 +28,17 @@ function cleanup_dummy_iso_files {
 
   [ -n "${output}" ]
   [ "${status}" -eq 0 ]
-}
 
+  run usacloud_run iso-image delete -y "${ISO_IMAGE_NAME}"
+  [ -n "${output}" ]
+  [ "${status}" -eq 0 ]
+}
+@test "Usacloud: should can create and upload iso-image using STDIN" {
+  run usacloud_run iso-image create -y --name "${ISO_IMAGE_NAME}" < ${DUMMY_ISO_FILE}
+
+  [ -n "${output}" ]
+  [ "${status}" -eq 0 ]
+}
 @test "Usacloud: should can read iso-image" {
   run usacloud_run iso-image read --out json "${ISO_IMAGE_NAME}"
 
@@ -52,7 +61,6 @@ function cleanup_dummy_iso_files {
   # compare .iso files
   [ -z "$(cmp "${DUMMY_ISO_FILE}" "${DUMMY_ISO_DOWNLOAD_FILE}")" ]
 }
-
 
 @test "Usacloud: should can delete iso-image" {
   run usacloud_run iso-image delete -y "${ISO_IMAGE_NAME}"

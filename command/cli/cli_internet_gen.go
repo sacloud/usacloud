@@ -671,8 +671,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), createParam)
 
 					// confirm
-					if !createParam.Assumeyes && !command.ConfirmContinue("create") {
-						return nil
+					if !createParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("create") {
+							return nil
+						}
 					}
 
 					// Run command with params
@@ -1416,8 +1421,13 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes && !command.ConfirmContinue("update", ids...) {
-						return nil
+					if !updateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("update") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -1778,8 +1788,13 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes && !command.ConfirmContinue("delete", ids...) {
-						return nil
+					if !deleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("delete") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -2150,8 +2165,13 @@ func init() {
 					}
 
 					// confirm
-					if !updateBandwidthParam.Assumeyes && !command.ConfirmContinue("update-bandwidth", ids...) {
-						return nil
+					if !updateBandwidthParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("update-bandwidth") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -2878,8 +2898,13 @@ func init() {
 					}
 
 					// confirm
-					if !subnetAddParam.Assumeyes && !command.ConfirmContinue("subnet-add", ids...) {
-						return nil
+					if !subnetAddParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("subnet-add") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -3195,8 +3220,13 @@ func init() {
 					}
 
 					// confirm
-					if !subnetDeleteParam.Assumeyes && !command.ConfirmContinue("subnet-delete", ids...) {
-						return nil
+					if !subnetDeleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("subnet-delete") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -3576,8 +3606,13 @@ func init() {
 					}
 
 					// confirm
-					if !subnetUpdateParam.Assumeyes && !command.ConfirmContinue("subnet-update", ids...) {
-						return nil
+					if !subnetUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("subnet-update") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -4282,8 +4317,13 @@ func init() {
 					}
 
 					// confirm
-					if !ipv6EnableParam.Assumeyes && !command.ConfirmContinue("ipv6-enable", ids...) {
-						return nil
+					if !ipv6EnableParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("ipv6-enable") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -4589,8 +4629,13 @@ func init() {
 					}
 
 					// confirm
-					if !ipv6DisableParam.Assumeyes && !command.ConfirmContinue("ipv6-disable", ids...) {
-						return nil
+					if !ipv6DisableParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("ipv6-disable") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}

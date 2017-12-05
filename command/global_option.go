@@ -20,7 +20,7 @@ type Option struct {
 	TraceMode         bool
 	Format            string
 	DefaultOutputType string
-	In                io.Reader
+	In                *os.File
 	Out               io.Writer
 	Progress          io.Writer
 	Err               io.Writer

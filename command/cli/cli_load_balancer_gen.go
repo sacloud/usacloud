@@ -741,8 +741,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), createParam)
 
 					// confirm
-					if !createParam.Assumeyes && !command.ConfirmContinue("create") {
-						return nil
+					if !createParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("create") {
+							return nil
+						}
 					}
 
 					// Run command with params
@@ -1476,8 +1481,13 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes && !command.ConfirmContinue("update", ids...) {
-						return nil
+					if !updateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("update") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -1849,8 +1859,13 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes && !command.ConfirmContinue("delete", ids...) {
-						return nil
+					if !deleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("delete") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -2157,8 +2172,13 @@ func init() {
 					}
 
 					// confirm
-					if !bootParam.Assumeyes && !command.ConfirmContinue("boot", ids...) {
-						return nil
+					if !bootParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("boot") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -2465,8 +2485,13 @@ func init() {
 					}
 
 					// confirm
-					if !shutdownParam.Assumeyes && !command.ConfirmContinue("shutdown", ids...) {
-						return nil
+					if !shutdownParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("shutdown") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -2773,8 +2798,13 @@ func init() {
 					}
 
 					// confirm
-					if !shutdownForceParam.Assumeyes && !command.ConfirmContinue("shutdown-force", ids...) {
-						return nil
+					if !shutdownForceParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("shutdown-force") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -3080,8 +3110,13 @@ func init() {
 					}
 
 					// confirm
-					if !resetParam.Assumeyes && !command.ConfirmContinue("reset", ids...) {
-						return nil
+					if !resetParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("reset") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -4363,8 +4398,13 @@ func init() {
 					}
 
 					// confirm
-					if !vipAddParam.Assumeyes && !command.ConfirmContinue("vip-add", ids...) {
-						return nil
+					if !vipAddParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("vip-add") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -4725,8 +4765,13 @@ func init() {
 					}
 
 					// confirm
-					if !vipUpdateParam.Assumeyes && !command.ConfirmContinue("vip-update", ids...) {
-						return nil
+					if !vipUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("vip-update") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -5046,8 +5091,13 @@ func init() {
 					}
 
 					// confirm
-					if !vipDeleteParam.Assumeyes && !command.ConfirmContinue("vip-delete", ids...) {
-						return nil
+					if !vipDeleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("vip-delete") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -5818,8 +5868,13 @@ func init() {
 					}
 
 					// confirm
-					if !serverAddParam.Assumeyes && !command.ConfirmContinue("server-add", ids...) {
-						return nil
+					if !serverAddParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("server-add") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -6210,8 +6265,13 @@ func init() {
 					}
 
 					// confirm
-					if !serverUpdateParam.Assumeyes && !command.ConfirmContinue("server-update", ids...) {
-						return nil
+					if !serverUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("server-update") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -6562,8 +6622,13 @@ func init() {
 					}
 
 					// confirm
-					if !serverDeleteParam.Assumeyes && !command.ConfirmContinue("server-delete", ids...) {
-						return nil
+					if !serverDeleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("server-delete") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}

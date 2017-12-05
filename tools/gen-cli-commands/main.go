@@ -722,8 +722,13 @@ func init() {
 
 					{{ if .NeedConfirm }}
 					// confirm
-					if !{{.ParamName}}.Assumeyes && !command.ConfirmContinue("{{.ConfirmMsg}}", ids...) {
-						return nil
+					if !{{.ParamName}}.Assumeyes {
+						if !isTerminal(){
+						    return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("{{.ConfirmMsg}}") {
+							return nil
+						}
 					}
 					{{ end }}
 
@@ -749,8 +754,13 @@ func init() {
 					{{ else }}
 					{{ if .NeedConfirm }}
 					// confirm
-					if !{{.ParamName}}.Assumeyes && !command.ConfirmContinue("{{.ConfirmMsg}}") {
-						return nil
+					if !{{.ParamName}}.Assumeyes {
+						if !isTerminal(){
+						    return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("{{.ConfirmMsg}}") {
+							return nil
+						}
 					}
 					{{ end }}
 					// Run command with params

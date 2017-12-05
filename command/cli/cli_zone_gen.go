@@ -668,8 +668,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), readParam)
 
 					// confirm
-					if !readParam.Assumeyes && !command.ConfirmContinue("read") {
-						return nil
+					if !readParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("read") {
+							return nil
+						}
 					}
 
 					// Run command with params

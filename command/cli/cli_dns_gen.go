@@ -1013,8 +1013,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), createParam)
 
 					// confirm
-					if !createParam.Assumeyes && !command.ConfirmContinue("create") {
-						return nil
+					if !createParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("create") {
+							return nil
+						}
 					}
 
 					// Run command with params
@@ -1457,8 +1462,13 @@ func init() {
 					}
 
 					// confirm
-					if !recordAddParam.Assumeyes && !command.ConfirmContinue("record-add", ids...) {
-						return nil
+					if !recordAddParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("record-add") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -2271,8 +2281,13 @@ func init() {
 					}
 
 					// confirm
-					if !recordUpdateParam.Assumeyes && !command.ConfirmContinue("record-update", ids...) {
-						return nil
+					if !recordUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("record-update") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -2646,8 +2661,13 @@ func init() {
 					}
 
 					// confirm
-					if !recordDeleteParam.Assumeyes && !command.ConfirmContinue("delete record", ids...) {
-						return nil
+					if !recordDeleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("delete record") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -3038,8 +3058,13 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes && !command.ConfirmContinue("update", ids...) {
-						return nil
+					if !updateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("update") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -3400,8 +3425,13 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes && !command.ConfirmContinue("delete", ids...) {
-						return nil
+					if !deleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("delete") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}

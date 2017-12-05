@@ -5,6 +5,8 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
+	"os"
 	"path/filepath"
 	"strings"
 	"time"
@@ -115,4 +117,20 @@ func parseDateTimeString(strDateTime string) time.Time {
 	}
 
 	return time.Now()
+}
+
+func fileOrStdin(path string) (file *os.File, deferFunc func(), err error) {
+	if path == "" || path == "-" {
+		file = command.GlobalOption.In
+		deferFunc = func() {}
+	} else {
+		file, err = os.Open(path)
+		if err != nil {
+			return
+		}
+		deferFunc = func() {
+			file.Close()
+		}
+	}
+	return
 }

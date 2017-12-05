@@ -373,13 +373,6 @@ func (p *CreateISOImageParam) Validate() []error {
 		}
 	}
 	{
-		validator := validateRequired
-		errs := validator("--iso-file", p.IsoFile)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := define.Resources["ISOImage"].Commands["create"].Params["iso-file"].ValidateFunc
 		errs := validator("--iso-file", p.IsoFile)
 		if errs != nil {
@@ -1284,13 +1277,6 @@ func (p *UploadISOImageParam) FillValueToSkeleton() {
 func (p *UploadISOImageParam) Validate() []error {
 	errors := []error{}
 	{
-		validator := validateRequired
-		errs := validator("--iso-file", p.IsoFile)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := define.Resources["ISOImage"].Commands["upload"].Params["iso-file"].ValidateFunc
 		errs := validator("--iso-file", p.IsoFile)
 		if errs != nil {
@@ -1482,13 +1468,6 @@ func (p *DownloadISOImageParam) FillValueToSkeleton() {
 // Validate checks current values in model
 func (p *DownloadISOImageParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--file-destination", p.FileDestination)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := validateSakuraID
 		errs := validator("--id", p.Id)

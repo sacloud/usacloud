@@ -132,10 +132,19 @@ func StringIDs(ids []int64) []string {
 }
 
 func Confirm(msg string) bool {
+
+	fi, err := GlobalOption.In.Stat()
+	if err != nil {
+		panic(err)
+	}
+	if fi.Size() > 0 {
+		return true
+	}
 	fmt.Printf("\n%s(y/n) [n]: ", msg)
+
 	var input string
 	fmt.Fscanln(GlobalOption.In, &input)
-	return input == "y"
+	return input == "y" || input == "yes"
 }
 
 func ConfirmContinue(target string, ids ...int64) bool {

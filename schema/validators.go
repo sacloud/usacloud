@@ -23,6 +23,21 @@ func ValidateMulti(validators ...ValidateFunc) ValidateFunc {
 	}
 }
 
+func ValidateMultiOr(validators ...ValidateFunc) ValidateFunc {
+	return func(fieldName string, object interface{}) []error {
+		errors := []error{}
+
+		for _, v := range validators {
+			errs := v(fieldName, object)
+			errors = append(errors, errs...)
+			if len(errors) > 0 {
+				return errors
+			}
+		}
+		return errors
+	}
+}
+
 func ValidateStringSlice(validator ValidateFunc) ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}
@@ -280,7 +295,7 @@ func ValidateFileExists() ValidateFunc {
 		}
 
 		if path, ok := object.(string); ok {
-			if path == "" {
+			if path == "" || path == "-" {
 				return res
 			}
 
@@ -291,6 +306,34 @@ func ValidateFileExists() ValidateFunc {
 				}
 			} else {
 				res = append(res, fmt.Errorf("%q: File must be exists", fieldName))
+			}
+		}
+
+		return res
+	}
+}
+
+func ValidateStdinExists() ValidateFunc {
+	return func(fieldName string, object interface{}) []error {
+		res := []error{}
+
+		// if target is nil , return OK(Use required attr if necessary)
+		if object == nil {
+			return res
+		}
+
+		if path, ok := object.(string); ok {
+			if path != "" {
+				return res
+			}
+
+			fi, err := os.Stdin.Stat()
+			if err != nil {
+				res = append(res, fmt.Errorf("Opening STDIN is failed"))
+			} else {
+				if fi.Size() == 0 && fi.Mode()&os.ModeNamedPipe == 0 {
+					res = append(res, fmt.Errorf("%q: must not be empty", "STDIN"))
+				}
 			}
 		}
 

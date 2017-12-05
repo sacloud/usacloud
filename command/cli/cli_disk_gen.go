@@ -740,8 +740,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), createParam)
 
 					// confirm
-					if !createParam.Assumeyes && !command.ConfirmContinue("create") {
-						return nil
+					if !createParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("create") {
+							return nil
+						}
 					}
 
 					// Run command with params
@@ -1485,8 +1490,13 @@ func init() {
 					}
 
 					// confirm
-					if !updateParam.Assumeyes && !command.ConfirmContinue("update", ids...) {
-						return nil
+					if !updateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("update") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -1847,8 +1857,13 @@ func init() {
 					}
 
 					// confirm
-					if !deleteParam.Assumeyes && !command.ConfirmContinue("delete", ids...) {
-						return nil
+					if !deleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("delete") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -2295,8 +2310,13 @@ func init() {
 					}
 
 					// confirm
-					if !editParam.Assumeyes && !command.ConfirmContinue("edit", ids...) {
-						return nil
+					if !editParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("edit") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -2622,8 +2642,13 @@ func init() {
 					}
 
 					// confirm
-					if !reinstallFromArchiveParam.Assumeyes && !command.ConfirmContinue("re-install from archive", ids...) {
-						return nil
+					if !reinstallFromArchiveParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("re-install from archive") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -2949,8 +2974,13 @@ func init() {
 					}
 
 					// confirm
-					if !reinstallFromDiskParam.Assumeyes && !command.ConfirmContinue("re-install from disk", ids...) {
-						return nil
+					if !reinstallFromDiskParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("re-install from disk") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -3266,8 +3296,13 @@ func init() {
 					}
 
 					// confirm
-					if !reinstallToBlankParam.Assumeyes && !command.ConfirmContinue("re-install to blank", ids...) {
-						return nil
+					if !reinstallToBlankParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("re-install to blank") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -3583,8 +3618,13 @@ func init() {
 					}
 
 					// confirm
-					if !serverConnectParam.Assumeyes && !command.ConfirmContinue("server-connect", ids...) {
-						return nil
+					if !serverConnectParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("server-connect") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -3890,8 +3930,13 @@ func init() {
 					}
 
 					// confirm
-					if !serverDisconnectParam.Assumeyes && !command.ConfirmContinue("server-disconnect", ids...) {
-						return nil
+					if !serverDisconnectParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("server-disconnect") {
+							return nil
+						}
 					}
 
 					wg := sync.WaitGroup{}

@@ -281,8 +281,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), deleteCacheParam)
 
 					// confirm
-					if !deleteCacheParam.Assumeyes && !command.ConfirmContinue("delete-cache") {
-						return nil
+					if !deleteCacheParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("delete-cache") {
+							return nil
+						}
 					}
 
 					// Run command with params

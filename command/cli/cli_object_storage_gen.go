@@ -570,8 +570,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), putParam)
 
 					// confirm
-					if !putParam.Assumeyes && !command.ConfirmContinue("put") {
-						return nil
+					if !putParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("put") {
+							return nil
+						}
 					}
 
 					// Run command with params
@@ -1069,8 +1074,13 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
 
 					// confirm
-					if !deleteParam.Assumeyes && !command.ConfirmContinue("delete") {
-						return nil
+					if !deleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("delete") {
+							return nil
+						}
 					}
 
 					// Run command with params

@@ -1381,13 +1381,6 @@ func (p *UploadArchiveParam) FillValueToSkeleton() {
 func (p *UploadArchiveParam) Validate() []error {
 	errors := []error{}
 	{
-		validator := validateRequired
-		errs := validator("--archive-file", p.ArchiveFile)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
 		validator := define.Resources["Archive"].Commands["upload"].Params["archive-file"].ValidateFunc
 		errs := validator("--archive-file", p.ArchiveFile)
 		if errs != nil {
@@ -1579,13 +1572,6 @@ func (p *DownloadArchiveParam) FillValueToSkeleton() {
 // Validate checks current values in model
 func (p *DownloadArchiveParam) Validate() []error {
 	errors := []error{}
-	{
-		validator := validateRequired
-		errs := validator("--file-destination", p.FileDestination)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
 	{
 		validator := validateSakuraID
 		errs := validator("--id", p.Id)

@@ -2,10 +2,10 @@ package funcs
 
 import (
 	"fmt"
+	"github.com/sacloud/ftps"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
-	"github.com/sacloud/usacloud/helper/ftp"
 )
 
 func ISOImageCreate(ctx command.Context, params *params.CreateISOImageParam) error {
@@ -29,15 +29,24 @@ func ISOImageCreate(ctx command.Context, params *params.CreateISOImageParam) err
 	}
 
 	// upload
-	ftpsClient := ftp.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
+	ftpsClient := ftps.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
 	err = internal.ExecWithProgress(
 		fmt.Sprintf("Still uploading[ID:%d]...", res.ID),
 		fmt.Sprintf("Upload iso-image[ID:%d]", res.ID),
 		command.GlobalOption.Progress,
 		func(compChan chan bool, errChan chan error) {
-			err = ftpsClient.Upload(params.GetIsoFile())
+
+			file, df, err := fileOrStdin(params.GetIsoFile())
 			if err != nil {
 				errChan <- err
+				return
+			}
+			defer df()
+
+			err = ftpsClient.UploadFile("upload.iso", file)
+			if err != nil {
+				errChan <- err
+				return
 			}
 			compChan <- true
 		},

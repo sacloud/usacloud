@@ -2,10 +2,11 @@ package funcs
 
 import (
 	"fmt"
+	"github.com/sacloud/ftps"
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/internal"
 	usacloud_params "github.com/sacloud/usacloud/command/params"
-	"github.com/sacloud/usacloud/helper/ftp"
 )
 
 func ServerIsoInsert(ctx command.Context, params *usacloud_params.IsoInsertServerParam) error {
@@ -56,8 +57,28 @@ func ServerIsoInsert(ctx command.Context, params *usacloud_params.IsoInsertServe
 		}
 
 		// upload
-		ftpsClient := ftp.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
-		err = ftpsClient.Upload(params.GetIsoFile())
+		ftpsClient := ftps.NewClient(ftpServer.User, ftpServer.Password, ftpServer.HostName)
+		err = internal.ExecWithProgress(
+			fmt.Sprintf("Still uploading[ID:%d]...", params.Id),
+			fmt.Sprintf("Upload iso-image[ID:%d]", params.Id),
+			command.GlobalOption.Progress,
+			func(compChan chan bool, errChan chan error) {
+
+				file, df, err := fileOrStdin(params.GetIsoFile())
+				if err != nil {
+					errChan <- err
+					return
+				}
+				defer df()
+
+				err = ftpsClient.UploadFile("upload.iso", file)
+				if err != nil {
+					errChan <- err
+					return
+				}
+				compChan <- true
+			},
+		)
 		if err != nil {
 			return fmt.Errorf("ServerIsoInsert is failed: %s", err)
 		}

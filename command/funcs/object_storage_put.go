@@ -15,27 +15,50 @@ import (
 )
 
 func ObjectStoragePut(ctx command.Context, params *params.PutObjectStorageParam) error {
-	if ctx.NArgs() != 2 {
+	useStdIn := false
+	srcPath := ""
+	destPath := ""
+	var srcInfo os.FileInfo
+
+	switch ctx.NArgs() {
+	case 1:
+		useStdIn = true
+		destPath = ctx.Args()[0]
+
+		if params.Recursive {
+			return fmt.Errorf("--recursie can't be used with STDIN")
+		}
+		// validate stdin
+		fi, err := command.GlobalOption.In.Stat()
+		if err != nil {
+			return fmt.Errorf("STDIN Stat() is failed: %s", err)
+		}
+		// if using pipe with curl, fi.Size() will return zero.
+		// so check file mode is os.ModeNamedPipe
+		if fi.Size() == 0 && fi.Mode()&os.ModeNamedPipe == 0 {
+			return fmt.Errorf("STDIN is Empty")
+		}
+
+	case 2:
+		srcPath = filepath.Clean(ctx.Args()[0])
+		destPath = ctx.Args()[1]
+		// validate filepath
+		info, err := os.Stat(srcPath)
+		if err != nil {
+			return fmt.Errorf("file[%s] is not exists: %s", srcPath, err)
+		}
+		srcInfo = info
+	default:
 		return fmt.Errorf("ObjectStoragePut is failed: %s", "Only two argument can be specified")
 	}
 
-	// validate filepath
-	filePath := ""
-	filePath = filepath.Clean(ctx.Args()[0])
-	info, err := os.Stat(filePath)
-	if err != nil {
-		return fmt.Errorf("file[%s] is not exists: %s", filePath, err)
+	// destPath
+	if destPath != "" && strings.HasPrefix(destPath, "/") {
+		destPath = strings.Replace(destPath, "/", "", 1)
 	}
-
-	// path
-	path := ""
-	path = ctx.Args()[1]
-	if path != "" && strings.HasPrefix(path, "/") {
-		path = strings.Replace(path, "/", "", 1)
-	}
-	// if path is dir, set filename from filePath
-	if strings.HasSuffix(path, "/") {
-		path = fmt.Sprintf("%s%s", path, filepath.Base(filePath))
+	// if destPath is dir, set filename from srcPath
+	if strings.HasSuffix(destPath, "/") {
+		destPath = fmt.Sprintf("%s%s", destPath, filepath.Base(srcPath))
 	}
 
 	// on SakuraCloud, bucket name is same as AccessKey
@@ -54,22 +77,30 @@ func ObjectStoragePut(ctx command.Context, params *params.PutObjectStorageParam)
 
 	bucket := client.Bucket(params.Bucket)
 
-	if info.IsDir() {
-		if !params.Recursive {
-			return fmt.Errorf("%q is directory. Use -r or --recursive flag", filePath)
-		}
-		params.ContentType = "" // when directory mode, set empty to content-type
-		err := objectStoragePutRecursive(path, filePath, filePath, params.Recursive, bucket, params.ContentType)
+	if useStdIn {
+		err := objectStoragePutReader(destPath, command.GlobalOption.In, bucket, params.ContentType)
 		if err != nil {
 			return fmt.Errorf("ObjectStoragePut is failed: %s", err)
 		}
-
 	} else {
-		err := objectStoragePut(path, filePath, bucket, params.ContentType)
-		if err != nil {
-			return fmt.Errorf("ObjectStoragePut is failed: %s", err)
-		}
 
+		if srcInfo.IsDir() {
+			if !params.Recursive {
+				return fmt.Errorf("%q is directory. Use -r or --recursive flag", srcPath)
+			}
+			params.ContentType = "" // when directory mode, set empty to content-type
+			err := objectStoragePutRecursive(destPath, srcPath, srcPath, params.Recursive, bucket, params.ContentType)
+			if err != nil {
+				return fmt.Errorf("ObjectStoragePut is failed: %s", err)
+			}
+
+		} else {
+			err := objectStoragePut(destPath, srcPath, bucket, params.ContentType)
+			if err != nil {
+				return fmt.Errorf("ObjectStoragePut is failed: %s", err)
+			}
+
+		}
 	}
 
 	return nil
@@ -123,6 +154,10 @@ func objectStoragePut(destPath, srcPath string, bucket *s3.Bucket, contentType s
 	}
 	defer file.Close()
 
+	return objectStoragePutReader(destPath, file, bucket, contentType)
+}
+
+func objectStoragePutReader(destPath string, file *os.File, bucket *s3.Bucket, contentType string) error {
 	fi, err := file.Stat()
 	if err != nil {
 		return err
@@ -134,5 +169,6 @@ func objectStoragePut(destPath, srcPath string, bucket *s3.Bucket, contentType s
 		return err
 	}
 	fmt.Fprintf(command.GlobalOption.Progress, "Uploaded: %s\n", destPath)
+
 	return nil
 }
