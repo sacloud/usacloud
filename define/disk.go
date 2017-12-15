@@ -1,8 +1,10 @@
 package define
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
+	"strings"
 )
 
 func DiskResource() *schema.Resource {
@@ -184,6 +186,29 @@ func diskListParam() map[string]*schema.Schema {
 		paramTagsCond,
 		paramSourceArchiveIDCond,
 		paramSourceDiskCond,
+		map[string]*schema.Schema{
+			"storage": {
+				Type:        schema.TypeString,
+				HandlerType: schema.HandlerFilterFunc,
+				FilterFunc: func(_ []interface{}, item interface{}, param interface{}) bool {
+					if param == nil {
+						return true
+					}
+					storageName := param.(string)
+					if storageName == "" {
+						return true
+					}
+					if disk, ok := item.(*sacloud.Disk); ok {
+						return strings.Contains(disk.Storage.Name, storageName)
+					}
+					return true
+				},
+				Description:  "set filter by storage-name",
+				Category:     "filter",
+				CompleteFunc: completeStorageName(),
+				Order:        10,
+			},
+		},
 	)
 }
 
@@ -212,6 +237,10 @@ func diskListColumns() []output.ColumnDef {
 			Format:  "%sMB",
 		},
 		{Name: "Connection"},
+		{
+			Name:    "Storage",
+			Sources: []string{"Storage.Name"},
+		},
 	}
 }
 

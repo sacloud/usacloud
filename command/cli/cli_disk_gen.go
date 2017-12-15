@@ -65,6 +65,10 @@ func init() {
 						Name:  "source-disk-id",
 						Usage: "set filter by source-disk-id",
 					},
+					&cli.StringFlag{
+						Name:  "storage",
+						Usage: "set filter by storage-name",
+					},
 					&cli.IntFlag{
 						Name:    "from",
 						Aliases: []string{"offset"},
@@ -171,6 +175,9 @@ func init() {
 					}
 					if c.IsSet("source-disk-id") {
 						listParam.SourceDiskId = c.Int64("source-disk-id")
+					}
+					if c.IsSet("storage") {
+						listParam.Storage = c.String("storage")
 					}
 					if c.IsSet("from") {
 						listParam.From = c.Int("from")
@@ -307,6 +314,9 @@ func init() {
 					}
 					if c.IsSet("source-disk-id") {
 						listParam.SourceDiskId = c.Int64("source-disk-id")
+					}
+					if c.IsSet("storage") {
+						listParam.Storage = c.String("storage")
 					}
 					if c.IsSet("from") {
 						listParam.From = c.Int("from")
@@ -5033,6 +5043,11 @@ func init() {
 		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("disk", "list", "source-disk-id", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("disk", "list", "storage", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,

@@ -44,6 +44,11 @@ func DiskListCompleteFlags(ctx command.Context, params *params.ListDiskParam, fl
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "storage":
+		param := define.Resources["Disk"].Commands["list"].BuildedParams().Get("storage")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
 		param := define.Resources["Disk"].Commands["list"].BuildedParams().Get("from")
 		if param != nil {
