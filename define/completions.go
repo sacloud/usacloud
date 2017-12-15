@@ -353,3 +353,21 @@ func completeBackupTime() schema.CompletionFunc {
 
 	return schema.CompleteInStrValues(timeStrings...)
 }
+
+func completeStorageName() schema.CompletionFunc {
+	return func(ctx schema.CompletionContext, currentValue string) []string {
+
+		api := ctx.GetAPIClient().GetDiskAPI()
+		res := []string{}
+
+		result, err := api.Find()
+		if err != nil {
+			return res
+		}
+
+		for _, v := range result.Disks {
+			res = append(res, v.Storage.Name)
+		}
+		return res
+	}
+}

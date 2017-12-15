@@ -16,6 +16,7 @@ type ListDiskParam struct {
 	Tags              []string `json:"tags"`
 	SourceArchiveId   int64    `json:"source-archive-id"`
 	SourceDiskId      int64    `json:"source-disk-id"`
+	Storage           string   `json:"storage"`
 	From              int      `json:"from"`
 	Max               int      `json:"max"`
 	Sort              []string `json:"sort"`
@@ -53,6 +54,9 @@ func (p *ListDiskParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.SourceDiskId) {
 		p.SourceDiskId = 0
+	}
+	if isEmpty(p.Storage) {
+		p.Storage = ""
 	}
 	if isEmpty(p.From) {
 		p.From = 0
@@ -235,6 +239,13 @@ func (p *ListDiskParam) SetSourceDiskId(v int64) {
 
 func (p *ListDiskParam) GetSourceDiskId() int64 {
 	return p.SourceDiskId
+}
+func (p *ListDiskParam) SetStorage(v string) {
+	p.Storage = v
+}
+
+func (p *ListDiskParam) GetStorage() string {
+	return p.Storage
 }
 func (p *ListDiskParam) SetFrom(v int) {
 	p.From = v
