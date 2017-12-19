@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Dec 19 2017 <sacloud.users@gmail.com> - 0.8.0-1
+- ストレージ情報の追加 (by yamamoto-febc)
+
 * Tue Dec 05 2017 <sacloud.users@gmail.com> - 0.7.0-1
 - 標準入出力の取り扱い改善 (by yamamoto-febc)
 - オブジェクトストレージへのマルチパートアップロード (by yamamoto-febc)

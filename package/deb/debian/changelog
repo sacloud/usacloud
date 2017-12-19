@@ -1,3 +1,10 @@
+usacloud (0.8.0-1) stable; urgency=low
+
+  * ストレージ情報の追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/274>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Tue, 19 Dec 2017 00:51:30 +0000
+
 usacloud (0.7.0-1) stable; urgency=low
 
   * 標準入出力の取り扱い改善 (by yamamoto-febc)
