@@ -1516,7 +1516,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("update") {
+						if !command.ConfirmContinue("update", ids...) {
 							return nil
 						}
 					}
@@ -1894,7 +1894,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("delete") {
+						if !command.ConfirmContinue("delete", ids...) {
 							return nil
 						}
 					}
@@ -2207,7 +2207,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("boot") {
+						if !command.ConfirmContinue("boot", ids...) {
 							return nil
 						}
 					}
@@ -2520,7 +2520,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("shutdown") {
+						if !command.ConfirmContinue("shutdown", ids...) {
 							return nil
 						}
 					}
@@ -2833,7 +2833,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("shutdown-force") {
+						if !command.ConfirmContinue("shutdown-force", ids...) {
 							return nil
 						}
 					}
@@ -3145,7 +3145,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("reset") {
+						if !command.ConfirmContinue("reset", ids...) {
 							return nil
 						}
 					}
@@ -4468,7 +4468,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("interface-connect") {
+						if !command.ConfirmContinue("interface-connect", ids...) {
 							return nil
 						}
 					}
@@ -4869,7 +4869,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("interface-update") {
+						if !command.ConfirmContinue("interface-update", ids...) {
 							return nil
 						}
 					}
@@ -5205,7 +5205,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("interface-disconnect") {
+						if !command.ConfirmContinue("interface-disconnect", ids...) {
 							return nil
 						}
 					}
@@ -5904,7 +5904,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("static-nat-add") {
+						if !command.ConfirmContinue("static-nat-add", ids...) {
 							return nil
 						}
 					}
@@ -6263,7 +6263,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("static-nat-update") {
+						if !command.ConfirmContinue("static-nat-update", ids...) {
 							return nil
 						}
 					}
@@ -6589,7 +6589,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("static-nat-delete") {
+						if !command.ConfirmContinue("static-nat-delete", ids...) {
 							return nil
 						}
 					}
@@ -7307,7 +7307,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("port-forwarding-add") {
+						if !command.ConfirmContinue("port-forwarding-add", ids...) {
 							return nil
 						}
 					}
@@ -7685,7 +7685,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("port-forwarding-update") {
+						if !command.ConfirmContinue("port-forwarding-update", ids...) {
 							return nil
 						}
 					}
@@ -8011,7 +8011,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("port-forwarding-delete") {
+						if !command.ConfirmContinue("port-forwarding-delete", ids...) {
 							return nil
 						}
 					}
@@ -8805,7 +8805,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("firewall-add") {
+						if !command.ConfirmContinue("firewall-add", ids...) {
 							return nil
 						}
 					}
@@ -9237,7 +9237,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("firewall-update") {
+						if !command.ConfirmContinue("firewall-update", ids...) {
 							return nil
 						}
 					}
@@ -9585,7 +9585,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("firewall-delete") {
+						if !command.ConfirmContinue("firewall-delete", ids...) {
 							return nil
 						}
 					}
@@ -10292,7 +10292,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("dhcp-server-add") {
+						if !command.ConfirmContinue("dhcp-server-add", ids...) {
 							return nil
 						}
 					}
@@ -10649,7 +10649,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("dhcp-server-update") {
+						if !command.ConfirmContinue("dhcp-server-update", ids...) {
 							return nil
 						}
 					}
@@ -10975,7 +10975,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("dhcp-server-delete") {
+						if !command.ConfirmContinue("dhcp-server-delete", ids...) {
 							return nil
 						}
 					}
@@ -11663,7 +11663,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("dhcp-static-mapping-add") {
+						if !command.ConfirmContinue("dhcp-static-mapping-add", ids...) {
 							return nil
 						}
 					}
@@ -12011,7 +12011,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("dhcp-static-mapping-update") {
+						if !command.ConfirmContinue("dhcp-static-mapping-update", ids...) {
 							return nil
 						}
 					}
@@ -12337,7 +12337,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("dhcp-static-mapping-delete") {
+						if !command.ConfirmContinue("dhcp-static-mapping-delete", ids...) {
 							return nil
 						}
 					}
@@ -13033,7 +13033,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("pptp-server-update") {
+						if !command.ConfirmContinue("pptp-server-update", ids...) {
 							return nil
 						}
 					}
@@ -13739,7 +13739,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("l2tp-server-update") {
+						if !command.ConfirmContinue("l2tp-server-update", ids...) {
 							return nil
 						}
 					}
@@ -14427,7 +14427,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("user-add") {
+						if !command.ConfirmContinue("user-add", ids...) {
 							return nil
 						}
 					}
@@ -14775,7 +14775,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("user-update") {
+						if !command.ConfirmContinue("user-update", ids...) {
 							return nil
 						}
 					}
@@ -15101,7 +15101,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("user-delete") {
+						if !command.ConfirmContinue("user-delete", ids...) {
 							return nil
 						}
 					}
@@ -15817,7 +15817,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("site-to-site-vpn-add") {
+						if !command.ConfirmContinue("site-to-site-vpn-add", ids...) {
 							return nil
 						}
 					}
@@ -16193,7 +16193,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("site-to-site-vpn-update") {
+						if !command.ConfirmContinue("site-to-site-vpn-update", ids...) {
 							return nil
 						}
 					}
@@ -16519,7 +16519,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("site-to-site-vpn-delete") {
+						if !command.ConfirmContinue("site-to-site-vpn-delete", ids...) {
 							return nil
 						}
 					}
@@ -17205,7 +17205,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("static-route-add") {
+						if !command.ConfirmContinue("static-route-add", ids...) {
 							return nil
 						}
 					}
@@ -17551,7 +17551,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("static-route-update") {
+						if !command.ConfirmContinue("static-route-update", ids...) {
 							return nil
 						}
 					}
@@ -17877,7 +17877,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("static-route-delete") {
+						if !command.ConfirmContinue("static-route-delete", ids...) {
 							return nil
 						}
 					}

@@ -726,7 +726,7 @@ func init() {
 						if !isTerminal(){
 						    return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("{{.ConfirmMsg}}") {
+						if !command.ConfirmContinue("{{.ConfirmMsg}}", ids...) {
 							return nil
 						}
 					}
