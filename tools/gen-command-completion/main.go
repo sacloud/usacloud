@@ -169,7 +169,7 @@ func generateArgsComplete(commands ...schema.SortableCommand) (string, error) {
 	}
 
 	err := t.Execute(b, map[string]interface{}{
-		"NeedDonotEditComment": len(commands) == 1 && !commands[0].Command.UseCustomArgCompletion,
+		"NeedDonotEditComment": !commands[0].Command.UseCustomArgCompletion,
 		"UseImport":            useImport,
 		"Commands":             paramCommands,
 	})

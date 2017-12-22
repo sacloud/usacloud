@@ -1435,7 +1435,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("update") {
+						if !command.ConfirmContinue("update", ids...) {
 							return nil
 						}
 					}
@@ -1802,7 +1802,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("delete") {
+						if !command.ConfirmContinue("delete", ids...) {
 							return nil
 						}
 					}

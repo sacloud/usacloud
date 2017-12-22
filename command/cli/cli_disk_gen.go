@@ -1504,7 +1504,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("update") {
+						if !command.ConfirmContinue("update", ids...) {
 							return nil
 						}
 					}
@@ -1871,7 +1871,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("delete") {
+						if !command.ConfirmContinue("delete", ids...) {
 							return nil
 						}
 					}
@@ -2324,7 +2324,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("edit") {
+						if !command.ConfirmContinue("edit", ids...) {
 							return nil
 						}
 					}
@@ -2656,7 +2656,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("re-install from archive") {
+						if !command.ConfirmContinue("re-install from archive", ids...) {
 							return nil
 						}
 					}
@@ -2988,7 +2988,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("re-install from disk") {
+						if !command.ConfirmContinue("re-install from disk", ids...) {
 							return nil
 						}
 					}
@@ -3310,7 +3310,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("re-install to blank") {
+						if !command.ConfirmContinue("re-install to blank", ids...) {
 							return nil
 						}
 					}
@@ -3632,7 +3632,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("server-connect") {
+						if !command.ConfirmContinue("server-connect", ids...) {
 							return nil
 						}
 					}
@@ -3944,7 +3944,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("server-disconnect") {
+						if !command.ConfirmContinue("server-disconnect", ids...) {
 							return nil
 						}
 					}
