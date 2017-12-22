@@ -1,3 +1,12 @@
+usacloud (0.9.0-1) stable; urgency=low
+
+  * ウェブアクセラレータ コマンド追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/278>
+  * ソース生成ツール修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/279>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Fri, 22 Dec 2017 06:48:49 +0000
+
 usacloud (0.8.0-1) stable; urgency=low
 
   * ストレージ情報の追加 (by yamamoto-febc)

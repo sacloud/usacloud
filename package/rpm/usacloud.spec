@@ -40,6 +40,10 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Fri Dec 22 2017 <sacloud.users@gmail.com> - 0.9.0-1
+- ウェブアクセラレータ コマンド追加 (by yamamoto-febc)
+- ソース生成ツール修正 (by yamamoto-febc)
+
 * Tue Dec 19 2017 <sacloud.users@gmail.com> - 0.8.0-1
 - ストレージ情報の追加 (by yamamoto-febc)
 
