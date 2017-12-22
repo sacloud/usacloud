@@ -6,8 +6,123 @@ import (
 	"fmt"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
+	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/schema"
 )
+
+func WebAccelListCompleteFlags(ctx command.Context, params *params.ListWebAccelParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func WebAccelReadCompleteFlags(ctx command.Context, params *params.ReadWebAccelParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["WebAccel"].Commands["read"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["WebAccel"].Commands["read"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func WebAccelCertificateInfoCompleteFlags(ctx command.Context, params *params.CertificateInfoWebAccelParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["WebAccel"].Commands["certificate-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["WebAccel"].Commands["certificate-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func WebAccelCertificateUpdateCompleteFlags(ctx command.Context, params *params.CertificateUpdateWebAccelParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "cert":
+		param := define.Resources["WebAccel"].Commands["certificate-update"].BuildedParams().Get("cert")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "key":
+		param := define.Resources["WebAccel"].Commands["certificate-update"].BuildedParams().Get("key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "cert-content":
+		param := define.Resources["WebAccel"].Commands["certificate-update"].BuildedParams().Get("cert-content")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "key-content":
+		param := define.Resources["WebAccel"].Commands["certificate-update"].BuildedParams().Get("key-content")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["WebAccel"].Commands["certificate-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["WebAccel"].Commands["certificate-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
 
 func WebAccelDeleteCacheCompleteFlags(ctx command.Context, params *params.DeleteCacheWebAccelParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
