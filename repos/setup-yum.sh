@@ -3,6 +3,8 @@
 set -e
 sudo -k
 
+echo "===== install usacloud by yum ====="
+
 sudo sh <<'SCRIPT'
   set -x
 
