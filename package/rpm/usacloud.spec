@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Jan 24 2018 <sacloud.users@gmail.com> - 0.9.1-1
+- MariaDB作成時のAPIパラメータ更新 (by yamamoto-febc)
+
 * Fri Dec 22 2017 <sacloud.users@gmail.com> - 0.9.0-1
 - ウェブアクセラレータ コマンド追加 (by yamamoto-febc)
 - ソース生成ツール修正 (by yamamoto-febc)
