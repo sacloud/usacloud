@@ -53,11 +53,11 @@ resource_name=${TEST_TARGET_NAME}01
   run usacloud_run load-balancer rm -f -y "${resource_name}"
 
   [ -n "${output}" ]
-  [ ${status} -eq 0 ]
+  [ "${status}" -eq 0 ]
 
   run usacloud_run switch rm -y "${resource_name}"
 
   [ -n "${output}" ]
-  [ ${status} -eq 0 ]
+  [ "${status}" -eq 0 ]
 
 }

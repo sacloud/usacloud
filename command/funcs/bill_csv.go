@@ -2,7 +2,6 @@ package funcs
 
 import (
 	"fmt"
-	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"os"
@@ -19,7 +18,7 @@ func BillCsv(ctx command.Context, params *params.CsvBillParam) error {
 	if err != nil {
 		return fmt.Errorf("BillCsv is failed: %s", err)
 	}
-	accountID := sacloud.NewResourceByStringID(auth.Account.ID).ID
+	accountID := auth.Account.ID
 	if accountID == 0 {
 		return fmt.Errorf("BillCsv is failed: %s", "invalid account id")
 	}

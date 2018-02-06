@@ -3,7 +3,6 @@ package funcs
 import (
 	"fmt"
 	"github.com/sacloud/libsacloud/api"
-	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"strings"
@@ -23,7 +22,7 @@ func BillList(ctx command.Context, params *params.ListBillParam) error {
 	if err != nil {
 		return fmt.Errorf("BillList is failed: %s", err)
 	}
-	accountID := sacloud.NewResourceByStringID(auth.Account.ID).ID
+	accountID := auth.Account.ID
 	if accountID == 0 {
 		return fmt.Errorf("BillList is failed: %s", "invalid account id")
 	}
