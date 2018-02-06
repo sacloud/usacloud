@@ -23,6 +23,8 @@ const (
 	RancherOS
 	// Kusanagi OS種別:Kusanagi(CentOS)
 	Kusanagi
+	// SophosUTM OS種別:Sophos UTM
+	SophosUTM
 	// FreeBSD OS種別:FreeBSD
 	FreeBSD
 	// Windows2012 OS種別:Windows Server 2012 R2 Datacenter Edition

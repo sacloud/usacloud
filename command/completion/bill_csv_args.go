@@ -2,7 +2,6 @@ package completion
 
 import (
 	"fmt"
-	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"strings"
@@ -22,7 +21,7 @@ func BillCsvCompleteArgs(ctx command.Context, params *params.CsvBillParam, cur, 
 	if err != nil {
 		return
 	}
-	accountID := sacloud.NewResourceByStringID(auth.Account.ID).ID
+	accountID := auth.Account.ID
 	if accountID == 0 {
 		return
 	}
