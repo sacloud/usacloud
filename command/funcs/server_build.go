@@ -29,7 +29,7 @@ func ServerBuild(ctx command.Context, params *params.BuildServerParam) error {
 	for _, handler := range serverBuildHandlers {
 		err := handler(sb, ctx, params)
 		if err != nil {
-			return nil
+			return err
 		}
 	}
 
