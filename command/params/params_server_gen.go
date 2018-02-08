@@ -4037,6 +4037,377 @@ func (p *VncSnapshotServerParam) GetId() int64 {
 	return p.Id
 }
 
+// RdpServerParam is input parameters for the sacloud API
+type RdpServerParam struct {
+	User              string   `json:"user"`
+	Port              int      `json:"port"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
+}
+
+// NewRdpServerParam return new RdpServerParam
+func NewRdpServerParam() *RdpServerParam {
+	return &RdpServerParam{
+
+		User: "Administrator",
+		Port: 3389,
+	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *RdpServerParam) FillValueToSkeleton() {
+	if isEmpty(p.User) {
+		p.User = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *RdpServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--user", p.User)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *RdpServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *RdpServerParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["rdp"]
+}
+
+func (p *RdpServerParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *RdpServerParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *RdpServerParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *RdpServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *RdpServerParam) SetUser(v string) {
+	p.User = v
+}
+
+func (p *RdpServerParam) GetUser() string {
+	return p.User
+}
+func (p *RdpServerParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *RdpServerParam) GetPort() int {
+	return p.Port
+}
+func (p *RdpServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *RdpServerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *RdpServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *RdpServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *RdpServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *RdpServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *RdpServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *RdpServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *RdpServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *RdpServerParam) GetId() int64 {
+	return p.Id
+}
+
+// RdpInfoServerParam is input parameters for the sacloud API
+type RdpInfoServerParam struct {
+	User              string   `json:"user"`
+	Port              int      `json:"port"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewRdpInfoServerParam return new RdpInfoServerParam
+func NewRdpInfoServerParam() *RdpInfoServerParam {
+	return &RdpInfoServerParam{
+
+		User: "Administrator",
+		Port: 3389,
+	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *RdpInfoServerParam) FillValueToSkeleton() {
+	if isEmpty(p.User) {
+		p.User = ""
+	}
+	if isEmpty(p.Port) {
+		p.Port = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *RdpInfoServerParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--user", p.User)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--port", p.Port)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *RdpInfoServerParam) GetResourceDef() *schema.Resource {
+	return define.Resources["Server"]
+}
+
+func (p *RdpInfoServerParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["rdp-info"]
+}
+
+func (p *RdpInfoServerParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *RdpInfoServerParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *RdpInfoServerParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *RdpInfoServerParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *RdpInfoServerParam) SetUser(v string) {
+	p.User = v
+}
+
+func (p *RdpInfoServerParam) GetUser() string {
+	return p.User
+}
+func (p *RdpInfoServerParam) SetPort(v int) {
+	p.Port = v
+}
+
+func (p *RdpInfoServerParam) GetPort() int {
+	return p.Port
+}
+func (p *RdpInfoServerParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *RdpInfoServerParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *RdpInfoServerParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *RdpInfoServerParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *RdpInfoServerParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *RdpInfoServerParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *RdpInfoServerParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *RdpInfoServerParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *RdpInfoServerParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *RdpInfoServerParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *RdpInfoServerParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *RdpInfoServerParam) GetColumn() []string {
+	return p.Column
+}
+func (p *RdpInfoServerParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *RdpInfoServerParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *RdpInfoServerParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *RdpInfoServerParam) GetFormat() string {
+	return p.Format
+}
+func (p *RdpInfoServerParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *RdpInfoServerParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *RdpInfoServerParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *RdpInfoServerParam) GetId() int64 {
+	return p.Id
+}
+
 // DiskInfoServerParam is input parameters for the sacloud API
 type DiskInfoServerParam struct {
 	Selector          []string `json:"selector"`
