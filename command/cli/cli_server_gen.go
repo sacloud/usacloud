@@ -5413,11 +5413,6 @@ func init() {
 						Name:  "selector",
 						Usage: "Set target filter by tag",
 					},
-					&cli.BoolFlag{
-						Name:    "assumeyes",
-						Aliases: []string{"y"},
-						Usage:   "Assume that the answer to any question which would be asked is yes",
-					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -5479,9 +5474,6 @@ func init() {
 					}
 					if c.IsSet("selector") {
 						vncParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						vncParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
 						vncParam.ParamTemplate = c.String("param-template")
@@ -5586,9 +5578,6 @@ func init() {
 					if c.IsSet("selector") {
 						vncParam.Selector = c.StringSlice("selector")
 					}
-					if c.IsSet("assumeyes") {
-						vncParam.Assumeyes = c.Bool("assumeyes")
-					}
 					if c.IsSet("param-template") {
 						vncParam.ParamTemplate = c.String("param-template")
 					}
@@ -5689,16 +5678,6 @@ func init() {
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
 						return fmt.Errorf("Target resource is not found")
-					}
-
-					// confirm
-					if !vncParam.Assumeyes {
-						if !isTerminal() {
-							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
-						}
-						if !command.ConfirmContinue("open VNC client", ids...) {
-							return nil
-						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -13852,11 +13831,6 @@ func init() {
 		Key:         "common",
 		DisplayName: "Common options",
 		Order:       2147483617,
-	})
-	AppendFlagCategoryMap("server", "vnc", "assumeyes", &schema.Category{
-		Key:         "Input",
-		DisplayName: "Input options",
-		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "vnc", "generate-skeleton", &schema.Category{
 		Key:         "Input",

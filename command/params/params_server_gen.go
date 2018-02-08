@@ -3247,7 +3247,6 @@ func (p *ScpServerParam) GetQuiet() bool {
 type VncServerParam struct {
 	WaitForBoot       bool     `json:"wait-for-boot"`
 	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
@@ -3266,9 +3265,6 @@ func (p *VncServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
-	}
-	if isEmpty(p.Assumeyes) {
-		p.Assumeyes = false
 	}
 	if isEmpty(p.ParamTemplate) {
 		p.ParamTemplate = ""
@@ -3336,13 +3332,6 @@ func (p *VncServerParam) SetSelector(v []string) {
 
 func (p *VncServerParam) GetSelector() []string {
 	return p.Selector
-}
-func (p *VncServerParam) SetAssumeyes(v bool) {
-	p.Assumeyes = v
-}
-
-func (p *VncServerParam) GetAssumeyes() bool {
-	return p.Assumeyes
 }
 func (p *VncServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
