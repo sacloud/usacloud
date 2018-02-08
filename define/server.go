@@ -163,7 +163,7 @@ func ServerResource() *schema.Resource {
 			Category:         "connect",
 			Order:            40,
 			NoOutput:         true,
-			ConfirmMessage:   "open VNC client",
+			NeedlessConfirm:  true,
 		},
 		"vnc-info": {
 			Type:             schema.CommandRead,
