@@ -192,6 +192,25 @@ func ServerResource() *schema.Resource {
 			Category:            "connect",
 			Order:               47,
 		},
+		"rdp": {
+			Type:             schema.CommandManipulateMulti,
+			Params:           serverRDPParam(),
+			Usage:            "Open RDP client using the OS's default application",
+			UseCustomCommand: true,
+			Category:         "connect",
+			Order:            50,
+			NoOutput:         true,
+			NeedlessConfirm:  true,
+		},
+		"rdp-info": {
+			Type:             schema.CommandRead,
+			Params:           serverRDPParam(),
+			Usage:            "Show RDP information(.rdp)",
+			UseCustomCommand: true,
+			Category:         "connect",
+			Order:            55,
+			NeedlessConfirm:  true,
+		},
 		"disk-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             serverDiskInfoParam(),
@@ -1211,6 +1230,31 @@ func serverVNCSnapshotParam() map[string]*schema.Schema {
 			Description: "snapshot output filepath",
 			Category:    "VNC",
 			Order:       20,
+		},
+	}
+}
+
+func serverRDPParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"user": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Aliases:      []string{"l"},
+			Required:     true,
+			DefaultValue: "Administrator",
+			Description:  "user name",
+			Category:     "auth",
+			Order:        20,
+		},
+		"port": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Aliases:      []string{"p"},
+			Description:  "port",
+			Required:     true,
+			DefaultValue: 3389,
+			Category:     "auth",
+			Order:        30,
 		},
 	}
 }
