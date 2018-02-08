@@ -52,7 +52,7 @@ const (
 // OSTypeShortNames OSTypeとして利用できる文字列のリスト
 var OSTypeShortNames = []string{
 	"centos", "centos6", "ubuntu", "debian", "vyos", "coreos",
-	"rancheros", "kusanagi", "freebsd",
+	"rancheros", "kusanagi", "sophos-utm", "freebsd",
 	"windows2012", "windows2012-rds", "windows2012-rds-office",
 	"windows2016", "windows2016-rds", "windows2016-rds-office",
 	"windows2016-sql-web", "windows2016-sql-standard", "windows2016-sql-standard-all",
@@ -99,6 +99,8 @@ func StrToOSType(osType string) ArchiveOSTypes {
 		return RancherOS
 	case "kusanagi":
 		return Kusanagi
+	case "sophos-utm":
+		return SophosUTM
 	case "freebsd":
 		return FreeBSD
 	case "windows2012":

@@ -148,6 +148,17 @@ func ServerPublicArchiveUnix(client *api.Client, os ostype.ArchiveOSTypes, name 
 
 }
 
+// ServerPublicArchiveFixedUnix ディスクの編集が不可なLinux(Unix)系パブリックアーカイブを利用するビルダー
+func ServerPublicArchiveFixedUnix(client *api.Client, os ostype.ArchiveOSTypes, name string) *FixedUnixArchiveServerBuilder {
+
+	b := newServerBuilder(client, name)
+	b.ServerPublicArchiveFixedUnix(os)
+	return &FixedUnixArchiveServerBuilder{
+		serverBuilder: b,
+	}
+
+}
+
 // ServerPublicArchiveWindows Windows系パブリックアーカイブを利用するビルダー
 func ServerPublicArchiveWindows(client *api.Client, os ostype.ArchiveOSTypes, name string) *PublicArchiveWindowsServerBuilder {
 
@@ -219,6 +230,16 @@ func (b *serverBuilder) ServerPublicArchiveUnix(os ostype.ArchiveOSTypes, passwo
 	b.disk.sourceArchiveID = archive.ID
 	b.disk.password = password
 
+}
+
+func (b *serverBuilder) ServerPublicArchiveFixedUnix(os ostype.ArchiveOSTypes) {
+	archive, err := b.client.Archive.FindByOSType(os)
+	if err != nil {
+		b.errors = append(b.errors, err)
+	}
+
+	b.disk = Disk(b.client, b.serverName)
+	b.disk.sourceArchiveID = archive.ID
 }
 
 func (b *serverBuilder) ServerPublicArchiveWindows(os ostype.ArchiveOSTypes) {
