@@ -418,7 +418,7 @@ func databaseCreateParam() map[string]*schema.Schema {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
 			Aliases:      []string{"db"},
-			Description:  "set database type",
+			Description:  "set database type[postgresql/mariadb]",
 			Required:     true,
 			ValidateFunc: validateInStrValues("postgresql", "mariadb"),
 			CompleteFunc: completeInStrValues("postgresql", "mariadb"),
