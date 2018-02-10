@@ -377,7 +377,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "database",
 						Aliases: []string{"db"},
-						Usage:   "[Required] set database type",
+						Usage:   "[Required] set database type[postgresql/mariadb]",
 					},
 					&cli.StringFlag{
 						Name:  "username",
