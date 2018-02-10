@@ -516,7 +516,7 @@ func ServerVncSnapshotCompleteArgs(ctx command.Context, params *params.VncSnapsh
 
 }
 
-func ServerRdpCompleteArgs(ctx command.Context, params *params.RdpServerParam, cur, prev, commandName string) {
+func ServerRemoteDesktopCompleteArgs(ctx command.Context, params *params.RemoteDesktopServerParam, cur, prev, commandName string) {
 
 	if !command.GlobalOption.Valid {
 		return
@@ -547,7 +547,7 @@ func ServerRdpCompleteArgs(ctx command.Context, params *params.RdpServerParam, c
 
 }
 
-func ServerRdpInfoCompleteArgs(ctx command.Context, params *params.RdpInfoServerParam, cur, prev, commandName string) {
+func ServerRemoteDesktopInfoCompleteArgs(ctx command.Context, params *params.RemoteDesktopInfoServerParam, cur, prev, commandName string) {
 
 	if !command.GlobalOption.Valid {
 		return

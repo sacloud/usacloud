@@ -7,17 +7,17 @@ import (
 	"github.com/sacloud/usacloud/helper/rdp"
 )
 
-func ServerRdpInfo(ctx command.Context, params *params.RdpInfoServerParam) error {
+func ServerRemoteDesktop(ctx command.Context, params *params.RemoteDesktopServerParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetServerAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("ServerRdpInfo is failed: %s", e)
+		return fmt.Errorf("ServerRemoteDesktop is failed: %s", e)
 	}
 
 	if !p.IsUp() {
-		return fmt.Errorf("ServerRdpInfo is failed: %s", "server is not running")
+		return fmt.Errorf("ServerRemoteDesktop is failed: %s", "server is not running")
 	}
 
 	// collect server IPAddress
@@ -26,7 +26,7 @@ func ServerRdpInfo(ctx command.Context, params *params.RdpInfoServerParam) error
 		ip = p.Interfaces[0].UserIPAddress
 	}
 	if ip == "" {
-		return fmt.Errorf("ServerRdpInfo is failed: collecting IPAddress from server is failed: %#v", p)
+		return fmt.Errorf("ServerRemoteDesktop is failed: collecting IPAddress from server is failed: %#v", p)
 	}
 
 	rdpClient := &rdp.Opener{
@@ -34,7 +34,6 @@ func ServerRdpInfo(ctx command.Context, params *params.RdpInfoServerParam) error
 		Port:      params.Port,
 		IPAddress: ip,
 	}
+	return rdpClient.StartDefaultClient()
 
-	fmt.Fprint(command.GlobalOption.Out, rdpClient.RDPFileContent())
-	return nil
 }

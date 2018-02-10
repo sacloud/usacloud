@@ -225,7 +225,7 @@ COPYRIGHT:
     
 ```
 
-#### Examples: サーバへの接続(SSH/SCP/VNC)
+#### Examples: サーバへの接続(SSH/SCP/VNC/リモートデスクトップ)
 
 ```bash
     # サーバへのSSH接続
@@ -243,7 +243,14 @@ COPYRIGHT:
     # OSのデフォルトVNCクライアントを用いてサーバへVNC接続
     # (Windowsの場合、.vnc拡張子に適切なVNCクライアントを関連付けしておく必要あり)
     $ usacloud server vnc <ID または 名称> 
+
+    # OSのデフォルトRDPクライアントを用いてサーバへリモートデスクトップ接続
+    $ usacloud server remote-desktop <ID または 名称>
+    # または
+    $ usacloud server rdp <ID または 名称>
 ```
+
+
 
 #### Examples: FTPSでのアップロード/ダウンロード(アーカイブ/ISOイメージ)
 

@@ -192,9 +192,10 @@ func ServerResource() *schema.Resource {
 			Category:            "connect",
 			Order:               47,
 		},
-		"rdp": {
+		"remote-desktop": {
 			Type:             schema.CommandManipulateMulti,
 			Params:           serverRDPParam(),
+			Aliases:          []string{"rdp"},
 			Usage:            "Open RDP client using the OS's default application",
 			UseCustomCommand: true,
 			Category:         "connect",
@@ -202,9 +203,10 @@ func ServerResource() *schema.Resource {
 			NoOutput:         true,
 			NeedlessConfirm:  true,
 		},
-		"rdp-info": {
+		"remote-desktop-info": {
 			Type:             schema.CommandRead,
 			Params:           serverRDPParam(),
+			Aliases:          []string{"rdp-info"},
 			Usage:            "Show RDP information(.rdp)",
 			UseCustomCommand: true,
 			Category:         "connect",
