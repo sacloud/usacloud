@@ -15,6 +15,9 @@ type Option struct {
 	AccessTokenSecret string
 	Zone              string
 	ProfileName       string
+	AcceptLanguage    string
+	RetryMax          int
+	RetryIntervalSec  int64
 	Zones             []string
 	APIRootURL        string
 	TraceMode         bool
@@ -78,10 +81,28 @@ var GlobalFlags = []cli.Flag{
 		Destination: &GlobalOption.ProfileName,
 	},
 	&cli.StringFlag{
+		Name:        "accept-language",
+		Usage:       "Accept-Language Header",
+		EnvVars:     []string{"SAKURACLOUD_ACCEPT_LANGUAGE"},
+		Destination: &GlobalOption.AcceptLanguage,
+	},
+	&cli.IntFlag{
+		Name:        "retry-max",
+		Usage:       "Number of API-Client retries",
+		EnvVars:     []string{"SAKURACLOUD_RETRY_MAX"},
+		Destination: &GlobalOption.RetryMax,
+	},
+	&cli.Int64Flag{
+		Name:        "retry-interval",
+		Usage:       "API client retry interval seconds",
+		EnvVars:     []string{"SAKURACLOUD_RETRY_INTERVAL"},
+		Destination: &GlobalOption.RetryIntervalSec,
+	},
+	&cli.StringFlag{
 		Name:        "api-root-url",
-		Hidden:      true,
 		EnvVars:     []string{"USACLOUD_API_ROOT_URL"},
 		Destination: &GlobalOption.APIRootURL,
+		Hidden:      true,
 	},
 	&cli.StringFlag{
 		Name:        "default-output-type",
