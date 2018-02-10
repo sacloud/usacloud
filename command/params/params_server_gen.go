@@ -4037,8 +4037,8 @@ func (p *VncSnapshotServerParam) GetId() int64 {
 	return p.Id
 }
 
-// RdpServerParam is input parameters for the sacloud API
-type RdpServerParam struct {
+// RemoteDesktopServerParam is input parameters for the sacloud API
+type RemoteDesktopServerParam struct {
 	User              string   `json:"user"`
 	Port              int      `json:"port"`
 	Selector          []string `json:"selector"`
@@ -4048,9 +4048,9 @@ type RdpServerParam struct {
 	Id                int64    `json:"id"`
 }
 
-// NewRdpServerParam return new RdpServerParam
-func NewRdpServerParam() *RdpServerParam {
-	return &RdpServerParam{
+// NewRemoteDesktopServerParam return new RemoteDesktopServerParam
+func NewRemoteDesktopServerParam() *RemoteDesktopServerParam {
+	return &RemoteDesktopServerParam{
 
 		User: "Administrator",
 		Port: 3389,
@@ -4058,7 +4058,7 @@ func NewRdpServerParam() *RdpServerParam {
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *RdpServerParam) FillValueToSkeleton() {
+func (p *RemoteDesktopServerParam) FillValueToSkeleton() {
 	if isEmpty(p.User) {
 		p.User = ""
 	}
@@ -4084,7 +4084,7 @@ func (p *RdpServerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *RdpServerParam) Validate() []error {
+func (p *RemoteDesktopServerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -4111,82 +4111,82 @@ func (p *RdpServerParam) Validate() []error {
 	return errors
 }
 
-func (p *RdpServerParam) GetResourceDef() *schema.Resource {
+func (p *RemoteDesktopServerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *RdpServerParam) GetCommandDef() *schema.Command {
-	return p.GetResourceDef().Commands["rdp"]
+func (p *RemoteDesktopServerParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["remote-desktop"]
 }
 
-func (p *RdpServerParam) GetIncludeFields() []string {
+func (p *RemoteDesktopServerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *RdpServerParam) GetExcludeFields() []string {
+func (p *RemoteDesktopServerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *RdpServerParam) GetTableType() output.TableType {
+func (p *RemoteDesktopServerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *RdpServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *RemoteDesktopServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *RdpServerParam) SetUser(v string) {
+func (p *RemoteDesktopServerParam) SetUser(v string) {
 	p.User = v
 }
 
-func (p *RdpServerParam) GetUser() string {
+func (p *RemoteDesktopServerParam) GetUser() string {
 	return p.User
 }
-func (p *RdpServerParam) SetPort(v int) {
+func (p *RemoteDesktopServerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *RdpServerParam) GetPort() int {
+func (p *RemoteDesktopServerParam) GetPort() int {
 	return p.Port
 }
-func (p *RdpServerParam) SetSelector(v []string) {
+func (p *RemoteDesktopServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *RdpServerParam) GetSelector() []string {
+func (p *RemoteDesktopServerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *RdpServerParam) SetParamTemplate(v string) {
+func (p *RemoteDesktopServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *RdpServerParam) GetParamTemplate() string {
+func (p *RemoteDesktopServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *RdpServerParam) SetParamTemplateFile(v string) {
+func (p *RemoteDesktopServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *RdpServerParam) GetParamTemplateFile() string {
+func (p *RemoteDesktopServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *RdpServerParam) SetGenerateSkeleton(v bool) {
+func (p *RemoteDesktopServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *RdpServerParam) GetGenerateSkeleton() bool {
+func (p *RemoteDesktopServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *RdpServerParam) SetId(v int64) {
+func (p *RemoteDesktopServerParam) SetId(v int64) {
 	p.Id = v
 }
 
-func (p *RdpServerParam) GetId() int64 {
+func (p *RemoteDesktopServerParam) GetId() int64 {
 	return p.Id
 }
 
-// RdpInfoServerParam is input parameters for the sacloud API
-type RdpInfoServerParam struct {
+// RemoteDesktopInfoServerParam is input parameters for the sacloud API
+type RemoteDesktopInfoServerParam struct {
 	User              string   `json:"user"`
 	Port              int      `json:"port"`
 	Selector          []string `json:"selector"`
@@ -4201,9 +4201,9 @@ type RdpInfoServerParam struct {
 	Id                int64    `json:"id"`
 }
 
-// NewRdpInfoServerParam return new RdpInfoServerParam
-func NewRdpInfoServerParam() *RdpInfoServerParam {
-	return &RdpInfoServerParam{
+// NewRemoteDesktopInfoServerParam return new RemoteDesktopInfoServerParam
+func NewRemoteDesktopInfoServerParam() *RemoteDesktopInfoServerParam {
+	return &RemoteDesktopInfoServerParam{
 
 		User: "Administrator",
 		Port: 3389,
@@ -4211,7 +4211,7 @@ func NewRdpInfoServerParam() *RdpInfoServerParam {
 }
 
 // FillValueToSkeleton fill values to empty fields
-func (p *RdpInfoServerParam) FillValueToSkeleton() {
+func (p *RemoteDesktopInfoServerParam) FillValueToSkeleton() {
 	if isEmpty(p.User) {
 		p.User = ""
 	}
@@ -4252,7 +4252,7 @@ func (p *RdpInfoServerParam) FillValueToSkeleton() {
 }
 
 // Validate checks current values in model
-func (p *RdpInfoServerParam) Validate() []error {
+func (p *RemoteDesktopInfoServerParam) Validate() []error {
 	errors := []error{}
 	{
 		validator := validateRequired
@@ -4299,112 +4299,112 @@ func (p *RdpInfoServerParam) Validate() []error {
 	return errors
 }
 
-func (p *RdpInfoServerParam) GetResourceDef() *schema.Resource {
+func (p *RemoteDesktopInfoServerParam) GetResourceDef() *schema.Resource {
 	return define.Resources["Server"]
 }
 
-func (p *RdpInfoServerParam) GetCommandDef() *schema.Command {
-	return p.GetResourceDef().Commands["rdp-info"]
+func (p *RemoteDesktopInfoServerParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["remote-desktop-info"]
 }
 
-func (p *RdpInfoServerParam) GetIncludeFields() []string {
+func (p *RemoteDesktopInfoServerParam) GetIncludeFields() []string {
 	return p.GetCommandDef().IncludeFields
 }
 
-func (p *RdpInfoServerParam) GetExcludeFields() []string {
+func (p *RemoteDesktopInfoServerParam) GetExcludeFields() []string {
 	return p.GetCommandDef().ExcludeFields
 }
 
-func (p *RdpInfoServerParam) GetTableType() output.TableType {
+func (p *RemoteDesktopInfoServerParam) GetTableType() output.TableType {
 	return p.GetCommandDef().TableType
 }
 
-func (p *RdpInfoServerParam) GetColumnDefs() []output.ColumnDef {
+func (p *RemoteDesktopInfoServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *RdpInfoServerParam) SetUser(v string) {
+func (p *RemoteDesktopInfoServerParam) SetUser(v string) {
 	p.User = v
 }
 
-func (p *RdpInfoServerParam) GetUser() string {
+func (p *RemoteDesktopInfoServerParam) GetUser() string {
 	return p.User
 }
-func (p *RdpInfoServerParam) SetPort(v int) {
+func (p *RemoteDesktopInfoServerParam) SetPort(v int) {
 	p.Port = v
 }
 
-func (p *RdpInfoServerParam) GetPort() int {
+func (p *RemoteDesktopInfoServerParam) GetPort() int {
 	return p.Port
 }
-func (p *RdpInfoServerParam) SetSelector(v []string) {
+func (p *RemoteDesktopInfoServerParam) SetSelector(v []string) {
 	p.Selector = v
 }
 
-func (p *RdpInfoServerParam) GetSelector() []string {
+func (p *RemoteDesktopInfoServerParam) GetSelector() []string {
 	return p.Selector
 }
-func (p *RdpInfoServerParam) SetParamTemplate(v string) {
+func (p *RemoteDesktopInfoServerParam) SetParamTemplate(v string) {
 	p.ParamTemplate = v
 }
 
-func (p *RdpInfoServerParam) GetParamTemplate() string {
+func (p *RemoteDesktopInfoServerParam) GetParamTemplate() string {
 	return p.ParamTemplate
 }
-func (p *RdpInfoServerParam) SetParamTemplateFile(v string) {
+func (p *RemoteDesktopInfoServerParam) SetParamTemplateFile(v string) {
 	p.ParamTemplateFile = v
 }
 
-func (p *RdpInfoServerParam) GetParamTemplateFile() string {
+func (p *RemoteDesktopInfoServerParam) GetParamTemplateFile() string {
 	return p.ParamTemplateFile
 }
-func (p *RdpInfoServerParam) SetGenerateSkeleton(v bool) {
+func (p *RemoteDesktopInfoServerParam) SetGenerateSkeleton(v bool) {
 	p.GenerateSkeleton = v
 }
 
-func (p *RdpInfoServerParam) GetGenerateSkeleton() bool {
+func (p *RemoteDesktopInfoServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *RdpInfoServerParam) SetOutputType(v string) {
+func (p *RemoteDesktopInfoServerParam) SetOutputType(v string) {
 	p.OutputType = v
 }
 
-func (p *RdpInfoServerParam) GetOutputType() string {
+func (p *RemoteDesktopInfoServerParam) GetOutputType() string {
 	return p.OutputType
 }
-func (p *RdpInfoServerParam) SetColumn(v []string) {
+func (p *RemoteDesktopInfoServerParam) SetColumn(v []string) {
 	p.Column = v
 }
 
-func (p *RdpInfoServerParam) GetColumn() []string {
+func (p *RemoteDesktopInfoServerParam) GetColumn() []string {
 	return p.Column
 }
-func (p *RdpInfoServerParam) SetQuiet(v bool) {
+func (p *RemoteDesktopInfoServerParam) SetQuiet(v bool) {
 	p.Quiet = v
 }
 
-func (p *RdpInfoServerParam) GetQuiet() bool {
+func (p *RemoteDesktopInfoServerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *RdpInfoServerParam) SetFormat(v string) {
+func (p *RemoteDesktopInfoServerParam) SetFormat(v string) {
 	p.Format = v
 }
 
-func (p *RdpInfoServerParam) GetFormat() string {
+func (p *RemoteDesktopInfoServerParam) GetFormat() string {
 	return p.Format
 }
-func (p *RdpInfoServerParam) SetFormatFile(v string) {
+func (p *RemoteDesktopInfoServerParam) SetFormatFile(v string) {
 	p.FormatFile = v
 }
 
-func (p *RdpInfoServerParam) GetFormatFile() string {
+func (p *RemoteDesktopInfoServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
-func (p *RdpInfoServerParam) SetId(v int64) {
+func (p *RemoteDesktopInfoServerParam) SetId(v int64) {
 	p.Id = v
 }
 
-func (p *RdpInfoServerParam) GetId() int64 {
+func (p *RemoteDesktopInfoServerParam) GetId() int64 {
 	return p.Id
 }
 

@@ -845,27 +845,27 @@ func ServerVncSnapshotCompleteFlags(ctx command.Context, params *params.VncSnaps
 	}
 }
 
-func ServerRdpCompleteFlags(ctx command.Context, params *params.RdpServerParam, flagName string, currentValue string) {
+func ServerRemoteDesktopCompleteFlags(ctx command.Context, params *params.RemoteDesktopServerParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 
 	switch flagName {
 	case "user", "l":
-		param := define.Resources["Server"].Commands["rdp"].BuildedParams().Get("user")
+		param := define.Resources["Server"].Commands["remote-desktop"].BuildedParams().Get("user")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
 	case "port", "p":
-		param := define.Resources["Server"].Commands["rdp"].BuildedParams().Get("port")
+		param := define.Resources["Server"].Commands["remote-desktop"].BuildedParams().Get("port")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
 	case "selector":
-		param := define.Resources["Server"].Commands["rdp"].BuildedParams().Get("selector")
+		param := define.Resources["Server"].Commands["remote-desktop"].BuildedParams().Get("selector")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
 	case "id":
-		param := define.Resources["Server"].Commands["rdp"].BuildedParams().Get("id")
+		param := define.Resources["Server"].Commands["remote-desktop"].BuildedParams().Get("id")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -879,27 +879,27 @@ func ServerRdpCompleteFlags(ctx command.Context, params *params.RdpServerParam, 
 	}
 }
 
-func ServerRdpInfoCompleteFlags(ctx command.Context, params *params.RdpInfoServerParam, flagName string, currentValue string) {
+func ServerRemoteDesktopInfoCompleteFlags(ctx command.Context, params *params.RemoteDesktopInfoServerParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 
 	switch flagName {
 	case "user", "l":
-		param := define.Resources["Server"].Commands["rdp-info"].BuildedParams().Get("user")
+		param := define.Resources["Server"].Commands["remote-desktop-info"].BuildedParams().Get("user")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
 	case "port", "p":
-		param := define.Resources["Server"].Commands["rdp-info"].BuildedParams().Get("port")
+		param := define.Resources["Server"].Commands["remote-desktop-info"].BuildedParams().Get("port")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
 	case "selector":
-		param := define.Resources["Server"].Commands["rdp-info"].BuildedParams().Get("selector")
+		param := define.Resources["Server"].Commands["remote-desktop-info"].BuildedParams().Get("selector")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
 	case "id":
-		param := define.Resources["Server"].Commands["rdp-info"].BuildedParams().Get("id")
+		param := define.Resources["Server"].Commands["remote-desktop-info"].BuildedParams().Get("id")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
