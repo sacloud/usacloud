@@ -23,6 +23,7 @@ type Option struct {
 	TraceMode         bool
 	Format            string
 	DefaultOutputType string
+	NoColor           bool
 	In                *os.File
 	Out               io.Writer
 	Progress          io.Writer
@@ -97,6 +98,12 @@ var GlobalFlags = []cli.Flag{
 		Usage:       "API client retry interval seconds",
 		EnvVars:     []string{"SAKURACLOUD_RETRY_INTERVAL"},
 		Destination: &GlobalOption.RetryIntervalSec,
+	},
+	&cli.BoolFlag{
+		Name:        "no-color",
+		Usage:       "Flag of not using ANSI color output",
+		EnvVars:     []string{"NO_COLOR"},
+		Destination: &GlobalOption.NoColor,
 	},
 	&cli.StringFlag{
 		Name:        "api-root-url",
