@@ -5,6 +5,7 @@ import (
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
+	"github.com/sacloud/usacloud/helper/printer"
 	"github.com/sacloud/usacloud/helper/ssh"
 	"os"
 	"strings"
@@ -97,13 +98,12 @@ func ServerSshExec(ctx command.Context, params *params.SshExecServerParam) error
 		args = append(args, ctx.Args()[1:]...)
 	}
 
-	clr := color.New(color.FgHiGreen)
 	if !params.Quiet {
-		clr.Fprintf(command.GlobalOption.Progress, "=== start | %s ===\n", displayName)
+		printer.Fprintf(command.GlobalOption.Progress, color.New(color.FgHiGreen), "=== start | %s ===\n", displayName)
 	}
 	err = session.Run(strings.Join(args, " "))
 	if !params.Quiet {
-		clr.Fprintf(command.GlobalOption.Progress, "=== end | %s ===\n", displayName)
+		printer.Fprintf(command.GlobalOption.Progress, color.New(color.FgHiGreen), "=== end | %s ===\n", displayName)
 	}
 
 	if err != nil {

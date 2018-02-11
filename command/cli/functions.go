@@ -70,6 +70,10 @@ func applyConfigFromFile(c FlagHandler) error {
 		c.Set("retry-interval", fmt.Sprintf("%d", v.RetryIntervalSec))
 		command.GlobalOption.RetryIntervalSec = v.RetryIntervalSec
 	}
+	if !c.IsSet("no-color") && v.NoColor {
+		c.Set("no-color", "true")
+		command.GlobalOption.NoColor = v.NoColor
+	}
 
 	// for string-slice
 	zones := []string{}

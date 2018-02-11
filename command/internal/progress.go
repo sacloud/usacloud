@@ -3,6 +3,7 @@ package internal
 import (
 	"fmt"
 	"github.com/fatih/color"
+	"github.com/sacloud/usacloud/helper/printer"
 	"io"
 	"sync"
 	"time"
@@ -100,6 +101,5 @@ func (s *ProgressWriter) Fail(err error) {
 func (s *ProgressWriter) print(clr *color.Color, msg string) {
 	mutex.Lock()
 	defer mutex.Unlock()
-
-	clr.Fprint(s.out, msg)
+	printer.Fprint(s.out, clr, msg)
 }

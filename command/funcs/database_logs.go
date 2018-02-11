@@ -6,6 +6,7 @@ import (
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
+	"github.com/sacloud/usacloud/helper/printer"
 	"time"
 )
 
@@ -62,7 +63,7 @@ func DatabaseLogs(ctx command.Context, params *params.LogsDatabaseParam) error {
 
 			for key, lines := range logs {
 				if params.LogName == "all" {
-					color.New(color.FgHiGreen).Fprintf(out, "\n==> [%s]:start\n", key)
+					printer.Fprintf(out, color.New(color.FgHiGreen), "\n==> [%s]:start\n", key)
 				}
 				for _, line := range lines {
 					if logBuf.PutIfAbsent(line) {
@@ -70,7 +71,7 @@ func DatabaseLogs(ctx command.Context, params *params.LogsDatabaseParam) error {
 					}
 				}
 				if params.LogName == "all" {
-					color.New(color.FgHiGreen).Fprintf(out, "\n<== [%s]:end\n", key)
+					printer.Fprintf(out, color.New(color.FgHiGreen), "\n<== [%s]:end\n", key)
 				}
 			}
 		}
