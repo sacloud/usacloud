@@ -40,6 +40,19 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Feb 13 2018 <sacloud.users@gmail.com> - 0.10.0-1
+- server build時のバリデーション誤り修正 (by yamamoto-febc)
+- インストールスクリプトの複数OS対応 (by yamamoto-febc)
+- Windows系OSの作成時パラメータ例誤り修正 (by yamamoto-febc)
+- auth-statusでのレスポンスハンドリング修正 (by yamamoto-febc)
+- Sophos UTM対応 (by yamamoto-febc)
+- VNC接続時の確認ダイアログ除去 (by yamamoto-febc)
+- リモートデスクトップ接続(RDP)コマンドの追加 (by yamamoto-febc)
+- リモートデスクトップ接続コマンド名変更 (by yamamoto-febc)
+- グローバルオプションの追加 (by yamamoto-febc)
+- database create時のヘルプテキスト改善 (by yamamoto-febc)
+- no-colorオプションの追加 (by yamamoto-febc)
+
 * Wed Jan 24 2018 <sacloud.users@gmail.com> - 0.9.1-1
 - MariaDB作成時のAPIパラメータ更新 (by yamamoto-febc)
 

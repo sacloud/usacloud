@@ -1,3 +1,30 @@
+usacloud (0.10.0-1) stable; urgency=low
+
+  * server build時のバリデーション誤り修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/294>
+  * インストールスクリプトの複数OS対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/295>
+  * Windows系OSの作成時パラメータ例誤り修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/296>
+  * auth-statusでのレスポンスハンドリング修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/297>
+  * Sophos UTM対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/300>
+  * VNC接続時の確認ダイアログ除去 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/302>
+  * リモートデスクトップ接続(RDP)コマンドの追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/303>
+  * リモートデスクトップ接続コマンド名変更 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/304>
+  * グローバルオプションの追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/306>
+  * database create時のヘルプテキスト改善 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/307>
+  * no-colorオプションの追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/308>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Tue, 13 Feb 2018 01:47:07 +0000
+
 usacloud (0.9.1-1) stable; urgency=low
 
   * MariaDB作成時のAPIパラメータ更新 (by yamamoto-febc)
