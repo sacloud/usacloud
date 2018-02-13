@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.10.0 (2018-02-13)
+
+* server build時のバリデーション誤り修正 #294 (yamamoto-febc)
+* インストールスクリプトの複数OS対応 #295 (yamamoto-febc)
+* Windows系OSの作成時パラメータ例誤り修正 #296 (yamamoto-febc)
+* auth-statusでのレスポンスハンドリング修正 #297 (yamamoto-febc)
+* Sophos UTM対応 #300 (yamamoto-febc)
+* VNC接続時の確認ダイアログ除去 #302 (yamamoto-febc)
+* リモートデスクトップ接続(RDP)コマンドの追加 #303 (yamamoto-febc)
+* リモートデスクトップ接続コマンド名変更 #304 (yamamoto-febc)
+* グローバルオプションの追加 #306 (yamamoto-febc)
+* database create時のヘルプテキスト改善 #307 (yamamoto-febc)
+* no-colorオプションの追加 #308 (yamamoto-febc)
+
+
 ## 0.9.1 (2018-01-24)
 
 * MariaDB作成時のAPIパラメータ更新 #284 (yamamoto-febc)
