@@ -24,30 +24,10 @@
 
 # インストール
 
-### macOS(`homebrew`) / Linux(`linuxbrew`)
+### macOS(`brew`) / Linux(`apt` or `yum` or `brew`) / bash on Windows(Ubuntu)
 
 ```bash
-brew tap sacloud/usacloud; brew install usacloud
-```
-
-> ※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。
-
---- 
-
-### RHEL / CentOS
-
-```bash
-curl -fsSL https://releases.usacloud.jp/usacloud/repos/setup-yum.sh | sh
-```
-
-> ※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。
-
---- 
-
-### Ubuntu / debian / bash on Windows
-
-```bash
-curl -fsSL https://releases.usacloud.jp/usacloud/repos/setup-apt.sh | sh
+curl -fsSL https://releases.usacloud.jp/usacloud/repos/install.sh | bash
 ```
 
 > ※bash_completionを有効化するには上記コマンドを実行後に再ログインしてください。
@@ -56,7 +36,9 @@ curl -fsSL https://releases.usacloud.jp/usacloud/repos/setup-apt.sh | sh
 
 ### Windows(`chocolatey`)
 
-    choco install usacloud
+```bash
+choco install usacloud
+```
 
 > chocolateyの[usacloudパッケージ](https://chocolatey.org/packages/usacloud)は @223n さんによってメンテナンスされています。
 

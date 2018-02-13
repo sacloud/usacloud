@@ -17,17 +17,9 @@
 
 ## インストール
 
-### macOS(`homebrew`) / Linux(`linuxbrew`)
+### macOS(`brew`) / Linux(`apt` or `yum` or `brew`) / bash on Windows(Ubuntu)
 
-    brew tap sacloud/usacloud; brew install usacloud
-
-### RHEL / CentOS
-
-    curl -fsSL https://releases.usacloud.jp/usacloud/repos/setup-yum.sh | sh
-
-### Ubuntu / debian / bash on Windows(Ubuntu)
-
-    curl -fsSL https://releases.usacloud.jp/usacloud/repos/setup-apt.sh | sh
+    curl -fsSL https://releases.usacloud.jp/usacloud/repos/install.sh | bash
 
 ### Windows(`chocolatey`)
 
@@ -35,7 +27,7 @@
 
 > chocolateyの[usacloudパッケージ](https://chocolatey.org/packages/usacloud)は @223n さんによってメンテナンスされています。
 
-### Windows / その他の場合
+### Windows(`chocolatey`以外) / その他環境の場合
 
 以下のリンクからバイナリーファイルをダウンロードして展開し、任意のフォルダー内に配置してください。  
 (PATHを通しておくと便利です)
