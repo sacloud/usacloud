@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.10.1 (2018-02-14)
+
+* タイムアウトオプションの追加 #312 (yamamoto-febc)
+* プログレス表示崩れ対応 #313 (yamamoto-febc)
+
+
 ## 0.10.0 (2018-02-13)
 
 * server build時のバリデーション誤り修正 #294 (yamamoto-febc)
