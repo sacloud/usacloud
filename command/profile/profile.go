@@ -72,6 +72,7 @@ type ConfigFileValue struct {
 	AccessToken       string
 	AccessTokenSecret string
 	Zone              string
+	Timeout           int      `json:",omitempty"`
 	AcceptLanguage    string   `json:",omitempty"`
 	RetryMax          int      `json:",omitempty"`
 	RetryIntervalSec  int64    `json:",omitempty"`
