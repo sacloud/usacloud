@@ -97,6 +97,10 @@ func createAPIClient() *api.Client {
 	c.UserAgent = fmt.Sprintf("usacloud-%s", version.Version)
 	c.TraceMode = GlobalOption.TraceMode
 
+	if GlobalOption.Timeout > 0 {
+		c.DefaultTimeoutDuration = time.Duration(GlobalOption.Timeout) * time.Minute
+	}
+
 	if GlobalOption.AcceptLanguage != "" {
 		c.AcceptLanguage = GlobalOption.AcceptLanguage
 	}

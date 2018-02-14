@@ -31,7 +31,7 @@ func NewProgress(msgProgress, msgPrefix string, out io.Writer) *ProgressWriter {
 		msgStart:    fmt.Sprintf("%s is started...", msgPrefix),
 		msgComplete: fmt.Sprintf("%s is finished", msgPrefix),
 		msgFail:     fmt.Sprintf("%s is failed", msgPrefix),
-		timeout:     1 * time.Hour,
+		timeout:     12 * time.Hour,
 		duration:    10 * time.Second,
 		wg:          sync.WaitGroup{},
 	}

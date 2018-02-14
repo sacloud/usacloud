@@ -15,6 +15,7 @@ type Option struct {
 	AccessTokenSecret string
 	Zone              string
 	ProfileName       string
+	Timeout           int
 	AcceptLanguage    string
 	RetryMax          int
 	RetryIntervalSec  int64
@@ -80,6 +81,13 @@ var GlobalFlags = []cli.Flag{
 		Usage:       "Config(Profile) name",
 		EnvVars:     []string{"USACLOUD_PROFILE"},
 		Destination: &GlobalOption.ProfileName,
+	},
+	&cli.IntFlag{
+		Name:        "timeout",
+		Usage:       "Number of timeout minutes for polling functions",
+		EnvVars:     []string{"SAKURACLOUD_TIMEOUT"},
+		Value:       20,
+		Destination: &GlobalOption.Timeout,
 	},
 	&cli.StringFlag{
 		Name:        "accept-language",
