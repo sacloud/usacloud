@@ -40,6 +40,10 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Feb 14 2018 <sacloud.users@gmail.com> - 0.10.1-1
+- タイムアウトオプションの追加 (by yamamoto-febc)
+- プログレス表示崩れ対応 (by yamamoto-febc)
+
 * Tue Feb 13 2018 <sacloud.users@gmail.com> - 0.10.0-1
 - server build時のバリデーション誤り修正 (by yamamoto-febc)
 - インストールスクリプトの複数OS対応 (by yamamoto-febc)
