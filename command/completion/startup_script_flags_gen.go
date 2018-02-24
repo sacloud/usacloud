@@ -34,6 +34,11 @@ func StartupScriptListCompleteFlags(ctx command.Context, params *params.ListStar
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "class":
+		param := define.Resources["StartupScript"].Commands["list"].BuildedParams().Get("class")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
 		param := define.Resources["StartupScript"].Commands["list"].BuildedParams().Get("from")
 		if param != nil {

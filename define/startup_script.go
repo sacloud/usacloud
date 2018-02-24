@@ -65,7 +65,7 @@ func StartupScriptResource() *schema.Resource {
 }
 
 func startupScriptListParam() map[string]*schema.Schema {
-	return mergeParameterMap(CommonListParam, paramScopeCond, paramTagsCond)
+	return mergeParameterMap(CommonListParam, paramScopeCond, paramTagsCond, paramClassCond)
 
 }
 

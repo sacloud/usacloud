@@ -14,6 +14,7 @@ type ListStartupScriptParam struct {
 	Id                []int64  `json:"id"`
 	Scope             string   `json:"scope"`
 	Tags              []string `json:"tags"`
+	Class             []string `json:"class"`
 	From              int      `json:"from"`
 	Max               int      `json:"max"`
 	Sort              []string `json:"sort"`
@@ -45,6 +46,9 @@ func (p *ListStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
+	}
+	if isEmpty(p.Class) {
+		p.Class = []string{""}
 	}
 	if isEmpty(p.From) {
 		p.From = 0
@@ -199,6 +203,13 @@ func (p *ListStartupScriptParam) SetTags(v []string) {
 
 func (p *ListStartupScriptParam) GetTags() []string {
 	return p.Tags
+}
+func (p *ListStartupScriptParam) SetClass(v []string) {
+	p.Class = v
+}
+
+func (p *ListStartupScriptParam) GetClass() []string {
+	return p.Class
 }
 func (p *ListStartupScriptParam) SetFrom(v int) {
 	p.From = v
