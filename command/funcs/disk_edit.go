@@ -2,6 +2,7 @@ package funcs
 
 import (
 	"fmt"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
@@ -11,33 +12,7 @@ func DiskEdit(ctx command.Context, params *params.EditDiskParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetDiskAPI()
-	p := api.NewCondig()
-
-	// set params
-	if ctx.IsSet("hostname") {
-		p.SetHostName(params.Hostname)
-	}
-	if ctx.IsSet("password") {
-		p.SetPassword(params.Password)
-	}
-	if ctx.IsSet("ssh-key") {
-		p.SetSSHKeys(command.StringIDs(params.SshKeyIds))
-	}
-	if ctx.IsSet("disable-password-auth") {
-		p.SetDisablePWAuth(params.DisablePasswordAuth)
-	}
-	if ctx.IsSet("startup-script-ids") {
-		p.SetNotes(command.StringIDs(params.StartupScriptIds))
-	}
-	if ctx.IsSet("ipaddress") {
-		p.SetUserIPAddress(params.Ipaddress)
-	}
-	if ctx.IsSet("default-route") {
-		p.SetDefaultRoute(params.DefaultRoute)
-	}
-	if ctx.IsSet("nw-masklen") {
-		p.SetNetworkMaskLen(fmt.Sprintf("%d", params.NwMasklen))
-	}
+	p := buildDiskEditValue(ctx, params)
 
 	// wait for copy with progress
 	err := internal.ExecWithProgress(
@@ -65,4 +40,36 @@ func DiskEdit(ctx command.Context, params *params.EditDiskParam) error {
 		return fmt.Errorf("DiskEdit is failed: %s", err)
 	}
 	return ctx.GetOutput().Print(res)
+}
+
+func buildDiskEditValue(ctx command.Context, params *params.EditDiskParam) *sacloud.DiskEditValue {
+	p := ctx.GetAPIClient().GetDiskAPI().NewCondig()
+
+	// set params
+	if ctx.IsSet("hostname") {
+		p.SetHostName(params.Hostname)
+	}
+	if ctx.IsSet("password") {
+		p.SetPassword(params.Password)
+	}
+	if ctx.IsSet("ssh-key-ids") {
+		p.SetSSHKeys(command.StringIDs(params.SshKeyIds))
+	}
+	if ctx.IsSet("disable-password-auth") {
+		p.SetDisablePWAuth(params.DisablePasswordAuth)
+	}
+	if ctx.IsSet("startup-script-ids") {
+		p.SetNotes(command.StringIDs(params.StartupScriptIds))
+	}
+	if ctx.IsSet("ipaddress") {
+		p.SetUserIPAddress(params.Ipaddress)
+	}
+	if ctx.IsSet("default-route") {
+		p.SetDefaultRoute(params.DefaultRoute)
+	}
+	if ctx.IsSet("nw-masklen") {
+		p.SetNetworkMaskLen(fmt.Sprintf("%d", params.NwMasklen))
+	}
+
+	return p
 }
