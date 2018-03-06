@@ -26,7 +26,7 @@ func DiskEdit(ctx command.Context, params *params.EditDiskParam) error {
 	if ctx.IsSet("disable-password-auth") {
 		p.SetDisablePWAuth(params.DisablePasswordAuth)
 	}
-	if ctx.IsSet("startup-script") {
+	if ctx.IsSet("startup-script-ids") {
 		p.SetNotes(command.StringIDs(params.StartupScriptIds))
 	}
 	if ctx.IsSet("ipaddress") {
