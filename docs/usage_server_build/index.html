@@ -560,7 +560,6 @@
 <p><strong>2) パブリックアーカイブ(Windows系)を利用してディスクを作成する場合</strong></p>
 <p><code>ディスクの修正</code>カテゴリのうち、以下の項目のみ利用可能です。  </p>
 <ul>
-<li>パスワード</li>
 <li>IPアドレス(共有セグメント以外に接続する場合)</li>
 <li>ネットワークマスク(共有セグメント以外に接続する場合)</li>
 <li>デフォルトゲートウェイ(共有セグメント以外に接続する場合)</li>
@@ -666,14 +665,14 @@
 <h4 id="_9">共有セグメントに接続する場合</h4>
 <pre><code class="console">$ usacloud server build \
         --os-type windows2016-rds \
-        --password [put-your-password] \
+        --disk-size 100 \
         --name [put-your-server-name] \
 </code></pre>
 
 <h4 id="_10">スイッチ/スイッチ+ルータに接続する場合</h4>
 <pre><code class="console">$ usacloud server build \
         --os-type windows2016-rds \
-        --password [put-your-password] \
+        --disk-size 100 \
         --name [put-your-server-name] \
         --network-mode switch \
         --switch-id [put-your-switchID] \

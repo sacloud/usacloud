@@ -1425,7 +1425,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("update") {
+						if !command.ConfirmContinue("update", ids...) {
 							return nil
 						}
 					}
@@ -1792,7 +1792,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("delete") {
+						if !command.ConfirmContinue("delete", ids...) {
 							return nil
 						}
 					}
@@ -2169,7 +2169,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("update-bandwidth") {
+						if !command.ConfirmContinue("update-bandwidth", ids...) {
 							return nil
 						}
 					}
@@ -2902,7 +2902,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("subnet-add") {
+						if !command.ConfirmContinue("subnet-add", ids...) {
 							return nil
 						}
 					}
@@ -3224,7 +3224,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("subnet-delete") {
+						if !command.ConfirmContinue("subnet-delete", ids...) {
 							return nil
 						}
 					}
@@ -3610,7 +3610,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("subnet-update") {
+						if !command.ConfirmContinue("subnet-update", ids...) {
 							return nil
 						}
 					}
@@ -4321,7 +4321,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("ipv6-enable") {
+						if !command.ConfirmContinue("ipv6-enable", ids...) {
 							return nil
 						}
 					}
@@ -4633,7 +4633,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("ipv6-disable") {
+						if !command.ConfirmContinue("ipv6-disable", ids...) {
 							return nil
 						}
 					}

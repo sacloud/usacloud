@@ -96,6 +96,21 @@ func createAPIClient() *api.Client {
 	c := api.NewClient(GlobalOption.AccessToken, GlobalOption.AccessTokenSecret, GlobalOption.Zone)
 	c.UserAgent = fmt.Sprintf("usacloud-%s", version.Version)
 	c.TraceMode = GlobalOption.TraceMode
+
+	if GlobalOption.Timeout > 0 {
+		c.DefaultTimeoutDuration = time.Duration(GlobalOption.Timeout) * time.Minute
+	}
+
+	if GlobalOption.AcceptLanguage != "" {
+		c.AcceptLanguage = GlobalOption.AcceptLanguage
+	}
+	if GlobalOption.RetryMax >= 0 {
+		c.RetryMax = GlobalOption.RetryMax
+	}
+	if GlobalOption.RetryIntervalSec >= 0 {
+		c.RetryInterval = time.Duration(GlobalOption.RetryIntervalSec) * time.Second
+	}
+
 	return c
 }
 

@@ -36,6 +36,8 @@ func init() {
 	vncInfoParam := params.NewVncInfoServerParam()
 	vncSendParam := params.NewVncSendServerParam()
 	vncSnapshotParam := params.NewVncSnapshotServerParam()
+	remoteDesktopParam := params.NewRemoteDesktopServerParam()
+	remoteDesktopInfoParam := params.NewRemoteDesktopInfoServerParam()
 	diskInfoParam := params.NewDiskInfoServerParam()
 	diskConnectParam := params.NewDiskConnectServerParam()
 	diskDisconnectParam := params.NewDiskDisconnectServerParam()
@@ -1811,7 +1813,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("update") {
+						if !command.ConfirmContinue("update", ids...) {
 							return nil
 						}
 					}
@@ -2199,7 +2201,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("delete") {
+						if !command.ConfirmContinue("delete", ids...) {
 							return nil
 						}
 					}
@@ -2585,7 +2587,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("plan-change") {
+						if !command.ConfirmContinue("plan-change", ids...) {
 							return nil
 						}
 					}
@@ -2898,7 +2900,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("boot") {
+						if !command.ConfirmContinue("boot", ids...) {
 							return nil
 						}
 					}
@@ -3211,7 +3213,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("shutdown") {
+						if !command.ConfirmContinue("shutdown", ids...) {
 							return nil
 						}
 					}
@@ -3524,7 +3526,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("shutdown-force") {
+						if !command.ConfirmContinue("shutdown-force", ids...) {
 							return nil
 						}
 					}
@@ -3836,7 +3838,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("reset") {
+						if !command.ConfirmContinue("reset", ids...) {
 							return nil
 						}
 					}
@@ -5413,11 +5415,6 @@ func init() {
 						Name:  "selector",
 						Usage: "Set target filter by tag",
 					},
-					&cli.BoolFlag{
-						Name:    "assumeyes",
-						Aliases: []string{"y"},
-						Usage:   "Assume that the answer to any question which would be asked is yes",
-					},
 					&cli.StringFlag{
 						Name:  "param-template",
 						Usage: "Set input parameter from string(JSON)",
@@ -5479,9 +5476,6 @@ func init() {
 					}
 					if c.IsSet("selector") {
 						vncParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						vncParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
 						vncParam.ParamTemplate = c.String("param-template")
@@ -5586,9 +5580,6 @@ func init() {
 					if c.IsSet("selector") {
 						vncParam.Selector = c.StringSlice("selector")
 					}
-					if c.IsSet("assumeyes") {
-						vncParam.Assumeyes = c.Bool("assumeyes")
-					}
 					if c.IsSet("param-template") {
 						vncParam.ParamTemplate = c.String("param-template")
 					}
@@ -5689,16 +5680,6 @@ func init() {
 					ids = command.UniqIDs(ids)
 					if len(ids) == 0 {
 						return fmt.Errorf("Target resource is not found")
-					}
-
-					// confirm
-					if !vncParam.Assumeyes {
-						if !isTerminal() {
-							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
-						}
-						if !command.ConfirmContinue("open VNC client") {
-							return nil
-						}
 					}
 
 					wg := sync.WaitGroup{}
@@ -6476,7 +6457,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("vnc-send") {
+						if !command.ConfirmContinue("vnc-send", ids...) {
 							return nil
 						}
 					}
@@ -6865,7 +6846,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("vnc-snapshot") {
+						if !command.ConfirmContinue("vnc-snapshot", ids...) {
 							return nil
 						}
 					}
@@ -6880,6 +6861,696 @@ func init() {
 						vncSnapshotParam := &p
 						go func() {
 							err := funcs.ServerVncSnapshot(ctx, vncSnapshotParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "remote-desktop",
+				Aliases:   []string{"rdp"},
+				Usage:     "Open RDP client using the OS's default application",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "user",
+						Aliases: []string{"l"},
+						Usage:   "[Required] user name",
+						Value:   "Administrator",
+					},
+					&cli.IntFlag{
+						Name:    "port",
+						Aliases: []string{"p"},
+						Usage:   "[Required] port",
+						Value:   3389,
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = remoteDesktopParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, remoteDesktopParam)
+
+					// Set option values
+					if c.IsSet("user") {
+						remoteDesktopParam.User = c.String("user")
+					}
+					if c.IsSet("port") {
+						remoteDesktopParam.Port = c.Int("port")
+					}
+					if c.IsSet("selector") {
+						remoteDesktopParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						remoteDesktopParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						remoteDesktopParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						remoteDesktopParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						remoteDesktopParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ServerRemoteDesktopCompleteArgs(ctx, remoteDesktopParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ServerRemoteDesktopCompleteArgs(ctx, remoteDesktopParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ServerRemoteDesktopCompleteFlags(ctx, remoteDesktopParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ServerRemoteDesktopCompleteArgs(ctx, remoteDesktopParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					remoteDesktopParam.ParamTemplate = c.String("param-template")
+					remoteDesktopParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(remoteDesktopParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewRemoteDesktopServerParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(remoteDesktopParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("user") {
+						remoteDesktopParam.User = c.String("user")
+					}
+					if c.IsSet("port") {
+						remoteDesktopParam.Port = c.Int("port")
+					}
+					if c.IsSet("selector") {
+						remoteDesktopParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						remoteDesktopParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						remoteDesktopParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						remoteDesktopParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						remoteDesktopParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = remoteDesktopParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if remoteDesktopParam.GenerateSkeleton {
+						remoteDesktopParam.GenerateSkeleton = false
+						remoteDesktopParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(remoteDesktopParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := remoteDesktopParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), remoteDesktopParam)
+
+					apiClient := ctx.GetAPIClient().Server
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(remoteDesktopParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, remoteDesktopParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", remoteDesktopParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(remoteDesktopParam.Selector) == 0 || hasTags(&v, remoteDesktopParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						remoteDesktopParam.SetId(id)
+						p := *remoteDesktopParam // copy struct value
+						remoteDesktopParam := &p
+						go func() {
+							err := funcs.ServerRemoteDesktop(ctx, remoteDesktopParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "remote-desktop-info",
+				Aliases:   []string{"rdp-info"},
+				Usage:     "Show RDP information(.rdp)",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "user",
+						Aliases: []string{"l"},
+						Usage:   "[Required] user name",
+						Value:   "Administrator",
+					},
+					&cli.IntFlag{
+						Name:    "port",
+						Aliases: []string{"p"},
+						Usage:   "[Required] port",
+						Value:   3389,
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = remoteDesktopInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, remoteDesktopInfoParam)
+
+					// Set option values
+					if c.IsSet("user") {
+						remoteDesktopInfoParam.User = c.String("user")
+					}
+					if c.IsSet("port") {
+						remoteDesktopInfoParam.Port = c.Int("port")
+					}
+					if c.IsSet("selector") {
+						remoteDesktopInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						remoteDesktopInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						remoteDesktopInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						remoteDesktopInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						remoteDesktopInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						remoteDesktopInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						remoteDesktopInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						remoteDesktopInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						remoteDesktopInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						remoteDesktopInfoParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ServerRemoteDesktopInfoCompleteArgs(ctx, remoteDesktopInfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ServerRemoteDesktopInfoCompleteArgs(ctx, remoteDesktopInfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ServerRemoteDesktopInfoCompleteFlags(ctx, remoteDesktopInfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ServerRemoteDesktopInfoCompleteArgs(ctx, remoteDesktopInfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					remoteDesktopInfoParam.ParamTemplate = c.String("param-template")
+					remoteDesktopInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(remoteDesktopInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewRemoteDesktopInfoServerParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.MergeWithOverwrite(remoteDesktopInfoParam, p)
+					}
+
+					// Set option values
+					if c.IsSet("user") {
+						remoteDesktopInfoParam.User = c.String("user")
+					}
+					if c.IsSet("port") {
+						remoteDesktopInfoParam.Port = c.Int("port")
+					}
+					if c.IsSet("selector") {
+						remoteDesktopInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						remoteDesktopInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						remoteDesktopInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						remoteDesktopInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						remoteDesktopInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						remoteDesktopInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						remoteDesktopInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						remoteDesktopInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						remoteDesktopInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("id") {
+						remoteDesktopInfoParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = remoteDesktopInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if remoteDesktopInfoParam.GenerateSkeleton {
+						remoteDesktopInfoParam.GenerateSkeleton = false
+						remoteDesktopInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(remoteDesktopInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := remoteDesktopInfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), remoteDesktopInfoParam)
+
+					apiClient := ctx.GetAPIClient().Server
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(remoteDesktopInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Servers {
+							if hasTags(&v, remoteDesktopInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", remoteDesktopInfoParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Servers {
+										if len(remoteDesktopInfoParam.Selector) == 0 || hasTags(&v, remoteDesktopInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						remoteDesktopInfoParam.SetId(id)
+						p := *remoteDesktopInfoParam // copy struct value
+						remoteDesktopInfoParam := &p
+						go func() {
+							err := funcs.ServerRemoteDesktopInfo(ctx, remoteDesktopInfoParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -7541,7 +8212,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("disk-connect") {
+						if !command.ConfirmContinue("disk-connect", ids...) {
 							return nil
 						}
 					}
@@ -7867,7 +8538,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("disk-disconnect") {
+						if !command.ConfirmContinue("disk-disconnect", ids...) {
 							return nil
 						}
 					}
@@ -8543,7 +9214,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("interface-add-for-internet") {
+						if !command.ConfirmContinue("interface-add-for-internet", ids...) {
 							return nil
 						}
 					}
@@ -8913,7 +9584,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("interface-add-for-router") {
+						if !command.ConfirmContinue("interface-add-for-router", ids...) {
 							return nil
 						}
 					}
@@ -9283,7 +9954,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("interface-add-for-switch") {
+						if !command.ConfirmContinue("interface-add-for-switch", ids...) {
 							return nil
 						}
 					}
@@ -9599,7 +10270,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("interface-add-disconnected") {
+						if !command.ConfirmContinue("interface-add-disconnected", ids...) {
 							return nil
 						}
 					}
@@ -10336,7 +11007,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("iso-insert") {
+						if !command.ConfirmContinue("iso-insert", ids...) {
 							return nil
 						}
 					}
@@ -10652,7 +11323,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("iso-eject") {
+						if !command.ConfirmContinue("iso-eject", ids...) {
 							return nil
 						}
 					}
@@ -12205,6 +12876,16 @@ func init() {
 		DisplayName: "Basics",
 		Order:       10,
 	})
+	AppendCommandCategoryMap("server", "remote-desktop", &schema.Category{
+		Key:         "connect",
+		DisplayName: "SSH/SCP/VNC",
+		Order:       30,
+	})
+	AppendCommandCategoryMap("server", "remote-desktop-info", &schema.Category{
+		Key:         "connect",
+		DisplayName: "SSH/SCP/VNC",
+		Order:       30,
+	})
 	AppendCommandCategoryMap("server", "reset", &schema.Category{
 		Key:         "power",
 		DisplayName: "Power Management",
@@ -13538,6 +14219,101 @@ func init() {
 		DisplayName: "Filter options",
 		Order:       2147483587,
 	})
+	AppendFlagCategoryMap("server", "remote-desktop", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop", "port", &schema.Category{
+		Key:         "auth",
+		DisplayName: "Auth options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop", "user", &schema.Category{
+		Key:         "auth",
+		DisplayName: "Auth options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "port", &schema.Category{
+		Key:         "auth",
+		DisplayName: "Auth options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("server", "remote-desktop-info", "user", &schema.Category{
+		Key:         "auth",
+		DisplayName: "Auth options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("server", "reset", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -13852,11 +14628,6 @@ func init() {
 		Key:         "common",
 		DisplayName: "Common options",
 		Order:       2147483617,
-	})
-	AppendFlagCategoryMap("server", "vnc", "assumeyes", &schema.Category{
-		Key:         "Input",
-		DisplayName: "Input options",
-		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("server", "vnc", "generate-skeleton", &schema.Category{
 		Key:         "Input",

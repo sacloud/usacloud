@@ -17,17 +17,9 @@
 
 ## インストール
 
-### macOS(`homebrew`) / Linux(`linuxbrew`)
+### macOS(`brew`) / Linux(`apt` or `yum` or `brew`) / bash on Windows(Ubuntu)
 
-    brew tap sacloud/usacloud; brew install usacloud
-
-### RHEL / CentOS
-
-    curl -fsSL https://releases.usacloud.jp/usacloud/repos/setup-yum.sh | sh
-
-### Ubuntu / debian / bash on Windows(Ubuntu)
-
-    curl -fsSL https://releases.usacloud.jp/usacloud/repos/setup-apt.sh | sh
+    curl -fsSL https://releases.usacloud.jp/usacloud/repos/install.sh | bash
 
 ### Windows(`chocolatey`)
 
@@ -35,7 +27,7 @@
 
 > chocolateyの[usacloudパッケージ](https://chocolatey.org/packages/usacloud)は @223n さんによってメンテナンスされています。
 
-### Windows / その他の場合
+### Windows(`chocolatey`以外) / その他環境の場合
 
 以下のリンクからバイナリーファイルをダウンロードして展開し、任意のフォルダー内に配置してください。  
 (PATHを通しておくと便利です)
@@ -225,7 +217,7 @@ COPYRIGHT:
     
 ```
 
-#### Examples: サーバへの接続(SSH/SCP/VNC)
+#### Examples: サーバへの接続(SSH/SCP/VNC/リモートデスクトップ)
 
 ```bash
     # サーバへのSSH接続
@@ -243,7 +235,14 @@ COPYRIGHT:
     # OSのデフォルトVNCクライアントを用いてサーバへVNC接続
     # (Windowsの場合、.vnc拡張子に適切なVNCクライアントを関連付けしておく必要あり)
     $ usacloud server vnc <ID または 名称> 
+
+    # OSのデフォルトRDPクライアントを用いてサーバへリモートデスクトップ接続
+    $ usacloud server remote-desktop <ID または 名称>
+    # または
+    $ usacloud server rdp <ID または 名称>
 ```
+
+
 
 #### Examples: FTPSでのアップロード/ダウンロード(アーカイブ/ISOイメージ)
 
@@ -428,7 +427,7 @@ $ make docker-integration-test
 
 ## License
 
- `usacloud` Copyright (C) 2017 Kazumichi Yamamoto.
+ `usacloud` Copyright (C) 2017-2018 Kazumichi Yamamoto.
 
   This project is published under [Apache 2.0 License](LICENSE.txt).
   

@@ -2,6 +2,7 @@ package funcs
 
 import (
 	"fmt"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 )
@@ -45,7 +46,8 @@ func VPCRouterFirewallAdd(ctx command.Context, params *params.FirewallAddVPCRout
 		}
 	}
 
-	var f func(ifIndex int, isAllow bool, protocol string, sourceNetwork string, sourcePort string, destNetwork string, destPort string, logging bool, description string)
+	var f func(ifIndex int, isAllow bool, protocol string, sourceNetwork string, sourcePort string,
+		destNetwork string, destPort string, logging bool, description string) (int, *sacloud.VPCRouterFirewallRule)
 	switch params.Direction {
 	case "send":
 		f = p.Settings.Router.AddFirewallRuleSend

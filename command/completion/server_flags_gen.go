@@ -845,6 +845,76 @@ func ServerVncSnapshotCompleteFlags(ctx command.Context, params *params.VncSnaps
 	}
 }
 
+func ServerRemoteDesktopCompleteFlags(ctx command.Context, params *params.RemoteDesktopServerParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "user", "l":
+		param := define.Resources["Server"].Commands["remote-desktop"].BuildedParams().Get("user")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "port", "p":
+		param := define.Resources["Server"].Commands["remote-desktop"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["remote-desktop"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Server"].Commands["remote-desktop"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ServerRemoteDesktopInfoCompleteFlags(ctx command.Context, params *params.RemoteDesktopInfoServerParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "user", "l":
+		param := define.Resources["Server"].Commands["remote-desktop-info"].BuildedParams().Get("user")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "port", "p":
+		param := define.Resources["Server"].Commands["remote-desktop-info"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["Server"].Commands["remote-desktop-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Server"].Commands["remote-desktop-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
 func ServerDiskInfoCompleteFlags(ctx command.Context, params *params.DiskInfoServerParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 

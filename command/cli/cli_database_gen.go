@@ -377,7 +377,7 @@ func init() {
 					&cli.StringFlag{
 						Name:    "database",
 						Aliases: []string{"db"},
-						Usage:   "[Required] set database type",
+						Usage:   "[Required] set database type[postgresql/mariadb]",
 					},
 					&cli.StringFlag{
 						Name:  "username",
@@ -1578,7 +1578,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("update") {
+						if !command.ConfirmContinue("update", ids...) {
 							return nil
 						}
 					}
@@ -1956,7 +1956,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("delete") {
+						if !command.ConfirmContinue("delete", ids...) {
 							return nil
 						}
 					}
@@ -2269,7 +2269,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("boot") {
+						if !command.ConfirmContinue("boot", ids...) {
 							return nil
 						}
 					}
@@ -2582,7 +2582,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("shutdown") {
+						if !command.ConfirmContinue("shutdown", ids...) {
 							return nil
 						}
 					}
@@ -2895,7 +2895,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("shutdown-force") {
+						if !command.ConfirmContinue("shutdown-force", ids...) {
 							return nil
 						}
 					}
@@ -3207,7 +3207,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("reset") {
+						if !command.ConfirmContinue("reset", ids...) {
 							return nil
 						}
 					}
@@ -4484,7 +4484,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("backup-create") {
+						if !command.ConfirmContinue("backup-create", ids...) {
 							return nil
 						}
 					}
@@ -4839,7 +4839,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("backup-restore") {
+						if !command.ConfirmContinue("backup-restore", ids...) {
 							return nil
 						}
 					}
@@ -5194,7 +5194,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("backup-lock") {
+						if !command.ConfirmContinue("backup-lock", ids...) {
 							return nil
 						}
 					}
@@ -5549,7 +5549,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("backup-unlock") {
+						if !command.ConfirmContinue("backup-unlock", ids...) {
 							return nil
 						}
 					}
@@ -5904,7 +5904,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("backup-remove") {
+						if !command.ConfirmContinue("backup-remove", ids...) {
 							return nil
 						}
 					}

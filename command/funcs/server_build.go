@@ -29,7 +29,7 @@ func ServerBuild(ctx command.Context, params *params.BuildServerParam) error {
 	for _, handler := range serverBuildHandlers {
 		err := handler(sb, ctx, params)
 		if err != nil {
-			return nil
+			return err
 		}
 	}
 
@@ -83,6 +83,8 @@ func createServerBuilder(ctx command.Context, params *params.BuildServerParam) i
 				// Windows?
 				if isWindows(params.OsType) {
 					sb = builder.ServerPublicArchiveWindows(client, strToOSType(params.OsType), params.Name)
+				} else if params.OsType == "sophos-utm" { // [HACK] ディスク修正可否から判定するのが望ましいが、Sophos以外に対象がないため現状は決め打ち判定
+					sb = builder.ServerPublicArchiveFixedUnix(client, strToOSType(params.OsType), params.Name)
 				} else {
 					sb = builder.ServerPublicArchiveUnix(client, strToOSType(params.OsType), params.Name, params.Password)
 				}
@@ -351,7 +353,7 @@ func validateServerDiskModeParams(ctx command.Context, params *params.BuildServe
 
 		if params.SourceDiskId == 0 && params.SourceArchiveId == 0 {
 			// Windows?
-			if params.OsType != "" && !isWindows(params.OsType) {
+			if params.OsType != "" && !isWindows(params.OsType) && params.OsType != "sophos-utm" {
 				appendErrors(validateRequired("password", params.Password))
 			}
 

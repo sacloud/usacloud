@@ -3,6 +3,7 @@ package internal
 import (
 	"fmt"
 	"github.com/fatih/color"
+	"github.com/sacloud/usacloud/helper/printer"
 	"io"
 	"sync"
 	"time"
@@ -30,7 +31,7 @@ func NewProgress(msgProgress, msgPrefix string, out io.Writer) *ProgressWriter {
 		msgStart:    fmt.Sprintf("%s is started...", msgPrefix),
 		msgComplete: fmt.Sprintf("%s is finished", msgPrefix),
 		msgFail:     fmt.Sprintf("%s is failed", msgPrefix),
-		timeout:     1 * time.Hour,
+		timeout:     12 * time.Hour,
 		duration:    10 * time.Second,
 		wg:          sync.WaitGroup{},
 	}
@@ -100,6 +101,5 @@ func (s *ProgressWriter) Fail(err error) {
 func (s *ProgressWriter) print(clr *color.Color, msg string) {
 	mutex.Lock()
 	defer mutex.Unlock()
-
-	clr.Fprint(s.out, msg)
+	printer.Fprint(s.out, clr, msg)
 }

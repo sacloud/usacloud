@@ -28,6 +28,9 @@ func StartupScriptList(ctx command.Context, params *params.ListStartupScriptPara
 	if !command.IsEmpty(params.Scope) {
 		finder.SetFilterBy("Scope", params.Scope)
 	}
+	if !command.IsEmpty(params.Class) {
+		finder.SetFilterBy("Class", params.Class)
+	}
 	if !command.IsEmpty(params.From) {
 		finder.SetOffset(params.From)
 	}

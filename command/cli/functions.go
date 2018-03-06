@@ -58,6 +58,23 @@ func applyConfigFromFile(c FlagHandler) error {
 		command.GlobalOption.DefaultOutputType = v.DefaultOutputType
 	}
 
+	if !c.IsSet("accept-language") && v.AcceptLanguage != "" {
+		c.Set("accept-language", v.AcceptLanguage)
+		command.GlobalOption.AcceptLanguage = v.AcceptLanguage
+	}
+	if !c.IsSet("retry-max") && v.RetryMax > 0 {
+		c.Set("retry-max", fmt.Sprintf("%d", v.RetryMax))
+		command.GlobalOption.RetryMax = v.RetryMax
+	}
+	if !c.IsSet("retry-interval") && v.RetryIntervalSec > 0 {
+		c.Set("retry-interval", fmt.Sprintf("%d", v.RetryIntervalSec))
+		command.GlobalOption.RetryIntervalSec = v.RetryIntervalSec
+	}
+	if !c.IsSet("no-color") && v.NoColor {
+		c.Set("no-color", "true")
+		command.GlobalOption.NoColor = v.NoColor
+	}
+
 	// for string-slice
 	zones := []string{}
 	if c.IsSet("zones") {

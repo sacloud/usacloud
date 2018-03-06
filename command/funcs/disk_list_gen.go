@@ -61,6 +61,10 @@ func DiskList(ctx command.Context, params *params.ListDiskParam) error {
 			continue
 		}
 
+		if !params.GetCommandDef().Params["storage"].FilterFunc(list, &res.Disks[i], params.Storage) {
+			continue
+		}
+
 		list = append(list, &res.Disks[i])
 	}
 	return ctx.GetOutput().Print(list...)

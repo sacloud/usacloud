@@ -50,6 +50,10 @@ func init() {
 						Aliases: []string{"selector"},
 						Usage:   "set filter by tags(AND)",
 					},
+					&cli.StringSliceFlag{
+						Name:  "class",
+						Usage: "set filter by class(es)",
+					},
 					&cli.IntFlag{
 						Name:    "from",
 						Aliases: []string{"offset"},
@@ -150,6 +154,9 @@ func init() {
 					}
 					if c.IsSet("tags") {
 						listParam.Tags = c.StringSlice("tags")
+					}
+					if c.IsSet("class") {
+						listParam.Class = c.StringSlice("class")
 					}
 					if c.IsSet("from") {
 						listParam.From = c.Int("from")
@@ -280,6 +287,9 @@ func init() {
 					}
 					if c.IsSet("tags") {
 						listParam.Tags = c.StringSlice("tags")
+					}
+					if c.IsSet("class") {
+						listParam.Class = c.StringSlice("class")
 					}
 					if c.IsSet("from") {
 						listParam.From = c.Int("from")
@@ -1437,7 +1447,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("update") {
+						if !command.ConfirmContinue("update", ids...) {
 							return nil
 						}
 					}
@@ -1804,7 +1814,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("delete") {
+						if !command.ConfirmContinue("delete", ids...) {
 							return nil
 						}
 					}
@@ -1996,6 +2006,11 @@ func init() {
 		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("startup-script", "delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("startup-script", "list", "class", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,

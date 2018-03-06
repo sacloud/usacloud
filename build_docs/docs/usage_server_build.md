@@ -49,7 +49,6 @@
 
 `ディスクの修正`カテゴリのうち、以下の項目のみ利用可能です。  
 
-- パスワード
 - IPアドレス(共有セグメント以外に接続する場合)
 - ネットワークマスク(共有セグメント以外に接続する場合)
 - デフォルトゲートウェイ(共有セグメント以外に接続する場合)
@@ -184,7 +183,7 @@ $ usacloud server build \
 ```console
 $ usacloud server build \
         --os-type windows2016-rds \
-        --password [put-your-password] \
+        --disk-size 100 \
         --name [put-your-server-name] \
 ```
 
@@ -193,7 +192,7 @@ $ usacloud server build \
 ```console
 $ usacloud server build \
         --os-type windows2016-rds \
-        --password [put-your-password] \
+        --disk-size 100 \
         --name [put-your-server-name] \
         --network-mode switch \
         --switch-id [put-your-switchID] \

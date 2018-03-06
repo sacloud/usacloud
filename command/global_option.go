@@ -15,11 +15,16 @@ type Option struct {
 	AccessTokenSecret string
 	Zone              string
 	ProfileName       string
+	Timeout           int
+	AcceptLanguage    string
+	RetryMax          int
+	RetryIntervalSec  int64
 	Zones             []string
 	APIRootURL        string
 	TraceMode         bool
 	Format            string
 	DefaultOutputType string
+	NoColor           bool
 	In                *os.File
 	Out               io.Writer
 	Progress          io.Writer
@@ -77,11 +82,42 @@ var GlobalFlags = []cli.Flag{
 		EnvVars:     []string{"USACLOUD_PROFILE"},
 		Destination: &GlobalOption.ProfileName,
 	},
+	&cli.IntFlag{
+		Name:        "timeout",
+		Usage:       "Number of timeout minutes for polling functions",
+		EnvVars:     []string{"SAKURACLOUD_TIMEOUT"},
+		Value:       20,
+		Destination: &GlobalOption.Timeout,
+	},
+	&cli.StringFlag{
+		Name:        "accept-language",
+		Usage:       "Accept-Language Header",
+		EnvVars:     []string{"SAKURACLOUD_ACCEPT_LANGUAGE"},
+		Destination: &GlobalOption.AcceptLanguage,
+	},
+	&cli.IntFlag{
+		Name:        "retry-max",
+		Usage:       "Number of API-Client retries",
+		EnvVars:     []string{"SAKURACLOUD_RETRY_MAX"},
+		Destination: &GlobalOption.RetryMax,
+	},
+	&cli.Int64Flag{
+		Name:        "retry-interval",
+		Usage:       "API client retry interval seconds",
+		EnvVars:     []string{"SAKURACLOUD_RETRY_INTERVAL"},
+		Destination: &GlobalOption.RetryIntervalSec,
+	},
+	&cli.BoolFlag{
+		Name:        "no-color",
+		Usage:       "Flag of not using ANSI color output",
+		EnvVars:     []string{"NO_COLOR"},
+		Destination: &GlobalOption.NoColor,
+	},
 	&cli.StringFlag{
 		Name:        "api-root-url",
-		Hidden:      true,
 		EnvVars:     []string{"USACLOUD_API_ROOT_URL"},
 		Destination: &GlobalOption.APIRootURL,
+		Hidden:      true,
 	},
 	&cli.StringFlag{
 		Name:        "default-output-type",

@@ -6,6 +6,7 @@ import (
 	"github.com/mitchellh/go-homedir"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/profile"
+	"github.com/sacloud/usacloud/helper/printer"
 	"os"
 	"path/filepath"
 )
@@ -103,7 +104,6 @@ func MigrateConfig() error {
 		return fmt.Errorf("Migrating [%q] to [%q] is failed: %s", src, dest, err)
 	}
 
-	color.New(color.FgGreen).Fprintf(command.GlobalOption.Out,
-		"\nMigrated: [%q] to [%q]\n", src, dest)
+	printer.Fprintf(command.GlobalOption.Out, color.New(color.FgGreen), "\nMigrated: [%q] to [%q]\n", src, dest)
 	return nil
 }

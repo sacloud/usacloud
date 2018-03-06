@@ -19,7 +19,7 @@ func VPCRouterDhcpServerDelete(ctx command.Context, params *params.DhcpServerDel
 		return fmt.Errorf("VPCRouter[%d] don't have any DHCP servers", params.Id)
 	}
 
-	cnf := p.Settings.Router.FindDHCPServerAt(params.Interface)
+	_, cnf := p.Settings.Router.FindDHCPServerAt(params.Interface)
 	if cnf == nil {
 		return fmt.Errorf("DHCP server is not found on eth%d", params.Interface)
 	}

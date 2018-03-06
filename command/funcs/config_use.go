@@ -6,6 +6,7 @@ import (
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/command/profile"
+	"github.com/sacloud/usacloud/helper/printer"
 )
 
 func ConfigUse(ctx command.Context, params *params.UseConfigParam) error {
@@ -19,6 +20,6 @@ func ConfigUse(ctx command.Context, params *params.UseConfigParam) error {
 		return err
 	}
 
-	color.New(color.FgHiGreen).Fprintf(command.GlobalOption.Out, "\nCurrent profile: %q\n", profileName)
+	printer.Fprintf(command.GlobalOption.Out, color.New(color.FgHiGreen), "\nCurrent profile: %q\n", profileName)
 	return nil
 }

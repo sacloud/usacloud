@@ -7,6 +7,7 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/command/profile"
 	"github.com/sacloud/usacloud/define"
+	"github.com/sacloud/usacloud/helper/printer"
 	"strings"
 )
 
@@ -48,7 +49,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 		exists := conf.AccessToken != ""
 		if exists {
 			fmt.Fprintf(out, "(Current = ")
-			color.New(color.FgCyan).Fprintf(out, "%q", conf.AccessToken)
+			printer.Fprintf(out, color.New(color.FgCyan), "%q", conf.AccessToken)
 			fmt.Fprintf(out, ")")
 		}
 
@@ -83,7 +84,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 		exists := conf.AccessTokenSecret != ""
 		if exists {
 			fmt.Fprintf(out, "(Current = ")
-			color.New(color.FgCyan).Fprintf(out, "%q", conf.AccessTokenSecret)
+			printer.Fprintf(out, color.New(color.FgCyan), "%q", conf.AccessTokenSecret)
 			fmt.Fprintf(out, ")")
 		}
 
@@ -118,7 +119,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 		exists := conf.Zone != ""
 		if exists {
 			fmt.Fprintf(out, "(Current = ")
-			color.New(color.FgCyan).Fprintf(out, "%q", conf.Zone)
+			printer.Fprintf(out, color.New(color.FgCyan), "%q", conf.Zone)
 			fmt.Fprintf(out, ")")
 		}
 
@@ -161,7 +162,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 		exists := conf.DefaultOutputType != ""
 		if exists {
 			fmt.Fprintf(out, "(Current = ")
-			color.New(color.FgCyan).Fprintf(out, "%q", conf.DefaultOutputType)
+			printer.Fprintf(out, color.New(color.FgCyan), "%q", conf.DefaultOutputType)
 			fmt.Fprintf(out, ")")
 		}
 
@@ -197,7 +198,7 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 	}
 
 	if inputParams.IsEmpty() {
-		color.New(color.FgCyan).Fprintf(out, "\nConfig: Values are empty, profile[%q] was not saved\n", profileName)
+		printer.Fprintf(out, color.New(color.FgCyan), "\nConfig: Values are empty, profile[%q] was not saved\n", profileName)
 		return nil
 	}
 
@@ -213,6 +214,6 @@ func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {
 		return fmt.Errorf("Config: GetConfigFilePath is failed: %s", err)
 	}
 
-	color.New(color.FgHiGreen).Fprintf(out, "\nWritten your settings to %s\n", filePath)
+	printer.Fprintf(out, color.New(color.FgHiGreen), "\nWritten your settings to %s\n", filePath)
 	return nil
 }

@@ -163,7 +163,7 @@ func ServerResource() *schema.Resource {
 			Category:         "connect",
 			Order:            40,
 			NoOutput:         true,
-			ConfirmMessage:   "open VNC client",
+			NeedlessConfirm:  true,
 		},
 		"vnc-info": {
 			Type:             schema.CommandRead,
@@ -191,6 +191,27 @@ func ServerResource() *schema.Resource {
 			SkipAfterSecondArgs: true,
 			Category:            "connect",
 			Order:               47,
+		},
+		"remote-desktop": {
+			Type:             schema.CommandManipulateMulti,
+			Params:           serverRDPParam(),
+			Aliases:          []string{"rdp"},
+			Usage:            "Open RDP client using the OS's default application",
+			UseCustomCommand: true,
+			Category:         "connect",
+			Order:            50,
+			NoOutput:         true,
+			NeedlessConfirm:  true,
+		},
+		"remote-desktop-info": {
+			Type:             schema.CommandRead,
+			Params:           serverRDPParam(),
+			Aliases:          []string{"rdp-info"},
+			Usage:            "Show RDP information(.rdp)",
+			UseCustomCommand: true,
+			Category:         "connect",
+			Order:            55,
+			NeedlessConfirm:  true,
 		},
 		"disk-info": {
 			Type:               schema.CommandManipulateSingle,
@@ -1211,6 +1232,31 @@ func serverVNCSnapshotParam() map[string]*schema.Schema {
 			Description: "snapshot output filepath",
 			Category:    "VNC",
 			Order:       20,
+		},
+	}
+}
+
+func serverRDPParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"user": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Aliases:      []string{"l"},
+			Required:     true,
+			DefaultValue: "Administrator",
+			Description:  "user name",
+			Category:     "auth",
+			Order:        20,
+		},
+		"port": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Aliases:      []string{"p"},
+			Description:  "port",
+			Required:     true,
+			DefaultValue: 3389,
+			Category:     "auth",
+			Order:        30,
 		},
 	}
 }

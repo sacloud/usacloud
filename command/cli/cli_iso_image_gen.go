@@ -1418,7 +1418,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("update") {
+						if !command.ConfirmContinue("update", ids...) {
 							return nil
 						}
 					}
@@ -1785,7 +1785,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("delete") {
+						if !command.ConfirmContinue("delete", ids...) {
 							return nil
 						}
 					}
@@ -2165,7 +2165,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("upload") {
+						if !command.ConfirmContinue("upload", ids...) {
 							return nil
 						}
 					}
@@ -2491,7 +2491,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("download") {
+						if !command.ConfirmContinue("download", ids...) {
 							return nil
 						}
 					}
@@ -2857,7 +2857,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("ftp-open") {
+						if !command.ConfirmContinue("ftp-open", ids...) {
 							return nil
 						}
 					}
@@ -3169,7 +3169,7 @@ func init() {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("ftp-close") {
+						if !command.ConfirmContinue("ftp-close", ids...) {
 							return nil
 						}
 					}

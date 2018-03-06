@@ -235,3 +235,13 @@ func filterBySourceDiskID(_ []interface{}, item interface{}, param interface{}) 
 
 	return diskIDHolder.GetSourceDiskID() == id
 }
+
+var paramClassCond = map[string]*schema.Schema{
+	"class": {
+		Type:        schema.TypeStringList,
+		HandlerType: schema.HandlerFilterBy,
+		Description: "set filter by class(es)",
+		Category:    "filter",
+		Order:       7,
+	},
+}
