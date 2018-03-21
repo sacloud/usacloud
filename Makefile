@@ -56,13 +56,15 @@ build: bin/usacloud
 bin/usacloud: contrib/completion/bash/usacloud $(GO_FILES)
 	OS="`go env GOOS`" ARCH="`go env GOARCH`" ARCHIVE= BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
-build-x: build-darwin build-windows build-linux
+build-x: build-darwin build-windows build-linux build-bsd
 
 build-darwin: bin/usacloud_darwin-amd64.zip
 
 build-windows: bin/usacloud_windows-386.zip bin/usacloud_windows-amd64.zip
 
 build-linux: bin/usacloud_linux-386.zip bin/usacloud_linux-amd64.zip bin/usacloud_linux-arm.zip
+
+build-bsd: bin/usacloud_freebsd-386.zip bin/usacloud_freebsd-amd64.zip
 
 bin/usacloud_darwin-amd64.zip:
 	OS="darwin"  ARCH="amd64"     ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
@@ -81,6 +83,12 @@ bin/usacloud_linux-amd64.zip:
 
 bin/usacloud_linux-arm.zip:
 	OS="linux"   ARCH="arm" ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
+
+bin/usacloud_freebsd-386.zip:
+	OS="freebsd"   ARCH="386" ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
+
+bin/usacloud_freebsd-amd64.zip:
+	OS="freebsd"   ARCH="amd64" ARCHIVE=1 BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
 .PHONY: rpm deb
 rpm: build-linux

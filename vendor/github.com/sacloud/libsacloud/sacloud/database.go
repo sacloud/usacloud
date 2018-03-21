@@ -310,7 +310,7 @@ func CreateNewDatabase(values *CreateDatabaseValue) *Database {
 	}
 
 	db.Remark.Servers = []interface{}{
-		map[string]string{"IPAddress": values.IPAddress1},
+		map[string]interface{}{"IPAddress": values.IPAddress1},
 	}
 
 	if values.WebUI {
@@ -400,7 +400,7 @@ func CloneNewDatabase(values *CreateDatabaseValue) *Database {
 	}
 
 	db.Remark.Servers = []interface{}{
-		map[string]string{"IPAddress": values.IPAddress1},
+		map[string]interface{}{"IPAddress": values.IPAddress1},
 	}
 
 	if values.WebUI {
