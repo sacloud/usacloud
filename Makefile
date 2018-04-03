@@ -31,10 +31,12 @@ clean-all:
 	rm -f contrib/completion/bash/usacloud
 
 
-.PHONY: deps
-deps:
-	go get -u github.com/kardianos/govendor; \
-	go get -u github.com/golang/lint/golint
+.PHONY: tools
+tools:
+	go get -u github.com/golang/dep/cmd/dep
+	go get -u github.com/motemen/gobump/cmd/gobump
+	go get -v github.com/alecthomas/gometalinter
+	gometalinter --install
 
 
 contrib/completion/bash/usacloud: define/*.go

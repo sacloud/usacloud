@@ -1,0 +1,11 @@
+language: go
+
+go:
+  - 1.7.4
+  - 1.8beta2
+
+sudo: false
+
+install:
+  - go get -t -d -v ./...
+  - go test -v
