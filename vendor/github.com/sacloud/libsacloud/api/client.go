@@ -247,11 +247,15 @@ func (c *retryableHTTPClient) Do(req *request) (*http.Response, error) {
 		}
 
 		res, err := c.Client.Do(req.Request)
-		if res.StatusCode != 503 {
+		if res != nil && res.StatusCode != 503 {
 			return res, err
 		}
 		if res != nil && res.Body != nil {
 			res.Body.Close()
+		}
+
+		if err != nil {
+			return res, err
 		}
 
 		remain := c.retryMax - i
