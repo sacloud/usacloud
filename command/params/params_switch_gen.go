@@ -24,6 +24,7 @@ type ListSwitchParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListSwitchParam return new ListSwitchParam
@@ -74,6 +75,9 @@ func (p *ListSwitchParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -259,6 +263,13 @@ func (p *ListSwitchParam) SetFormatFile(v string) {
 func (p *ListSwitchParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListSwitchParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListSwitchParam) GetQuery() string {
+	return p.Query
+}
 
 // CreateSwitchParam is input parameters for the sacloud API
 type CreateSwitchParam struct {
@@ -275,6 +286,7 @@ type CreateSwitchParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewCreateSwitchParam return new CreateSwitchParam
@@ -322,6 +334,9 @@ func (p *CreateSwitchParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -503,6 +518,13 @@ func (p *CreateSwitchParam) SetFormatFile(v string) {
 func (p *CreateSwitchParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CreateSwitchParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateSwitchParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadSwitchParam is input parameters for the sacloud API
 type ReadSwitchParam struct {
@@ -515,6 +537,7 @@ type ReadSwitchParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -551,6 +574,9 @@ func (p *ReadSwitchParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -679,6 +705,13 @@ func (p *ReadSwitchParam) SetFormatFile(v string) {
 func (p *ReadSwitchParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadSwitchParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadSwitchParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadSwitchParam) SetId(v int64) {
 	p.Id = v
 }
@@ -703,6 +736,7 @@ type UpdateSwitchParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -754,6 +788,9 @@ func (p *UpdateSwitchParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -945,6 +982,13 @@ func (p *UpdateSwitchParam) SetFormatFile(v string) {
 func (p *UpdateSwitchParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdateSwitchParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateSwitchParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdateSwitchParam) SetId(v int64) {
 	p.Id = v
 }
@@ -965,6 +1009,7 @@ type DeleteSwitchParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1004,6 +1049,9 @@ func (p *DeleteSwitchParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1138,6 +1186,13 @@ func (p *DeleteSwitchParam) SetFormatFile(v string) {
 
 func (p *DeleteSwitchParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *DeleteSwitchParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteSwitchParam) GetQuery() string {
+	return p.Query
 }
 func (p *DeleteSwitchParam) SetId(v int64) {
 	p.Id = v

@@ -129,7 +129,7 @@ func getOutputWriter(formatter output.Formatter) output.Output {
 	case "tsv":
 		return output.NewRowOutput(o.Out, o.Err, '\t', formatter)
 	case "json":
-		return output.NewJSONOutput(o.Out, o.Err)
+		return output.NewJSONOutput(o.Out, o.Err, formatter.GetQuery())
 	default:
 		return output.NewTableOutput(o.Out, o.Err, formatter)
 	}

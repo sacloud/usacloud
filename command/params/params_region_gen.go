@@ -23,6 +23,7 @@ type ListRegionParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListRegionParam return new ListRegionParam
@@ -70,6 +71,9 @@ func (p *ListRegionParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -241,6 +245,13 @@ func (p *ListRegionParam) SetFormatFile(v string) {
 func (p *ListRegionParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListRegionParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListRegionParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadRegionParam is input parameters for the sacloud API
 type ReadRegionParam struct {
@@ -253,6 +264,7 @@ type ReadRegionParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -289,6 +301,9 @@ func (p *ReadRegionParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -423,6 +438,13 @@ func (p *ReadRegionParam) SetFormatFile(v string) {
 
 func (p *ReadRegionParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *ReadRegionParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadRegionParam) GetQuery() string {
+	return p.Query
 }
 func (p *ReadRegionParam) SetId(v int64) {
 	p.Id = v

@@ -14,6 +14,7 @@ type dummyOption struct {
 	format            string
 	formatFile        string
 	quiet             bool
+	query             string
 	defaultOutputType string
 }
 
@@ -22,6 +23,7 @@ func (o *dummyOption) GetColumn() []string   { return o.column }
 func (o *dummyOption) GetFormat() string     { return o.format }
 func (o *dummyOption) GetFormatFile() string { return o.formatFile }
 func (o *dummyOption) GetQuiet() bool        { return o.quiet }
+func (o dummyOption) GetQuery() string       { return o.query }
 
 func TestValidateOutputOption(t *testing.T) {
 
@@ -258,6 +260,22 @@ func TestValidateOutputOption(t *testing.T) {
 				formatFile: "/etc/hosts",
 			},
 			expect: true,
+		},
+		{
+			testName: "Should get no error when have query and output-type is json",
+			option: &dummyOption{
+				outputType: "json",
+				query:      "[].ID",
+			},
+			expect: true,
+		},
+		{
+			testName: "Should get error when have query and output-type is not json",
+			option: &dummyOption{
+				outputType: "csv",
+				query:      "[].ID",
+			},
+			expect: false,
 		},
 	}
 

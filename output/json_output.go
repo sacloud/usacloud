@@ -7,34 +7,47 @@ import (
 	"os"
 
 	"github.com/bitly/go-simplejson"
+	"github.com/jmespath/go-jmespath"
 )
 
 type jsonOutput struct {
-	Out io.Writer
-	Err io.Writer
+	out   io.Writer
+	err   io.Writer
+	query string
 }
 
-func NewJSONOutput(out io.Writer, err io.Writer) Output {
+func NewJSONOutput(out io.Writer, err io.Writer, query string) Output {
 	return &jsonOutput{
-		Out: out,
-		Err: err,
+		out:   out,
+		err:   err,
+		query: query,
 	}
 }
 
 func (o *jsonOutput) Print(targets ...interface{}) error {
-	if o.Out == nil {
-		o.Out = os.Stdout
+	if o.out == nil {
+		o.out = os.Stdout
 	}
-	if o.Err == nil {
-		o.Err = os.Stderr
+	if o.err == nil {
+		o.err = os.Stderr
 	}
 
 	if len(targets) == 0 {
-		fmt.Fprintf(o.Err, "Result is empty\n")
+		fmt.Fprintf(o.err, "Result is empty\n")
 		return nil
 	}
 
-	rawArray, err := json.Marshal(targets)
+	var values interface{} = targets
+
+	if o.query != "" {
+		v, err := o.searchByJMESPath(targets)
+		if err != nil {
+			return fmt.Errorf("JSONOutput:Query: jmespath.Search is Failed: %s", err)
+		}
+		values = v
+	}
+
+	rawArray, err := json.Marshal(values)
 	if err != nil {
 		return fmt.Errorf("JSONOutput:Print: json.Marshal is Failed: %s", err)
 	}
@@ -49,8 +62,21 @@ func (o *jsonOutput) Print(targets ...interface{}) error {
 	if err != nil {
 		return fmt.Errorf("JSONOutput:Print: Print pretty JSON is failed: %s", err)
 	}
-	o.Out.Write(b)
-	fmt.Fprintln(o.Out, "")
+	o.out.Write(b)
+	fmt.Fprintln(o.out, "")
 	return nil
 
+}
+
+func (o *jsonOutput) searchByJMESPath(v interface{}) (result interface{}, err error) {
+
+	defer func() {
+		ret := recover()
+		if ret != nil {
+			fmt.Fprintf(o.err, "jmespath.Search failed: parse error\n")
+			err = fmt.Errorf("jmespath.Search failed: %s", ret)
+		}
+	}()
+	result, err = jmespath.Search(o.query, v)
+	return
 }

@@ -24,6 +24,7 @@ type ListGSLBParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListGSLBParam return new ListGSLBParam
@@ -74,6 +75,9 @@ func (p *ListGSLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -259,6 +263,13 @@ func (p *ListGSLBParam) SetFormatFile(v string) {
 func (p *ListGSLBParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListGSLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListGSLBParam) GetQuery() string {
+	return p.Query
+}
 
 // ServerInfoGSLBParam is input parameters for the sacloud API
 type ServerInfoGSLBParam struct {
@@ -271,6 +282,7 @@ type ServerInfoGSLBParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -307,6 +319,9 @@ func (p *ServerInfoGSLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -435,6 +450,13 @@ func (p *ServerInfoGSLBParam) SetFormatFile(v string) {
 func (p *ServerInfoGSLBParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ServerInfoGSLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ServerInfoGSLBParam) GetQuery() string {
+	return p.Query
+}
 func (p *ServerInfoGSLBParam) SetId(v int64) {
 	p.Id = v
 }
@@ -466,6 +488,7 @@ type CreateGSLBParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewCreateGSLBParam return new CreateGSLBParam
@@ -544,6 +567,9 @@ func (p *CreateGSLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -816,6 +842,13 @@ func (p *CreateGSLBParam) SetFormatFile(v string) {
 func (p *CreateGSLBParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CreateGSLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateGSLBParam) GetQuery() string {
+	return p.Query
+}
 
 // ServerAddGSLBParam is input parameters for the sacloud API
 type ServerAddGSLBParam struct {
@@ -832,6 +865,7 @@ type ServerAddGSLBParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -880,6 +914,9 @@ func (p *ServerAddGSLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1050,6 +1087,13 @@ func (p *ServerAddGSLBParam) SetFormatFile(v string) {
 func (p *ServerAddGSLBParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ServerAddGSLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ServerAddGSLBParam) GetQuery() string {
+	return p.Query
+}
 func (p *ServerAddGSLBParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1069,6 +1113,7 @@ type ReadGSLBParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1105,6 +1150,9 @@ func (p *ReadGSLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1233,6 +1281,13 @@ func (p *ReadGSLBParam) SetFormatFile(v string) {
 func (p *ReadGSLBParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadGSLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadGSLBParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadGSLBParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1257,6 +1312,7 @@ type ServerUpdateGSLBParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1308,6 +1364,9 @@ func (p *ServerUpdateGSLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1492,6 +1551,13 @@ func (p *ServerUpdateGSLBParam) SetFormatFile(v string) {
 func (p *ServerUpdateGSLBParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ServerUpdateGSLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ServerUpdateGSLBParam) GetQuery() string {
+	return p.Query
+}
 func (p *ServerUpdateGSLBParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1513,6 +1579,7 @@ type ServerDeleteGSLBParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1555,6 +1622,9 @@ func (p *ServerDeleteGSLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1704,6 +1774,13 @@ func (p *ServerDeleteGSLBParam) SetFormatFile(v string) {
 func (p *ServerDeleteGSLBParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ServerDeleteGSLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ServerDeleteGSLBParam) GetQuery() string {
+	return p.Query
+}
 func (p *ServerDeleteGSLBParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1736,6 +1813,7 @@ type UpdateGSLBParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1811,6 +1889,9 @@ func (p *UpdateGSLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2079,6 +2160,13 @@ func (p *UpdateGSLBParam) SetFormatFile(v string) {
 func (p *UpdateGSLBParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdateGSLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateGSLBParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdateGSLBParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2099,6 +2187,7 @@ type DeleteGSLBParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -2138,6 +2227,9 @@ func (p *DeleteGSLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2272,6 +2364,13 @@ func (p *DeleteGSLBParam) SetFormatFile(v string) {
 
 func (p *DeleteGSLBParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *DeleteGSLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteGSLBParam) GetQuery() string {
+	return p.Query
 }
 func (p *DeleteGSLBParam) SetId(v int64) {
 	p.Id = v

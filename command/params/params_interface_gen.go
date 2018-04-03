@@ -23,6 +23,7 @@ type ListInterfaceParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListInterfaceParam return new ListInterfaceParam
@@ -70,6 +71,9 @@ func (p *ListInterfaceParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -241,6 +245,13 @@ func (p *ListInterfaceParam) SetFormatFile(v string) {
 func (p *ListInterfaceParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListInterfaceParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListInterfaceParam) GetQuery() string {
+	return p.Query
+}
 
 // PacketFilterConnectInterfaceParam is input parameters for the sacloud API
 type PacketFilterConnectInterfaceParam struct {
@@ -387,6 +398,7 @@ type CreateInterfaceParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewCreateInterfaceParam return new CreateInterfaceParam
@@ -425,6 +437,9 @@ func (p *CreateInterfaceParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -563,6 +578,13 @@ func (p *CreateInterfaceParam) SetFormatFile(v string) {
 
 func (p *CreateInterfaceParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *CreateInterfaceParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateInterfaceParam) GetQuery() string {
+	return p.Query
 }
 
 // PacketFilterDisconnectInterfaceParam is input parameters for the sacloud API
@@ -708,6 +730,7 @@ type ReadInterfaceParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -741,6 +764,9 @@ func (p *ReadInterfaceParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -862,6 +888,13 @@ func (p *ReadInterfaceParam) SetFormatFile(v string) {
 func (p *ReadInterfaceParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadInterfaceParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadInterfaceParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadInterfaceParam) SetId(v int64) {
 	p.Id = v
 }
@@ -882,6 +915,7 @@ type UpdateInterfaceParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -921,6 +955,9 @@ func (p *UpdateInterfaceParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1063,6 +1100,13 @@ func (p *UpdateInterfaceParam) SetFormatFile(v string) {
 func (p *UpdateInterfaceParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdateInterfaceParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateInterfaceParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdateInterfaceParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1082,6 +1126,7 @@ type DeleteInterfaceParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1118,6 +1163,9 @@ func (p *DeleteInterfaceParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1245,6 +1293,13 @@ func (p *DeleteInterfaceParam) SetFormatFile(v string) {
 
 func (p *DeleteInterfaceParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *DeleteInterfaceParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteInterfaceParam) GetQuery() string {
+	return p.Query
 }
 func (p *DeleteInterfaceParam) SetId(v int64) {
 	p.Id = v
