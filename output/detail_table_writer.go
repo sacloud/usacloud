@@ -1,10 +1,11 @@
 package output
 
 import (
-	"github.com/olekukonko/tablewriter"
 	"io"
 	"sort"
 	"strings"
+
+	"github.com/olekukonko/tablewriter"
 )
 
 // detailTableWriter is write table that have two columns( attr_name , value )

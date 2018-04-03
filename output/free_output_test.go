@@ -2,9 +2,10 @@ package output
 
 import (
 	"bytes"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 type dummyOption struct{}

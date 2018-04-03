@@ -2,10 +2,11 @@ package funcs
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
-	"time"
 )
 
 const maxErrorCount = 10

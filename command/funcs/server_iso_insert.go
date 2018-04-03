@@ -2,6 +2,7 @@ package funcs
 
 import (
 	"fmt"
+
 	"github.com/sacloud/ftps"
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"

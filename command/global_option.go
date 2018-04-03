@@ -1,13 +1,14 @@
 package command
 
 import (
+	"io"
+	"io/ioutil"
+	"os"
+
 	"github.com/mattn/go-colorable"
 	"github.com/mattn/go-isatty"
 	"github.com/sacloud/usacloud/define"
 	"gopkg.in/urfave/cli.v2"
-	"io"
-	"io/ioutil"
-	"os"
 )
 
 type Option struct {

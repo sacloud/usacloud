@@ -2,10 +2,11 @@ package define
 
 import (
 	"fmt"
+	"math"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
-	"math"
 )
 
 func DatabaseResource() *schema.Resource {

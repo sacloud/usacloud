@@ -2,10 +2,11 @@ package tools
 
 import (
 	"fmt"
-	"github.com/huandu/xstrings"
 	"go/format"
 	"log"
 	"strings"
+
+	"github.com/huandu/xstrings"
 )
 
 func Sformat(buf []byte) []byte {

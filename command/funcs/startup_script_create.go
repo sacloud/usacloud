@@ -2,9 +2,10 @@ package funcs
 
 import (
 	"fmt"
+	"io/ioutil"
+
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
-	"io/ioutil"
 )
 
 func StartupScriptCreate(ctx command.Context, params *params.CreateStartupScriptParam) error {

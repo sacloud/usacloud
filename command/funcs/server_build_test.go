@@ -2,12 +2,13 @@ package funcs
 
 import (
 	"fmt"
+	"testing"
+
 	"github.com/sacloud/libsacloud/builder"
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestServerBuild_CreateBuilder_FromDisk(t *testing.T) {

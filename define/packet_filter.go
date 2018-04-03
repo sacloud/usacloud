@@ -2,10 +2,11 @@ package define
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/output"
-	"github.com/sacloud/usacloud/schema"
 	"strconv"
 	"strings"
+
+	"github.com/sacloud/usacloud/output"
+	"github.com/sacloud/usacloud/schema"
 )
 
 func PacketFilterResource() *schema.Resource {

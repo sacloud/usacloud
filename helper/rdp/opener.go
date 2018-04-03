@@ -2,8 +2,9 @@ package rdp
 
 import (
 	"fmt"
-	"github.com/skratchdot/open-golang/open"
 	"io/ioutil"
+
+	"github.com/skratchdot/open-golang/open"
 )
 
 // Opener information of RDP connection

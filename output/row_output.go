@@ -4,11 +4,12 @@ import (
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
-	"github.com/astaxie/flatmap"
-	"github.com/bitly/go-simplejson"
 	"io"
 	"os"
 	"sort"
+
+	"github.com/astaxie/flatmap"
+	"github.com/bitly/go-simplejson"
 )
 
 type rowOutput struct {

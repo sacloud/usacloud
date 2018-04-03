@@ -2,12 +2,13 @@ package funcs
 
 import (
 	"fmt"
+	"io/ioutil"
+	"strings"
+
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/helper/vnc"
-	"io/ioutil"
-	"strings"
 )
 
 func ServerVncSend(ctx command.Context, params *params.VncSendServerParam) error {

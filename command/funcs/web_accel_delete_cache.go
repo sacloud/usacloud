@@ -4,9 +4,10 @@ package funcs
 
 import (
 	"fmt"
+	"net/url"
+
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
-	"net/url"
 )
 
 func WebAccelDeleteCache(ctx command.Context, params *params.DeleteCacheWebAccelParam) error {

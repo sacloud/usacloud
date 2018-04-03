@@ -2,10 +2,11 @@ package funcs
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/command"
 	"log"
 	"os"
 	"testing"
+
+	"github.com/sacloud/usacloud/command"
 )
 
 type dummyFlagContext struct{}

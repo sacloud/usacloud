@@ -2,14 +2,15 @@ package funcs
 
 import (
 	"fmt"
+	"os"
+	"strings"
+	"sync"
+
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/helper/printer"
 	"github.com/sacloud/usacloud/helper/ssh"
-	"os"
-	"strings"
-	"sync"
 )
 
 var serverSSHMutex = sync.Mutex{}

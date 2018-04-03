@@ -3,11 +3,6 @@ package funcs
 import (
 	"bytes"
 	"fmt"
-	"github.com/mitchellh/goamz/aws"
-	"github.com/mitchellh/goamz/s3"
-	"github.com/sacloud/usacloud/command"
-	"github.com/sacloud/usacloud/command/internal"
-	"github.com/sacloud/usacloud/command/params"
 	"io"
 	"io/ioutil"
 	"mime"
@@ -15,6 +10,12 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
+
+	"github.com/mitchellh/goamz/aws"
+	"github.com/mitchellh/goamz/s3"
+	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/internal"
+	"github.com/sacloud/usacloud/command/params"
 )
 
 func ObjectStoragePut(ctx command.Context, params *params.PutObjectStorageParam) error {

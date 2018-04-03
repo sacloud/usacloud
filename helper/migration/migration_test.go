@@ -1,11 +1,12 @@
 package migration
 
 import (
-	"github.com/sacloud/usacloud/command/profile"
-	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"os"
 	"testing"
+
+	"github.com/sacloud/usacloud/command/profile"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMigrateConfig(t *testing.T) {

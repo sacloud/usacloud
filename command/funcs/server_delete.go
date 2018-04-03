@@ -2,11 +2,12 @@ package funcs
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
-	"os"
 )
 
 func ServerDelete(ctx command.Context, params *params.DeleteServerParam) error {

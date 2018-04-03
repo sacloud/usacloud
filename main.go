@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"os"
+	"sort"
+	"strings"
+
 	"github.com/sacloud/usacloud/command"
 	usacloud_cli "github.com/sacloud/usacloud/command/cli"
 	"github.com/sacloud/usacloud/schema"
 	"github.com/sacloud/usacloud/version"
 	"gopkg.in/urfave/cli.v2"
-	"io"
-	"os"
-	"sort"
-	"strings"
 )
 
 var (

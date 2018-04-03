@@ -5,6 +5,9 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
+	"sync"
+
 	"github.com/imdario/mergo"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
@@ -12,8 +15,6 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
-	"strings"
-	"sync"
 )
 
 func init() {
@@ -371,7 +372,7 @@ func init() {
 					},
 					&cli.IntFlag{
 						Name:  "plan",
-						Usage: "[Required] set plan[10/30/90/240]",
+						Usage: "[Required] set plan[10/30/90/240/500/1000]",
 						Value: 10,
 					},
 					&cli.StringFlag{

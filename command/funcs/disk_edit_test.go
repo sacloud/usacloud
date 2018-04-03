@@ -2,11 +2,12 @@ package funcs
 
 import (
 	"fmt"
+	"io/ioutil"
+	"testing"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/stretchr/testify/assert"
-	"io/ioutil"
-	"testing"
 )
 
 func TestDiskEdit(t *testing.T) {

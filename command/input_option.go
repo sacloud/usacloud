@@ -2,8 +2,9 @@ package command
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/schema"
 	"io/ioutil"
+
+	"github.com/sacloud/usacloud/schema"
 )
 
 type InputOption interface {

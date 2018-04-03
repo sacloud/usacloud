@@ -2,13 +2,14 @@ package funcs
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/helper/printer"
-	"time"
 )
 
 func VPCRouterLogs(ctx command.Context, params *params.LogsVPCRouterParam) error {

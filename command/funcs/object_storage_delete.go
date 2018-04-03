@@ -2,11 +2,12 @@ package funcs
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/mitchellh/goamz/aws"
 	"github.com/mitchellh/goamz/s3"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
-	"strings"
 )
 
 func ObjectStorageDelete(ctx command.Context, params *params.DeleteObjectStorageParam) error {

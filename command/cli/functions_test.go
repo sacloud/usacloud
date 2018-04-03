@@ -1,11 +1,12 @@
 package cli
 
 import (
-	"github.com/sacloud/usacloud/command/profile"
-	"github.com/stretchr/testify/assert"
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/sacloud/usacloud/command/profile"
+	"github.com/stretchr/testify/assert"
 )
 
 type mockFlagHandler struct {

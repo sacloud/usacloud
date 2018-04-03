@@ -1,9 +1,10 @@
 package define
 
 import (
+	"testing"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestFilterByTagFunc(t *testing.T) {

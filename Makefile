@@ -31,10 +31,12 @@ clean-all:
 	rm -f contrib/completion/bash/usacloud
 
 
-.PHONY: deps
-deps:
-	go get -u github.com/kardianos/govendor; \
-	go get -u github.com/golang/lint/golint
+.PHONY: tools
+tools:
+	go get -u github.com/golang/dep/cmd/dep
+	go get -u github.com/motemen/gobump/cmd/gobump
+	go get -v github.com/alecthomas/gometalinter
+	gometalinter --install
 
 
 contrib/completion/bash/usacloud: define/*.go
@@ -45,10 +47,10 @@ gen: command/cli/*_gen.go command/completion/*_gen.go command/funcs/*_gen.go com
 
 .PHONY: gen-force
 gen-force: clean-all contrib/completion/bash/usacloud
-	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
+	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES); goimports -l -w $(GOFMT_FILES)
 
 command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-funcs/*.go tools/gen-input-models/*.go
-	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
+	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES); goimports -l -w $(GOFMT_FILES)
 
 .PHONY: build build-x build-darwin build-windows build-linux
 build: bin/usacloud
@@ -98,28 +100,27 @@ deb: rpm
 	CURRENT_VERSION="$(CURRENT_VERSION)" sh -c "'$(CURDIR)/scripts/build_apt.sh'"
 
 .PHONY: test
-test: vet
+test: lint
 	go test $(TEST) $(TESTARGS) -v -timeout=30m -parallel=4 ;
 
 .PHONY: integration-test
 integration-test: bin/usacloud
 	test/integration/run-bats.sh test/integration/bats ;
 
-.PHONY: vet
-vet: golint gen
-	@echo "go tool vet $(VETARGS) ."
-	@go tool vet $(VETARGS) $$(ls -d */ | grep -v vendor) ; if [ $$? -eq 1 ]; then \
-		echo ""; \
-		echo "Vet found suspicious constructs. Please check the reported constructs"; \
-		echo "and fix them if necessary before submitting the code for review."; \
-		exit 1; \
-	fi
+.PHONY: lint
+lint: golint
+	gometalinter --vendor --skip=vendor/ --disable-all --enable vet --enable goimports --deadline=2m ./...
+	@echo
 
 .PHONY: golint
-golint: fmt
+golint: goimports
 	for pkg in $$(go list ./... | grep -v /vendor/ ) ; do \
         test -z "$$(golint $$pkg | grep -v '_gen.go' | grep -v '_string.go' | grep -v 'should have comment' | grep -v 'func ServerMonitorCpu' | grep -v 'func ServerSsh' | grep -v 'DatabaseMonitorCpu' | tee /dev/stderr)" || RES=1; \
     done ;exit $$RES
+
+.PHONY: goimports
+goimports:
+	goimports -l -w $(GOFMT_FILES)
 
 .PHONY: fmt
 fmt:

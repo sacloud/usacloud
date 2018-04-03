@@ -4,14 +4,15 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
-	"github.com/mattn/go-runewidth"
-	"github.com/mattn/go-tty"
-	"golang.org/x/crypto/ssh"
 	"io"
 	"io/ioutil"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/mattn/go-runewidth"
+	"github.com/mattn/go-tty"
+	"golang.org/x/crypto/ssh"
 )
 
 type ClientParams struct {

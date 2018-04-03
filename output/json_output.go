@@ -3,9 +3,10 @@ package output
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/bitly/go-simplejson"
 	"io"
 	"os"
+
+	"github.com/bitly/go-simplejson"
 )
 
 type jsonOutput struct {

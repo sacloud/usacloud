@@ -2,8 +2,9 @@ package completion
 
 import (
 	"fmt"
-	"gopkg.in/urfave/cli.v2"
 	"strconv"
+
+	"gopkg.in/urfave/cli.v2"
 )
 
 func FlagNames(c *cli.Context, commandName string) {

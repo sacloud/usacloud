@@ -2,10 +2,11 @@ package define
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/output"
-	"github.com/sacloud/usacloud/schema"
 	"math"
 	"strings"
+
+	"github.com/sacloud/usacloud/output"
+	"github.com/sacloud/usacloud/schema"
 )
 
 func VPCRouterResource() *schema.Resource {
