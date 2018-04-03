@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/bitly/go-simplejson"
 	"io"
 	"io/ioutil"
 	"os"
 	"text/template"
+
+	"github.com/bitly/go-simplejson"
 )
 
 type freeOutput struct {

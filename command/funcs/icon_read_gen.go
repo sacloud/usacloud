@@ -4,6 +4,7 @@ package funcs
 
 import (
 	"fmt"
+
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 )

@@ -3,10 +3,11 @@ package output
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/astaxie/flatmap"
-	"github.com/bitly/go-simplejson"
 	"io"
 	"os"
+
+	"github.com/astaxie/flatmap"
+	"github.com/bitly/go-simplejson"
 )
 
 type tableOutput struct {

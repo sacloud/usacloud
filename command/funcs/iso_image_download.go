@@ -2,11 +2,12 @@ package funcs
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/sacloud/ftps"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
-	"os"
 )
 
 func ISOImageDownload(ctx command.Context, params *params.DownloadISOImageParam) error {

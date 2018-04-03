@@ -3,13 +3,14 @@ package funcs
 import (
 	"bytes"
 	"fmt"
-	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/command"
-	"github.com/sacloud/usacloud/command/params"
 	"sort"
 	"strconv"
 	"text/template"
 	"time"
+
+	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/params"
 )
 
 func VPCRouterMonitor(ctx command.Context, params *params.MonitorVPCRouterParam) error {

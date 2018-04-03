@@ -2,10 +2,11 @@ package tools
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/define"
-	"github.com/sacloud/usacloud/schema"
 	"go/build"
 	"path/filepath"
+
+	"github.com/sacloud/usacloud/define"
+	"github.com/sacloud/usacloud/schema"
 )
 
 type GenerateContext struct {

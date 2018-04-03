@@ -2,13 +2,14 @@ package funcs
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/command/profile"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/helper/printer"
-	"strings"
 )
 
 func ConfigEdit(ctx command.Context, params *params.EditConfigParam) error {

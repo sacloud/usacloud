@@ -2,9 +2,10 @@ package printer
 
 import (
 	"fmt"
+	"io"
+
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/command"
-	"io"
 )
 
 // Print is delegates to *color.Color or fmt depending on command.GlobalOption.NoColor flag

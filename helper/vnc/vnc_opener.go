@@ -4,6 +4,7 @@ package vnc
 
 import (
 	"fmt"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/skratchdot/open-golang/open"
 )

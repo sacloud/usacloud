@@ -1,10 +1,11 @@
 package funcs
 
 import (
-	"github.com/sacloud/libsacloud/api"
-	"github.com/sacloud/usacloud/output"
 	"io"
 	"log"
+
+	"github.com/sacloud/libsacloud/api"
+	"github.com/sacloud/usacloud/output"
 )
 
 // dummyCommandContext is a structure for making funcs package testable

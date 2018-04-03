@@ -2,9 +2,10 @@ package completion
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
-	"strings"
 )
 
 func BillCsvCompleteArgs(ctx command.Context, params *params.CsvBillParam, cur, prev, commandName string) {

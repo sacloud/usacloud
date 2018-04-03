@@ -3,11 +3,12 @@ package profile
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/mitchellh/go-homedir"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/mitchellh/go-homedir"
 )
 
 const ProfileDirEnv = "USACLOUD_PROFILE_DIR"

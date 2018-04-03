@@ -2,8 +2,6 @@ package vnc
 
 import (
 	"fmt"
-	"github.com/mitchellh/go-vnc"
-	"github.com/sacloud/libsacloud/sacloud"
 	"io"
 	"io/ioutil"
 	"net"
@@ -12,6 +10,9 @@ import (
 	"time"
 	"unicode"
 	"unicode/utf8"
+
+	"github.com/mitchellh/go-vnc"
+	"github.com/sacloud/libsacloud/sacloud"
 )
 
 const KeyLeftShift uint32 = 0xFFE1

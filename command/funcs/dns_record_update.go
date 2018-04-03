@@ -2,10 +2,11 @@ package funcs
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/command"
-	"github.com/sacloud/usacloud/command/params"
 	"strconv"
 	"strings"
+
+	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/params"
 )
 
 func DNSRecordUpdate(ctx command.Context, params *params.RecordUpdateDNSParam) error {

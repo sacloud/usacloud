@@ -2,9 +2,10 @@ package command
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
-	"strings"
 )
 
 func ValidateInStrValues(fieldName string, object interface{}, allowValues ...string) []error {

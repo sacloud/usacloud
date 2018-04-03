@@ -2,10 +2,11 @@ package funcs
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
-	"strings"
 )
 
 func VPCRouterDhcpServerInfo(ctx command.Context, params *params.DhcpServerInfoVPCRouterParam) error {

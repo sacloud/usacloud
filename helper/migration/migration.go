@@ -2,13 +2,14 @@ package migration
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+
 	"github.com/fatih/color"
 	"github.com/mitchellh/go-homedir"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/profile"
 	"github.com/sacloud/usacloud/helper/printer"
-	"os"
-	"path/filepath"
 )
 
 const OldConfigFileName = ".usacloud_config"

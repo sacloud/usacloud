@@ -4,10 +4,11 @@ package vnc
 
 import (
 	"fmt"
-	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/skratchdot/open-golang/open"
 	"io/ioutil"
 	"os"
+
+	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/skratchdot/open-golang/open"
 )
 
 func OpenVNCClient(vncProxyInfo *sacloud.VNCProxyResponse) error {

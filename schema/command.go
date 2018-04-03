@@ -2,9 +2,10 @@ package schema
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/output"
 	"sort"
 	"strings"
+
+	"github.com/sacloud/usacloud/output"
 )
 
 type Command struct {

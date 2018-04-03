@@ -2,9 +2,10 @@ package internal
 
 import (
 	"bytes"
+	"text/template"
+
 	"github.com/sacloud/usacloud/schema"
 	"github.com/sacloud/usacloud/tools"
-	"text/template"
 )
 
 func GenerateReadCommand(ctx *tools.GenerateContext, command *schema.Command) (string, error) {

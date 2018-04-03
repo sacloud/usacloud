@@ -3,12 +3,13 @@ package funcs
 import (
 	"bytes"
 	"fmt"
-	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/command"
-	"github.com/sacloud/usacloud/command/params"
 	"sort"
 	"text/template"
 	"time"
+
+	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/params"
 )
 
 func DatabaseMonitorMemory(ctx command.Context, params *params.MonitorMemoryDatabaseParam) error {

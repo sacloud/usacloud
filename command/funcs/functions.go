@@ -2,14 +2,15 @@ package funcs
 
 import (
 	"fmt"
-	"github.com/mitchellh/go-homedir"
-	"github.com/sacloud/libsacloud/api"
-	"github.com/sacloud/libsacloud/sacloud"
-	"github.com/sacloud/usacloud/command"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/mitchellh/go-homedir"
+	"github.com/sacloud/libsacloud/api"
+	"github.com/sacloud/libsacloud/sacloud"
+	"github.com/sacloud/usacloud/command"
 )
 
 func setSortBy(target sortable, key string) {

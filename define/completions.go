@@ -2,6 +2,7 @@ package define
 
 import (
 	"fmt"
+
 	"github.com/sacloud/usacloud/schema"
 )
 

@@ -2,15 +2,16 @@ package cli
 
 import (
 	"fmt"
+	"os"
+	"strconv"
+	"strings"
+
 	"github.com/mattn/go-isatty"
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/profile"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/helper/migration"
-	"os"
-	"strconv"
-	"strings"
 )
 
 func checkConfigVersion() error {

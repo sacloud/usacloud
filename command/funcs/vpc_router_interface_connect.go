@@ -2,10 +2,11 @@ package funcs
 
 import (
 	"fmt"
+	"strconv"
+
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
-	"strconv"
 )
 
 func VPCRouterInterfaceConnect(ctx command.Context, params *params.InterfaceConnectVPCRouterParam) error {

@@ -3,14 +3,15 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/sacloud/usacloud/schema"
-	"github.com/sacloud/usacloud/tools"
-	"github.com/sacloud/usacloud/tools/gen-command-funcs/internal"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"text/template"
+
+	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/tools"
+	"github.com/sacloud/usacloud/tools/gen-command-funcs/internal"
 )
 
 var (

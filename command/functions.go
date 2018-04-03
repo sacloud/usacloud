@@ -2,12 +2,13 @@ package command
 
 import (
 	"fmt"
-	"github.com/sacloud/libsacloud/api"
-	"github.com/sacloud/usacloud/output"
-	"github.com/sacloud/usacloud/version"
 	"reflect"
 	"strings"
 	"time"
+
+	"github.com/sacloud/libsacloud/api"
+	"github.com/sacloud/usacloud/output"
+	"github.com/sacloud/usacloud/version"
 )
 
 var numericZeros = []interface{}{

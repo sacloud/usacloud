@@ -2,10 +2,11 @@ package funcs
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/command"
-	"github.com/sacloud/usacloud/command/params"
 	"io"
 	"os"
+
+	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/params"
 )
 
 func SSHKeyGenerate(ctx command.Context, params *params.GenerateSSHKeyParam) error {

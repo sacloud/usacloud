@@ -5,6 +5,9 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
+	"sync"
+
 	"github.com/imdario/mergo"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
@@ -12,8 +15,6 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
-	"strings"
-	"sync"
 )
 
 func init() {

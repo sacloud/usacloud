@@ -2,11 +2,12 @@ package output
 
 import (
 	"fmt"
-	"github.com/olekukonko/tablewriter"
-	"github.com/stretchr/testify/assert"
 	"io"
 	"io/ioutil"
 	"testing"
+
+	"github.com/olekukonko/tablewriter"
+	"github.com/stretchr/testify/assert"
 )
 
 type testTable struct {

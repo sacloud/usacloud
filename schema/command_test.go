@@ -1,9 +1,10 @@
 package schema
 
 import (
+	"testing"
+
 	"github.com/sacloud/usacloud/output"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestCommand_Validate(t *testing.T) {

@@ -2,8 +2,9 @@ package completion
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/command/profile"
 	"io"
+
+	"github.com/sacloud/usacloud/command/profile"
 )
 
 func writeAllProfileName(w io.Writer) {
