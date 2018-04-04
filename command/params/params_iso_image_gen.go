@@ -25,6 +25,7 @@ type ListISOImageParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListISOImageParam return new ListISOImageParam
@@ -78,6 +79,9 @@ func (p *ListISOImageParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -277,6 +281,13 @@ func (p *ListISOImageParam) SetFormatFile(v string) {
 func (p *ListISOImageParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListISOImageParam) GetQuery() string {
+	return p.Query
+}
 
 // CreateISOImageParam is input parameters for the sacloud API
 type CreateISOImageParam struct {
@@ -295,6 +306,7 @@ type CreateISOImageParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewCreateISOImageParam return new CreateISOImageParam
@@ -351,6 +363,9 @@ func (p *CreateISOImageParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -567,6 +582,13 @@ func (p *CreateISOImageParam) SetFormatFile(v string) {
 func (p *CreateISOImageParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CreateISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateISOImageParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadISOImageParam is input parameters for the sacloud API
 type ReadISOImageParam struct {
@@ -579,6 +601,7 @@ type ReadISOImageParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -615,6 +638,9 @@ func (p *ReadISOImageParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -743,6 +769,13 @@ func (p *ReadISOImageParam) SetFormatFile(v string) {
 func (p *ReadISOImageParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadISOImageParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadISOImageParam) SetId(v int64) {
 	p.Id = v
 }
@@ -767,6 +800,7 @@ type UpdateISOImageParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -818,6 +852,9 @@ func (p *UpdateISOImageParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1009,6 +1046,13 @@ func (p *UpdateISOImageParam) SetFormatFile(v string) {
 func (p *UpdateISOImageParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdateISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateISOImageParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdateISOImageParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1029,6 +1073,7 @@ type DeleteISOImageParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1068,6 +1113,9 @@ func (p *DeleteISOImageParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1203,6 +1251,13 @@ func (p *DeleteISOImageParam) SetFormatFile(v string) {
 func (p *DeleteISOImageParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *DeleteISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteISOImageParam) GetQuery() string {
+	return p.Query
+}
 func (p *DeleteISOImageParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1224,6 +1279,7 @@ type UploadISOImageParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1266,6 +1322,9 @@ func (p *UploadISOImageParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1414,6 +1473,13 @@ func (p *UploadISOImageParam) SetFormatFile(v string) {
 
 func (p *UploadISOImageParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *UploadISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UploadISOImageParam) GetQuery() string {
+	return p.Query
 }
 func (p *UploadISOImageParam) SetId(v int64) {
 	p.Id = v
@@ -1565,6 +1631,7 @@ type FtpOpenISOImageParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1604,6 +1671,9 @@ func (p *FtpOpenISOImageParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1738,6 +1808,13 @@ func (p *FtpOpenISOImageParam) SetFormatFile(v string) {
 
 func (p *FtpOpenISOImageParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *FtpOpenISOImageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *FtpOpenISOImageParam) GetQuery() string {
+	return p.Query
 }
 func (p *FtpOpenISOImageParam) SetId(v int64) {
 	p.Id = v

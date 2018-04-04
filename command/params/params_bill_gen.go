@@ -139,6 +139,7 @@ type ListBillParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListBillParam return new ListBillParam
@@ -177,6 +178,9 @@ func (p *ListBillParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -315,4 +319,11 @@ func (p *ListBillParam) SetFormatFile(v string) {
 
 func (p *ListBillParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *ListBillParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListBillParam) GetQuery() string {
+	return p.Query
 }

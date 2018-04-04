@@ -25,6 +25,7 @@ type ListIconParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListIconParam return new ListIconParam
@@ -78,6 +79,9 @@ func (p *ListIconParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -277,6 +281,13 @@ func (p *ListIconParam) SetFormatFile(v string) {
 func (p *ListIconParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListIconParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListIconParam) GetQuery() string {
+	return p.Query
+}
 
 // CreateIconParam is input parameters for the sacloud API
 type CreateIconParam struct {
@@ -292,6 +303,7 @@ type CreateIconParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewCreateIconParam return new CreateIconParam
@@ -336,6 +348,9 @@ func (p *CreateIconParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -510,6 +525,13 @@ func (p *CreateIconParam) SetFormatFile(v string) {
 func (p *CreateIconParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CreateIconParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateIconParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadIconParam is input parameters for the sacloud API
 type ReadIconParam struct {
@@ -522,6 +544,7 @@ type ReadIconParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -558,6 +581,9 @@ func (p *ReadIconParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -686,6 +712,13 @@ func (p *ReadIconParam) SetFormatFile(v string) {
 func (p *ReadIconParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadIconParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadIconParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadIconParam) SetId(v int64) {
 	p.Id = v
 }
@@ -708,6 +741,7 @@ type UpdateIconParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -753,6 +787,9 @@ func (p *UpdateIconParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -916,6 +953,13 @@ func (p *UpdateIconParam) SetFormatFile(v string) {
 func (p *UpdateIconParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdateIconParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateIconParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdateIconParam) SetId(v int64) {
 	p.Id = v
 }
@@ -936,6 +980,7 @@ type DeleteIconParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -975,6 +1020,9 @@ func (p *DeleteIconParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1109,6 +1157,13 @@ func (p *DeleteIconParam) SetFormatFile(v string) {
 
 func (p *DeleteIconParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *DeleteIconParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteIconParam) GetQuery() string {
+	return p.Query
 }
 func (p *DeleteIconParam) SetId(v int64) {
 	p.Id = v

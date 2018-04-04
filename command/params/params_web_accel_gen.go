@@ -18,6 +18,7 @@ type ListWebAccelParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListWebAccelParam return new ListWebAccelParam
@@ -50,6 +51,9 @@ func (p *ListWebAccelParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -161,6 +165,13 @@ func (p *ListWebAccelParam) SetFormatFile(v string) {
 func (p *ListWebAccelParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListWebAccelParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListWebAccelParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadWebAccelParam is input parameters for the sacloud API
 type ReadWebAccelParam struct {
@@ -173,6 +184,7 @@ type ReadWebAccelParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -209,6 +221,9 @@ func (p *ReadWebAccelParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -337,6 +352,13 @@ func (p *ReadWebAccelParam) SetFormatFile(v string) {
 func (p *ReadWebAccelParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadWebAccelParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadWebAccelParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadWebAccelParam) SetId(v int64) {
 	p.Id = v
 }
@@ -356,6 +378,7 @@ type CertificateInfoWebAccelParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -392,6 +415,9 @@ func (p *CertificateInfoWebAccelParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -520,6 +546,13 @@ func (p *CertificateInfoWebAccelParam) SetFormatFile(v string) {
 func (p *CertificateInfoWebAccelParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CertificateInfoWebAccelParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CertificateInfoWebAccelParam) GetQuery() string {
+	return p.Query
+}
 func (p *CertificateInfoWebAccelParam) SetId(v int64) {
 	p.Id = v
 }
@@ -544,6 +577,7 @@ type CertificateUpdateWebAccelParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -595,6 +629,9 @@ func (p *CertificateUpdateWebAccelParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -790,6 +827,13 @@ func (p *CertificateUpdateWebAccelParam) SetFormatFile(v string) {
 func (p *CertificateUpdateWebAccelParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CertificateUpdateWebAccelParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CertificateUpdateWebAccelParam) GetQuery() string {
+	return p.Query
+}
 func (p *CertificateUpdateWebAccelParam) SetId(v int64) {
 	p.Id = v
 }
@@ -809,6 +853,7 @@ type DeleteCacheWebAccelParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewDeleteCacheWebAccelParam return new DeleteCacheWebAccelParam
@@ -844,6 +889,9 @@ func (p *DeleteCacheWebAccelParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -961,4 +1009,11 @@ func (p *DeleteCacheWebAccelParam) SetFormatFile(v string) {
 
 func (p *DeleteCacheWebAccelParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *DeleteCacheWebAccelParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteCacheWebAccelParam) GetQuery() string {
+	return p.Query
 }

@@ -18,6 +18,7 @@ type ShowAuthStatusParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewShowAuthStatusParam return new ShowAuthStatusParam
@@ -50,6 +51,9 @@ func (p *ShowAuthStatusParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -160,4 +164,11 @@ func (p *ShowAuthStatusParam) SetFormatFile(v string) {
 
 func (p *ShowAuthStatusParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *ShowAuthStatusParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ShowAuthStatusParam) GetQuery() string {
+	return p.Query
 }

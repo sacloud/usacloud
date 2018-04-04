@@ -57,6 +57,14 @@
   branch = "master"
   name = "github.com/skratchdot/open-golang"
 
+[[constraint]]
+  branch = "master"
+  name = "github.com/jmespath/go-jmespath"
+
+[[override]]
+  name = "github.com/huandu/xstrings"
+  revision = "3959339b333561bf62a38b424fd41517c2c90f40"
+
 [prune]
   go-tests = true
   unused-packages = true

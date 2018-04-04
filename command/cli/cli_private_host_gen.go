@@ -99,6 +99,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -179,6 +183,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						listParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						listParam.Query = c.String("query")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -307,6 +314,9 @@ func init() {
 					if c.IsSet("format-file") {
 						listParam.FormatFile = c.String("format-file")
 					}
+					if c.IsSet("query") {
+						listParam.Query = c.String("query")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -407,6 +417,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -484,6 +498,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						createParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						createParam.Query = c.String("query")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -609,6 +626,9 @@ func init() {
 					if c.IsSet("format-file") {
 						createParam.FormatFile = c.String("format-file")
 					}
+					if c.IsSet("query") {
+						createParam.Query = c.String("query")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -702,6 +722,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -772,6 +796,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						readParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						readParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						readParam.Id = c.Int64("id")
@@ -887,6 +914,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						readParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						readParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						readParam.Id = c.Int64("id")
@@ -1073,6 +1103,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -1158,6 +1192,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						updateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						updateParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						updateParam.Id = c.Int64("id")
@@ -1288,6 +1325,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						updateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						updateParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						updateParam.Id = c.Int64("id")
@@ -1464,6 +1504,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -1537,6 +1581,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						deleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						deleteParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						deleteParam.Id = c.Int64("id")
@@ -1655,6 +1702,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						deleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						deleteParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						deleteParam.Id = c.Int64("id")
@@ -1826,6 +1876,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -1896,6 +1950,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						serverInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						serverInfoParam.Id = c.Int64("id")
@@ -2011,6 +2068,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						serverInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						serverInfoParam.Id = c.Int64("id")
@@ -2184,6 +2244,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -2260,6 +2324,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						serverAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverAddParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						serverAddParam.Id = c.Int64("id")
@@ -2381,6 +2448,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						serverAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverAddParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						serverAddParam.Id = c.Int64("id")
@@ -2564,6 +2634,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -2640,6 +2714,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						serverDeleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						serverDeleteParam.Id = c.Int64("id")
@@ -2761,6 +2838,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						serverDeleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverDeleteParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						serverDeleteParam.Id = c.Int64("id")
@@ -3000,6 +3080,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("private-host", "create", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("private-host", "create", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3054,6 +3139,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("private-host", "delete", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("private-host", "delete", "quiet", &schema.Category{
 		Key:         "output",
@@ -3120,6 +3210,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("private-host", "list", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("private-host", "list", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3175,6 +3270,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("private-host", "read", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("private-host", "read", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3229,6 +3329,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("private-host", "server-add", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("private-host", "server-add", "quiet", &schema.Category{
 		Key:         "output",
@@ -3290,6 +3395,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("private-host", "server-delete", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("private-host", "server-delete", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3344,6 +3454,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("private-host", "server-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("private-host", "server-info", "quiet", &schema.Category{
 		Key:         "output",
@@ -3414,6 +3529,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("private-host", "update", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("private-host", "update", "quiet", &schema.Category{
 		Key:         "output",

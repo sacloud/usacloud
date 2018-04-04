@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/jmespath/go-jmespath"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
 )
@@ -121,6 +122,7 @@ func ValidateOutputOption(o output.Option) []error {
 	format := o.GetFormat()
 	formatFile := o.GetFormatFile()
 	quiet := o.GetQuiet()
+	query := o.GetQuery()
 
 	// format and format-file
 	if format != "" && formatFile != "" {
@@ -169,6 +171,18 @@ func ValidateOutputOption(o output.Option) []error {
 	// columns only allow when outputType is tsv/csv
 	if outputType != "tsv" && outputType != "csv" && len(columns) > 0 {
 		return []error{fmt.Errorf("%q: can't set when --output-type is csv/tsv", "--column")}
+	}
+
+	// query only allow when outputType is json
+	if outputType != "json" && len(query) > 0 {
+		return []error{fmt.Errorf("%q: can't set when --output-type is not json", "--query")}
+	}
+
+	if outputType == "json" && len(query) > 0 {
+		_, err := jmespath.Compile(query)
+		if err != nil {
+			return []error{fmt.Errorf("%q: invalid JMESPath: %s", "--query", err)}
+		}
 	}
 
 	return []error{}

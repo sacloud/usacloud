@@ -23,6 +23,7 @@ type ListProductInternetParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListProductInternetParam return new ListProductInternetParam
@@ -70,6 +71,9 @@ func (p *ListProductInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -241,6 +245,13 @@ func (p *ListProductInternetParam) SetFormatFile(v string) {
 func (p *ListProductInternetParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListProductInternetParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListProductInternetParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadProductInternetParam is input parameters for the sacloud API
 type ReadProductInternetParam struct {
@@ -253,6 +264,7 @@ type ReadProductInternetParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -289,6 +301,9 @@ func (p *ReadProductInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -423,6 +438,13 @@ func (p *ReadProductInternetParam) SetFormatFile(v string) {
 
 func (p *ReadProductInternetParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *ReadProductInternetParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadProductInternetParam) GetQuery() string {
+	return p.Query
 }
 func (p *ReadProductInternetParam) SetId(v int64) {
 	p.Id = v

@@ -24,6 +24,7 @@ type ListSimpleMonitorParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListSimpleMonitorParam return new ListSimpleMonitorParam
@@ -74,6 +75,9 @@ func (p *ListSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -259,6 +263,13 @@ func (p *ListSimpleMonitorParam) SetFormatFile(v string) {
 func (p *ListSimpleMonitorParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListSimpleMonitorParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListSimpleMonitorParam) GetQuery() string {
+	return p.Query
+}
 
 // CreateSimpleMonitorParam is input parameters for the sacloud API
 type CreateSimpleMonitorParam struct {
@@ -288,6 +299,7 @@ type CreateSimpleMonitorParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewCreateSimpleMonitorParam return new CreateSimpleMonitorParam
@@ -381,6 +393,9 @@ func (p *CreateSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -695,6 +710,13 @@ func (p *CreateSimpleMonitorParam) SetFormatFile(v string) {
 func (p *CreateSimpleMonitorParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CreateSimpleMonitorParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateSimpleMonitorParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadSimpleMonitorParam is input parameters for the sacloud API
 type ReadSimpleMonitorParam struct {
@@ -707,6 +729,7 @@ type ReadSimpleMonitorParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -743,6 +766,9 @@ func (p *ReadSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -871,6 +897,13 @@ func (p *ReadSimpleMonitorParam) SetFormatFile(v string) {
 func (p *ReadSimpleMonitorParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadSimpleMonitorParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadSimpleMonitorParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadSimpleMonitorParam) SetId(v int64) {
 	p.Id = v
 }
@@ -907,6 +940,7 @@ type UpdateSimpleMonitorParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -994,6 +1028,9 @@ func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1297,6 +1334,13 @@ func (p *UpdateSimpleMonitorParam) SetFormatFile(v string) {
 func (p *UpdateSimpleMonitorParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdateSimpleMonitorParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdateSimpleMonitorParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1317,6 +1361,7 @@ type DeleteSimpleMonitorParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1356,6 +1401,9 @@ func (p *DeleteSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1490,6 +1538,13 @@ func (p *DeleteSimpleMonitorParam) SetFormatFile(v string) {
 
 func (p *DeleteSimpleMonitorParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *DeleteSimpleMonitorParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteSimpleMonitorParam) GetQuery() string {
+	return p.Query
 }
 func (p *DeleteSimpleMonitorParam) SetId(v int64) {
 	p.Id = v

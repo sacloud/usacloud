@@ -23,6 +23,7 @@ type ListZoneParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListZoneParam return new ListZoneParam
@@ -70,6 +71,9 @@ func (p *ListZoneParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -241,6 +245,13 @@ func (p *ListZoneParam) SetFormatFile(v string) {
 func (p *ListZoneParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListZoneParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListZoneParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadZoneParam is input parameters for the sacloud API
 type ReadZoneParam struct {
@@ -253,6 +264,7 @@ type ReadZoneParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -289,6 +301,9 @@ func (p *ReadZoneParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -423,6 +438,13 @@ func (p *ReadZoneParam) SetFormatFile(v string) {
 
 func (p *ReadZoneParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *ReadZoneParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadZoneParam) GetQuery() string {
+	return p.Query
 }
 func (p *ReadZoneParam) SetId(v int64) {
 	p.Id = v

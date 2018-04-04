@@ -23,6 +23,7 @@ type ListLicenseParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListLicenseParam return new ListLicenseParam
@@ -70,6 +71,9 @@ func (p *ListLicenseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -241,6 +245,13 @@ func (p *ListLicenseParam) SetFormatFile(v string) {
 func (p *ListLicenseParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListLicenseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListLicenseParam) GetQuery() string {
+	return p.Query
+}
 
 // CreateLicenseParam is input parameters for the sacloud API
 type CreateLicenseParam struct {
@@ -255,6 +266,7 @@ type CreateLicenseParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewCreateLicenseParam return new CreateLicenseParam
@@ -296,6 +308,9 @@ func (p *CreateLicenseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -442,6 +457,13 @@ func (p *CreateLicenseParam) SetFormatFile(v string) {
 func (p *CreateLicenseParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CreateLicenseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateLicenseParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadLicenseParam is input parameters for the sacloud API
 type ReadLicenseParam struct {
@@ -453,6 +475,7 @@ type ReadLicenseParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -486,6 +509,9 @@ func (p *ReadLicenseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -607,6 +633,13 @@ func (p *ReadLicenseParam) SetFormatFile(v string) {
 func (p *ReadLicenseParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadLicenseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadLicenseParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadLicenseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -627,6 +660,7 @@ type UpdateLicenseParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -666,6 +700,9 @@ func (p *UpdateLicenseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -808,6 +845,13 @@ func (p *UpdateLicenseParam) SetFormatFile(v string) {
 func (p *UpdateLicenseParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdateLicenseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateLicenseParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdateLicenseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -827,6 +871,7 @@ type DeleteLicenseParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -863,6 +908,9 @@ func (p *DeleteLicenseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -990,6 +1038,13 @@ func (p *DeleteLicenseParam) SetFormatFile(v string) {
 
 func (p *DeleteLicenseParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *DeleteLicenseParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteLicenseParam) GetQuery() string {
+	return p.Query
 }
 func (p *DeleteLicenseParam) SetId(v int64) {
 	p.Id = v

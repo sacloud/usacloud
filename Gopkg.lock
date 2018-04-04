@@ -10,7 +10,8 @@
 [[projects]]
   name = "github.com/bitly/go-simplejson"
   packages = ["."]
-  revision = "da1a8928f709389522c8023062a3739f3b4af419"
+  revision = "aabad6e819789e569bd6aabf444c935aa9ba1e44"
+  version = "v0.5.0"
 
 [[projects]]
   name = "github.com/davecgh/go-spew"
@@ -21,13 +22,14 @@
 [[projects]]
   name = "github.com/fatih/color"
   packages = ["."]
-  revision = "9131ab34cf20d2f6d83fdc67168a5430d1c7dc23"
-  version = "v1.4.1"
+  revision = "507f6050b8568533fb3f5504de8e5205fa62a114"
+  version = "v1.6.0"
 
 [[projects]]
+  branch = "master"
   name = "github.com/hnakamur/go-scp"
   packages = ["."]
-  revision = "7e443c37b32d5e6f132d529f778fd327eb79987c"
+  revision = "05a5990ec14530193d9bd33e31cd7fecec76caab"
 
 [[projects]]
   name = "github.com/huandu/xstrings"
@@ -37,27 +39,38 @@
 [[projects]]
   name = "github.com/imdario/mergo"
   packages = ["."]
-  revision = "d806ba8c21777d504a2090a2ca4913c750dd3a33"
+  revision = "33882c6bfe701aca0ff1472aa8b4ebd6135a560d"
+  version = "v0.3.3"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/jmespath/go-jmespath"
+  packages = ["."]
+  revision = "c2b33e8439af944379acbdd9c3a5fe0bc44bd8a5"
 
 [[projects]]
   name = "github.com/mattn/go-colorable"
   packages = ["."]
-  revision = "a392f450ea64cee2b268dfaacdc2502b50a22b18"
+  revision = "167de6bfdfba052fa6b2d3664c8f5272e23c9072"
+  version = "v0.0.9"
 
 [[projects]]
   name = "github.com/mattn/go-isatty"
   packages = ["."]
-  revision = "dda3de49cbfcec471bd7a70e6cc01fcc3ff90109"
+  revision = "0360b2af4f38e8d38c7fce2a9f4e702702d73a39"
+  version = "v0.0.3"
 
 [[projects]]
   name = "github.com/mattn/go-runewidth"
   packages = ["."]
-  revision = "14207d285c6c197daabb5c9793d63e7af9ab2d50"
+  revision = "9e777a8366cce605130a531d2cd6363d07ad7317"
+  version = "v0.0.2"
 
 [[projects]]
+  branch = "master"
   name = "github.com/mattn/go-tty"
   packages = ["."]
-  revision = "58bac1f462f7fee3c71460e92418b6edfb6ae950"
+  revision = "931426f7535ac39720c8909d70ece5a41a2502a6"
 
 [[projects]]
   branch = "master"
@@ -81,9 +94,10 @@
   revision = "caaaea8b30ee15616494ee68abd5d8ebbbef05cf"
 
 [[projects]]
+  branch = "master"
   name = "github.com/olekukonko/tablewriter"
   packages = ["."]
-  revision = "febf2d34b54a69ce7530036c7503b1c9fbfdf0bb"
+  revision = "b8a9be070da40449e501c3c4730a889e42d87a9e"
 
 [[projects]]
   name = "github.com/pmezard/go-difflib"
@@ -118,7 +132,8 @@
 [[projects]]
   name = "github.com/stretchr/testify"
   packages = ["assert"]
-  revision = "4d4bfba8f1d1027c4fdbe371823030df51419987"
+  revision = "12b6f73e6084dad08a7c6e575284b177ecafbc71"
+  version = "v1.2.1"
 
 [[projects]]
   branch = "master"
@@ -127,28 +142,33 @@
   revision = "a98ad7ee00ec53921f08832bc06ecf7fd600e6a1"
 
 [[projects]]
+  branch = "master"
   name = "golang.org/x/crypto"
   packages = [
     "curve25519",
     "ed25519",
     "ed25519/internal/edwards25519",
+    "internal/chacha20",
+    "poly1305",
     "ssh"
   ]
-  revision = "453249f01cfeb54c3d549ddb75ff152ca243f9d8"
+  revision = "12892e8c234f4fe6f6803f052061de9057903bb2"
 
 [[projects]]
+  branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "075e574b89e4c2d22f2286a7e2b919519c6f3547"
+  revision = "378d26f46672a356c46195c28f61bdb4c0a781dd"
 
 [[projects]]
+  branch = "v2"
   name = "gopkg.in/urfave/cli.v2"
   packages = ["."]
-  revision = "04b2f4ff79cf1fd71e138bafc67df8bbdb5b81c2"
+  revision = "d3ae77c26ac8db90639677e4831a728d33c36111"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "f277feef2a204e633b23a6ad9343ae77950d5b5425a552577314ef9da95c50c1"
+  inputs-digest = "366e1b51de9948b681d952acf423adba692ba5415df415b6b8ca4b11b631a467"
   solver-name = "gps-cdcl"
   solver-version = 1

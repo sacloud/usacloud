@@ -27,6 +27,7 @@ type ListArchiveParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListArchiveParam return new ListArchiveParam
@@ -86,6 +87,9 @@ func (p *ListArchiveParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -313,6 +317,13 @@ func (p *ListArchiveParam) SetFormatFile(v string) {
 func (p *ListArchiveParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListArchiveParam) GetQuery() string {
+	return p.Query
+}
 
 // CreateArchiveParam is input parameters for the sacloud API
 type CreateArchiveParam struct {
@@ -333,6 +344,7 @@ type CreateArchiveParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewCreateArchiveParam return new CreateArchiveParam
@@ -392,6 +404,9 @@ func (p *CreateArchiveParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -671,6 +686,13 @@ func (p *CreateArchiveParam) SetFormatFile(v string) {
 func (p *CreateArchiveParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CreateArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateArchiveParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadArchiveParam is input parameters for the sacloud API
 type ReadArchiveParam struct {
@@ -683,6 +705,7 @@ type ReadArchiveParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -719,6 +742,9 @@ func (p *ReadArchiveParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -847,6 +873,13 @@ func (p *ReadArchiveParam) SetFormatFile(v string) {
 func (p *ReadArchiveParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadArchiveParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadArchiveParam) SetId(v int64) {
 	p.Id = v
 }
@@ -871,6 +904,7 @@ type UpdateArchiveParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -922,6 +956,9 @@ func (p *UpdateArchiveParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1113,6 +1150,13 @@ func (p *UpdateArchiveParam) SetFormatFile(v string) {
 func (p *UpdateArchiveParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdateArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateArchiveParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdateArchiveParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1133,6 +1177,7 @@ type DeleteArchiveParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1172,6 +1217,9 @@ func (p *DeleteArchiveParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1307,6 +1355,13 @@ func (p *DeleteArchiveParam) SetFormatFile(v string) {
 func (p *DeleteArchiveParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *DeleteArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteArchiveParam) GetQuery() string {
+	return p.Query
+}
 func (p *DeleteArchiveParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1328,6 +1383,7 @@ type UploadArchiveParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1370,6 +1426,9 @@ func (p *UploadArchiveParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1518,6 +1577,13 @@ func (p *UploadArchiveParam) SetFormatFile(v string) {
 
 func (p *UploadArchiveParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *UploadArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UploadArchiveParam) GetQuery() string {
+	return p.Query
 }
 func (p *UploadArchiveParam) SetId(v int64) {
 	p.Id = v
@@ -1669,6 +1735,7 @@ type FtpOpenArchiveParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1708,6 +1775,9 @@ func (p *FtpOpenArchiveParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1842,6 +1912,13 @@ func (p *FtpOpenArchiveParam) SetFormatFile(v string) {
 
 func (p *FtpOpenArchiveParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *FtpOpenArchiveParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *FtpOpenArchiveParam) GetQuery() string {
+	return p.Query
 }
 func (p *FtpOpenArchiveParam) SetId(v int64) {
 	p.Id = v
