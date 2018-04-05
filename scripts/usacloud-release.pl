@@ -477,6 +477,9 @@ sub create_pull_request {
         infof "skip to update changelogs because no merged pull request is found after the last release.\n"
     }
 
+    infof "Build GitHub Pages.\n";
+    system "make", "build-docs";
+
     infof "Update AUTHORS.\n";
     system "scripts/generate-authors.sh";
 
