@@ -69,12 +69,6 @@
     "parser": "f.Value.String(), error(nil)"
   },
   {
-    "name": "Path",
-    "type": "string",
-    "context_default": "\"\"",
-    "parser": "f.Value.String(), error(nil)"
-  },
-  {
     "name": "StringSlice",
     "type": "*StringSlice",
     "dest": false,
