@@ -65,12 +65,6 @@ type App struct {
 	ErrWriter io.Writer
 	// Other custom info
 	Metadata map[string]interface{}
-	// Carries a function which returns app specific info.
-	ExtraInfo func() map[string]string
-	// CustomAppHelpTemplate the text template for app help topic.
-	// cli.go uses text/template to render templates. You can
-	// render custom help text by setting this variable.
-	CustomAppHelpTemplate string
 
 	didSetup bool
 }
@@ -162,10 +156,6 @@ func (a *App) Setup() {
 	if a.Metadata == nil {
 		a.Metadata = make(map[string]interface{})
 	}
-
-	if a.Writer == nil {
-		a.Writer = os.Stdout
-	}
 }
 
 // Run is the entry point to the cli app. Parses the arguments slice and routes
@@ -173,20 +163,8 @@ func (a *App) Setup() {
 func (a *App) Run(arguments []string) (err error) {
 	a.Setup()
 
-	// handle the completion flag separately from the flagset since
-	// completion could be attempted after a flag, but before its value was put
-	// on the command line. this causes the flagset to interpret the completion
-	// flag name as the value of the flag before it which is undesirable
-	// note that we can only do this because the shell autocomplete function
-	// always appends the completion flag at the end of the command
-	shellComplete, arguments := checkShellCompleteFlag(a, arguments)
-
 	// parse flags
-	set, err := flagSet(a.Name, a.Flags)
-	if err != nil {
-		return err
-	}
-
+	set := flagSet(a.Name, a.Flags)
 	set.SetOutput(ioutil.Discard)
 	err = set.Parse(arguments[1:])
 	nerr := normalizeFlags(a.Flags, set)
@@ -196,7 +174,6 @@ func (a *App) Run(arguments []string) (err error) {
 		ShowAppHelp(context)
 		return nerr
 	}
-	context.shellComplete = shellComplete
 
 	if checkCompletions(context) {
 		return nil
@@ -212,7 +189,7 @@ func (a *App) Run(arguments []string) (err error) {
 
 	if err != nil {
 		if a.OnUsageError != nil {
-			err = a.OnUsageError(context, err, false)
+			err := a.OnUsageError(context, err, false)
 			HandleExitCoder(err)
 			return err
 		}
@@ -246,6 +223,7 @@ func (a *App) Run(arguments []string) (err error) {
 	if a.Before != nil {
 		beforeErr := a.Before(context)
 		if beforeErr != nil {
+			fmt.Fprintf(a.Writer, "%v\n\n", beforeErr)
 			ShowAppHelp(context)
 			HandleExitCoder(beforeErr)
 			err = beforeErr
@@ -260,10 +238,6 @@ func (a *App) Run(arguments []string) (err error) {
 		if c != nil {
 			return c.Run(context)
 		}
-	}
-
-	if a.Action == nil {
-		a.Action = helpCommand.Action
 	}
 
 	// Run default Action
@@ -304,11 +278,7 @@ func (a *App) RunAsSubcommand(ctx *Context) (err error) {
 	}
 
 	// parse flags
-	set, err := flagSet(a.Name, a.Flags)
-	if err != nil {
-		return err
-	}
-
+	set := flagSet(a.Name, a.Flags)
 	set.SetOutput(ioutil.Discard)
 	err = set.Parse(ctx.Args().Tail())
 	nerr := normalizeFlags(a.Flags, set)
@@ -479,12 +449,4 @@ func (a *Author) String() string {
 	}
 
 	return fmt.Sprintf("%v%v", a.Name, e)
-}
-
-// DefaultAppComplete returns an ActionFunc to run a default command if non were passed.
-// Usage: `app.Action = cli.DefaultCommand("command")`
-func DefaultCommand(name string) ActionFunc {
-	return func(ctx *Context) error {
-		return ctx.App.Command(name).Run(ctx)
-	}
 }

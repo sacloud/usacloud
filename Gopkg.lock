@@ -39,8 +39,8 @@
 [[projects]]
   name = "github.com/imdario/mergo"
   packages = ["."]
-  revision = "33882c6bfe701aca0ff1472aa8b4ebd6135a560d"
-  version = "v0.3.3"
+  revision = "9d5f1277e9a8ed20c3684bda8fde67c05628518c"
+  version = "v0.3.4"
 
 [[projects]]
   branch = "master"
@@ -121,7 +121,7 @@
     "sacloud",
     "sacloud/ostype"
   ]
-  revision = "70fd9a4892954471efef322e2d9f3c1353690cf9"
+  revision = "3bd32230c679b062c633d1ecfd2281cf75cb992c"
 
 [[projects]]
   branch = "master"
@@ -152,23 +152,22 @@
     "poly1305",
     "ssh"
   ]
-  revision = "12892e8c234f4fe6f6803f052061de9057903bb2"
+  revision = "b2aa35443fbc700ab74c586ae79b81c171851023"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "378d26f46672a356c46195c28f61bdb4c0a781dd"
+  revision = "3b87a42e500a6dc65dae1a55d0b641295971163e"
 
 [[projects]]
-  branch = "v2"
   name = "gopkg.in/urfave/cli.v2"
   packages = ["."]
-  revision = "d3ae77c26ac8db90639677e4831a728d33c36111"
+  revision = "04b2f4ff79cf1fd71e138bafc67df8bbdb5b81c2"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "366e1b51de9948b681d952acf423adba692ba5415df415b6b8ca4b11b631a467"
+  inputs-digest = "213fabc18eef1b2029167a4d33050e124ac6cd5a11d4dde615612fb8d096dcf5"
   solver-name = "gps-cdcl"
   solver-version = 1

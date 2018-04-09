@@ -40,7 +40,9 @@ func main() {
 	cli.InitCompletionFlag.Hidden = true
 	cli.HelpPrinter = getHelpPrinter(app, cli.HelpPrinter)
 
-	app.Run(os.Args)
+	if err := app.Run(os.Args); err != nil {
+		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
+	}
 }
 
 func getHelpPrinter(app *cli.App, currentHelpPrinter func(io.Writer, string, interface{})) func(io.Writer, string, interface{}) {

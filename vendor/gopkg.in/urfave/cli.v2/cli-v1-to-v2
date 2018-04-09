@@ -236,11 +236,7 @@ def _flag_name_stringly_repl(match):
 
 @_migrator
 def _commands_opaque_type(source):
-    return _subfmt(
-        'cli\\.Commands(?P<suffix>[^B])',
-        '[]*cli.Command{suffix}',
-        source
-    )
+    return re.sub('cli\\.Commands', '[]*cli.Command', source, flags=re.UNICODE)
 
 
 @_migrator

@@ -189,7 +189,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(infoParam, p)
+						mergo.Merge(infoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values

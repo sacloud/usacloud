@@ -274,7 +274,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(listParam, p)
+						mergo.Merge(listParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -606,7 +606,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(createParam, p)
+						mergo.Merge(createParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -913,7 +913,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(readParam, p)
+						mergo.Merge(readParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -1316,7 +1316,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(updateParam, p)
+						mergo.Merge(updateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -1708,7 +1708,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(deleteParam, p)
+						mergo.Merge(deleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -2092,7 +2092,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(updateBandwidthParam, p)
+						mergo.Merge(updateBandwidthParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -2463,7 +2463,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(subnetInfoParam, p)
+						mergo.Merge(subnetInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -2842,7 +2842,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(subnetAddParam, p)
+						mergo.Merge(subnetAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -3185,7 +3185,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(subnetDeleteParam, p)
+						mergo.Merge(subnetDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -3560,7 +3560,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(subnetUpdateParam, p)
+						mergo.Merge(subnetUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -3934,7 +3934,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(ipv6InfoParam, p)
+						mergo.Merge(ipv6InfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -4297,7 +4297,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(ipv6EnableParam, p)
+						mergo.Merge(ipv6EnableParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -4627,7 +4627,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(ipv6DisableParam, p)
+						mergo.Merge(ipv6DisableParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -4999,7 +4999,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(monitorParam, p)
+						mergo.Merge(monitorParam, p, mergo.WithOverride)
 					}
 
 					// Set option values

@@ -65,6 +65,10 @@
   name = "github.com/huandu/xstrings"
   revision = "3959339b333561bf62a38b424fd41517c2c90f40"
 
+[[override]]
+  name = "gopkg.in/urfave/cli.v2"
+  revision = "04b2f4ff79cf1fd71e138bafc67df8bbdb5b81c2"
+
 [prune]
   go-tests = true
   unused-packages = true
