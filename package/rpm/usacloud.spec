@@ -40,6 +40,20 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Mon Apr 09 2018 <sacloud.users@gmail.com> - 0.11.0-1
+- Add --class option to startup-script (by blp1526)
+- Update copyright (by yamamoto-febc)
+- Fix startup-script to startup-script-ids (by blp1526)
+- ディスク修正のテスト追加 (by yamamoto-febc)
+- FreeBSD版のビルド/リリース (by yamamoto-febc)
+- データベースアプライアンス 500GB/1TBプラン対応 (by yamamoto-febc)
+- 開発環境の改善 (by yamamoto-febc)
+- --queryオプションでのJMESPath指定 (by yamamoto-febc)
+- マルチパートアップロードの修正 (by yamamoto-febc)
+- バージョン情報にOS/ARCHを表示 (by yamamoto-febc)
+- リリース時のドキュメント生成を自動化 (by yamamoto-febc)
+- セキュアモバイル(SIM/モバイルゲートウェイ)対応 (by yamamoto-febc)
+
 * Wed Feb 14 2018 <sacloud.users@gmail.com> - 0.10.1-1
 - タイムアウトオプションの追加 (by yamamoto-febc)
 - プログレス表示崩れ対応 (by yamamoto-febc)

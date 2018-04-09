@@ -3434,12 +3434,6 @@ type LogsMobileGatewayParam struct {
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -3471,24 +3465,6 @@ func (p *LogsMobileGatewayParam) FillValueToSkeleton() {
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if isEmpty(p.OutputType) {
-		p.OutputType = ""
-	}
-	if isEmpty(p.Column) {
-		p.Column = []string{""}
-	}
-	if isEmpty(p.Quiet) {
-		p.Quiet = false
-	}
-	if isEmpty(p.Format) {
-		p.Format = ""
-	}
-	if isEmpty(p.FormatFile) {
-		p.FormatFile = ""
-	}
-	if isEmpty(p.Query) {
-		p.Query = ""
-	}
 	if isEmpty(p.Id) {
 		p.Id = 0
 	}
@@ -3508,26 +3484,6 @@ func (p *LogsMobileGatewayParam) Validate() []error {
 	{
 		validator := validateSakuraID
 		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateInputOption(p)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -3601,48 +3557,6 @@ func (p *LogsMobileGatewayParam) SetGenerateSkeleton(v bool) {
 
 func (p *LogsMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
-}
-func (p *LogsMobileGatewayParam) SetOutputType(v string) {
-	p.OutputType = v
-}
-
-func (p *LogsMobileGatewayParam) GetOutputType() string {
-	return p.OutputType
-}
-func (p *LogsMobileGatewayParam) SetColumn(v []string) {
-	p.Column = v
-}
-
-func (p *LogsMobileGatewayParam) GetColumn() []string {
-	return p.Column
-}
-func (p *LogsMobileGatewayParam) SetQuiet(v bool) {
-	p.Quiet = v
-}
-
-func (p *LogsMobileGatewayParam) GetQuiet() bool {
-	return p.Quiet
-}
-func (p *LogsMobileGatewayParam) SetFormat(v string) {
-	p.Format = v
-}
-
-func (p *LogsMobileGatewayParam) GetFormat() string {
-	return p.Format
-}
-func (p *LogsMobileGatewayParam) SetFormatFile(v string) {
-	p.FormatFile = v
-}
-
-func (p *LogsMobileGatewayParam) GetFormatFile() string {
-	return p.FormatFile
-}
-func (p *LogsMobileGatewayParam) SetQuery(v string) {
-	p.Query = v
-}
-
-func (p *LogsMobileGatewayParam) GetQuery() string {
-	return p.Query
 }
 func (p *LogsMobileGatewayParam) SetId(v int64) {
 	p.Id = v

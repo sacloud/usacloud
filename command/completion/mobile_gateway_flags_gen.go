@@ -654,8 +654,6 @@ func MobileGatewayLogsCompleteFlags(ctx command.Context, params *params.LogsMobi
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

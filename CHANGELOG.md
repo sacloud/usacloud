@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.11.0 (2018-04-09)
+
+* Add --class option to startup-script #318 (blp1526)
+* Update copyright #319 (yamamoto-febc)
+* Fix startup-script to startup-script-ids #321 (blp1526)
+* ディスク修正のテスト追加 #323 (yamamoto-febc)
+* FreeBSD版のビルド/リリース #325 (yamamoto-febc)
+* データベースアプライアンス 500GB/1TBプラン対応 #328 (yamamoto-febc)
+* 開発環境の改善 #329 (yamamoto-febc)
+* --queryオプションでのJMESPath指定 #330 (yamamoto-febc)
+* マルチパートアップロードの修正 #331 (yamamoto-febc)
+* バージョン情報にOS/ARCHを表示 #332 (yamamoto-febc)
+* リリース時のドキュメント生成を自動化 #333 (yamamoto-febc)
+* セキュアモバイル(SIM/モバイルゲートウェイ)対応 #334 (yamamoto-febc)
+
+
 ## 0.10.1 (2018-02-14)
 
 * タイムアウトオプションの追加 #312 (yamamoto-febc)
