@@ -2025,12 +2025,6 @@ type LogsSIMParam struct {
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -2062,24 +2056,6 @@ func (p *LogsSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
-	if isEmpty(p.OutputType) {
-		p.OutputType = ""
-	}
-	if isEmpty(p.Column) {
-		p.Column = []string{""}
-	}
-	if isEmpty(p.Quiet) {
-		p.Quiet = false
-	}
-	if isEmpty(p.Format) {
-		p.Format = ""
-	}
-	if isEmpty(p.FormatFile) {
-		p.FormatFile = ""
-	}
-	if isEmpty(p.Query) {
-		p.Query = ""
-	}
 	if isEmpty(p.Id) {
 		p.Id = 0
 	}
@@ -2099,26 +2075,6 @@ func (p *LogsSIMParam) Validate() []error {
 	{
 		validator := validateSakuraID
 		errs := validator("--id", p.Id)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-
-	{
-		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
-		errs := validator("--output-type", p.OutputType)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateInputOption(p)
-		if errs != nil {
-			errors = append(errors, errs...)
-		}
-	}
-	{
-		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2192,48 +2148,6 @@ func (p *LogsSIMParam) SetGenerateSkeleton(v bool) {
 
 func (p *LogsSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
-}
-func (p *LogsSIMParam) SetOutputType(v string) {
-	p.OutputType = v
-}
-
-func (p *LogsSIMParam) GetOutputType() string {
-	return p.OutputType
-}
-func (p *LogsSIMParam) SetColumn(v []string) {
-	p.Column = v
-}
-
-func (p *LogsSIMParam) GetColumn() []string {
-	return p.Column
-}
-func (p *LogsSIMParam) SetQuiet(v bool) {
-	p.Quiet = v
-}
-
-func (p *LogsSIMParam) GetQuiet() bool {
-	return p.Quiet
-}
-func (p *LogsSIMParam) SetFormat(v string) {
-	p.Format = v
-}
-
-func (p *LogsSIMParam) GetFormat() string {
-	return p.Format
-}
-func (p *LogsSIMParam) SetFormatFile(v string) {
-	p.FormatFile = v
-}
-
-func (p *LogsSIMParam) GetFormatFile() string {
-	return p.FormatFile
-}
-func (p *LogsSIMParam) SetQuery(v string) {
-	p.Query = v
-}
-
-func (p *LogsSIMParam) GetQuery() string {
-	return p.Query
 }
 func (p *LogsSIMParam) SetId(v int64) {
 	p.Id = v

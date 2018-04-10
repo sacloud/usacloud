@@ -389,8 +389,6 @@ func SIMLogsCompleteFlags(ctx command.Context, params *params.LogsSIMParam, flag
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
 	if comp != nil {

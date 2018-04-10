@@ -1,3 +1,32 @@
+usacloud (0.11.0-1) stable; urgency=low
+
+  * Add --class option to startup-script (by blp1526)
+    <https://github.com/sacloud/usacloud/pull/318>
+  * Update copyright (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/319>
+  * Fix startup-script to startup-script-ids (by blp1526)
+    <https://github.com/sacloud/usacloud/pull/321>
+  * ディスク修正のテスト追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/323>
+  * FreeBSD版のビルド/リリース (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/325>
+  * データベースアプライアンス 500GB/1TBプラン対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/328>
+  * 開発環境の改善 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/329>
+  * --queryオプションでのJMESPath指定 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/330>
+  * マルチパートアップロードの修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/331>
+  * バージョン情報にOS/ARCHを表示 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/332>
+  * リリース時のドキュメント生成を自動化 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/333>
+  * セキュアモバイル(SIM/モバイルゲートウェイ)対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/334>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Mon, 09 Apr 2018 10:38:22 +0000
+
 usacloud (0.10.1-1) stable; urgency=low
 
   * タイムアウトオプションの追加 (by yamamoto-febc)

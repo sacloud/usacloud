@@ -3806,34 +3806,6 @@ func init() {
 						Name:  "generate-skeleton",
 						Usage: "Output skelton of parameter JSON",
 					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -3895,24 +3867,6 @@ func init() {
 					}
 					if c.IsSet("generate-skeleton") {
 						logsParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						logsParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						logsParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						logsParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						logsParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						logsParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						logsParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						logsParam.Id = c.Int64("id")
@@ -4019,24 +3973,6 @@ func init() {
 					}
 					if c.IsSet("generate-skeleton") {
 						logsParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						logsParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						logsParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						logsParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						logsParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						logsParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						logsParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						logsParam.Id = c.Int64("id")
@@ -5041,25 +4977,10 @@ func init() {
 		DisplayName: "Filter options",
 		Order:       2147483587,
 	})
-	AppendFlagCategoryMap("sim", "logs", "column", &schema.Category{
-		Key:         "output",
-		DisplayName: "Output options",
-		Order:       2147483637,
-	})
 	AppendFlagCategoryMap("sim", "logs", "follow", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitor options",
 		Order:       1,
-	})
-	AppendFlagCategoryMap("sim", "logs", "format", &schema.Category{
-		Key:         "output",
-		DisplayName: "Output options",
-		Order:       2147483637,
-	})
-	AppendFlagCategoryMap("sim", "logs", "format-file", &schema.Category{
-		Key:         "output",
-		DisplayName: "Output options",
-		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("sim", "logs", "generate-skeleton", &schema.Category{
 		Key:         "Input",
@@ -5071,11 +4992,6 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
-	AppendFlagCategoryMap("sim", "logs", "output-type", &schema.Category{
-		Key:         "output",
-		DisplayName: "Output options",
-		Order:       2147483637,
-	})
 	AppendFlagCategoryMap("sim", "logs", "param-template", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -5085,16 +5001,6 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
-	})
-	AppendFlagCategoryMap("sim", "logs", "query", &schema.Category{
-		Key:         "output",
-		DisplayName: "Output options",
-		Order:       2147483637,
-	})
-	AppendFlagCategoryMap("sim", "logs", "quiet", &schema.Category{
-		Key:         "output",
-		DisplayName: "Output options",
-		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("sim", "logs", "refresh-interval", &schema.Category{
 		Key:         "monitor",
