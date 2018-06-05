@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Jun 05 2018 <sacloud.users@gmail.com> - 0.11.1-1
+- データベースアプライアンスのデフォルトバージョン更新 (by yamamoto-febc)
+
 * Mon Apr 09 2018 <sacloud.users@gmail.com> - 0.11.0-1
 - Add --class option to startup-script (by blp1526)
 - Update copyright (by yamamoto-febc)
