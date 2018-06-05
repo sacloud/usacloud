@@ -1,3 +1,10 @@
+usacloud (0.11.1-1) stable; urgency=low
+
+  * データベースアプライアンスのデフォルトバージョン更新 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/338>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Tue, 05 Jun 2018 06:06:44 +0000
+
 usacloud (0.11.0-1) stable; urgency=low
 
   * Add --class option to startup-script (by blp1526)

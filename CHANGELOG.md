@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.11.1 (2018-06-05)
+
+* データベースアプライアンスのデフォルトバージョン更新 #338 (yamamoto-febc)
+
+
 ## 0.11.0 (2018-04-09)
 
 * Add --class option to startup-script #318 (blp1526)
