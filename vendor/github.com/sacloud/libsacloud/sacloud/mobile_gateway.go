@@ -1,5 +1,10 @@
 package sacloud
 
+import (
+	"encoding/json"
+	"strings"
+)
+
 // MobileGateway モバイルゲートウェイ
 type MobileGateway struct {
 	*Appliance // アプライアンス共通属性
@@ -128,6 +133,26 @@ func NewMobileGatewayResolver(dns1, dns2 string) *MobileGatewayResolver {
 // MobileGatewayResolver DNS登録用パラメータ
 type MobileGatewayResolver struct {
 	SimGroup *MobileGatewaySIMGroup `json:"sim_group,omitempty"`
+}
+
+// UnmarshalJSON JSONアンマーシャル(配列、オブジェクトが混在するためここで対応)
+func (m *MobileGatewaySIMGroup) UnmarshalJSON(data []byte) error {
+	targetData := strings.Replace(strings.Replace(string(data), " ", "", -1), "\n", "", -1)
+	if targetData == `[]` {
+		return nil
+	}
+
+	tmp := &struct {
+		DNS1 string `json:"dns_1,omitempty"`
+		DNS2 string `json:"dns_2,omitempty"`
+	}{}
+	if err := json.Unmarshal(data, &tmp); err != nil {
+		return err
+	}
+
+	m.DNS1 = tmp.DNS1
+	m.DNS2 = tmp.DNS2
+	return nil
 }
 
 // MobileGatewaySIMGroup DNS登録用SIMグループ値
