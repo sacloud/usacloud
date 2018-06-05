@@ -110,6 +110,17 @@ func (api *MobileGatewayAPI) Update(id int64, value *sacloud.MobileGateway) (*sa
 	})
 }
 
+// UpdateSetting 設定更新
+func (api *MobileGatewayAPI) UpdateSetting(id int64, value *sacloud.MobileGateway) (*sacloud.MobileGateway, error) {
+	req := &sacloud.MobileGateway{
+		// Settings
+		Settings: value.Settings,
+	}
+	return api.request(func(res *mobileGatewayResponse) error {
+		return api.update(id, api.createRequest(req), res)
+	})
+}
+
 // Delete 削除
 func (api *MobileGatewayAPI) Delete(id int64) (*sacloud.MobileGateway, error) {
 	return api.request(func(res *mobileGatewayResponse) error {
@@ -241,6 +252,24 @@ func (api *MobileGatewayAPI) DisconnectFromSwitch(id int64) (bool, error) {
 		uri    = fmt.Sprintf("%s/%d/interface/%d/to/switch", api.getResourceURL(), id, 1)
 	)
 	return api.modify(method, uri, nil)
+}
+
+// GetDNS DNSサーバ設定 取得
+func (api *MobileGatewayAPI) GetDNS(id int64) (*sacloud.MobileGatewayResolver, error) {
+	var (
+		method = "GET"
+		uri    = fmt.Sprintf("%s/%d/mobilegateway/dnsresolver", api.getResourceURL(), id)
+	)
+
+	data, err := api.client.newRequest(method, uri, nil)
+	if err != nil {
+		return nil, err
+	}
+	var res sacloud.MobileGatewayResolver
+	if err := json.Unmarshal(data, &res); err != nil {
+		return nil, err
+	}
+	return &res, err
 }
 
 // SetDNS DNSサーバ設定

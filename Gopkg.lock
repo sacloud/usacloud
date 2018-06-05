@@ -22,8 +22,8 @@
 [[projects]]
   name = "github.com/fatih/color"
   packages = ["."]
-  revision = "507f6050b8568533fb3f5504de8e5205fa62a114"
-  version = "v1.6.0"
+  revision = "5b77d2a35fb0ede96d138fc9a99f5c9b6aef11b4"
+  version = "v1.7.0"
 
 [[projects]]
   branch = "master"
@@ -76,7 +76,7 @@
   branch = "master"
   name = "github.com/mitchellh/go-homedir"
   packages = ["."]
-  revision = "b8bc1bf767474819792c23f32d8286a45736f1c6"
+  revision = "3864e76763d94a6df2f9960b16a20a33da9f9a66"
 
 [[projects]]
   branch = "master"
@@ -97,7 +97,7 @@
   branch = "master"
   name = "github.com/olekukonko/tablewriter"
   packages = ["."]
-  revision = "b8a9be070da40449e501c3c4730a889e42d87a9e"
+  revision = "d4647c9c7a84d847478d890b816b7d8b62b0b279"
 
 [[projects]]
   name = "github.com/pmezard/go-difflib"
@@ -121,7 +121,7 @@
     "sacloud",
     "sacloud/ostype"
   ]
-  revision = "3bd32230c679b062c633d1ecfd2281cf75cb992c"
+  revision = "178aa57136e8c6e3882b6b5ef37a48f0e7cf836f"
 
 [[projects]]
   branch = "master"
@@ -152,13 +152,13 @@
     "poly1305",
     "ssh"
   ]
-  revision = "b2aa35443fbc700ab74c586ae79b81c171851023"
+  revision = "df8d4716b3472e4a531c33cedbe537dae921a1a9"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "3b87a42e500a6dc65dae1a55d0b641295971163e"
+  revision = "c11f84a56e43e20a78cee75a7c034031ecf57d1f"
 
 [[projects]]
   name = "gopkg.in/urfave/cli.v2"
