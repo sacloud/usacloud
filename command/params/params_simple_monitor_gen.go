@@ -281,6 +281,7 @@ type CreateSimpleMonitorParam struct {
 	HostHeader        string   `json:"host-header"`
 	Path              string   `json:"path"`
 	ResponseCode      int      `json:"response-code"`
+	Sni               bool     `json:"sni"`
 	DnsQname          string   `json:"dns-qname"`
 	DnsExcepted       string   `json:"dns-excepted"`
 	RemainingDays     int      `json:"remaining-days"`
@@ -339,6 +340,9 @@ func (p *CreateSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.ResponseCode) {
 		p.ResponseCode = 0
+	}
+	if isEmpty(p.Sni) {
+		p.Sni = false
 	}
 	if isEmpty(p.DnsQname) {
 		p.DnsQname = ""
@@ -583,6 +587,13 @@ func (p *CreateSimpleMonitorParam) SetResponseCode(v int) {
 
 func (p *CreateSimpleMonitorParam) GetResponseCode() int {
 	return p.ResponseCode
+}
+func (p *CreateSimpleMonitorParam) SetSni(v bool) {
+	p.Sni = v
+}
+
+func (p *CreateSimpleMonitorParam) GetSni() bool {
+	return p.Sni
 }
 func (p *CreateSimpleMonitorParam) SetDnsQname(v string) {
 	p.DnsQname = v
@@ -921,6 +932,7 @@ type UpdateSimpleMonitorParam struct {
 	HostHeader        string   `json:"host-header"`
 	Path              string   `json:"path"`
 	ResponseCode      int      `json:"response-code"`
+	Sni               bool     `json:"sni"`
 	DnsQname          string   `json:"dns-qname"`
 	DnsExcepted       string   `json:"dns-excepted"`
 	RemainingDays     int      `json:"remaining-days"`
@@ -971,6 +983,9 @@ func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.ResponseCode) {
 		p.ResponseCode = 0
+	}
+	if isEmpty(p.Sni) {
+		p.Sni = false
 	}
 	if isEmpty(p.DnsQname) {
 		p.DnsQname = ""
@@ -1200,6 +1215,13 @@ func (p *UpdateSimpleMonitorParam) SetResponseCode(v int) {
 
 func (p *UpdateSimpleMonitorParam) GetResponseCode() int {
 	return p.ResponseCode
+}
+func (p *UpdateSimpleMonitorParam) SetSni(v bool) {
+	p.Sni = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetSni() bool {
+	return p.Sni
 }
 func (p *UpdateSimpleMonitorParam) SetDnsQname(v string) {
 	p.DnsQname = v

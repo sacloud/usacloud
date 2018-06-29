@@ -101,6 +101,11 @@ func SimpleMonitorCreateCompleteFlags(ctx command.Context, params *params.Create
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "sni":
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("sni")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "dns-qname":
 		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("dns-qname")
 		if param != nil {
@@ -220,6 +225,11 @@ func SimpleMonitorUpdateCompleteFlags(ctx command.Context, params *params.Update
 		}
 	case "response-code":
 		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("response-code")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "sni":
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("sni")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

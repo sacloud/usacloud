@@ -2,6 +2,7 @@ package funcs
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
@@ -45,6 +46,11 @@ func SimpleMonitorUpdate(ctx command.Context, params *params.UpdateSimpleMonitor
 			hostHeader = params.HostHeader
 		}
 
+		sni := strings.ToLower(p.Settings.SimpleMonitor.HealthCheck.SNI) == "true"
+		if ctx.IsSet("sni") {
+			sni = params.Sni
+		}
+
 		if path == "" {
 			return fmt.Errorf("path is required when protocol is http/https")
 		}
@@ -62,7 +68,7 @@ func SimpleMonitorUpdate(ctx command.Context, params *params.UpdateSimpleMonitor
 				path,
 				responseCode,
 				hostHeader,
-				false, // TODO
+				sni,
 			)
 		}
 

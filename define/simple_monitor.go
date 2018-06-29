@@ -237,7 +237,14 @@ func simpleMonitorCreateParam() map[string]*schema.Schema {
 			Category:    "http-check",
 			Order:       30,
 		},
-
+		"sni": {
+			Type:         schema.TypeBool,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "enable SNI support for https monitoring",
+			DefaultValue: false,
+			Category:     "http-check",
+			Order:        40,
+		},
 		"dns-qname": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -351,6 +358,14 @@ func simpleMonitorUpdateParam() map[string]*schema.Schema {
 			Description: "set response-code of http/https monitoring request",
 			Category:    "http-check",
 			Order:       30,
+		},
+		"sni": {
+			Type:         schema.TypeBool,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "enable SNI support for https monitoring",
+			DefaultValue: false,
+			Category:     "http-check",
+			Order:        40,
 		},
 		"dns_qname": {
 			Type:        schema.TypeString,

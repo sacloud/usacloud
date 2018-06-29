@@ -390,6 +390,11 @@ func init() {
 						Name:  "response-code",
 						Usage: "set response-code of http/https monitoring request",
 					},
+					&cli.BoolFlag{
+						Name:  "sni",
+						Usage: "enable SNI support for https monitoring",
+						Value: false,
+					},
 					&cli.StringFlag{
 						Name:  "dns-qname",
 						Usage: "set DNS query target name",
@@ -537,6 +542,9 @@ func init() {
 					}
 					if c.IsSet("response-code") {
 						createParam.ResponseCode = c.Int("response-code")
+					}
+					if c.IsSet("sni") {
+						createParam.Sni = c.Bool("sni")
 					}
 					if c.IsSet("dns-qname") {
 						createParam.DnsQname = c.String("dns-qname")
@@ -703,6 +711,9 @@ func init() {
 					}
 					if c.IsSet("response-code") {
 						createParam.ResponseCode = c.Int("response-code")
+					}
+					if c.IsSet("sni") {
+						createParam.Sni = c.Bool("sni")
 					}
 					if c.IsSet("dns-qname") {
 						createParam.DnsQname = c.String("dns-qname")
@@ -1201,6 +1212,11 @@ func init() {
 						Name:  "response-code",
 						Usage: "set response-code of http/https monitoring request",
 					},
+					&cli.BoolFlag{
+						Name:  "sni",
+						Usage: "enable SNI support for https monitoring",
+						Value: false,
+					},
 					&cli.StringFlag{
 						Name:  "dns-qname",
 						Usage: "set DNS query target name",
@@ -1351,6 +1367,9 @@ func init() {
 					}
 					if c.IsSet("response-code") {
 						updateParam.ResponseCode = c.Int("response-code")
+					}
+					if c.IsSet("sni") {
+						updateParam.Sni = c.Bool("sni")
 					}
 					if c.IsSet("dns-qname") {
 						updateParam.DnsQname = c.String("dns-qname")
@@ -1520,6 +1539,9 @@ func init() {
 					}
 					if c.IsSet("response-code") {
 						updateParam.ResponseCode = c.Int("response-code")
+					}
+					if c.IsSet("sni") {
+						updateParam.Sni = c.Bool("sni")
 					}
 					if c.IsSet("dns-qname") {
 						updateParam.DnsQname = c.String("dns-qname")
@@ -2247,6 +2269,11 @@ func init() {
 		DisplayName: "Notify options",
 		Order:       30,
 	})
+	AppendFlagCategoryMap("simple-monitor", "create", "sni", &schema.Category{
+		Key:         "http-check",
+		DisplayName: "Health-Check(HTTP/HTTPS) options",
+		Order:       22,
+	})
 	AppendFlagCategoryMap("simple-monitor", "create", "tags", &schema.Category{
 		Key:         "common",
 		DisplayName: "Common options",
@@ -2581,6 +2608,11 @@ func init() {
 		Key:         "notify",
 		DisplayName: "Notify options",
 		Order:       30,
+	})
+	AppendFlagCategoryMap("simple-monitor", "update", "sni", &schema.Category{
+		Key:         "http-check",
+		DisplayName: "Health-Check(HTTP/HTTPS) options",
+		Order:       22,
 	})
 	AppendFlagCategoryMap("simple-monitor", "update", "tags", &schema.Category{
 		Key:         "common",

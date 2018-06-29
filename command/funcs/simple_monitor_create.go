@@ -42,7 +42,7 @@ func SimpleMonitorCreate(ctx command.Context, params *params.CreateSimpleMonitor
 				params.Path,
 				responseCode,
 				params.HostHeader,
-				false, // TODO
+				params.Sni,
 			)
 		}
 
