@@ -45,21 +45,26 @@ func SimpleMonitorUpdate(ctx command.Context, params *params.UpdateSimpleMonitor
 			hostHeader = params.HostHeader
 		}
 
-		// set health check
-		setHealthCheck := p.SetHealthCheckHTTP
-		if params.Protocol == "https" {
-			setHealthCheck = p.SetHealthCheckHTTPS
-		}
-
 		if path == "" {
 			return fmt.Errorf("path is required when protocol is http/https")
 		}
-		setHealthCheck(
-			port,
-			path,
-			responseCode,
-			hostHeader,
-		)
+		// set health check
+		if params.Protocol == "http" {
+			p.SetHealthCheckHTTP(
+				port,
+				path,
+				responseCode,
+				hostHeader,
+			)
+		} else {
+			p.SetHealthCheckHTTPS(
+				port,
+				path,
+				responseCode,
+				hostHeader,
+				false, // TODO
+			)
+		}
 
 	case "ping":
 		p.SetHealthCheckPing()
