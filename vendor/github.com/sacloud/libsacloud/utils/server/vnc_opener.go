@@ -1,6 +1,6 @@
 // +build !windows,!linux
 
-package vnc
+package server
 
 import (
 	"fmt"
@@ -9,7 +9,8 @@ import (
 	"github.com/skratchdot/open-golang/open"
 )
 
-func OpenVNCClient(vncProxyInfo *sacloud.VNCProxyResponse) error {
+// StartDefaultVNCClient starts OS's default VNC client
+func StartDefaultVNCClient(vncProxyInfo *sacloud.VNCProxyResponse) error {
 	host := vncProxyInfo.ActualHost()
 	uri := fmt.Sprintf("vnc://:%s@%s:%s",
 		vncProxyInfo.Password,

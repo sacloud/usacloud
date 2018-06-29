@@ -1,4 +1,4 @@
-package ssh
+package server
 
 import (
 	"crypto/x509"
@@ -15,7 +15,8 @@ import (
 	"golang.org/x/crypto/ssh"
 )
 
-type ClientParams struct {
+// SSHClientParams represents SSHClient params
+type SSHClientParams struct {
 	DisplayName    string
 	UserName       string
 	Password       string
@@ -26,11 +27,13 @@ type ClientParams struct {
 	Out            io.Writer
 }
 
-func (p *ClientParams) TargetHost() string {
+// TargetHost returns hostname as 'host:port'
+func (p *SSHClientParams) TargetHost() string {
 	return fmt.Sprintf("%s:%d", p.Host, p.Port)
 }
 
-func CreateSSHClient(params *ClientParams) (*ssh.Client, error) {
+// CreateSSHClient returns new *ssh.Client by SSHClientParams
+func CreateSSHClient(params *SSHClientParams) (*ssh.Client, error) {
 
 	// collect file info
 	fileExists := false

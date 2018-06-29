@@ -1,4 +1,4 @@
-package rdp
+package server
 
 import (
 	"fmt"
@@ -7,15 +7,16 @@ import (
 	"github.com/skratchdot/open-golang/open"
 )
 
-// Opener information of RDP connection
-type Opener struct {
+// RDPOpener information of RDP connection
+type RDPOpener struct {
 	IPAddress       string
 	User            string
 	Port            int
 	RDPFileTemplate string
 }
 
-func (c *Opener) RDPFileContent() string {
+// RDPFileContent represents .rdp file contents
+func (c *RDPOpener) RDPFileContent() string {
 	addr := c.IPAddress
 	if c.Port > 0 {
 		addr = fmt.Sprintf("%s:%d", c.IPAddress, c.Port)
@@ -34,7 +35,8 @@ username:s:%s
 autoreconnection enabled:i:1
 `
 
-func (c *Opener) StartDefaultClient() error {
+// StartDefaultClient starts OS's default RDP client
+func (c *RDPOpener) StartDefaultClient() error {
 	uri := ""
 
 	// create .rdp tmp-file

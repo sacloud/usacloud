@@ -1,6 +1,6 @@
 // +build linux
 
-package vnc
+package server
 
 import (
 	"fmt"
@@ -11,13 +11,14 @@ import (
 	"github.com/skratchdot/open-golang/open"
 )
 
-func OpenVNCClient(vncProxyInfo *sacloud.VNCProxyResponse) error {
+// StartDefaultVNCClient starts OS's default VNC client
+func StartDefaultVNCClient(vncProxyInfo *sacloud.VNCProxyResponse) error {
 
 	uri := ""
 
 	for uri == "" {
 		// create .vnc tmp-file
-		f, err := ioutil.TempFile("", "usacloud_open_vnc")
+		f, err := ioutil.TempFile("", "libsacloud_open_vnc")
 		if err != nil {
 			return err
 		}

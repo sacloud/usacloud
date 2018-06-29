@@ -119,7 +119,8 @@
     "api",
     "builder",
     "sacloud",
-    "sacloud/ostype"
+    "sacloud/ostype",
+    "utils/server"
   ]
   revision = "160b81c6238019afcfca496d65c63acb7b809ccd"
 
@@ -169,6 +170,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "213fabc18eef1b2029167a4d33050e124ac6cd5a11d4dde615612fb8d096dcf5"
+  inputs-digest = "d4650561caaa846223c2a820d7aadcb7a887a70597f2fc09af0273d02796232c"
   solver-name = "gps-cdcl"
   solver-version = 1
