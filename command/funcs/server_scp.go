@@ -15,7 +15,7 @@ import (
 	"strings"
 
 	"github.com/sacloud/libsacloud/api"
-	"github.com/sacloud/usacloud/helper/ssh"
+	"github.com/sacloud/libsacloud/utils/server"
 )
 
 func ServerScp(ctx command.Context, params *params.ScpServerParam) error {
@@ -94,7 +94,7 @@ func ServerScp(ctx command.Context, params *params.ScpServerParam) error {
 		user = sshUser
 	}
 
-	sshParam := &ssh.ClientParams{
+	sshParam := &server.SSHClientParams{
 		UserName:       user,
 		Password:       params.Password,
 		Host:           ip,
@@ -103,7 +103,7 @@ func ServerScp(ctx command.Context, params *params.ScpServerParam) error {
 		Out:            command.GlobalOption.Progress,
 		Quiet:          params.Quiet,
 	}
-	conn, err := ssh.CreateSSHClient(sshParam)
+	conn, err := server.CreateSSHClient(sshParam)
 	if err != nil {
 		return fmt.Errorf("ServerScp is failed: creating ssh-client is failed: %s", err)
 	}

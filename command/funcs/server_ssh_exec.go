@@ -7,10 +7,10 @@ import (
 	"sync"
 
 	"github.com/fatih/color"
+	"github.com/sacloud/libsacloud/utils/server"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/helper/printer"
-	"github.com/sacloud/usacloud/helper/ssh"
 )
 
 var serverSSHMutex = sync.Mutex{}
@@ -68,7 +68,7 @@ func ServerSshExec(ctx command.Context, params *params.SshExecServerParam) error
 	}
 
 	displayName := fmt.Sprintf("%s(%d)", p.Name, p.ID)
-	sshParam := &ssh.ClientParams{
+	sshParam := &server.SSHClientParams{
 		DisplayName:    displayName,
 		UserName:       user,
 		Password:       params.Password,
@@ -78,7 +78,7 @@ func ServerSshExec(ctx command.Context, params *params.SshExecServerParam) error
 		Out:            command.GlobalOption.Progress,
 		Quiet:          params.Quiet,
 	}
-	conn, err := ssh.CreateSSHClient(sshParam)
+	conn, err := server.CreateSSHClient(sshParam)
 	if err != nil {
 		return fmt.Errorf("ServerSshExec is failed: creating ssh-client is failed: %s", err)
 	}
