@@ -1,4 +1,4 @@
-package vnc
+package server
 
 import (
 	"fmt"
@@ -15,9 +15,9 @@ import (
 	"github.com/sacloud/libsacloud/sacloud"
 )
 
-const KeyLeftShift uint32 = 0xFFE1
+const keyLeftShift uint32 = 0xFFE1
 
-// SendCommandOption is the Option value of VNC SendCommand
+// SendCommandOption is the Option value of VNC VNCSendCommand
 type SendCommandOption struct {
 	UseUSKeyboard  bool
 	Debug          bool
@@ -54,7 +54,8 @@ func (c *vncClientConnWrapper) log(format string, a ...interface{}) {
 	fmt.Fprintf(c.w, format, a...)
 }
 
-func SendCommand(vncProxyInfo *sacloud.VNCProxyResponse, command string, option *SendCommandOption) error {
+// VNCSendCommand sends command over VNC connection
+func VNCSendCommand(vncProxyInfo *sacloud.VNCProxyResponse, command string, option *SendCommandOption) error {
 	host := vncProxyInfo.ActualHost()
 
 	fmt.Fprintf(option.ProgressWriter, "Connecting to VM via VNC...\n")
@@ -408,7 +409,7 @@ func vncSendString(c *vncClientConnWrapper, original string, useUSKeyboard bool)
 		}
 
 		if keyShift {
-			c.KeyEvent(KeyLeftShift, true)
+			c.KeyEvent(keyLeftShift, true)
 		}
 
 		c.KeyEvent(keyCode, true)
@@ -417,7 +418,7 @@ func vncSendString(c *vncClientConnWrapper, original string, useUSKeyboard bool)
 		time.Sleep(time.Second / 10)
 
 		if keyShift {
-			c.KeyEvent(KeyLeftShift, false)
+			c.KeyEvent(keyLeftShift, false)
 		}
 
 		// qemu is picky, so no matter what, wait a small period

@@ -39,10 +39,6 @@
 
 [[constraint]]
   branch = "master"
-  name = "github.com/mitchellh/go-vnc"
-
-[[constraint]]
-  branch = "master"
   name = "github.com/mitchellh/goamz"
 
 [[constraint]]
@@ -52,10 +48,6 @@
 [[constraint]]
   branch = "master"
   name = "github.com/sacloud/libsacloud"
-
-[[constraint]]
-  branch = "master"
-  name = "github.com/skratchdot/open-golang"
 
 [[constraint]]
   branch = "master"
