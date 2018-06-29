@@ -6,9 +6,7 @@ install:
   - go get github.com/stretchr/testify/assert
 
 script:
-  - test -z "$(gofmt -s -l -w . | tee /dev/stderr)"
-  - test -z "$(golint ./... | grep -v '_string.go' | tee /dev/stderr)"
-  - go vet ./...
+  - make vet
   - go build -v ./...
   - go test -v ./sacloud
   - travis_wait 120 go test -v ./builder -timeout 120m
