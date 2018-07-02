@@ -473,27 +473,121 @@ func MobileGatewayInterfaceDisconnectCompleteFlags(ctx command.Context, params *
 	}
 }
 
-func MobileGatewayDnsUpdateCompleteFlags(ctx command.Context, params *params.DnsUpdateMobileGatewayParam, flagName string, currentValue string) {
+func MobileGatewayStaticRouteInfoCompleteFlags(ctx command.Context, params *params.StaticRouteInfoMobileGatewayParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "dns1":
-		param := define.Resources["MobileGateway"].Commands["dns-update"].BuildedParams().Get("dns1")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "dns2":
-		param := define.Resources["MobileGateway"].Commands["dns-update"].BuildedParams().Get("dns2")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
 	case "selector":
-		param := define.Resources["MobileGateway"].Commands["dns-update"].BuildedParams().Get("selector")
+		param := define.Resources["MobileGateway"].Commands["static-route-info"].BuildedParams().Get("selector")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
 	case "id":
-		param := define.Resources["MobileGateway"].Commands["dns-update"].BuildedParams().Get("id")
+		param := define.Resources["MobileGateway"].Commands["static-route-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func MobileGatewayStaticRouteAddCompleteFlags(ctx command.Context, params *params.StaticRouteAddMobileGatewayParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "prefix":
+		param := define.Resources["MobileGateway"].Commands["static-route-add"].BuildedParams().Get("prefix")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "next-hop":
+		param := define.Resources["MobileGateway"].Commands["static-route-add"].BuildedParams().Get("next-hop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["MobileGateway"].Commands["static-route-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["MobileGateway"].Commands["static-route-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func MobileGatewayStaticRouteUpdateCompleteFlags(ctx command.Context, params *params.StaticRouteUpdateMobileGatewayParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "index":
+		param := define.Resources["MobileGateway"].Commands["static-route-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "prefix":
+		param := define.Resources["MobileGateway"].Commands["static-route-update"].BuildedParams().Get("prefix")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "next-hop":
+		param := define.Resources["MobileGateway"].Commands["static-route-update"].BuildedParams().Get("next-hop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["MobileGateway"].Commands["static-route-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["MobileGateway"].Commands["static-route-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func MobileGatewayStaticRouteDeleteCompleteFlags(ctx command.Context, params *params.StaticRouteDeleteMobileGatewayParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "index":
+		param := define.Resources["MobileGateway"].Commands["static-route-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["MobileGateway"].Commands["static-route-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["MobileGateway"].Commands["static-route-delete"].BuildedParams().Get("id")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -617,6 +711,40 @@ func MobileGatewaySimDeleteCompleteFlags(ctx command.Context, params *params.Sim
 		}
 	case "id":
 		param := define.Resources["MobileGateway"].Commands["sim-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func MobileGatewayDnsUpdateCompleteFlags(ctx command.Context, params *params.DnsUpdateMobileGatewayParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "dns1":
+		param := define.Resources["MobileGateway"].Commands["dns-update"].BuildedParams().Get("dns1")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "dns2":
+		param := define.Resources["MobileGateway"].Commands["dns-update"].BuildedParams().Get("dns2")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["MobileGateway"].Commands["dns-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["MobileGateway"].Commands["dns-update"].BuildedParams().Get("id")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

@@ -420,7 +420,100 @@ func MobileGatewayInterfaceDisconnectCompleteArgs(ctx command.Context, params *p
 
 }
 
-func MobileGatewayDnsUpdateCompleteArgs(ctx command.Context, params *params.DnsUpdateMobileGatewayParam, cur, prev, commandName string) {
+func MobileGatewayStaticRouteInfoCompleteArgs(ctx command.Context, params *params.StaticRouteInfoMobileGatewayParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetMobileGatewayAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.MobileGateways {
+		fmt.Println(res.MobileGateways[i].ID)
+		var target interface{} = &res.MobileGateways[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func MobileGatewayStaticRouteAddCompleteArgs(ctx command.Context, params *params.StaticRouteAddMobileGatewayParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetMobileGatewayAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.MobileGateways {
+		fmt.Println(res.MobileGateways[i].ID)
+		var target interface{} = &res.MobileGateways[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func MobileGatewayStaticRouteUpdateCompleteArgs(ctx command.Context, params *params.StaticRouteUpdateMobileGatewayParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetMobileGatewayAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.MobileGateways {
+		fmt.Println(res.MobileGateways[i].ID)
+		var target interface{} = &res.MobileGateways[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func MobileGatewayStaticRouteDeleteCompleteArgs(ctx command.Context, params *params.StaticRouteDeleteMobileGatewayParam, cur, prev, commandName string) {
 
 	if !command.GlobalOption.Valid {
 		return
@@ -545,6 +638,37 @@ func MobileGatewaySimUpdateCompleteArgs(ctx command.Context, params *params.SimU
 }
 
 func MobileGatewaySimDeleteCompleteArgs(ctx command.Context, params *params.SimDeleteMobileGatewayParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetMobileGatewayAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.MobileGateways {
+		fmt.Println(res.MobileGateways[i].ID)
+		var target interface{} = &res.MobileGateways[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func MobileGatewayDnsUpdateCompleteArgs(ctx command.Context, params *params.DnsUpdateMobileGatewayParam, cur, prev, commandName string) {
 
 	if !command.GlobalOption.Valid {
 		return

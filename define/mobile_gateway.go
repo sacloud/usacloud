@@ -150,6 +150,45 @@ func MobileGatewayResource() *schema.Resource {
 			Order:            40,
 			NoOutput:         true,
 		},
+		"static-route-info": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             mobileGatewayStaticRouteInfoParam(),
+			Aliases:            []string{"static-route-list"},
+			Usage:              "Show information of static-routes",
+			TableType:          output.TableSimple,
+			TableColumnDefines: mobileGatewayStaticRouteListColumns(),
+			UseCustomCommand:   true,
+			Category:           "static-route",
+			Order:              10,
+			NeedlessConfirm:    true,
+		},
+		"static-route-add": {
+			Type:             schema.CommandManipulateSingle,
+			Params:           mobileGatewayStaticRouteAddParam(),
+			Usage:            "Add static-route",
+			UseCustomCommand: true,
+			Category:         "static-route",
+			Order:            20,
+			NoOutput:         true,
+		},
+		"static-route-update": {
+			Type:             schema.CommandManipulateSingle,
+			Params:           mobileGatewayStaticRouteUpdateParam(),
+			Usage:            "Update static-route",
+			UseCustomCommand: true,
+			Category:         "static-route",
+			Order:            30,
+			NoOutput:         true,
+		},
+		"static-route-delete": {
+			Type:             schema.CommandManipulateSingle,
+			Params:           mobileGatewayStaticRouteDeleteParam(),
+			Usage:            "Delete static-route",
+			UseCustomCommand: true,
+			Category:         "static-route",
+			Order:            40,
+			NoOutput:         true,
+		},
 		"sim-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             mobileGatewaySIMInfoParam(),
@@ -232,19 +271,24 @@ var MobileGatewayCommandCategories = []schema.Category{
 		Order:       30,
 	},
 	{
+		Key:         "static-route",
+		DisplayName: "StaticRoute Management",
+		Order:       40,
+	},
+	{
 		Key:         "sim",
 		DisplayName: "SIM Management",
-		Order:       40,
+		Order:       50,
 	},
 	{
 		Key:         "dns",
 		DisplayName: "DNS Management",
-		Order:       40,
+		Order:       60,
 	},
 	{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       50,
+		Order:       70,
 	},
 	{
 		Key:         "other",
@@ -300,6 +344,14 @@ func mobileGatewayInterfaceListColumns() []output.ColumnDef {
 		{Name: "Switch"},
 		{Name: "IPAddress"},
 		{Name: "NetworkMaskLen"},
+	}
+}
+
+func mobileGatewayStaticRouteListColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "__ORDER__"}, // magic column name(generated on demand)
+		{Name: "Prefix"},
+		{Name: "NextHop"},
 	}
 }
 
@@ -559,6 +611,75 @@ func mobileGatewayLogsParam() map[string]*schema.Schema {
 			Description:  "log refresh interval second",
 			Category:     "monitor",
 			Order:        20,
+		},
+	}
+}
+
+func mobileGatewayStaticRouteInfoParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
+}
+
+func mobileGatewayStaticRouteAddParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"prefix": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set prefix",
+			Required:     true,
+			ValidateFunc: validateIPv4AddressWithPrefix(),
+			Category:     "Static-Route",
+			Order:        10,
+		},
+		"next-hop": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set next-hop",
+			Required:     true,
+			ValidateFunc: validateIPv4Address(),
+			Category:     "Static-Route",
+			Order:        20,
+		},
+	}
+}
+
+func mobileGatewayStaticRouteUpdateParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"index": {
+			Type:        schema.TypeInt,
+			HandlerType: schema.HandlerNoop,
+			Description: "index of target static-route",
+			Required:    true,
+			Category:    "Static-Route",
+			Order:       1,
+		},
+		"prefix": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set prefix",
+			ValidateFunc: validateIPv4AddressWithPrefix(),
+			Category:     "Static-Route",
+			Order:        10,
+		},
+		"next-hop": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set next-hop",
+			ValidateFunc: validateIPv4Address(),
+			Category:     "Static-Route",
+			Order:        20,
+		},
+	}
+}
+
+func mobileGatewayStaticRouteDeleteParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"index": {
+			Type:        schema.TypeInt,
+			HandlerType: schema.HandlerNoop,
+			Description: "index of target static-route",
+			Required:    true,
+			Category:    "Static-Route",
+			Order:       1,
 		},
 	}
 }
