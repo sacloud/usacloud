@@ -3930,6 +3930,679 @@ func (p *SimDeleteMobileGatewayParam) GetId() int64 {
 	return p.Id
 }
 
+// SimRouteInfoMobileGatewayParam is input parameters for the sacloud API
+type SimRouteInfoMobileGatewayParam struct {
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
+	Id                int64    `json:"id"`
+}
+
+// NewSimRouteInfoMobileGatewayParam return new SimRouteInfoMobileGatewayParam
+func NewSimRouteInfoMobileGatewayParam() *SimRouteInfoMobileGatewayParam {
+	return &SimRouteInfoMobileGatewayParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *SimRouteInfoMobileGatewayParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *SimRouteInfoMobileGatewayParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["sim-route-info"]
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *SimRouteInfoMobileGatewayParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *SimRouteInfoMobileGatewayParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SimRouteInfoMobileGatewayParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *SimRouteInfoMobileGatewayParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *SimRouteInfoMobileGatewayParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *SimRouteInfoMobileGatewayParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetColumn() []string {
+	return p.Column
+}
+func (p *SimRouteInfoMobileGatewayParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *SimRouteInfoMobileGatewayParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetFormat() string {
+	return p.Format
+}
+func (p *SimRouteInfoMobileGatewayParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *SimRouteInfoMobileGatewayParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetQuery() string {
+	return p.Query
+}
+func (p *SimRouteInfoMobileGatewayParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetId() int64 {
+	return p.Id
+}
+
+// SimRouteAddMobileGatewayParam is input parameters for the sacloud API
+type SimRouteAddMobileGatewayParam struct {
+	Prefix            string   `json:"prefix"`
+	Sim               int64    `json:"sim"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
+}
+
+// NewSimRouteAddMobileGatewayParam return new SimRouteAddMobileGatewayParam
+func NewSimRouteAddMobileGatewayParam() *SimRouteAddMobileGatewayParam {
+	return &SimRouteAddMobileGatewayParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *SimRouteAddMobileGatewayParam) FillValueToSkeleton() {
+	if isEmpty(p.Prefix) {
+		p.Prefix = ""
+	}
+	if isEmpty(p.Sim) {
+		p.Sim = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *SimRouteAddMobileGatewayParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--prefix", p.Prefix)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["MobileGateway"].Commands["sim-route-add"].Params["prefix"].ValidateFunc
+		errs := validator("--prefix", p.Prefix)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--sim", p.Sim)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["MobileGateway"].Commands["sim-route-add"].Params["sim"].ValidateFunc
+		errs := validator("--sim", p.Sim)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["sim-route-add"]
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *SimRouteAddMobileGatewayParam) SetPrefix(v string) {
+	p.Prefix = v
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetPrefix() string {
+	return p.Prefix
+}
+func (p *SimRouteAddMobileGatewayParam) SetSim(v int64) {
+	p.Sim = v
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetSim() int64 {
+	return p.Sim
+}
+func (p *SimRouteAddMobileGatewayParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *SimRouteAddMobileGatewayParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *SimRouteAddMobileGatewayParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SimRouteAddMobileGatewayParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *SimRouteAddMobileGatewayParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *SimRouteAddMobileGatewayParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *SimRouteAddMobileGatewayParam) GetId() int64 {
+	return p.Id
+}
+
+// SimRouteUpdateMobileGatewayParam is input parameters for the sacloud API
+type SimRouteUpdateMobileGatewayParam struct {
+	Index             int      `json:"index"`
+	Prefix            string   `json:"prefix"`
+	Sim               int64    `json:"sim"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
+}
+
+// NewSimRouteUpdateMobileGatewayParam return new SimRouteUpdateMobileGatewayParam
+func NewSimRouteUpdateMobileGatewayParam() *SimRouteUpdateMobileGatewayParam {
+	return &SimRouteUpdateMobileGatewayParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *SimRouteUpdateMobileGatewayParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Prefix) {
+		p.Prefix = ""
+	}
+	if isEmpty(p.Sim) {
+		p.Sim = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *SimRouteUpdateMobileGatewayParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["MobileGateway"].Commands["sim-route-update"].Params["prefix"].ValidateFunc
+		errs := validator("--prefix", p.Prefix)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["MobileGateway"].Commands["sim-route-update"].Params["sim"].ValidateFunc
+		errs := validator("--sim", p.Sim)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["sim-route-update"]
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetIndex() int {
+	return p.Index
+}
+func (p *SimRouteUpdateMobileGatewayParam) SetPrefix(v string) {
+	p.Prefix = v
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetPrefix() string {
+	return p.Prefix
+}
+func (p *SimRouteUpdateMobileGatewayParam) SetSim(v int64) {
+	p.Sim = v
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetSim() int64 {
+	return p.Sim
+}
+func (p *SimRouteUpdateMobileGatewayParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *SimRouteUpdateMobileGatewayParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *SimRouteUpdateMobileGatewayParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SimRouteUpdateMobileGatewayParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *SimRouteUpdateMobileGatewayParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *SimRouteUpdateMobileGatewayParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *SimRouteUpdateMobileGatewayParam) GetId() int64 {
+	return p.Id
+}
+
+// SimRouteDeleteMobileGatewayParam is input parameters for the sacloud API
+type SimRouteDeleteMobileGatewayParam struct {
+	Index             int      `json:"index"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
+}
+
+// NewSimRouteDeleteMobileGatewayParam return new SimRouteDeleteMobileGatewayParam
+func NewSimRouteDeleteMobileGatewayParam() *SimRouteDeleteMobileGatewayParam {
+	return &SimRouteDeleteMobileGatewayParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *SimRouteDeleteMobileGatewayParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *SimRouteDeleteMobileGatewayParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["sim-route-delete"]
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) GetIndex() int {
+	return p.Index
+}
+func (p *SimRouteDeleteMobileGatewayParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *SimRouteDeleteMobileGatewayParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *SimRouteDeleteMobileGatewayParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *SimRouteDeleteMobileGatewayParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *SimRouteDeleteMobileGatewayParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *SimRouteDeleteMobileGatewayParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *SimRouteDeleteMobileGatewayParam) GetId() int64 {
+	return p.Id
+}
+
 // DnsUpdateMobileGatewayParam is input parameters for the sacloud API
 type DnsUpdateMobileGatewayParam struct {
 	Dns1              string   `json:"dns1"`

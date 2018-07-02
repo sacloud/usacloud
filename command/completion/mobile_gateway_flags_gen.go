@@ -724,6 +724,134 @@ func MobileGatewaySimDeleteCompleteFlags(ctx command.Context, params *params.Sim
 	}
 }
 
+func MobileGatewaySimRouteInfoCompleteFlags(ctx command.Context, params *params.SimRouteInfoMobileGatewayParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["MobileGateway"].Commands["sim-route-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["MobileGateway"].Commands["sim-route-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func MobileGatewaySimRouteAddCompleteFlags(ctx command.Context, params *params.SimRouteAddMobileGatewayParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "prefix":
+		param := define.Resources["MobileGateway"].Commands["sim-route-add"].BuildedParams().Get("prefix")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "sim":
+		param := define.Resources["MobileGateway"].Commands["sim-route-add"].BuildedParams().Get("sim")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["MobileGateway"].Commands["sim-route-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["MobileGateway"].Commands["sim-route-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func MobileGatewaySimRouteUpdateCompleteFlags(ctx command.Context, params *params.SimRouteUpdateMobileGatewayParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "index":
+		param := define.Resources["MobileGateway"].Commands["sim-route-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "prefix":
+		param := define.Resources["MobileGateway"].Commands["sim-route-update"].BuildedParams().Get("prefix")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "sim":
+		param := define.Resources["MobileGateway"].Commands["sim-route-update"].BuildedParams().Get("sim")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["MobileGateway"].Commands["sim-route-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["MobileGateway"].Commands["sim-route-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func MobileGatewaySimRouteDeleteCompleteFlags(ctx command.Context, params *params.SimRouteDeleteMobileGatewayParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "index":
+		param := define.Resources["MobileGateway"].Commands["sim-route-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["MobileGateway"].Commands["sim-route-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["MobileGateway"].Commands["sim-route-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
 func MobileGatewayDnsUpdateCompleteFlags(ctx command.Context, params *params.DnsUpdateMobileGatewayParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 

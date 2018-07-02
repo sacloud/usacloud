@@ -228,6 +228,45 @@ func MobileGatewayResource() *schema.Resource {
 			Order:            40,
 			NoOutput:         true,
 		},
+		"sim-route-info": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             mobileGatewaySIMRouteInfoParam(),
+			Aliases:            []string{"sim-route-list"},
+			Usage:              "Show information of sim-routes",
+			TableType:          output.TableSimple,
+			TableColumnDefines: mobileGatewaySIMRouteListColumns(),
+			UseCustomCommand:   true,
+			Category:           "sim-route",
+			Order:              10,
+			NeedlessConfirm:    true,
+		},
+		"sim-route-add": {
+			Type:             schema.CommandManipulateSingle,
+			Params:           mobileGatewaySIMRouteAddParam(),
+			Usage:            "Add sim-route",
+			UseCustomCommand: true,
+			Category:         "sim-route",
+			Order:            20,
+			NoOutput:         true,
+		},
+		"sim-route-update": {
+			Type:             schema.CommandManipulateSingle,
+			Params:           mobileGatewaySIMRouteUpdateParam(),
+			Usage:            "Update sim-route",
+			UseCustomCommand: true,
+			Category:         "sim-route",
+			Order:            30,
+			NoOutput:         true,
+		},
+		"sim-route-delete": {
+			Type:             schema.CommandManipulateSingle,
+			Params:           mobileGatewaySIMRouteDeleteParam(),
+			Usage:            "Delete sim-route",
+			UseCustomCommand: true,
+			Category:         "sim-route",
+			Order:            40,
+			NoOutput:         true,
+		},
 		"dns-update": {
 			Type:             schema.CommandManipulateSingle,
 			Params:           mobileGatewayDNSUpdateParam(),
@@ -279,6 +318,11 @@ var MobileGatewayCommandCategories = []schema.Category{
 		Key:         "sim",
 		DisplayName: "SIM Management",
 		Order:       50,
+	},
+	{
+		Key:         "sim-route",
+		DisplayName: "SIM Route Management",
+		Order:       55,
 	},
 	{
 		Key:         "dns",
@@ -352,6 +396,24 @@ func mobileGatewayStaticRouteListColumns() []output.ColumnDef {
 		{Name: "__ORDER__"}, // magic column name(generated on demand)
 		{Name: "Prefix"},
 		{Name: "NextHop"},
+	}
+}
+
+func mobileGatewaySIMRouteListColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "__ORDER__"}, // magic column name(generated on demand)
+		{
+			Name:    "Prefix",
+			Sources: []string{"prefix"},
+		},
+		{
+			Name:    "SIM ID",
+			Sources: []string{"resource_id"},
+		},
+		{
+			Name:    "ICCID",
+			Sources: []string{"iccid"},
+		},
 	}
 }
 
@@ -745,6 +807,75 @@ func mobileGatewaySIMDeleteParam() map[string]*schema.Schema {
 			Required:     true,
 			Category:     "interface",
 			Order:        10,
+		},
+	}
+}
+
+func mobileGatewaySIMRouteInfoParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
+}
+
+func mobileGatewaySIMRouteAddParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"prefix": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set prefix",
+			Required:     true,
+			ValidateFunc: validateIPv4AddressWithPrefix(),
+			Category:     "SIM-Route",
+			Order:        10,
+		},
+		"sim": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set sim",
+			Required:     true,
+			ValidateFunc: validateSakuraID(),
+			Category:     "SIM-Route",
+			Order:        20,
+		},
+	}
+}
+
+func mobileGatewaySIMRouteUpdateParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"index": {
+			Type:        schema.TypeInt,
+			HandlerType: schema.HandlerNoop,
+			Description: "index of target sim-route",
+			Required:    true,
+			Category:    "SIM-Route",
+			Order:       1,
+		},
+		"prefix": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set prefix",
+			ValidateFunc: validateIPv4AddressWithPrefix(),
+			Category:     "SIM-Route",
+			Order:        10,
+		},
+		"sim": {
+			Type:         schema.TypeInt64,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set sim",
+			ValidateFunc: validateSakuraID(),
+			Category:     "SIM-Route",
+			Order:        20,
+		},
+	}
+}
+
+func mobileGatewaySIMRouteDeleteParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"index": {
+			Type:        schema.TypeInt,
+			HandlerType: schema.HandlerNoop,
+			Description: "index of target sim-route",
+			Required:    true,
+			Category:    "SIM-Route",
+			Order:       1,
 		},
 	}
 }
