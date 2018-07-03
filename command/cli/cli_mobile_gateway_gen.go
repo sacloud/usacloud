@@ -33,11 +33,19 @@ func init() {
 	interfaceConnectParam := params.NewInterfaceConnectMobileGatewayParam()
 	interfaceUpdateParam := params.NewInterfaceUpdateMobileGatewayParam()
 	interfaceDisconnectParam := params.NewInterfaceDisconnectMobileGatewayParam()
-	dnsUpdateParam := params.NewDnsUpdateMobileGatewayParam()
+	staticRouteInfoParam := params.NewStaticRouteInfoMobileGatewayParam()
+	staticRouteAddParam := params.NewStaticRouteAddMobileGatewayParam()
+	staticRouteUpdateParam := params.NewStaticRouteUpdateMobileGatewayParam()
+	staticRouteDeleteParam := params.NewStaticRouteDeleteMobileGatewayParam()
 	simInfoParam := params.NewSimInfoMobileGatewayParam()
 	simAddParam := params.NewSimAddMobileGatewayParam()
 	simUpdateParam := params.NewSimUpdateMobileGatewayParam()
 	simDeleteParam := params.NewSimDeleteMobileGatewayParam()
+	simRouteInfoParam := params.NewSimRouteInfoMobileGatewayParam()
+	simRouteAddParam := params.NewSimRouteAddMobileGatewayParam()
+	simRouteUpdateParam := params.NewSimRouteUpdateMobileGatewayParam()
+	simRouteDeleteParam := params.NewSimRouteDeleteMobileGatewayParam()
+	dnsUpdateParam := params.NewDnsUpdateMobileGatewayParam()
 	logsParam := params.NewLogsMobileGatewayParam()
 
 	cliCommand := &cli.Command{
@@ -5073,17 +5081,377 @@ func init() {
 				},
 			},
 			{
-				Name:      "dns-update",
-				Usage:     "Update interface",
+				Name:      "static-route-info",
+				Aliases:   []string{"static-route-list"},
+				Usage:     "Show information of static-routes",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = staticRouteInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, staticRouteInfoParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						staticRouteInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						staticRouteInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						staticRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						staticRouteInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						staticRouteInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						staticRouteInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						staticRouteInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						staticRouteInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						staticRouteInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						staticRouteInfoParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.MobileGatewayStaticRouteInfoCompleteArgs(ctx, staticRouteInfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.MobileGatewayStaticRouteInfoCompleteArgs(ctx, staticRouteInfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.MobileGatewayStaticRouteInfoCompleteFlags(ctx, staticRouteInfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.MobileGatewayStaticRouteInfoCompleteArgs(ctx, staticRouteInfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					staticRouteInfoParam.ParamTemplate = c.String("param-template")
+					staticRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(staticRouteInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewStaticRouteInfoMobileGatewayParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(staticRouteInfoParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						staticRouteInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						staticRouteInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						staticRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						staticRouteInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						staticRouteInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						staticRouteInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						staticRouteInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						staticRouteInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						staticRouteInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						staticRouteInfoParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = staticRouteInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if staticRouteInfoParam.GenerateSkeleton {
+						staticRouteInfoParam.GenerateSkeleton = false
+						staticRouteInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(staticRouteInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := staticRouteInfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), staticRouteInfoParam)
+
+					apiClient := ctx.GetAPIClient().MobileGateway
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(staticRouteInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.MobileGateways {
+							if hasTags(&v, staticRouteInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticRouteInfoParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.MobileGateways {
+										if len(staticRouteInfoParam.Selector) == 0 || hasTags(&v, staticRouteInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						staticRouteInfoParam.SetId(id)
+						p := *staticRouteInfoParam // copy struct value
+						staticRouteInfoParam := &p
+						go func() {
+							err := funcs.MobileGatewayStaticRouteInfo(ctx, staticRouteInfoParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "static-route-add",
+				Usage:     "Add static-route",
 				ArgsUsage: "<ID or Name(only single target)>",
 				Flags: []cli.Flag{
 					&cli.StringFlag{
-						Name:  "dns1",
-						Usage: "[Required] set DNS server address",
+						Name:  "prefix",
+						Usage: "[Required] set prefix",
 					},
 					&cli.StringFlag{
-						Name:  "dns2",
-						Usage: "[Required] set DNS server address",
+						Name:  "next-hop",
+						Usage: "[Required] set next-hop",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
@@ -5139,7 +5507,7 @@ func init() {
 
 					// set default output-type
 					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = dnsUpdateParam
+					var outputTypeHolder interface{} = staticRouteAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5147,32 +5515,32 @@ func init() {
 					}
 
 					// build command context
-					ctx := command.NewContext(c, realArgs, dnsUpdateParam)
+					ctx := command.NewContext(c, realArgs, staticRouteAddParam)
 
 					// Set option values
-					if c.IsSet("dns1") {
-						dnsUpdateParam.Dns1 = c.String("dns1")
+					if c.IsSet("prefix") {
+						staticRouteAddParam.Prefix = c.String("prefix")
 					}
-					if c.IsSet("dns2") {
-						dnsUpdateParam.Dns2 = c.String("dns2")
+					if c.IsSet("next-hop") {
+						staticRouteAddParam.NextHop = c.String("next-hop")
 					}
 					if c.IsSet("selector") {
-						dnsUpdateParam.Selector = c.StringSlice("selector")
+						staticRouteAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						dnsUpdateParam.Assumeyes = c.Bool("assumeyes")
+						staticRouteAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						dnsUpdateParam.ParamTemplate = c.String("param-template")
+						staticRouteAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("param-template-file") {
-						dnsUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						staticRouteAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						dnsUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						staticRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						dnsUpdateParam.Id = c.Int64("id")
+						staticRouteAddParam.Id = c.Int64("id")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -5182,7 +5550,7 @@ func init() {
 								completion.FlagNames(c, commandName)
 								return
 							} else {
-								completion.MobileGatewayDnsUpdateCompleteArgs(ctx, dnsUpdateParam, cur, prev, commandName)
+								completion.MobileGatewayStaticRouteAddCompleteArgs(ctx, staticRouteAddParam, cur, prev, commandName)
 								return
 							}
 						}
@@ -5213,12 +5581,12 @@ func init() {
 										completion.FlagNames(c, commandName)
 										return
 									} else {
-										completion.MobileGatewayDnsUpdateCompleteArgs(ctx, dnsUpdateParam, cur, prev, commandName)
+										completion.MobileGatewayStaticRouteAddCompleteArgs(ctx, staticRouteAddParam, cur, prev, commandName)
 										return
 									}
 								} else {
 									// prev is flag , call completion func of each flags
-									completion.MobileGatewayDnsUpdateCompleteFlags(ctx, dnsUpdateParam, name, cur)
+									completion.MobileGatewayStaticRouteAddCompleteFlags(ctx, staticRouteAddParam, name, cur)
 									return
 								}
 							}
@@ -5229,7 +5597,7 @@ func init() {
 							completion.FlagNames(c, commandName)
 							return
 						} else {
-							completion.MobileGatewayDnsUpdateCompleteArgs(ctx, dnsUpdateParam, cur, prev, commandName)
+							completion.MobileGatewayStaticRouteAddCompleteArgs(ctx, staticRouteAddParam, cur, prev, commandName)
 							return
 						}
 					}
@@ -5243,45 +5611,45 @@ func init() {
 						return err
 					}
 
-					dnsUpdateParam.ParamTemplate = c.String("param-template")
-					dnsUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(dnsUpdateParam)
+					staticRouteAddParam.ParamTemplate = c.String("param-template")
+					staticRouteAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(staticRouteAddParam)
 					if err != nil {
 						return err
 					}
 					if strInput != "" {
-						p := params.NewDnsUpdateMobileGatewayParam()
+						p := params.NewStaticRouteAddMobileGatewayParam()
 						err := json.Unmarshal([]byte(strInput), p)
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.Merge(dnsUpdateParam, p, mergo.WithOverride)
+						mergo.Merge(staticRouteAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
-					if c.IsSet("dns1") {
-						dnsUpdateParam.Dns1 = c.String("dns1")
+					if c.IsSet("prefix") {
+						staticRouteAddParam.Prefix = c.String("prefix")
 					}
-					if c.IsSet("dns2") {
-						dnsUpdateParam.Dns2 = c.String("dns2")
+					if c.IsSet("next-hop") {
+						staticRouteAddParam.NextHop = c.String("next-hop")
 					}
 					if c.IsSet("selector") {
-						dnsUpdateParam.Selector = c.StringSlice("selector")
+						staticRouteAddParam.Selector = c.StringSlice("selector")
 					}
 					if c.IsSet("assumeyes") {
-						dnsUpdateParam.Assumeyes = c.Bool("assumeyes")
+						staticRouteAddParam.Assumeyes = c.Bool("assumeyes")
 					}
 					if c.IsSet("param-template") {
-						dnsUpdateParam.ParamTemplate = c.String("param-template")
+						staticRouteAddParam.ParamTemplate = c.String("param-template")
 					}
 					if c.IsSet("param-template-file") {
-						dnsUpdateParam.ParamTemplateFile = c.String("param-template-file")
+						staticRouteAddParam.ParamTemplateFile = c.String("param-template-file")
 					}
 					if c.IsSet("generate-skeleton") {
-						dnsUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+						staticRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						dnsUpdateParam.Id = c.Int64("id")
+						staticRouteAddParam.Id = c.Int64("id")
 					}
 
 					// Validate global params
@@ -5289,7 +5657,7 @@ func init() {
 						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
 					}
 
-					var outputTypeHolder interface{} = dnsUpdateParam
+					var outputTypeHolder interface{} = staticRouteAddParam
 					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
 						if v.GetOutputType() == "" {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
@@ -5297,10 +5665,10 @@ func init() {
 					}
 
 					// Generate skeleton
-					if dnsUpdateParam.GenerateSkeleton {
-						dnsUpdateParam.GenerateSkeleton = false
-						dnsUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(dnsUpdateParam, "", "\t")
+					if staticRouteAddParam.GenerateSkeleton {
+						staticRouteAddParam.GenerateSkeleton = false
+						staticRouteAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(staticRouteAddParam, "", "\t")
 						if err != nil {
 							return fmt.Errorf("Failed to Marshal JSON: %s", err)
 						}
@@ -5309,19 +5677,19 @@ func init() {
 					}
 
 					// Validate specific for each command params
-					if errors := dnsUpdateParam.Validate(); len(errors) > 0 {
+					if errors := staticRouteAddParam.Validate(); len(errors) > 0 {
 						return command.FlattenErrorsWithPrefix(errors, "Options")
 					}
 
 					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), dnsUpdateParam)
+					ctx := command.NewContext(c, c.Args().Slice(), staticRouteAddParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
 					ids := []int64{}
 
 					if c.NArg() == 0 {
 
-						if len(dnsUpdateParam.Selector) == 0 {
+						if len(staticRouteAddParam.Selector) == 0 {
 							return fmt.Errorf("ID or Name argument or --selector option is required")
 						}
 						apiClient.Reset()
@@ -5330,12 +5698,12 @@ func init() {
 							return fmt.Errorf("Find ID is failed: %s", err)
 						}
 						for _, v := range res.MobileGateways {
-							if hasTags(&v, dnsUpdateParam.Selector) {
+							if hasTags(&v, staticRouteAddParam.Selector) {
 								ids = append(ids, v.GetID())
 							}
 						}
 						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dnsUpdateParam.Selector)
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticRouteAddParam.Selector)
 						}
 
 					} else {
@@ -5357,7 +5725,7 @@ func init() {
 										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
 									}
 									for _, v := range res.MobileGateways {
-										if len(dnsUpdateParam.Selector) == 0 || hasTags(&v, dnsUpdateParam.Selector) {
+										if len(staticRouteAddParam.Selector) == 0 || hasTags(&v, staticRouteAddParam.Selector) {
 											ids = append(ids, v.GetID())
 										}
 									}
@@ -5378,11 +5746,11 @@ func init() {
 					}
 
 					// confirm
-					if !dnsUpdateParam.Assumeyes {
+					if !staticRouteAddParam.Assumeyes {
 						if !isTerminal() {
 							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
 						}
-						if !command.ConfirmContinue("dns-update", ids...) {
+						if !command.ConfirmContinue("static-route-add", ids...) {
 							return nil
 						}
 					}
@@ -5392,11 +5760,683 @@ func init() {
 
 					for _, id := range ids {
 						wg.Add(1)
-						dnsUpdateParam.SetId(id)
-						p := *dnsUpdateParam // copy struct value
-						dnsUpdateParam := &p
+						staticRouteAddParam.SetId(id)
+						p := *staticRouteAddParam // copy struct value
+						staticRouteAddParam := &p
 						go func() {
-							err := funcs.MobileGatewayDnsUpdate(ctx, dnsUpdateParam)
+							err := funcs.MobileGatewayStaticRouteAdd(ctx, staticRouteAddParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "static-route-update",
+				Usage:     "Update static-route",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target static-route",
+					},
+					&cli.StringFlag{
+						Name:  "prefix",
+						Usage: "set prefix",
+					},
+					&cli.StringFlag{
+						Name:  "next-hop",
+						Usage: "set next-hop",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = staticRouteUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, staticRouteUpdateParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						staticRouteUpdateParam.Index = c.Int("index")
+					}
+					if c.IsSet("prefix") {
+						staticRouteUpdateParam.Prefix = c.String("prefix")
+					}
+					if c.IsSet("next-hop") {
+						staticRouteUpdateParam.NextHop = c.String("next-hop")
+					}
+					if c.IsSet("selector") {
+						staticRouteUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						staticRouteUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						staticRouteUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						staticRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						staticRouteUpdateParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.MobileGatewayStaticRouteUpdateCompleteArgs(ctx, staticRouteUpdateParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.MobileGatewayStaticRouteUpdateCompleteArgs(ctx, staticRouteUpdateParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.MobileGatewayStaticRouteUpdateCompleteFlags(ctx, staticRouteUpdateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.MobileGatewayStaticRouteUpdateCompleteArgs(ctx, staticRouteUpdateParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					staticRouteUpdateParam.ParamTemplate = c.String("param-template")
+					staticRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(staticRouteUpdateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewStaticRouteUpdateMobileGatewayParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(staticRouteUpdateParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						staticRouteUpdateParam.Index = c.Int("index")
+					}
+					if c.IsSet("prefix") {
+						staticRouteUpdateParam.Prefix = c.String("prefix")
+					}
+					if c.IsSet("next-hop") {
+						staticRouteUpdateParam.NextHop = c.String("next-hop")
+					}
+					if c.IsSet("selector") {
+						staticRouteUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						staticRouteUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						staticRouteUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						staticRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						staticRouteUpdateParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = staticRouteUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if staticRouteUpdateParam.GenerateSkeleton {
+						staticRouteUpdateParam.GenerateSkeleton = false
+						staticRouteUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(staticRouteUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := staticRouteUpdateParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), staticRouteUpdateParam)
+
+					apiClient := ctx.GetAPIClient().MobileGateway
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(staticRouteUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.MobileGateways {
+							if hasTags(&v, staticRouteUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticRouteUpdateParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.MobileGateways {
+										if len(staticRouteUpdateParam.Selector) == 0 || hasTags(&v, staticRouteUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !staticRouteUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("static-route-update", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						staticRouteUpdateParam.SetId(id)
+						p := *staticRouteUpdateParam // copy struct value
+						staticRouteUpdateParam := &p
+						go func() {
+							err := funcs.MobileGatewayStaticRouteUpdate(ctx, staticRouteUpdateParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "static-route-delete",
+				Usage:     "Delete static-route",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target static-route",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = staticRouteDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, staticRouteDeleteParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						staticRouteDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						staticRouteDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						staticRouteDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						staticRouteDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						staticRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						staticRouteDeleteParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.MobileGatewayStaticRouteDeleteCompleteArgs(ctx, staticRouteDeleteParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.MobileGatewayStaticRouteDeleteCompleteArgs(ctx, staticRouteDeleteParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.MobileGatewayStaticRouteDeleteCompleteFlags(ctx, staticRouteDeleteParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.MobileGatewayStaticRouteDeleteCompleteArgs(ctx, staticRouteDeleteParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					staticRouteDeleteParam.ParamTemplate = c.String("param-template")
+					staticRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(staticRouteDeleteParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewStaticRouteDeleteMobileGatewayParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(staticRouteDeleteParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						staticRouteDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						staticRouteDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						staticRouteDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						staticRouteDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						staticRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						staticRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						staticRouteDeleteParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = staticRouteDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if staticRouteDeleteParam.GenerateSkeleton {
+						staticRouteDeleteParam.GenerateSkeleton = false
+						staticRouteDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(staticRouteDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := staticRouteDeleteParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), staticRouteDeleteParam)
+
+					apiClient := ctx.GetAPIClient().MobileGateway
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(staticRouteDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.MobileGateways {
+							if hasTags(&v, staticRouteDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", staticRouteDeleteParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.MobileGateways {
+										if len(staticRouteDeleteParam.Selector) == 0 || hasTags(&v, staticRouteDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !staticRouteDeleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("static-route-delete", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						staticRouteDeleteParam.SetId(id)
+						p := *staticRouteDeleteParam // copy struct value
+						staticRouteDeleteParam := &p
+						go func() {
+							err := funcs.MobileGatewayStaticRouteDelete(ctx, staticRouteDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -6769,6 +7809,1710 @@ func init() {
 				},
 			},
 			{
+				Name:      "sim-route-info",
+				Aliases:   []string{"sim-route-list"},
+				Usage:     "Show information of sim-routes",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = simRouteInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, simRouteInfoParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						simRouteInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						simRouteInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						simRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						simRouteInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						simRouteInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						simRouteInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						simRouteInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						simRouteInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						simRouteInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						simRouteInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						simRouteInfoParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.MobileGatewaySimRouteInfoCompleteArgs(ctx, simRouteInfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.MobileGatewaySimRouteInfoCompleteArgs(ctx, simRouteInfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.MobileGatewaySimRouteInfoCompleteFlags(ctx, simRouteInfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.MobileGatewaySimRouteInfoCompleteArgs(ctx, simRouteInfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					simRouteInfoParam.ParamTemplate = c.String("param-template")
+					simRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simRouteInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewSimRouteInfoMobileGatewayParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(simRouteInfoParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						simRouteInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						simRouteInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						simRouteInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						simRouteInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						simRouteInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						simRouteInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						simRouteInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						simRouteInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						simRouteInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						simRouteInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						simRouteInfoParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = simRouteInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if simRouteInfoParam.GenerateSkeleton {
+						simRouteInfoParam.GenerateSkeleton = false
+						simRouteInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simRouteInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := simRouteInfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), simRouteInfoParam)
+
+					apiClient := ctx.GetAPIClient().MobileGateway
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(simRouteInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.MobileGateways {
+							if hasTags(&v, simRouteInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simRouteInfoParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.MobileGateways {
+										if len(simRouteInfoParam.Selector) == 0 || hasTags(&v, simRouteInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						simRouteInfoParam.SetId(id)
+						p := *simRouteInfoParam // copy struct value
+						simRouteInfoParam := &p
+						go func() {
+							err := funcs.MobileGatewaySimRouteInfo(ctx, simRouteInfoParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "sim-route-add",
+				Usage:     "Add sim-route",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "prefix",
+						Usage: "[Required] set prefix",
+					},
+					&cli.Int64Flag{
+						Name:  "sim",
+						Usage: "[Required] set sim",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = simRouteAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, simRouteAddParam)
+
+					// Set option values
+					if c.IsSet("prefix") {
+						simRouteAddParam.Prefix = c.String("prefix")
+					}
+					if c.IsSet("sim") {
+						simRouteAddParam.Sim = c.Int64("sim")
+					}
+					if c.IsSet("selector") {
+						simRouteAddParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						simRouteAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						simRouteAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						simRouteAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						simRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						simRouteAddParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.MobileGatewaySimRouteAddCompleteArgs(ctx, simRouteAddParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.MobileGatewaySimRouteAddCompleteArgs(ctx, simRouteAddParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.MobileGatewaySimRouteAddCompleteFlags(ctx, simRouteAddParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.MobileGatewaySimRouteAddCompleteArgs(ctx, simRouteAddParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					simRouteAddParam.ParamTemplate = c.String("param-template")
+					simRouteAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simRouteAddParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewSimRouteAddMobileGatewayParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(simRouteAddParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("prefix") {
+						simRouteAddParam.Prefix = c.String("prefix")
+					}
+					if c.IsSet("sim") {
+						simRouteAddParam.Sim = c.Int64("sim")
+					}
+					if c.IsSet("selector") {
+						simRouteAddParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						simRouteAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						simRouteAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						simRouteAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						simRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						simRouteAddParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = simRouteAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if simRouteAddParam.GenerateSkeleton {
+						simRouteAddParam.GenerateSkeleton = false
+						simRouteAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simRouteAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := simRouteAddParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), simRouteAddParam)
+
+					apiClient := ctx.GetAPIClient().MobileGateway
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(simRouteAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.MobileGateways {
+							if hasTags(&v, simRouteAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simRouteAddParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.MobileGateways {
+										if len(simRouteAddParam.Selector) == 0 || hasTags(&v, simRouteAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !simRouteAddParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("sim-route-add", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						simRouteAddParam.SetId(id)
+						p := *simRouteAddParam // copy struct value
+						simRouteAddParam := &p
+						go func() {
+							err := funcs.MobileGatewaySimRouteAdd(ctx, simRouteAddParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "sim-route-update",
+				Usage:     "Update sim-route",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target sim-route",
+					},
+					&cli.StringFlag{
+						Name:  "prefix",
+						Usage: "set prefix",
+					},
+					&cli.Int64Flag{
+						Name:  "sim",
+						Usage: "set sim",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = simRouteUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, simRouteUpdateParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						simRouteUpdateParam.Index = c.Int("index")
+					}
+					if c.IsSet("prefix") {
+						simRouteUpdateParam.Prefix = c.String("prefix")
+					}
+					if c.IsSet("sim") {
+						simRouteUpdateParam.Sim = c.Int64("sim")
+					}
+					if c.IsSet("selector") {
+						simRouteUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						simRouteUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						simRouteUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						simRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						simRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						simRouteUpdateParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.MobileGatewaySimRouteUpdateCompleteArgs(ctx, simRouteUpdateParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.MobileGatewaySimRouteUpdateCompleteArgs(ctx, simRouteUpdateParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.MobileGatewaySimRouteUpdateCompleteFlags(ctx, simRouteUpdateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.MobileGatewaySimRouteUpdateCompleteArgs(ctx, simRouteUpdateParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					simRouteUpdateParam.ParamTemplate = c.String("param-template")
+					simRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simRouteUpdateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewSimRouteUpdateMobileGatewayParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(simRouteUpdateParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						simRouteUpdateParam.Index = c.Int("index")
+					}
+					if c.IsSet("prefix") {
+						simRouteUpdateParam.Prefix = c.String("prefix")
+					}
+					if c.IsSet("sim") {
+						simRouteUpdateParam.Sim = c.Int64("sim")
+					}
+					if c.IsSet("selector") {
+						simRouteUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						simRouteUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						simRouteUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						simRouteUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						simRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						simRouteUpdateParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = simRouteUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if simRouteUpdateParam.GenerateSkeleton {
+						simRouteUpdateParam.GenerateSkeleton = false
+						simRouteUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simRouteUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := simRouteUpdateParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), simRouteUpdateParam)
+
+					apiClient := ctx.GetAPIClient().MobileGateway
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(simRouteUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.MobileGateways {
+							if hasTags(&v, simRouteUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simRouteUpdateParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.MobileGateways {
+										if len(simRouteUpdateParam.Selector) == 0 || hasTags(&v, simRouteUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !simRouteUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("sim-route-update", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						simRouteUpdateParam.SetId(id)
+						p := *simRouteUpdateParam // copy struct value
+						simRouteUpdateParam := &p
+						go func() {
+							err := funcs.MobileGatewaySimRouteUpdate(ctx, simRouteUpdateParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "sim-route-delete",
+				Usage:     "Delete sim-route",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target sim-route",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = simRouteDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, simRouteDeleteParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						simRouteDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						simRouteDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						simRouteDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						simRouteDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						simRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						simRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						simRouteDeleteParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.MobileGatewaySimRouteDeleteCompleteArgs(ctx, simRouteDeleteParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.MobileGatewaySimRouteDeleteCompleteArgs(ctx, simRouteDeleteParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.MobileGatewaySimRouteDeleteCompleteFlags(ctx, simRouteDeleteParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.MobileGatewaySimRouteDeleteCompleteArgs(ctx, simRouteDeleteParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					simRouteDeleteParam.ParamTemplate = c.String("param-template")
+					simRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(simRouteDeleteParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewSimRouteDeleteMobileGatewayParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(simRouteDeleteParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						simRouteDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						simRouteDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						simRouteDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						simRouteDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						simRouteDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						simRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						simRouteDeleteParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = simRouteDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if simRouteDeleteParam.GenerateSkeleton {
+						simRouteDeleteParam.GenerateSkeleton = false
+						simRouteDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(simRouteDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := simRouteDeleteParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), simRouteDeleteParam)
+
+					apiClient := ctx.GetAPIClient().MobileGateway
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(simRouteDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.MobileGateways {
+							if hasTags(&v, simRouteDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", simRouteDeleteParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.MobileGateways {
+										if len(simRouteDeleteParam.Selector) == 0 || hasTags(&v, simRouteDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !simRouteDeleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("sim-route-delete", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						simRouteDeleteParam.SetId(id)
+						p := *simRouteDeleteParam // copy struct value
+						simRouteDeleteParam := &p
+						go func() {
+							err := funcs.MobileGatewaySimRouteDelete(ctx, simRouteDeleteParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "dns-update",
+				Usage:     "Update interface",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "dns1",
+						Usage: "[Required] set DNS server address",
+					},
+					&cli.StringFlag{
+						Name:  "dns2",
+						Usage: "[Required] set DNS server address",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = dnsUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, dnsUpdateParam)
+
+					// Set option values
+					if c.IsSet("dns1") {
+						dnsUpdateParam.Dns1 = c.String("dns1")
+					}
+					if c.IsSet("dns2") {
+						dnsUpdateParam.Dns2 = c.String("dns2")
+					}
+					if c.IsSet("selector") {
+						dnsUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						dnsUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						dnsUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						dnsUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						dnsUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						dnsUpdateParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.MobileGatewayDnsUpdateCompleteArgs(ctx, dnsUpdateParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.MobileGatewayDnsUpdateCompleteArgs(ctx, dnsUpdateParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.MobileGatewayDnsUpdateCompleteFlags(ctx, dnsUpdateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.MobileGatewayDnsUpdateCompleteArgs(ctx, dnsUpdateParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					dnsUpdateParam.ParamTemplate = c.String("param-template")
+					dnsUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(dnsUpdateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewDnsUpdateMobileGatewayParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(dnsUpdateParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("dns1") {
+						dnsUpdateParam.Dns1 = c.String("dns1")
+					}
+					if c.IsSet("dns2") {
+						dnsUpdateParam.Dns2 = c.String("dns2")
+					}
+					if c.IsSet("selector") {
+						dnsUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						dnsUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						dnsUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						dnsUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						dnsUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						dnsUpdateParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = dnsUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if dnsUpdateParam.GenerateSkeleton {
+						dnsUpdateParam.GenerateSkeleton = false
+						dnsUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(dnsUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := dnsUpdateParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), dnsUpdateParam)
+
+					apiClient := ctx.GetAPIClient().MobileGateway
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(dnsUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.MobileGateways {
+							if hasTags(&v, dnsUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", dnsUpdateParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.MobileGateways {
+										if len(dnsUpdateParam.Selector) == 0 || hasTags(&v, dnsUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !dnsUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("dns-update", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						dnsUpdateParam.SetId(id)
+						p := *dnsUpdateParam // copy struct value
+						dnsUpdateParam := &p
+						go func() {
+							err := funcs.MobileGatewayDnsUpdate(ctx, dnsUpdateParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
 				Name:      "logs",
 				Usage:     "Logs MobileGateway",
 				ArgsUsage: "<ID or Name(only single target)>",
@@ -7115,7 +9859,7 @@ func init() {
 	AppendCommandCategoryMap("mobile-gateway", "dns-update", &schema.Category{
 		Key:         "dns",
 		DisplayName: "DNS Management",
-		Order:       40,
+		Order:       60,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "interface-connect", &schema.Category{
 		Key:         "nic",
@@ -7145,7 +9889,7 @@ func init() {
 	AppendCommandCategoryMap("mobile-gateway", "logs", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       50,
+		Order:       70,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "read", &schema.Category{
 		Key:         "basic",
@@ -7170,21 +9914,61 @@ func init() {
 	AppendCommandCategoryMap("mobile-gateway", "sim-add", &schema.Category{
 		Key:         "sim",
 		DisplayName: "SIM Management",
-		Order:       40,
+		Order:       50,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "sim-delete", &schema.Category{
 		Key:         "sim",
 		DisplayName: "SIM Management",
-		Order:       40,
+		Order:       50,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "sim-info", &schema.Category{
 		Key:         "sim",
 		DisplayName: "SIM Management",
-		Order:       40,
+		Order:       50,
+	})
+	AppendCommandCategoryMap("mobile-gateway", "sim-route-add", &schema.Category{
+		Key:         "sim-route",
+		DisplayName: "SIM Route Management",
+		Order:       55,
+	})
+	AppendCommandCategoryMap("mobile-gateway", "sim-route-delete", &schema.Category{
+		Key:         "sim-route",
+		DisplayName: "SIM Route Management",
+		Order:       55,
+	})
+	AppendCommandCategoryMap("mobile-gateway", "sim-route-info", &schema.Category{
+		Key:         "sim-route",
+		DisplayName: "SIM Route Management",
+		Order:       55,
+	})
+	AppendCommandCategoryMap("mobile-gateway", "sim-route-update", &schema.Category{
+		Key:         "sim-route",
+		DisplayName: "SIM Route Management",
+		Order:       55,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "sim-update", &schema.Category{
 		Key:         "sim",
 		DisplayName: "SIM Management",
+		Order:       50,
+	})
+	AppendCommandCategoryMap("mobile-gateway", "static-route-add", &schema.Category{
+		Key:         "static-route",
+		DisplayName: "StaticRoute Management",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("mobile-gateway", "static-route-delete", &schema.Category{
+		Key:         "static-route",
+		DisplayName: "StaticRoute Management",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("mobile-gateway", "static-route-info", &schema.Category{
+		Key:         "static-route",
+		DisplayName: "StaticRoute Management",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("mobile-gateway", "static-route-update", &schema.Category{
+		Key:         "static-route",
+		DisplayName: "StaticRoute Management",
 		Order:       40,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "update", &schema.Category{
@@ -7970,6 +10754,181 @@ func init() {
 		DisplayName: "Filter options",
 		Order:       2147483587,
 	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-add", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-add", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-add", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-add", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-add", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-add", "prefix", &schema.Category{
+		Key:         "SIM-Route",
+		DisplayName: "SIM-Route options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-add", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-add", "sim", &schema.Category{
+		Key:         "SIM-Route",
+		DisplayName: "SIM-Route options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-delete", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-delete", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-delete", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-delete", "index", &schema.Category{
+		Key:         "SIM-Route",
+		DisplayName: "SIM-Route options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-delete", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-update", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-update", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-update", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-update", "index", &schema.Category{
+		Key:         "SIM-Route",
+		DisplayName: "SIM-Route options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-update", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-update", "prefix", &schema.Category{
+		Key:         "SIM-Route",
+		DisplayName: "SIM-Route options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "sim-route-update", "sim", &schema.Category{
+		Key:         "SIM-Route",
+		DisplayName: "SIM-Route options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("mobile-gateway", "sim-update", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -8009,6 +10968,181 @@ func init() {
 		Key:         "interface",
 		DisplayName: "Interface options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-add", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-add", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-add", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-add", "next-hop", &schema.Category{
+		Key:         "Static-Route",
+		DisplayName: "Static-Route options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-add", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-add", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-add", "prefix", &schema.Category{
+		Key:         "Static-Route",
+		DisplayName: "Static-Route options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-add", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-delete", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-delete", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-delete", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-delete", "index", &schema.Category{
+		Key:         "Static-Route",
+		DisplayName: "Static-Route options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-delete", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-update", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-update", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-update", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-update", "index", &schema.Category{
+		Key:         "Static-Route",
+		DisplayName: "Static-Route options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-update", "next-hop", &schema.Category{
+		Key:         "Static-Route",
+		DisplayName: "Static-Route options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-update", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-update", "prefix", &schema.Category{
+		Key:         "Static-Route",
+		DisplayName: "Static-Route options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "static-route-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "update", "assumeyes", &schema.Category{
 		Key:         "Input",
