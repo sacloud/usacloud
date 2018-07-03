@@ -40,6 +40,10 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Jul 03 2018 <sacloud.users@gmail.com> - 0.12.0-1
+- シンプル監視でのSNIオプション追加 (by yamamoto-febc)
+- モバイルゲートウェイでのルーティング設定 (by yamamoto-febc)
+
 * Tue Jun 05 2018 <sacloud.users@gmail.com> - 0.11.1-1
 - データベースアプライアンスのデフォルトバージョン更新 (by yamamoto-febc)
 
