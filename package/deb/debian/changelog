@@ -1,3 +1,12 @@
+usacloud (0.12.0-1) stable; urgency=low
+
+  * シンプル監視でのSNIオプション追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/340>
+  * モバイルゲートウェイでのルーティング設定 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/342>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Tue, 03 Jul 2018 00:22:00 +0000
+
 usacloud (0.11.1-1) stable; urgency=low
 
   * データベースアプライアンスのデフォルトバージョン更新 (by yamamoto-febc)
