@@ -273,27 +273,28 @@ func (p *ListVPCRouterParam) GetQuery() string {
 
 // CreateVPCRouterParam is input parameters for the sacloud API
 type CreateVPCRouterParam struct {
-	Plan              string   `json:"plan"`
-	SwitchId          int64    `json:"switch-id"`
-	Vrid              int      `json:"vrid"`
-	Vip               string   `json:"vip"`
-	Ipaddress1        string   `json:"ipaddress1"`
-	Ipaddress2        string   `json:"ipaddress2"`
-	BootAfterCreate   bool     `json:"boot-after-create"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
+	Plan                      string   `json:"plan"`
+	SwitchId                  int64    `json:"switch-id"`
+	Vrid                      int      `json:"vrid"`
+	Vip                       string   `json:"vip"`
+	Ipaddress1                string   `json:"ipaddress1"`
+	Ipaddress2                string   `json:"ipaddress2"`
+	DisableInternetConnection bool     `json:"disable-internet-connection"`
+	BootAfterCreate           bool     `json:"boot-after-create"`
+	Name                      string   `json:"name"`
+	Description               string   `json:"description"`
+	Tags                      []string `json:"tags"`
+	IconId                    int64    `json:"icon-id"`
+	Assumeyes                 bool     `json:"assumeyes"`
+	ParamTemplate             string   `json:"param-template"`
+	ParamTemplateFile         string   `json:"param-template-file"`
+	GenerateSkeleton          bool     `json:"generate-skeleton"`
+	OutputType                string   `json:"output-type"`
+	Column                    []string `json:"column"`
+	Quiet                     bool     `json:"quiet"`
+	Format                    string   `json:"format"`
+	FormatFile                string   `json:"format-file"`
+	Query                     string   `json:"query"`
 }
 
 // NewCreateVPCRouterParam return new CreateVPCRouterParam
@@ -324,6 +325,9 @@ func (p *CreateVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Ipaddress2) {
 		p.Ipaddress2 = ""
+	}
+	if isEmpty(p.DisableInternetConnection) {
+		p.DisableInternetConnection = false
 	}
 	if isEmpty(p.BootAfterCreate) {
 		p.BootAfterCreate = false
@@ -549,6 +553,13 @@ func (p *CreateVPCRouterParam) SetIpaddress2(v string) {
 
 func (p *CreateVPCRouterParam) GetIpaddress2() string {
 	return p.Ipaddress2
+}
+func (p *CreateVPCRouterParam) SetDisableInternetConnection(v bool) {
+	p.DisableInternetConnection = v
+}
+
+func (p *CreateVPCRouterParam) GetDisableInternetConnection() bool {
+	return p.DisableInternetConnection
 }
 func (p *CreateVPCRouterParam) SetBootAfterCreate(v bool) {
 	p.BootAfterCreate = v
@@ -852,23 +863,24 @@ func (p *ReadVPCRouterParam) GetId() int64 {
 
 // UpdateVPCRouterParam is input parameters for the sacloud API
 type UpdateVPCRouterParam struct {
-	SyslogHost        string   `json:"syslog-host"`
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	Id                int64    `json:"id"`
+	SyslogHost         string   `json:"syslog-host"`
+	InternetConnection bool     `json:"internet-connection"`
+	Selector           []string `json:"selector"`
+	Name               string   `json:"name"`
+	Description        string   `json:"description"`
+	Tags               []string `json:"tags"`
+	IconId             int64    `json:"icon-id"`
+	Assumeyes          bool     `json:"assumeyes"`
+	ParamTemplate      string   `json:"param-template"`
+	ParamTemplateFile  string   `json:"param-template-file"`
+	GenerateSkeleton   bool     `json:"generate-skeleton"`
+	OutputType         string   `json:"output-type"`
+	Column             []string `json:"column"`
+	Quiet              bool     `json:"quiet"`
+	Format             string   `json:"format"`
+	FormatFile         string   `json:"format-file"`
+	Query              string   `json:"query"`
+	Id                 int64    `json:"id"`
 }
 
 // NewUpdateVPCRouterParam return new UpdateVPCRouterParam
@@ -880,6 +892,9 @@ func NewUpdateVPCRouterParam() *UpdateVPCRouterParam {
 func (p *UpdateVPCRouterParam) FillValueToSkeleton() {
 	if isEmpty(p.SyslogHost) {
 		p.SyslogHost = ""
+	}
+	if isEmpty(p.InternetConnection) {
+		p.InternetConnection = false
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -1031,6 +1046,13 @@ func (p *UpdateVPCRouterParam) SetSyslogHost(v string) {
 
 func (p *UpdateVPCRouterParam) GetSyslogHost() string {
 	return p.SyslogHost
+}
+func (p *UpdateVPCRouterParam) SetInternetConnection(v bool) {
+	p.InternetConnection = v
+}
+
+func (p *UpdateVPCRouterParam) GetInternetConnection() bool {
+	return p.InternetConnection
 }
 func (p *UpdateVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
@@ -2050,6 +2072,244 @@ func (p *WaitForDownVPCRouterParam) SetId(v int64) {
 }
 
 func (p *WaitForDownVPCRouterParam) GetId() int64 {
+	return p.Id
+}
+
+// EnableInternetConnectionVPCRouterParam is input parameters for the sacloud API
+type EnableInternetConnectionVPCRouterParam struct {
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
+}
+
+// NewEnableInternetConnectionVPCRouterParam return new EnableInternetConnectionVPCRouterParam
+func NewEnableInternetConnectionVPCRouterParam() *EnableInternetConnectionVPCRouterParam {
+	return &EnableInternetConnectionVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *EnableInternetConnectionVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *EnableInternetConnectionVPCRouterParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["enable-internet-connection"]
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetId() int64 {
+	return p.Id
+}
+
+// DisableInternetConnectionVPCRouterParam is input parameters for the sacloud API
+type DisableInternetConnectionVPCRouterParam struct {
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
+}
+
+// NewDisableInternetConnectionVPCRouterParam return new DisableInternetConnectionVPCRouterParam
+func NewDisableInternetConnectionVPCRouterParam() *DisableInternetConnectionVPCRouterParam {
+	return &DisableInternetConnectionVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DisableInternetConnectionVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *DisableInternetConnectionVPCRouterParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["disable-internet-connection"]
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetId() int64 {
 	return p.Id
 }
 

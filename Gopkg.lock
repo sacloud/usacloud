@@ -122,7 +122,7 @@
     "sacloud/ostype",
     "utils/server"
   ]
-  revision = "2fd1b17a85c8ed7bf58ecdc103368a0c0cb3e631"
+  revision = "30b4283b6fd10fea46802704cc0a3f33f30cdb39"
 
 [[projects]]
   branch = "master"
@@ -160,7 +160,7 @@
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "7138fd3d9dc8335c567ca206f4333fb75eb05d56"
+  revision = "151529c776cdc58ddbe7963ba9af779f3577b419"
 
 [[projects]]
   name = "gopkg.in/urfave/cli.v2"
