@@ -1,3 +1,10 @@
+usacloud (0.13.0-1) stable; urgency=low
+
+  * VPCルータでのインターネット接続 有効/無効 設定 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/344>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Thu, 05 Jul 2018 08:11:09 +0000
+
 usacloud (0.12.0-1) stable; urgency=low
 
   * シンプル監視でのSNIオプション追加 (by yamamoto-febc)
