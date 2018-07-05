@@ -29,6 +29,8 @@ func init() {
 	resetParam := params.NewResetVPCRouterParam()
 	waitForBootParam := params.NewWaitForBootVPCRouterParam()
 	waitForDownParam := params.NewWaitForDownVPCRouterParam()
+	enableInternetConnectionParam := params.NewEnableInternetConnectionVPCRouterParam()
+	disableInternetConnectionParam := params.NewDisableInternetConnectionVPCRouterParam()
 	interfaceInfoParam := params.NewInterfaceInfoVPCRouterParam()
 	interfaceConnectParam := params.NewInterfaceConnectVPCRouterParam()
 	interfaceUpdateParam := params.NewInterfaceUpdateVPCRouterParam()
@@ -434,6 +436,11 @@ func init() {
 						Usage:   "set ipaddress(#2)",
 					},
 					&cli.BoolFlag{
+						Name:  "disable-internet-connection",
+						Usage: "disable internet connection from VPCRouter",
+						Value: false,
+					},
+					&cli.BoolFlag{
 						Name:  "boot-after-create",
 						Usage: "boot after create",
 					},
@@ -555,6 +562,9 @@ func init() {
 					}
 					if c.IsSet("ipaddress2") {
 						createParam.Ipaddress2 = c.String("ipaddress2")
+					}
+					if c.IsSet("disable-internet-connection") {
+						createParam.DisableInternetConnection = c.Bool("disable-internet-connection")
 					}
 					if c.IsSet("boot-after-create") {
 						createParam.BootAfterCreate = c.Bool("boot-after-create")
@@ -703,6 +713,9 @@ func init() {
 					}
 					if c.IsSet("ipaddress2") {
 						createParam.Ipaddress2 = c.String("ipaddress2")
+					}
+					if c.IsSet("disable-internet-connection") {
+						createParam.DisableInternetConnection = c.Bool("disable-internet-connection")
 					}
 					if c.IsSet("boot-after-create") {
 						createParam.BootAfterCreate = c.Bool("boot-after-create")
@@ -1165,6 +1178,10 @@ func init() {
 						Name:  "syslog-host",
 						Usage: "set syslog host IPAddress",
 					},
+					&cli.BoolFlag{
+						Name:  "internet-connection",
+						Usage: "set internet connection from VPCRouter",
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
@@ -1277,6 +1294,9 @@ func init() {
 					// Set option values
 					if c.IsSet("syslog-host") {
 						updateParam.SyslogHost = c.String("syslog-host")
+					}
+					if c.IsSet("internet-connection") {
+						updateParam.InternetConnection = c.Bool("internet-connection")
 					}
 					if c.IsSet("selector") {
 						updateParam.Selector = c.StringSlice("selector")
@@ -1413,6 +1433,9 @@ func init() {
 					// Set option values
 					if c.IsSet("syslog-host") {
 						updateParam.SyslogHost = c.String("syslog-host")
+					}
+					if c.IsSet("internet-connection") {
+						updateParam.InternetConnection = c.Bool("internet-connection")
 					}
 					if c.IsSet("selector") {
 						updateParam.Selector = c.StringSlice("selector")
@@ -3793,6 +3816,638 @@ func init() {
 						waitForDownParam := &p
 						go func() {
 							err := funcs.VPCRouterWaitForDown(ctx, waitForDownParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "enable-internet-connection",
+				Usage:     "Enable internet connection from VPCRouter",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = enableInternetConnectionParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, enableInternetConnectionParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						enableInternetConnectionParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						enableInternetConnectionParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						enableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						enableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						enableInternetConnectionParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						enableInternetConnectionParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.VPCRouterEnableInternetConnectionCompleteArgs(ctx, enableInternetConnectionParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.VPCRouterEnableInternetConnectionCompleteArgs(ctx, enableInternetConnectionParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.VPCRouterEnableInternetConnectionCompleteFlags(ctx, enableInternetConnectionParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.VPCRouterEnableInternetConnectionCompleteArgs(ctx, enableInternetConnectionParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					enableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					enableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(enableInternetConnectionParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewEnableInternetConnectionVPCRouterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(enableInternetConnectionParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						enableInternetConnectionParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						enableInternetConnectionParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						enableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						enableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						enableInternetConnectionParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						enableInternetConnectionParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = enableInternetConnectionParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if enableInternetConnectionParam.GenerateSkeleton {
+						enableInternetConnectionParam.GenerateSkeleton = false
+						enableInternetConnectionParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(enableInternetConnectionParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := enableInternetConnectionParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), enableInternetConnectionParam)
+
+					apiClient := ctx.GetAPIClient().VPCRouter
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(enableInternetConnectionParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, enableInternetConnectionParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", enableInternetConnectionParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(enableInternetConnectionParam.Selector) == 0 || hasTags(&v, enableInternetConnectionParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !enableInternetConnectionParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("enable-internet-connection", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						enableInternetConnectionParam.SetId(id)
+						p := *enableInternetConnectionParam // copy struct value
+						enableInternetConnectionParam := &p
+						go func() {
+							err := funcs.VPCRouterEnableInternetConnection(ctx, enableInternetConnectionParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "disable-internet-connection",
+				Usage:     "Enable internet connection from VPCRouter",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = disableInternetConnectionParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, disableInternetConnectionParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						disableInternetConnectionParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						disableInternetConnectionParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						disableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						disableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						disableInternetConnectionParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						disableInternetConnectionParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.VPCRouterDisableInternetConnectionCompleteArgs(ctx, disableInternetConnectionParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.VPCRouterDisableInternetConnectionCompleteArgs(ctx, disableInternetConnectionParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.VPCRouterDisableInternetConnectionCompleteFlags(ctx, disableInternetConnectionParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.VPCRouterDisableInternetConnectionCompleteArgs(ctx, disableInternetConnectionParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					disableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					disableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(disableInternetConnectionParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewDisableInternetConnectionVPCRouterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(disableInternetConnectionParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						disableInternetConnectionParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						disableInternetConnectionParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						disableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						disableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						disableInternetConnectionParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						disableInternetConnectionParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = disableInternetConnectionParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if disableInternetConnectionParam.GenerateSkeleton {
+						disableInternetConnectionParam.GenerateSkeleton = false
+						disableInternetConnectionParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(disableInternetConnectionParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := disableInternetConnectionParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), disableInternetConnectionParam)
+
+					apiClient := ctx.GetAPIClient().VPCRouter
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(disableInternetConnectionParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, disableInternetConnectionParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", disableInternetConnectionParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(disableInternetConnectionParam.Selector) == 0 || hasTags(&v, disableInternetConnectionParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !disableInternetConnectionParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("disable-internet-connection", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						disableInternetConnectionParam.SetId(id)
+						p := *disableInternetConnectionParam // copy struct value
+						disableInternetConnectionParam := &p
+						go func() {
+							err := funcs.VPCRouterDisableInternetConnection(ctx, disableInternetConnectionParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -18871,6 +19526,16 @@ func init() {
 		DisplayName: "DHCP Static Map Setting Management",
 		Order:       65,
 	})
+	AppendCommandCategoryMap("vpc-router", "disable-internet-connection", &schema.Category{
+		Key:         "nic",
+		DisplayName: "Network Interface Management",
+		Order:       30,
+	})
+	AppendCommandCategoryMap("vpc-router", "enable-internet-connection", &schema.Category{
+		Key:         "nic",
+		DisplayName: "Network Interface Management",
+		Order:       30,
+	})
 	AppendCommandCategoryMap("vpc-router", "firewall-add", &schema.Category{
 		Key:         "fw",
 		DisplayName: "Firewall Setting Management",
@@ -19133,6 +19798,11 @@ func init() {
 		Key:         "common",
 		DisplayName: "Common options",
 		Order:       2147483617,
+	})
+	AppendFlagCategoryMap("vpc-router", "create", "disable-internet-connection", &schema.Category{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       20,
 	})
 	AppendFlagCategoryMap("vpc-router", "create", "format", &schema.Category{
 		Key:         "output",
@@ -19645,6 +20315,66 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("vpc-router", "disable-internet-connection", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "disable-internet-connection", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "disable-internet-connection", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("vpc-router", "disable-internet-connection", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "disable-internet-connection", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "disable-internet-connection", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("vpc-router", "enable-internet-connection", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "enable-internet-connection", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "enable-internet-connection", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("vpc-router", "enable-internet-connection", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "enable-internet-connection", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "enable-internet-connection", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
@@ -21508,6 +22238,11 @@ func init() {
 		Key:         "default",
 		DisplayName: "Other options",
 		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("vpc-router", "update", "internet-connection", &schema.Category{
+		Key:         "router",
+		DisplayName: "VPCRouter options",
+		Order:       10,
 	})
 	AppendFlagCategoryMap("vpc-router", "update", "name", &schema.Category{
 		Key:         "common",

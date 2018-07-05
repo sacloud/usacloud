@@ -3,6 +3,7 @@ package funcs
 import (
 	"fmt"
 
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
@@ -53,6 +54,14 @@ func VPCRouterCreate(ctx command.Context, params *params.CreateVPCRouterParam) e
 	p.SetDescription(params.Description)
 	p.SetTags(params.Tags)
 	p.SetIconByID(params.IconId)
+
+	p.InitVPCRouterSetting()
+	p.Settings.Router.InternetConnection = &sacloud.VPCRouterInternetConnection{
+		Enabled: "True",
+	}
+	if params.DisableInternetConnection {
+		p.Settings.Router.InternetConnection.Enabled = "False"
+	}
 
 	// call Create(id)
 	res, err := api.Create(p)
