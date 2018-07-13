@@ -4,13 +4,14 @@ package profile
 
 import (
 	"fmt"
-	"github.com/mitchellh/go-homedir"
-	"github.com/stretchr/testify/assert"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/mitchellh/go-homedir"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetProfileBaseDir(t *testing.T) {

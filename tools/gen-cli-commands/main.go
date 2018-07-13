@@ -3,14 +3,15 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/sacloud/usacloud/schema"
-	"github.com/sacloud/usacloud/tools"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/tools"
 )
 
 var (
@@ -603,7 +604,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s",err)
 						}
-						mergo.MergeWithOverwrite({{.ParamName}}, p)
+						mergo.Merge({{.ParamName}}, p, mergo.WithOverride)
 					}
 
 					{{ if .SetDefault }}

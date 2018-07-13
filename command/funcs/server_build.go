@@ -2,16 +2,17 @@ package funcs
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"time"
+
 	"github.com/sacloud/libsacloud/builder"
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/libsacloud/sacloud/ostype"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
-	"io/ioutil"
-	"os"
-	"path/filepath"
-	"time"
 )
 
 func ServerBuild(ctx command.Context, params *params.BuildServerParam) error {

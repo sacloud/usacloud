@@ -2,9 +2,10 @@ package funcs
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
-	"os"
 )
 
 func ServerPlanChange(ctx command.Context, params *params.PlanChangeServerParam) error {

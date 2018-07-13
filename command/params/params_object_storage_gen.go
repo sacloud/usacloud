@@ -21,6 +21,7 @@ type ListObjectStorageParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListObjectStorageParam return new ListObjectStorageParam
@@ -62,6 +63,9 @@ func (p *ListObjectStorageParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -207,6 +211,13 @@ func (p *ListObjectStorageParam) SetFormatFile(v string) {
 
 func (p *ListObjectStorageParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *ListObjectStorageParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListObjectStorageParam) GetQuery() string {
+	return p.Query
 }
 
 // PutObjectStorageParam is input parameters for the sacloud API

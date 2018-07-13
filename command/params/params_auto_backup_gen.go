@@ -24,6 +24,7 @@ type ListAutoBackupParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListAutoBackupParam return new ListAutoBackupParam
@@ -74,6 +75,9 @@ func (p *ListAutoBackupParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -259,6 +263,13 @@ func (p *ListAutoBackupParam) SetFormatFile(v string) {
 func (p *ListAutoBackupParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListAutoBackupParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListAutoBackupParam) GetQuery() string {
+	return p.Query
+}
 
 // CreateAutoBackupParam is input parameters for the sacloud API
 type CreateAutoBackupParam struct {
@@ -278,6 +289,7 @@ type CreateAutoBackupParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewCreateAutoBackupParam return new CreateAutoBackupParam
@@ -338,6 +350,9 @@ func (p *CreateAutoBackupParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -582,6 +597,13 @@ func (p *CreateAutoBackupParam) SetFormatFile(v string) {
 func (p *CreateAutoBackupParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CreateAutoBackupParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateAutoBackupParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadAutoBackupParam is input parameters for the sacloud API
 type ReadAutoBackupParam struct {
@@ -594,6 +616,7 @@ type ReadAutoBackupParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -630,6 +653,9 @@ func (p *ReadAutoBackupParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -758,6 +784,13 @@ func (p *ReadAutoBackupParam) SetFormatFile(v string) {
 func (p *ReadAutoBackupParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadAutoBackupParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadAutoBackupParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadAutoBackupParam) SetId(v int64) {
 	p.Id = v
 }
@@ -784,6 +817,7 @@ type UpdateAutoBackupParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -841,6 +875,9 @@ func (p *UpdateAutoBackupParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1060,6 +1097,13 @@ func (p *UpdateAutoBackupParam) SetFormatFile(v string) {
 func (p *UpdateAutoBackupParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdateAutoBackupParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateAutoBackupParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdateAutoBackupParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1080,6 +1124,7 @@ type DeleteAutoBackupParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1119,6 +1164,9 @@ func (p *DeleteAutoBackupParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1253,6 +1301,13 @@ func (p *DeleteAutoBackupParam) SetFormatFile(v string) {
 
 func (p *DeleteAutoBackupParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *DeleteAutoBackupParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteAutoBackupParam) GetQuery() string {
+	return p.Query
 }
 func (p *DeleteAutoBackupParam) SetId(v int64) {
 	p.Id = v

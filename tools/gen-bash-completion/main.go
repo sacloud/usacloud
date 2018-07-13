@@ -3,16 +3,17 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/sacloud/usacloud/command"
-	"github.com/sacloud/usacloud/schema"
-	"github.com/sacloud/usacloud/tools"
-	"gopkg.in/urfave/cli.v2"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"sort"
 	"text/template"
+
+	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/tools"
+	"gopkg.in/urfave/cli.v2"
 )
 
 var (

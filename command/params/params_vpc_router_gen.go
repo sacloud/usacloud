@@ -24,6 +24,7 @@ type ListVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListVPCRouterParam return new ListVPCRouterParam
@@ -74,6 +75,9 @@ func (p *ListVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -259,29 +263,38 @@ func (p *ListVPCRouterParam) SetFormatFile(v string) {
 func (p *ListVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListVPCRouterParam) GetQuery() string {
+	return p.Query
+}
 
 // CreateVPCRouterParam is input parameters for the sacloud API
 type CreateVPCRouterParam struct {
-	Plan              string   `json:"plan"`
-	SwitchId          int64    `json:"switch-id"`
-	Vrid              int      `json:"vrid"`
-	Vip               string   `json:"vip"`
-	Ipaddress1        string   `json:"ipaddress1"`
-	Ipaddress2        string   `json:"ipaddress2"`
-	BootAfterCreate   bool     `json:"boot-after-create"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
+	Plan                      string   `json:"plan"`
+	SwitchId                  int64    `json:"switch-id"`
+	Vrid                      int      `json:"vrid"`
+	Vip                       string   `json:"vip"`
+	Ipaddress1                string   `json:"ipaddress1"`
+	Ipaddress2                string   `json:"ipaddress2"`
+	DisableInternetConnection bool     `json:"disable-internet-connection"`
+	BootAfterCreate           bool     `json:"boot-after-create"`
+	Name                      string   `json:"name"`
+	Description               string   `json:"description"`
+	Tags                      []string `json:"tags"`
+	IconId                    int64    `json:"icon-id"`
+	Assumeyes                 bool     `json:"assumeyes"`
+	ParamTemplate             string   `json:"param-template"`
+	ParamTemplateFile         string   `json:"param-template-file"`
+	GenerateSkeleton          bool     `json:"generate-skeleton"`
+	OutputType                string   `json:"output-type"`
+	Column                    []string `json:"column"`
+	Quiet                     bool     `json:"quiet"`
+	Format                    string   `json:"format"`
+	FormatFile                string   `json:"format-file"`
+	Query                     string   `json:"query"`
 }
 
 // NewCreateVPCRouterParam return new CreateVPCRouterParam
@@ -312,6 +325,9 @@ func (p *CreateVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Ipaddress2) {
 		p.Ipaddress2 = ""
+	}
+	if isEmpty(p.DisableInternetConnection) {
+		p.DisableInternetConnection = false
 	}
 	if isEmpty(p.BootAfterCreate) {
 		p.BootAfterCreate = false
@@ -354,6 +370,9 @@ func (p *CreateVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -535,6 +554,13 @@ func (p *CreateVPCRouterParam) SetIpaddress2(v string) {
 func (p *CreateVPCRouterParam) GetIpaddress2() string {
 	return p.Ipaddress2
 }
+func (p *CreateVPCRouterParam) SetDisableInternetConnection(v bool) {
+	p.DisableInternetConnection = v
+}
+
+func (p *CreateVPCRouterParam) GetDisableInternetConnection() bool {
+	return p.DisableInternetConnection
+}
 func (p *CreateVPCRouterParam) SetBootAfterCreate(v bool) {
 	p.BootAfterCreate = v
 }
@@ -633,6 +659,13 @@ func (p *CreateVPCRouterParam) SetFormatFile(v string) {
 func (p *CreateVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CreateVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateVPCRouterParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadVPCRouterParam is input parameters for the sacloud API
 type ReadVPCRouterParam struct {
@@ -645,6 +678,7 @@ type ReadVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -681,6 +715,9 @@ func (p *ReadVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -809,6 +846,13 @@ func (p *ReadVPCRouterParam) SetFormatFile(v string) {
 func (p *ReadVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadVPCRouterParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -819,22 +863,24 @@ func (p *ReadVPCRouterParam) GetId() int64 {
 
 // UpdateVPCRouterParam is input parameters for the sacloud API
 type UpdateVPCRouterParam struct {
-	SyslogHost        string   `json:"syslog-host"`
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Id                int64    `json:"id"`
+	SyslogHost         string   `json:"syslog-host"`
+	InternetConnection bool     `json:"internet-connection"`
+	Selector           []string `json:"selector"`
+	Name               string   `json:"name"`
+	Description        string   `json:"description"`
+	Tags               []string `json:"tags"`
+	IconId             int64    `json:"icon-id"`
+	Assumeyes          bool     `json:"assumeyes"`
+	ParamTemplate      string   `json:"param-template"`
+	ParamTemplateFile  string   `json:"param-template-file"`
+	GenerateSkeleton   bool     `json:"generate-skeleton"`
+	OutputType         string   `json:"output-type"`
+	Column             []string `json:"column"`
+	Quiet              bool     `json:"quiet"`
+	Format             string   `json:"format"`
+	FormatFile         string   `json:"format-file"`
+	Query              string   `json:"query"`
+	Id                 int64    `json:"id"`
 }
 
 // NewUpdateVPCRouterParam return new UpdateVPCRouterParam
@@ -846,6 +892,9 @@ func NewUpdateVPCRouterParam() *UpdateVPCRouterParam {
 func (p *UpdateVPCRouterParam) FillValueToSkeleton() {
 	if isEmpty(p.SyslogHost) {
 		p.SyslogHost = ""
+	}
+	if isEmpty(p.InternetConnection) {
+		p.InternetConnection = false
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -888,6 +937,9 @@ func (p *UpdateVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -995,6 +1047,13 @@ func (p *UpdateVPCRouterParam) SetSyslogHost(v string) {
 func (p *UpdateVPCRouterParam) GetSyslogHost() string {
 	return p.SyslogHost
 }
+func (p *UpdateVPCRouterParam) SetInternetConnection(v bool) {
+	p.InternetConnection = v
+}
+
+func (p *UpdateVPCRouterParam) GetInternetConnection() bool {
+	return p.InternetConnection
+}
 func (p *UpdateVPCRouterParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1093,6 +1152,13 @@ func (p *UpdateVPCRouterParam) SetFormatFile(v string) {
 func (p *UpdateVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdateVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateVPCRouterParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdateVPCRouterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1114,6 +1180,7 @@ type DeleteVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1156,6 +1223,9 @@ func (p *DeleteVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1297,6 +1367,13 @@ func (p *DeleteVPCRouterParam) SetFormatFile(v string) {
 
 func (p *DeleteVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *DeleteVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteVPCRouterParam) GetQuery() string {
+	return p.Query
 }
 func (p *DeleteVPCRouterParam) SetId(v int64) {
 	p.Id = v
@@ -1998,6 +2075,244 @@ func (p *WaitForDownVPCRouterParam) GetId() int64 {
 	return p.Id
 }
 
+// EnableInternetConnectionVPCRouterParam is input parameters for the sacloud API
+type EnableInternetConnectionVPCRouterParam struct {
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
+}
+
+// NewEnableInternetConnectionVPCRouterParam return new EnableInternetConnectionVPCRouterParam
+func NewEnableInternetConnectionVPCRouterParam() *EnableInternetConnectionVPCRouterParam {
+	return &EnableInternetConnectionVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *EnableInternetConnectionVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *EnableInternetConnectionVPCRouterParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["enable-internet-connection"]
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *EnableInternetConnectionVPCRouterParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *EnableInternetConnectionVPCRouterParam) GetId() int64 {
+	return p.Id
+}
+
+// DisableInternetConnectionVPCRouterParam is input parameters for the sacloud API
+type DisableInternetConnectionVPCRouterParam struct {
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
+}
+
+// NewDisableInternetConnectionVPCRouterParam return new DisableInternetConnectionVPCRouterParam
+func NewDisableInternetConnectionVPCRouterParam() *DisableInternetConnectionVPCRouterParam {
+	return &DisableInternetConnectionVPCRouterParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *DisableInternetConnectionVPCRouterParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *DisableInternetConnectionVPCRouterParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetResourceDef() *schema.Resource {
+	return define.Resources["VPCRouter"]
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["disable-internet-connection"]
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *DisableInternetConnectionVPCRouterParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *DisableInternetConnectionVPCRouterParam) GetId() int64 {
+	return p.Id
+}
+
 // InterfaceInfoVPCRouterParam is input parameters for the sacloud API
 type InterfaceInfoVPCRouterParam struct {
 	Selector          []string `json:"selector"`
@@ -2009,6 +2324,7 @@ type InterfaceInfoVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -2045,6 +2361,9 @@ func (p *InterfaceInfoVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2172,6 +2491,13 @@ func (p *InterfaceInfoVPCRouterParam) SetFormatFile(v string) {
 
 func (p *InterfaceInfoVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *InterfaceInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *InterfaceInfoVPCRouterParam) GetQuery() string {
+	return p.Query
 }
 func (p *InterfaceInfoVPCRouterParam) SetId(v int64) {
 	p.Id = v
@@ -2875,6 +3201,7 @@ type StaticNatInfoVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -2911,6 +3238,9 @@ func (p *StaticNatInfoVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -3038,6 +3368,13 @@ func (p *StaticNatInfoVPCRouterParam) SetFormatFile(v string) {
 
 func (p *StaticNatInfoVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *StaticNatInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *StaticNatInfoVPCRouterParam) GetQuery() string {
+	return p.Query
 }
 func (p *StaticNatInfoVPCRouterParam) SetId(v int64) {
 	p.Id = v
@@ -3573,6 +3910,7 @@ type PortForwardingInfoVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -3609,6 +3947,9 @@ func (p *PortForwardingInfoVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -3736,6 +4077,13 @@ func (p *PortForwardingInfoVPCRouterParam) SetFormatFile(v string) {
 
 func (p *PortForwardingInfoVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *PortForwardingInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *PortForwardingInfoVPCRouterParam) GetQuery() string {
+	return p.Query
 }
 func (p *PortForwardingInfoVPCRouterParam) SetId(v int64) {
 	p.Id = v
@@ -4359,6 +4707,7 @@ type FirewallInfoVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -4404,6 +4753,9 @@ func (p *FirewallInfoVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -4566,6 +4918,13 @@ func (p *FirewallInfoVPCRouterParam) SetFormatFile(v string) {
 
 func (p *FirewallInfoVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *FirewallInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *FirewallInfoVPCRouterParam) GetQuery() string {
+	return p.Query
 }
 func (p *FirewallInfoVPCRouterParam) SetId(v int64) {
 	p.Id = v
@@ -5407,6 +5766,7 @@ type DhcpServerInfoVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -5443,6 +5803,9 @@ func (p *DhcpServerInfoVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -5570,6 +5933,13 @@ func (p *DhcpServerInfoVPCRouterParam) SetFormatFile(v string) {
 
 func (p *DhcpServerInfoVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *DhcpServerInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DhcpServerInfoVPCRouterParam) GetQuery() string {
+	return p.Query
 }
 func (p *DhcpServerInfoVPCRouterParam) SetId(v int64) {
 	p.Id = v
@@ -6144,6 +6514,7 @@ type DhcpStaticMappingInfoVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -6180,6 +6551,9 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -6307,6 +6681,13 @@ func (p *DhcpStaticMappingInfoVPCRouterParam) SetFormatFile(v string) {
 
 func (p *DhcpStaticMappingInfoVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *DhcpStaticMappingInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DhcpStaticMappingInfoVPCRouterParam) GetQuery() string {
+	return p.Query
 }
 func (p *DhcpStaticMappingInfoVPCRouterParam) SetId(v int64) {
 	p.Id = v
@@ -6806,6 +7187,7 @@ type PptpServerInfoVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -6842,6 +7224,9 @@ func (p *PptpServerInfoVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -6969,6 +7354,13 @@ func (p *PptpServerInfoVPCRouterParam) SetFormatFile(v string) {
 
 func (p *PptpServerInfoVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *PptpServerInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *PptpServerInfoVPCRouterParam) GetQuery() string {
+	return p.Query
 }
 func (p *PptpServerInfoVPCRouterParam) SetId(v int64) {
 	p.Id = v
@@ -7155,6 +7547,7 @@ type L2tpServerInfoVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -7191,6 +7584,9 @@ func (p *L2tpServerInfoVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -7318,6 +7714,13 @@ func (p *L2tpServerInfoVPCRouterParam) SetFormatFile(v string) {
 
 func (p *L2tpServerInfoVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *L2tpServerInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *L2tpServerInfoVPCRouterParam) GetQuery() string {
+	return p.Query
 }
 func (p *L2tpServerInfoVPCRouterParam) SetId(v int64) {
 	p.Id = v
@@ -7522,6 +7925,7 @@ type UserInfoVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -7558,6 +7962,9 @@ func (p *UserInfoVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -7685,6 +8092,13 @@ func (p *UserInfoVPCRouterParam) SetFormatFile(v string) {
 
 func (p *UserInfoVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *UserInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UserInfoVPCRouterParam) GetQuery() string {
+	return p.Query
 }
 func (p *UserInfoVPCRouterParam) SetId(v int64) {
 	p.Id = v
@@ -8184,6 +8598,7 @@ type SiteToSiteVpnInfoVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -8220,6 +8635,9 @@ func (p *SiteToSiteVpnInfoVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -8347,6 +8765,13 @@ func (p *SiteToSiteVpnInfoVPCRouterParam) SetFormatFile(v string) {
 
 func (p *SiteToSiteVpnInfoVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *SiteToSiteVpnInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *SiteToSiteVpnInfoVPCRouterParam) GetQuery() string {
+	return p.Query
 }
 func (p *SiteToSiteVpnInfoVPCRouterParam) SetId(v int64) {
 	p.Id = v
@@ -8961,6 +9386,7 @@ type StaticRouteInfoVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -8997,6 +9423,9 @@ func (p *StaticRouteInfoVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -9124,6 +9553,13 @@ func (p *StaticRouteInfoVPCRouterParam) SetFormatFile(v string) {
 
 func (p *StaticRouteInfoVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *StaticRouteInfoVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *StaticRouteInfoVPCRouterParam) GetQuery() string {
+	return p.Query
 }
 func (p *StaticRouteInfoVPCRouterParam) SetId(v int64) {
 	p.Id = v
@@ -9627,6 +10063,7 @@ type MonitorVPCRouterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -9679,6 +10116,9 @@ func (p *MonitorVPCRouterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -9869,6 +10309,13 @@ func (p *MonitorVPCRouterParam) SetFormatFile(v string) {
 
 func (p *MonitorVPCRouterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *MonitorVPCRouterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorVPCRouterParam) GetQuery() string {
+	return p.Query
 }
 func (p *MonitorVPCRouterParam) SetId(v int64) {
 	p.Id = v

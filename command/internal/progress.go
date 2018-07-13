@@ -2,11 +2,12 @@ package internal
 
 import (
 	"fmt"
-	"github.com/fatih/color"
-	"github.com/sacloud/usacloud/helper/printer"
 	"io"
 	"sync"
 	"time"
+
+	"github.com/fatih/color"
+	"github.com/sacloud/usacloud/helper/printer"
 )
 
 var mutex = sync.Mutex{}

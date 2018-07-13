@@ -4,6 +4,7 @@ package completion
 
 import (
 	"fmt"
+
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
@@ -90,6 +91,11 @@ func VPCRouterCreateCompleteFlags(ctx command.Context, params *params.CreateVPCR
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "disable-internet-connection":
+		param := define.Resources["VPCRouter"].Commands["create"].BuildedParams().Get("disable-internet-connection")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "boot-after-create":
 		param := define.Resources["VPCRouter"].Commands["create"].BuildedParams().Get("boot-after-create")
 		if param != nil {
@@ -159,6 +165,11 @@ func VPCRouterUpdateCompleteFlags(ctx command.Context, params *params.UpdateVPCR
 	switch flagName {
 	case "syslog-host":
 		param := define.Resources["VPCRouter"].Commands["update"].BuildedParams().Get("syslog-host")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "internet-connection":
+		param := define.Resources["VPCRouter"].Commands["update"].BuildedParams().Get("internet-connection")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -366,6 +377,54 @@ func VPCRouterWaitForDownCompleteFlags(ctx command.Context, params *params.WaitF
 		}
 	case "id":
 		param := define.Resources["VPCRouter"].Commands["wait-for-down"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func VPCRouterEnableInternetConnectionCompleteFlags(ctx command.Context, params *params.EnableInternetConnectionVPCRouterParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["enable-internet-connection"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["VPCRouter"].Commands["enable-internet-connection"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func VPCRouterDisableInternetConnectionCompleteFlags(ctx command.Context, params *params.DisableInternetConnectionVPCRouterParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["disable-internet-connection"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["VPCRouter"].Commands["disable-internet-connection"].BuildedParams().Get("id")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

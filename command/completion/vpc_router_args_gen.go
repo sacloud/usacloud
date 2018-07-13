@@ -4,6 +4,7 @@ package completion
 
 import (
 	"fmt"
+
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 )
@@ -265,6 +266,68 @@ func VPCRouterWaitForBootCompleteArgs(ctx command.Context, params *params.WaitFo
 }
 
 func VPCRouterWaitForDownCompleteArgs(ctx command.Context, params *params.WaitForDownVPCRouterParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetVPCRouterAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.VPCRouters {
+		fmt.Println(res.VPCRouters[i].ID)
+		var target interface{} = &res.VPCRouters[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func VPCRouterEnableInternetConnectionCompleteArgs(ctx command.Context, params *params.EnableInternetConnectionVPCRouterParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetVPCRouterAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.VPCRouters {
+		fmt.Println(res.VPCRouters[i].ID)
+		var target interface{} = &res.VPCRouters[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func VPCRouterDisableInternetConnectionCompleteArgs(ctx command.Context, params *params.DisableInternetConnectionVPCRouterParam, cur, prev, commandName string) {
 
 	if !command.GlobalOption.Valid {
 		return

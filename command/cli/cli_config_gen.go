@@ -5,6 +5,8 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
+
 	"github.com/imdario/mergo"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
@@ -12,7 +14,6 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
-	"strings"
 )
 
 func init() {
@@ -194,7 +195,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(currentParam, p)
+						mergo.Merge(currentParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -377,7 +378,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(deleteParam, p)
+						mergo.Merge(deleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -592,7 +593,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(editParam, p)
+						mergo.Merge(editParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -779,7 +780,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(listParam, p)
+						mergo.Merge(listParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -953,7 +954,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(migrateParam, p)
+						mergo.Merge(migrateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -1127,7 +1128,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(showParam, p)
+						mergo.Merge(showParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -1301,7 +1302,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(useParam, p)
+						mergo.Merge(useParam, p, mergo.WithOverride)
 					}
 
 					// Set option values

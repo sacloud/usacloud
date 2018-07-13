@@ -2,9 +2,10 @@ package funcs
 
 import (
 	"fmt"
+
+	"github.com/sacloud/libsacloud/utils/server"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
-	"github.com/sacloud/usacloud/helper/rdp"
 )
 
 func ServerRemoteDesktop(ctx command.Context, params *params.RemoteDesktopServerParam) error {
@@ -29,7 +30,7 @@ func ServerRemoteDesktop(ctx command.Context, params *params.RemoteDesktopServer
 		return fmt.Errorf("ServerRemoteDesktop is failed: collecting IPAddress from server is failed: %#v", p)
 	}
 
-	rdpClient := &rdp.Opener{
+	rdpClient := &server.RDPOpener{
 		User:      params.User,
 		Port:      params.Port,
 		IPAddress: ip,

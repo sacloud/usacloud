@@ -1,10 +1,11 @@
 package define
 
 import (
+	"strings"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
-	"strings"
 )
 
 func DiskResource() *schema.Resource {

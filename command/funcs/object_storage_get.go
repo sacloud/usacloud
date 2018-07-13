@@ -2,15 +2,16 @@ package funcs
 
 import (
 	"fmt"
-	"github.com/mitchellh/goamz/aws"
-	"github.com/mitchellh/goamz/s3"
-	"github.com/sacloud/usacloud/command"
-	"github.com/sacloud/usacloud/command/params"
 	"io"
 	"os"
 	"path"
 	"path/filepath"
 	"strings"
+
+	"github.com/mitchellh/goamz/aws"
+	"github.com/mitchellh/goamz/s3"
+	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/params"
 )
 
 func ObjectStorageGet(ctx command.Context, params *params.GetObjectStorageParam) error {

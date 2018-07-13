@@ -2,10 +2,11 @@ package funcs
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
-	"strings"
 )
 
 func BillList(ctx command.Context, params *params.ListBillParam) error {

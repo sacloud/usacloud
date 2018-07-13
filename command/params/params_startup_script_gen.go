@@ -26,6 +26,7 @@ type ListStartupScriptParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListStartupScriptParam return new ListStartupScriptParam
@@ -82,6 +83,9 @@ func (p *ListStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -288,6 +292,13 @@ func (p *ListStartupScriptParam) SetFormatFile(v string) {
 func (p *ListStartupScriptParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListStartupScriptParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListStartupScriptParam) GetQuery() string {
+	return p.Query
+}
 
 // CreateStartupScriptParam is input parameters for the sacloud API
 type CreateStartupScriptParam struct {
@@ -306,6 +317,7 @@ type CreateStartupScriptParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewCreateStartupScriptParam return new CreateStartupScriptParam
@@ -362,6 +374,9 @@ func (p *CreateStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -580,6 +595,13 @@ func (p *CreateStartupScriptParam) SetFormatFile(v string) {
 func (p *CreateStartupScriptParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CreateStartupScriptParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateStartupScriptParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadStartupScriptParam is input parameters for the sacloud API
 type ReadStartupScriptParam struct {
@@ -592,6 +614,7 @@ type ReadStartupScriptParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -628,6 +651,9 @@ func (p *ReadStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -756,6 +782,13 @@ func (p *ReadStartupScriptParam) SetFormatFile(v string) {
 func (p *ReadStartupScriptParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadStartupScriptParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadStartupScriptParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadStartupScriptParam) SetId(v int64) {
 	p.Id = v
 }
@@ -782,6 +815,7 @@ type UpdateStartupScriptParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -839,6 +873,9 @@ func (p *UpdateStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1060,6 +1097,13 @@ func (p *UpdateStartupScriptParam) SetFormatFile(v string) {
 func (p *UpdateStartupScriptParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdateStartupScriptParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateStartupScriptParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdateStartupScriptParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1080,6 +1124,7 @@ type DeleteStartupScriptParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1119,6 +1164,9 @@ func (p *DeleteStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1253,6 +1301,13 @@ func (p *DeleteStartupScriptParam) SetFormatFile(v string) {
 
 func (p *DeleteStartupScriptParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *DeleteStartupScriptParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteStartupScriptParam) GetQuery() string {
+	return p.Query
 }
 func (p *DeleteStartupScriptParam) SetId(v int64) {
 	p.Id = v

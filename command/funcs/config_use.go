@@ -2,6 +2,7 @@ package funcs
 
 import (
 	"fmt"
+
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"

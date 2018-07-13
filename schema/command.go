@@ -2,9 +2,10 @@ package schema
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/output"
 	"sort"
 	"strings"
+
+	"github.com/sacloud/usacloud/output"
 )
 
 type Command struct {
@@ -194,6 +195,15 @@ func (c *Command) BuildedParams() SortableParams {
 				Description: "Output format from file(see text/template package document for detail)",
 				Category:    "output",
 				Order:       50,
+			}
+		}
+		if _, ok := c.Params["query"]; !ok {
+			c.Params["query"] = &Schema{
+				Type:        TypeString,
+				HandlerType: HandlerNoop,
+				Description: "JMESPath query(using when '--output-type' is json only)",
+				Category:    "output",
+				Order:       60,
 			}
 		}
 	}

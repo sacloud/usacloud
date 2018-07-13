@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
+	"io"
+	"os"
+	"sort"
+	"strings"
+
 	"github.com/sacloud/usacloud/command"
 	usacloud_cli "github.com/sacloud/usacloud/command/cli"
 	"github.com/sacloud/usacloud/schema"
 	"github.com/sacloud/usacloud/version"
 	"gopkg.in/urfave/cli.v2"
-	"io"
-	"os"
-	"sort"
-	"strings"
 )
 
 var (
@@ -39,7 +40,9 @@ func main() {
 	cli.InitCompletionFlag.Hidden = true
 	cli.HelpPrinter = getHelpPrinter(app, cli.HelpPrinter)
 
-	app.Run(os.Args)
+	if err := app.Run(os.Args); err != nil {
+		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
+	}
 }
 
 func getHelpPrinter(app *cli.App, currentHelpPrinter func(io.Writer, string, interface{})) func(io.Writer, string, interface{}) {

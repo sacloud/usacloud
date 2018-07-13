@@ -2,9 +2,10 @@ package funcs
 
 import (
 	"fmt"
+	"strconv"
+
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
-	"strconv"
 )
 
 func GSLBUpdate(ctx command.Context, params *params.UpdateGSLBParam) error {

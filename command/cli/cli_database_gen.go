@@ -5,6 +5,9 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
+	"sync"
+
 	"github.com/imdario/mergo"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
@@ -12,8 +15,6 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
-	"strings"
-	"sync"
 )
 
 func init() {
@@ -115,6 +116,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -195,6 +200,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						listParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						listParam.Query = c.String("query")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -277,7 +285,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(listParam, p)
+						mergo.Merge(listParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -322,6 +330,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						listParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						listParam.Query = c.String("query")
 					}
 
 					// Validate global params
@@ -371,7 +382,7 @@ func init() {
 					},
 					&cli.IntFlag{
 						Name:  "plan",
-						Usage: "[Required] set plan[10/30/90/240]",
+						Usage: "[Required] set plan[10/30/90/240/500/1000]",
 						Value: 10,
 					},
 					&cli.StringFlag{
@@ -474,6 +485,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -589,6 +604,9 @@ func init() {
 					if c.IsSet("format-file") {
 						createParam.FormatFile = c.String("format-file")
 					}
+					if c.IsSet("query") {
+						createParam.Query = c.String("query")
+					}
 
 					if strings.HasPrefix(prev, "-") {
 						// prev if flag , is values setted?
@@ -670,7 +688,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(createParam, p)
+						mergo.Merge(createParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -748,6 +766,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						createParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						createParam.Query = c.String("query")
 					}
 
 					// Validate global params
@@ -842,6 +863,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -912,6 +937,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						readParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						readParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						readParam.Id = c.Int64("id")
@@ -997,7 +1025,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(readParam, p)
+						mergo.Merge(readParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -1027,6 +1055,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						readParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						readParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						readParam.Id = c.Int64("id")
@@ -1234,6 +1265,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -1335,6 +1370,9 @@ func init() {
 					if c.IsSet("format-file") {
 						updateParam.FormatFile = c.String("format-file")
 					}
+					if c.IsSet("query") {
+						updateParam.Query = c.String("query")
+					}
 					if c.IsSet("id") {
 						updateParam.Id = c.Int64("id")
 					}
@@ -1419,7 +1457,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(updateParam, p)
+						mergo.Merge(updateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -1479,6 +1517,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						updateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						updateParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						updateParam.Id = c.Int64("id")
@@ -1655,6 +1696,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.BoolFlag{
 						Name:    "force",
 						Aliases: []string{"f"},
@@ -1733,6 +1778,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						deleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						deleteParam.Query = c.String("query")
 					}
 					if c.IsSet("force") {
 						deleteParam.Force = c.Bool("force")
@@ -1821,7 +1869,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(deleteParam, p)
+						mergo.Merge(deleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -1854,6 +1902,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						deleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						deleteParam.Query = c.String("query")
 					}
 					if c.IsSet("force") {
 						deleteParam.Force = c.Bool("force")
@@ -2152,7 +2203,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(bootParam, p)
+						mergo.Merge(bootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -2465,7 +2516,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(shutdownParam, p)
+						mergo.Merge(shutdownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -2778,7 +2829,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(shutdownForceParam, p)
+						mergo.Merge(shutdownForceParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -3090,7 +3141,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(resetParam, p)
+						mergo.Merge(resetParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -3394,7 +3445,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(waitForBootParam, p)
+						mergo.Merge(waitForBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -3685,7 +3736,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(waitForDownParam, p)
+						mergo.Merge(waitForDownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -3861,6 +3912,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -3931,6 +3986,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						backupInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						backupInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						backupInfoParam.Id = c.Int64("id")
@@ -4016,7 +4074,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(backupInfoParam, p)
+						mergo.Merge(backupInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -4046,6 +4104,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						backupInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						backupInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						backupInfoParam.Id = c.Int64("id")
@@ -4211,6 +4272,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -4281,6 +4346,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						backupCreateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						backupCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						backupCreateParam.Id = c.Int64("id")
@@ -4366,7 +4434,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(backupCreateParam, p)
+						mergo.Merge(backupCreateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -4396,6 +4464,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						backupCreateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						backupCreateParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						backupCreateParam.Id = c.Int64("id")
@@ -4560,6 +4631,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -4633,6 +4708,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						backupRestoreParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						backupRestoreParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						backupRestoreParam.Id = c.Int64("id")
@@ -4718,7 +4796,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(backupRestoreParam, p)
+						mergo.Merge(backupRestoreParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -4751,6 +4829,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						backupRestoreParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						backupRestoreParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						backupRestoreParam.Id = c.Int64("id")
@@ -4915,6 +4996,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -4988,6 +5073,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						backupLockParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						backupLockParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						backupLockParam.Id = c.Int64("id")
@@ -5073,7 +5161,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(backupLockParam, p)
+						mergo.Merge(backupLockParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -5106,6 +5194,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						backupLockParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						backupLockParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						backupLockParam.Id = c.Int64("id")
@@ -5270,6 +5361,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -5343,6 +5438,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						backupUnlockParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						backupUnlockParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						backupUnlockParam.Id = c.Int64("id")
@@ -5428,7 +5526,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(backupUnlockParam, p)
+						mergo.Merge(backupUnlockParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -5461,6 +5559,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						backupUnlockParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						backupUnlockParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						backupUnlockParam.Id = c.Int64("id")
@@ -5625,6 +5726,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -5698,6 +5803,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						backupRemoveParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						backupRemoveParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						backupRemoveParam.Id = c.Int64("id")
@@ -5783,7 +5891,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(backupRemoveParam, p)
+						mergo.Merge(backupRemoveParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -5816,6 +5924,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						backupRemoveParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						backupRemoveParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						backupRemoveParam.Id = c.Int64("id")
@@ -5988,6 +6099,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -6067,6 +6182,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorCpuParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorCpuParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorCpuParam.Id = c.Int64("id")
@@ -6152,7 +6270,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(monitorCpuParam, p)
+						mergo.Merge(monitorCpuParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -6191,6 +6309,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorCpuParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorCpuParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorCpuParam.Id = c.Int64("id")
@@ -6368,6 +6489,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -6447,6 +6572,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorMemoryParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorMemoryParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorMemoryParam.Id = c.Int64("id")
@@ -6532,7 +6660,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(monitorMemoryParam, p)
+						mergo.Merge(monitorMemoryParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -6571,6 +6699,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorMemoryParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorMemoryParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorMemoryParam.Id = c.Int64("id")
@@ -6748,6 +6879,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -6827,6 +6962,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorNicParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorNicParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorNicParam.Id = c.Int64("id")
@@ -6912,7 +7050,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(monitorNicParam, p)
+						mergo.Merge(monitorNicParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -6951,6 +7089,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorNicParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorNicParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorNicParam.Id = c.Int64("id")
@@ -7128,6 +7269,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -7207,6 +7352,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorSystemDiskParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorSystemDiskParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorSystemDiskParam.Id = c.Int64("id")
@@ -7292,7 +7440,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(monitorSystemDiskParam, p)
+						mergo.Merge(monitorSystemDiskParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -7331,6 +7479,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorSystemDiskParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorSystemDiskParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorSystemDiskParam.Id = c.Int64("id")
@@ -7508,6 +7659,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -7587,6 +7742,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorBackupDiskParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorBackupDiskParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorBackupDiskParam.Id = c.Int64("id")
@@ -7672,7 +7830,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(monitorBackupDiskParam, p)
+						mergo.Merge(monitorBackupDiskParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -7711,6 +7869,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorBackupDiskParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorBackupDiskParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorBackupDiskParam.Id = c.Int64("id")
@@ -7888,6 +8049,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -7967,6 +8132,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorSystemDiskSizeParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorSystemDiskSizeParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorSystemDiskSizeParam.Id = c.Int64("id")
@@ -8052,7 +8220,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(monitorSystemDiskSizeParam, p)
+						mergo.Merge(monitorSystemDiskSizeParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -8091,6 +8259,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorSystemDiskSizeParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorSystemDiskSizeParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorSystemDiskSizeParam.Id = c.Int64("id")
@@ -8268,6 +8439,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -8347,6 +8522,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorBackupDiskSizeParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorBackupDiskSizeParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorBackupDiskSizeParam.Id = c.Int64("id")
@@ -8432,7 +8610,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(monitorBackupDiskSizeParam, p)
+						mergo.Merge(monitorBackupDiskSizeParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -8471,6 +8649,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorBackupDiskSizeParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorBackupDiskSizeParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorBackupDiskSizeParam.Id = c.Int64("id")
@@ -8783,7 +8964,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(logsParam, p)
+						mergo.Merge(logsParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -9114,6 +9295,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "backup-create", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "backup-create", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -9158,6 +9344,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("database", "backup-info", "quiet", &schema.Category{
 		Key:         "output",
@@ -9219,6 +9410,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "backup-lock", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "backup-lock", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -9273,6 +9469,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("database", "backup-remove", "quiet", &schema.Category{
 		Key:         "output",
@@ -9329,6 +9530,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "backup-restore", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "backup-restore", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -9383,6 +9589,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("database", "backup-unlock", "quiet", &schema.Category{
 		Key:         "output",
@@ -9519,6 +9730,11 @@ func init() {
 		DisplayName: "Network options",
 		Order:       20,
 	})
+	AppendFlagCategoryMap("database", "create", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "create", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -9594,6 +9810,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "delete", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "delete", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -9658,6 +9879,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "list", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("database", "list", "quiet", &schema.Category{
 		Key:         "output",
@@ -9769,6 +9995,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "monitor-backup-disk", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -9833,6 +10064,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "quiet", &schema.Category{
 		Key:         "output",
@@ -9899,6 +10135,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "monitor-cpu", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -9963,6 +10204,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("database", "monitor-memory", "quiet", &schema.Category{
 		Key:         "output",
@@ -10029,6 +10275,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "monitor-nic", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "monitor-nic", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -10093,6 +10344,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("database", "monitor-system-disk", "quiet", &schema.Category{
 		Key:         "output",
@@ -10159,6 +10415,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "monitor-system-disk-size", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -10213,6 +10474,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "read", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("database", "read", "quiet", &schema.Category{
 		Key:         "output",
@@ -10393,6 +10659,11 @@ func init() {
 		Key:         "database",
 		DisplayName: "Database options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "update", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("database", "update", "quiet", &schema.Category{
 		Key:         "output",

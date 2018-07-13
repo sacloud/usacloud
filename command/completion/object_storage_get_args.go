@@ -2,12 +2,13 @@ package completion
 
 import (
 	"fmt"
+	"path"
+	"strings"
+
 	"github.com/mitchellh/goamz/aws"
 	"github.com/mitchellh/goamz/s3"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
-	"path"
-	"strings"
 )
 
 func ObjectStorageGetCompleteArgs(ctx command.Context, params *params.GetObjectStorageParam, cur, prev, commandName string) {

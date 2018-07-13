@@ -2,10 +2,11 @@ package define
 
 import (
 	"fmt"
+	"math"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
-	"math"
 )
 
 func DatabaseResource() *schema.Resource {
@@ -408,7 +409,7 @@ func databaseCreateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Required:     true,
 			DefaultValue: 10,
-			Description:  "set plan[10/30/90/240]",
+			Description:  "set plan[10/30/90/240/500/1000]",
 			ValidateFunc: validateInIntValues(sacloud.AllowDatabasePlans()...),
 			CompleteFunc: completeInIntValues(sacloud.AllowDatabasePlans()...),
 			Category:     "database",

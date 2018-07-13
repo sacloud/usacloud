@@ -2,12 +2,13 @@ package funcs
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/fatih/color"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/helper/printer"
-	"time"
 )
 
 func DatabaseLogs(ctx command.Context, params *params.LogsDatabaseParam) error {

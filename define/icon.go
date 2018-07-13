@@ -2,9 +2,10 @@ package define
 
 import (
 	"encoding/base64"
+	"io/ioutil"
+
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
-	"io/ioutil"
 )
 
 func IconResource() *schema.Resource {

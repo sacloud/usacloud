@@ -3,11 +3,6 @@ package funcs
 import (
 	"bytes"
 	"fmt"
-	"github.com/mitchellh/goamz/aws"
-	"github.com/mitchellh/goamz/s3"
-	"github.com/sacloud/usacloud/command"
-	"github.com/sacloud/usacloud/command/internal"
-	"github.com/sacloud/usacloud/command/params"
 	"io"
 	"io/ioutil"
 	"mime"
@@ -15,6 +10,12 @@ import (
 	"path"
 	"path/filepath"
 	"strings"
+
+	"github.com/mitchellh/goamz/aws"
+	"github.com/mitchellh/goamz/s3"
+	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/internal"
+	"github.com/sacloud/usacloud/command/params"
 )
 
 func ObjectStoragePut(ctx command.Context, params *params.PutObjectStorageParam) error {
@@ -22,26 +23,37 @@ func ObjectStoragePut(ctx command.Context, params *params.PutObjectStorageParam)
 	srcPath := ""
 	destPath := ""
 	var srcInfo os.FileInfo
+	progressLabel := ""
 
 	switch ctx.NArgs() {
 	case 1:
-		useStdIn = true
-		destPath = ctx.Args()[0]
 
-		if params.Recursive {
-			return fmt.Errorf("--recursie can't be used with STDIN")
-		}
-		// validate stdin
-		fi, err := command.GlobalOption.In.Stat()
-		if err != nil {
-			return fmt.Errorf("STDIN Stat() is failed: %s", err)
-		}
-		// if using pipe with curl, fi.Size() will return zero.
-		// so check file mode is os.ModeNamedPipe
-		if fi.Size() == 0 && fi.Mode()&os.ModeNamedPipe == 0 {
-			return fmt.Errorf("STDIN is Empty")
-		}
+		info, err := os.Stat(ctx.Args()[0])
+		if err == nil {
+			// use filepath
+			srcPath = filepath.Clean(ctx.Args()[0])
+			srcInfo = info
+			progressLabel = filepath.Clean(filepath.Base(srcPath))
+		} else {
+			// use stdin
+			useStdIn = true
+			destPath = ctx.Args()[0]
 
+			if params.Recursive {
+				return fmt.Errorf("--recursie can't be used with STDIN")
+			}
+			// validate stdin
+			fi, err := command.GlobalOption.In.Stat()
+			if err != nil {
+				return fmt.Errorf("STDIN Stat() is failed: %s", err)
+			}
+			// if using pipe with curl, fi.Size() will return zero.
+			// so check file mode is os.ModeNamedPipe
+			if fi.Size() == 0 && fi.Mode()&os.ModeNamedPipe == 0 {
+				return fmt.Errorf("STDIN is Empty")
+			}
+			progressLabel = destPath
+		}
 	case 2:
 		srcPath = filepath.Clean(ctx.Args()[0])
 		destPath = ctx.Args()[1]
@@ -51,16 +63,17 @@ func ObjectStoragePut(ctx command.Context, params *params.PutObjectStorageParam)
 			return fmt.Errorf("file[%s] is not exists: %s", srcPath, err)
 		}
 		srcInfo = info
+		progressLabel = destPath
 	default:
 		return fmt.Errorf("ObjectStoragePut is failed: %s", "Only two argument can be specified")
 	}
 
-	// destPath
+	// destPath prefix
 	if destPath != "" && strings.HasPrefix(destPath, "/") {
 		destPath = strings.Replace(destPath, "/", "", 1)
 	}
 	// if destPath is dir, set filename from srcPath
-	if strings.HasSuffix(destPath, "/") {
+	if destPath == "" || strings.HasSuffix(destPath, "/") {
 		destPath = fmt.Sprintf("%s%s", destPath, filepath.Base(srcPath))
 	}
 
@@ -104,8 +117,8 @@ func ObjectStoragePut(ctx command.Context, params *params.PutObjectStorageParam)
 	}
 
 	return internal.ExecWithProgress(
-		fmt.Sprintf("Still uploading[%q]...", destPath),
-		fmt.Sprintf("Upload [%q]", destPath),
+		fmt.Sprintf("Still uploading[%q]...", progressLabel),
+		fmt.Sprintf("Upload [%q]", progressLabel),
 		command.GlobalOption.Progress,
 		func(compChan chan bool, errChan chan error) {
 			if err := putFunc(); err != nil {
@@ -203,11 +216,16 @@ func objectStoragePutReaderMulti(destPath string, file *os.File, bucket *s3.Buck
 	}
 
 	// put file
-	_, err = m.PutAll(file, partSize)
+	var parts []s3.Part
+	parts, err = m.PutAll(file, partSize)
 	if err != nil {
 		return err
 	}
 
+	err = m.Complete(parts)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 

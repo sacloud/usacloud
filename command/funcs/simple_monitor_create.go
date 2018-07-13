@@ -2,6 +2,7 @@ package funcs
 
 import (
 	"fmt"
+
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 )
@@ -28,17 +29,22 @@ func SimpleMonitorCreate(ctx command.Context, params *params.CreateSimpleMonitor
 		}
 
 		// set health check
-		setHealthCheck := p.SetHealthCheckHTTP
-		if params.Protocol == "https" {
-			setHealthCheck = p.SetHealthCheckHTTPS
+		if params.Protocol == "http" {
+			p.SetHealthCheckHTTP(
+				port,
+				params.Path,
+				responseCode,
+				params.HostHeader,
+			)
+		} else {
+			p.SetHealthCheckHTTPS(
+				port,
+				params.Path,
+				responseCode,
+				params.HostHeader,
+				params.Sni,
+			)
 		}
-
-		setHealthCheck(
-			port,
-			params.Path,
-			responseCode,
-			params.HostHeader,
-		)
 
 	case "ping":
 		p.SetHealthCheckPing()

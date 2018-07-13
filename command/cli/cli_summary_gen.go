@@ -5,6 +5,8 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
+
 	"github.com/imdario/mergo"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
@@ -12,7 +14,6 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
-	"strings"
 )
 
 func init() {
@@ -65,6 +66,10 @@ func init() {
 				Name:  "format-file",
 				Usage: "Output format from file(see text/template package document for detail)",
 			},
+			&cli.StringFlag{
+				Name:  "query",
+				Usage: "JMESPath query(using when '--output-type' is json only)",
+			},
 			&cli.BoolFlag{
 				Name:    "paid-resources-only",
 				Aliases: []string{"paid"},
@@ -111,6 +116,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
 					&cli.BoolFlag{
 						Name:    "paid-resources-only",
@@ -179,6 +188,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						showParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						showParam.Query = c.String("query")
 					}
 					if c.IsSet("paid-resources-only") {
 						showParam.PaidResourcesOnly = c.Bool("paid-resources-only")
@@ -264,7 +276,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(showParam, p)
+						mergo.Merge(showParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -291,6 +303,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						showParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						showParam.Query = c.String("query")
 					}
 					if c.IsSet("paid-resources-only") {
 						showParam.PaidResourcesOnly = c.Bool("paid-resources-only")
@@ -392,6 +407,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("summary", "show", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("summary", "show", "quiet", &schema.Category{
 		Key:         "output",

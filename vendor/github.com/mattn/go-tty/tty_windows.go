@@ -11,6 +11,16 @@ import (
 )
 
 const (
+	rightAltPressed  = 1
+	leftAltPressed   = 2
+	rightCtrlPressed = 4
+	leftCtrlPressed  = 8
+	shiftPressed     = 0x0010
+	ctrlPressed      = rightCtrlPressed | leftCtrlPressed
+	altPressed       = rightAltPressed | leftAltPressed
+)
+
+const (
 	enableProcessedInput = 0x1
 	enableLineInput      = 0x2
 	enableEchoInput      = 0x4
@@ -19,6 +29,9 @@ const (
 	enableInsertMode     = 0x20
 	enableQuickEditMode  = 0x40
 	enableExtendedFlag   = 0x80
+
+	enableProcessedOutput = 1
+	enableWrapAtEolOutput = 2
 
 	keyEvent              = 0x1
 	mouseEvent            = 0x2
@@ -112,6 +125,8 @@ type TTY struct {
 	in  *os.File
 	out *os.File
 	st  uint32
+	rs  []rune
+	ws  chan WINSIZE
 }
 
 func readConsoleInput(fd uintptr, record *inputRecord) (err error) {
@@ -167,26 +182,101 @@ func open() (*TTY, error) {
 	// ignore error
 	procSetConsoleMode.Call(h, uintptr(st))
 
+	tty.ws = make(chan WINSIZE)
+
 	return tty, nil
 }
 
+func (tty *TTY) buffered() bool {
+	return len(tty.rs) > 0
+}
+
 func (tty *TTY) readRune() (rune, error) {
+	if len(tty.rs) > 0 {
+		r := tty.rs[0]
+		tty.rs = tty.rs[1:]
+		return r, nil
+	}
 	var ir inputRecord
 	err := readConsoleInput(tty.in.Fd(), &ir)
 	if err != nil {
 		return 0, err
 	}
 
-	if ir.eventType == keyEvent {
+	switch ir.eventType {
+	case windowBufferSizeEvent:
+		wr := (*windowBufferSizeRecord)(unsafe.Pointer(&ir.event))
+		tty.ws <- WINSIZE{
+			W: int(wr.size.x),
+			H: int(wr.size.y),
+		}
+	case keyEvent:
 		kr := (*keyEventRecord)(unsafe.Pointer(&ir.event))
 		if kr.keyDown != 0 {
-			return rune(kr.unicodeChar), nil
+			if kr.controlKeyState&altPressed != 0 && kr.unicodeChar > 0 {
+				tty.rs = []rune{rune(kr.unicodeChar)}
+				return rune(0x1b), nil
+			}
+			if kr.unicodeChar > 0 {
+				if kr.controlKeyState&shiftPressed != 0 {
+					switch kr.unicodeChar {
+					case 0x09:
+						tty.rs = []rune{0x5b, 0x5a}
+						return rune(0x1b), nil
+					}
+				}
+				return rune(kr.unicodeChar), nil
+			}
+			vk := kr.virtualKeyCode
+			switch vk {
+			case 0x21: // page-up
+				tty.rs = []rune{0x5b, 0x35, 0x7e}
+				return rune(0x1b), nil
+			case 0x22: // page-down
+				tty.rs = []rune{0x5b, 0x36, 0x7e}
+				return rune(0x1b), nil
+			case 0x23: // end
+				tty.rs = []rune{0x5b, 0x46}
+				return rune(0x1b), nil
+			case 0x24: // home
+				tty.rs = []rune{0x5b, 0x48}
+				return rune(0x1b), nil
+			case 0x25: // left
+				tty.rs = []rune{0x5b, 0x44}
+				return rune(0x1b), nil
+			case 0x26: // up
+				tty.rs = []rune{0x5b, 0x41}
+				return rune(0x1b), nil
+			case 0x27: // right
+				tty.rs = []rune{0x5b, 0x43}
+				return rune(0x1b), nil
+			case 0x28: // down
+				tty.rs = []rune{0x5b, 0x42}
+				return rune(0x1b), nil
+			case 0x2e: // delete
+				tty.rs = []rune{0x5b, 0x33, 0x7e}
+				return rune(0x1b), nil
+			case 0x70, 0x71, 0x72, 0x73: // F1,F2,F3,F4
+				tty.rs = []rune{0x5b, 0x4f, rune(vk) - 0x20}
+				return rune(0x1b), nil
+			case 0x074, 0x75, 0x76, 0x77: // F5,F6,F7,F8
+				tty.rs = []rune{0x5b, 0x31, rune(vk) - 0x3f, 0x7e}
+				return rune(0x1b), nil
+			case 0x78, 0x79: // F9,F10
+				tty.rs = []rune{0x5b, 0x32, rune(vk) - 0x48, 0x7e}
+				return rune(0x1b), nil
+			case 0x7a, 0x7b: // F11,F12
+				tty.rs = []rune{0x5b, 0x32, rune(vk) - 0x47, 0x7e}
+				return rune(0x1b), nil
+			}
+			return 0, nil
 		}
 	}
 	return 0, nil
 }
 
 func (tty *TTY) close() error {
+	close(tty.ws)
 	procSetConsoleMode.Call(tty.in.Fd(), uintptr(tty.st))
 	return nil
 }
@@ -197,7 +287,7 @@ func (tty *TTY) size() (int, int, error) {
 	if r1 == 0 {
 		return 0, 0, err
 	}
-	return int(csbi.window.right - csbi.window.left), int(csbi.window.bottom - csbi.window.top), nil
+	return int(csbi.window.right - csbi.window.left + 1), int(csbi.window.bottom - csbi.window.top + 1), nil
 }
 
 func (tty *TTY) input() *os.File {
@@ -206,4 +296,28 @@ func (tty *TTY) input() *os.File {
 
 func (tty *TTY) output() *os.File {
 	return tty.out
+}
+
+func (tty *TTY) raw() (func() error, error) {
+	var st uint32
+	r1, _, err := procGetConsoleMode.Call(tty.in.Fd(), uintptr(unsafe.Pointer(&st)))
+	if r1 == 0 {
+		return nil, err
+	}
+	mode := st &^ (enableEchoInput | enableProcessedInput | enableLineInput | enableProcessedOutput)
+	r1, _, err = procSetConsoleMode.Call(tty.in.Fd(), uintptr(mode))
+	if r1 == 0 {
+		return nil, err
+	}
+	return func() error {
+		r1, _, err := procSetConsoleMode.Call(tty.in.Fd(), uintptr(st))
+		if r1 == 0 {
+			return err
+		}
+		return nil
+	}, nil
+}
+
+func (tty *TTY) sigwinch() chan WINSIZE {
+	return tty.ws
 }

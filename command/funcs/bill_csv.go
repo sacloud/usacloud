@@ -2,10 +2,11 @@ package funcs
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/command"
-	"github.com/sacloud/usacloud/command/params"
 	"os"
 	"strings"
+
+	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/params"
 )
 
 func BillCsv(ctx command.Context, params *params.CsvBillParam) error {

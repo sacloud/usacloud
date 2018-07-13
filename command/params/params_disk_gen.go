@@ -28,6 +28,7 @@ type ListDiskParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListDiskParam return new ListDiskParam
@@ -90,6 +91,9 @@ func (p *ListDiskParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -324,6 +328,13 @@ func (p *ListDiskParam) SetFormatFile(v string) {
 func (p *ListDiskParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListDiskParam) GetQuery() string {
+	return p.Query
+}
 
 // CreateDiskParam is input parameters for the sacloud API
 type CreateDiskParam struct {
@@ -346,6 +357,7 @@ type CreateDiskParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewCreateDiskParam return new CreateDiskParam
@@ -416,6 +428,9 @@ func (p *CreateDiskParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -720,6 +735,13 @@ func (p *CreateDiskParam) SetFormatFile(v string) {
 func (p *CreateDiskParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CreateDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreateDiskParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadDiskParam is input parameters for the sacloud API
 type ReadDiskParam struct {
@@ -732,6 +754,7 @@ type ReadDiskParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -768,6 +791,9 @@ func (p *ReadDiskParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -896,6 +922,13 @@ func (p *ReadDiskParam) SetFormatFile(v string) {
 func (p *ReadDiskParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadDiskParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -921,6 +954,7 @@ type UpdateDiskParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -975,6 +1009,9 @@ func (p *UpdateDiskParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1180,6 +1217,13 @@ func (p *UpdateDiskParam) SetFormatFile(v string) {
 func (p *UpdateDiskParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdateDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateDiskParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdateDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1200,6 +1244,7 @@ type DeleteDiskParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1239,6 +1284,9 @@ func (p *DeleteDiskParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1374,6 +1422,13 @@ func (p *DeleteDiskParam) SetFormatFile(v string) {
 func (p *DeleteDiskParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *DeleteDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteDiskParam) GetQuery() string {
+	return p.Query
+}
 func (p *DeleteDiskParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1402,6 +1457,7 @@ type EditDiskParam struct {
 	Quiet               bool     `json:"quiet"`
 	Format              string   `json:"format"`
 	FormatFile          string   `json:"format-file"`
+	Query               string   `json:"query"`
 	Id                  int64    `json:"id"`
 }
 
@@ -1468,6 +1524,9 @@ func (p *EditDiskParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1679,6 +1738,13 @@ func (p *EditDiskParam) SetFormatFile(v string) {
 
 func (p *EditDiskParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *EditDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *EditDiskParam) GetQuery() string {
+	return p.Query
 }
 func (p *EditDiskParam) SetId(v int64) {
 	p.Id = v
@@ -2423,6 +2489,7 @@ type MonitorDiskParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	End               string   `json:"end"`
 	Id                int64    `json:"id"`
 	KeyFormat         string   `json:"key-format"`
@@ -2465,6 +2532,9 @@ func (p *MonitorDiskParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.End) {
 		p.End = ""
@@ -2622,6 +2692,13 @@ func (p *MonitorDiskParam) SetFormatFile(v string) {
 
 func (p *MonitorDiskParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *MonitorDiskParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorDiskParam) GetQuery() string {
+	return p.Query
 }
 func (p *MonitorDiskParam) SetEnd(v string) {
 	p.End = v

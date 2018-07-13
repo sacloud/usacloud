@@ -2,10 +2,11 @@ package funcs
 
 import (
 	"fmt"
+
+	"github.com/sacloud/libsacloud/utils/server"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
-	"github.com/sacloud/usacloud/helper/vnc"
 )
 
 func ServerVnc(ctx command.Context, params *params.VncServerParam) error {
@@ -42,5 +43,5 @@ func ServerVnc(ctx command.Context, params *params.VncServerParam) error {
 		return fmt.Errorf("ServerVnc is failed: %s", e)
 	}
 
-	return vnc.OpenVNCClient(vncProxyInfo)
+	return server.StartDefaultVNCClient(vncProxyInfo)
 }

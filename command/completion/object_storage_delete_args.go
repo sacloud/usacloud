@@ -2,12 +2,13 @@ package completion
 
 import (
 	"fmt"
+	"path"
+	"strings"
+
 	"github.com/mitchellh/goamz/aws"
 	"github.com/mitchellh/goamz/s3"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
-	"path"
-	"strings"
 )
 
 func ObjectStorageDeleteCompleteArgs(ctx command.Context, params *params.DeleteObjectStorageParam, cur, prev, commandName string) {

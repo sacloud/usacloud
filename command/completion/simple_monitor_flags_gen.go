@@ -4,6 +4,7 @@ package completion
 
 import (
 	"fmt"
+
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/define"
@@ -97,6 +98,11 @@ func SimpleMonitorCreateCompleteFlags(ctx command.Context, params *params.Create
 		}
 	case "response-code":
 		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("response-code")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "sni":
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("sni")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -219,6 +225,11 @@ func SimpleMonitorUpdateCompleteFlags(ctx command.Context, params *params.Update
 		}
 	case "response-code":
 		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("response-code")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "sni":
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("sni")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

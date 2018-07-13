@@ -1,7 +1,7 @@
 
 _usacloud() {
     COMPREPLY=();
-    local commands=(archive auth-status auto-backup bill bridge config profile dns database disk gslb ipv4 ipv6 iso-image icon interface internet license load-balancer nfs object-storage ojs packet-filter price public-price private-host product-disk disk-plan product-internet internet-plan product-license license-info product-server server-plan region ssh-key self server simple-monitor startup-script note summary switch vpc-router web-accel zone )
+    local commands=(archive auth-status auto-backup bill bridge config profile dns database disk gslb ipv4 ipv6 iso-image icon interface internet license load-balancer mobile-gateway mgw nfs object-storage ojs packet-filter price public-price private-host product-disk disk-plan product-internet internet-plan product-license license-info product-server server-plan region sim ssh-key self server simple-monitor startup-script note summary switch vpc-router web-accel zone )
 
     local flags=(--no-color --trace --help --version)
     local wants_value=(--token --secret --zone --config --profile --timeout --accept-language --retry-max --retry-interval --default-output-type )

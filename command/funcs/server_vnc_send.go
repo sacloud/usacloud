@@ -2,12 +2,13 @@ package funcs
 
 import (
 	"fmt"
+	"io/ioutil"
+	"strings"
+
+	"github.com/sacloud/libsacloud/utils/server"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/internal"
 	"github.com/sacloud/usacloud/command/params"
-	"github.com/sacloud/usacloud/helper/vnc"
-	"io/ioutil"
-	"strings"
 )
 
 func ServerVncSend(ctx command.Context, params *params.VncSendServerParam) error {
@@ -59,7 +60,7 @@ func ServerVncSend(ctx command.Context, params *params.VncSendServerParam) error
 	cmd = strings.Replace(cmd, "\n", "", -1)
 
 	// create option
-	option := vnc.NewSendCommandOption()
+	option := server.NewSendCommandOption()
 	option.UseUSKeyboard = params.UseUsKeyboard
 	option.Debug = params.Debug
 	option.ProgressWriter = command.GlobalOption.Progress
@@ -70,5 +71,5 @@ func ServerVncSend(ctx command.Context, params *params.VncSendServerParam) error
 		return fmt.Errorf("ServerVncSend is failed: %s", e)
 	}
 
-	return vnc.SendCommand(vncProxyInfo, cmd, option)
+	return server.VNCSendCommand(vncProxyInfo, cmd, option)
 }

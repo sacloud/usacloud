@@ -2,10 +2,11 @@ package define
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/output"
-	"github.com/sacloud/usacloud/schema"
 	"math"
 	"strings"
+
+	"github.com/sacloud/usacloud/output"
+	"github.com/sacloud/usacloud/schema"
 )
 
 func VPCRouterResource() *schema.Resource {
@@ -113,6 +114,24 @@ func VPCRouterResource() *schema.Resource {
 			Order:            50,
 			NoOutput:         true,
 			NeedlessConfirm:  true,
+		},
+		"enable-internet-connection": {
+			Type:             schema.CommandManipulateSingle,
+			Params:           vpcRouterEnableInternetParam(),
+			Usage:            "Enable internet connection from VPCRouter",
+			UseCustomCommand: true,
+			Category:         "nic",
+			Order:            5,
+			NoOutput:         true,
+		},
+		"disable-internet-connection": {
+			Type:             schema.CommandManipulateSingle,
+			Params:           vpcRouterEnableInternetParam(),
+			Usage:            "Enable internet connection from VPCRouter",
+			UseCustomCommand: true,
+			Category:         "nic",
+			Order:            6,
+			NoOutput:         true,
 		},
 		"interface-info": {
 			Type:               schema.CommandManipulateSingle,
@@ -680,6 +699,15 @@ func vpcRouterListColumns() []output.ColumnDef {
 			},
 		},
 		{
+			Name: "Internet",
+			FormatFunc: func(values map[string]string) string {
+				if enabled, ok := values["Settings.Router.InternetConnection.Enabled"]; ok && enabled == "False" {
+					return "false"
+				}
+				return "true"
+			},
+		},
+		{
 			Name: "IPAddress",
 			FormatFunc: func(values map[string]string) string {
 				if plan, ok := values["Plan.ID"]; ok {
@@ -921,6 +949,14 @@ func vpcRouterCreateParam() map[string]*schema.Schema {
 			Category:     "network",
 			Order:        30,
 		},
+		"disable-internet-connection": {
+			Type:         schema.TypeBool,
+			HandlerType:  schema.HandlerNoop,
+			DefaultValue: false,
+			Description:  "disable internet connection from VPCRouter",
+			Category:     "network",
+			Order:        35,
+		},
 		"boot-after-create": {
 			Type:        schema.TypeBool,
 			HandlerType: schema.HandlerNoop,
@@ -980,6 +1016,13 @@ func vpcRouterUpdateParam() map[string]*schema.Schema {
 			Category:     "router",
 			Order:        10,
 		},
+		"internet-connection": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "set internet connection from VPCRouter",
+			Category:    "router",
+			Order:       20,
+		},
 		"name":        paramName,
 		"description": paramDescription,
 		"tags":        paramTags,
@@ -998,6 +1041,14 @@ func vpcRouterDeleteParam() map[string]*schema.Schema {
 			Order:       10,
 		},
 	}
+}
+
+func vpcRouterEnableInternetParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
+}
+
+func vpcRouterDisableInternetParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
 }
 
 func vpcRouterPowerOnParam() map[string]*schema.Schema {

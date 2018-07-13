@@ -2,6 +2,7 @@ package define
 
 import (
 	"fmt"
+
 	"github.com/sacloud/usacloud/schema"
 )
 
@@ -268,6 +269,24 @@ func completeSubnetID() schema.CompletionFunc {
 		}
 
 		for _, v := range result.Subnets {
+			res = append(res, fmt.Sprintf("%d", v.ID))
+		}
+		return res
+	}
+}
+
+func completeSIMID() schema.CompletionFunc {
+	return func(ctx schema.CompletionContext, currentValue string) []string {
+
+		api := ctx.GetAPIClient().GetSIMAPI()
+		res := []string{}
+
+		result, err := api.Find()
+		if err != nil {
+			return res
+		}
+
+		for _, v := range result.CommonServiceSIMItems {
 			res = append(res, fmt.Sprintf("%d", v.ID))
 		}
 		return res

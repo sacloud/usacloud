@@ -2,11 +2,12 @@ package funcs
 
 import (
 	"fmt"
-	"github.com/sacloud/usacloud/command"
-	"github.com/sacloud/usacloud/command/params"
 	"os"
 	"os/exec"
 	"strings"
+
+	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/params"
 )
 
 func ServerSsh(ctx command.Context, params *params.SshServerParam) error {

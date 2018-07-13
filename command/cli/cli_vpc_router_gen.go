@@ -5,6 +5,9 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
+	"sync"
+
 	"github.com/imdario/mergo"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
@@ -12,8 +15,6 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 	"github.com/sacloud/usacloud/schema"
 	"gopkg.in/urfave/cli.v2"
-	"strings"
-	"sync"
 )
 
 func init() {
@@ -28,6 +29,8 @@ func init() {
 	resetParam := params.NewResetVPCRouterParam()
 	waitForBootParam := params.NewWaitForBootVPCRouterParam()
 	waitForDownParam := params.NewWaitForDownVPCRouterParam()
+	enableInternetConnectionParam := params.NewEnableInternetConnectionVPCRouterParam()
+	disableInternetConnectionParam := params.NewDisableInternetConnectionVPCRouterParam()
 	interfaceInfoParam := params.NewInterfaceInfoVPCRouterParam()
 	interfaceConnectParam := params.NewInterfaceConnectVPCRouterParam()
 	interfaceUpdateParam := params.NewInterfaceUpdateVPCRouterParam()
@@ -143,6 +146,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -223,6 +230,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						listParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						listParam.Query = c.String("query")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -305,7 +315,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(listParam, p)
+						mergo.Merge(listParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -350,6 +360,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						listParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						listParam.Query = c.String("query")
 					}
 
 					// Validate global params
@@ -423,6 +436,11 @@ func init() {
 						Usage:   "set ipaddress(#2)",
 					},
 					&cli.BoolFlag{
+						Name:  "disable-internet-connection",
+						Usage: "disable internet connection from VPCRouter",
+						Value: false,
+					},
+					&cli.BoolFlag{
 						Name:  "boot-after-create",
 						Usage: "boot after create",
 					},
@@ -484,6 +502,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -541,6 +563,9 @@ func init() {
 					if c.IsSet("ipaddress2") {
 						createParam.Ipaddress2 = c.String("ipaddress2")
 					}
+					if c.IsSet("disable-internet-connection") {
+						createParam.DisableInternetConnection = c.Bool("disable-internet-connection")
+					}
 					if c.IsSet("boot-after-create") {
 						createParam.BootAfterCreate = c.Bool("boot-after-create")
 					}
@@ -582,6 +607,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						createParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						createParam.Query = c.String("query")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -664,7 +692,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(createParam, p)
+						mergo.Merge(createParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -685,6 +713,9 @@ func init() {
 					}
 					if c.IsSet("ipaddress2") {
 						createParam.Ipaddress2 = c.String("ipaddress2")
+					}
+					if c.IsSet("disable-internet-connection") {
+						createParam.DisableInternetConnection = c.Bool("disable-internet-connection")
 					}
 					if c.IsSet("boot-after-create") {
 						createParam.BootAfterCreate = c.Bool("boot-after-create")
@@ -727,6 +758,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						createParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						createParam.Query = c.String("query")
 					}
 
 					// Validate global params
@@ -821,6 +855,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -891,6 +929,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						readParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						readParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						readParam.Id = c.Int64("id")
@@ -976,7 +1017,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(readParam, p)
+						mergo.Merge(readParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -1006,6 +1047,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						readParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						readParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						readParam.Id = c.Int64("id")
@@ -1134,6 +1178,10 @@ func init() {
 						Name:  "syslog-host",
 						Usage: "set syslog host IPAddress",
 					},
+					&cli.BoolFlag{
+						Name:  "internet-connection",
+						Usage: "set internet connection from VPCRouter",
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
@@ -1196,6 +1244,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -1243,6 +1295,9 @@ func init() {
 					if c.IsSet("syslog-host") {
 						updateParam.SyslogHost = c.String("syslog-host")
 					}
+					if c.IsSet("internet-connection") {
+						updateParam.InternetConnection = c.Bool("internet-connection")
+					}
 					if c.IsSet("selector") {
 						updateParam.Selector = c.StringSlice("selector")
 					}
@@ -1284,6 +1339,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						updateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						updateParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						updateParam.Id = c.Int64("id")
@@ -1369,12 +1427,15 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(updateParam, p)
+						mergo.Merge(updateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
 					if c.IsSet("syslog-host") {
 						updateParam.SyslogHost = c.String("syslog-host")
+					}
+					if c.IsSet("internet-connection") {
+						updateParam.InternetConnection = c.Bool("internet-connection")
 					}
 					if c.IsSet("selector") {
 						updateParam.Selector = c.StringSlice("selector")
@@ -1417,6 +1478,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						updateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						updateParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						updateParam.Id = c.Int64("id")
@@ -1598,6 +1662,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -1674,6 +1742,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						deleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						deleteParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						deleteParam.Id = c.Int64("id")
@@ -1759,7 +1830,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(deleteParam, p)
+						mergo.Merge(deleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -1795,6 +1866,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						deleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						deleteParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						deleteParam.Id = c.Int64("id")
@@ -2090,7 +2164,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(bootParam, p)
+						mergo.Merge(bootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -2403,7 +2477,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(shutdownParam, p)
+						mergo.Merge(shutdownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -2716,7 +2790,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(shutdownForceParam, p)
+						mergo.Merge(shutdownForceParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -3028,7 +3102,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(resetParam, p)
+						mergo.Merge(resetParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -3332,7 +3406,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(waitForBootParam, p)
+						mergo.Merge(waitForBootParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -3623,7 +3697,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(waitForDownParam, p)
+						mergo.Merge(waitForDownParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -3754,6 +3828,638 @@ func init() {
 				},
 			},
 			{
+				Name:      "enable-internet-connection",
+				Usage:     "Enable internet connection from VPCRouter",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = enableInternetConnectionParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, enableInternetConnectionParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						enableInternetConnectionParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						enableInternetConnectionParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						enableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						enableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						enableInternetConnectionParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						enableInternetConnectionParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.VPCRouterEnableInternetConnectionCompleteArgs(ctx, enableInternetConnectionParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.VPCRouterEnableInternetConnectionCompleteArgs(ctx, enableInternetConnectionParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.VPCRouterEnableInternetConnectionCompleteFlags(ctx, enableInternetConnectionParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.VPCRouterEnableInternetConnectionCompleteArgs(ctx, enableInternetConnectionParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					enableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					enableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(enableInternetConnectionParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewEnableInternetConnectionVPCRouterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(enableInternetConnectionParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						enableInternetConnectionParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						enableInternetConnectionParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						enableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						enableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						enableInternetConnectionParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						enableInternetConnectionParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = enableInternetConnectionParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if enableInternetConnectionParam.GenerateSkeleton {
+						enableInternetConnectionParam.GenerateSkeleton = false
+						enableInternetConnectionParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(enableInternetConnectionParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := enableInternetConnectionParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), enableInternetConnectionParam)
+
+					apiClient := ctx.GetAPIClient().VPCRouter
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(enableInternetConnectionParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, enableInternetConnectionParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", enableInternetConnectionParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(enableInternetConnectionParam.Selector) == 0 || hasTags(&v, enableInternetConnectionParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !enableInternetConnectionParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("enable-internet-connection", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						enableInternetConnectionParam.SetId(id)
+						p := *enableInternetConnectionParam // copy struct value
+						enableInternetConnectionParam := &p
+						go func() {
+							err := funcs.VPCRouterEnableInternetConnection(ctx, enableInternetConnectionParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "disable-internet-connection",
+				Usage:     "Enable internet connection from VPCRouter",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = disableInternetConnectionParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, disableInternetConnectionParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						disableInternetConnectionParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						disableInternetConnectionParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						disableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						disableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						disableInternetConnectionParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						disableInternetConnectionParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.VPCRouterDisableInternetConnectionCompleteArgs(ctx, disableInternetConnectionParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.VPCRouterDisableInternetConnectionCompleteArgs(ctx, disableInternetConnectionParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.VPCRouterDisableInternetConnectionCompleteFlags(ctx, disableInternetConnectionParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.VPCRouterDisableInternetConnectionCompleteArgs(ctx, disableInternetConnectionParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					disableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					disableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(disableInternetConnectionParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewDisableInternetConnectionVPCRouterParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(disableInternetConnectionParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						disableInternetConnectionParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						disableInternetConnectionParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						disableInternetConnectionParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						disableInternetConnectionParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						disableInternetConnectionParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						disableInternetConnectionParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = disableInternetConnectionParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if disableInternetConnectionParam.GenerateSkeleton {
+						disableInternetConnectionParam.GenerateSkeleton = false
+						disableInternetConnectionParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(disableInternetConnectionParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := disableInternetConnectionParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), disableInternetConnectionParam)
+
+					apiClient := ctx.GetAPIClient().VPCRouter
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(disableInternetConnectionParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.VPCRouters {
+							if hasTags(&v, disableInternetConnectionParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", disableInternetConnectionParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.VPCRouters {
+										if len(disableInternetConnectionParam.Selector) == 0 || hasTags(&v, disableInternetConnectionParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !disableInternetConnectionParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("disable-internet-connection", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						disableInternetConnectionParam.SetId(id)
+						p := *disableInternetConnectionParam // copy struct value
+						disableInternetConnectionParam := &p
+						go func() {
+							err := funcs.VPCRouterDisableInternetConnection(ctx, disableInternetConnectionParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
 				Name:      "interface-info",
 				Aliases:   []string{"interface-list"},
 				Usage:     "Show information of NIC(s) connected to vpc-router",
@@ -3798,6 +4504,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
 					&cli.Int64Flag{
 						Name:   "id",
@@ -3869,6 +4579,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						interfaceInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						interfaceInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						interfaceInfoParam.Id = c.Int64("id")
@@ -3954,7 +4667,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(interfaceInfoParam, p)
+						mergo.Merge(interfaceInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -3984,6 +4697,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						interfaceInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						interfaceInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						interfaceInfoParam.Id = c.Int64("id")
@@ -4326,7 +5042,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(interfaceConnectParam, p)
+						mergo.Merge(interfaceConnectParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -4724,7 +5440,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(interfaceUpdateParam, p)
+						mergo.Merge(interfaceUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -5078,7 +5794,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(interfaceDisconnectParam, p)
+						mergo.Merge(interfaceDisconnectParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -5277,6 +5993,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -5347,6 +6067,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						staticNatInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						staticNatInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						staticNatInfoParam.Id = c.Int64("id")
@@ -5432,7 +6155,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(staticNatInfoParam, p)
+						mergo.Merge(staticNatInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -5462,6 +6185,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						staticNatInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						staticNatInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						staticNatInfoParam.Id = c.Int64("id")
@@ -5774,7 +6500,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(staticNatAddParam, p)
+						mergo.Merge(staticNatAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -6130,7 +6856,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(staticNatUpdateParam, p)
+						mergo.Merge(staticNatUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -6465,7 +7191,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(staticNatDeleteParam, p)
+						mergo.Merge(staticNatDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -6661,6 +7387,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -6731,6 +7461,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						portForwardingInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						portForwardingInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						portForwardingInfoParam.Id = c.Int64("id")
@@ -6816,7 +7549,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(portForwardingInfoParam, p)
+						mergo.Merge(portForwardingInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -6846,6 +7579,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						portForwardingInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						portForwardingInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						portForwardingInfoParam.Id = c.Int64("id")
@@ -7171,7 +7907,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(portForwardingAddParam, p)
+						mergo.Merge(portForwardingAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -7546,7 +8282,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(portForwardingUpdateParam, p)
+						mergo.Merge(portForwardingUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -7887,7 +8623,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(portForwardingDeleteParam, p)
+						mergo.Merge(portForwardingDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -8093,6 +8829,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -8169,6 +8909,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						firewallInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						firewallInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						firewallInfoParam.Id = c.Int64("id")
@@ -8254,7 +8997,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(firewallInfoParam, p)
+						mergo.Merge(firewallInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -8290,6 +9033,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						firewallInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						firewallInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						firewallInfoParam.Id = c.Int64("id")
@@ -8654,7 +9400,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(firewallAddParam, p)
+						mergo.Merge(firewallAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -9083,7 +9829,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(firewallUpdateParam, p)
+						mergo.Merge(firewallUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -9455,7 +10201,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(firewallDeleteParam, p)
+						mergo.Merge(firewallDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -9657,6 +10403,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -9727,6 +10477,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						dhcpServerInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						dhcpServerInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						dhcpServerInfoParam.Id = c.Int64("id")
@@ -9812,7 +10565,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(dhcpServerInfoParam, p)
+						mergo.Merge(dhcpServerInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -9842,6 +10595,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						dhcpServerInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						dhcpServerInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						dhcpServerInfoParam.Id = c.Int64("id")
@@ -10159,7 +10915,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(dhcpServerAddParam, p)
+						mergo.Merge(dhcpServerAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -10516,7 +11272,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(dhcpServerUpdateParam, p)
+						mergo.Merge(dhcpServerUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -10851,7 +11607,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(dhcpServerDeleteParam, p)
+						mergo.Merge(dhcpServerDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -11047,6 +11803,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -11117,6 +11877,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						dhcpStaticMappingInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						dhcpStaticMappingInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						dhcpStaticMappingInfoParam.Id = c.Int64("id")
@@ -11202,7 +11965,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(dhcpStaticMappingInfoParam, p)
+						mergo.Merge(dhcpStaticMappingInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -11232,6 +11995,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						dhcpStaticMappingInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						dhcpStaticMappingInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						dhcpStaticMappingInfoParam.Id = c.Int64("id")
@@ -11536,7 +12302,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(dhcpStaticMappingAddParam, p)
+						mergo.Merge(dhcpStaticMappingAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -11881,7 +12647,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(dhcpStaticMappingUpdateParam, p)
+						mergo.Merge(dhcpStaticMappingUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -12213,7 +12979,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(dhcpStaticMappingDeleteParam, p)
+						mergo.Merge(dhcpStaticMappingDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -12408,6 +13174,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -12478,6 +13248,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						pptpServerInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						pptpServerInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						pptpServerInfoParam.Id = c.Int64("id")
@@ -12563,7 +13336,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(pptpServerInfoParam, p)
+						mergo.Merge(pptpServerInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -12593,6 +13366,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						pptpServerInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						pptpServerInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						pptpServerInfoParam.Id = c.Int64("id")
@@ -12903,7 +13679,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(pptpServerUpdateParam, p)
+						mergo.Merge(pptpServerUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -13104,6 +13880,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -13174,6 +13954,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						l2tpServerInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						l2tpServerInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						l2tpServerInfoParam.Id = c.Int64("id")
@@ -13259,7 +14042,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(l2tpServerInfoParam, p)
+						mergo.Merge(l2tpServerInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -13289,6 +14072,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						l2tpServerInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						l2tpServerInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						l2tpServerInfoParam.Id = c.Int64("id")
@@ -13606,7 +14392,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(l2tpServerUpdateParam, p)
+						mergo.Merge(l2tpServerUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -13811,6 +14597,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -13881,6 +14671,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						userInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						userInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						userInfoParam.Id = c.Int64("id")
@@ -13966,7 +14759,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(userInfoParam, p)
+						mergo.Merge(userInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -13996,6 +14789,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						userInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						userInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						userInfoParam.Id = c.Int64("id")
@@ -14300,7 +15096,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(userAddParam, p)
+						mergo.Merge(userAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -14645,7 +15441,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(userUpdateParam, p)
+						mergo.Merge(userUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -14977,7 +15773,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(userDeleteParam, p)
+						mergo.Merge(userDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -15173,6 +15969,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -15243,6 +16043,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						siteToSiteVpnInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						siteToSiteVpnInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						siteToSiteVpnInfoParam.Id = c.Int64("id")
@@ -15328,7 +16131,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(siteToSiteVpnInfoParam, p)
+						mergo.Merge(siteToSiteVpnInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -15358,6 +16161,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						siteToSiteVpnInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						siteToSiteVpnInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						siteToSiteVpnInfoParam.Id = c.Int64("id")
@@ -15681,7 +16487,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(siteToSiteVpnAddParam, p)
+						mergo.Merge(siteToSiteVpnAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -16054,7 +16860,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(siteToSiteVpnUpdateParam, p)
+						mergo.Merge(siteToSiteVpnUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -16395,7 +17201,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(siteToSiteVpnDeleteParam, p)
+						mergo.Merge(siteToSiteVpnDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -16591,6 +17397,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -16661,6 +17471,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						staticRouteInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						staticRouteInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						staticRouteInfoParam.Id = c.Int64("id")
@@ -16746,7 +17559,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(staticRouteInfoParam, p)
+						mergo.Merge(staticRouteInfoParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -16776,6 +17589,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						staticRouteInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						staticRouteInfoParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						staticRouteInfoParam.Id = c.Int64("id")
@@ -17078,7 +17894,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(staticRouteAddParam, p)
+						mergo.Merge(staticRouteAddParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -17421,7 +18237,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(staticRouteUpdateParam, p)
+						mergo.Merge(staticRouteUpdateParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -17753,7 +18569,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(staticRouteDeleteParam, p)
+						mergo.Merge(staticRouteDeleteParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -17966,6 +18782,10 @@ func init() {
 						Name:  "format-file",
 						Usage: "Output format from file(see text/template package document for detail)",
 					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -18048,6 +18868,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorParam.Id = c.Int64("id")
@@ -18133,7 +18956,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(monitorParam, p)
+						mergo.Merge(monitorParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -18175,6 +18998,9 @@ func init() {
 					}
 					if c.IsSet("format-file") {
 						monitorParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						monitorParam.Id = c.Int64("id")
@@ -18487,7 +19313,7 @@ func init() {
 						if err != nil {
 							return fmt.Errorf("Failed to parse JSON: %s", err)
 						}
-						mergo.MergeWithOverwrite(logsParam, p)
+						mergo.Merge(logsParam, p, mergo.WithOverride)
 					}
 
 					// Set option values
@@ -18699,6 +19525,16 @@ func init() {
 		Key:         "dhcp-static-mapping",
 		DisplayName: "DHCP Static Map Setting Management",
 		Order:       65,
+	})
+	AppendCommandCategoryMap("vpc-router", "disable-internet-connection", &schema.Category{
+		Key:         "nic",
+		DisplayName: "Network Interface Management",
+		Order:       30,
+	})
+	AppendCommandCategoryMap("vpc-router", "enable-internet-connection", &schema.Category{
+		Key:         "nic",
+		DisplayName: "Network Interface Management",
+		Order:       30,
 	})
 	AppendCommandCategoryMap("vpc-router", "firewall-add", &schema.Category{
 		Key:         "fw",
@@ -18963,6 +19799,11 @@ func init() {
 		DisplayName: "Common options",
 		Order:       2147483617,
 	})
+	AppendFlagCategoryMap("vpc-router", "create", "disable-internet-connection", &schema.Category{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       20,
+	})
 	AppendFlagCategoryMap("vpc-router", "create", "format", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -19017,6 +19858,11 @@ func init() {
 		Key:         "router",
 		DisplayName: "VPCRouter options",
 		Order:       10,
+	})
+	AppendFlagCategoryMap("vpc-router", "create", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "create", "quiet", &schema.Category{
 		Key:         "output",
@@ -19092,6 +19938,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "delete", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "delete", "quiet", &schema.Category{
 		Key:         "output",
@@ -19227,6 +20078,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-server-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-server-info", "quiet", &schema.Category{
 		Key:         "output",
@@ -19403,6 +20259,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-info", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -19454,6 +20315,66 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("vpc-router", "dhcp-static-mapping-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("vpc-router", "disable-internet-connection", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "disable-internet-connection", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "disable-internet-connection", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("vpc-router", "disable-internet-connection", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "disable-internet-connection", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "disable-internet-connection", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("vpc-router", "enable-internet-connection", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "enable-internet-connection", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "enable-internet-connection", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("vpc-router", "enable-internet-connection", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "enable-internet-connection", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "enable-internet-connection", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
@@ -19632,6 +20553,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "firewall-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "firewall-info", "quiet", &schema.Category{
 		Key:         "output",
@@ -19873,6 +20799,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "interface-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("vpc-router", "interface-info", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -19993,6 +20924,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "l2tp-server-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("vpc-router", "l2tp-server-info", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -20108,6 +21044,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "list", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("vpc-router", "list", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -20222,6 +21163,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "monitor", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "monitor", "quiet", &schema.Category{
 		Key:         "output",
@@ -20368,6 +21314,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "port-forwarding-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("vpc-router", "port-forwarding-info", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -20478,6 +21429,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "pptp-server-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("vpc-router", "pptp-server-info", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -20572,6 +21528,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "read", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "read", "quiet", &schema.Category{
 		Key:         "output",
@@ -20803,6 +21764,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("vpc-router", "site-to-site-vpn-info", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -20993,6 +21959,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "static-nat-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("vpc-router", "static-nat-info", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -21168,6 +22139,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("vpc-router", "static-route-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("vpc-router", "static-route-info", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -21263,6 +22239,11 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
+	AppendFlagCategoryMap("vpc-router", "update", "internet-connection", &schema.Category{
+		Key:         "router",
+		DisplayName: "VPCRouter options",
+		Order:       10,
+	})
 	AppendFlagCategoryMap("vpc-router", "update", "name", &schema.Category{
 		Key:         "common",
 		DisplayName: "Common options",
@@ -21282,6 +22263,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "update", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "update", "quiet", &schema.Category{
 		Key:         "output",
@@ -21417,6 +22403,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("vpc-router", "user-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("vpc-router", "user-info", "quiet", &schema.Category{
 		Key:         "output",

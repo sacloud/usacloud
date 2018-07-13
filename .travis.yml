@@ -19,7 +19,7 @@ before_install:
 - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then openssl aes-256-cbc -K $encrypted_7a84e1e19ced_key
   -iv $encrypted_7a84e1e19ced_iv -in usacloud_gpg_key.enc -out usacloud_gpg_key -d;
   fi
-- go get -u github.com/golang/lint/golint
+- make tools
 install:
 - make gen-force
 script:
@@ -34,7 +34,7 @@ before_deploy:
   fi
 - go get github.com/aktau/github-release
 - mkdir -p ~/bin
-- git clone https://github.com/github/hub.git && cd hub && script/build -o ~/bin/hub && cd ..
+- (go get github.com/github/hub && cd $GOPATH/src/github.com/github/hub && script/build -o ~/bin/hub)
 - echo $TRAVIS_BRANCH
 - git config --add remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
 - git fetch

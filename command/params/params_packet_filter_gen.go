@@ -23,6 +23,7 @@ type ListPacketFilterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListPacketFilterParam return new ListPacketFilterParam
@@ -70,6 +71,9 @@ func (p *ListPacketFilterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -241,6 +245,13 @@ func (p *ListPacketFilterParam) SetFormatFile(v string) {
 func (p *ListPacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListPacketFilterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListPacketFilterParam) GetQuery() string {
+	return p.Query
+}
 
 // CreatePacketFilterParam is input parameters for the sacloud API
 type CreatePacketFilterParam struct {
@@ -255,6 +266,7 @@ type CreatePacketFilterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewCreatePacketFilterParam return new CreatePacketFilterParam
@@ -296,6 +308,9 @@ func (p *CreatePacketFilterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -449,6 +464,13 @@ func (p *CreatePacketFilterParam) SetFormatFile(v string) {
 func (p *CreatePacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *CreatePacketFilterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CreatePacketFilterParam) GetQuery() string {
+	return p.Query
+}
 
 // ReadPacketFilterParam is input parameters for the sacloud API
 type ReadPacketFilterParam struct {
@@ -460,6 +482,7 @@ type ReadPacketFilterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -493,6 +516,9 @@ func (p *ReadPacketFilterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -614,6 +640,13 @@ func (p *ReadPacketFilterParam) SetFormatFile(v string) {
 func (p *ReadPacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadPacketFilterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadPacketFilterParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadPacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -635,6 +668,7 @@ type UpdatePacketFilterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -677,6 +711,9 @@ func (p *UpdatePacketFilterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -833,6 +870,13 @@ func (p *UpdatePacketFilterParam) SetFormatFile(v string) {
 func (p *UpdatePacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdatePacketFilterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdatePacketFilterParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdatePacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -852,6 +896,7 @@ type DeletePacketFilterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -888,6 +933,9 @@ func (p *DeletePacketFilterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1016,6 +1064,13 @@ func (p *DeletePacketFilterParam) SetFormatFile(v string) {
 func (p *DeletePacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *DeletePacketFilterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeletePacketFilterParam) GetQuery() string {
+	return p.Query
+}
 func (p *DeletePacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1034,6 +1089,7 @@ type RuleInfoPacketFilterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1067,6 +1123,9 @@ func (p *RuleInfoPacketFilterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1188,6 +1247,13 @@ func (p *RuleInfoPacketFilterParam) SetFormatFile(v string) {
 func (p *RuleInfoPacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *RuleInfoPacketFilterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *RuleInfoPacketFilterParam) GetQuery() string {
+	return p.Query
+}
 func (p *RuleInfoPacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1214,6 +1280,7 @@ type RuleAddPacketFilterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1274,6 +1341,9 @@ func (p *RuleAddPacketFilterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1493,6 +1563,13 @@ func (p *RuleAddPacketFilterParam) SetFormatFile(v string) {
 func (p *RuleAddPacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *RuleAddPacketFilterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *RuleAddPacketFilterParam) GetQuery() string {
+	return p.Query
+}
 func (p *RuleAddPacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1519,6 +1596,7 @@ type RuleUpdatePacketFilterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1576,6 +1654,9 @@ func (p *RuleUpdatePacketFilterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1802,6 +1883,13 @@ func (p *RuleUpdatePacketFilterParam) SetFormatFile(v string) {
 func (p *RuleUpdatePacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *RuleUpdatePacketFilterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *RuleUpdatePacketFilterParam) GetQuery() string {
+	return p.Query
+}
 func (p *RuleUpdatePacketFilterParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1822,6 +1910,7 @@ type RuleDeletePacketFilterParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1861,6 +1950,9 @@ func (p *RuleDeletePacketFilterParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2002,6 +2094,13 @@ func (p *RuleDeletePacketFilterParam) SetFormatFile(v string) {
 
 func (p *RuleDeletePacketFilterParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *RuleDeletePacketFilterParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *RuleDeletePacketFilterParam) GetQuery() string {
+	return p.Query
 }
 func (p *RuleDeletePacketFilterParam) SetId(v int64) {
 	p.Id = v

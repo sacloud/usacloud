@@ -24,6 +24,7 @@ type ListServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewListServerParam return new ListServerParam
@@ -74,6 +75,9 @@ func (p *ListServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -259,6 +263,13 @@ func (p *ListServerParam) SetFormatFile(v string) {
 func (p *ListServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ListServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ListServerParam) GetQuery() string {
+	return p.Query
+}
 
 // BuildServerParam is input parameters for the sacloud API
 type BuildServerParam struct {
@@ -310,6 +321,7 @@ type BuildServerParam struct {
 	Quiet                   bool     `json:"quiet"`
 	Format                  string   `json:"format"`
 	FormatFile              string   `json:"format-file"`
+	Query                   string   `json:"query"`
 	UsKeyboard              bool     `json:"us-keyboard"`
 	DisableBootAfterCreate  bool     `json:"disable-boot-after-create"`
 }
@@ -477,6 +489,9 @@ func (p *BuildServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.UsKeyboard) {
 		p.UsKeyboard = false
@@ -1098,6 +1113,13 @@ func (p *BuildServerParam) SetFormatFile(v string) {
 func (p *BuildServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *BuildServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *BuildServerParam) GetQuery() string {
+	return p.Query
+}
 func (p *BuildServerParam) SetUsKeyboard(v bool) {
 	p.UsKeyboard = v
 }
@@ -1124,6 +1146,7 @@ type ReadServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1160,6 +1183,9 @@ func (p *ReadServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1288,6 +1314,13 @@ func (p *ReadServerParam) SetFormatFile(v string) {
 func (p *ReadServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *ReadServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ReadServerParam) GetQuery() string {
+	return p.Query
+}
 func (p *ReadServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1313,6 +1346,7 @@ type UpdateServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1370,6 +1404,9 @@ func (p *UpdateServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1575,6 +1612,13 @@ func (p *UpdateServerParam) SetFormatFile(v string) {
 func (p *UpdateServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *UpdateServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *UpdateServerParam) GetQuery() string {
+	return p.Query
+}
 func (p *UpdateServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1597,6 +1641,7 @@ type DeleteServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1642,6 +1687,9 @@ func (p *DeleteServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1791,6 +1839,13 @@ func (p *DeleteServerParam) SetFormatFile(v string) {
 func (p *DeleteServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *DeleteServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DeleteServerParam) GetQuery() string {
+	return p.Query
+}
 func (p *DeleteServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1813,6 +1868,7 @@ type PlanChangeServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -1858,6 +1914,9 @@ func (p *PlanChangeServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2020,6 +2079,13 @@ func (p *PlanChangeServerParam) SetFormatFile(v string) {
 
 func (p *PlanChangeServerParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *PlanChangeServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *PlanChangeServerParam) GetQuery() string {
+	return p.Query
 }
 func (p *PlanChangeServerParam) SetId(v int64) {
 	p.Id = v
@@ -3374,6 +3440,7 @@ type VncInfoServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -3413,6 +3480,9 @@ func (p *VncInfoServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -3548,6 +3618,13 @@ func (p *VncInfoServerParam) SetFormatFile(v string) {
 func (p *VncInfoServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *VncInfoServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *VncInfoServerParam) GetQuery() string {
+	return p.Query
+}
 func (p *VncInfoServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3573,6 +3650,7 @@ type VncSendServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -3627,6 +3705,9 @@ func (p *VncSendServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -3813,6 +3894,13 @@ func (p *VncSendServerParam) SetFormatFile(v string) {
 func (p *VncSendServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *VncSendServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *VncSendServerParam) GetQuery() string {
+	return p.Query
+}
 func (p *VncSendServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3835,6 +3923,7 @@ type VncSnapshotServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -3880,6 +3969,9 @@ func (p *VncSnapshotServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -4028,6 +4120,13 @@ func (p *VncSnapshotServerParam) SetFormatFile(v string) {
 
 func (p *VncSnapshotServerParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *VncSnapshotServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *VncSnapshotServerParam) GetQuery() string {
+	return p.Query
 }
 func (p *VncSnapshotServerParam) SetId(v int64) {
 	p.Id = v
@@ -4198,6 +4297,7 @@ type RemoteDesktopInfoServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -4244,6 +4344,9 @@ func (p *RemoteDesktopInfoServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -4400,6 +4503,13 @@ func (p *RemoteDesktopInfoServerParam) SetFormatFile(v string) {
 func (p *RemoteDesktopInfoServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *RemoteDesktopInfoServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *RemoteDesktopInfoServerParam) GetQuery() string {
+	return p.Query
+}
 func (p *RemoteDesktopInfoServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4419,6 +4529,7 @@ type DiskInfoServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -4455,6 +4566,9 @@ func (p *DiskInfoServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -4582,6 +4696,13 @@ func (p *DiskInfoServerParam) SetFormatFile(v string) {
 
 func (p *DiskInfoServerParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *DiskInfoServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *DiskInfoServerParam) GetQuery() string {
+	return p.Query
 }
 func (p *DiskInfoServerParam) SetId(v int64) {
 	p.Id = v
@@ -4890,6 +5011,7 @@ type InterfaceInfoServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -4926,6 +5048,9 @@ func (p *InterfaceInfoServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -5053,6 +5178,13 @@ func (p *InterfaceInfoServerParam) SetFormatFile(v string) {
 
 func (p *InterfaceInfoServerParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *InterfaceInfoServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *InterfaceInfoServerParam) GetQuery() string {
+	return p.Query
 }
 func (p *InterfaceInfoServerParam) SetId(v int64) {
 	p.Id = v
@@ -5746,6 +5878,7 @@ type IsoInfoServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -5782,6 +5915,9 @@ func (p *IsoInfoServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -5909,6 +6045,13 @@ func (p *IsoInfoServerParam) SetFormatFile(v string) {
 
 func (p *IsoInfoServerParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *IsoInfoServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *IsoInfoServerParam) GetQuery() string {
+	return p.Query
 }
 func (p *IsoInfoServerParam) SetId(v int64) {
 	p.Id = v
@@ -6292,6 +6435,7 @@ type MonitorCpuServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -6340,6 +6484,9 @@ func (p *MonitorCpuServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -6510,6 +6657,13 @@ func (p *MonitorCpuServerParam) SetFormatFile(v string) {
 func (p *MonitorCpuServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *MonitorCpuServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorCpuServerParam) GetQuery() string {
+	return p.Query
+}
 func (p *MonitorCpuServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -6533,6 +6687,7 @@ type MonitorNicServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -6584,6 +6739,9 @@ func (p *MonitorNicServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -6761,6 +6919,13 @@ func (p *MonitorNicServerParam) SetFormatFile(v string) {
 func (p *MonitorNicServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *MonitorNicServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorNicServerParam) GetQuery() string {
+	return p.Query
+}
 func (p *MonitorNicServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -6784,6 +6949,7 @@ type MonitorDiskServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -6835,6 +7001,9 @@ func (p *MonitorDiskServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -7012,6 +7181,13 @@ func (p *MonitorDiskServerParam) SetFormatFile(v string) {
 func (p *MonitorDiskServerParam) GetFormatFile() string {
 	return p.FormatFile
 }
+func (p *MonitorDiskServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MonitorDiskServerParam) GetQuery() string {
+	return p.Query
+}
 func (p *MonitorDiskServerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -7030,6 +7206,7 @@ type MaintenanceInfoServerParam struct {
 	Quiet             bool     `json:"quiet"`
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 }
 
 // NewMaintenanceInfoServerParam return new MaintenanceInfoServerParam
@@ -7062,6 +7239,9 @@ func (p *MaintenanceInfoServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.FormatFile) {
 		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
 	}
 
 }
@@ -7172,4 +7352,11 @@ func (p *MaintenanceInfoServerParam) SetFormatFile(v string) {
 
 func (p *MaintenanceInfoServerParam) GetFormatFile() string {
 	return p.FormatFile
+}
+func (p *MaintenanceInfoServerParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *MaintenanceInfoServerParam) GetQuery() string {
+	return p.Query
 }

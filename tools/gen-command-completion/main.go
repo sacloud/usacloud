@@ -3,14 +3,15 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"github.com/sacloud/usacloud/schema"
-	"github.com/sacloud/usacloud/tools"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/sacloud/usacloud/schema"
+	"github.com/sacloud/usacloud/tools"
 )
 
 var (

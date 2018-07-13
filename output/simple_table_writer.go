@@ -2,8 +2,9 @@ package output
 
 import (
 	"fmt"
-	"github.com/olekukonko/tablewriter"
 	"io"
+
+	"github.com/olekukonko/tablewriter"
 )
 
 // simpleTableWriter is write table that output one line for each value
