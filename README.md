@@ -47,7 +47,7 @@ curl -s -L https://releases.usacloud.jp/usacloud/contrib/completion/bash/usaclou
 ## 初期設定
 
 `usacloud config` コマンドを用いてAPIキーを設定しておきます。 
-(APIキーの設定は`~/.usacloud_config`にファイルとして保存されます。)
+(APIキーの設定は`~/.usacloud/<profile_name>/config.json`にファイルとして保存されます。)
 
 ```bash
     $ usacloud config
@@ -60,8 +60,11 @@ curl -s -L https://releases.usacloud.jp/usacloud/contrib/completion/bash/usaclou
     	
     Setting SakuraCloud Zone => 
     	Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [ENTER ZONE]
+    	
+    Setting Default Output Type => 
+	    Enter default-output-type[table/json/csv/tsv]: 
    
-    Written your settings to ~/.usacloud_config
+    Written your settings to ~/.usacloud/default/config.json
 ```
 
 APIキーの設定は`usacloud config --show`コマンドで確認可能です。  
