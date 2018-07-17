@@ -250,7 +250,7 @@ COPYRIGHT:
     # ISOイメージのアップロード
     $ usacloud iso-image create --name example --iso-file example.iso
     
-    # アーカイブのダウンロード(マイカーカイブのみダウンロード可能)
+    # アーカイブのダウンロード(マイアーカイブのみダウンロード可能)
     $ usacloud archive download --file-destination example.img <ID または 名称> 
     
 ```
