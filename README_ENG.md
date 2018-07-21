@@ -51,7 +51,7 @@ curl -s -L https://releases.usacloud.jp/usacloud/contrib/completion/bash/usaclou
 
 Set the API key using `usacloud config` command.
 
-(The API key setting is saved as a file in `~/.usacloud/default/config.json`.)
+(The API key setting is saved as a file in `~/.usacloud/<profile_name>/config.json`.)
 
 ```bash
     $ usacloud config
