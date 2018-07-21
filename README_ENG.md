@@ -11,8 +11,8 @@
 ## Major features
 
 - Following the latest function of Sakura Cloud. Billing Information, Object Storage, Web Accelerator, etc. can also be used.
-- Support for cross-platform version.(Windows / macOS / Linux) It can also be executed with ARM.
-- Single binary implemented in Go language. Installation method is only binary copy. (yum / apt / brew is also supported)
+- Support for cross-platform version　(Windows / macOS / Linux). It can also be executed with ARM.
+- Single binary implemented in Go language. Installation method is only binary copy (yum / apt / brew is also supported).
 - Supports SSH / SCP / SFTP / VNC etc. only with "binary".
 
 ## Install
@@ -31,7 +31,7 @@
 
 Please downloaded the binary file from the following link.
 
-After expanding the file, please it in an arbitray folder.
+After expanding the file, please it in an arbitrary folder.
 
 (It is convenient to set PATH.)
 
@@ -39,13 +39,13 @@ After expanding the file, please it in an arbitray folder.
 - Windows 32bit : [https://releases.usacloud.jp/usacloud/repos/windows/usacloud_windows-386.zip](https://releases.usacloud.jp/usacloud/repos/windows/usacloud_windows-386.zip)
 - Other : [https://github.com/sacloud/usacloud/releases/latest/](https://github.com/sacloud/usacloud/releases/latest/)
 
-If `bash_completion` is available, you can introduce `bash_completion` for `usacloud` with the following command.
+If `bash_completion` is available, you can use it with `usacloud` by the following commands.
 
 ```bash
 curl -s -L https://releases.usacloud.jp/usacloud/contrib/completion/bash/usacloud >> ~/.bashrc
 ```
 
-> ※To active `bash_completion`, execute the above command and then login again.
+> ※To active `bash_completion`, execute it and do re-login.
 
 ## Initial setting
 
@@ -68,7 +68,7 @@ Set the API key using `usacloud config` command.
     Written your settings to ~/.usacloud_config
 ```
 
-The API key setting can be checked with `usacloud config --show` command.
+You can confirm the API key setting with `usacloud config --show` command.
 
 ```bash
    $ usacloud config show
