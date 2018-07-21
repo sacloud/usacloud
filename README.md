@@ -8,6 +8,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/pt8g7b9ht3t8ohox?svg=true)](https://ci.appveyor.com/project/sacloud-bot/usacloud)
 [![Slack](https://slack.usacloud.jp/badge.svg)](https://slack.usacloud.jp/)  
 
+([English version](README_ENG.md))
+
 ## 主な特徴
 
 - さくらのクラウドの最新機能に追随。請求情報やオブジェクトストレージ、ウェブアクセラレータなども対応済み
