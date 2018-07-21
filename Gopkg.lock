@@ -122,7 +122,7 @@
     "sacloud/ostype",
     "utils/server"
   ]
-  revision = "30b4283b6fd10fea46802704cc0a3f33f30cdb39"
+  revision = "47be9b60a30c8ad62f4c1397963ff24a07b55069"
 
 [[projects]]
   branch = "master"
@@ -154,13 +154,13 @@
     "poly1305",
     "ssh"
   ]
-  revision = "a49355c7e3f8fe157a85be2f77e6e269a0f89602"
+  revision = "a2144134853fc9a27a7b1e3eb4f19f1a76df13c9"
 
 [[projects]]
   branch = "master"
   name = "golang.org/x/sys"
   packages = ["unix"]
-  revision = "151529c776cdc58ddbe7963ba9af779f3577b419"
+  revision = "ac767d655b305d4e9612f5f6e33120b9176c4ad4"
 
 [[projects]]
   name = "gopkg.in/urfave/cli.v2"
