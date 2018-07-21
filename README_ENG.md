@@ -65,7 +65,7 @@ Set the API key using `usacloud config` command.
     Setting SakuraCloud Zone => 
     	Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [ENTER ZONE]
    
-    Written your settings to ~/.usacloud_config
+    Written your settings to ~/.usacloud/default/config.json
 ```
 
 You can confirm the API key setting with `usacloud config --show` command.
