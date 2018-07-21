@@ -8,6 +8,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/pt8g7b9ht3t8ohox?svg=true)](https://ci.appveyor.com/project/sacloud-bot/usacloud)
 [![Slack](https://slack.usacloud.jp/badge.svg)](https://slack.usacloud.jp/)
 
+([Japanese version](README.md))
+
 ## Major features
 
 - Following the latest function of Sakura Cloud. Billing Information, Object Storage, Web Accelerator, etc. can also be used.
