@@ -485,6 +485,17 @@ func VPCRouterResource() *schema.Resource {
 			Order:            40,
 			NoOutput:         true,
 		},
+		"site-to-site-vpn-peers": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             vpcRouterS2SPeersParam(),
+			Usage:              "Show status of site-to-site IPSec VPN peers",
+			TableType:          output.TableSimple,
+			TableColumnDefines: vpcRouterS2SPeersColumns(),
+			UseCustomCommand:   true,
+			Category:           "s2s",
+			Order:              50,
+			NeedlessConfirm:    true,
+		},
 		"static-route-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             vpcRouterStaticRouteInfoParam(),
@@ -858,6 +869,14 @@ func vpcRouterS2SListColumns() []output.ColumnDef {
 			Name:    "LocalPrefix",
 			Sources: []string{"LocalPrefixJoined"},
 		},
+	}
+}
+
+func vpcRouterS2SPeersColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "__ORDER__"}, // magic column name(generated on demand)
+		{Name: "Peer"},
+		{Name: "Status"},
 	}
 }
 
@@ -2142,6 +2161,10 @@ func vpcRouterS2SDeleteParam() map[string]*schema.Schema {
 			Order:       1,
 		},
 	}
+}
+
+func vpcRouterS2SPeersParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
 }
 
 func vpcRouterStaticRouteInfoParam() map[string]*schema.Schema {
