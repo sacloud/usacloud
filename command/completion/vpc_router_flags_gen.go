@@ -1837,6 +1837,32 @@ func VPCRouterSiteToSiteVpnDeleteCompleteFlags(ctx command.Context, params *para
 	}
 }
 
+func VPCRouterSiteToSiteVpnPeersCompleteFlags(ctx command.Context, params *params.SiteToSiteVpnPeersVPCRouterParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-peers"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["VPCRouter"].Commands["site-to-site-vpn-peers"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
 func VPCRouterStaticRouteInfoCompleteFlags(ctx command.Context, params *params.StaticRouteInfoVPCRouterParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 
