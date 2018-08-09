@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.2 (2018-08-09)
+
+ * VPCルータでのサイト間VPNステータス確認用コマンド #353 (yamamoto-febc)
+
 ## 0.13.1 (2018-07-19)
 
 * SQL Server 2017パブリックアーカイブ対応 #351 (yamamoto-febc)
