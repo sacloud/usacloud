@@ -1,3 +1,17 @@
+usacloud (0.13.2-1) stable; urgency=low
+
+  * VPCルータでのサイト間VPNステータス確認用コマンド (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/353>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Thu, 08 Aug 2018 00:00:00 +0000
+
+usacloud (0.13.1-1) stable; urgency=low
+
+  * SQL Server 2017パブリックアーカイブ対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/351>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Tue, 19 Jul 2018 00:00:00 +0000
+
 usacloud (0.13.0-1) stable; urgency=low
 
   * VPCルータでのインターネット接続 有効/無効 設定 (by yamamoto-febc)

@@ -40,6 +40,12 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu 08 Aug 2018 <sacloud.users@gmail.com> - 0.13.2-1
+- VPCルータでのサイト間VPNステータス確認用コマンド (by yamamoto-febc)
+
+* Tue 19 Jul 2018<sacloud.users@gmail.com> - 0.13.1-1
+- SQL Server 2017パブリックアーカイブ対応 (by yamamoto-febc)
+
 * Thu Jul 05 2018 <sacloud.users@gmail.com> - 0.13.0-1
 - VPCルータでのインターネット接続 有効/無効 設定 (by yamamoto-febc)
 
