@@ -2267,6 +2267,7 @@ type VipAddLoadBalancerParam struct {
 	Port              int      `json:"port"`
 	DelayLoop         int      `json:"delay-loop"`
 	SorryServer       string   `json:"sorry-server"`
+	Description       string   `json:"description"`
 	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
@@ -2296,6 +2297,9 @@ func (p *VipAddLoadBalancerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.SorryServer) {
 		p.SorryServer = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -2426,6 +2430,13 @@ func (p *VipAddLoadBalancerParam) SetSorryServer(v string) {
 func (p *VipAddLoadBalancerParam) GetSorryServer() string {
 	return p.SorryServer
 }
+func (p *VipAddLoadBalancerParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *VipAddLoadBalancerParam) GetDescription() string {
+	return p.Description
+}
 func (p *VipAddLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -2476,6 +2487,7 @@ type VipUpdateLoadBalancerParam struct {
 	Port              int      `json:"port"`
 	DelayLoop         int      `json:"delay-loop"`
 	SorryServer       string   `json:"sorry-server"`
+	Description       string   `json:"description"`
 	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
@@ -2508,6 +2520,9 @@ func (p *VipUpdateLoadBalancerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.SorryServer) {
 		p.SorryServer = ""
+	}
+	if isEmpty(p.Description) {
+		p.Description = ""
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -2637,6 +2652,13 @@ func (p *VipUpdateLoadBalancerParam) SetSorryServer(v string) {
 
 func (p *VipUpdateLoadBalancerParam) GetSorryServer() string {
 	return p.SorryServer
+}
+func (p *VipUpdateLoadBalancerParam) SetDescription(v string) {
+	p.Description = v
+}
+
+func (p *VipUpdateLoadBalancerParam) GetDescription() string {
+	return p.Description
 }
 func (p *VipUpdateLoadBalancerParam) SetSelector(v []string) {
 	p.Selector = v

@@ -350,6 +350,7 @@ func loadBalancerVIPListColumns() []output.ColumnDef {
 		{Name: "Port"},
 		{Name: "DelayLoop"},
 		{Name: "SorryServer"},
+		{Name: "Description"},
 	}
 }
 
@@ -580,6 +581,14 @@ func loadBalancerVIPAddParam() map[string]*schema.Schema {
 			Category:     "vip",
 			Order:        40,
 		},
+		"description": {
+			Type:        schema.TypeString,
+			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"desc"},
+			Description: "set Description of VIP",
+			Category:    "vip",
+			Order:       50,
+		},
 	}
 }
 
@@ -625,6 +634,14 @@ func loadBalancerVIPUpdateParam() map[string]*schema.Schema {
 			ValidateFunc: validateIPv4Address(),
 			Category:     "vip",
 			Order:        40,
+		},
+		"description": {
+			Type:        schema.TypeString,
+			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"desc"},
+			Description: "set Description of VIP",
+			Category:    "vip",
+			Order:       50,
 		},
 	}
 }
