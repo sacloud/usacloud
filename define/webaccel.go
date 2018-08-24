@@ -214,13 +214,5 @@ func webAccelCertUpdateParam() map[string]*schema.Schema {
 }
 
 func webAccelDeleteCacheParam() map[string]*schema.Schema {
-	return map[string]*schema.Schema{
-	// URLs use from os.Args
-	//"url": {
-	//	Type:        schema.TypeStringList,
-	//	HandlerType: schema.HandlerNoop,
-	//	Required:    true,
-	//	Description: "set delete-cache(purge) targets",
-	//},
-	}
+	return map[string]*schema.Schema{}
 }

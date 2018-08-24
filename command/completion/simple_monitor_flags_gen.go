@@ -106,6 +106,16 @@ func SimpleMonitorCreateCompleteFlags(ctx command.Context, params *params.Create
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "username", "user":
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("username")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "password", "pass":
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("password")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "dns-qname":
 		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("dns-qname")
 		if param != nil {
@@ -230,6 +240,16 @@ func SimpleMonitorUpdateCompleteFlags(ctx command.Context, params *params.Update
 		}
 	case "sni":
 		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("sni")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "username", "user":
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("username")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "password", "pass":
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("password")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

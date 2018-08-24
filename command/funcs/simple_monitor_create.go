@@ -35,6 +35,8 @@ func SimpleMonitorCreate(ctx command.Context, params *params.CreateSimpleMonitor
 				params.Path,
 				responseCode,
 				params.HostHeader,
+				params.Username,
+				params.Password,
 			)
 		} else {
 			p.SetHealthCheckHTTPS(
@@ -43,6 +45,8 @@ func SimpleMonitorCreate(ctx command.Context, params *params.CreateSimpleMonitor
 				responseCode,
 				params.HostHeader,
 				params.Sni,
+				params.Username,
+				params.Password,
 			)
 		}
 
