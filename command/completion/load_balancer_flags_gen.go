@@ -430,6 +430,11 @@ func LoadBalancerVipAddCompleteFlags(ctx command.Context, params *params.VipAddL
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "description", "desc":
+		param := define.Resources["LoadBalancer"].Commands["vip-add"].BuildedParams().Get("description")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "selector":
 		param := define.Resources["LoadBalancer"].Commands["vip-add"].BuildedParams().Get("selector")
 		if param != nil {
@@ -476,6 +481,11 @@ func LoadBalancerVipUpdateCompleteFlags(ctx command.Context, params *params.VipU
 		}
 	case "sorry-server":
 		param := define.Resources["LoadBalancer"].Commands["vip-update"].BuildedParams().Get("sorry-server")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "description", "desc":
+		param := define.Resources["LoadBalancer"].Commands["vip-update"].BuildedParams().Get("description")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

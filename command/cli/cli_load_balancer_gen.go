@@ -4154,6 +4154,11 @@ func init() {
 						Name:  "sorry-server",
 						Usage: "set IPAddress of sorry-server",
 					},
+					&cli.StringFlag{
+						Name:    "description",
+						Aliases: []string{"desc"},
+						Usage:   "set Description of VIP",
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
@@ -4230,6 +4235,9 @@ func init() {
 					}
 					if c.IsSet("sorry-server") {
 						vipAddParam.SorryServer = c.String("sorry-server")
+					}
+					if c.IsSet("description") {
+						vipAddParam.Description = c.String("description")
 					}
 					if c.IsSet("selector") {
 						vipAddParam.Selector = c.StringSlice("selector")
@@ -4345,6 +4353,9 @@ func init() {
 					}
 					if c.IsSet("sorry-server") {
 						vipAddParam.SorryServer = c.String("sorry-server")
+					}
+					if c.IsSet("description") {
+						vipAddParam.Description = c.String("description")
 					}
 					if c.IsSet("selector") {
 						vipAddParam.Selector = c.StringSlice("selector")
@@ -4515,6 +4526,11 @@ func init() {
 						Name:  "sorry-server",
 						Usage: "set IPAddress of sorry-server",
 					},
+					&cli.StringFlag{
+						Name:    "description",
+						Aliases: []string{"desc"},
+						Usage:   "set Description of VIP",
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
@@ -4594,6 +4610,9 @@ func init() {
 					}
 					if c.IsSet("sorry-server") {
 						vipUpdateParam.SorryServer = c.String("sorry-server")
+					}
+					if c.IsSet("description") {
+						vipUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("selector") {
 						vipUpdateParam.Selector = c.StringSlice("selector")
@@ -4712,6 +4731,9 @@ func init() {
 					}
 					if c.IsSet("sorry-server") {
 						vipUpdateParam.SorryServer = c.String("sorry-server")
+					}
+					if c.IsSet("description") {
+						vipUpdateParam.Description = c.String("description")
 					}
 					if c.IsSet("selector") {
 						vipUpdateParam.Selector = c.StringSlice("selector")
@@ -8073,6 +8095,11 @@ func init() {
 		DisplayName: "Vip options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("load-balancer", "vip-add", "description", &schema.Category{
+		Key:         "vip",
+		DisplayName: "Vip options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("load-balancer", "vip-add", "generate-skeleton", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -8209,6 +8236,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("load-balancer", "vip-update", "delay-loop", &schema.Category{
+		Key:         "vip",
+		DisplayName: "Vip options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("load-balancer", "vip-update", "description", &schema.Category{
 		Key:         "vip",
 		DisplayName: "Vip options",
 		Order:       1,

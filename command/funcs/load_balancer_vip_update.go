@@ -48,6 +48,9 @@ func LoadBalancerVipUpdate(ctx command.Context, params *params.VipUpdateLoadBala
 	if ctx.IsSet("sorry-server") {
 		vip.SorryServer = params.SorryServer
 	}
+	if ctx.IsSet("description") {
+		vip.Description = params.Description
+	}
 
 	p, err := client.LoadBalancer.Update(params.Id, p)
 	if err != nil {
