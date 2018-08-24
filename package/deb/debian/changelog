@@ -1,3 +1,12 @@
+usacloud (0.14.0-1) stable; urgency=low
+
+  * シンプル監視でのBasic認証 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/357>
+  * ロードバランサーVIPでの説明欄 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/358>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Fri, 24 Aug 2018 04:48:22 +0000
+
 usacloud (0.13.2-1) stable; urgency=low
 
   * VPCルータでのサイト間VPNステータス確認用コマンド (by yamamoto-febc)

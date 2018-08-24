@@ -36,7 +36,7 @@ func LoadBalancerVipAdd(ctx command.Context, params *params.VipAddLoadBalancerPa
 		Port:             fmt.Sprintf("%d", params.Port),
 		DelayLoop:        fmt.Sprintf("%d", params.DelayLoop),
 		SorryServer:      params.SorryServer,
-		Description: params.Description,
+		Description:      params.Description,
 	}
 
 	p.AddLoadBalancerSetting(vip)
