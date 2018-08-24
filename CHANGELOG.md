@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.14.0 (2018-08-24)
+
+* シンプル監視でのBasic認証 #357 (yamamoto-febc)
+* ロードバランサーVIPでの説明欄 #358 (yamamoto-febc)
+
+
 ## 0.13.2 (2018-08-09)
 
  * VPCルータでのサイト間VPNステータス確認用コマンド #353 (yamamoto-febc)
