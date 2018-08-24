@@ -396,6 +396,16 @@ func init() {
 						Value: false,
 					},
 					&cli.StringFlag{
+						Name:    "username",
+						Aliases: []string{"user"},
+						Usage:   "set Basic Auth user name",
+					},
+					&cli.StringFlag{
+						Name:    "password",
+						Aliases: []string{"pass"},
+						Usage:   "set Basic Auth password",
+					},
+					&cli.StringFlag{
 						Name:  "dns-qname",
 						Usage: "set DNS query target name",
 					},
@@ -545,6 +555,12 @@ func init() {
 					}
 					if c.IsSet("sni") {
 						createParam.Sni = c.Bool("sni")
+					}
+					if c.IsSet("username") {
+						createParam.Username = c.String("username")
+					}
+					if c.IsSet("password") {
+						createParam.Password = c.String("password")
 					}
 					if c.IsSet("dns-qname") {
 						createParam.DnsQname = c.String("dns-qname")
@@ -714,6 +730,12 @@ func init() {
 					}
 					if c.IsSet("sni") {
 						createParam.Sni = c.Bool("sni")
+					}
+					if c.IsSet("username") {
+						createParam.Username = c.String("username")
+					}
+					if c.IsSet("password") {
+						createParam.Password = c.String("password")
 					}
 					if c.IsSet("dns-qname") {
 						createParam.DnsQname = c.String("dns-qname")
@@ -1218,6 +1240,16 @@ func init() {
 						Value: false,
 					},
 					&cli.StringFlag{
+						Name:    "username",
+						Aliases: []string{"user"},
+						Usage:   "set Basic Auth user name",
+					},
+					&cli.StringFlag{
+						Name:    "password",
+						Aliases: []string{"pass"},
+						Usage:   "set Basic Auth password",
+					},
+					&cli.StringFlag{
 						Name:  "dns-qname",
 						Usage: "set DNS query target name",
 					},
@@ -1370,6 +1402,12 @@ func init() {
 					}
 					if c.IsSet("sni") {
 						updateParam.Sni = c.Bool("sni")
+					}
+					if c.IsSet("username") {
+						updateParam.Username = c.String("username")
+					}
+					if c.IsSet("password") {
+						updateParam.Password = c.String("password")
 					}
 					if c.IsSet("dns-qname") {
 						updateParam.DnsQname = c.String("dns-qname")
@@ -1542,6 +1580,12 @@ func init() {
 					}
 					if c.IsSet("sni") {
 						updateParam.Sni = c.Bool("sni")
+					}
+					if c.IsSet("username") {
+						updateParam.Username = c.String("username")
+					}
+					if c.IsSet("password") {
+						updateParam.Password = c.String("password")
 					}
 					if c.IsSet("dns-qname") {
 						updateParam.DnsQname = c.String("dns-qname")
@@ -2229,6 +2273,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("simple-monitor", "create", "password", &schema.Category{
+		Key:         "http-check",
+		DisplayName: "Health-Check(HTTP/HTTPS) options",
+		Order:       22,
+	})
 	AppendFlagCategoryMap("simple-monitor", "create", "path", &schema.Category{
 		Key:         "http-check",
 		DisplayName: "Health-Check(HTTP/HTTPS) options",
@@ -2283,6 +2332,11 @@ func init() {
 		Key:         "monitor",
 		DisplayName: "Simple-Monitor options",
 		Order:       10,
+	})
+	AppendFlagCategoryMap("simple-monitor", "create", "username", &schema.Category{
+		Key:         "http-check",
+		DisplayName: "Health-Check(HTTP/HTTPS) options",
+		Order:       22,
 	})
 	AppendFlagCategoryMap("simple-monitor", "delete", "assumeyes", &schema.Category{
 		Key:         "Input",
@@ -2564,6 +2618,11 @@ func init() {
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
+	AppendFlagCategoryMap("simple-monitor", "update", "password", &schema.Category{
+		Key:         "http-check",
+		DisplayName: "Health-Check(HTTP/HTTPS) options",
+		Order:       22,
+	})
 	AppendFlagCategoryMap("simple-monitor", "update", "path", &schema.Category{
 		Key:         "http-check",
 		DisplayName: "Health-Check(HTTP/HTTPS) options",
@@ -2618,6 +2677,11 @@ func init() {
 		Key:         "common",
 		DisplayName: "Common options",
 		Order:       2147483617,
+	})
+	AppendFlagCategoryMap("simple-monitor", "update", "username", &schema.Category{
+		Key:         "http-check",
+		DisplayName: "Health-Check(HTTP/HTTPS) options",
+		Order:       22,
 	})
 
 	// append command to GlobalContext

@@ -282,6 +282,8 @@ type CreateSimpleMonitorParam struct {
 	Path              string   `json:"path"`
 	ResponseCode      int      `json:"response-code"`
 	Sni               bool     `json:"sni"`
+	Username          string   `json:"username"`
+	Password          string   `json:"password"`
 	DnsQname          string   `json:"dns-qname"`
 	DnsExcepted       string   `json:"dns-excepted"`
 	RemainingDays     int      `json:"remaining-days"`
@@ -343,6 +345,12 @@ func (p *CreateSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Sni) {
 		p.Sni = false
+	}
+	if isEmpty(p.Username) {
+		p.Username = ""
+	}
+	if isEmpty(p.Password) {
+		p.Password = ""
 	}
 	if isEmpty(p.DnsQname) {
 		p.DnsQname = ""
@@ -594,6 +602,20 @@ func (p *CreateSimpleMonitorParam) SetSni(v bool) {
 
 func (p *CreateSimpleMonitorParam) GetSni() bool {
 	return p.Sni
+}
+func (p *CreateSimpleMonitorParam) SetUsername(v string) {
+	p.Username = v
+}
+
+func (p *CreateSimpleMonitorParam) GetUsername() string {
+	return p.Username
+}
+func (p *CreateSimpleMonitorParam) SetPassword(v string) {
+	p.Password = v
+}
+
+func (p *CreateSimpleMonitorParam) GetPassword() string {
+	return p.Password
 }
 func (p *CreateSimpleMonitorParam) SetDnsQname(v string) {
 	p.DnsQname = v
@@ -933,6 +955,8 @@ type UpdateSimpleMonitorParam struct {
 	Path              string   `json:"path"`
 	ResponseCode      int      `json:"response-code"`
 	Sni               bool     `json:"sni"`
+	Username          string   `json:"username"`
+	Password          string   `json:"password"`
 	DnsQname          string   `json:"dns-qname"`
 	DnsExcepted       string   `json:"dns-excepted"`
 	RemainingDays     int      `json:"remaining-days"`
@@ -986,6 +1010,12 @@ func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Sni) {
 		p.Sni = false
+	}
+	if isEmpty(p.Username) {
+		p.Username = ""
+	}
+	if isEmpty(p.Password) {
+		p.Password = ""
 	}
 	if isEmpty(p.DnsQname) {
 		p.DnsQname = ""
@@ -1222,6 +1252,20 @@ func (p *UpdateSimpleMonitorParam) SetSni(v bool) {
 
 func (p *UpdateSimpleMonitorParam) GetSni() bool {
 	return p.Sni
+}
+func (p *UpdateSimpleMonitorParam) SetUsername(v string) {
+	p.Username = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetUsername() string {
+	return p.Username
+}
+func (p *UpdateSimpleMonitorParam) SetPassword(v string) {
+	p.Password = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetPassword() string {
+	return p.Password
 }
 func (p *UpdateSimpleMonitorParam) SetDnsQname(v string) {
 	p.DnsQname = v

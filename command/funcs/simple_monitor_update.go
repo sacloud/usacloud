@@ -61,6 +61,8 @@ func SimpleMonitorUpdate(ctx command.Context, params *params.UpdateSimpleMonitor
 				path,
 				responseCode,
 				hostHeader,
+				params.Username,
+				params.Password,
 			)
 		} else {
 			p.SetHealthCheckHTTPS(
@@ -69,6 +71,8 @@ func SimpleMonitorUpdate(ctx command.Context, params *params.UpdateSimpleMonitor
 				responseCode,
 				hostHeader,
 				sni,
+				params.Username,
+				params.Password,
 			)
 		}
 
