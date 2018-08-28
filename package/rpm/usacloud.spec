@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Aug 28 2018 <sacloud.users@gmail.com> - 0.14.1-1
+- ディスクの再インストール時のパラメータ修正 (by yamamoto-febc)
+
 * Fri Aug 24 2018 <sacloud.users@gmail.com> - 0.14.0-1
 - シンプル監視でのBasic認証 (by yamamoto-febc)
 - ロードバランサーVIPでの説明欄 (by yamamoto-febc)
