@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.14.2 (2018-08-28)
+
+* Change DNS record max count from 300 to 1000 #362 (hnakamur)
+
+
 ## 0.14.1 (2018-08-28)
 
 * ディスクの再インストール時のパラメータ修正 #360 (yamamoto-febc)
