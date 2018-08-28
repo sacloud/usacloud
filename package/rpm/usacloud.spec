@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Aug 28 2018 <sacloud.users@gmail.com> - 0.14.2-1
+- Change DNS record max count from 300 to 1000 (by hnakamur)
+
 * Tue Aug 28 2018 <sacloud.users@gmail.com> - 0.14.1-1
 - ディスクの再インストール時のパラメータ修正 (by yamamoto-febc)
 
