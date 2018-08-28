@@ -19,8 +19,8 @@ func DNSRecordAdd(ctx command.Context, params *params.RecordAddDNSParam) error {
 	}
 
 	// validate maxlen
-	if len(p.Settings.DNS.ResourceRecordSets) == 300 {
-		return fmt.Errorf("DNS already have max(300) records")
+	if len(p.Settings.DNS.ResourceRecordSets) == 1000 {
+		return fmt.Errorf("DNS already have max(1000) records")
 	}
 
 	// validate per types
