@@ -218,6 +218,30 @@ func TestServerBuild_CreateBuilder_WithConnect(t *testing.T) {
 	assert.EqualValues(t, expectedBuilder, actualBuilder)
 }
 
+func TestServerBuild_CreateBuilder_FixedUnix(t *testing.T) {
+	osTypes := []string{"sophos-utm", "netwiser", "opnsense"}
+	for _, ostype := range osTypes {
+
+		t.Run(ostype, func(t *testing.T) {
+			param := &params.BuildServerParam{
+				DiskMode: "create",
+				Name:     "fixedUnix",
+				OsType:   ostype,
+			}
+
+			sb := createServerBuilder(dummyContext, param)
+			assert.NotNil(t, sb)
+
+			// builder type should be *builder.CommonServerBuilder
+			expectedBuilder := sb.(*builder.FixedUnixArchiveServerBuilder)
+			assert.NotNil(t, expectedBuilder)
+
+			actualBuilder := builder.ServerPublicArchiveFixedUnix(dummyContext.GetAPIClient(), strToOSType(param.OsType), param.Name)
+			assert.EqualValues(t, expectedBuilder, actualBuilder)
+		})
+	}
+}
+
 func TestServerBuild_CreateBuilder_Diskless(t *testing.T) {
 	param := &params.BuildServerParam{
 		DiskMode: "diskless",
