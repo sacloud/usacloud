@@ -4,6 +4,7 @@ clone_folder: c:\gopath\src\github.com\sacloud\usacloud
 
 environment:
   GOPATH: c:\gopath
+  GOROOT: c:\go110
 
 install:
   - echo %PATH%
