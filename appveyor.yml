@@ -8,7 +8,7 @@ environment:
 install:
   - echo %PATH%
   - echo %GOPATH%
-  - set PATH=%GOPATH%\bin;c:\go\bin;%PATH%
+  - set PATH=%GOPATH%\bin;C:\go110\bin;%PATH%
   - go version
   - go env
 
