@@ -56,7 +56,15 @@ func (api *DiskAPI) Create(value *sacloud.Disk) (*sacloud.Disk, error) {
 		Success string `json:",omitempty"`
 	}
 	res := &diskResponse{}
-	err := api.create(api.createRequest(value), res)
+
+	rawBody := &sacloud.Request{}
+	rawBody.Disk = value
+	if len(value.DistantFrom) > 0 {
+		rawBody.DistantFrom = value.DistantFrom
+		value.DistantFrom = []int64{}
+	}
+
+	err := api.create(rawBody, res)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +98,14 @@ func (api *DiskAPI) install(id int64, body *sacloud.Disk) (bool, error) {
 		Success string `json:",omitempty"`
 	}
 	res := &diskResponse{}
-	err := api.baseAPI.request(method, uri, api.createRequest(body), res)
+	rawBody := &sacloud.Request{}
+	rawBody.Disk = body
+	if len(body.DistantFrom) > 0 {
+		rawBody.DistantFrom = body.DistantFrom
+		body.DistantFrom = []int64{}
+	}
+
+	err := api.baseAPI.request(method, uri, rawBody, res)
 	if err != nil {
 		return false, err
 	}
@@ -213,6 +228,14 @@ func (api *DiskAPI) CanEditDisk(id int64) (bool, error) {
 	if disk.HasTag("pkg-sophosutm") || disk.IsSophosUTM() {
 		return false, nil
 	}
+	// OPNsenseであれば編集不可
+	if disk.HasTag("distro-opnsense") {
+		return false, nil
+	}
+	// Netwiser VEであれば編集不可
+	if disk.HasTag("pkg-netwiserve") {
+		return false, nil
+	}
 
 	// ソースアーカイブ/ソースディスクともに持っていない場合
 	if disk.SourceArchive == nil && disk.SourceDisk == nil {
@@ -261,6 +284,14 @@ func (api *DiskAPI) GetPublicArchiveIDFromAncestors(id int64) (int64, bool) {
 
 	// SophosUTMであれば編集不可
 	if disk.HasTag("pkg-sophosutm") || disk.IsSophosUTM() {
+		return emptyID, false
+	}
+	// OPNsenseであれば編集不可
+	if disk.HasTag("distro-opnsense") {
+		return emptyID, false
+	}
+	// Netwiser VEであれば編集不可
+	if disk.HasTag("pkg-netwiserve") {
 		return emptyID, false
 	}
 

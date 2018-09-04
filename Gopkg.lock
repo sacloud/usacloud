@@ -122,7 +122,7 @@
     "sacloud/ostype",
     "utils/server"
   ]
-  revision = "7afff3fbc0a3bdff2e008fe2c429d44d9f66f209"
+  revision = "a2a3e1260ec65508ed0a8b5af27d557fa382707d"
 
 [[projects]]
   branch = "master"
