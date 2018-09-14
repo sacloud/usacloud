@@ -1,3 +1,14 @@
+usacloud (0.14.3-1) stable; urgency=low
+
+  * CentOS6向けタグの更新 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/364>
+  * パブリックアーカイブ追加/ストレージ分離オプションのリクエストレイアウト対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/365>
+  * DNSゾーン登録時のパラメータにデフォルト値を明示  (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/367>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Fri, 14 Sep 2018 13:35:28 +0000
+
 usacloud (0.14.2-1) stable; urgency=low
 
   * Change DNS record max count from 300 to 1000 (by hnakamur)

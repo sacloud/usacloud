@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.14.3 (2018-09-14)
+
+* CentOS6向けタグの更新 #364 (yamamoto-febc)
+* パブリックアーカイブ追加/ストレージ分離オプションのリクエストレイアウト対応 #365 (yamamoto-febc)
+* DNSゾーン登録時のパラメータにデフォルト値を明示  #367 (yamamoto-febc)
+
+
 ## 0.14.2 (2018-08-28)
 
 * Change DNS record max count from 300 to 1000 #362 (hnakamur)

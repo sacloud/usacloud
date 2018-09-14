@@ -40,6 +40,11 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Fri Sep 14 2018 <sacloud.users@gmail.com> - 0.14.3-1
+- CentOS6向けタグの更新 (by yamamoto-febc)
+- パブリックアーカイブ追加/ストレージ分離オプションのリクエストレイアウト対応 (by yamamoto-febc)
+- DNSゾーン登録時のパラメータにデフォルト値を明示  (by yamamoto-febc)
+
 * Tue Aug 28 2018 <sacloud.users@gmail.com> - 0.14.2-1
 - Change DNS record max count from 300 to 1000 (by hnakamur)
 
