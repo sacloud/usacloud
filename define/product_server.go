@@ -50,6 +50,7 @@ func productServerListColumns() []output.ColumnDef {
 			Sources: []string{"MemoryMB"},
 			Format:  "%sMB",
 		},
+		{Name: "Generation"},
 	}
 }
 
@@ -62,7 +63,7 @@ func productServerDetailExcludes() []string {
 }
 
 func productServerReadParam() map[string]*schema.Schema {
-	id := getParamResourceShortID("resource ID", 6)
+	id := getParamResourceShortID("resource ID", 9)
 	id.Hidden = true
 	return map[string]*schema.Schema{
 		"id": id,
