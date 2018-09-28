@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 )
@@ -21,13 +22,13 @@ func ServerPlanChange(ctx command.Context, params *params.PlanChangeServerParam)
 		return fmt.Errorf("ServerPlanChange is failed: %s", "server is running")
 	}
 
-	plan, err := client.GetProductServerAPI().GetBySpec(params.Core, params.Memory)
+	plan, err := client.GetProductServerAPI().GetBySpec(params.Core, params.Memory, sacloud.PlanDefault)
 	if err != nil {
 		return fmt.Errorf("ServerPlanChange is failed: plan is invalid: %s", err)
 	}
 
 	// call manipurate functions
-	res, err := api.ChangePlan(params.Id, fmt.Sprintf("%d", plan.ID))
+	res, err := api.ChangePlan(params.Id, plan)
 	if err != nil {
 		return fmt.Errorf("ServerPlanChange is failed: %s", err)
 	}

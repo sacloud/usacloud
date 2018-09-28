@@ -352,7 +352,7 @@ func (b *serverBuilder) buildServerParams() error {
 	b.callEventHandlerIfExists(ServerBuildOnSetPlanBefore)
 
 	// plan
-	plan, err := b.client.Product.Server.GetBySpec(b.core, b.memory)
+	plan, err := b.client.Product.Server.GetBySpec(b.core, b.memory, sacloud.PlanDefault)
 	if err != nil {
 		err = fmt.Errorf("Error building server parameters : setting plan / [%s]", err)
 		return err
