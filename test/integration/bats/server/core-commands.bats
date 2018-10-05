@@ -5,7 +5,7 @@ load ${BASE_TEST_DIR}/helpers.bash
 password="$TMP_PASSWORD"
 hostname=${TEST_TARGET_NAME}01
 
-@test "Usacloud: should build server with using CentOS and minimum options" {
+@test "Usacloud: should be able to build server with using CentOS and minimum options" {
 
   # build server with CentOS pablic archive and minimum options
   run usacloud_run server build -y -q \
@@ -19,7 +19,7 @@ hostname=${TEST_TARGET_NAME}01
 
 }
 
-@test "Usacloud: should read server JSON with CentOS and minimum options" {
+@test "Usacloud: should be able to read server JSON with CentOS and minimum options" {
 
   # read server
   run usacloud_run server read --out json $hostname
@@ -48,7 +48,7 @@ hostname=${TEST_TARGET_NAME}01
 
 }
 
-@test "Usacloud: should can delete server with server name" {
+@test "Usacloud: should be able to delete server with server name" {
   run usacloud_run server rm -f -y $hostname
 
   [ -n "${output}" ]

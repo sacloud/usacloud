@@ -21,10 +21,10 @@ func TestServerBuild_CreateBuilder_FromDisk(t *testing.T) {
 	sb := createServerBuilder(dummyContext, param)
 	assert.NotNil(t, sb)
 
-	expectedBuilder := sb.(*builder.CommonServerBuilder)
-	assert.NotNil(t, expectedBuilder)
+	expectedBuilder := builder.ServerFromDisk(dummyContext.GetAPIClient(), param.Name, param.SourceDiskId)
+	actualBuilder := sb.(builder.CommonServerBuilder)
+	assert.NotNil(t, actualBuilder)
 
-	actualBuilder := builder.ServerFromDisk(dummyContext.GetAPIClient(), param.Name, param.SourceDiskId)
 	assert.EqualValues(t, expectedBuilder, actualBuilder)
 }
 
@@ -38,10 +38,10 @@ func TestServerBuild_CreateBuilder_FromArchive(t *testing.T) {
 	sb := createServerBuilder(dummyContext, param)
 	assert.NotNil(t, sb)
 
-	expectedBuilder := sb.(*builder.CommonServerBuilder)
-	assert.NotNil(t, expectedBuilder)
+	actualBuilder := sb.(builder.CommonServerBuilder)
+	assert.NotNil(t, actualBuilder)
 
-	actualBuilder := builder.ServerFromArchive(dummyContext.GetAPIClient(), param.Name, param.SourceArchiveId)
+	expectedBuilder := builder.ServerFromArchive(dummyContext.GetAPIClient(), param.Name, param.SourceArchiveId)
 	assert.EqualValues(t, expectedBuilder, actualBuilder)
 }
 
@@ -55,10 +55,10 @@ func TestServerBuild_CreateBuilder_FromBlank(t *testing.T) {
 	sb := createServerBuilder(dummyContext, param)
 	assert.NotNil(t, sb)
 
-	expectedBuilder := sb.(*builder.BlankDiskServerBuilder)
-	assert.NotNil(t, expectedBuilder)
+	actualBuilder := sb.(builder.BlankDiskServerBuilder)
+	assert.NotNil(t, actualBuilder)
 
-	actualBuilder := builder.ServerBlankDisk(dummyContext.GetAPIClient(), param.Name)
+	expectedBuilder := builder.ServerBlankDisk(dummyContext.GetAPIClient(), param.Name)
 	assert.EqualValues(t, expectedBuilder, actualBuilder)
 }
 
@@ -73,10 +73,10 @@ func TestServerBuild_CreateBuilder_FromUnix(t *testing.T) {
 	sb := createServerBuilder(dummyContext, param)
 	assert.NotNil(t, sb)
 
-	expectedBuilder := sb.(*builder.PublicArchiveUnixServerBuilder)
-	assert.NotNil(t, expectedBuilder)
+	actualBuilder := sb.(builder.PublicArchiveUnixServerBuilder)
+	assert.NotNil(t, actualBuilder)
 
-	actualBuilder := builder.ServerPublicArchiveUnix(dummyContext.GetAPIClient(), strToOSType(param.OsType), param.Name, param.Password)
+	expectedBuilder := builder.ServerPublicArchiveUnix(dummyContext.GetAPIClient(), strToOSType(param.OsType), param.Name, param.Password)
 	assert.EqualValues(t, expectedBuilder, actualBuilder)
 }
 
@@ -90,10 +90,10 @@ func TestServerBuild_CreateBuilder_FromWindows(t *testing.T) {
 	sb := createServerBuilder(dummyContext, param)
 	assert.NotNil(t, sb)
 
-	expectedBuilder := sb.(*builder.PublicArchiveWindowsServerBuilder)
-	assert.NotNil(t, expectedBuilder)
+	actualBuilder := sb.(builder.PublicArchiveWindowsServerBuilder)
+	assert.NotNil(t, actualBuilder)
 
-	actualBuilder := builder.ServerPublicArchiveWindows(dummyContext.GetAPIClient(), strToOSType(param.OsType), param.Name)
+	expectedBuilder := builder.ServerPublicArchiveWindows(dummyContext.GetAPIClient(), strToOSType(param.OsType), param.Name)
 	assert.EqualValues(t, expectedBuilder, actualBuilder)
 }
 
@@ -135,7 +135,7 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 	sb := createServerBuilder(dummyContext, param)
 	assert.NotNil(t, sb)
 	// handle build processes
-	var handlers = []func(interface{}, command.Context, *params.BuildServerParam) error{
+	var handlers = []func(serverBuilder, command.Context, *params.BuildServerParam) error{
 		handleNetworkParams,
 		handleDiskEditParams,
 		handleDiskParams,
@@ -148,11 +148,11 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 		}
 	}
 
-	expectedBuilder := sb.(*builder.PublicArchiveUnixServerBuilder)
-	assert.NotNil(t, expectedBuilder)
+	actualBuilder := sb.(builder.PublicArchiveUnixServerBuilder)
+	assert.NotNil(t, actualBuilder)
 
-	actualBuilder := builder.ServerPublicArchiveUnix(dummyContext.GetAPIClient(), strToOSType(param.OsType), param.Name, param.Password)
-	var i interface{} = actualBuilder
+	expectedBuilder := builder.ServerPublicArchiveUnix(dummyContext.GetAPIClient(), strToOSType(param.OsType), param.Name, param.Password)
+	var i interface{} = expectedBuilder
 	{
 		b := i.(serverBuilder)
 		b.SetCore(param.Core)
@@ -163,28 +163,29 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 		b.SetIconID(param.IconId)
 		b.SetBootAfterCreate(false)
 		b.SetISOImageID(param.IsoImageId)
+		b.SetInterfaceDriver(sacloud.EInterfaceDriver(param.InterfaceDriver))
 	}
 	{
-		b := i.(serverDiskParams)
+		b := i.(builder.DiskProperty)
 		b.SetDiskPlan(param.DiskPlan)
 		b.SetDiskConnection(sacloud.DiskConnectionVirtio)
 		b.SetDiskSize(param.DiskSize)
 		b.SetDistantFrom(param.DistantFrom)
 	}
 	{
-		b := i.(serverNetworkParams)
-		b.SetInterfaceDriver(sacloud.EInterfaceDriver(param.InterfaceDriver))
+		b := i.(builder.NetworkInterfaceProperty)
+		b.AddExistsSwitchConnectedNIC(fmt.Sprintf("%d", param.SwitchId))
 		b.SetPacketFilterIDs([]int64{param.PacketFilterId})
 	}
 	{
-		b := i.(serverConnectSwitchParamWithEditableDisk)
-		b.AddExistsSwitchConnectedNIC(fmt.Sprintf("%d", param.SwitchId), param.Ipaddress, param.NwMasklen, param.DefaultRoute)
-	}
-	{
-		b := i.(serverEditDiskParam)
+		b := i.(builder.DiskEditProperty)
 		b.SetHostName(param.Hostname)
 		b.SetPassword(param.Password)
 		b.SetDisablePWAuth(param.DisablePasswordAuth)
+
+		b.SetIPAddress(param.Ipaddress)
+		b.SetDefaultRoute(param.DefaultRoute)
+		b.SetNetworkMaskLen(param.NwMasklen)
 
 		for _, v := range param.StartupScriptIds {
 			b.AddNoteID(v)
@@ -211,10 +212,10 @@ func TestServerBuild_CreateBuilder_WithConnect(t *testing.T) {
 	sb := createServerBuilder(dummyContext, param)
 	assert.NotNil(t, sb)
 
-	expectedBuilder := sb.(*builder.ConnectDiskServerBuilder)
-	assert.NotNil(t, expectedBuilder)
+	actualBuilder := sb.(builder.ConnectDiskServerBuilder)
+	assert.NotNil(t, actualBuilder)
 
-	actualBuilder := builder.ServerFromExistsDisk(dummyContext.GetAPIClient(), param.Name, 999999999999)
+	expectedBuilder := builder.ServerFromExistsDisk(dummyContext.GetAPIClient(), param.Name, 999999999999)
 	assert.EqualValues(t, expectedBuilder, actualBuilder)
 }
 
@@ -232,11 +233,11 @@ func TestServerBuild_CreateBuilder_FixedUnix(t *testing.T) {
 			sb := createServerBuilder(dummyContext, param)
 			assert.NotNil(t, sb)
 
-			// builder type should be *builder.CommonServerBuilder
-			expectedBuilder := sb.(*builder.FixedUnixArchiveServerBuilder)
-			assert.NotNil(t, expectedBuilder)
+			// builder type should be builder.CommonServerBuilder
+			actualBuilder := sb.(builder.FixedUnixArchiveServerBuilder)
+			assert.NotNil(t, actualBuilder)
 
-			actualBuilder := builder.ServerPublicArchiveFixedUnix(dummyContext.GetAPIClient(), strToOSType(param.OsType), param.Name)
+			expectedBuilder := builder.ServerPublicArchiveFixedUnix(dummyContext.GetAPIClient(), strToOSType(param.OsType), param.Name)
 			assert.EqualValues(t, expectedBuilder, actualBuilder)
 		})
 	}
@@ -251,10 +252,10 @@ func TestServerBuild_CreateBuilder_Diskless(t *testing.T) {
 	sb := createServerBuilder(dummyContext, param)
 	assert.NotNil(t, sb)
 
-	// builder type should be *builder.CommonServerBuilder
-	expectedBuilder := sb.(*builder.DisklessServerBuilder)
-	assert.NotNil(t, expectedBuilder)
+	// builder type should be builder.CommonServerBuilder
+	actualBuilder := sb.(builder.DisklessServerBuilder)
+	assert.NotNil(t, actualBuilder)
 
-	actualBuilder := builder.ServerDiskless(dummyContext.GetAPIClient(), param.Name)
+	expectedBuilder := builder.ServerDiskless(dummyContext.GetAPIClient(), param.Name)
 	assert.EqualValues(t, expectedBuilder, actualBuilder)
 }

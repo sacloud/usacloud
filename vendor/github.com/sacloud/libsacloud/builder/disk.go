@@ -36,12 +36,6 @@ const (
 	// DiskBuildOnCreateDiskAfter ディスク作成 終了時
 	DiskBuildOnCreateDiskAfter
 
-	// DiskBuildOnEditDiskBefore ディスク修正 開始時
-	DiskBuildOnEditDiskBefore
-
-	// DiskBuildOnEditDiskAfter ディスク修正 終了時
-	DiskBuildOnEditDiskAfter
-
 	// DiskBuildOnCleanupSSHKeyBefore SSHキークリーンアップ 開始時
 	DiskBuildOnCleanupSSHKeyBefore
 
@@ -102,6 +96,8 @@ type DiskBuilder struct {
 
 	forceEditDisk bool // windowsなどの場合にディスクの修正を強制するためのフラグ
 
+	autoBoot bool
+
 	currentDiskBuildValue  *DiskBuildValue
 	currentDiskBuildResult *DiskBuildResult
 }
@@ -145,12 +141,6 @@ func (b *DiskBuilder) SetName(name string) {
 	b.name = name
 }
 
-// WithName ディスク名 設定
-func (b *DiskBuilder) WithName(name string) *DiskBuilder {
-	b.SetName(name)
-	return b
-}
-
 // GetSize ディスクサイズ(GB単位) 取得
 func (b *DiskBuilder) GetSize() int {
 	return b.size
@@ -161,12 +151,6 @@ func (b *DiskBuilder) SetSize(size int) {
 	b.size = size
 }
 
-// WithSize ディスクサイズ(GB単位) 設定
-func (b *DiskBuilder) WithSize(size int) *DiskBuilder {
-	b.SetSize(size)
-	return b
-}
-
 // GetDistantFrom ストレージ隔離対象ディスク 取得
 func (b *DiskBuilder) GetDistantFrom() []int64 {
 	return b.distantFrom
@@ -175,12 +159,6 @@ func (b *DiskBuilder) GetDistantFrom() []int64 {
 // SetDistantFrom ストレージ隔離対象ディスク 設定
 func (b *DiskBuilder) SetDistantFrom(diskIDs []int64) {
 	b.distantFrom = diskIDs
-}
-
-// WithDistantFrom ストレージ隔離対象ディスク 設定
-func (b *DiskBuilder) WithDistantFrom(diskIDs []int64) *DiskBuilder {
-	b.SetDistantFrom(diskIDs)
-	return b
 }
 
 // AddDistantFrom ストレージ隔離対象ディスク 追加
@@ -194,12 +172,6 @@ func (b *DiskBuilder) ClearDistantFrom() {
 	b.distantFrom = []int64{}
 }
 
-// WithEmptyDistantFrom ストレージ隔離対象ディスク クリア
-func (b *DiskBuilder) WithEmptyDistantFrom() *DiskBuilder {
-	b.ClearDistantFrom()
-	return b
-}
-
 // GetPlanID ディスクプラン(SSD/HDD) 取得
 func (b *DiskBuilder) GetPlanID() sacloud.DiskPlanID {
 	return b.planID
@@ -208,12 +180,6 @@ func (b *DiskBuilder) GetPlanID() sacloud.DiskPlanID {
 // SetPlanID ディスクプラン(SSD/HDD) 設定
 func (b *DiskBuilder) SetPlanID(planID sacloud.DiskPlanID) {
 	b.planID = planID
-}
-
-// WithPlanID ディスクプラン(SSD/HDD) 設定
-func (b *DiskBuilder) WithPlanID(planID sacloud.DiskPlanID) *DiskBuilder {
-	b.SetPlanID(planID)
-	return b
 }
 
 // SetPlan ディスクプラン(ssd/hdd) 設定(文字列から)
@@ -228,12 +194,6 @@ func (b *DiskBuilder) SetPlan(plan string) {
 	}
 }
 
-// WithPlan ディスクプラン(ssd/hdd) 設定(文字列から)
-func (b *DiskBuilder) WithPlan(plan string) *DiskBuilder {
-	b.SetPlan(plan)
-	return b
-}
-
 // GetConnection ディスク接続方法(VirtIO/IDE) 取得
 func (b *DiskBuilder) GetConnection() sacloud.EDiskConnection {
 	return b.connection
@@ -242,12 +202,6 @@ func (b *DiskBuilder) GetConnection() sacloud.EDiskConnection {
 // SetConnection ディスク接続方法(VirtIO/IDE) 設定
 func (b *DiskBuilder) SetConnection(connection sacloud.EDiskConnection) {
 	b.connection = connection
-}
-
-// WithConnection ディスク接続方法(VirtIO/IDE) 設定
-func (b *DiskBuilder) WithConnection(connection sacloud.EDiskConnection) *DiskBuilder {
-	b.SetConnection(connection)
-	return b
 }
 
 // GetSourceArchiveID ソースアーカイブID 取得
@@ -261,12 +215,6 @@ func (b *DiskBuilder) SetSourceArchiveID(id int64) {
 	b.sourceDiskID = 0
 }
 
-// WithSourceArchiveID ソースアーカイブID 設定
-func (b *DiskBuilder) WithSourceArchiveID(id int64) *DiskBuilder {
-	b.SetSourceArchiveID(id)
-	return b
-}
-
 // GetSourceDiskID ソースディスクID 取得
 func (b *DiskBuilder) GetSourceDiskID() int64 {
 	return b.sourceDiskID
@@ -276,12 +224,6 @@ func (b *DiskBuilder) GetSourceDiskID() int64 {
 func (b *DiskBuilder) SetSourceDiskID(id int64) {
 	b.sourceArchiveID = 0
 	b.sourceDiskID = id
-}
-
-// WithSourceDiskID ソースディスクID 設定
-func (b *DiskBuilder) WithSourceDiskID(id int64) *DiskBuilder {
-	b.SetSourceDiskID(id)
-	return b
 }
 
 // GetDescription 説明 取得
@@ -294,12 +236,6 @@ func (b *DiskBuilder) SetDescription(desc string) {
 	b.description = desc
 }
 
-// WithDescription 説明 設定
-func (b *DiskBuilder) WithDescription(desc string) *DiskBuilder {
-	b.SetDescription(desc)
-	return b
-}
-
 // GetTags タグ 取得
 func (b *DiskBuilder) GetTags() []string {
 	return b.tags
@@ -308,12 +244,6 @@ func (b *DiskBuilder) GetTags() []string {
 // SetTags タグ 設定
 func (b *DiskBuilder) SetTags(tags []string) {
 	b.tags = tags
-}
-
-// WithTags タグ 設定
-func (b *DiskBuilder) WithTags(tags []string) *DiskBuilder {
-	b.SetTags(tags)
-	return b
 }
 
 // GetIconID アイコンID 取得
@@ -326,12 +256,6 @@ func (b *DiskBuilder) SetIconID(id int64) {
 	b.iconID = id
 }
 
-// WithIconID アイコンID 設定
-func (b *DiskBuilder) WithIconID(id int64) *DiskBuilder {
-	b.SetIconID(id)
-	return b
-}
-
 // GetServerID サーバーID 取得
 func (b *DiskBuilder) GetServerID() int64 {
 	return b.serverID
@@ -340,12 +264,6 @@ func (b *DiskBuilder) GetServerID() int64 {
 // SetServerID サーバーID 設定
 func (b *DiskBuilder) SetServerID(id int64) {
 	b.serverID = id
-}
-
-// WithServerID サーバーID 設定
-func (b *DiskBuilder) WithServerID(id int64) *DiskBuilder {
-	b.SetServerID(id)
-	return b
 }
 
 // GetIPAddress IPアドレス 取得
@@ -358,12 +276,6 @@ func (b *DiskBuilder) SetIPAddress(ip string) {
 	b.ipAddress = ip
 }
 
-// WithIPAddress IPアドレス 設定
-func (b *DiskBuilder) WithIPAddress(ip string) *DiskBuilder {
-	b.SetIPAddress(ip)
-	return b
-}
-
 // GetNetworkMaskLen ネットワークマスク長 取得
 func (b *DiskBuilder) GetNetworkMaskLen() int {
 	return b.networkMaskLen
@@ -372,12 +284,6 @@ func (b *DiskBuilder) GetNetworkMaskLen() int {
 // SetNetworkMaskLen ネットワークマスク長 設定
 func (b *DiskBuilder) SetNetworkMaskLen(masklen int) {
 	b.networkMaskLen = masklen
-}
-
-// WithNetworkMaskLen ネットワークマスク長 設定
-func (b *DiskBuilder) WithNetworkMaskLen(masklen int) *DiskBuilder {
-	b.SetNetworkMaskLen(masklen)
-	return b
 }
 
 // GetDefaultRoute デフォルトルート 取得
@@ -390,12 +296,6 @@ func (b *DiskBuilder) SetDefaultRoute(route string) {
 	b.defaultRoute = route
 }
 
-// WithDefaultRoute デフォルトルート 設定
-func (b *DiskBuilder) WithDefaultRoute(route string) *DiskBuilder {
-	b.SetDefaultRoute(route)
-	return b
-}
-
 // GetPassword パスワード 取得
 func (b *DiskBuilder) GetPassword() string {
 	return b.password
@@ -404,12 +304,6 @@ func (b *DiskBuilder) GetPassword() string {
 // SetPassword パスワード 設定
 func (b *DiskBuilder) SetPassword(password string) {
 	b.password = password
-}
-
-// WithPassword パスワード 設定
-func (b *DiskBuilder) WithPassword(password string) *DiskBuilder {
-	b.SetPassword(password)
-	return b
 }
 
 // GetHostName ホスト名 取得
@@ -422,12 +316,6 @@ func (b *DiskBuilder) SetHostName(name string) {
 	b.hostName = name
 }
 
-// WithHostName ホスト名 設定
-func (b *DiskBuilder) WithHostName(name string) *DiskBuilder {
-	b.SetHostName(name)
-	return b
-}
-
 // IsDisablePWAuth パスワード認証無効化フラグ 取得
 func (b *DiskBuilder) IsDisablePWAuth() bool {
 	return b.disablePWAuth
@@ -438,32 +326,14 @@ func (b *DiskBuilder) SetDisablePWAuth(disable bool) {
 	b.disablePWAuth = disable
 }
 
-// WithDisablePWAuth パスワード認証無効化フラグ 設定
-func (b *DiskBuilder) WithDisablePWAuth(disable bool) *DiskBuilder {
-	b.SetDisablePWAuth(disable)
-	return b
-}
-
 // AddSSHKeyID 公開鍵ID 追加
 func (b *DiskBuilder) AddSSHKeyID(sshKeyID int64) {
 	b.sshKeyIDs = append(b.sshKeyIDs, sshKeyID)
 }
 
-// WithAddSSHKeyID 公開鍵ID 追加
-func (b *DiskBuilder) WithAddSSHKeyID(sshKeyID int64) *DiskBuilder {
-	b.AddSSHKeyID(sshKeyID)
-	return b
-}
-
 // ClearSSHKeyIDs 公開鍵ID クリア
 func (b *DiskBuilder) ClearSSHKeyIDs() {
 	b.sshKeyIDs = []int64{}
-}
-
-// WithEmptySSHKeyIDs 公開鍵ID クリア
-func (b *DiskBuilder) WithEmptySSHKeyIDs() *DiskBuilder {
-	b.ClearSSHKeyIDs()
-	return b
 }
 
 // GetSSHKeyIds 公開鍵ID 取得
@@ -476,21 +346,9 @@ func (b *DiskBuilder) AddSSHKey(sshKey string) {
 	b.sshKeys = append(b.sshKeys, sshKey)
 }
 
-// WithAddSSHKey 公開鍵 追加
-func (b *DiskBuilder) WithAddSSHKey(sshKey string) *DiskBuilder {
-	b.AddSSHKey(sshKey)
-	return b
-}
-
 // ClearSSHKey 公開鍵 クリア
 func (b *DiskBuilder) ClearSSHKey() {
 	b.sshKeys = []string{}
-}
-
-// WithEmptySSHKey 公開鍵 クリア
-func (b *DiskBuilder) WithEmptySSHKey() *DiskBuilder {
-	b.ClearSSHKey()
-	return b
 }
 
 // GetSSHKeys 公開鍵 取得
@@ -503,21 +361,9 @@ func (b *DiskBuilder) AddNote(note string) {
 	b.notes = append(b.notes, note)
 }
 
-// WithAddNote スタートアップスクリプト 追加
-func (b *DiskBuilder) WithAddNote(note string) *DiskBuilder {
-	b.AddNote(note)
-	return b
-}
-
 // ClearNotes スタートアップスクリプト クリア
 func (b *DiskBuilder) ClearNotes() {
 	b.notes = []string{}
-}
-
-// WithEmptyNotes スタートアップスクリプト クリア
-func (b *DiskBuilder) WithEmptyNotes() *DiskBuilder {
-	b.ClearNotes()
-	return b
 }
 
 // GetNotes スタートアップスクリプト 取得
@@ -530,21 +376,9 @@ func (b *DiskBuilder) AddNoteID(noteID int64) {
 	b.noteIDs = append(b.noteIDs, noteID)
 }
 
-// WithAddNoteID スタートアップスクリプトID 追加
-func (b *DiskBuilder) WithAddNoteID(noteID int64) *DiskBuilder {
-	b.AddNoteID(noteID)
-	return b
-}
-
 // ClearNoteIDs スタートアップスクリプトID クリア
 func (b *DiskBuilder) ClearNoteIDs() {
 	b.noteIDs = []int64{}
-}
-
-// WithEmptyNoteIDs スタートアップスクリプトID クリア
-func (b *DiskBuilder) WithEmptyNoteIDs() *DiskBuilder {
-	b.ClearNoteIDs()
-	return b
 }
 
 // GetNoteIDs スタートアップスクリプトID 取得
@@ -562,12 +396,6 @@ func (b *DiskBuilder) SetSSHKeysEphemeral(isEphemeral bool) {
 	b.isSSHKeysEphemeral = isEphemeral
 }
 
-// WithSSHKeysEphemeral ディスク作成後の公開鍵削除フラグ 設定
-func (b *DiskBuilder) WithSSHKeysEphemeral(isEphemeral bool) *DiskBuilder {
-	b.SetSSHKeysEphemeral(isEphemeral)
-	return b
-}
-
 // IsNotesEphemeral ディスク作成後のスタートアップスクリプト削除フラグ 取得
 func (b *DiskBuilder) IsNotesEphemeral() bool {
 	return b.isNotesEphemeral
@@ -576,12 +404,6 @@ func (b *DiskBuilder) IsNotesEphemeral() bool {
 // SetNotesEphemeral ディスク作成後のスタートアップスクリプト削除フラグ 設定
 func (b *DiskBuilder) SetNotesEphemeral(isEphemeral bool) {
 	b.isNotesEphemeral = isEphemeral
-}
-
-// WithNotesEphemeral ディスク作成後のスタートアップスクリプト削除フラグ 設定
-func (b *DiskBuilder) WithNotesEphemeral(isEphemeral bool) *DiskBuilder {
-	b.SetNotesEphemeral(isEphemeral)
-	return b
 }
 
 // GetGenerateSSHKeyName SSHキー生成 名称 取得
@@ -594,12 +416,6 @@ func (b *DiskBuilder) SetGenerateSSHKeyName(name string) {
 	b.generateSSHKeyName = name
 }
 
-// WithGenerateSSHKeyName SSHキー生成 名称 設定
-func (b *DiskBuilder) WithGenerateSSHKeyName(name string) *DiskBuilder {
-	b.SetGenerateSSHKeyName(name)
-	return b
-}
-
 // GetGenerateSSHKeyPassPhrase SSHキー生成 パスフレーズ 取得
 func (b *DiskBuilder) GetGenerateSSHKeyPassPhrase() string {
 	return b.generateSSHKeyPassPhrase
@@ -608,12 +424,6 @@ func (b *DiskBuilder) GetGenerateSSHKeyPassPhrase() string {
 // SetGenerateSSHKeyPassPhrase SSHキー生成 パスフレーズ 設定
 func (b *DiskBuilder) SetGenerateSSHKeyPassPhrase(pass string) {
 	b.generateSSHKeyPassPhrase = pass
-}
-
-// WithGenerateSSHKeyPassPhrase SSHキー生成 パスフレーズ 設定
-func (b *DiskBuilder) WithGenerateSSHKeyPassPhrase(pass string) *DiskBuilder {
-	b.SetGenerateSSHKeyPassPhrase(pass)
-	return b
 }
 
 // GetGenerateSSHKeyDescription SSHキー生成 説明 取得
@@ -626,10 +436,14 @@ func (b *DiskBuilder) SetGenerateSSHKeyDescription(desc string) {
 	b.generateSSHKeyDescription = desc
 }
 
-// WithGenerateSSHKeyDescription SSHキー生成 説明 設定
-func (b *DiskBuilder) WithGenerateSSHKeyDescription(desc string) *DiskBuilder {
-	b.SetGenerateSSHKeyDescription(desc)
-	return b
+// GetAutoBoot サーバ自動起動 取得
+func (b *DiskBuilder) GetAutoBoot() bool {
+	return b.autoBoot
+}
+
+// SetAutoBoot サーバ自動起動 設定
+func (b *DiskBuilder) SetAutoBoot(autoBoot bool) {
+	b.autoBoot = autoBoot
 }
 
 // SetEventHandler イベントハンドラ 登録
@@ -637,21 +451,9 @@ func (b *DiskBuilder) SetEventHandler(event DiskBuildEvents, handler DiskBuildEv
 	b.buildEventHandlers[event] = handler
 }
 
-// WithEventHandler イベントハンドラ 登録
-func (b *DiskBuilder) WithEventHandler(event DiskBuildEvents, handler DiskBuildEventHandler) *DiskBuilder {
-	b.SetEventHandler(event, handler)
-	return b
-}
-
 // ClearEventHandler イベントハンドラ クリア
 func (b *DiskBuilder) ClearEventHandler(event DiskBuildEvents) {
 	delete(b.buildEventHandlers, event)
-}
-
-// WithEmptyEventHandler イベントハンドラ クリア
-func (b *DiskBuilder) WithEmptyEventHandler(event DiskBuildEvents) *DiskBuilder {
-	b.ClearEventHandler(event)
-	return b
 }
 
 // GetEventHandler イベントハンドラ取得
@@ -678,19 +480,11 @@ func (b *DiskBuilder) Build() (*DiskBuildResult, error) {
 
 	// create disk
 	b.callEventHandlerIfExists(DiskBuildOnCreateDiskBefore)
-	if err := b.createDisk(b.currentDiskBuildValue.Disk); err != nil {
+	if err := b.createDisk(b.currentDiskBuildValue.Disk, b.currentDiskBuildValue.Edit); err != nil {
 		return b.currentDiskBuildResult, err
 	}
 	b.callEventHandlerIfExists(DiskBuildOnCreateDiskAfter)
 
-	// edit disk
-	if b.currentDiskBuildValue.Edit != nil {
-		b.callEventHandlerIfExists(DiskBuildOnEditDiskBefore)
-		if err := b.editDisk(b.currentDiskBuildValue.Edit); err != nil {
-			return b.currentDiskBuildResult, err
-		}
-		b.callEventHandlerIfExists(DiskBuildOnEditDiskAfter)
-	}
 	// cleanup
 	if b.isSSHKeysEphemeral && (len(b.currentDiskBuildResult.SSHKeys) > 0 || b.currentDiskBuildResult.GeneratedSSHKey != nil) {
 		b.callEventHandlerIfExists(DiskBuildOnCleanupSSHKeyBefore)
@@ -917,8 +711,15 @@ func (b *DiskBuilder) createNote(strNote string) (*sacloud.Note, error) {
 
 }
 
-func (b *DiskBuilder) createDisk(diskReq *sacloud.Disk) error {
-	disk, err := b.client.Disk.Create(diskReq)
+func (b *DiskBuilder) createDisk(diskReq *sacloud.Disk, editReq *sacloud.DiskEditValue) error {
+	var disk *sacloud.Disk
+	var err error
+	if editReq == nil {
+		disk, err = b.client.Disk.Create(diskReq)
+	} else {
+		disk, err = b.client.Disk.CreateWithConfig(diskReq, editReq, b.autoBoot)
+	}
+
 	if err != nil {
 		return err
 	}
@@ -926,14 +727,6 @@ func (b *DiskBuilder) createDisk(diskReq *sacloud.Disk) error {
 	b.currentDiskBuildResult.Disk = disk
 	//wait
 	return b.client.Disk.SleepWhileCopying(disk.ID, b.client.DefaultTimeoutDuration)
-}
-
-func (b *DiskBuilder) editDisk(editReq *sacloud.DiskEditValue) error {
-	_, err := b.client.Disk.Config(b.currentDiskBuildResult.Disk.ID, editReq)
-	if err != nil {
-		return err
-	}
-	return nil
 }
 
 func (b *DiskBuilder) isNeedDiskEdit() bool {

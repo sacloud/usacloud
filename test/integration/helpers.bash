@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # define environment variables
-export USACLOUD_BIN_NAME="usacloud"
+export USACLOUD_BIN_NAME="bin/usacloud"
 export TEST_TARGET_NAME="usacloud-integration-test"
 export TEST_TARGET_TAG="usacloud-integration-test"
 
