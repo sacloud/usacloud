@@ -13,7 +13,7 @@ teardown(){
   quiet_run usacloud_run server rm -y -f --selector $TEST_TARGET_TAG
 }
 
-@test "Usacloud: should list servers" {
+@test "Usacloud: should be able to can list servers" {
   # no filter
   run usacloud_run server list -q --tags $TEST_TARGET_TAG
   [ -n "${output}" ]

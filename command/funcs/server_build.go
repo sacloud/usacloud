@@ -66,9 +66,9 @@ func ServerBuild(ctx command.Context, params *params.BuildServerParam) error {
 	return ctx.GetOutput().Print(res.Server)
 }
 
-func createServerBuilder(ctx command.Context, params *params.BuildServerParam) interface{} {
+func createServerBuilder(ctx command.Context, params *params.BuildServerParam) serverBuilder {
 	client := ctx.GetAPIClient()
-	var sb interface{}
+	var sb serverBuilder
 
 	switch params.DiskMode {
 	case "create":
@@ -100,7 +100,7 @@ func createServerBuilder(ctx command.Context, params *params.BuildServerParam) i
 	return sb
 }
 
-var serverBuildHandlers = []func(interface{}, command.Context, *params.BuildServerParam) error{
+var serverBuildHandlers = []func(serverBuilder, command.Context, *params.BuildServerParam) error{
 	handleNetworkParams,
 	handleDiskEditParams,
 	handleDiskParams,
@@ -109,7 +109,7 @@ var serverBuildHandlers = []func(interface{}, command.Context, *params.BuildServ
 	handleServerEvents,
 }
 
-func handleNetworkParams(sb interface{}, ctx command.Context, params *params.BuildServerParam) error {
+func handleNetworkParams(sb serverBuilder, ctx command.Context, params *params.BuildServerParam) error {
 	// validate --- for network params
 	errs := validateServerNetworkParams(sb, ctx, params)
 	if len(errs) > 0 {
@@ -117,25 +117,14 @@ func handleNetworkParams(sb interface{}, ctx command.Context, params *params.Bui
 	}
 
 	// set network params
-	if sb, ok := sb.(serverNetworkParams); ok {
+	//if sb, ok := sb.(builder.NetworkInterfaceProperty); ok {
+	if sb.HasNetworkInterfaceProperty() {
+		sb := sb.(builder.NetworkInterfaceProperty)
 		switch params.NetworkMode {
 		case "shared":
 			sb.AddPublicNWConnectedNIC()
 		case "switch":
-			switch sb := sb.(type) {
-			case serverConnectSwitchParam:
-				sb.AddExistsSwitchConnectedNIC(fmt.Sprintf("%d", params.SwitchId))
-			case serverConnectSwitchParamWithEditableDisk:
-				sb.AddExistsSwitchConnectedNIC(
-					fmt.Sprintf("%d", params.SwitchId),
-					params.Ipaddress,
-					params.NwMasklen,
-					params.DefaultRoute,
-				)
-			default:
-				panic(fmt.Errorf("This server builder Can't connect to switch : %#v", sb))
-			}
-
+			sb.AddExistsSwitchConnectedNIC(fmt.Sprintf("%d", params.SwitchId))
 		case "disconnect":
 			sb.AddDisconnectedNIC()
 		case "none":
@@ -144,7 +133,6 @@ func handleNetworkParams(sb interface{}, ctx command.Context, params *params.Bui
 			panic(fmt.Errorf("Unknown NetworkMode : %s", params.NetworkMode))
 		}
 
-		sb.SetInterfaceDriver(sacloud.EInterfaceDriver(params.InterfaceDriver))
 		if params.PacketFilterId != sacloud.EmptyID {
 			sb.SetPacketFilterIDs([]int64{params.PacketFilterId})
 		}
@@ -153,7 +141,7 @@ func handleNetworkParams(sb interface{}, ctx command.Context, params *params.Bui
 	return nil
 }
 
-func handleDiskEditParams(sb interface{}, ctx command.Context, params *params.BuildServerParam) error {
+func handleDiskEditParams(sb serverBuilder, ctx command.Context, params *params.BuildServerParam) error {
 	// validate --- for disk params
 	errs := validateServerDiskEditParams(sb, ctx, params)
 	if len(errs) > 0 {
@@ -161,10 +149,21 @@ func handleDiskEditParams(sb interface{}, ctx command.Context, params *params.Bu
 	}
 
 	// set disk edit params
-	if sb, ok := sb.(serverEditDiskParam); ok {
+	if sb.HasDiskEditProperty() {
+		sb := sb.(builder.DiskEditProperty)
 		sb.SetHostName(params.Hostname)
 		sb.SetPassword(params.Password)
 		sb.SetDisablePWAuth(params.DisablePasswordAuth)
+
+		if params.Ipaddress != "" {
+			sb.SetIPAddress(params.Ipaddress)
+		}
+		if params.DefaultRoute != "" {
+			sb.SetDefaultRoute(params.DefaultRoute)
+		}
+		if params.NwMasklen > 0 {
+			sb.SetNetworkMaskLen(params.NwMasklen)
+		}
 
 		for _, v := range params.StartupScriptIds {
 			sb.AddNoteID(v)
@@ -210,9 +209,10 @@ func handleDiskEditParams(sb interface{}, ctx command.Context, params *params.Bu
 	return nil
 }
 
-func handleDiskParams(sb interface{}, ctx command.Context, params *params.BuildServerParam) error {
+func handleDiskParams(sb serverBuilder, ctx command.Context, params *params.BuildServerParam) error {
 	// set disk params
-	if sb, ok := sb.(serverDiskParams); ok {
+	if sb.HasDiskProperty() {
+		sb := sb.(builder.DiskProperty)
 		sb.SetDiskPlan(params.DiskPlan)
 		sb.SetDiskConnection(sacloud.EDiskConnection(params.DiskConnection))
 		sb.SetDiskSize(params.DiskSize)
@@ -222,56 +222,40 @@ func handleDiskParams(sb interface{}, ctx command.Context, params *params.BuildS
 	return nil
 }
 
-func handleServerCommonParams(sb interface{}, ctx command.Context, params *params.BuildServerParam) error {
+func handleServerCommonParams(sb serverBuilder, ctx command.Context, params *params.BuildServerParam) error {
 	// set common params
-	var b serverBuilder
-	b, ok := sb.(serverBuilder)
-	if !ok {
-		panic(fmt.Errorf("ServerCreate is failed: %s", "ServerBuilder not implements common property."))
-	}
-
 	tags := params.GetTags()
 
-	b.SetCore(params.GetCore())
-	b.SetMemory(params.GetMemory())
-	b.SetPrivateHostID(params.PrivateHostId)
-	b.SetServerName(params.GetName())
-	b.SetDescription(params.GetDescription())
+	sb.SetCore(params.GetCore())
+	sb.SetMemory(params.GetMemory())
+	sb.SetPrivateHostID(params.PrivateHostId)
+	sb.SetServerName(params.GetName())
+	sb.SetDescription(params.GetDescription())
 	if params.UsKeyboard {
 		tags = append(tags, sacloud.TagKeyboardUS)
 	}
-	b.SetTags(tags)
-	b.SetIconID(params.IconId)
-	b.SetBootAfterCreate(!params.DisableBootAfterCreate)
-	b.SetISOImageID(params.GetIsoImageId())
+	sb.SetTags(tags)
+	sb.SetIconID(params.IconId)
+	sb.SetBootAfterCreate(!params.DisableBootAfterCreate)
+	sb.SetISOImageID(params.GetIsoImageId())
+	sb.SetInterfaceDriver(sacloud.EInterfaceDriver(params.InterfaceDriver))
 	return nil
 }
 
-func handleDiskEvents(sb interface{}, ctx command.Context, params *params.BuildServerParam) error {
+func handleDiskEvents(sb serverBuilder, ctx command.Context, params *params.BuildServerParam) error {
 	// set events
-	if diskEventBuilder, ok := sb.(serverDiskEventParam); ok {
+	if sb.HasDiskEventProperty() {
+		sb := sb.(builder.DiskEventProperty)
 		// create disk
 		progCreate := internal.NewProgress(
 			"Still creating disk...",
 			"Create disk",
 			command.GlobalOption.Progress)
-		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCreateDiskBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+		sb.SetDiskEventHandler(builder.DiskBuildOnCreateDiskBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCreate.Start()
 		})
-		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCreateDiskAfter, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+		sb.SetDiskEventHandler(builder.DiskBuildOnCreateDiskAfter, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCreate.Stop()
-		})
-
-		// edit disk
-		progEdit := internal.NewProgress(
-			"Still editing disk...",
-			"Edit disk",
-			command.GlobalOption.Progress)
-		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnEditDiskBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
-			progEdit.Start()
-		})
-		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnEditDiskAfter, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
-			progEdit.Stop()
 		})
 
 		// cleanup startup script
@@ -279,10 +263,10 @@ func handleDiskEvents(sb interface{}, ctx command.Context, params *params.BuildS
 			"Still cleaning StartupScript...",
 			"Cleanup StartupScript",
 			command.GlobalOption.Progress)
-		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCleanupNoteBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+		sb.SetDiskEventHandler(builder.DiskBuildOnCleanupNoteBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCleanupNotes.Start()
 		})
-		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCleanupNoteAfter, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+		sb.SetDiskEventHandler(builder.DiskBuildOnCleanupNoteAfter, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCleanupNotes.Stop()
 		})
 
@@ -291,10 +275,10 @@ func handleDiskEvents(sb interface{}, ctx command.Context, params *params.BuildS
 			"Still cleaning SSHKey...",
 			"Cleanup SSHKey",
 			command.GlobalOption.Progress)
-		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCleanupSSHKeyBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+		sb.SetDiskEventHandler(builder.DiskBuildOnCleanupSSHKeyBefore, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCleanupSSHKey.Start()
 		})
-		diskEventBuilder.SetDiskEventHandler(builder.DiskBuildOnCleanupSSHKeyAfter, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
+		sb.SetDiskEventHandler(builder.DiskBuildOnCleanupSSHKeyAfter, func(value *builder.DiskBuildValue, result *builder.DiskBuildResult) {
 			progCleanupSSHKey.Stop()
 		})
 	}
@@ -302,17 +286,18 @@ func handleDiskEvents(sb interface{}, ctx command.Context, params *params.BuildS
 	return nil
 }
 
-func handleServerEvents(sb interface{}, ctx command.Context, params *params.BuildServerParam) error {
-	if serverEventBuilder, ok := sb.(serverEventparam); ok {
+func handleServerEvents(sb serverBuilder, ctx command.Context, params *params.BuildServerParam) error {
+	if sb.HasServerEventProperty() {
+		sb := sb.(builder.ServerEventProperty)
 		progCreate := internal.NewProgress(
 			"Still creating server...",
 			"Create server",
 			command.GlobalOption.Progress)
 
-		serverEventBuilder.SetEventHandler(builder.ServerBuildOnCreateServerBefore, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
+		sb.SetEventHandler(builder.ServerBuildOnCreateServerBefore, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
 			progCreate.Start()
 		})
-		serverEventBuilder.SetEventHandler(builder.ServerBuildOnCreateServerAfter, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
+		sb.SetEventHandler(builder.ServerBuildOnCreateServerAfter, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
 			progCreate.Stop()
 		})
 
@@ -321,10 +306,10 @@ func handleServerEvents(sb interface{}, ctx command.Context, params *params.Buil
 			"Boot server",
 			command.GlobalOption.Progress)
 
-		serverEventBuilder.SetEventHandler(builder.ServerBuildOnBootBefore, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
+		sb.SetEventHandler(builder.ServerBuildOnBootBefore, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
 			progBoot.Start()
 		})
-		serverEventBuilder.SetEventHandler(builder.ServerBuildOnBootAfter, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
+		sb.SetEventHandler(builder.ServerBuildOnBootAfter, func(value *builder.ServerBuildValue, result *builder.ServerBuildResult) {
 			progBoot.Stop()
 		})
 
@@ -385,7 +370,7 @@ func validateServerDiskModeParams(ctx command.Context, params *params.BuildServe
 	return errs
 }
 
-func validateServerNetworkParams(sb interface{}, ctx command.Context, params *params.BuildServerParam) []error {
+func validateServerNetworkParams(sb serverBuilder, ctx command.Context, params *params.BuildServerParam) []error {
 	var errs []error
 	var appendErrors = func(e []error) {
 		errs = append(errs, e...)
@@ -403,7 +388,7 @@ func validateServerNetworkParams(sb interface{}, ctx command.Context, params *pa
 		}
 	}
 
-	if sb, ok := sb.(serverNetworkParams); ok {
+	if sb.HasNetworkInterfaceProperty() {
 		switch params.NetworkMode {
 		case "shared", "disconnect", "none":
 			validateIfCtxIsSet("network-mode", params.NetworkMode, "switch-id", params.SwitchId)
@@ -412,39 +397,25 @@ func validateServerNetworkParams(sb interface{}, ctx command.Context, params *pa
 			validateIfCtxIsSet("network-mode", params.NetworkMode, "default-route", params.DefaultRoute)
 
 			if params.NetworkMode == "none" {
-				validateIfCtxIsSet("network-mode", params.NetworkMode, "interface-driver", params.InterfaceDriver)
 				validateIfCtxIsSet("network-mode", params.NetworkMode, "packet-filter-id", params.PacketFilterId)
 			}
 
 		case "switch":
-			switch sb.(type) {
-			case serverConnectSwitchParam:
-				appendErrors(validateRequired("switch-id", params.SwitchId))
-
-				validateProhibitedIfCtxIsSet("ipaddress", params.Ipaddress)
-				validateProhibitedIfCtxIsSet("nw-masklen", params.NwMasklen)
-				validateProhibitedIfCtxIsSet("default-route", params.DefaultRoute)
-
-			case serverConnectSwitchParamWithEditableDisk:
-
-				appendErrors(validateRequired("switch-id", params.SwitchId))
-			}
+			appendErrors(validateRequired("switch-id", params.SwitchId))
 		}
-
 	} else {
 		validateProhibitedIfCtxIsSet("network-mode", params.NetworkMode)
 		validateProhibitedIfCtxIsSet("switch-id", params.SwitchId)
 		validateProhibitedIfCtxIsSet("ipaddress", params.Ipaddress)
 		validateProhibitedIfCtxIsSet("nw-masklen", params.NwMasklen)
 		validateProhibitedIfCtxIsSet("default-route", params.DefaultRoute)
-		validateProhibitedIfCtxIsSet("interface-driver", params.DefaultRoute)
 		validateProhibitedIfCtxIsSet("packet-filter-id", params.PacketFilterId)
 	}
 
 	return errs
 }
 
-func validateServerDiskEditParams(sb interface{}, ctx command.Context, params *params.BuildServerParam) []error {
+func validateServerDiskEditParams(sb serverBuilder, ctx command.Context, params *params.BuildServerParam) []error {
 	var errs []error
 	var appendErrors = func(e []error) {
 		errs = append(errs, e...)
@@ -462,8 +433,7 @@ func validateServerDiskEditParams(sb interface{}, ctx command.Context, params *p
 		}
 	}
 
-	if _, ok := sb.(serverEditDiskParam); ok {
-
+	if sb.HasDiskEditProperty() {
 		// SSH Key generate params
 		switch params.SshKeyMode {
 		case "id":
@@ -538,60 +508,6 @@ func strToOSType(strOSType string) ostype.ArchiveOSTypes {
 }
 
 type serverBuilder interface {
-	SetCore(int)
-	SetMemory(int)
-	SetPrivateHostID(int64)
-	SetServerName(string)
-	SetDescription(string)
-	SetTags([]string)
-	SetIconID(int64)
-	SetBootAfterCreate(bool)
-	SetISOImageID(int64)
-
-	Build() (*builder.ServerBuildResult, error)
-}
-
-type serverDiskParams interface {
-	SetDiskPlan(string)
-	SetDiskConnection(sacloud.EDiskConnection)
-	SetDiskSize(int)
-	SetDistantFrom([]int64)
-}
-
-type serverNetworkParams interface {
-	SetInterfaceDriver(sacloud.EInterfaceDriver)
-	SetPacketFilterIDs([]int64)
-	AddPublicNWConnectedNIC()
-	AddDisconnectedNIC()
-}
-
-type serverConnectSwitchParamWithEditableDisk interface {
-	AddExistsSwitchConnectedNIC(id string, ipaddress string, maskLen int, defRoute string)
-}
-
-type serverConnectSwitchParam interface {
-	AddExistsSwitchConnectedNIC(id string)
-}
-
-type serverEditDiskParam interface {
-	SetHostName(string)
-	SetPassword(string)
-	SetDisablePWAuth(bool)
-	AddNote(string)
-	AddNoteID(int64)
-	SetNotesEphemeral(bool)
-	AddSSHKey(string)
-	AddSSHKeyID(int64)
-	SetSSHKeysEphemeral(bool)
-	SetGenerateSSHKeyName(string)
-	SetGenerateSSHKeyPassPhrase(string)
-	SetGenerateSSHKeyDescription(string)
-}
-
-type serverDiskEventParam interface {
-	SetDiskEventHandler(event builder.DiskBuildEvents, handler builder.DiskBuildEventHandler)
-}
-
-type serverEventparam interface {
-	SetEventHandler(event builder.ServerBuildEvents, handler builder.ServerBuildEventHandler)
+	builder.Builder
+	builder.CommonProperty
 }
