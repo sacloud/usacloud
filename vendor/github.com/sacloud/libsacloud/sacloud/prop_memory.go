@@ -20,5 +20,5 @@ func (p *propMemoryMB) GetMemoryGB() int {
 
 // SetMemoryGB サイズ(GB単位) 設定
 func (p *propMemoryMB) SetMemoryGB(memoryGB int) {
-	p.MemoryMB = memoryGB / 1024
+	p.MemoryMB = memoryGB * 1024
 }

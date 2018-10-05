@@ -29,6 +29,7 @@ func (p *propServerPlan) SetServerPlanByValue(cpu int, memoryGB int, gen PlanGen
 	plan.CPU = cpu
 	plan.SetMemoryGB(memoryGB)
 	plan.Generation = gen
+	p.ServerPlan = plan
 }
 
 // GetCPU CPUコア数 取得
