@@ -420,6 +420,130 @@ func MobileGatewayInterfaceDisconnectCompleteArgs(ctx command.Context, params *p
 
 }
 
+func MobileGatewayTrafficControlInfoCompleteArgs(ctx command.Context, params *params.TrafficControlInfoMobileGatewayParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetMobileGatewayAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.MobileGateways {
+		fmt.Println(res.MobileGateways[i].ID)
+		var target interface{} = &res.MobileGateways[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func MobileGatewayTrafficControlEnableCompleteArgs(ctx command.Context, params *params.TrafficControlEnableMobileGatewayParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetMobileGatewayAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.MobileGateways {
+		fmt.Println(res.MobileGateways[i].ID)
+		var target interface{} = &res.MobileGateways[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func MobileGatewayTrafficControlUpdateCompleteArgs(ctx command.Context, params *params.TrafficControlUpdateMobileGatewayParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetMobileGatewayAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.MobileGateways {
+		fmt.Println(res.MobileGateways[i].ID)
+		var target interface{} = &res.MobileGateways[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func MobileGatewayTrafficControlDisableCompleteArgs(ctx command.Context, params *params.TrafficControlDisableMobileGatewayParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetMobileGatewayAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.MobileGateways {
+		fmt.Println(res.MobileGateways[i].ID)
+		var target interface{} = &res.MobileGateways[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
 func MobileGatewayStaticRouteInfoCompleteArgs(ctx command.Context, params *params.StaticRouteInfoMobileGatewayParam, cur, prev, commandName string) {
 
 	if !command.GlobalOption.Valid {

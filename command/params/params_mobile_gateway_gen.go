@@ -2588,6 +2588,719 @@ func (p *InterfaceDisconnectMobileGatewayParam) GetId() int64 {
 	return p.Id
 }
 
+// TrafficControlInfoMobileGatewayParam is input parameters for the sacloud API
+type TrafficControlInfoMobileGatewayParam struct {
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
+	Id                int64    `json:"id"`
+}
+
+// NewTrafficControlInfoMobileGatewayParam return new TrafficControlInfoMobileGatewayParam
+func NewTrafficControlInfoMobileGatewayParam() *TrafficControlInfoMobileGatewayParam {
+	return &TrafficControlInfoMobileGatewayParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *TrafficControlInfoMobileGatewayParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *TrafficControlInfoMobileGatewayParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["traffic-control-info"]
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *TrafficControlInfoMobileGatewayParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *TrafficControlInfoMobileGatewayParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *TrafficControlInfoMobileGatewayParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *TrafficControlInfoMobileGatewayParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *TrafficControlInfoMobileGatewayParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetColumn() []string {
+	return p.Column
+}
+func (p *TrafficControlInfoMobileGatewayParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *TrafficControlInfoMobileGatewayParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetFormat() string {
+	return p.Format
+}
+func (p *TrafficControlInfoMobileGatewayParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *TrafficControlInfoMobileGatewayParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetQuery() string {
+	return p.Query
+}
+func (p *TrafficControlInfoMobileGatewayParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetId() int64 {
+	return p.Id
+}
+
+// TrafficControlEnableMobileGatewayParam is input parameters for the sacloud API
+type TrafficControlEnableMobileGatewayParam struct {
+	Quota              int      `json:"quota"`
+	BandWidthLimit     int      `json:"band-width-limit"`
+	EnableEmail        bool     `json:"enable-email"`
+	SlackWebhookUrl    string   `json:"slack-webhook-url"`
+	AutoTrafficShaping bool     `json:"auto-traffic-shaping"`
+	Selector           []string `json:"selector"`
+	Assumeyes          bool     `json:"assumeyes"`
+	ParamTemplate      string   `json:"param-template"`
+	ParamTemplateFile  string   `json:"param-template-file"`
+	GenerateSkeleton   bool     `json:"generate-skeleton"`
+	Id                 int64    `json:"id"`
+}
+
+// NewTrafficControlEnableMobileGatewayParam return new TrafficControlEnableMobileGatewayParam
+func NewTrafficControlEnableMobileGatewayParam() *TrafficControlEnableMobileGatewayParam {
+	return &TrafficControlEnableMobileGatewayParam{
+
+		Quota: 512,
+	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *TrafficControlEnableMobileGatewayParam) FillValueToSkeleton() {
+	if isEmpty(p.Quota) {
+		p.Quota = 0
+	}
+	if isEmpty(p.BandWidthLimit) {
+		p.BandWidthLimit = 0
+	}
+	if isEmpty(p.EnableEmail) {
+		p.EnableEmail = false
+	}
+	if isEmpty(p.SlackWebhookUrl) {
+		p.SlackWebhookUrl = ""
+	}
+	if isEmpty(p.AutoTrafficShaping) {
+		p.AutoTrafficShaping = false
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *TrafficControlEnableMobileGatewayParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--quota", p.Quota)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["MobileGateway"].Commands["traffic-control-enable"].Params["quota"].ValidateFunc
+		errs := validator("--quota", p.Quota)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["MobileGateway"].Commands["traffic-control-enable"].Params["band-width-limit"].ValidateFunc
+		errs := validator("--band-width-limit", p.BandWidthLimit)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["MobileGateway"].Commands["traffic-control-enable"].Params["slack-webhook-url"].ValidateFunc
+		errs := validator("--slack-webhook-url", p.SlackWebhookUrl)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["traffic-control-enable"]
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) SetQuota(v int) {
+	p.Quota = v
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetQuota() int {
+	return p.Quota
+}
+func (p *TrafficControlEnableMobileGatewayParam) SetBandWidthLimit(v int) {
+	p.BandWidthLimit = v
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetBandWidthLimit() int {
+	return p.BandWidthLimit
+}
+func (p *TrafficControlEnableMobileGatewayParam) SetEnableEmail(v bool) {
+	p.EnableEmail = v
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetEnableEmail() bool {
+	return p.EnableEmail
+}
+func (p *TrafficControlEnableMobileGatewayParam) SetSlackWebhookUrl(v string) {
+	p.SlackWebhookUrl = v
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetSlackWebhookUrl() string {
+	return p.SlackWebhookUrl
+}
+func (p *TrafficControlEnableMobileGatewayParam) SetAutoTrafficShaping(v bool) {
+	p.AutoTrafficShaping = v
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetAutoTrafficShaping() bool {
+	return p.AutoTrafficShaping
+}
+func (p *TrafficControlEnableMobileGatewayParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *TrafficControlEnableMobileGatewayParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *TrafficControlEnableMobileGatewayParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *TrafficControlEnableMobileGatewayParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *TrafficControlEnableMobileGatewayParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *TrafficControlEnableMobileGatewayParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *TrafficControlEnableMobileGatewayParam) GetId() int64 {
+	return p.Id
+}
+
+// TrafficControlUpdateMobileGatewayParam is input parameters for the sacloud API
+type TrafficControlUpdateMobileGatewayParam struct {
+	Quota              int      `json:"quota"`
+	BandWidthLimit     int      `json:"band-width-limit"`
+	EnableEmail        bool     `json:"enable-email"`
+	SlackWebhookUrl    string   `json:"slack-webhook-url"`
+	AutoTrafficShaping bool     `json:"auto-traffic-shaping"`
+	Selector           []string `json:"selector"`
+	Assumeyes          bool     `json:"assumeyes"`
+	ParamTemplate      string   `json:"param-template"`
+	ParamTemplateFile  string   `json:"param-template-file"`
+	GenerateSkeleton   bool     `json:"generate-skeleton"`
+	Id                 int64    `json:"id"`
+}
+
+// NewTrafficControlUpdateMobileGatewayParam return new TrafficControlUpdateMobileGatewayParam
+func NewTrafficControlUpdateMobileGatewayParam() *TrafficControlUpdateMobileGatewayParam {
+	return &TrafficControlUpdateMobileGatewayParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *TrafficControlUpdateMobileGatewayParam) FillValueToSkeleton() {
+	if isEmpty(p.Quota) {
+		p.Quota = 0
+	}
+	if isEmpty(p.BandWidthLimit) {
+		p.BandWidthLimit = 0
+	}
+	if isEmpty(p.EnableEmail) {
+		p.EnableEmail = false
+	}
+	if isEmpty(p.SlackWebhookUrl) {
+		p.SlackWebhookUrl = ""
+	}
+	if isEmpty(p.AutoTrafficShaping) {
+		p.AutoTrafficShaping = false
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *TrafficControlUpdateMobileGatewayParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := define.Resources["MobileGateway"].Commands["traffic-control-update"].Params["quota"].ValidateFunc
+		errs := validator("--quota", p.Quota)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["MobileGateway"].Commands["traffic-control-update"].Params["band-width-limit"].ValidateFunc
+		errs := validator("--band-width-limit", p.BandWidthLimit)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["MobileGateway"].Commands["traffic-control-update"].Params["slack-webhook-url"].ValidateFunc
+		errs := validator("--slack-webhook-url", p.SlackWebhookUrl)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["traffic-control-update"]
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) SetQuota(v int) {
+	p.Quota = v
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetQuota() int {
+	return p.Quota
+}
+func (p *TrafficControlUpdateMobileGatewayParam) SetBandWidthLimit(v int) {
+	p.BandWidthLimit = v
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetBandWidthLimit() int {
+	return p.BandWidthLimit
+}
+func (p *TrafficControlUpdateMobileGatewayParam) SetEnableEmail(v bool) {
+	p.EnableEmail = v
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetEnableEmail() bool {
+	return p.EnableEmail
+}
+func (p *TrafficControlUpdateMobileGatewayParam) SetSlackWebhookUrl(v string) {
+	p.SlackWebhookUrl = v
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetSlackWebhookUrl() string {
+	return p.SlackWebhookUrl
+}
+func (p *TrafficControlUpdateMobileGatewayParam) SetAutoTrafficShaping(v bool) {
+	p.AutoTrafficShaping = v
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetAutoTrafficShaping() bool {
+	return p.AutoTrafficShaping
+}
+func (p *TrafficControlUpdateMobileGatewayParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *TrafficControlUpdateMobileGatewayParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *TrafficControlUpdateMobileGatewayParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *TrafficControlUpdateMobileGatewayParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *TrafficControlUpdateMobileGatewayParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *TrafficControlUpdateMobileGatewayParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *TrafficControlUpdateMobileGatewayParam) GetId() int64 {
+	return p.Id
+}
+
+// TrafficControlDisableMobileGatewayParam is input parameters for the sacloud API
+type TrafficControlDisableMobileGatewayParam struct {
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
+}
+
+// NewTrafficControlDisableMobileGatewayParam return new TrafficControlDisableMobileGatewayParam
+func NewTrafficControlDisableMobileGatewayParam() *TrafficControlDisableMobileGatewayParam {
+	return &TrafficControlDisableMobileGatewayParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *TrafficControlDisableMobileGatewayParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *TrafficControlDisableMobileGatewayParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetResourceDef() *schema.Resource {
+	return define.Resources["MobileGateway"]
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["traffic-control-disable"]
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *TrafficControlDisableMobileGatewayParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *TrafficControlDisableMobileGatewayParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *TrafficControlDisableMobileGatewayParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *TrafficControlDisableMobileGatewayParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *TrafficControlDisableMobileGatewayParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *TrafficControlDisableMobileGatewayParam) GetId() int64 {
+	return p.Id
+}
+
 // StaticRouteInfoMobileGatewayParam is input parameters for the sacloud API
 type StaticRouteInfoMobileGatewayParam struct {
 	Selector          []string `json:"selector"`

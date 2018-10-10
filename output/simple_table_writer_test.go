@@ -43,11 +43,11 @@ func newTestSimpleTableWriter(out io.Writer, columnDefs []ColumnDef) *testSimple
 
 func simpleTableTestValue() map[string]string {
 	return map[string]string{
-		"ID":                                            "999999999999",
-		"Name":                                          "TestValue",
-		"Dummy":                                         "1",
-		"Interfaces.0.IPAddress":                        "192.2.0.1",
-		"Interfaces.0.UserIPAddress":                    "192.2.0.2",
+		"ID":                         "999999999999",
+		"Name":                       "TestValue",
+		"Dummy":                      "1",
+		"Interfaces.0.IPAddress":     "192.2.0.1",
+		"Interfaces.0.UserIPAddress": "192.2.0.2",
 		"Interfaces.0.Switch.UserSubnet.NetworkMaskLen": "24",
 		"Interfaces.0.Switch.Scope":                     "shared",
 	}

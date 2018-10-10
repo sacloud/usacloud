@@ -48,6 +48,10 @@ func validateMemberCD() schema.ValidateFunc {
 	return schema.ValidateMemberCD()
 }
 
+func validateSlackWebhookURL() schema.ValidateFunc {
+	return schema.ValidateSlackWebhookURL()
+}
+
 func validateFileExists() schema.ValidateFunc {
 	return schema.ValidateFileExists()
 }

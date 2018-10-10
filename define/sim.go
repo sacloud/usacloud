@@ -217,7 +217,7 @@ func simMonitorColumns() []output.ColumnDef {
 		{Name: "TimeStamp"},
 		{Name: "UnixTime"},
 		{Name: "UplinkBPS"},
-		{Name: "DownlingBPS"},
+		{Name: "DownlinkBPS"},
 	}
 }
 
