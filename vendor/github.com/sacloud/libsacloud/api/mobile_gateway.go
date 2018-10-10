@@ -449,6 +449,15 @@ func (api *MobileGatewayAPI) SetTrafficMonitoringConfig(id int64, trafficMonConf
 	return api.modify(method, uri, req)
 }
 
+// DisableTrafficMonitoringConfig トラフィックコントロール 解除
+func (api *MobileGatewayAPI) DisableTrafficMonitoringConfig(id int64) (bool, error) {
+	var (
+		method = "DELETE"
+		uri    = fmt.Sprintf("%s/%d/mobilegateway/traffic_monitoring", api.getResourceURL(), id)
+	)
+	return api.modify(method, uri, nil)
+}
+
 // GetTrafficStatus 当月通信量 取得
 func (api *MobileGatewayAPI) GetTrafficStatus(id int64) (*sacloud.TrafficStatus, error) {
 	var (
