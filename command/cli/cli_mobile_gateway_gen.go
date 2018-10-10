@@ -33,6 +33,10 @@ func init() {
 	interfaceConnectParam := params.NewInterfaceConnectMobileGatewayParam()
 	interfaceUpdateParam := params.NewInterfaceUpdateMobileGatewayParam()
 	interfaceDisconnectParam := params.NewInterfaceDisconnectMobileGatewayParam()
+	trafficControlInfoParam := params.NewTrafficControlInfoMobileGatewayParam()
+	trafficControlEnableParam := params.NewTrafficControlEnableMobileGatewayParam()
+	trafficControlUpdateParam := params.NewTrafficControlUpdateMobileGatewayParam()
+	trafficControlDisableParam := params.NewTrafficControlDisableMobileGatewayParam()
 	staticRouteInfoParam := params.NewStaticRouteInfoMobileGatewayParam()
 	staticRouteAddParam := params.NewStaticRouteAddMobileGatewayParam()
 	staticRouteUpdateParam := params.NewStaticRouteUpdateMobileGatewayParam()
@@ -5081,6 +5085,1394 @@ func init() {
 				},
 			},
 			{
+				Name:      "traffic-control-info",
+				Usage:     "Show information of traffic-control",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = trafficControlInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, trafficControlInfoParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						trafficControlInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						trafficControlInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						trafficControlInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						trafficControlInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						trafficControlInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						trafficControlInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						trafficControlInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						trafficControlInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						trafficControlInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						trafficControlInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						trafficControlInfoParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.MobileGatewayTrafficControlInfoCompleteArgs(ctx, trafficControlInfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.MobileGatewayTrafficControlInfoCompleteArgs(ctx, trafficControlInfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.MobileGatewayTrafficControlInfoCompleteFlags(ctx, trafficControlInfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.MobileGatewayTrafficControlInfoCompleteArgs(ctx, trafficControlInfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					trafficControlInfoParam.ParamTemplate = c.String("param-template")
+					trafficControlInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(trafficControlInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewTrafficControlInfoMobileGatewayParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(trafficControlInfoParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						trafficControlInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						trafficControlInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						trafficControlInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						trafficControlInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						trafficControlInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						trafficControlInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						trafficControlInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						trafficControlInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						trafficControlInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						trafficControlInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						trafficControlInfoParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = trafficControlInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if trafficControlInfoParam.GenerateSkeleton {
+						trafficControlInfoParam.GenerateSkeleton = false
+						trafficControlInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(trafficControlInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := trafficControlInfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), trafficControlInfoParam)
+
+					apiClient := ctx.GetAPIClient().MobileGateway
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(trafficControlInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.MobileGateways {
+							if hasTags(&v, trafficControlInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", trafficControlInfoParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.MobileGateways {
+										if len(trafficControlInfoParam.Selector) == 0 || hasTags(&v, trafficControlInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						trafficControlInfoParam.SetId(id)
+						p := *trafficControlInfoParam // copy struct value
+						trafficControlInfoParam := &p
+						go func() {
+							err := funcs.MobileGatewayTrafficControlInfo(ctx, trafficControlInfoParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "traffic-control-enable",
+				Usage:     "Enable traffic-control",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "quota",
+						Usage: "[Required] ",
+						Value: 512,
+					},
+					&cli.IntFlag{
+						Name: "band-width-limit",
+					},
+					&cli.BoolFlag{
+						Name: "enable-email",
+					},
+					&cli.StringFlag{
+						Name: "slack-webhook-url",
+					},
+					&cli.BoolFlag{
+						Name: "auto-traffic-shaping",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = trafficControlEnableParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, trafficControlEnableParam)
+
+					// Set option values
+					if c.IsSet("quota") {
+						trafficControlEnableParam.Quota = c.Int("quota")
+					}
+					if c.IsSet("band-width-limit") {
+						trafficControlEnableParam.BandWidthLimit = c.Int("band-width-limit")
+					}
+					if c.IsSet("enable-email") {
+						trafficControlEnableParam.EnableEmail = c.Bool("enable-email")
+					}
+					if c.IsSet("slack-webhook-url") {
+						trafficControlEnableParam.SlackWebhookUrl = c.String("slack-webhook-url")
+					}
+					if c.IsSet("auto-traffic-shaping") {
+						trafficControlEnableParam.AutoTrafficShaping = c.Bool("auto-traffic-shaping")
+					}
+					if c.IsSet("selector") {
+						trafficControlEnableParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						trafficControlEnableParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						trafficControlEnableParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						trafficControlEnableParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						trafficControlEnableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						trafficControlEnableParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.MobileGatewayTrafficControlEnableCompleteArgs(ctx, trafficControlEnableParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.MobileGatewayTrafficControlEnableCompleteArgs(ctx, trafficControlEnableParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.MobileGatewayTrafficControlEnableCompleteFlags(ctx, trafficControlEnableParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.MobileGatewayTrafficControlEnableCompleteArgs(ctx, trafficControlEnableParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					trafficControlEnableParam.ParamTemplate = c.String("param-template")
+					trafficControlEnableParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(trafficControlEnableParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewTrafficControlEnableMobileGatewayParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(trafficControlEnableParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("quota") {
+						trafficControlEnableParam.Quota = c.Int("quota")
+					}
+					if c.IsSet("band-width-limit") {
+						trafficControlEnableParam.BandWidthLimit = c.Int("band-width-limit")
+					}
+					if c.IsSet("enable-email") {
+						trafficControlEnableParam.EnableEmail = c.Bool("enable-email")
+					}
+					if c.IsSet("slack-webhook-url") {
+						trafficControlEnableParam.SlackWebhookUrl = c.String("slack-webhook-url")
+					}
+					if c.IsSet("auto-traffic-shaping") {
+						trafficControlEnableParam.AutoTrafficShaping = c.Bool("auto-traffic-shaping")
+					}
+					if c.IsSet("selector") {
+						trafficControlEnableParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						trafficControlEnableParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						trafficControlEnableParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						trafficControlEnableParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						trafficControlEnableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						trafficControlEnableParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = trafficControlEnableParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if trafficControlEnableParam.GenerateSkeleton {
+						trafficControlEnableParam.GenerateSkeleton = false
+						trafficControlEnableParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(trafficControlEnableParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := trafficControlEnableParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), trafficControlEnableParam)
+
+					apiClient := ctx.GetAPIClient().MobileGateway
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(trafficControlEnableParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.MobileGateways {
+							if hasTags(&v, trafficControlEnableParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", trafficControlEnableParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.MobileGateways {
+										if len(trafficControlEnableParam.Selector) == 0 || hasTags(&v, trafficControlEnableParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					// confirm
+					if !trafficControlEnableParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("traffic-control-enable", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						trafficControlEnableParam.SetId(id)
+						p := *trafficControlEnableParam // copy struct value
+						trafficControlEnableParam := &p
+						go func() {
+							err := funcs.MobileGatewayTrafficControlEnable(ctx, trafficControlEnableParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "traffic-control-update",
+				Usage:     "Update traffic-control config",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name: "quota",
+					},
+					&cli.IntFlag{
+						Name: "band-width-limit",
+					},
+					&cli.BoolFlag{
+						Name: "enable-email",
+					},
+					&cli.StringFlag{
+						Name: "slack-webhook-url",
+					},
+					&cli.BoolFlag{
+						Name: "auto-traffic-shaping",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = trafficControlUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, trafficControlUpdateParam)
+
+					// Set option values
+					if c.IsSet("quota") {
+						trafficControlUpdateParam.Quota = c.Int("quota")
+					}
+					if c.IsSet("band-width-limit") {
+						trafficControlUpdateParam.BandWidthLimit = c.Int("band-width-limit")
+					}
+					if c.IsSet("enable-email") {
+						trafficControlUpdateParam.EnableEmail = c.Bool("enable-email")
+					}
+					if c.IsSet("slack-webhook-url") {
+						trafficControlUpdateParam.SlackWebhookUrl = c.String("slack-webhook-url")
+					}
+					if c.IsSet("auto-traffic-shaping") {
+						trafficControlUpdateParam.AutoTrafficShaping = c.Bool("auto-traffic-shaping")
+					}
+					if c.IsSet("selector") {
+						trafficControlUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						trafficControlUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						trafficControlUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						trafficControlUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						trafficControlUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						trafficControlUpdateParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.MobileGatewayTrafficControlUpdateCompleteArgs(ctx, trafficControlUpdateParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.MobileGatewayTrafficControlUpdateCompleteArgs(ctx, trafficControlUpdateParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.MobileGatewayTrafficControlUpdateCompleteFlags(ctx, trafficControlUpdateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.MobileGatewayTrafficControlUpdateCompleteArgs(ctx, trafficControlUpdateParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					trafficControlUpdateParam.ParamTemplate = c.String("param-template")
+					trafficControlUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(trafficControlUpdateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewTrafficControlUpdateMobileGatewayParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(trafficControlUpdateParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("quota") {
+						trafficControlUpdateParam.Quota = c.Int("quota")
+					}
+					if c.IsSet("band-width-limit") {
+						trafficControlUpdateParam.BandWidthLimit = c.Int("band-width-limit")
+					}
+					if c.IsSet("enable-email") {
+						trafficControlUpdateParam.EnableEmail = c.Bool("enable-email")
+					}
+					if c.IsSet("slack-webhook-url") {
+						trafficControlUpdateParam.SlackWebhookUrl = c.String("slack-webhook-url")
+					}
+					if c.IsSet("auto-traffic-shaping") {
+						trafficControlUpdateParam.AutoTrafficShaping = c.Bool("auto-traffic-shaping")
+					}
+					if c.IsSet("selector") {
+						trafficControlUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						trafficControlUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						trafficControlUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						trafficControlUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						trafficControlUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						trafficControlUpdateParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = trafficControlUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if trafficControlUpdateParam.GenerateSkeleton {
+						trafficControlUpdateParam.GenerateSkeleton = false
+						trafficControlUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(trafficControlUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := trafficControlUpdateParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), trafficControlUpdateParam)
+
+					apiClient := ctx.GetAPIClient().MobileGateway
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(trafficControlUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.MobileGateways {
+							if hasTags(&v, trafficControlUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", trafficControlUpdateParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.MobileGateways {
+										if len(trafficControlUpdateParam.Selector) == 0 || hasTags(&v, trafficControlUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					// confirm
+					if !trafficControlUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("traffic-control-update", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						trafficControlUpdateParam.SetId(id)
+						p := *trafficControlUpdateParam // copy struct value
+						trafficControlUpdateParam := &p
+						go func() {
+							err := funcs.MobileGatewayTrafficControlUpdate(ctx, trafficControlUpdateParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "traffic-control-disable",
+				Aliases:   []string{"traffic-control-delete"},
+				Usage:     "Disable traffic-control config",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = trafficControlDisableParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, trafficControlDisableParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						trafficControlDisableParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						trafficControlDisableParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						trafficControlDisableParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						trafficControlDisableParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						trafficControlDisableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						trafficControlDisableParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.MobileGatewayTrafficControlDisableCompleteArgs(ctx, trafficControlDisableParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.MobileGatewayTrafficControlDisableCompleteArgs(ctx, trafficControlDisableParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.MobileGatewayTrafficControlDisableCompleteFlags(ctx, trafficControlDisableParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.MobileGatewayTrafficControlDisableCompleteArgs(ctx, trafficControlDisableParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					trafficControlDisableParam.ParamTemplate = c.String("param-template")
+					trafficControlDisableParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(trafficControlDisableParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewTrafficControlDisableMobileGatewayParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(trafficControlDisableParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						trafficControlDisableParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						trafficControlDisableParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						trafficControlDisableParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						trafficControlDisableParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						trafficControlDisableParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						trafficControlDisableParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = trafficControlDisableParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if trafficControlDisableParam.GenerateSkeleton {
+						trafficControlDisableParam.GenerateSkeleton = false
+						trafficControlDisableParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(trafficControlDisableParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := trafficControlDisableParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), trafficControlDisableParam)
+
+					apiClient := ctx.GetAPIClient().MobileGateway
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(trafficControlDisableParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.MobileGateways {
+							if hasTags(&v, trafficControlDisableParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", trafficControlDisableParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.MobileGateways {
+										if len(trafficControlDisableParam.Selector) == 0 || hasTags(&v, trafficControlDisableParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					// confirm
+					if !trafficControlDisableParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("traffic-control-disable", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						trafficControlDisableParam.SetId(id)
+						p := *trafficControlDisableParam // copy struct value
+						trafficControlDisableParam := &p
+						go func() {
+							err := funcs.MobileGatewayTrafficControlDisable(ctx, trafficControlDisableParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
 				Name:      "static-route-info",
 				Aliases:   []string{"static-route-list"},
 				Usage:     "Show information of static-routes",
@@ -9859,7 +11251,7 @@ func init() {
 	AppendCommandCategoryMap("mobile-gateway", "dns-update", &schema.Category{
 		Key:         "dns",
 		DisplayName: "DNS Management",
-		Order:       60,
+		Order:       70,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "interface-connect", &schema.Category{
 		Key:         "nic",
@@ -9889,7 +11281,7 @@ func init() {
 	AppendCommandCategoryMap("mobile-gateway", "logs", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       70,
+		Order:       80,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "read", &schema.Category{
 		Key:         "basic",
@@ -9914,61 +11306,81 @@ func init() {
 	AppendCommandCategoryMap("mobile-gateway", "sim-add", &schema.Category{
 		Key:         "sim",
 		DisplayName: "SIM Management",
-		Order:       50,
+		Order:       60,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "sim-delete", &schema.Category{
 		Key:         "sim",
 		DisplayName: "SIM Management",
-		Order:       50,
+		Order:       60,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "sim-info", &schema.Category{
 		Key:         "sim",
 		DisplayName: "SIM Management",
-		Order:       50,
+		Order:       60,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "sim-route-add", &schema.Category{
 		Key:         "sim-route",
 		DisplayName: "SIM Route Management",
-		Order:       55,
+		Order:       65,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "sim-route-delete", &schema.Category{
 		Key:         "sim-route",
 		DisplayName: "SIM Route Management",
-		Order:       55,
+		Order:       65,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "sim-route-info", &schema.Category{
 		Key:         "sim-route",
 		DisplayName: "SIM Route Management",
-		Order:       55,
+		Order:       65,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "sim-route-update", &schema.Category{
 		Key:         "sim-route",
 		DisplayName: "SIM Route Management",
-		Order:       55,
+		Order:       65,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "sim-update", &schema.Category{
 		Key:         "sim",
 		DisplayName: "SIM Management",
-		Order:       50,
+		Order:       60,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "static-route-add", &schema.Category{
 		Key:         "static-route",
 		DisplayName: "StaticRoute Management",
-		Order:       40,
+		Order:       50,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "static-route-delete", &schema.Category{
 		Key:         "static-route",
 		DisplayName: "StaticRoute Management",
-		Order:       40,
+		Order:       50,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "static-route-info", &schema.Category{
 		Key:         "static-route",
 		DisplayName: "StaticRoute Management",
-		Order:       40,
+		Order:       50,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "static-route-update", &schema.Category{
 		Key:         "static-route",
 		DisplayName: "StaticRoute Management",
+		Order:       50,
+	})
+	AppendCommandCategoryMap("mobile-gateway", "traffic-control-disable", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic Control",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("mobile-gateway", "traffic-control-enable", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic Control",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("mobile-gateway", "traffic-control-info", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic Control",
+		Order:       40,
+	})
+	AppendCommandCategoryMap("mobile-gateway", "traffic-control-update", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic Control",
 		Order:       40,
 	})
 	AppendCommandCategoryMap("mobile-gateway", "update", &schema.Category{
@@ -11143,6 +12555,201 @@ func init() {
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-disable", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-disable", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-disable", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-disable", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-disable", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-disable", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "auto-traffic-shaping", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic-Control options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "band-width-limit", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic-Control options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "enable-email", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic-Control options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "quota", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic-Control options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-enable", "slack-webhook-url", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic-Control options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "auto-traffic-shaping", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic-Control options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "band-width-limit", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic-Control options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "enable-email", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic-Control options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "quota", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic-Control options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("mobile-gateway", "traffic-control-update", "slack-webhook-url", &schema.Category{
+		Key:         "traffic-control",
+		DisplayName: "Traffic-Control options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("mobile-gateway", "update", "assumeyes", &schema.Category{
 		Key:         "Input",

@@ -473,6 +473,154 @@ func MobileGatewayInterfaceDisconnectCompleteFlags(ctx command.Context, params *
 	}
 }
 
+func MobileGatewayTrafficControlInfoCompleteFlags(ctx command.Context, params *params.TrafficControlInfoMobileGatewayParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func MobileGatewayTrafficControlEnableCompleteFlags(ctx command.Context, params *params.TrafficControlEnableMobileGatewayParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "quota":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-enable"].BuildedParams().Get("quota")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "band-width-limit":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-enable"].BuildedParams().Get("band-width-limit")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "enable-email":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-enable"].BuildedParams().Get("enable-email")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "slack-webhook-url":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-enable"].BuildedParams().Get("slack-webhook-url")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "auto-traffic-shaping":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-enable"].BuildedParams().Get("auto-traffic-shaping")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-enable"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-enable"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func MobileGatewayTrafficControlUpdateCompleteFlags(ctx command.Context, params *params.TrafficControlUpdateMobileGatewayParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "quota":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-update"].BuildedParams().Get("quota")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "band-width-limit":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-update"].BuildedParams().Get("band-width-limit")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "enable-email":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-update"].BuildedParams().Get("enable-email")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "slack-webhook-url":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-update"].BuildedParams().Get("slack-webhook-url")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "auto-traffic-shaping":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-update"].BuildedParams().Get("auto-traffic-shaping")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func MobileGatewayTrafficControlDisableCompleteFlags(ctx command.Context, params *params.TrafficControlDisableMobileGatewayParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-disable"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["MobileGateway"].Commands["traffic-control-disable"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
 func MobileGatewayStaticRouteInfoCompleteFlags(ctx command.Context, params *params.StaticRouteInfoMobileGatewayParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 

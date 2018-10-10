@@ -285,6 +285,30 @@ func ValidateMemberCD() ValidateFunc {
 	}
 }
 
+func ValidateSlackWebhookURL() ValidateFunc {
+	return func(fieldName string, object interface{}) []error {
+		res := []error{}
+
+		// if target is nil , return OK(Use required attr if necessary)
+		if object == nil {
+			return res
+		}
+
+		if cd, ok := object.(string); ok {
+			if cd == "" {
+				return res
+			}
+
+			r := regexp.MustCompile(`^https://hooks.slack.com/services/\w+/\w+/\w+$`)
+			if !r.MatchString(cd) {
+				res = append(res, fmt.Errorf(`%q: slack webhook url must be ^https://hooks.slack.com/services/\w+/\w+/\w+$`, fieldName))
+			}
+		}
+
+		return res
+	}
+}
+
 func ValidateFileExists() ValidateFunc {
 	return func(fieldName string, object interface{}) []error {
 		res := []error{}

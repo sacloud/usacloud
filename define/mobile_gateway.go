@@ -150,6 +150,44 @@ func MobileGatewayResource() *schema.Resource {
 			Order:            40,
 			NoOutput:         true,
 		},
+		"traffic-control-info": {
+			Type:               schema.CommandRead,
+			Params:             mobileGatewayTrafficControlInfoParam(),
+			Usage:              "Show information of traffic-control",
+			TableType:          output.TableSimple,
+			TableColumnDefines: mobileGatewayTrafficControlInfoColumns(),
+			UseCustomCommand:   true,
+			Category:           "traffic-control",
+			Order:              10,
+		},
+		"traffic-control-enable": {
+			Type:             schema.CommandUpdate,
+			Params:           mobileGatewayTrafficControlCreateParam(),
+			Usage:            "Enable traffic-control",
+			NoOutput:         true,
+			UseCustomCommand: true,
+			Category:         "traffic-control",
+			Order:            20,
+		},
+		"traffic-control-update": {
+			Type:             schema.CommandUpdate,
+			Params:           mobileGatewayTrafficControlUpdateParam(),
+			Usage:            "Update traffic-control config",
+			NoOutput:         true,
+			UseCustomCommand: true,
+			Category:         "traffic-control",
+			Order:            30,
+		},
+		"traffic-control-disable": {
+			Type:             schema.CommandUpdate,
+			Aliases:          []string{"traffic-control-delete"},
+			Params:           mobileGatewayTrafficControlDeleteParam(),
+			Usage:            "Disable traffic-control config",
+			NoOutput:         true,
+			UseCustomCommand: true,
+			Category:         "traffic-control",
+			Order:            40,
+		},
 		"static-route-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             mobileGatewayStaticRouteInfoParam(),
@@ -310,29 +348,34 @@ var MobileGatewayCommandCategories = []schema.Category{
 		Order:       30,
 	},
 	{
+		Key:         "traffic-control",
+		DisplayName: "Traffic Control",
+		Order:       40,
+	},
+	{
 		Key:         "static-route",
 		DisplayName: "StaticRoute Management",
-		Order:       40,
+		Order:       50,
 	},
 	{
 		Key:         "sim",
 		DisplayName: "SIM Management",
-		Order:       50,
+		Order:       60,
 	},
 	{
 		Key:         "sim-route",
 		DisplayName: "SIM Route Management",
-		Order:       55,
+		Order:       65,
 	},
 	{
 		Key:         "dns",
 		DisplayName: "DNS Management",
-		Order:       60,
+		Order:       70,
 	},
 	{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       70,
+		Order:       80,
 	},
 	{
 		Key:         "other",
@@ -388,6 +431,39 @@ func mobileGatewayInterfaceListColumns() []output.ColumnDef {
 		{Name: "Switch"},
 		{Name: "IPAddress"},
 		{Name: "NetworkMaskLen"},
+	}
+}
+
+func mobileGatewayTrafficControlInfoColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{
+			Name:    "Quota(MB)",
+			Sources: []string{"config.traffic_quota_in_mb"},
+		},
+		{
+			Name:    "Limit(Kbps)",
+			Sources: []string{"config.bandwidth_limit_in_kbps"},
+		},
+		{
+			Name:    "Email",
+			Sources: []string{"config.email_config.enabled"},
+		},
+		{
+			Name:    "Slack",
+			Sources: []string{"config.slack_config.slack_url"},
+		},
+		{
+			Name:    "TrafficShaping",
+			Sources: []string{"config.auto_traffic_shaping"},
+		},
+		{
+			Name:    "UplinkBPS",
+			Sources: []string{"status.uplink_bytes"},
+		},
+		{
+			Name:    "DownlinkBPS",
+			Sources: []string{"status.downlink_bytes"},
+		},
 	}
 }
 
@@ -629,6 +705,92 @@ func mobileGatewayInterfaceUpdateParam() map[string]*schema.Schema {
 }
 
 func mobileGatewayInterfaceDisconnectParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
+}
+
+func mobileGatewayTrafficControlInfoParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
+}
+
+func mobileGatewayTrafficControlCreateParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"quota": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Required:     true,
+			DefaultValue: 512,
+			ValidateFunc: validateIntRange(1, math.MaxInt32),
+			Category:     "traffic-control",
+			Order:        10,
+		},
+		"band-width-limit": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			ValidateFunc: validateIntRange(1, math.MaxInt32),
+			Category:     "traffic-control",
+			Order:        20,
+		},
+		"enable-email": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Category:    "traffic-control",
+			Order:       30,
+		},
+		"slack-webhook-url": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Category:     "traffic-control",
+			ValidateFunc: validateSlackWebhookURL(),
+			Order:        40,
+		},
+		"auto-traffic-shaping": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Category:    "traffic-control",
+			Order:       50,
+		},
+	}
+}
+
+func mobileGatewayTrafficControlUpdateParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"quota": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			ValidateFunc: validateIntRange(1, math.MaxInt32),
+			Category:     "traffic-control",
+			Order:        10,
+		},
+		"band-width-limit": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			ValidateFunc: validateIntRange(1, math.MaxInt32),
+			Category:     "traffic-control",
+			Order:        20,
+		},
+		"enable-email": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Category:    "traffic-control",
+			Order:       30,
+		},
+		"slack-webhook-url": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Category:     "traffic-control",
+			ValidateFunc: validateSlackWebhookURL(),
+			Order:        40,
+		},
+		"auto-traffic-shaping": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Category:    "traffic-control",
+			Order:       50,
+		},
+	}
+}
+
+func mobileGatewayTrafficControlDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
 }
 

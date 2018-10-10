@@ -349,6 +349,6 @@ type TrafficMonitoringNotifyEmail struct {
 
 // TrafficMonitoringNotifySlack トラフィックコントロール通知設定
 type TrafficMonitoringNotifySlack struct {
-	Enabled             bool   `json:"enabled"`   // 有効/無効
-	IncomingWebhooksURL string `json:"slack_url"` // Slack通知の場合のWebhook URL
+	Enabled             bool   `json:"enabled"`             // 有効/無効
+	IncomingWebhooksURL string `json:"slack_url,omitempty"` // Slack通知の場合のWebhook URL
 }
