@@ -184,3 +184,21 @@ func UniqIDs(elements []int64) []int64 {
 	}
 	return result
 }
+
+func IsSetAnd(ctx Context, targetes ...string) bool {
+	for _, target := range targetes {
+		if !ctx.IsSet(target) {
+			return false
+		}
+	}
+	return true
+}
+
+func IsSetOr(ctx Context, targetes ...string) bool {
+	for _, target := range targetes {
+		if ctx.IsSet(target) {
+			return true
+		}
+	}
+	return false
+}

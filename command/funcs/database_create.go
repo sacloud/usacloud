@@ -33,9 +33,10 @@ func DatabaseCreate(ctx command.Context, params *params.CreateDatabaseParam) err
 	p.Plan = sacloud.DatabasePlan(params.Plan)
 	p.DefaultUser = params.Username
 	p.UserPassword = params.Password
+	p.ReplicaPassword = params.ReplicaUserPassword
 
 	if ctx.IsSet("port") {
-		p.ServicePort = fmt.Sprintf("%d", params.Port)
+		p.ServicePort = params.Port
 	}
 	p.IPAddress1 = params.Ipaddress1
 	p.MaskLen = params.NwMaskLen
@@ -44,7 +45,23 @@ func DatabaseCreate(ctx command.Context, params *params.CreateDatabaseParam) err
 	if params.EnableWebUi {
 		p.WebUI = params.EnableWebUi
 	}
+	p.EnableBackup = params.EnableBackup
+
+	exists := false
+	for _, v := range params.BackupWeekdays {
+		if v == "all" {
+			exists = true
+			break
+		}
+	}
+	if exists {
+		p.BackupDayOfWeek = sacloud.AllowDatabaseBackupWeekdays()
+	} else {
+		p.BackupDayOfWeek = params.BackupWeekdays
+	}
+
 	p.BackupTime = params.BackupTime
+
 	p.Name = params.Name
 	p.Tags = params.Tags
 	p.Description = params.Description

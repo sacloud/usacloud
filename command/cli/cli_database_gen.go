@@ -35,6 +35,8 @@ func init() {
 	backupLockParam := params.NewBackupLockDatabaseParam()
 	backupUnlockParam := params.NewBackupUnlockDatabaseParam()
 	backupRemoveParam := params.NewBackupRemoveDatabaseParam()
+	cloneParam := params.NewCloneDatabaseParam()
+	replicaCreateParam := params.NewReplicaCreateDatabaseParam()
 	monitorCpuParam := params.NewMonitorCpuDatabaseParam()
 	monitorMemoryParam := params.NewMonitorMemoryDatabaseParam()
 	monitorNicParam := params.NewMonitorNicDatabaseParam()
@@ -398,6 +400,10 @@ func init() {
 						Name:  "password",
 						Usage: "[Required] set database default user password",
 					},
+					&cli.StringFlag{
+						Name:  "replica-user-password",
+						Usage: "set database replica user password",
+					},
 					&cli.StringSliceFlag{
 						Name:  "source-networks",
 						Usage: "set network of allow connection",
@@ -405,6 +411,15 @@ func init() {
 					&cli.BoolFlag{
 						Name:  "enable-web-ui",
 						Usage: "enable web-ui",
+					},
+					&cli.BoolFlag{
+						Name:  "enable-backup",
+						Usage: "enable backup",
+					},
+					&cli.StringSliceFlag{
+						Name:  "backup-weekdays",
+						Usage: "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
+						Value: cli.NewStringSlice("all"),
 					},
 					&cli.StringFlag{
 						Name:  "backup-time",
@@ -544,11 +559,20 @@ func init() {
 					if c.IsSet("password") {
 						createParam.Password = c.String("password")
 					}
+					if c.IsSet("replica-user-password") {
+						createParam.ReplicaUserPassword = c.String("replica-user-password")
+					}
 					if c.IsSet("source-networks") {
 						createParam.SourceNetworks = c.StringSlice("source-networks")
 					}
 					if c.IsSet("enable-web-ui") {
 						createParam.EnableWebUi = c.Bool("enable-web-ui")
+					}
+					if c.IsSet("enable-backup") {
+						createParam.EnableBackup = c.Bool("enable-backup")
+					}
+					if c.IsSet("backup-weekdays") {
+						createParam.BackupWeekdays = c.StringSlice("backup-weekdays")
 					}
 					if c.IsSet("backup-time") {
 						createParam.BackupTime = c.String("backup-time")
@@ -707,11 +731,20 @@ func init() {
 					if c.IsSet("password") {
 						createParam.Password = c.String("password")
 					}
+					if c.IsSet("replica-user-password") {
+						createParam.ReplicaUserPassword = c.String("replica-user-password")
+					}
 					if c.IsSet("source-networks") {
 						createParam.SourceNetworks = c.StringSlice("source-networks")
 					}
 					if c.IsSet("enable-web-ui") {
 						createParam.EnableWebUi = c.Bool("enable-web-ui")
+					}
+					if c.IsSet("enable-backup") {
+						createParam.EnableBackup = c.Bool("enable-backup")
+					}
+					if c.IsSet("backup-weekdays") {
+						createParam.BackupWeekdays = c.StringSlice("backup-weekdays")
 					}
 					if c.IsSet("backup-time") {
 						createParam.BackupTime = c.String("backup-time")
@@ -1186,6 +1219,14 @@ func init() {
 						Name:  "password",
 						Usage: "set database default user password",
 					},
+					&cli.StringFlag{
+						Name:  "replica-user-password",
+						Usage: "set database replica user password",
+					},
+					&cli.BoolFlag{
+						Name:  "enable-replication",
+						Usage: "enable replication",
+					},
 					&cli.IntFlag{
 						Name:        "port",
 						Usage:       "set database port",
@@ -1198,6 +1239,15 @@ func init() {
 					&cli.BoolFlag{
 						Name:  "enable-web-ui",
 						Usage: "enable web-ui",
+					},
+					&cli.BoolFlag{
+						Name:  "enable-backup",
+						Usage: "enable backup",
+					},
+					&cli.StringSliceFlag{
+						Name:  "backup-weekdays",
+						Usage: "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
+						Value: cli.NewStringSlice("all"),
 					},
 					&cli.StringFlag{
 						Name:  "backup-time",
@@ -1316,6 +1366,12 @@ func init() {
 					if c.IsSet("password") {
 						updateParam.Password = c.String("password")
 					}
+					if c.IsSet("replica-user-password") {
+						updateParam.ReplicaUserPassword = c.String("replica-user-password")
+					}
+					if c.IsSet("enable-replication") {
+						updateParam.EnableReplication = c.Bool("enable-replication")
+					}
 					if c.IsSet("port") {
 						updateParam.Port = c.Int("port")
 					}
@@ -1324,6 +1380,12 @@ func init() {
 					}
 					if c.IsSet("enable-web-ui") {
 						updateParam.EnableWebUi = c.Bool("enable-web-ui")
+					}
+					if c.IsSet("enable-backup") {
+						updateParam.EnableBackup = c.Bool("enable-backup")
+					}
+					if c.IsSet("backup-weekdays") {
+						updateParam.BackupWeekdays = c.StringSlice("backup-weekdays")
 					}
 					if c.IsSet("backup-time") {
 						updateParam.BackupTime = c.String("backup-time")
@@ -1464,6 +1526,12 @@ func init() {
 					if c.IsSet("password") {
 						updateParam.Password = c.String("password")
 					}
+					if c.IsSet("replica-user-password") {
+						updateParam.ReplicaUserPassword = c.String("replica-user-password")
+					}
+					if c.IsSet("enable-replication") {
+						updateParam.EnableReplication = c.Bool("enable-replication")
+					}
 					if c.IsSet("port") {
 						updateParam.Port = c.Int("port")
 					}
@@ -1472,6 +1540,12 @@ func init() {
 					}
 					if c.IsSet("enable-web-ui") {
 						updateParam.EnableWebUi = c.Bool("enable-web-ui")
+					}
+					if c.IsSet("enable-backup") {
+						updateParam.EnableBackup = c.Bool("enable-backup")
+					}
+					if c.IsSet("backup-weekdays") {
+						updateParam.BackupWeekdays = c.StringSlice("backup-weekdays")
 					}
 					if c.IsSet("backup-time") {
 						updateParam.BackupTime = c.String("backup-time")
@@ -6042,6 +6116,963 @@ func init() {
 				},
 			},
 			{
+				Name:      "clone",
+				Usage:     "Create clone instance",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:        "port",
+						Usage:       "set database port",
+						DefaultText: "PostgreSQL:5432, MariaDB:3306",
+					},
+					&cli.Int64Flag{
+						Name:  "switch-id",
+						Usage: "set connect switch ID",
+					},
+					&cli.StringFlag{
+						Name:    "ipaddress1",
+						Aliases: []string{"ip1", "ipaddress", "ip"},
+						Usage:   "[Required] set ipaddress(#1)",
+					},
+					&cli.IntFlag{
+						Name:  "plan",
+						Usage: "[Required] set plan[10/30/90/240/500/1000]",
+						Value: 10,
+					},
+					&cli.IntFlag{
+						Name:  "nw-mask-len",
+						Usage: "set network mask length",
+					},
+					&cli.StringFlag{
+						Name:  "default-route",
+						Usage: "set default route",
+					},
+					&cli.StringFlag{
+						Name:  "replica-user-password",
+						Usage: "set database replica user password",
+					},
+					&cli.StringSliceFlag{
+						Name:  "source-networks",
+						Usage: "set network of allow connection",
+					},
+					&cli.BoolFlag{
+						Name:  "enable-web-ui",
+						Usage: "enable web-ui",
+					},
+					&cli.BoolFlag{
+						Name:  "enable-backup",
+						Usage: "enable backup",
+					},
+					&cli.StringSliceFlag{
+						Name:  "backup-weekdays",
+						Usage: "set backup target weekdays[all or mon/tue/wed/thu/fri/sat/sun]",
+						Value: cli.NewStringSlice("all"),
+					},
+					&cli.StringFlag{
+						Name:  "backup-time",
+						Usage: "set backup start time",
+					},
+					&cli.StringFlag{
+						Name:  "name",
+						Usage: "[Required] set resource display name",
+					},
+					&cli.StringFlag{
+						Name:    "description",
+						Aliases: []string{"desc"},
+						Usage:   "set resource description",
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:  "icon-id",
+						Usage: "set Icon ID",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = cloneParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, cloneParam)
+
+					// Set option values
+					if c.IsSet("port") {
+						cloneParam.Port = c.Int("port")
+					}
+					if c.IsSet("switch-id") {
+						cloneParam.SwitchId = c.Int64("switch-id")
+					}
+					if c.IsSet("ipaddress1") {
+						cloneParam.Ipaddress1 = c.String("ipaddress1")
+					}
+					if c.IsSet("plan") {
+						cloneParam.Plan = c.Int("plan")
+					}
+					if c.IsSet("nw-mask-len") {
+						cloneParam.NwMaskLen = c.Int("nw-mask-len")
+					}
+					if c.IsSet("default-route") {
+						cloneParam.DefaultRoute = c.String("default-route")
+					}
+					if c.IsSet("replica-user-password") {
+						cloneParam.ReplicaUserPassword = c.String("replica-user-password")
+					}
+					if c.IsSet("source-networks") {
+						cloneParam.SourceNetworks = c.StringSlice("source-networks")
+					}
+					if c.IsSet("enable-web-ui") {
+						cloneParam.EnableWebUi = c.Bool("enable-web-ui")
+					}
+					if c.IsSet("enable-backup") {
+						cloneParam.EnableBackup = c.Bool("enable-backup")
+					}
+					if c.IsSet("backup-weekdays") {
+						cloneParam.BackupWeekdays = c.StringSlice("backup-weekdays")
+					}
+					if c.IsSet("backup-time") {
+						cloneParam.BackupTime = c.String("backup-time")
+					}
+					if c.IsSet("name") {
+						cloneParam.Name = c.String("name")
+					}
+					if c.IsSet("description") {
+						cloneParam.Description = c.String("description")
+					}
+					if c.IsSet("tags") {
+						cloneParam.Tags = c.StringSlice("tags")
+					}
+					if c.IsSet("icon-id") {
+						cloneParam.IconId = c.Int64("icon-id")
+					}
+					if c.IsSet("assumeyes") {
+						cloneParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						cloneParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						cloneParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						cloneParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						cloneParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						cloneParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						cloneParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						cloneParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						cloneParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						cloneParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						cloneParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseCloneCompleteArgs(ctx, cloneParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseCloneCompleteArgs(ctx, cloneParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseCloneCompleteFlags(ctx, cloneParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseCloneCompleteArgs(ctx, cloneParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					cloneParam.ParamTemplate = c.String("param-template")
+					cloneParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(cloneParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewCloneDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(cloneParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("port") {
+						cloneParam.Port = c.Int("port")
+					}
+					if c.IsSet("switch-id") {
+						cloneParam.SwitchId = c.Int64("switch-id")
+					}
+					if c.IsSet("ipaddress1") {
+						cloneParam.Ipaddress1 = c.String("ipaddress1")
+					}
+					if c.IsSet("plan") {
+						cloneParam.Plan = c.Int("plan")
+					}
+					if c.IsSet("nw-mask-len") {
+						cloneParam.NwMaskLen = c.Int("nw-mask-len")
+					}
+					if c.IsSet("default-route") {
+						cloneParam.DefaultRoute = c.String("default-route")
+					}
+					if c.IsSet("replica-user-password") {
+						cloneParam.ReplicaUserPassword = c.String("replica-user-password")
+					}
+					if c.IsSet("source-networks") {
+						cloneParam.SourceNetworks = c.StringSlice("source-networks")
+					}
+					if c.IsSet("enable-web-ui") {
+						cloneParam.EnableWebUi = c.Bool("enable-web-ui")
+					}
+					if c.IsSet("enable-backup") {
+						cloneParam.EnableBackup = c.Bool("enable-backup")
+					}
+					if c.IsSet("backup-weekdays") {
+						cloneParam.BackupWeekdays = c.StringSlice("backup-weekdays")
+					}
+					if c.IsSet("backup-time") {
+						cloneParam.BackupTime = c.String("backup-time")
+					}
+					if c.IsSet("name") {
+						cloneParam.Name = c.String("name")
+					}
+					if c.IsSet("description") {
+						cloneParam.Description = c.String("description")
+					}
+					if c.IsSet("tags") {
+						cloneParam.Tags = c.StringSlice("tags")
+					}
+					if c.IsSet("icon-id") {
+						cloneParam.IconId = c.Int64("icon-id")
+					}
+					if c.IsSet("assumeyes") {
+						cloneParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						cloneParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						cloneParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						cloneParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						cloneParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						cloneParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						cloneParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						cloneParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						cloneParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						cloneParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						cloneParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = cloneParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if cloneParam.GenerateSkeleton {
+						cloneParam.GenerateSkeleton = false
+						cloneParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(cloneParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := cloneParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), cloneParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						return fmt.Errorf("ID or Name argument is required")
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+
+										ids = append(ids, v.GetID())
+
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !cloneParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("clone", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						cloneParam.SetId(id)
+						p := *cloneParam // copy struct value
+						cloneParam := &p
+						go func() {
+							err := funcs.DatabaseClone(ctx, cloneParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "replica-create",
+				Usage:     "Create replication slave instance",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.Int64Flag{
+						Name:  "switch-id",
+						Usage: "set connect switch ID",
+					},
+					&cli.StringFlag{
+						Name:    "ipaddress1",
+						Aliases: []string{"ip1", "ipaddress", "ip"},
+						Usage:   "[Required] set ipaddress(#1)",
+					},
+					&cli.IntFlag{
+						Name:  "nw-mask-len",
+						Usage: "set network mask length",
+					},
+					&cli.StringFlag{
+						Name:  "default-route",
+						Usage: "set default route",
+					},
+					&cli.StringFlag{
+						Name:  "name",
+						Usage: "[Required] set resource display name",
+					},
+					&cli.StringFlag{
+						Name:    "description",
+						Aliases: []string{"desc"},
+						Usage:   "set resource description",
+					},
+					&cli.StringSliceFlag{
+						Name:  "tags",
+						Usage: "set resource tags",
+					},
+					&cli.Int64Flag{
+						Name:  "icon-id",
+						Usage: "set Icon ID",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = replicaCreateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, replicaCreateParam)
+
+					// Set option values
+					if c.IsSet("switch-id") {
+						replicaCreateParam.SwitchId = c.Int64("switch-id")
+					}
+					if c.IsSet("ipaddress1") {
+						replicaCreateParam.Ipaddress1 = c.String("ipaddress1")
+					}
+					if c.IsSet("nw-mask-len") {
+						replicaCreateParam.NwMaskLen = c.Int("nw-mask-len")
+					}
+					if c.IsSet("default-route") {
+						replicaCreateParam.DefaultRoute = c.String("default-route")
+					}
+					if c.IsSet("name") {
+						replicaCreateParam.Name = c.String("name")
+					}
+					if c.IsSet("description") {
+						replicaCreateParam.Description = c.String("description")
+					}
+					if c.IsSet("tags") {
+						replicaCreateParam.Tags = c.StringSlice("tags")
+					}
+					if c.IsSet("icon-id") {
+						replicaCreateParam.IconId = c.Int64("icon-id")
+					}
+					if c.IsSet("assumeyes") {
+						replicaCreateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						replicaCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						replicaCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						replicaCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						replicaCreateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						replicaCreateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						replicaCreateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						replicaCreateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						replicaCreateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						replicaCreateParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						replicaCreateParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DatabaseReplicaCreateCompleteArgs(ctx, replicaCreateParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DatabaseReplicaCreateCompleteArgs(ctx, replicaCreateParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DatabaseReplicaCreateCompleteFlags(ctx, replicaCreateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DatabaseReplicaCreateCompleteArgs(ctx, replicaCreateParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					replicaCreateParam.ParamTemplate = c.String("param-template")
+					replicaCreateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(replicaCreateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewReplicaCreateDatabaseParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(replicaCreateParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("switch-id") {
+						replicaCreateParam.SwitchId = c.Int64("switch-id")
+					}
+					if c.IsSet("ipaddress1") {
+						replicaCreateParam.Ipaddress1 = c.String("ipaddress1")
+					}
+					if c.IsSet("nw-mask-len") {
+						replicaCreateParam.NwMaskLen = c.Int("nw-mask-len")
+					}
+					if c.IsSet("default-route") {
+						replicaCreateParam.DefaultRoute = c.String("default-route")
+					}
+					if c.IsSet("name") {
+						replicaCreateParam.Name = c.String("name")
+					}
+					if c.IsSet("description") {
+						replicaCreateParam.Description = c.String("description")
+					}
+					if c.IsSet("tags") {
+						replicaCreateParam.Tags = c.StringSlice("tags")
+					}
+					if c.IsSet("icon-id") {
+						replicaCreateParam.IconId = c.Int64("icon-id")
+					}
+					if c.IsSet("assumeyes") {
+						replicaCreateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						replicaCreateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						replicaCreateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						replicaCreateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						replicaCreateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						replicaCreateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						replicaCreateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						replicaCreateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						replicaCreateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						replicaCreateParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						replicaCreateParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = replicaCreateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if replicaCreateParam.GenerateSkeleton {
+						replicaCreateParam.GenerateSkeleton = false
+						replicaCreateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(replicaCreateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := replicaCreateParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), replicaCreateParam)
+
+					apiClient := ctx.GetAPIClient().Database
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						return fmt.Errorf("ID or Name argument is required")
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Databases {
+
+										ids = append(ids, v.GetID())
+
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !replicaCreateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("replica-create", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						replicaCreateParam.SetId(id)
+						p := *replicaCreateParam // copy struct value
+						replicaCreateParam := &p
+						go func() {
+							err := funcs.DatabaseReplicaCreate(ctx, replicaCreateParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
 				Name:      "monitor-cpu",
 				Usage:     "Collect CPU monitor values",
 				ArgsUsage: "<ID or Name(only single target)>",
@@ -9157,6 +10188,11 @@ func init() {
 		DisplayName: "Power Management",
 		Order:       20,
 	})
+	AppendCommandCategoryMap("database", "clone", &schema.Category{
+		Key:         "clone",
+		DisplayName: "Clone Instance Management",
+		Order:       40,
+	})
 	AppendCommandCategoryMap("database", "create", &schema.Category{
 		Key:         "basics",
 		DisplayName: "Basics",
@@ -9175,47 +10211,52 @@ func init() {
 	AppendCommandCategoryMap("database", "logs", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       40,
+		Order:       50,
 	})
 	AppendCommandCategoryMap("database", "monitor-backup-disk", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       40,
+		Order:       50,
 	})
 	AppendCommandCategoryMap("database", "monitor-backup-disk-size", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       40,
+		Order:       50,
 	})
 	AppendCommandCategoryMap("database", "monitor-cpu", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       40,
+		Order:       50,
 	})
 	AppendCommandCategoryMap("database", "monitor-memory", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       40,
+		Order:       50,
 	})
 	AppendCommandCategoryMap("database", "monitor-nic", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       40,
+		Order:       50,
 	})
 	AppendCommandCategoryMap("database", "monitor-system-disk", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       40,
+		Order:       50,
 	})
 	AppendCommandCategoryMap("database", "monitor-system-disk-size", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitoring",
-		Order:       40,
+		Order:       50,
 	})
 	AppendCommandCategoryMap("database", "read", &schema.Category{
 		Key:         "basics",
 		DisplayName: "Basics",
 		Order:       10,
+	})
+	AppendCommandCategoryMap("database", "replica-create", &schema.Category{
+		Key:         "replication",
+		DisplayName: "Replica Instance Management",
+		Order:       45,
 	})
 	AppendCommandCategoryMap("database", "reset", &schema.Category{
 		Key:         "power",
@@ -9630,12 +10671,152 @@ func init() {
 		DisplayName: "Filter options",
 		Order:       2147483587,
 	})
+	AppendFlagCategoryMap("database", "clone", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "clone", "backup-time", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "clone", "backup-weekdays", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "clone", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "clone", "default-route", &schema.Category{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "clone", "description", &schema.Category{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       2147483617,
+	})
+	AppendFlagCategoryMap("database", "clone", "enable-backup", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "clone", "enable-web-ui", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "clone", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "clone", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "clone", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "clone", "icon-id", &schema.Category{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       2147483617,
+	})
+	AppendFlagCategoryMap("database", "clone", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "clone", "ipaddress1", &schema.Category{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "clone", "name", &schema.Category{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       2147483617,
+	})
+	AppendFlagCategoryMap("database", "clone", "nw-mask-len", &schema.Category{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "clone", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "clone", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "clone", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "clone", "plan", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "clone", "port", &schema.Category{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "clone", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "clone", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "clone", "replica-user-password", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "clone", "source-networks", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "clone", "switch-id", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "clone", "tags", &schema.Category{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       2147483617,
+	})
 	AppendFlagCategoryMap("database", "create", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "create", "backup-time", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       10,
+	})
+	AppendFlagCategoryMap("database", "create", "backup-weekdays", &schema.Category{
 		Key:         "database",
 		DisplayName: "Database options",
 		Order:       10,
@@ -9659,6 +10840,11 @@ func init() {
 		Key:         "common",
 		DisplayName: "Common options",
 		Order:       2147483617,
+	})
+	AppendFlagCategoryMap("database", "create", "enable-backup", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       10,
 	})
 	AppendFlagCategoryMap("database", "create", "enable-web-ui", &schema.Category{
 		Key:         "database",
@@ -9739,6 +10925,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "create", "replica-user-password", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       10,
 	})
 	AppendFlagCategoryMap("database", "create", "source-networks", &schema.Category{
 		Key:         "database",
@@ -10490,6 +11681,101 @@ func init() {
 		DisplayName: "Filter options",
 		Order:       2147483587,
 	})
+	AppendFlagCategoryMap("database", "replica-create", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "default-route", &schema.Category{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "description", &schema.Category{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       2147483617,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "icon-id", &schema.Category{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       2147483617,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "ipaddress1", &schema.Category{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "name", &schema.Category{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       2147483617,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "nw-mask-len", &schema.Category{
+		Key:         "network",
+		DisplayName: "Network options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "switch-id", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "tags", &schema.Category{
+		Key:         "common",
+		DisplayName: "Common options",
+		Order:       2147483617,
+	})
 	AppendFlagCategoryMap("database", "reset", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -10590,6 +11876,11 @@ func init() {
 		DisplayName: "Database options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("database", "update", "backup-weekdays", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("database", "update", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -10599,6 +11890,16 @@ func init() {
 		Key:         "common",
 		DisplayName: "Common options",
 		Order:       2147483617,
+	})
+	AppendFlagCategoryMap("database", "update", "enable-backup", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("database", "update", "enable-replication", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("database", "update", "enable-web-ui", &schema.Category{
 		Key:         "database",
@@ -10669,6 +11970,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "update", "replica-user-password", &schema.Category{
+		Key:         "database",
+		DisplayName: "Database options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("database", "update", "selector", &schema.Category{
 		Key:         "filter",
