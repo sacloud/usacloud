@@ -2,8 +2,9 @@ package builder
 
 import (
 	"fmt"
-	"github.com/sacloud/libsacloud/api"
 	"strings"
+
+	"github.com/sacloud/libsacloud/api"
 )
 
 type baseBuilder struct {
