@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.15.0 (2018-10-12)
+
+* サーバ/ディスクの新プラン対応 #370 (yamamoto-febc)
+* トラフィックコントロール機能 #372 (yamamoto-febc)
+* データベースサブコマンド追加(clone/replica) #373 (yamamoto-febc)
+
+
 ## 0.14.3 (2018-09-14)
 
 * CentOS6向けタグの更新 #364 (yamamoto-febc)

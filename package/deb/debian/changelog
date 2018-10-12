@@ -1,3 +1,14 @@
+usacloud (0.15.0-1) stable; urgency=low
+
+  * サーバ/ディスクの新プラン対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/370>
+  * トラフィックコントロール機能 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/372>
+  * データベースサブコマンド追加(clone/replica) (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/373>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Fri, 12 Oct 2018 07:00:38 +0000
+
 usacloud (0.14.3-1) stable; urgency=low
 
   * CentOS6向けタグの更新 (by yamamoto-febc)
