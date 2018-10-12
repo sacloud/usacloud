@@ -2,9 +2,10 @@ package builder
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/libsacloud/sacloud"
-	"time"
 )
 
 /**********************************************************
