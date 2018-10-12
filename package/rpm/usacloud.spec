@@ -40,6 +40,11 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Fri Oct 12 2018 <sacloud.users@gmail.com> - 0.15.0-1
+- サーバ/ディスクの新プラン対応 (by yamamoto-febc)
+- トラフィックコントロール機能 (by yamamoto-febc)
+- データベースサブコマンド追加(clone/replica) (by yamamoto-febc)
+
 * Fri Sep 14 2018 <sacloud.users@gmail.com> - 0.14.3-1
 - CentOS6向けタグの更新 (by yamamoto-febc)
 - パブリックアーカイブ追加/ストレージ分離オプションのリクエストレイアウト対応 (by yamamoto-febc)
