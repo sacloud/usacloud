@@ -4,18 +4,16 @@ package funcs
 
 import (
 	"fmt"
-
-	"github.com/hnakamur/go-scp"
-	"github.com/sacloud/usacloud/command"
-	"github.com/sacloud/usacloud/command/params"
-
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
 
+	"github.com/hnakamur/go-scp"
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/libsacloud/utils/server"
+	"github.com/sacloud/usacloud/command"
+	"github.com/sacloud/usacloud/command/params"
 )
 
 func ServerScp(ctx command.Context, params *params.ScpServerParam) error {

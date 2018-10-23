@@ -3,7 +3,7 @@ services:
 - docker
 language: go
 go:
-- 1.9
+- "1.11"
 env:
   global:
   - PATH=/home/travis/gopath/bin:$PATH DEBIAN_FRONTEND=noninteractive
@@ -20,8 +20,6 @@ before_install:
   -iv $encrypted_7a84e1e19ced_iv -in usacloud_gpg_key.enc -out usacloud_gpg_key -d;
   fi
 - make tools
-install:
-- make gen-force
 script:
 - make test
 - make lint-docs
