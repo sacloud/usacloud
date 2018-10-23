@@ -5,6 +5,7 @@ GOGEN_FILES?=$$(go list ./... | grep -v vendor)
 BIN_NAME?=usacloud
 CURRENT_VERSION = $(shell git log --merges --oneline | perl -ne 'if(m/^.+Merge pull request \#[0-9]+ from .+\/bump-version-([0-9\.]+)/){print $$1;exit}')
 GO_FILES?=$(shell find . -name '*.go')
+export GO111MODULE=on
 
 BUILD_LDFLAGS = "-s -w \
 	  -X github.com/sacloud/usacloud/version.Revision=`git rev-parse --short HEAD` \
@@ -33,11 +34,11 @@ clean-all:
 
 .PHONY: tools
 tools:
-	go get -u github.com/golang/dep/cmd/dep
+	go get -u golang.org/x/tools/cmd/goimports
 	go get -u github.com/motemen/gobump/cmd/gobump
-	go get -v github.com/alecthomas/gometalinter
-	gometalinter --install
-
+	go get -u golang.org/x/lint/golint
+	#curl https://git.io/vp6lP | sh
+	#gometalinter --install
 
 contrib/completion/bash/usacloud: define/*.go
 	go run tools/gen-bash-completion/main.go
@@ -100,7 +101,7 @@ deb: rpm
 	CURRENT_VERSION="$(CURRENT_VERSION)" sh -c "'$(CURDIR)/scripts/build_apt.sh'"
 
 .PHONY: test
-test: lint
+test: 
 	go test $(TEST) $(TESTARGS) -v -timeout=30m -parallel=4 ;
 
 .PHONY: integration-test
@@ -109,7 +110,7 @@ integration-test: bin/usacloud
 
 .PHONY: lint
 lint: golint
-	gometalinter --vendor --skip=vendor/ --disable-all --enable vet --enable goimports --deadline=2m ./...
+	gometalinter --vendor --skip=vendor/ --disable-all --enable vet --enable goimports --deadline=5m ./...
 	@echo
 
 .PHONY: golint
@@ -153,3 +154,18 @@ docker-build: clean
 docker-rpm: clean
 	sh -c "'$(CURDIR)/scripts/build_on_docker.sh' 'rpm'"
 
+.PHONY: bump-patch bump-minor bump-major version
+bump-patch:
+	gobump patch -w
+
+bump-minor:
+	gobump minor -w
+
+bump-major:
+	gobump major -w
+
+version:
+	gobump show
+
+git-tag:
+	git tag v`gobump show -r`
