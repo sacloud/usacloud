@@ -7,7 +7,7 @@ import (
 
 var (
 	// Version app version
-	Version = "0.0.0" // set on build time
+	Version = "0.15.0" // set on build time
 	// Revision git commit short commithash
 	Revision = "xxxxxx" // set on build time
 )

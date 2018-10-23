@@ -3,7 +3,8 @@ VETARGS?=-all
 GOFMT_FILES?=$$(find . -name '*.go' | grep -v vendor)
 GOGEN_FILES?=$$(go list ./... | grep -v vendor)
 BIN_NAME?=usacloud
-CURRENT_VERSION = $(shell git log --merges --oneline | perl -ne 'if(m/^.+Merge pull request \#[0-9]+ from .+\/bump-version-([0-9\.]+)/){print $$1;exit}')
+CURRENT_VERSION = $$(gobump show -r version/)
+NEXT_VERSION?= $$(git symbolic-ref --short HEAD | sed -n -E 's/^bump-version-([0-9]+\.[0-9]+\.[0-9]+)$$/\1/p')
 GO_FILES?=$(shell find . -name '*.go')
 export GO111MODULE=on
 
@@ -34,11 +35,9 @@ clean-all:
 
 .PHONY: tools
 tools:
-	go get -u golang.org/x/tools/cmd/goimports
-	go get -u github.com/motemen/gobump/cmd/gobump
-	go get -u golang.org/x/lint/golint
-	#curl https://git.io/vp6lP | sh
-	#gometalinter --install
+	GO111MODULE=off go get -u golang.org/x/tools/cmd/goimports
+	GO111MODULE=off go get -u github.com/motemen/gobump/cmd/gobump
+	GO111MODULE=off go get -u golang.org/x/lint/golint
 
 contrib/completion/bash/usacloud: define/*.go
 	go run tools/gen-bash-completion/main.go
@@ -154,18 +153,44 @@ docker-build: clean
 docker-rpm: clean
 	sh -c "'$(CURDIR)/scripts/build_on_docker.sh' 'rpm'"
 
-.PHONY: bump-patch bump-minor bump-major version
+# -----------------------------------------------
+# for release
+# -----------------------------------------------
+.PHONY: bump-patch bump-minor bump-major
 bump-patch:
-	gobump patch -w
+	gobump patch -w version/
 
 bump-minor:
-	gobump minor -w
+	gobump minor -w version/
 
 bump-major:
-	gobump major -w
+	gobump major -w version/
 
-version:
-	gobump show
+.PHONY: current-version next-version
+current-version:
+	@echo $(CURRENT_VERSION)
+
+next-version:
+	@echo $(NEXT_VERSION)
+
+update-authors:
+	@scripts/generate-authors.sh
+
+.PHONY: create-release-pr
+create-release-pr: build-docs update-authors
+	$(eval CURRENT := $(shell echo $(CURRENT_VERSION)))
+	gobump set "$(NEXT_VERSION)" -w version/ && \
+	docker run --rm \
+        -e APP_NAME=usacloud \
+        -e REPO_NAME=sacloud/usacloud \
+        -e ENABLE_RPM=1 \
+        -e ENABLE_DEB=1 \
+        -e ENABLE_PR=1 \
+        -e RELEASE_FROM="$(CURRENT)" \
+        -e RELEASE_TO="$(NEXT_VERSION)" \
+        -e GITHUB_TOKEN \
+        -v $(PWD):/workdir \
+        sacloud/generate-changelog:latest
 
 git-tag:
-	git tag v`gobump show -r`
+	git tag v$(CURRENT_VERSION)
