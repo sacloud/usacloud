@@ -81,11 +81,10 @@ usacloud server ls -h
 #### コンフィグ(`--config`)
 
 利用するコンフィグ(プロファイル)の指定を行います。(エイリアス:`--profile`)  
-指定可能な値は`usacloud config list`コマンドで調べることが可能です。  
+指定可能な値は`usacloud config list`コマンドで調べることができます。  
 
 > 通常この値は`~/.usacloud/current`の値が利用されます。  
-> 環境変数`USACLOUD_PROFILE`で指定することも可能です。  
-> コマンド実行時に`--config`を指定することでこれらの設定を上書きすることが可能です。  
+> 環境変数`USACLOUD_PROFILE`での指定、またはコマンド実行時の`--config`の指定でこの設定を上書き可能です。  
 
 ---
 
@@ -94,8 +93,7 @@ usacloud server ls -h
 さくらのクラウドのAPIトークンを指定します。  
 
 > 通常この値は`~/.usacloud/[current-profile-nane]/config.json`の値が利用されます。  
-> 環境変数`SAKURACLOUD_ACCESS_TOKEN`で指定することも可能です。  
-> コマンド実行時に`--token`を指定することでこれらの設定を上書きすることが可能です。  
+> 環境変数`SAKURACLOUD_ACCESS_TOKEN`での指定、またはコマンド実行時の`--token`の指定でこれらの設定を上書き可能です。  
 
 ---
 
@@ -104,8 +102,7 @@ usacloud server ls -h
 さくらのクラウドのAPIシークレットを指定します。  
 
 > 通常この値は`~/.usacloud/[current-profile-nane]/config.json`の値が利用されます。  
-> 環境変数`SAKURACLOUD_ACCESS_TOKEN_SECRET`で指定することも可能です。  
-> コマンド実行時に`--secret`を指定することでこれらの設定を上書きすることが可能です。  
+> 環境変数`SAKURACLOUD_ACCESS_TOKEN_SECRET`での指定、またはコマンド実行時の`--secret`の指定でこれらの設定を上書き可能です。  
 
 ---
 
@@ -120,8 +117,7 @@ usacloud server ls -h
   * `tk1v` : サンドボックス
 
 > 通常この値は`~/.usacloud/[current-profile-nane]/config.json`の値が利用されます。  
-> 環境変数`SAKURACLOUD_ZONE`で指定することも可能です。  
-> コマンド実行時に`--zone`を指定することでこれらの設定を上書きすることが可能です。  
+> 環境変数`SAKURACLOUD_ZONE`での指定、またはコマンド実行時の`--zone`の指定でこれらの設定を上書き可能です。  
 
 ---
 
@@ -136,8 +132,7 @@ usacloud server ls -h
   * `tsv`   : TSV形式
 
 > 通常この値は`~/.usacloud/[current-profile-nane]/config.json`の値が利用されます。  
-> 環境変数`USACLOUD_DEFAULT_OUTPUT_TYPE`で指定することも可能です。  
-> コマンド実行時に`--output-type`(エイリアス:`--out`)を指定することでこの設定を上書きすることが可能です。  
+> 環境変数`USACLOUD_DEFAULT_OUTPUT_TYPE`での指定、またはコマンド実行時の`--output-type`(エイリアス:`--out`)の指定でこの設定を上書き可能です。  
 
 ---
 
@@ -204,7 +199,7 @@ usacloud server ls --output-type csv --column=ID --column=Interfaces.0.ID
 
 IDのみ出力します。
 
-**このオプションは`--output-type`と一緒に指定することができません。 **
+**このオプションは`--output-type`と一緒に指定できません。 **
 
 ---
 
