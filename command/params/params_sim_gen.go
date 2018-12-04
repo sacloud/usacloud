@@ -277,6 +277,7 @@ type CreateSIMParam struct {
 	Passcode          string   `json:"passcode"`
 	Disabled          bool     `json:"disabled"`
 	Imei              string   `json:"imei"`
+	Career            []string `json:"career"`
 	Name              string   `json:"name"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
@@ -311,6 +312,9 @@ func (p *CreateSIMParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Imei) {
 		p.Imei = ""
+	}
+	if isEmpty(p.Career) {
+		p.Career = []string{""}
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -370,6 +374,26 @@ func (p *CreateSIMParam) Validate() []error {
 	{
 		validator := validateRequired
 		errs := validator("--passcode", p.Passcode)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--career", p.Career)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SIM"].Commands["create"].Params["career"].ValidateFunc
+		errs := validator("--career", p.Career)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateBetween("--career", p.Career, 1, 3)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -484,6 +508,13 @@ func (p *CreateSIMParam) SetImei(v string) {
 
 func (p *CreateSIMParam) GetImei() string {
 	return p.Imei
+}
+func (p *CreateSIMParam) SetCareer(v []string) {
+	p.Career = v
+}
+
+func (p *CreateSIMParam) GetCareer() []string {
+	return p.Career
 }
 func (p *CreateSIMParam) SetName(v string) {
 	p.Name = v
@@ -1057,6 +1088,7 @@ func (p *UpdateSIMParam) GetId() int64 {
 
 // DeleteSIMParam is input parameters for the sacloud API
 type DeleteSIMParam struct {
+	Force             bool     `json:"force"`
 	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
@@ -1078,6 +1110,9 @@ func NewDeleteSIMParam() *DeleteSIMParam {
 
 // FillValueToSkeleton fill values to empty fields
 func (p *DeleteSIMParam) FillValueToSkeleton() {
+	if isEmpty(p.Force) {
+		p.Force = false
+	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
 	}
@@ -1175,6 +1210,13 @@ func (p *DeleteSIMParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
+func (p *DeleteSIMParam) SetForce(v bool) {
+	p.Force = v
+}
+
+func (p *DeleteSIMParam) GetForce() bool {
+	return p.Force
+}
 func (p *DeleteSIMParam) SetSelector(v []string) {
 	p.Selector = v
 }
@@ -1258,6 +1300,350 @@ func (p *DeleteSIMParam) SetId(v int64) {
 
 func (p *DeleteSIMParam) GetId() int64 {
 	return p.Id
+}
+
+// CareerInfoSIMParam is input parameters for the sacloud API
+type CareerInfoSIMParam struct {
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
+	Id                int64    `json:"id"`
+}
+
+// NewCareerInfoSIMParam return new CareerInfoSIMParam
+func NewCareerInfoSIMParam() *CareerInfoSIMParam {
+	return &CareerInfoSIMParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CareerInfoSIMParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *CareerInfoSIMParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *CareerInfoSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *CareerInfoSIMParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["career-info"]
+}
+
+func (p *CareerInfoSIMParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *CareerInfoSIMParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *CareerInfoSIMParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *CareerInfoSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *CareerInfoSIMParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *CareerInfoSIMParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *CareerInfoSIMParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CareerInfoSIMParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CareerInfoSIMParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CareerInfoSIMParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CareerInfoSIMParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CareerInfoSIMParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CareerInfoSIMParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *CareerInfoSIMParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *CareerInfoSIMParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *CareerInfoSIMParam) GetColumn() []string {
+	return p.Column
+}
+func (p *CareerInfoSIMParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *CareerInfoSIMParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *CareerInfoSIMParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *CareerInfoSIMParam) GetFormat() string {
+	return p.Format
+}
+func (p *CareerInfoSIMParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *CareerInfoSIMParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *CareerInfoSIMParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *CareerInfoSIMParam) GetQuery() string {
+	return p.Query
+}
+func (p *CareerInfoSIMParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *CareerInfoSIMParam) GetId() int64 {
+	return p.Id
+}
+
+// CareerUpdateSIMParam is input parameters for the sacloud API
+type CareerUpdateSIMParam struct {
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	Id                int64    `json:"id"`
+	Career            []string `json:"career"`
+}
+
+// NewCareerUpdateSIMParam return new CareerUpdateSIMParam
+func NewCareerUpdateSIMParam() *CareerUpdateSIMParam {
+	return &CareerUpdateSIMParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *CareerUpdateSIMParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+	if isEmpty(p.Career) {
+		p.Career = []string{""}
+	}
+
+}
+
+// Validate checks current values in model
+func (p *CareerUpdateSIMParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--career", p.Career)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SIM"].Commands["career-update"].Params["career"].ValidateFunc
+		errs := validator("--career", p.Career)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateBetween("--career", p.Career, 1, 3)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *CareerUpdateSIMParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SIM"]
+}
+
+func (p *CareerUpdateSIMParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["career-update"]
+}
+
+func (p *CareerUpdateSIMParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *CareerUpdateSIMParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *CareerUpdateSIMParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *CareerUpdateSIMParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *CareerUpdateSIMParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *CareerUpdateSIMParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *CareerUpdateSIMParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *CareerUpdateSIMParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *CareerUpdateSIMParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *CareerUpdateSIMParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *CareerUpdateSIMParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *CareerUpdateSIMParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *CareerUpdateSIMParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *CareerUpdateSIMParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *CareerUpdateSIMParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *CareerUpdateSIMParam) GetId() int64 {
+	return p.Id
+}
+func (p *CareerUpdateSIMParam) SetCareer(v []string) {
+	p.Career = v
+}
+
+func (p *CareerUpdateSIMParam) GetCareer() []string {
+	return p.Career
 }
 
 // ActivateSIMParam is input parameters for the sacloud API
@@ -2025,6 +2411,12 @@ type LogsSIMParam struct {
 	ParamTemplate     string   `json:"param-template"`
 	ParamTemplateFile string   `json:"param-template-file"`
 	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
 	Id                int64    `json:"id"`
 }
 
@@ -2056,6 +2448,24 @@ func (p *LogsSIMParam) FillValueToSkeleton() {
 	if isEmpty(p.GenerateSkeleton) {
 		p.GenerateSkeleton = false
 	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
+	}
 	if isEmpty(p.Id) {
 		p.Id = 0
 	}
@@ -2075,6 +2485,26 @@ func (p *LogsSIMParam) Validate() []error {
 	{
 		validator := validateSakuraID
 		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2148,6 +2578,48 @@ func (p *LogsSIMParam) SetGenerateSkeleton(v bool) {
 
 func (p *LogsSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
+}
+func (p *LogsSIMParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *LogsSIMParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *LogsSIMParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *LogsSIMParam) GetColumn() []string {
+	return p.Column
+}
+func (p *LogsSIMParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *LogsSIMParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *LogsSIMParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *LogsSIMParam) GetFormat() string {
+	return p.Format
+}
+func (p *LogsSIMParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *LogsSIMParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *LogsSIMParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *LogsSIMParam) GetQuery() string {
+	return p.Query
 }
 func (p *LogsSIMParam) SetId(v int64) {
 	p.Id = v

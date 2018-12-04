@@ -3,8 +3,10 @@ package funcs
 import (
 	"fmt"
 
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
+	"github.com/sacloud/usacloud/define"
 )
 
 func SIMCreate(ctx command.Context, params *params.CreateSIMParam) error {
@@ -21,6 +23,17 @@ func SIMCreate(ctx command.Context, params *params.CreateSIMParam) error {
 	// call Create(id)
 	res, err := api.Create(p)
 	if err != nil {
+		return fmt.Errorf("SIMCreate is failed: %s", err)
+	}
+
+	var careers []*sacloud.SIMNetworkOperatorConfig
+	for _, career := range params.Career {
+		careers = append(careers, &sacloud.SIMNetworkOperatorConfig{
+			Allow: true,
+			Name:  define.SIMCareers[career],
+		})
+	}
+	if _, err := api.SetNetworkOperator(res.ID, careers...); err != nil {
 		return fmt.Errorf("SIMCreate is failed: %s", err)
 	}
 

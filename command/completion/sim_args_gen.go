@@ -110,6 +110,68 @@ func SIMDeleteCompleteArgs(ctx command.Context, params *params.DeleteSIMParam, c
 
 }
 
+func SIMCareerInfoCompleteArgs(ctx command.Context, params *params.CareerInfoSIMParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetSIMAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.CommonServiceSIMItems {
+		fmt.Println(res.CommonServiceSIMItems[i].ID)
+		var target interface{} = &res.CommonServiceSIMItems[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func SIMCareerUpdateCompleteArgs(ctx command.Context, params *params.CareerUpdateSIMParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetSIMAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.CommonServiceSIMItems {
+		fmt.Println(res.CommonServiceSIMItems[i].ID)
+		var target interface{} = &res.CommonServiceSIMItems[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
 func SIMActivateCompleteArgs(ctx command.Context, params *params.ActivateSIMParam, cur, prev, commandName string) {
 
 	if !command.GlobalOption.Valid {
