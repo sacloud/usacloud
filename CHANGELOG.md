@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.16.0 (2018-12-06)
+
+* use go 1.11 modules #376 (yamamoto-febc)
+* SIMのマルチキャリア対応 #379 (yamamoto-febc)
+
+
 ## 0.15.0 (2018-10-12)
 
 * サーバ/ディスクの新プラン対応 #370 (yamamoto-febc)
