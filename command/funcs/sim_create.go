@@ -26,14 +26,14 @@ func SIMCreate(ctx command.Context, params *params.CreateSIMParam) error {
 		return fmt.Errorf("SIMCreate is failed: %s", err)
 	}
 
-	var careers []*sacloud.SIMNetworkOperatorConfig
-	for _, career := range params.Career {
-		careers = append(careers, &sacloud.SIMNetworkOperatorConfig{
+	var carriers []*sacloud.SIMNetworkOperatorConfig
+	for _, carrier := range params.Carrier {
+		carriers = append(carriers, &sacloud.SIMNetworkOperatorConfig{
 			Allow: true,
-			Name:  define.SIMCareers[career],
+			Name:  define.SIMCarrier[carrier],
 		})
 	}
-	if _, err := api.SetNetworkOperator(res.ID, careers...); err != nil {
+	if _, err := api.SetNetworkOperator(res.ID, carriers...); err != nil {
 		return fmt.Errorf("SIMCreate is failed: %s", err)
 	}
 

@@ -7,18 +7,18 @@ import (
 	"github.com/sacloud/usacloud/command/params"
 )
 
-func SIMCareerInfo(ctx command.Context, params *params.CareerInfoSIMParam) error {
+func SIMCarrierInfo(ctx command.Context, params *params.CarrierInfoSIMParam) error {
 
 	client := ctx.GetAPIClient()
 	api := client.GetSIMAPI()
 	p, e := api.Read(params.Id)
 	if e != nil {
-		return fmt.Errorf("SIMCareerInfo is failed: %s", e)
+		return fmt.Errorf("SIMCarrierInfo is failed: %s", e)
 	}
 
 	careerInfo, err := api.GetNetworkOperator(p.ID)
 	if err != nil {
-		return fmt.Errorf("SIMCareerInfo is failed: %s", err)
+		return fmt.Errorf("SIMCarrierInfo is failed: %s", err)
 	}
 
 	var list []interface{}

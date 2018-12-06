@@ -81,8 +81,8 @@ func SIMCreateCompleteFlags(ctx command.Context, params *params.CreateSIMParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "career":
-		param := define.Resources["SIM"].Commands["create"].BuildedParams().Get("career")
+	case "carrier":
+		param := define.Resources["SIM"].Commands["create"].BuildedParams().Get("carrier")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -209,6 +209,30 @@ func SIMDeleteCompleteFlags(ctx command.Context, params *params.DeleteSIMParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func SIMCarrierInfoCompleteFlags(ctx command.Context, params *params.CarrierInfoSIMParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["SIM"].Commands["carrier-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["SIM"].Commands["carrier-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "output-type", "out":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
@@ -221,48 +245,22 @@ func SIMDeleteCompleteFlags(ctx command.Context, params *params.DeleteSIMParam, 
 	}
 }
 
-func SIMCareerInfoCompleteFlags(ctx command.Context, params *params.CareerInfoSIMParam, flagName string, currentValue string) {
+func SIMCarrierUpdateCompleteFlags(ctx command.Context, params *params.CarrierUpdateSIMParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 
 	switch flagName {
 	case "selector":
-		param := define.Resources["SIM"].Commands["career-info"].BuildedParams().Get("selector")
+		param := define.Resources["SIM"].Commands["carrier-update"].BuildedParams().Get("selector")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
 	case "id":
-		param := define.Resources["SIM"].Commands["career-info"].BuildedParams().Get("id")
+		param := define.Resources["SIM"].Commands["carrier-update"].BuildedParams().Get("id")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
-func SIMCareerUpdateCompleteFlags(ctx command.Context, params *params.CareerUpdateSIMParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "selector":
-		param := define.Resources["SIM"].Commands["career-update"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["SIM"].Commands["career-update"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "career":
-		param := define.Resources["SIM"].Commands["career-update"].BuildedParams().Get("career")
+	case "carrier":
+		param := define.Resources["SIM"].Commands["carrier-update"].BuildedParams().Get("carrier")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

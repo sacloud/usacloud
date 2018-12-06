@@ -8,16 +8,16 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-// SIMCareers defines SIM career names
-var SIMCareers = map[string]string{
+// SIMCarrier defines SIM carrier names
+var SIMCarrier = map[string]string{
 	"kddi":     sacloud.SIMOperatorsKDDI,
 	"docomo":   sacloud.SIMOperatorsDOCOMO,
 	"softbank": sacloud.SIMOperatorsSoftBank,
 }
 
-func simCareerKeys() []string {
+func simCarrierKeys() []string {
 	var keys []string
-	for k := range SIMCareers {
+	for k := range SIMCarrier {
 		keys = append(keys, k)
 	}
 	return keys
@@ -73,22 +73,22 @@ func SIMResource() *schema.Resource {
 			UseCustomCommand: true,
 			NoOutput:         true,
 		},
-		"career-info": {
+		"carrier-info": {
 			Type:               schema.CommandManipulateSingle,
-			Params:             simCareerInfoParam(),
-			Aliases:            []string{"career-list"},
+			Params:             simCarrierInfoParam(),
+			Aliases:            []string{"carrier-list"},
 			TableType:          output.TableSimple,
-			TableColumnDefines: simCareerInfoColumns(),
+			TableColumnDefines: simCarrierInfoColumns(),
 			UseCustomCommand:   true,
 			NeedlessConfirm:    true,
-			Category:           "career",
+			Category:           "carrier",
 			Order:              10,
 		},
-		"career-update": {
+		"carrier-update": {
 			Type:             schema.CommandManipulateMulti,
-			Params:           simCareerUpdateParam(),
+			Params:           simCarrierUpdateParam(),
 			UseCustomCommand: true,
-			Category:         "career",
+			Category:         "carrier",
 			Order:            15,
 			NoOutput:         true,
 		},
@@ -177,8 +177,8 @@ var SIMCommandCategories = []schema.Category{
 		Order:       10,
 	},
 	{
-		Key:         "career",
-		DisplayName: "Career",
+		Key:         "carrier",
+		DisplayName: "Carrier",
 		Order:       20,
 	},
 	{
@@ -243,7 +243,7 @@ func simListColumns() []output.ColumnDef {
 	}
 }
 
-func simCareerInfoColumns() []output.ColumnDef {
+func simCarrierInfoColumns() []output.ColumnDef {
 	return []output.ColumnDef{
 		{Name: "name"},
 		{Name: "country_code"},
@@ -309,14 +309,14 @@ func simCreateParam() map[string]*schema.Schema {
 			Category:    "sim",
 			Order:       40,
 		},
-		"career": {
+		"carrier": {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
 			Category:     "sim",
 			Required:     true,
 			Order:        50,
-			ValidateFunc: validateStringSlice(validateInStrValues(simCareerKeys()...)),
-			CompleteFunc: completeInStrValues(simCareerKeys()...),
+			ValidateFunc: validateStringSlice(validateInStrValues(simCarrierKeys()...)),
+			CompleteFunc: completeInStrValues(simCarrierKeys()...),
 			MinItems:     1,
 			MaxItems:     3,
 		},
@@ -388,17 +388,17 @@ func simDeleteParam() map[string]*schema.Schema {
 	}
 }
 
-func simCareerInfoParam() map[string]*schema.Schema {
+func simCarrierInfoParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
 }
 
-func simCareerUpdateParam() map[string]*schema.Schema {
+func simCarrierUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
-		"career": {
+		"carrier": {
 			Type:         schema.TypeStringList,
 			HandlerType:  schema.HandlerNoop,
-			ValidateFunc: validateStringSlice(validateInStrValues(simCareerKeys()...)),
-			CompleteFunc: completeInStrValues(simCareerKeys()...),
+			ValidateFunc: validateStringSlice(validateInStrValues(simCarrierKeys()...)),
+			CompleteFunc: completeInStrValues(simCarrierKeys()...),
 			MinItems:     1,
 			MaxItems:     3,
 			Required:     true,

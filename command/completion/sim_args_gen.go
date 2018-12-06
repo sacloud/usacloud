@@ -110,7 +110,7 @@ func SIMDeleteCompleteArgs(ctx command.Context, params *params.DeleteSIMParam, c
 
 }
 
-func SIMCareerInfoCompleteArgs(ctx command.Context, params *params.CareerInfoSIMParam, cur, prev, commandName string) {
+func SIMCarrierInfoCompleteArgs(ctx command.Context, params *params.CarrierInfoSIMParam, cur, prev, commandName string) {
 
 	if !command.GlobalOption.Valid {
 		return
@@ -141,7 +141,7 @@ func SIMCareerInfoCompleteArgs(ctx command.Context, params *params.CareerInfoSIM
 
 }
 
-func SIMCareerUpdateCompleteArgs(ctx command.Context, params *params.CareerUpdateSIMParam, cur, prev, commandName string) {
+func SIMCarrierUpdateCompleteArgs(ctx command.Context, params *params.CarrierUpdateSIMParam, cur, prev, commandName string) {
 
 	if !command.GlobalOption.Valid {
 		return
