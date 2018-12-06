@@ -568,27 +568,24 @@ usacloud server ls -h
 <hr />
 <h4 id="-config">コンフィグ(<code>--config</code>)</h4>
 <p>利用するコンフィグ(プロファイル)の指定を行います。(エイリアス:<code>--profile</code>)<br />
-指定可能な値は<code>usacloud config list</code>コマンドで調べることが可能です。  </p>
+指定可能な値は<code>usacloud config list</code>コマンドで調べることができます。  </p>
 <blockquote>
 <p>通常この値は<code>~/.usacloud/current</code>の値が利用されます。<br />
-環境変数<code>USACLOUD_PROFILE</code>で指定することも可能です。<br />
-コマンド実行時に<code>--config</code>を指定することでこれらの設定を上書きすることが可能です。  </p>
+環境変数<code>USACLOUD_PROFILE</code>での指定、またはコマンド実行時の<code>--config</code>の指定でこの設定を上書き可能です。  </p>
 </blockquote>
 <hr />
 <h4 id="api-token">APIトークン(<code>--token</code>)</h4>
 <p>さくらのクラウドのAPIトークンを指定します。  </p>
 <blockquote>
 <p>通常この値は<code>~/.usacloud/[current-profile-nane]/config.json</code>の値が利用されます。<br />
-環境変数<code>SAKURACLOUD_ACCESS_TOKEN</code>で指定することも可能です。<br />
-コマンド実行時に<code>--token</code>を指定することでこれらの設定を上書きすることが可能です。  </p>
+環境変数<code>SAKURACLOUD_ACCESS_TOKEN</code>での指定、またはコマンド実行時の<code>--token</code>の指定でこれらの設定を上書き可能です。  </p>
 </blockquote>
 <hr />
 <h4 id="api-secret">APIシークレット(<code>--secret</code>)</h4>
 <p>さくらのクラウドのAPIシークレットを指定します。  </p>
 <blockquote>
 <p>通常この値は<code>~/.usacloud/[current-profile-nane]/config.json</code>の値が利用されます。<br />
-環境変数<code>SAKURACLOUD_ACCESS_TOKEN_SECRET</code>で指定することも可能です。<br />
-コマンド実行時に<code>--secret</code>を指定することでこれらの設定を上書きすることが可能です。  </p>
+環境変数<code>SAKURACLOUD_ACCESS_TOKEN_SECRET</code>での指定、またはコマンド実行時の<code>--secret</code>の指定でこれらの設定を上書き可能です。  </p>
 </blockquote>
 <hr />
 <h4 id="-zone">操作対象ゾーン(<code>--zone</code>)</h4>
@@ -602,8 +599,7 @@ usacloud server ls -h
 </ul>
 <blockquote>
 <p>通常この値は<code>~/.usacloud/[current-profile-nane]/config.json</code>の値が利用されます。<br />
-環境変数<code>SAKURACLOUD_ZONE</code>で指定することも可能です。<br />
-コマンド実行時に<code>--zone</code>を指定することでこれらの設定を上書きすることが可能です。  </p>
+環境変数<code>SAKURACLOUD_ZONE</code>での指定、またはコマンド実行時の<code>--zone</code>の指定でこれらの設定を上書き可能です。  </p>
 </blockquote>
 <hr />
 <h4 id="-default-output-type">デフォルト出力形式(<code>--default-output-type</code>)</h4>
@@ -617,8 +613,7 @@ usacloud server ls -h
 </ul>
 <blockquote>
 <p>通常この値は<code>~/.usacloud/[current-profile-nane]/config.json</code>の値が利用されます。<br />
-環境変数<code>USACLOUD_DEFAULT_OUTPUT_TYPE</code>で指定することも可能です。<br />
-コマンド実行時に<code>--output-type</code>(エイリアス:<code>--out</code>)を指定することでこの設定を上書きすることが可能です。  </p>
+環境変数<code>USACLOUD_DEFAULT_OUTPUT_TYPE</code>での指定、またはコマンド実行時の<code>--output-type</code>(エイリアス:<code>--out</code>)の指定でこの設定を上書き可能です。  </p>
 </blockquote>
 <hr />
 <h4 id="-help-or-h">ヘルプ表示(<code>--help</code> or <code>-h</code>)</h4>
@@ -660,7 +655,7 @@ usacloud server ls -h
 <hr />
 <h4 id="quiet-quiet-or-q">quietモード(<code>--quiet</code> or <code>-q</code>)</h4>
 <p>IDのみ出力します。</p>
-<p><strong>このオプションは<code>--output-type</code>と一緒に指定することができません。 </strong></p>
+<p><strong>このオプションは<code>--output-type</code>と一緒に指定できません。 </strong></p>
 <hr />
 <h4 id="-format-or-fmt">フォーマット(<code>--format</code> or <code>--fmt</code>)</h4>
 <p>出力フォーマットをgo言語の<a href="https://golang.org/pkg/text/template/">text/template</a>形式で指定します。</p>
