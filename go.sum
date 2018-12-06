@@ -82,6 +82,8 @@ github.com/sacloud/libsacloud v0.0.0-20181023005722-d32734f6cf48 h1:guodNw56m/2W
 github.com/sacloud/libsacloud v0.0.0-20181023005722-d32734f6cf48/go.mod h1:js4lAYJrwAUoE6xR+xw+yFtwCBII98zgFGsT6gwXd8I=
 github.com/sacloud/libsacloud v1.0.0 h1:FBV24jFqE72d1FMaP2NBbpEdKHOPEDcO4qKLhxj5mnU=
 github.com/sacloud/libsacloud v1.0.0/go.mod h1:js4lAYJrwAUoE6xR+xw+yFtwCBII98zgFGsT6gwXd8I=
+github.com/sacloud/libsacloud v1.3.0 h1:QxKQyW72GPhFe8ZBbPayveNL5UQEnxUhI6Gb0NBS3oI=
+github.com/sacloud/libsacloud v1.3.0/go.mod h1:js4lAYJrwAUoE6xR+xw+yFtwCBII98zgFGsT6gwXd8I=
 github.com/skratchdot/open-golang v0.0.0-20160302144031-75fb7ed4208c h1:fyKiXKO1/I/B6Y2U8T7WdQGWzwehOuGIrljPtt7YTTI=
 github.com/skratchdot/open-golang v0.0.0-20160302144031-75fb7ed4208c/go.mod h1:sUM3LWHvSMaG192sy56D9F7CNvL7jUJVXoqM1QKLnog=
 github.com/stretchr/testify v1.2.2 h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1w=

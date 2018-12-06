@@ -23,6 +23,8 @@ func init() {
 	readParam := params.NewReadSIMParam()
 	updateParam := params.NewUpdateSIMParam()
 	deleteParam := params.NewDeleteSIMParam()
+	careerInfoParam := params.NewCareerInfoSIMParam()
+	careerUpdateParam := params.NewCareerUpdateSIMParam()
 	activateParam := params.NewActivateSIMParam()
 	deactivateParam := params.NewDeactivateSIMParam()
 	imeiLockParam := params.NewImeiLockSIMParam()
@@ -379,6 +381,10 @@ func init() {
 					&cli.StringFlag{
 						Name: "imei",
 					},
+					&cli.StringSliceFlag{
+						Name:  "career",
+						Usage: "[Required] ",
+					},
 					&cli.StringFlag{
 						Name:  "name",
 						Usage: "[Required] set resource display name",
@@ -491,6 +497,9 @@ func init() {
 					}
 					if c.IsSet("imei") {
 						createParam.Imei = c.String("imei")
+					}
+					if c.IsSet("career") {
+						createParam.Career = c.StringSlice("career")
 					}
 					if c.IsSet("name") {
 						createParam.Name = c.String("name")
@@ -630,6 +639,9 @@ func init() {
 					}
 					if c.IsSet("imei") {
 						createParam.Imei = c.String("imei")
+					}
+					if c.IsSet("career") {
+						createParam.Career = c.StringSlice("career")
 					}
 					if c.IsSet("name") {
 						createParam.Name = c.String("name")
@@ -1503,6 +1515,11 @@ func init() {
 				Usage:     "Delete SIM",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
 				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:    "force",
+						Aliases: []string{"f"},
+						Usage:   "forced-delete flag if SIM is still activating",
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
@@ -1596,6 +1613,9 @@ func init() {
 					ctx := command.NewContext(c, realArgs, deleteParam)
 
 					// Set option values
+					if c.IsSet("force") {
+						deleteParam.Force = c.Bool("force")
+					}
 					if c.IsSet("selector") {
 						deleteParam.Selector = c.StringSlice("selector")
 					}
@@ -1717,6 +1737,9 @@ func init() {
 					}
 
 					// Set option values
+					if c.IsSet("force") {
+						deleteParam.Force = c.Bool("force")
+					}
 					if c.IsSet("selector") {
 						deleteParam.Selector = c.StringSlice("selector")
 					}
@@ -1863,6 +1886,688 @@ func init() {
 						deleteParam := &p
 						go func() {
 							err := funcs.SIMDelete(ctx, deleteParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "career-info",
+				Aliases:   []string{"career-list"},
+				Usage:     "CareerInfo SIM",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = careerInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, careerInfoParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						careerInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						careerInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						careerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						careerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						careerInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						careerInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						careerInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						careerInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						careerInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						careerInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						careerInfoParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.SIMCareerInfoCompleteArgs(ctx, careerInfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.SIMCareerInfoCompleteArgs(ctx, careerInfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.SIMCareerInfoCompleteFlags(ctx, careerInfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.SIMCareerInfoCompleteArgs(ctx, careerInfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					careerInfoParam.ParamTemplate = c.String("param-template")
+					careerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(careerInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewCareerInfoSIMParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(careerInfoParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						careerInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						careerInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						careerInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						careerInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						careerInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						careerInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						careerInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						careerInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						careerInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						careerInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						careerInfoParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = careerInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if careerInfoParam.GenerateSkeleton {
+						careerInfoParam.GenerateSkeleton = false
+						careerInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(careerInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := careerInfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), careerInfoParam)
+
+					apiClient := ctx.GetAPIClient().SIM
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(careerInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceSIMItems {
+							if hasTags(&v, careerInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", careerInfoParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceSIMItems {
+										if len(careerInfoParam.Selector) == 0 || hasTags(&v, careerInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						careerInfoParam.SetId(id)
+						p := *careerInfoParam // copy struct value
+						careerInfoParam := &p
+						go func() {
+							err := funcs.SIMCareerInfo(ctx, careerInfoParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "career-update",
+				Usage:     "CareerUpdate SIM",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+					&cli.StringSliceFlag{
+						Name:  "career",
+						Usage: "[Required] ",
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = careerUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, careerUpdateParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						careerUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						careerUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						careerUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						careerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						careerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						careerUpdateParam.Id = c.Int64("id")
+					}
+					if c.IsSet("career") {
+						careerUpdateParam.Career = c.StringSlice("career")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.SIMCareerUpdateCompleteArgs(ctx, careerUpdateParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.SIMCareerUpdateCompleteArgs(ctx, careerUpdateParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.SIMCareerUpdateCompleteFlags(ctx, careerUpdateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.SIMCareerUpdateCompleteArgs(ctx, careerUpdateParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					careerUpdateParam.ParamTemplate = c.String("param-template")
+					careerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(careerUpdateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewCareerUpdateSIMParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(careerUpdateParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						careerUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						careerUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						careerUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						careerUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						careerUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						careerUpdateParam.Id = c.Int64("id")
+					}
+					if c.IsSet("career") {
+						careerUpdateParam.Career = c.StringSlice("career")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = careerUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if careerUpdateParam.GenerateSkeleton {
+						careerUpdateParam.GenerateSkeleton = false
+						careerUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(careerUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := careerUpdateParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), careerUpdateParam)
+
+					apiClient := ctx.GetAPIClient().SIM
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(careerUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceSIMItems {
+							if hasTags(&v, careerUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", careerUpdateParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceSIMItems {
+										if len(careerUpdateParam.Selector) == 0 || hasTags(&v, careerUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					// confirm
+					if !careerUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("career-update", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						careerUpdateParam.SetId(id)
+						p := *careerUpdateParam // copy struct value
+						careerUpdateParam := &p
+						go func() {
+							err := funcs.SIMCareerUpdate(ctx, careerUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3806,6 +4511,34 @@ func init() {
 						Name:  "generate-skeleton",
 						Usage: "Output skelton of parameter JSON",
 					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -3867,6 +4600,24 @@ func init() {
 					}
 					if c.IsSet("generate-skeleton") {
 						logsParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						logsParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						logsParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						logsParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						logsParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						logsParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						logsParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						logsParam.Id = c.Int64("id")
@@ -3973,6 +4724,24 @@ func init() {
 					}
 					if c.IsSet("generate-skeleton") {
 						logsParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						logsParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						logsParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						logsParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						logsParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						logsParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						logsParam.Query = c.String("query")
 					}
 					if c.IsSet("id") {
 						logsParam.Id = c.Int64("id")
@@ -4497,6 +5266,16 @@ func init() {
 	AppendCommandCategoryMap("sim", "activate", &schema.Category{
 		Key:         "activate",
 		DisplayName: "Activate/Deactivate",
+		Order:       25,
+	})
+	AppendCommandCategoryMap("sim", "career-info", &schema.Category{
+		Key:         "career",
+		DisplayName: "Career",
+		Order:       20,
+	})
+	AppendCommandCategoryMap("sim", "career-update", &schema.Category{
+		Key:         "career",
+		DisplayName: "Career",
 		Order:       20,
 	})
 	AppendCommandCategoryMap("sim", "create", &schema.Category{
@@ -4507,7 +5286,7 @@ func init() {
 	AppendCommandCategoryMap("sim", "deactivate", &schema.Category{
 		Key:         "activate",
 		DisplayName: "Activate/Deactivate",
-		Order:       20,
+		Order:       25,
 	})
 	AppendCommandCategoryMap("sim", "delete", &schema.Category{
 		Key:         "basic",
@@ -4592,10 +5371,105 @@ func init() {
 		DisplayName: "Filter options",
 		Order:       2147483587,
 	})
+	AppendFlagCategoryMap("sim", "career-info", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("sim", "career-info", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("sim", "career-info", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("sim", "career-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "career-info", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("sim", "career-info", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("sim", "career-info", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "career-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "career-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("sim", "career-info", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("sim", "career-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("sim", "career-update", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "career-update", "career", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("sim", "career-update", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "career-update", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("sim", "career-update", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "career-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "career-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("sim", "create", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "create", "career", &schema.Category{
+		Key:         "sim",
+		DisplayName: "Sim options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("sim", "create", "column", &schema.Category{
 		Key:         "output",
@@ -4721,6 +5595,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("sim", "delete", "force", &schema.Category{
+		Key:         "operation",
+		DisplayName: "Operation options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("sim", "delete", "format", &schema.Category{
 		Key:         "output",
@@ -4977,10 +5856,25 @@ func init() {
 		DisplayName: "Filter options",
 		Order:       2147483587,
 	})
+	AppendFlagCategoryMap("sim", "logs", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("sim", "logs", "follow", &schema.Category{
 		Key:         "monitor",
 		DisplayName: "Monitor options",
 		Order:       1,
+	})
+	AppendFlagCategoryMap("sim", "logs", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("sim", "logs", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("sim", "logs", "generate-skeleton", &schema.Category{
 		Key:         "Input",
@@ -4992,6 +5886,11 @@ func init() {
 		DisplayName: "Other options",
 		Order:       2147483647,
 	})
+	AppendFlagCategoryMap("sim", "logs", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("sim", "logs", "param-template", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -5001,6 +5900,16 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("sim", "logs", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("sim", "logs", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("sim", "logs", "refresh-interval", &schema.Category{
 		Key:         "monitor",

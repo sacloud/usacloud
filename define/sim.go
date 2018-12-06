@@ -3,9 +3,25 @@ package define
 import (
 	"math"
 
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
 )
+
+// SIMCareers defines SIM career names
+var SIMCareers = map[string]string{
+	"kddi":     sacloud.SIMOperatorsKDDI,
+	"docomo":   sacloud.SIMOperatorsDOCOMO,
+	"softbank": sacloud.SIMOperatorsSoftBank,
+}
+
+func simCareerKeys() []string {
+	var keys []string
+	for k := range SIMCareers {
+		keys = append(keys, k)
+	}
+	return keys
+}
 
 func SIMResource() *schema.Resource {
 
@@ -47,13 +63,34 @@ func SIMResource() *schema.Resource {
 			Order:         40,
 		},
 		"delete": {
-			Type:          schema.CommandDelete,
-			Aliases:       []string{"rm"},
-			Params:        simDeleteParam(),
-			IncludeFields: simDetailIncludes(),
-			ExcludeFields: simDetailExcludes(),
-			Category:      "basic",
-			Order:         50,
+			Type:             schema.CommandDelete,
+			Aliases:          []string{"rm"},
+			Params:           simDeleteParam(),
+			IncludeFields:    simDetailIncludes(),
+			ExcludeFields:    simDetailExcludes(),
+			Category:         "basic",
+			Order:            50,
+			UseCustomCommand: true,
+			NoOutput:         true,
+		},
+		"career-info": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             simCareerInfoParam(),
+			Aliases:            []string{"career-list"},
+			TableType:          output.TableSimple,
+			TableColumnDefines: simCareerInfoColumns(),
+			UseCustomCommand:   true,
+			NeedlessConfirm:    true,
+			Category:           "career",
+			Order:              10,
+		},
+		"career-update": {
+			Type:             schema.CommandManipulateMulti,
+			Params:           simCareerUpdateParam(),
+			UseCustomCommand: true,
+			Category:         "career",
+			Order:            15,
+			NoOutput:         true,
 		},
 		"activate": {
 			Type:             schema.CommandManipulateMulti,
@@ -105,13 +142,14 @@ func SIMResource() *schema.Resource {
 			NoOutput:         true,
 		},
 		"logs": {
-			Type:             schema.CommandRead,
-			Params:           simLogsParam(),
-			Order:            10,
-			UseCustomCommand: true,
-			NeedlessConfirm:  true,
-			NoOutput:         true,
-			Category:         "monitor",
+			Type:               schema.CommandRead,
+			Params:             simLogsParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: simLogsColumns(),
+			Order:              10,
+			UseCustomCommand:   true,
+			NeedlessConfirm:    true,
+			Category:           "monitor",
 		},
 		"monitor": {
 			Type:               schema.CommandRead,
@@ -139,9 +177,14 @@ var SIMCommandCategories = []schema.Category{
 		Order:       10,
 	},
 	{
+		Key:         "career",
+		DisplayName: "Career",
+		Order:       20,
+	},
+	{
 		Key:         "activate",
 		DisplayName: "Activate/Deactivate",
-		Order:       20,
+		Order:       25,
 	},
 	{
 		Key:         "imei",
@@ -197,6 +240,14 @@ func simListColumns() []output.ColumnDef {
 			Name:       "Activated",
 			FormatFunc: formatBoolFunc("Status.sim.activated"),
 		},
+	}
+}
+
+func simCareerInfoColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "name"},
+		{Name: "country_code"},
+		{Name: "allow"},
 	}
 }
 
@@ -258,6 +309,17 @@ func simCreateParam() map[string]*schema.Schema {
 			Category:    "sim",
 			Order:       40,
 		},
+		"career": {
+			Type:         schema.TypeStringList,
+			HandlerType:  schema.HandlerNoop,
+			Category:     "sim",
+			Required:     true,
+			Order:        50,
+			ValidateFunc: validateStringSlice(validateInStrValues(simCareerKeys()...)),
+			CompleteFunc: completeInStrValues(simCareerKeys()...),
+			MinItems:     1,
+			MaxItems:     3,
+		},
 		"name": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
@@ -314,7 +376,35 @@ func simUpdateParam() map[string]*schema.Schema {
 }
 
 func simDeleteParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"force": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Aliases:     []string{"f"},
+			Description: "forced-delete flag if SIM is still activating",
+			Category:    "operation",
+			Order:       10,
+		},
+	}
+}
+
+func simCareerInfoParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
+}
+
+func simCareerUpdateParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"career": {
+			Type:         schema.TypeStringList,
+			HandlerType:  schema.HandlerNoop,
+			ValidateFunc: validateStringSlice(validateInStrValues(simCareerKeys()...)),
+			CompleteFunc: completeInStrValues(simCareerKeys()...),
+			MinItems:     1,
+			MaxItems:     3,
+			Required:     true,
+			Order:        10,
+		},
+	}
 }
 
 func simActivateParam() map[string]*schema.Schema {

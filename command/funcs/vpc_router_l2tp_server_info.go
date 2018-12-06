@@ -26,7 +26,7 @@ func VPCRouterL2tpServerInfo(ctx command.Context, params *params.L2tpServerInfoV
 	if p.HasL2TPIPsecServer() {
 		cnf = &l2tpConf{
 			VPCRouterL2TPIPsecServerConfig: p.Settings.Router.L2TPIPsecServer.Config,
-			Enabled: p.Settings.Router.L2TPIPsecServer.Enabled,
+			Enabled:                        p.Settings.Router.L2TPIPsecServer.Enabled,
 		}
 	} else {
 		cnf = &l2tpConf{

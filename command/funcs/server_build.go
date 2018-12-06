@@ -67,7 +67,7 @@ func ServerBuild(ctx command.Context, params *params.BuildServerParam) error {
 }
 
 func createServerBuilder(ctx command.Context, params *params.BuildServerParam) serverBuilder {
-	client := ctx.GetAPIClient()
+	client := builder.NewAPIClient(ctx.GetAPIClient())
 	var sb serverBuilder
 
 	switch params.DiskMode {
