@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu Dec 06 2018 <sacloud.users@gmail.com> - 0.16.1-1
+- リリースビルド: エラー修正 (by yamamoto-febc)
+
 * Thu Dec 06 2018 <sacloud.users@gmail.com> - 0.16.0-1
 - use go 1.11 modules (by yamamoto-febc)
 - SIMのマルチキャリア対応 (by yamamoto-febc)

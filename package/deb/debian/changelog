@@ -1,3 +1,10 @@
+usacloud (0.16.1-1) stable; urgency=low
+
+  * リリースビルド: エラー修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/382>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Thu, 06 Dec 2018 07:48:24 +0000
+
 usacloud (0.16.0-1) stable; urgency=low
 
   * use go 1.11 modules (by yamamoto-febc)

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.16.1 (2018-12-06)
+
+* リリースビルド: エラー修正 #382 (yamamoto-febc)
+
+
 ## 0.16.0 (2018-12-06)
 
 * use go 1.11 modules #376 (yamamoto-febc)
