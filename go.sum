@@ -76,14 +76,8 @@ github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZb
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/sacloud/ftps v0.0.0-20171205062625-42fc0f9886fe h1:JSZLn4B8X9V1ynSEht3QdNJ13Stey0hR6asicabuEqU=
 github.com/sacloud/ftps v0.0.0-20171205062625-42fc0f9886fe/go.mod h1:sdVeG85LaUt1f+0meZqSf6hSQYlwdgFLI8tJqLZ58VM=
-github.com/sacloud/libsacloud v0.0.0-20181012044508-a06f17c4eb0b h1:vNs1//4vPI92v3p9MIXDstPRUfJKRVDpCXiANXXkycg=
-github.com/sacloud/libsacloud v0.0.0-20181012044508-a06f17c4eb0b/go.mod h1:38KOZgoTGJ4VsMlNlF7Bh3xLGQNpNLNzNJsdtYAqwgo=
-github.com/sacloud/libsacloud v0.0.0-20181023005722-d32734f6cf48 h1:guodNw56m/2WhYXWVHqz00aOMgmbgiojpfwm4qOvpHg=
-github.com/sacloud/libsacloud v0.0.0-20181023005722-d32734f6cf48/go.mod h1:js4lAYJrwAUoE6xR+xw+yFtwCBII98zgFGsT6gwXd8I=
-github.com/sacloud/libsacloud v1.0.0 h1:FBV24jFqE72d1FMaP2NBbpEdKHOPEDcO4qKLhxj5mnU=
-github.com/sacloud/libsacloud v1.0.0/go.mod h1:js4lAYJrwAUoE6xR+xw+yFtwCBII98zgFGsT6gwXd8I=
-github.com/sacloud/libsacloud v1.3.0 h1:QxKQyW72GPhFe8ZBbPayveNL5UQEnxUhI6Gb0NBS3oI=
-github.com/sacloud/libsacloud v1.3.0/go.mod h1:js4lAYJrwAUoE6xR+xw+yFtwCBII98zgFGsT6gwXd8I=
+github.com/sacloud/libsacloud v1.3.1 h1:47dMAtvPvV5XWgzgpYxafObL331xBtPxIGV/NLi2zcM=
+github.com/sacloud/libsacloud v1.3.1/go.mod h1:js4lAYJrwAUoE6xR+xw+yFtwCBII98zgFGsT6gwXd8I=
 github.com/skratchdot/open-golang v0.0.0-20160302144031-75fb7ed4208c h1:fyKiXKO1/I/B6Y2U8T7WdQGWzwehOuGIrljPtt7YTTI=
 github.com/skratchdot/open-golang v0.0.0-20160302144031-75fb7ed4208c/go.mod h1:sUM3LWHvSMaG192sy56D9F7CNvL7jUJVXoqM1QKLnog=
 github.com/stretchr/testify v1.2.2 h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1w=
