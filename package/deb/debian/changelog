@@ -1,3 +1,10 @@
+usacloud (0.16.3-1) stable; urgency=low
+
+  * ロードバランサでのVIP削除エラー対応 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/387>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Fri, 14 Dec 2018 01:22:33 +0000
+
 usacloud (0.16.2-1) stable; urgency=low
 
   * SIMマルチキャリア機能での綴り誤り修正 (by yamamoto-febc)

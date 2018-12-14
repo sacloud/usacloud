@@ -99,6 +99,8 @@ golang.org/x/lint v0.0.0-20181011164241-5906bd5c48cd h1:cgsAvzdqkDKdI02tIvDjO225
 golang.org/x/lint v0.0.0-20181011164241-5906bd5c48cd/go.mod h1:UVdnD1Gm6xHRNCYTkRU2/jEulfH38KcIWyp/GAMgvoE=
 golang.org/x/lint v0.0.0-20181026193005-c67002cb31c3 h1:x/bBzNauLQAlE3fLku/xy92Y8QwKX5HZymrMz2IiKFc=
 golang.org/x/lint v0.0.0-20181026193005-c67002cb31c3/go.mod h1:UVdnD1Gm6xHRNCYTkRU2/jEulfH38KcIWyp/GAMgvoE=
+golang.org/x/lint v0.0.0-20181212231659-93c0bb5c8393 h1:dGRlBktj39730qkqD0/XX5lfeyP6d8Mcn0W0VmIAwnU=
+golang.org/x/lint v0.0.0-20181212231659-93c0bb5c8393/go.mod h1:UVdnD1Gm6xHRNCYTkRU2/jEulfH38KcIWyp/GAMgvoE=
 golang.org/x/sys v0.0.0-20180622082034-63fc586f45fe/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20180828065106-d99a578cf41b h1:cmOZLU2i7CLArKNViO+ZCQ47wqYFyKEIpbGWp+b6Uoc=
 golang.org/x/sys v0.0.0-20180828065106-d99a578cf41b/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
@@ -113,6 +115,8 @@ golang.org/x/tools v0.0.0-20181023010539-40a48ad93fbe h1:i8YNi6USHuTcWHQPvNjvHY7
 golang.org/x/tools v0.0.0-20181023010539-40a48ad93fbe/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 golang.org/x/tools v0.0.0-20181205224935-3576414c54a4 h1:DClqQnMTVHDNzKzRahtR4e5UN9A6/DU6VSw70i9ae6k=
 golang.org/x/tools v0.0.0-20181205224935-3576414c54a4/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
+golang.org/x/tools v0.0.0-20181213210126-fe2443f7b950 h1:TXhUh91A/zY5KvVrgVhMVAIwu8ikexq8+GC1Q2R5yLg=
+golang.org/x/tools v0.0.0-20181213210126-fe2443f7b950/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 gopkg.in/urfave/cli.v2 v2.0.0-20170215051800-04b2f4ff79cf h1:G7OVLwGrS4CUJzmi9HF7fMqpRRMll5jFYROQL8x3MrA=
 gopkg.in/urfave/cli.v2 v2.0.0-20170215051800-04b2f4ff79cf/go.mod h1:cKXr3E0k4aosgycml1b5z33BVV6hai1Kh7uDgFOkbcs=
 honnef.co/go/tools v0.0.0-20180920025451-e3ad64cb4ed3 h1:LyX67rVB0kBUFoROrQfzKwdrYLH1cRzHibxdJW85J1c=
