@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Fri Dec 14 2018 <sacloud.users@gmail.com> - 0.16.3-1
+- ロードバランサでのVIP削除エラー対応 (by yamamoto-febc)
+
 * Thu Dec 06 2018 <sacloud.users@gmail.com> - 0.16.2-1
 - SIMマルチキャリア機能での綴り誤り修正 (by yamamoto-febc)
 
