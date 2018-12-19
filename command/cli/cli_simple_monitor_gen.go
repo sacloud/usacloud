@@ -23,6 +23,7 @@ func init() {
 	readParam := params.NewReadSimpleMonitorParam()
 	updateParam := params.NewUpdateSimpleMonitorParam()
 	deleteParam := params.NewDeleteSimpleMonitorParam()
+	healthParam := params.NewHealthSimpleMonitorParam()
 
 	cliCommand := &cli.Command{
 		Name:  "simple-monitor",
@@ -45,6 +46,10 @@ func init() {
 						Name:    "tags",
 						Aliases: []string{"selector"},
 						Usage:   "set filter by tags(AND)",
+					},
+					&cli.StringFlag{
+						Name:  "health",
+						Usage: "set filter by HealthCheck Status('up' or 'down' or 'unknown')",
 					},
 					&cli.IntFlag{
 						Name:    "from",
@@ -147,6 +152,9 @@ func init() {
 					}
 					if c.IsSet("tags") {
 						listParam.Tags = c.StringSlice("tags")
+					}
+					if c.IsSet("health") {
+						listParam.Health = c.String("health")
 					}
 					if c.IsSet("from") {
 						listParam.From = c.Int("from")
@@ -277,6 +285,9 @@ func init() {
 					}
 					if c.IsSet("tags") {
 						listParam.Tags = c.StringSlice("tags")
+					}
+					if c.IsSet("health") {
+						listParam.Health = c.String("health")
 					}
 					if c.IsSet("from") {
 						listParam.From = c.Int("from")
@@ -2148,6 +2159,365 @@ func init() {
 
 				},
 			},
+			{
+				Name:      "health",
+				Usage:     "Health SimpleMonitor",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = healthParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, healthParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						healthParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						healthParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						healthParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						healthParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						healthParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						healthParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						healthParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						healthParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						healthParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						healthParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						healthParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.SimpleMonitorHealthCompleteArgs(ctx, healthParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.SimpleMonitorHealthCompleteArgs(ctx, healthParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.SimpleMonitorHealthCompleteFlags(ctx, healthParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.SimpleMonitorHealthCompleteArgs(ctx, healthParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					healthParam.ParamTemplate = c.String("param-template")
+					healthParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(healthParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewHealthSimpleMonitorParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(healthParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						healthParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						healthParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						healthParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						healthParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						healthParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						healthParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						healthParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						healthParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						healthParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						healthParam.Query = c.String("query")
+					}
+					if c.IsSet("id") {
+						healthParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = healthParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if healthParam.GenerateSkeleton {
+						healthParam.GenerateSkeleton = false
+						healthParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(healthParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := healthParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), healthParam)
+
+					apiClient := ctx.GetAPIClient().SimpleMonitor
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(healthParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.SimpleMonitors {
+							if hasTags(&v, healthParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", healthParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.SimpleMonitors {
+										if len(healthParam.Selector) == 0 || hasTags(&v, healthParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						healthParam.SetId(id)
+						p := *healthParam // copy struct value
+						healthParam := &p
+						go func() {
+							err := funcs.SimpleMonitorHealth(ctx, healthParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
 		},
 	}
 
@@ -2166,6 +2536,11 @@ func init() {
 		Order:       1,
 	})
 	AppendCommandCategoryMap("simple-monitor", "delete", &schema.Category{
+		Key:         "basics",
+		DisplayName: "Basics",
+		Order:       1,
+	})
+	AppendCommandCategoryMap("simple-monitor", "health", &schema.Category{
 		Key:         "basics",
 		DisplayName: "Basics",
 		Order:       1,
@@ -2398,6 +2773,61 @@ func init() {
 		DisplayName: "Filter options",
 		Order:       2147483587,
 	})
+	AppendFlagCategoryMap("simple-monitor", "health", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("simple-monitor", "health", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("simple-monitor", "health", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("simple-monitor", "health", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("simple-monitor", "health", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("simple-monitor", "health", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("simple-monitor", "health", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("simple-monitor", "health", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("simple-monitor", "health", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("simple-monitor", "health", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("simple-monitor", "health", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("simple-monitor", "list", "column", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -2422,6 +2852,11 @@ func init() {
 		Key:         "Input",
 		DisplayName: "Input options",
 		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("simple-monitor", "list", "health", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("simple-monitor", "list", "id", &schema.Category{
 		Key:         "filter",

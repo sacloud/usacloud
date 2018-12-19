@@ -30,6 +30,11 @@ func SimpleMonitorListCompleteFlags(ctx command.Context, params *params.ListSimp
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "health":
+		param := define.Resources["SimpleMonitor"].Commands["list"].BuildedParams().Get("health")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "from", "offset":
 		param := define.Resources["SimpleMonitor"].Commands["list"].BuildedParams().Get("from")
 		if param != nil {
@@ -331,6 +336,32 @@ func SimpleMonitorDeleteCompleteFlags(ctx command.Context, params *params.Delete
 		}
 	case "id":
 		param := define.Resources["SimpleMonitor"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out":
+		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func SimpleMonitorHealthCompleteFlags(ctx command.Context, params *params.HealthSimpleMonitorParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["SimpleMonitor"].Commands["health"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["SimpleMonitor"].Commands["health"].BuildedParams().Get("id")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

@@ -48,7 +48,7 @@ gen: command/cli/*_gen.go command/completion/*_gen.go command/funcs/*_gen.go com
 
 .PHONY: gen-force
 gen-force: clean-all contrib/completion/bash/usacloud
-	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
+	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES); goimports -l -w $(GOFMT_FILES)
 
 command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-funcs/*.go tools/gen-input-models/*.go
 	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)

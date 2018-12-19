@@ -1,6 +1,7 @@
 package define
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
 )
@@ -14,6 +15,7 @@ func SimpleMonitorResource() *schema.Resource {
 			Params:             simpleMonitorListParam(),
 			TableType:          output.TableSimple,
 			TableColumnDefines: simpleMonitorListColumns(),
+			UseCustomCommand:   true,
 			Category:           "basics",
 			Order:              10,
 		},
@@ -53,6 +55,15 @@ func SimpleMonitorResource() *schema.Resource {
 			ExcludeFields: simpleMonitorDetailExcludes(),
 			Category:      "basics",
 			Order:         50,
+		},
+		"health": {
+			Type:             schema.CommandRead,
+			Params:           simpleMonitorHealthParam(),
+			IncludeFields:    simpleMonitorDetailIncludes(),
+			ExcludeFields:    simpleMonitorDetailExcludes(),
+			Category:         "basics",
+			UseCustomCommand: true,
+			Order:            60,
 		},
 	}
 
@@ -133,28 +144,76 @@ var simpleMonitorUpdateParamCategories = []schema.Category{
 	},
 }
 
+var healthCheckCondStrings = []string{"up", "down", "unknown"}
+
 func simpleMonitorListParam() map[string]*schema.Schema {
-	return mergeParameterMap(CommonListParam, paramTagsCond)
+	return mergeParameterMap(CommonListParam, paramTagsCond,
+		map[string]*schema.Schema{
+			"health": {
+				Type:        schema.TypeString,
+				HandlerType: schema.HandlerFilterFunc,
+				FilterFunc: func(_ []interface{}, item interface{}, param interface{}) bool {
+					type handler interface {
+						HealthCheckResult() *sacloud.SimpleMonitorHealthCheckStatus
+					}
+
+					holder, ok := item.(handler)
+					if !ok {
+						return false
+					}
+
+					paramCond := param.(string)
+					status := holder.HealthCheckResult()
+
+					switch paramCond {
+					case "up":
+						return status != nil && status.Health == sacloud.EHealthUp
+					case "down":
+						return status != nil && status.Health == sacloud.EHealthDown
+					case "unknown":
+						return status == nil || (status.Health != sacloud.EHealthUp && status.Health != sacloud.EHealthDown)
+					default:
+						return true
+					}
+				},
+				Description:  "set filter by HealthCheck Status('up' or 'down' or 'unknown')",
+				ValidateFunc: validateInStrValues(healthCheckCondStrings...),
+				CompleteFunc: completeInStrValues(healthCheckCondStrings...),
+				Category:     "filter",
+				Order:        10,
+			},
+		})
 }
 
 func simpleMonitorListColumns() []output.ColumnDef {
 	return []output.ColumnDef{
-		{Name: "ID"},
+		{
+			Name:    "ID",
+			Sources: []string{"SimpleMonitor.ID"},
+		},
 		{
 			Name:    "Target",
-			Sources: []string{"Status.Target"},
+			Sources: []string{"SimpleMonitor.Status.Target"},
 		},
 		{
 			Name:    "Protocol",
-			Sources: []string{"Settings.SimpleMonitor.HealthCheck.Protocol"},
+			Sources: []string{"SimpleMonitor.Settings.SimpleMonitor.HealthCheck.Protocol"},
 		},
 		{
 			Name:    "Email",
-			Sources: []string{"Settings.SimpleMonitor.NotifyEmail.Enabled"},
+			Sources: []string{"SimpleMonitor.Settings.SimpleMonitor.NotifyEmail.Enabled"},
 		},
 		{
 			Name:    "Slack",
-			Sources: []string{"Settings.SimpleMonitor.NotifySlack.Enabled"},
+			Sources: []string{"SimpleMonitor.Settings.SimpleMonitor.NotifySlack.Enabled"},
+		},
+		{
+			Name:    "Health",
+			Sources: []string{"HealthCheck.Health"},
+		},
+		{
+			Name:    "LastCheckedAt",
+			Sources: []string{"HealthCheck.LastCheckedAt"},
 		},
 	}
 }
@@ -451,5 +510,9 @@ func simpleMonitorUpdateParam() map[string]*schema.Schema {
 }
 
 func simpleMonitorDeleteParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
+}
+
+func simpleMonitorHealthParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
 }
