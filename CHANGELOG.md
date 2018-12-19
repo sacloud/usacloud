@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.16.4 (2018-12-19)
+
+* Windows Server 2019対応 #394 (yamamoto-febc)
+
+
 ## 0.16.3 (2018-12-14)
 
 * ロードバランサでのVIP削除エラー対応 #387 (yamamoto-febc)

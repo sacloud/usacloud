@@ -39,10 +39,10 @@ require (
 	github.com/vaughan0/go-ini v0.0.0-20130923145212-a98ad7ee00ec // indirect
 	github.com/walle/lll v0.0.0-20160702150637-8b13b3fbf731 // indirect
 	golang.org/x/crypto v0.0.0-20181015023909-0c41d7ab0a0e // indirect
-	golang.org/x/lint v0.0.0-20181212231659-93c0bb5c8393 // indirect
+	golang.org/x/lint v0.0.0-20181217174547-8f45f776aaf1 // indirect
 	golang.org/x/sys v0.0.0-20181022134430-8a28ead16f52 // indirect
 	golang.org/x/text v0.3.0 // indirect
-	golang.org/x/tools v0.0.0-20181213210126-fe2443f7b950 // indirect
+	golang.org/x/tools v0.0.0-20181218204010-d4971274fe38 // indirect
 	gopkg.in/urfave/cli.v2 v2.0.0-20170215051800-04b2f4ff79cf
 	honnef.co/go/tools v0.0.0-20180920025451-e3ad64cb4ed3 // indirect
 	mvdan.cc/interfacer v0.0.0-20180901003855-c20040233aed // indirect
