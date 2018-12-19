@@ -13,6 +13,7 @@ type ListSimpleMonitorParam struct {
 	Name              []string `json:"name"`
 	Id                []int64  `json:"id"`
 	Tags              []string `json:"tags"`
+	Health            string   `json:"health"`
 	From              int      `json:"from"`
 	Max               int      `json:"max"`
 	Sort              []string `json:"sort"`
@@ -42,6 +43,9 @@ func (p *ListSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
+	}
+	if isEmpty(p.Health) {
+		p.Health = ""
 	}
 	if isEmpty(p.From) {
 		p.From = 0
@@ -117,6 +121,13 @@ func (p *ListSimpleMonitorParam) Validate() []error {
 			errors = append(errors, errs...)
 		}
 	}
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["list"].Params["health"].ValidateFunc
+		errs := validator("--health", p.Health)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
 
 	{
 		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
@@ -185,6 +196,13 @@ func (p *ListSimpleMonitorParam) SetTags(v []string) {
 
 func (p *ListSimpleMonitorParam) GetTags() []string {
 	return p.Tags
+}
+func (p *ListSimpleMonitorParam) SetHealth(v string) {
+	p.Health = v
+}
+
+func (p *ListSimpleMonitorParam) GetHealth() string {
+	return p.Health
 }
 func (p *ListSimpleMonitorParam) SetFrom(v int) {
 	p.From = v
@@ -1617,5 +1635,199 @@ func (p *DeleteSimpleMonitorParam) SetId(v int64) {
 }
 
 func (p *DeleteSimpleMonitorParam) GetId() int64 {
+	return p.Id
+}
+
+// HealthSimpleMonitorParam is input parameters for the sacloud API
+type HealthSimpleMonitorParam struct {
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
+	Id                int64    `json:"id"`
+}
+
+// NewHealthSimpleMonitorParam return new HealthSimpleMonitorParam
+func NewHealthSimpleMonitorParam() *HealthSimpleMonitorParam {
+	return &HealthSimpleMonitorParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *HealthSimpleMonitorParam) FillValueToSkeleton() {
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *HealthSimpleMonitorParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *HealthSimpleMonitorParam) GetResourceDef() *schema.Resource {
+	return define.Resources["SimpleMonitor"]
+}
+
+func (p *HealthSimpleMonitorParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["health"]
+}
+
+func (p *HealthSimpleMonitorParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *HealthSimpleMonitorParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *HealthSimpleMonitorParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *HealthSimpleMonitorParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *HealthSimpleMonitorParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *HealthSimpleMonitorParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *HealthSimpleMonitorParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *HealthSimpleMonitorParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *HealthSimpleMonitorParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *HealthSimpleMonitorParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *HealthSimpleMonitorParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *HealthSimpleMonitorParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *HealthSimpleMonitorParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *HealthSimpleMonitorParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *HealthSimpleMonitorParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *HealthSimpleMonitorParam) GetColumn() []string {
+	return p.Column
+}
+func (p *HealthSimpleMonitorParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *HealthSimpleMonitorParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *HealthSimpleMonitorParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *HealthSimpleMonitorParam) GetFormat() string {
+	return p.Format
+}
+func (p *HealthSimpleMonitorParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *HealthSimpleMonitorParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *HealthSimpleMonitorParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *HealthSimpleMonitorParam) GetQuery() string {
+	return p.Query
+}
+func (p *HealthSimpleMonitorParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *HealthSimpleMonitorParam) GetId() int64 {
 	return p.Id
 }
