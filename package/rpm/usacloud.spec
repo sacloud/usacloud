@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Dec 19 2018 <sacloud.users@gmail.com> - 0.16.4-1
+- Windows Server 2019対応 (by yamamoto-febc)
+
 * Fri Dec 14 2018 <sacloud.users@gmail.com> - 0.16.3-1
 - ロードバランサでのVIP削除エラー対応 (by yamamoto-febc)
 
