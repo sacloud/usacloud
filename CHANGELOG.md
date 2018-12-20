@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.17.0 (2018-12-20)
+
+* シンプル監視での死活監視ステータス #397 (yamamoto-febc)
+
+
 ## 0.16.4 (2018-12-19)
 
 * Windows Server 2019対応 #394 (yamamoto-febc)
