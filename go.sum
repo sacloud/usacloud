@@ -121,6 +121,8 @@ golang.org/x/tools v0.0.0-20181213210126-fe2443f7b950 h1:TXhUh91A/zY5KvVrgVhMVAI
 golang.org/x/tools v0.0.0-20181213210126-fe2443f7b950/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 golang.org/x/tools v0.0.0-20181218204010-d4971274fe38 h1:e07OqjPO5oqQAJqid1fAwyMi/IK+hfSYrivMpzzAJtU=
 golang.org/x/tools v0.0.0-20181218204010-d4971274fe38/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
+golang.org/x/tools v0.0.0-20181220024903-92cdcd90bf52 h1:oOIe9Zzq27JsS/3ACpGF1HwWnWNflZWT/3EvM7mtcEk=
+golang.org/x/tools v0.0.0-20181220024903-92cdcd90bf52/go.mod h1:n7NCudcB/nEzxVGmLbDWY5pfWTLqBcC2KZ6jyYvM4mQ=
 gopkg.in/urfave/cli.v2 v2.0.0-20170215051800-04b2f4ff79cf h1:G7OVLwGrS4CUJzmi9HF7fMqpRRMll5jFYROQL8x3MrA=
 gopkg.in/urfave/cli.v2 v2.0.0-20170215051800-04b2f4ff79cf/go.mod h1:cKXr3E0k4aosgycml1b5z33BVV6hai1Kh7uDgFOkbcs=
 honnef.co/go/tools v0.0.0-20180920025451-e3ad64cb4ed3 h1:LyX67rVB0kBUFoROrQfzKwdrYLH1cRzHibxdJW85J1c=

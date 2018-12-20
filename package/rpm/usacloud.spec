@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu Dec 20 2018 <sacloud.users@gmail.com> - 0.17.0-1
+- シンプル監視での死活監視ステータス (by yamamoto-febc)
+
 * Wed Dec 19 2018 <sacloud.users@gmail.com> - 0.16.4-1
 - Windows Server 2019対応 (by yamamoto-febc)
 
