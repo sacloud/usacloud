@@ -17,7 +17,15 @@
 - Go言語で実装されたシングルバイナリ、インストールはバイナリをコピーするだけ(yum/apt/brewもサポート)
 - SSH/SCP/SFTP/VNCなどをバイナリ単体でサポート
 
-## インストール
+# 使い方
+
+## オンラインで試す
+
+ブラウザ上でUsacloudをお試しいただけます。
+
+<a href="https://sandbox.usacloud.jp" target="_blank">https://sandbox.usacloud.jp</a>
+
+## ローカルマシンにインストール
 
 ### macOS(`brew`) / Linux(`apt` or `yum` or `brew`) / bash on Windows(Ubuntu)
 
