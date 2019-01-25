@@ -53,6 +53,12 @@ var CategoryBilling = schema.Category{
 	Order:       70,
 }
 
+var CategoryCoupon = schema.Category{
+	Key:         "coupon",
+	DisplayName: "Coupon",
+	Order:       75,
+}
+
 var CategoryOther = schema.Category{
 	Key:         "saas",
 	DisplayName: "Other services",
