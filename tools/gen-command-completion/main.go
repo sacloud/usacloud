@@ -347,7 +347,7 @@ func {{.FuncName}}(ctx command.Context, params *params.{{.ParamName}} , flagName
 		if param != nil {
 	 		comp = param.Param.CompleteFunc
 	 	}{{end}}{{end}}{{end}}
-	{{ if .HasOutputFlag }}case "output-type", "out":
+	{{ if .HasOutputFlag }}case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 {{ end -}}
 	}

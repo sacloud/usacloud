@@ -152,7 +152,7 @@ func (c *Command) BuildedParams() SortableParams {
 			c.Params["output-type"] = &Schema{
 				Type:        TypeString,
 				HandlerType: HandlerNoop,
-				Aliases:     []string{"out"},
+				Aliases:     []string{"out", "o"},
 				Description: "Output type [table/json/csv/tsv]",
 				Category:    "output",
 				Order:       10,

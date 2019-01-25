@@ -40,7 +40,7 @@ func PriceListCompleteFlags(ctx command.Context, params *params.ListPriceParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

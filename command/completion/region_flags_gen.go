@@ -40,7 +40,7 @@ func RegionListCompleteFlags(ctx command.Context, params *params.ListRegionParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -61,7 +61,7 @@ func RegionReadCompleteFlags(ctx command.Context, params *params.ReadRegionParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

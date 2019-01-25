@@ -40,7 +40,7 @@ func ProductServerListCompleteFlags(ctx command.Context, params *params.ListProd
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -61,7 +61,7 @@ func ProductServerReadCompleteFlags(ctx command.Context, params *params.ReadProd
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

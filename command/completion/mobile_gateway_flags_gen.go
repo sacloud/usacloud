@@ -45,7 +45,7 @@ func MobileGatewayListCompleteFlags(ctx command.Context, params *params.ListMobi
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -86,7 +86,7 @@ func MobileGatewayCreateCompleteFlags(ctx command.Context, params *params.Create
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -112,7 +112,7 @@ func MobileGatewayReadCompleteFlags(ctx command.Context, params *params.ReadMobi
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -163,7 +163,7 @@ func MobileGatewayUpdateCompleteFlags(ctx command.Context, params *params.Update
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -194,7 +194,7 @@ func MobileGatewayDeleteCompleteFlags(ctx command.Context, params *params.Delete
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -364,7 +364,7 @@ func MobileGatewayInterfaceInfoCompleteFlags(ctx command.Context, params *params
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -487,7 +487,7 @@ func MobileGatewayTrafficControlInfoCompleteFlags(ctx command.Context, params *p
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -635,7 +635,7 @@ func MobileGatewayStaticRouteInfoCompleteFlags(ctx command.Context, params *para
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -763,7 +763,7 @@ func MobileGatewaySimInfoCompleteFlags(ctx command.Context, params *params.SimIn
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -886,7 +886,7 @@ func MobileGatewaySimRouteInfoCompleteFlags(ctx command.Context, params *params.
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

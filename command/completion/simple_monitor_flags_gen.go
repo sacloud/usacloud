@@ -50,7 +50,7 @@ func SimpleMonitorListCompleteFlags(ctx command.Context, params *params.ListSimp
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -166,7 +166,7 @@ func SimpleMonitorCreateCompleteFlags(ctx command.Context, params *params.Create
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -192,7 +192,7 @@ func SimpleMonitorReadCompleteFlags(ctx command.Context, params *params.ReadSimp
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -313,7 +313,7 @@ func SimpleMonitorUpdateCompleteFlags(ctx command.Context, params *params.Update
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -339,7 +339,7 @@ func SimpleMonitorDeleteCompleteFlags(ctx command.Context, params *params.Delete
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -365,7 +365,7 @@ func SimpleMonitorHealthCompleteFlags(ctx command.Context, params *params.Health
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

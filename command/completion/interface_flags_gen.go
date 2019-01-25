@@ -40,7 +40,7 @@ func InterfaceListCompleteFlags(ctx command.Context, params *params.ListInterfac
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -85,7 +85,7 @@ func InterfaceCreateCompleteFlags(ctx command.Context, params *params.CreateInte
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -130,7 +130,7 @@ func InterfaceReadCompleteFlags(ctx command.Context, params *params.ReadInterfac
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -156,7 +156,7 @@ func InterfaceUpdateCompleteFlags(ctx command.Context, params *params.UpdateInte
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -177,7 +177,7 @@ func InterfaceDeleteCompleteFlags(ctx command.Context, params *params.DeleteInte
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

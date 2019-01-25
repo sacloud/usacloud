@@ -20,7 +20,7 @@ func BillCsvCompleteFlags(ctx command.Context, params *params.CsvBillParam, flag
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -46,7 +46,7 @@ func BillListCompleteFlags(ctx command.Context, params *params.ListBillParam, fl
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

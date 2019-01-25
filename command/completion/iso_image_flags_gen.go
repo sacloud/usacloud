@@ -50,7 +50,7 @@ func ISOImageListCompleteFlags(ctx command.Context, params *params.ListISOImageP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -96,7 +96,7 @@ func ISOImageCreateCompleteFlags(ctx command.Context, params *params.CreateISOIm
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -122,7 +122,7 @@ func ISOImageReadCompleteFlags(ctx command.Context, params *params.ReadISOImageP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -168,7 +168,7 @@ func ISOImageUpdateCompleteFlags(ctx command.Context, params *params.UpdateISOIm
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -194,7 +194,7 @@ func ISOImageDeleteCompleteFlags(ctx command.Context, params *params.DeleteISOIm
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -225,7 +225,7 @@ func ISOImageUploadCompleteFlags(ctx command.Context, params *params.UploadISOIm
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -280,7 +280,7 @@ func ISOImageFtpOpenCompleteFlags(ctx command.Context, params *params.FtpOpenISO
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

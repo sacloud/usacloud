@@ -20,7 +20,7 @@ func SummaryShowCompleteFlags(ctx command.Context, params *params.ShowSummaryPar
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

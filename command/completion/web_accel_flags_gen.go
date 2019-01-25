@@ -15,7 +15,7 @@ func WebAccelListCompleteFlags(ctx command.Context, params *params.ListWebAccelP
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -41,7 +41,7 @@ func WebAccelReadCompleteFlags(ctx command.Context, params *params.ReadWebAccelP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -67,7 +67,7 @@ func WebAccelCertificateInfoCompleteFlags(ctx command.Context, params *params.Ce
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -113,7 +113,7 @@ func WebAccelCertificateUpdateCompleteFlags(ctx command.Context, params *params.
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -129,7 +129,7 @@ func WebAccelDeleteCacheCompleteFlags(ctx command.Context, params *params.Delete
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

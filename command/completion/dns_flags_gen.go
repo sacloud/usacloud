@@ -45,7 +45,7 @@ func DNSListCompleteFlags(ctx command.Context, params *params.ListDNSParam, flag
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -81,7 +81,7 @@ func DNSRecordInfoCompleteFlags(ctx command.Context, params *params.RecordInfoDN
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -117,7 +117,7 @@ func DNSCreateCompleteFlags(ctx command.Context, params *params.CreateDNSParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -188,7 +188,7 @@ func DNSRecordAddCompleteFlags(ctx command.Context, params *params.RecordAddDNSP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -214,7 +214,7 @@ func DNSReadCompleteFlags(ctx command.Context, params *params.ReadDNSParam, flag
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -290,7 +290,7 @@ func DNSRecordUpdateCompleteFlags(ctx command.Context, params *params.RecordUpda
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -321,7 +321,7 @@ func DNSRecordDeleteCompleteFlags(ctx command.Context, params *params.RecordDele
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -362,7 +362,7 @@ func DNSUpdateCompleteFlags(ctx command.Context, params *params.UpdateDNSParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -388,7 +388,7 @@ func DNSDeleteCompleteFlags(ctx command.Context, params *params.DeleteDNSParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

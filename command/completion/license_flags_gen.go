@@ -40,7 +40,7 @@ func LicenseListCompleteFlags(ctx command.Context, params *params.ListLicensePar
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -66,7 +66,7 @@ func LicenseCreateCompleteFlags(ctx command.Context, params *params.CreateLicens
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -87,7 +87,7 @@ func LicenseReadCompleteFlags(ctx command.Context, params *params.ReadLicensePar
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -113,7 +113,7 @@ func LicenseUpdateCompleteFlags(ctx command.Context, params *params.UpdateLicens
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -134,7 +134,7 @@ func LicenseDeleteCompleteFlags(ctx command.Context, params *params.DeleteLicens
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

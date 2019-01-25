@@ -45,7 +45,7 @@ func PrivateHostListCompleteFlags(ctx command.Context, params *params.ListPrivat
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -81,7 +81,7 @@ func PrivateHostCreateCompleteFlags(ctx command.Context, params *params.CreatePr
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -107,7 +107,7 @@ func PrivateHostReadCompleteFlags(ctx command.Context, params *params.ReadPrivat
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -153,7 +153,7 @@ func PrivateHostUpdateCompleteFlags(ctx command.Context, params *params.UpdatePr
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -179,7 +179,7 @@ func PrivateHostDeleteCompleteFlags(ctx command.Context, params *params.DeletePr
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -205,7 +205,7 @@ func PrivateHostServerInfoCompleteFlags(ctx command.Context, params *params.Serv
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -236,7 +236,7 @@ func PrivateHostServerAddCompleteFlags(ctx command.Context, params *params.Serve
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -267,7 +267,7 @@ func PrivateHostServerDeleteCompleteFlags(ctx command.Context, params *params.Se
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

@@ -50,7 +50,7 @@ func Ipv6ListCompleteFlags(ctx command.Context, params *params.ListIpv6Param, fl
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -71,7 +71,7 @@ func Ipv6PtrAddCompleteFlags(ctx command.Context, params *params.PtrAddIpv6Param
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -87,7 +87,7 @@ func Ipv6PtrReadCompleteFlags(ctx command.Context, params *params.PtrReadIpv6Par
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -108,7 +108,7 @@ func Ipv6PtrUpdateCompleteFlags(ctx command.Context, params *params.PtrUpdateIpv
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -124,7 +124,7 @@ func Ipv6PtrDeleteCompleteFlags(ctx command.Context, params *params.PtrDeleteIpv
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

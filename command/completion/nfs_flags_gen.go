@@ -45,7 +45,7 @@ func NFSListCompleteFlags(ctx command.Context, params *params.ListNFSParam, flag
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -106,7 +106,7 @@ func NFSCreateCompleteFlags(ctx command.Context, params *params.CreateNFSParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -132,7 +132,7 @@ func NFSReadCompleteFlags(ctx command.Context, params *params.ReadNFSParam, flag
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -178,7 +178,7 @@ func NFSUpdateCompleteFlags(ctx command.Context, params *params.UpdateNFSParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -209,7 +209,7 @@ func NFSDeleteCompleteFlags(ctx command.Context, params *params.DeleteNFSParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -394,7 +394,7 @@ func NFSMonitorNicCompleteFlags(ctx command.Context, params *params.MonitorNicNF
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -435,7 +435,7 @@ func NFSMonitorFreeDiskSizeCompleteFlags(ctx command.Context, params *params.Mon
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

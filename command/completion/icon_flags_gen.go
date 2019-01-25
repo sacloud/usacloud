@@ -50,7 +50,7 @@ func IconListCompleteFlags(ctx command.Context, params *params.ListIconParam, fl
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -81,7 +81,7 @@ func IconCreateCompleteFlags(ctx command.Context, params *params.CreateIconParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -107,7 +107,7 @@ func IconReadCompleteFlags(ctx command.Context, params *params.ReadIconParam, fl
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -143,7 +143,7 @@ func IconUpdateCompleteFlags(ctx command.Context, params *params.UpdateIconParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -169,7 +169,7 @@ func IconDeleteCompleteFlags(ctx command.Context, params *params.DeleteIconParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

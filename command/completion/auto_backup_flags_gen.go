@@ -45,7 +45,7 @@ func AutoBackupListCompleteFlags(ctx command.Context, params *params.ListAutoBac
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -96,7 +96,7 @@ func AutoBackupCreateCompleteFlags(ctx command.Context, params *params.CreateAut
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -122,7 +122,7 @@ func AutoBackupReadCompleteFlags(ctx command.Context, params *params.ReadAutoBac
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -178,7 +178,7 @@ func AutoBackupUpdateCompleteFlags(ctx command.Context, params *params.UpdateAut
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -204,7 +204,7 @@ func AutoBackupDeleteCompleteFlags(ctx command.Context, params *params.DeleteAut
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

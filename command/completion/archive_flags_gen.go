@@ -60,7 +60,7 @@ func ArchiveListCompleteFlags(ctx command.Context, params *params.ListArchivePar
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -116,7 +116,7 @@ func ArchiveCreateCompleteFlags(ctx command.Context, params *params.CreateArchiv
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -142,7 +142,7 @@ func ArchiveReadCompleteFlags(ctx command.Context, params *params.ReadArchivePar
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -188,7 +188,7 @@ func ArchiveUpdateCompleteFlags(ctx command.Context, params *params.UpdateArchiv
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -214,7 +214,7 @@ func ArchiveDeleteCompleteFlags(ctx command.Context, params *params.DeleteArchiv
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -245,7 +245,7 @@ func ArchiveUploadCompleteFlags(ctx command.Context, params *params.UploadArchiv
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -300,7 +300,7 @@ func ArchiveFtpOpenCompleteFlags(ctx command.Context, params *params.FtpOpenArch
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

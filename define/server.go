@@ -1228,7 +1228,6 @@ func serverVNCSnapshotParam() map[string]*schema.Schema {
 		"output-path": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
-			Aliases:     []string{"o"},
 			Description: "snapshot output filepath",
 			Category:    "VNC",
 			Order:       20,
