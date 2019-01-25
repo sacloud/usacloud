@@ -14,6 +14,7 @@ var Resources = map[string]*schema.Resource{
 	"Bill":            BillResource(),
 	"Bridge":          BridgeResource(),
 	"Config":          ConfigResource(),
+	"Coupon":          CouponResource(),
 	"Database":        DatabaseResource(),
 	"Disk":            DiskResource(),
 	"DNS":             DNSResource(),
