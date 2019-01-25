@@ -40,7 +40,7 @@ func ProductInternetListCompleteFlags(ctx command.Context, params *params.ListPr
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -61,7 +61,7 @@ func ProductInternetReadCompleteFlags(ctx command.Context, params *params.ReadPr
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

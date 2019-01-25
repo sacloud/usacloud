@@ -65,7 +65,7 @@ func DiskListCompleteFlags(ctx command.Context, params *params.ListDiskParam, fl
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -131,7 +131,7 @@ func DiskCreateCompleteFlags(ctx command.Context, params *params.CreateDiskParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -157,7 +157,7 @@ func DiskReadCompleteFlags(ctx command.Context, params *params.ReadDiskParam, fl
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -208,7 +208,7 @@ func DiskUpdateCompleteFlags(ctx command.Context, params *params.UpdateDiskParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -234,7 +234,7 @@ func DiskDeleteCompleteFlags(ctx command.Context, params *params.DeleteDiskParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -300,7 +300,7 @@ func DiskEditCompleteFlags(ctx command.Context, params *params.EditDiskParam, fl
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -491,7 +491,7 @@ func DiskMonitorCompleteFlags(ctx command.Context, params *params.MonitorDiskPar
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

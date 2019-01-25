@@ -30,7 +30,7 @@ func ObjectStorageListCompleteFlags(ctx command.Context, params *params.ListObje
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

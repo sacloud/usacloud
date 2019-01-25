@@ -40,7 +40,7 @@ func PacketFilterListCompleteFlags(ctx command.Context, params *params.ListPacke
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -66,7 +66,7 @@ func PacketFilterCreateCompleteFlags(ctx command.Context, params *params.CreateP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -87,7 +87,7 @@ func PacketFilterReadCompleteFlags(ctx command.Context, params *params.ReadPacke
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -118,7 +118,7 @@ func PacketFilterUpdateCompleteFlags(ctx command.Context, params *params.UpdateP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -139,7 +139,7 @@ func PacketFilterDeleteCompleteFlags(ctx command.Context, params *params.DeleteP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -160,7 +160,7 @@ func PacketFilterRuleInfoCompleteFlags(ctx command.Context, params *params.RuleI
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -216,7 +216,7 @@ func PacketFilterRuleAddCompleteFlags(ctx command.Context, params *params.RuleAd
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -272,7 +272,7 @@ func PacketFilterRuleUpdateCompleteFlags(ctx command.Context, params *params.Rul
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -298,7 +298,7 @@ func PacketFilterRuleDeleteCompleteFlags(ctx command.Context, params *params.Rul
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

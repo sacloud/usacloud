@@ -77,7 +77,7 @@ func init() {
 					},
 					&cli.StringFlag{
 						Name:    "output-type",
-						Aliases: []string{"out"},
+						Aliases: []string{"out", "o"},
 						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
@@ -389,7 +389,7 @@ func init() {
 					},
 					&cli.StringFlag{
 						Name:    "output-type",
-						Aliases: []string{"out"},
+						Aliases: []string{"out", "o"},
 						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
@@ -672,7 +672,7 @@ func init() {
 					},
 					&cli.StringFlag{
 						Name:    "output-type",
-						Aliases: []string{"out"},
+						Aliases: []string{"out", "o"},
 						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
@@ -942,7 +942,7 @@ func init() {
 					},
 					&cli.StringFlag{
 						Name:    "output-type",
-						Aliases: []string{"out"},
+						Aliases: []string{"out", "o"},
 						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{
@@ -1230,7 +1230,7 @@ func init() {
 					},
 					&cli.StringFlag{
 						Name:    "output-type",
-						Aliases: []string{"out"},
+						Aliases: []string{"out", "o"},
 						Usage:   "Output type [table/json/csv/tsv]",
 					},
 					&cli.StringSliceFlag{

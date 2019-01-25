@@ -45,7 +45,7 @@ func VPCRouterListCompleteFlags(ctx command.Context, params *params.ListVPCRoute
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -121,7 +121,7 @@ func VPCRouterCreateCompleteFlags(ctx command.Context, params *params.CreateVPCR
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -147,7 +147,7 @@ func VPCRouterReadCompleteFlags(ctx command.Context, params *params.ReadVPCRoute
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -203,7 +203,7 @@ func VPCRouterUpdateCompleteFlags(ctx command.Context, params *params.UpdateVPCR
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -234,7 +234,7 @@ func VPCRouterDeleteCompleteFlags(ctx command.Context, params *params.DeleteVPCR
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -452,7 +452,7 @@ func VPCRouterInterfaceInfoCompleteFlags(ctx command.Context, params *params.Int
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -635,7 +635,7 @@ func VPCRouterStaticNatInfoCompleteFlags(ctx command.Context, params *params.Sta
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -773,7 +773,7 @@ func VPCRouterPortForwardingInfoCompleteFlags(ctx command.Context, params *param
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -941,7 +941,7 @@ func VPCRouterFirewallInfoCompleteFlags(ctx command.Context, params *params.Fire
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1159,7 +1159,7 @@ func VPCRouterDhcpServerInfoCompleteFlags(ctx command.Context, params *params.Dh
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1302,7 +1302,7 @@ func VPCRouterDhcpStaticMappingInfoCompleteFlags(ctx command.Context, params *pa
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1430,7 +1430,7 @@ func VPCRouterPptpServerInfoCompleteFlags(ctx command.Context, params *params.Pp
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1495,7 +1495,7 @@ func VPCRouterL2tpServerInfoCompleteFlags(ctx command.Context, params *params.L2
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1565,7 +1565,7 @@ func VPCRouterUserInfoCompleteFlags(ctx command.Context, params *params.UserInfo
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1693,7 +1693,7 @@ func VPCRouterSiteToSiteVpnInfoCompleteFlags(ctx command.Context, params *params
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1851,7 +1851,7 @@ func VPCRouterSiteToSiteVpnPeersCompleteFlags(ctx command.Context, params *param
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1877,7 +1877,7 @@ func VPCRouterStaticRouteInfoCompleteFlags(ctx command.Context, params *params.S
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -2025,7 +2025,7 @@ func VPCRouterMonitorCompleteFlags(ctx command.Context, params *params.MonitorVP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

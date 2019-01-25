@@ -40,7 +40,7 @@ func SSHKeyListCompleteFlags(ctx command.Context, params *params.ListSSHKeyParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -71,7 +71,7 @@ func SSHKeyCreateCompleteFlags(ctx command.Context, params *params.CreateSSHKeyP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -92,7 +92,7 @@ func SSHKeyReadCompleteFlags(ctx command.Context, params *params.ReadSSHKeyParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -123,7 +123,7 @@ func SSHKeyUpdateCompleteFlags(ctx command.Context, params *params.UpdateSSHKeyP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -144,7 +144,7 @@ func SSHKeyDeleteCompleteFlags(ctx command.Context, params *params.DeleteSSHKeyP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -175,7 +175,7 @@ func SSHKeyGenerateCompleteFlags(ctx command.Context, params *params.GenerateSSH
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

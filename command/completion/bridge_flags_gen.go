@@ -40,7 +40,7 @@ func BridgeListCompleteFlags(ctx command.Context, params *params.ListBridgeParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -66,7 +66,7 @@ func BridgeCreateCompleteFlags(ctx command.Context, params *params.CreateBridgeP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -87,7 +87,7 @@ func BridgeReadCompleteFlags(ctx command.Context, params *params.ReadBridgeParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -118,7 +118,7 @@ func BridgeUpdateCompleteFlags(ctx command.Context, params *params.UpdateBridgeP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -139,7 +139,7 @@ func BridgeDeleteCompleteFlags(ctx command.Context, params *params.DeleteBridgeP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

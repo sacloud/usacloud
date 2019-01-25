@@ -45,7 +45,7 @@ func LoadBalancerListCompleteFlags(ctx command.Context, params *params.ListLoadB
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -121,7 +121,7 @@ func LoadBalancerCreateCompleteFlags(ctx command.Context, params *params.CreateL
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -147,7 +147,7 @@ func LoadBalancerReadCompleteFlags(ctx command.Context, params *params.ReadLoadB
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -193,7 +193,7 @@ func LoadBalancerUpdateCompleteFlags(ctx command.Context, params *params.UpdateL
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -224,7 +224,7 @@ func LoadBalancerDeleteCompleteFlags(ctx command.Context, params *params.DeleteL
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -394,7 +394,7 @@ func LoadBalancerVipInfoCompleteFlags(ctx command.Context, params *params.VipInf
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -567,7 +567,7 @@ func LoadBalancerServerInfoCompleteFlags(ctx command.Context, params *params.Ser
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -780,7 +780,7 @@ func LoadBalancerMonitorCompleteFlags(ctx command.Context, params *params.Monito
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

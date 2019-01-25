@@ -45,7 +45,7 @@ func DatabaseListCompleteFlags(ctx command.Context, params *params.ListDatabaseP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -156,7 +156,7 @@ func DatabaseCreateCompleteFlags(ctx command.Context, params *params.CreateDatab
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -182,7 +182,7 @@ func DatabaseReadCompleteFlags(ctx command.Context, params *params.ReadDatabaseP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -273,7 +273,7 @@ func DatabaseUpdateCompleteFlags(ctx command.Context, params *params.UpdateDatab
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -304,7 +304,7 @@ func DatabaseDeleteCompleteFlags(ctx command.Context, params *params.DeleteDatab
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -474,7 +474,7 @@ func DatabaseBackupInfoCompleteFlags(ctx command.Context, params *params.BackupI
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -495,7 +495,7 @@ func DatabaseBackupCreateCompleteFlags(ctx command.Context, params *params.Backu
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -521,7 +521,7 @@ func DatabaseBackupRestoreCompleteFlags(ctx command.Context, params *params.Back
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -547,7 +547,7 @@ func DatabaseBackupLockCompleteFlags(ctx command.Context, params *params.BackupL
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -573,7 +573,7 @@ func DatabaseBackupUnlockCompleteFlags(ctx command.Context, params *params.Backu
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -599,7 +599,7 @@ func DatabaseBackupRemoveCompleteFlags(ctx command.Context, params *params.Backu
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -700,7 +700,7 @@ func DatabaseCloneCompleteFlags(ctx command.Context, params *params.CloneDatabas
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -761,7 +761,7 @@ func DatabaseReplicaCreateCompleteFlags(ctx command.Context, params *params.Repl
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -802,7 +802,7 @@ func DatabaseMonitorCpuCompleteFlags(ctx command.Context, params *params.Monitor
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -843,7 +843,7 @@ func DatabaseMonitorMemoryCompleteFlags(ctx command.Context, params *params.Moni
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -884,7 +884,7 @@ func DatabaseMonitorNicCompleteFlags(ctx command.Context, params *params.Monitor
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -925,7 +925,7 @@ func DatabaseMonitorSystemDiskCompleteFlags(ctx command.Context, params *params.
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -966,7 +966,7 @@ func DatabaseMonitorBackupDiskCompleteFlags(ctx command.Context, params *params.
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1007,7 +1007,7 @@ func DatabaseMonitorSystemDiskSizeCompleteFlags(ctx command.Context, params *par
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1048,7 +1048,7 @@ func DatabaseMonitorBackupDiskSizeCompleteFlags(ctx command.Context, params *par
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

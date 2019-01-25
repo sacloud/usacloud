@@ -45,7 +45,7 @@ func GSLBListCompleteFlags(ctx command.Context, params *params.ListGSLBParam, fl
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -71,7 +71,7 @@ func GSLBServerInfoCompleteFlags(ctx command.Context, params *params.ServerInfoG
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -147,7 +147,7 @@ func GSLBCreateCompleteFlags(ctx command.Context, params *params.CreateGSLBParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -188,7 +188,7 @@ func GSLBServerAddCompleteFlags(ctx command.Context, params *params.ServerAddGSL
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -214,7 +214,7 @@ func GSLBReadCompleteFlags(ctx command.Context, params *params.ReadGSLBParam, fl
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -260,7 +260,7 @@ func GSLBServerUpdateCompleteFlags(ctx command.Context, params *params.ServerUpd
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -291,7 +291,7 @@ func GSLBServerDeleteCompleteFlags(ctx command.Context, params *params.ServerDel
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -377,7 +377,7 @@ func GSLBUpdateCompleteFlags(ctx command.Context, params *params.UpdateGSLBParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -403,7 +403,7 @@ func GSLBDeleteCompleteFlags(ctx command.Context, params *params.DeleteGSLBParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

@@ -45,7 +45,7 @@ func SwitchListCompleteFlags(ctx command.Context, params *params.ListSwitchParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -81,7 +81,7 @@ func SwitchCreateCompleteFlags(ctx command.Context, params *params.CreateSwitchP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -107,7 +107,7 @@ func SwitchReadCompleteFlags(ctx command.Context, params *params.ReadSwitchParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -153,7 +153,7 @@ func SwitchUpdateCompleteFlags(ctx command.Context, params *params.UpdateSwitchP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -179,7 +179,7 @@ func SwitchDeleteCompleteFlags(ctx command.Context, params *params.DeleteSwitchP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

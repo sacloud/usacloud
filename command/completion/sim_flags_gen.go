@@ -45,7 +45,7 @@ func SIMListCompleteFlags(ctx command.Context, params *params.ListSIMParam, flag
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -106,7 +106,7 @@ func SIMCreateCompleteFlags(ctx command.Context, params *params.CreateSIMParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -132,7 +132,7 @@ func SIMReadCompleteFlags(ctx command.Context, params *params.ReadSIMParam, flag
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -178,7 +178,7 @@ func SIMUpdateCompleteFlags(ctx command.Context, params *params.UpdateSIMParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -233,7 +233,7 @@ func SIMCarrierInfoCompleteFlags(ctx command.Context, params *params.CarrierInfo
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -452,7 +452,7 @@ func SIMLogsCompleteFlags(ctx command.Context, params *params.LogsSIMParam, flag
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -493,7 +493,7 @@ func SIMMonitorCompleteFlags(ctx command.Context, params *params.MonitorSIMParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

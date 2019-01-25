@@ -45,7 +45,7 @@ func ServerListCompleteFlags(ctx command.Context, params *params.ListServerParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -266,7 +266,7 @@ func ServerBuildCompleteFlags(ctx command.Context, params *params.BuildServerPar
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -292,7 +292,7 @@ func ServerReadCompleteFlags(ctx command.Context, params *params.ReadServerParam
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -343,7 +343,7 @@ func ServerUpdateCompleteFlags(ctx command.Context, params *params.UpdateServerP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -379,7 +379,7 @@ func ServerDeleteCompleteFlags(ctx command.Context, params *params.DeleteServerP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -415,7 +415,7 @@ func ServerPlanChangeCompleteFlags(ctx command.Context, params *params.PlanChang
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -605,7 +605,7 @@ func ServerSshCompleteFlags(ctx command.Context, params *params.SshServerParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -646,7 +646,7 @@ func ServerSshExecCompleteFlags(ctx command.Context, params *params.SshExecServe
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -687,7 +687,7 @@ func ServerScpCompleteFlags(ctx command.Context, params *params.ScpServerParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -747,7 +747,7 @@ func ServerVncInfoCompleteFlags(ctx command.Context, params *params.VncInfoServe
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -798,7 +798,7 @@ func ServerVncSendCompleteFlags(ctx command.Context, params *params.VncSendServe
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -819,7 +819,7 @@ func ServerVncSnapshotCompleteFlags(ctx command.Context, params *params.VncSnaps
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-path", "o":
+	case "output-path":
 		param := define.Resources["Server"].Commands["vnc-snapshot"].BuildedParams().Get("output-path")
 		if param != nil {
 			comp = param.Param.CompleteFunc
@@ -834,7 +834,7 @@ func ServerVncSnapshotCompleteFlags(ctx command.Context, params *params.VncSnaps
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -904,7 +904,7 @@ func ServerRemoteDesktopInfoCompleteFlags(ctx command.Context, params *params.Re
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -930,7 +930,7 @@ func ServerDiskInfoCompleteFlags(ctx command.Context, params *params.DiskInfoSer
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1014,7 +1014,7 @@ func ServerInterfaceInfoCompleteFlags(ctx command.Context, params *params.Interf
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1191,7 +1191,7 @@ func ServerIsoInfoCompleteFlags(ctx command.Context, params *params.IsoInfoServe
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1315,7 +1315,7 @@ func ServerMonitorCpuCompleteFlags(ctx command.Context, params *params.MonitorCp
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1361,7 +1361,7 @@ func ServerMonitorNicCompleteFlags(ctx command.Context, params *params.MonitorNi
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1407,7 +1407,7 @@ func ServerMonitorDiskCompleteFlags(ctx command.Context, params *params.MonitorD
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -1423,7 +1423,7 @@ func ServerMaintenanceInfoCompleteFlags(ctx command.Context, params *params.Main
 	var comp schema.CompletionFunc
 
 	switch flagName {
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 

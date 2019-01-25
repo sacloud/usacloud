@@ -45,7 +45,7 @@ func InternetListCompleteFlags(ctx command.Context, params *params.ListInternetP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -91,7 +91,7 @@ func InternetCreateCompleteFlags(ctx command.Context, params *params.CreateInter
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -117,7 +117,7 @@ func InternetReadCompleteFlags(ctx command.Context, params *params.ReadInternetP
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -168,7 +168,7 @@ func InternetUpdateCompleteFlags(ctx command.Context, params *params.UpdateInter
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -194,7 +194,7 @@ func InternetDeleteCompleteFlags(ctx command.Context, params *params.DeleteInter
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -225,7 +225,7 @@ func InternetUpdateBandwidthCompleteFlags(ctx command.Context, params *params.Up
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -251,7 +251,7 @@ func InternetSubnetInfoCompleteFlags(ctx command.Context, params *params.SubnetI
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -287,7 +287,7 @@ func InternetSubnetAddCompleteFlags(ctx command.Context, params *params.SubnetAd
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -352,7 +352,7 @@ func InternetSubnetUpdateCompleteFlags(ctx command.Context, params *params.Subne
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -378,7 +378,7 @@ func InternetIpv6InfoCompleteFlags(ctx command.Context, params *params.Ipv6InfoI
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -404,7 +404,7 @@ func InternetIpv6EnableCompleteFlags(ctx command.Context, params *params.Ipv6Ena
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
@@ -469,7 +469,7 @@ func InternetMonitorCompleteFlags(ctx command.Context, params *params.MonitorInt
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
-	case "output-type", "out":
+	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "csv", "tsv")
 	}
 
