@@ -7,7 +7,7 @@ import (
 	"os"
 
 	"github.com/bitly/go-simplejson"
-	"github.com/jmespath/go-jmespath"
+	"github.com/sacloud/go-jmespath"
 )
 
 type jsonOutput struct {

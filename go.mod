@@ -18,7 +18,6 @@ require (
 	github.com/huandu/xstrings v0.0.0-20151130125119-3959339b3335
 	github.com/imdario/mergo v0.3.6
 	github.com/jgautheron/goconst v0.0.0-20170703170152-9740945f5dcb // indirect
-	github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af
 	github.com/kisielk/errcheck v1.1.0 // indirect
 	github.com/mattn/go-colorable v0.0.9
 	github.com/mattn/go-isatty v0.0.4
@@ -32,6 +31,7 @@ require (
 	github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
 	github.com/opennota/check v0.0.0-20180911053232-0c771f5545ff // indirect
 	github.com/sacloud/ftps v0.0.0-20171205062625-42fc0f9886fe
+	github.com/sacloud/go-jmespath v0.0.0-20190125082617-862639817e08
 	github.com/sacloud/libsacloud v1.6.0
 	github.com/stretchr/testify v1.2.2
 	github.com/stripe/safesql v0.0.0-20171221195208-cddf355596fe // indirect
