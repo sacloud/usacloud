@@ -42,7 +42,7 @@ require (
 	golang.org/x/lint v0.0.0-20181217174547-8f45f776aaf1 // indirect
 	golang.org/x/sys v0.0.0-20181022134430-8a28ead16f52 // indirect
 	golang.org/x/text v0.3.0 // indirect
-	golang.org/x/tools v0.0.0-20181220024903-92cdcd90bf52 // indirect
+	golang.org/x/tools v0.0.0-20190124215303-cc6a436ffe6b // indirect
 	gopkg.in/urfave/cli.v2 v2.0.0-20170215051800-04b2f4ff79cf
 	honnef.co/go/tools v0.0.0-20180920025451-e3ad64cb4ed3 // indirect
 	mvdan.cc/interfacer v0.0.0-20180901003855-c20040233aed // indirect

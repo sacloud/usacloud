@@ -40,6 +40,12 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Fri Jan 25 2019 <sacloud.users@gmail.com> - 0.18.0-1
+- Usacloud Sandboxへのリンク追加 (by yamamoto-febc)
+- クーポン情報取得コマンド (by yamamoto-febc)
+- Use sacloud/go-jmespath (by yamamoto-febc)
+- --output-typeオプションに一文字エイリアス(-o)を追加 (by yamamoto-febc)
+
 * Thu Dec 20 2018 <sacloud.users@gmail.com> - 0.17.0-1
 - シンプル監視での死活監視ステータス (by yamamoto-febc)
 
