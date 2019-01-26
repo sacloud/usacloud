@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.18.0 (2019-01-25)
+
+* Usacloud Sandboxへのリンク追加 #399 (yamamoto-febc)
+* クーポン情報取得コマンド #400 (yamamoto-febc)
+* Use sacloud/go-jmespath #401 (yamamoto-febc)
+* --output-typeオプションに一文字エイリアス(-o)を追加 #402 (yamamoto-febc)
+
+
 ## 0.17.0 (2018-12-20)
 
 * シンプル監視での死活監視ステータス #397 (yamamoto-febc)

@@ -1,3 +1,16 @@
+usacloud (0.18.0-1) stable; urgency=low
+
+  * Usacloud Sandboxへのリンク追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/399>
+  * クーポン情報取得コマンド (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/400>
+  * Use sacloud/go-jmespath (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/401>
+  * --output-typeオプションに一文字エイリアス(-o)を追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/402>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Fri, 25 Jan 2019 09:33:25 +0000
+
 usacloud (0.17.0-1) stable; urgency=low
 
   * シンプル監視での死活監視ステータス (by yamamoto-febc)
