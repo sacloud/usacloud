@@ -30,7 +30,7 @@ func NFSMonitorFreeDiskSize(ctx command.Context, params *params.MonitorFreeDiskS
 
 	req := sacloud.NewResourceMonitorRequest(&start, &end)
 
-	res, err := api.MonitorNFS(params.Id, req)
+	res, err := api.MonitorFreeDiskSize(params.Id, req)
 	if err != nil {
 		return fmt.Errorf("NFSMonitorFreeDiskSize is failed: %s", err)
 	}

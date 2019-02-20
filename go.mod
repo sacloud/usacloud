@@ -32,7 +32,7 @@ require (
 	github.com/opennota/check v0.0.0-20180911053232-0c771f5545ff // indirect
 	github.com/sacloud/ftps v0.0.0-20171205062625-42fc0f9886fe
 	github.com/sacloud/go-jmespath v0.0.0-20190125082617-862639817e08
-	github.com/sacloud/libsacloud v1.6.0
+	github.com/sacloud/libsacloud v1.14.0
 	github.com/stretchr/testify v1.2.2
 	github.com/stripe/safesql v0.0.0-20171221195208-cddf355596fe // indirect
 	github.com/tsenart/deadcode v0.0.0-20160724212837-210d2dc333e9 // indirect
