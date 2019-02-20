@@ -83,6 +83,12 @@ var resourceCounters = []*resourceCounter{
 		paid:        true,
 	},
 	{
+		displayName: "NFS",
+		finder:      countNFS,
+		global:      false,
+		paid:        true,
+	},
+	{
 		displayName: "GSLB",
 		finder:      countGSLB,
 		global:      true,
@@ -98,6 +104,18 @@ var resourceCounters = []*resourceCounter{
 		displayName: "SimpleMonitor",
 		finder:      countSimpleMonitor,
 		global:      true,
+		paid:        true,
+	},
+	{
+		displayName: "SIM",
+		finder:      countSIM,
+		global:      true,
+		paid:        true,
+	},
+	{
+		displayName: "MobileGateway",
+		finder:      countMobileGateway,
+		global:      false,
 		paid:        true,
 	},
 	{
@@ -127,7 +145,7 @@ var resourceCounters = []*resourceCounter{
 }
 
 func countServer(client *api.Client) (int, error) {
-	res, err := client.GetServerAPI().Include("ID").Find()
+	res, err := client.GetServerAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -135,7 +153,7 @@ func countServer(client *api.Client) (int, error) {
 }
 
 func countDisk(client *api.Client) (int, error) {
-	res, err := client.GetDiskAPI().Include("ID").Find()
+	res, err := client.GetDiskAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -143,7 +161,7 @@ func countDisk(client *api.Client) (int, error) {
 }
 
 func countArchive(client *api.Client) (int, error) {
-	res, err := client.GetArchiveAPI().WithUserScope().Include("ID").Find()
+	res, err := client.GetArchiveAPI().WithUserScope().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -151,7 +169,7 @@ func countArchive(client *api.Client) (int, error) {
 }
 
 func countISOImage(client *api.Client) (int, error) {
-	res, err := client.GetCDROMAPI().WithUserScope().Include("ID").Find()
+	res, err := client.GetCDROMAPI().WithUserScope().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -159,7 +177,7 @@ func countISOImage(client *api.Client) (int, error) {
 }
 
 func countSwitch(client *api.Client) (int, error) {
-	res, err := client.GetSwitchAPI().Include("ID").Find()
+	res, err := client.GetSwitchAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -167,7 +185,7 @@ func countSwitch(client *api.Client) (int, error) {
 }
 
 func countInternet(client *api.Client) (int, error) {
-	res, err := client.GetInternetAPI().Include("ID").Find()
+	res, err := client.GetInternetAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -175,7 +193,7 @@ func countInternet(client *api.Client) (int, error) {
 }
 
 func countPacketFilter(client *api.Client) (int, error) {
-	res, err := client.GetPacketFilterAPI().Include("ID").Find()
+	res, err := client.GetPacketFilterAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -183,7 +201,7 @@ func countPacketFilter(client *api.Client) (int, error) {
 }
 
 func countBridge(client *api.Client) (int, error) {
-	res, err := client.GetBridgeAPI().Include("ID").Find()
+	res, err := client.GetBridgeAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -191,7 +209,7 @@ func countBridge(client *api.Client) (int, error) {
 }
 
 func countAutoBackup(client *api.Client) (int, error) {
-	res, err := client.GetAutoBackupAPI().Include("ID").Find()
+	res, err := client.GetAutoBackupAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -199,7 +217,7 @@ func countAutoBackup(client *api.Client) (int, error) {
 }
 
 func countLoadBalancer(client *api.Client) (int, error) {
-	res, err := client.GetLoadBalancerAPI().Include("ID").Find()
+	res, err := client.GetLoadBalancerAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -207,7 +225,7 @@ func countLoadBalancer(client *api.Client) (int, error) {
 }
 
 func countVPCRouter(client *api.Client) (int, error) {
-	res, err := client.GetVPCRouterAPI().Include("ID").Find()
+	res, err := client.GetVPCRouterAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -215,7 +233,15 @@ func countVPCRouter(client *api.Client) (int, error) {
 }
 
 func countDatabase(client *api.Client) (int, error) {
-	res, err := client.GetDatabaseAPI().Include("ID").Find()
+	res, err := client.GetDatabaseAPI().Include("ID").Limit(1).Find()
+	if err != nil {
+		return 0, err
+	}
+	return int(res.Total), nil
+}
+
+func countNFS(client *api.Client) (int, error) {
+	res, err := client.GetNFSAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -223,7 +249,7 @@ func countDatabase(client *api.Client) (int, error) {
 }
 
 func countGSLB(client *api.Client) (int, error) {
-	res, err := client.GetGSLBAPI().Include("ID").Find()
+	res, err := client.GetGSLBAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -231,7 +257,7 @@ func countGSLB(client *api.Client) (int, error) {
 }
 
 func countDNS(client *api.Client) (int, error) {
-	res, err := client.GetDNSAPI().Include("ID").Find()
+	res, err := client.GetDNSAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -239,7 +265,23 @@ func countDNS(client *api.Client) (int, error) {
 }
 
 func countSimpleMonitor(client *api.Client) (int, error) {
-	res, err := client.GetSimpleMonitorAPI().Include("ID").Find()
+	res, err := client.GetSimpleMonitorAPI().Include("ID").Limit(1).Find()
+	if err != nil {
+		return 0, err
+	}
+	return int(res.Total), nil
+}
+
+func countSIM(client *api.Client) (int, error) {
+	res, err := client.GetSIMAPI().Include("ID").Limit(1).Find()
+	if err != nil {
+		return 0, err
+	}
+	return int(res.Total), nil
+}
+
+func countMobileGateway(client *api.Client) (int, error) {
+	res, err := client.GetMobileGatewayAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -247,7 +289,7 @@ func countSimpleMonitor(client *api.Client) (int, error) {
 }
 
 func countLicense(client *api.Client) (int, error) {
-	res, err := client.GetLicenseAPI().Include("ID").Find()
+	res, err := client.GetLicenseAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -255,7 +297,7 @@ func countLicense(client *api.Client) (int, error) {
 }
 
 func countSSHKey(client *api.Client) (int, error) {
-	res, err := client.GetSSHKeyAPI().Include("ID").Find()
+	res, err := client.GetSSHKeyAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -263,7 +305,7 @@ func countSSHKey(client *api.Client) (int, error) {
 }
 
 func countNote(client *api.Client) (int, error) {
-	res, err := client.GetNoteAPI().WithUserScope().Include("ID").Find()
+	res, err := client.GetNoteAPI().WithUserScope().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
@@ -271,7 +313,7 @@ func countNote(client *api.Client) (int, error) {
 }
 
 func countIcon(client *api.Client) (int, error) {
-	res, err := client.GetIconAPI().WithUserScope().Include("ID").Find()
+	res, err := client.GetIconAPI().WithUserScope().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
