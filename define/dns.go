@@ -63,6 +63,13 @@ func DNSResource() *schema.Resource {
 			Category:           "records",
 			Order:              10,
 		},
+		"record-bulk-update": {
+			Type:             schema.CommandManipulateSingle,
+			Params:           dnsRecordBulkUpdateParam(),
+			UseCustomCommand: true,
+			Category:         "records",
+			Order:            15,
+		},
 		"record-add": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             dnsRecordAddParam(),
@@ -211,6 +218,32 @@ func dnsRecordListParam() map[string]*schema.Schema {
 var allowDNSTypes = []string{
 	"a", "aaaa", "ns", "cname", "mx", "txt", "srv",
 	"A", "AAAA", "NS", "CNAME", "MX", "TXT", "SRV",
+}
+
+func dnsRecordBulkUpdateParam() map[string]*schema.Schema {
+
+	return map[string]*schema.Schema{
+		"file": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set name",
+			Required:     true,
+			ValidateFunc: validateFileExists(),
+			Category:     "record",
+			Order:        10,
+		},
+		"mode": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set name",
+			Required:     true,
+			DefaultValue: "upsert-only",
+			ValidateFunc: validateInStrValues("upsert-only", "sync"),
+			CompleteFunc: completeInStrValues("upsert-only", "sync"),
+			Category:     "record",
+			Order:        20,
+		},
+	}
 }
 
 func dnsRecordAddParam() map[string]*schema.Schema {

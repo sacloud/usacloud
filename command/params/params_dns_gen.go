@@ -523,6 +523,275 @@ func (p *RecordInfoDNSParam) GetId() int64 {
 	return p.Id
 }
 
+// RecordBulkUpdateDNSParam is input parameters for the sacloud API
+type RecordBulkUpdateDNSParam struct {
+	File              string   `json:"file"`
+	Mode              string   `json:"mode"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewRecordBulkUpdateDNSParam return new RecordBulkUpdateDNSParam
+func NewRecordBulkUpdateDNSParam() *RecordBulkUpdateDNSParam {
+	return &RecordBulkUpdateDNSParam{
+
+		Mode: "upsert-only",
+	}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *RecordBulkUpdateDNSParam) FillValueToSkeleton() {
+	if isEmpty(p.File) {
+		p.File = ""
+	}
+	if isEmpty(p.Mode) {
+		p.Mode = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *RecordBulkUpdateDNSParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--file", p.File)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-bulk-update"].Params["file"].ValidateFunc
+		errs := validator("--file", p.File)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--mode", p.Mode)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["DNS"].Commands["record-bulk-update"].Params["mode"].ValidateFunc
+		errs := validator("--mode", p.Mode)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *RecordBulkUpdateDNSParam) GetResourceDef() *schema.Resource {
+	return define.Resources["DNS"]
+}
+
+func (p *RecordBulkUpdateDNSParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["record-bulk-update"]
+}
+
+func (p *RecordBulkUpdateDNSParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *RecordBulkUpdateDNSParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *RecordBulkUpdateDNSParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *RecordBulkUpdateDNSParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *RecordBulkUpdateDNSParam) SetFile(v string) {
+	p.File = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetFile() string {
+	return p.File
+}
+func (p *RecordBulkUpdateDNSParam) SetMode(v string) {
+	p.Mode = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetMode() string {
+	return p.Mode
+}
+func (p *RecordBulkUpdateDNSParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *RecordBulkUpdateDNSParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *RecordBulkUpdateDNSParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *RecordBulkUpdateDNSParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *RecordBulkUpdateDNSParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *RecordBulkUpdateDNSParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *RecordBulkUpdateDNSParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetColumn() []string {
+	return p.Column
+}
+func (p *RecordBulkUpdateDNSParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *RecordBulkUpdateDNSParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetFormat() string {
+	return p.Format
+}
+func (p *RecordBulkUpdateDNSParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *RecordBulkUpdateDNSParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetQuery() string {
+	return p.Query
+}
+func (p *RecordBulkUpdateDNSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *RecordBulkUpdateDNSParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *RecordBulkUpdateDNSParam) GetId() int64 {
+	return p.Id
+}
+
 // CreateDNSParam is input parameters for the sacloud API
 type CreateDNSParam struct {
 	Name              string   `json:"name"`

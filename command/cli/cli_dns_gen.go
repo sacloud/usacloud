@@ -20,6 +20,7 @@ import (
 func init() {
 	listParam := params.NewListDNSParam()
 	recordInfoParam := params.NewRecordInfoDNSParam()
+	recordBulkUpdateParam := params.NewRecordBulkUpdateDNSParam()
 	createParam := params.NewCreateDNSParam()
 	recordAddParam := params.NewRecordAddDNSParam()
 	readParam := params.NewReadDNSParam()
@@ -745,6 +746,417 @@ func init() {
 						recordInfoParam := &p
 						go func() {
 							err := funcs.DNSRecordInfo(ctx, recordInfoParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "record-bulk-update",
+				Usage:     "RecordBulkUpdate DNS",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "file",
+						Usage: "[Required] set name",
+					},
+					&cli.StringFlag{
+						Name:  "mode",
+						Usage: "[Required] set name",
+						Value: "upsert-only",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = recordBulkUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, recordBulkUpdateParam)
+
+					// Set option values
+					if c.IsSet("file") {
+						recordBulkUpdateParam.File = c.String("file")
+					}
+					if c.IsSet("mode") {
+						recordBulkUpdateParam.Mode = c.String("mode")
+					}
+					if c.IsSet("selector") {
+						recordBulkUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						recordBulkUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						recordBulkUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						recordBulkUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						recordBulkUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						recordBulkUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						recordBulkUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						recordBulkUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						recordBulkUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						recordBulkUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						recordBulkUpdateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						recordBulkUpdateParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						recordBulkUpdateParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DNSRecordBulkUpdateCompleteArgs(ctx, recordBulkUpdateParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DNSRecordBulkUpdateCompleteArgs(ctx, recordBulkUpdateParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DNSRecordBulkUpdateCompleteFlags(ctx, recordBulkUpdateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DNSRecordBulkUpdateCompleteArgs(ctx, recordBulkUpdateParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					recordBulkUpdateParam.ParamTemplate = c.String("param-template")
+					recordBulkUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(recordBulkUpdateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewRecordBulkUpdateDNSParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(recordBulkUpdateParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("file") {
+						recordBulkUpdateParam.File = c.String("file")
+					}
+					if c.IsSet("mode") {
+						recordBulkUpdateParam.Mode = c.String("mode")
+					}
+					if c.IsSet("selector") {
+						recordBulkUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						recordBulkUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						recordBulkUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						recordBulkUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						recordBulkUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						recordBulkUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						recordBulkUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						recordBulkUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						recordBulkUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						recordBulkUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						recordBulkUpdateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						recordBulkUpdateParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						recordBulkUpdateParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = recordBulkUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if recordBulkUpdateParam.GenerateSkeleton {
+						recordBulkUpdateParam.GenerateSkeleton = false
+						recordBulkUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(recordBulkUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := recordBulkUpdateParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), recordBulkUpdateParam)
+
+					apiClient := ctx.GetAPIClient().DNS
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(recordBulkUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceDNSItems {
+							if hasTags(&v, recordBulkUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", recordBulkUpdateParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceDNSItems {
+										if len(recordBulkUpdateParam.Selector) == 0 || hasTags(&v, recordBulkUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !recordBulkUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("record-bulk-update", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						recordBulkUpdateParam.SetId(id)
+						p := *recordBulkUpdateParam // copy struct value
+						recordBulkUpdateParam := &p
+						go func() {
+							err := funcs.DNSRecordBulkUpdate(ctx, recordBulkUpdateParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -3673,6 +4085,11 @@ func init() {
 		DisplayName: "Records",
 		Order:       1,
 	})
+	AppendCommandCategoryMap("dns", "record-bulk-update", &schema.Category{
+		Key:         "records",
+		DisplayName: "Records",
+		Order:       1,
+	})
 	AppendCommandCategoryMap("dns", "record-delete", &schema.Category{
 		Key:         "records",
 		DisplayName: "Records",
@@ -4085,6 +4502,81 @@ func init() {
 		Key:         "record",
 		DisplayName: "Common record options",
 		Order:       10,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "file", &schema.Category{
+		Key:         "record",
+		DisplayName: "Record options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "mode", &schema.Category{
+		Key:         "record",
+		DisplayName: "Record options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("dns", "record-bulk-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
 	})
 	AppendFlagCategoryMap("dns", "record-delete", "assumeyes", &schema.Category{
 		Key:         "Input",
