@@ -24,6 +24,7 @@ type ListPriceParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListPriceParam return new ListPriceParam
@@ -74,6 +75,9 @@ func (p *ListPriceParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -251,4 +255,11 @@ func (p *ListPriceParam) SetQuery(v string) {
 
 func (p *ListPriceParam) GetQuery() string {
 	return p.Query
+}
+func (p *ListPriceParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListPriceParam) GetQueryFile() string {
+	return p.QueryFile
 }

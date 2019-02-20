@@ -19,6 +19,7 @@ type ShowSummaryParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	PaidResourcesOnly bool     `json:"paid-resources-only"`
 }
 
@@ -55,6 +56,9 @@ func (p *ShowSummaryParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.PaidResourcesOnly) {
 		p.PaidResourcesOnly = false
@@ -175,6 +179,13 @@ func (p *ShowSummaryParam) SetQuery(v string) {
 
 func (p *ShowSummaryParam) GetQuery() string {
 	return p.Query
+}
+func (p *ShowSummaryParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ShowSummaryParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *ShowSummaryParam) SetPaidResourcesOnly(v bool) {
 	p.PaidResourcesOnly = v

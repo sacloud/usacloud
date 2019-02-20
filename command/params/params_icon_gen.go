@@ -26,6 +26,7 @@ type ListIconParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListIconParam return new ListIconParam
@@ -82,6 +83,9 @@ func (p *ListIconParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -288,6 +292,13 @@ func (p *ListIconParam) SetQuery(v string) {
 func (p *ListIconParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListIconParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListIconParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateIconParam is input parameters for the sacloud API
 type CreateIconParam struct {
@@ -304,6 +315,7 @@ type CreateIconParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewCreateIconParam return new CreateIconParam
@@ -351,6 +363,9 @@ func (p *CreateIconParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -532,6 +547,13 @@ func (p *CreateIconParam) SetQuery(v string) {
 func (p *CreateIconParam) GetQuery() string {
 	return p.Query
 }
+func (p *CreateIconParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateIconParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadIconParam is input parameters for the sacloud API
 type ReadIconParam struct {
@@ -545,6 +567,7 @@ type ReadIconParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -584,6 +607,9 @@ func (p *ReadIconParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -719,6 +745,13 @@ func (p *ReadIconParam) SetQuery(v string) {
 func (p *ReadIconParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReadIconParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadIconParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadIconParam) SetId(v int64) {
 	p.Id = v
 }
@@ -742,6 +775,7 @@ type UpdateIconParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -790,6 +824,9 @@ func (p *UpdateIconParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -960,6 +997,13 @@ func (p *UpdateIconParam) SetQuery(v string) {
 func (p *UpdateIconParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdateIconParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateIconParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdateIconParam) SetId(v int64) {
 	p.Id = v
 }
@@ -981,6 +1025,7 @@ type DeleteIconParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1023,6 +1068,9 @@ func (p *DeleteIconParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1164,6 +1212,13 @@ func (p *DeleteIconParam) SetQuery(v string) {
 
 func (p *DeleteIconParam) GetQuery() string {
 	return p.Query
+}
+func (p *DeleteIconParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteIconParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *DeleteIconParam) SetId(v int64) {
 	p.Id = v

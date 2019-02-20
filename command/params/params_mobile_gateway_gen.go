@@ -25,6 +25,7 @@ type ListMobileGatewayParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListMobileGatewayParam return new ListMobileGatewayParam
@@ -78,6 +79,9 @@ func (p *ListMobileGatewayParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -270,6 +274,13 @@ func (p *ListMobileGatewayParam) SetQuery(v string) {
 func (p *ListMobileGatewayParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListMobileGatewayParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListMobileGatewayParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateMobileGatewayParam is input parameters for the sacloud API
 type CreateMobileGatewayParam struct {
@@ -288,6 +299,7 @@ type CreateMobileGatewayParam struct {
 	Format             string   `json:"format"`
 	FormatFile         string   `json:"format-file"`
 	Query              string   `json:"query"`
+	QueryFile          string   `json:"query-file"`
 }
 
 // NewCreateMobileGatewayParam return new CreateMobileGatewayParam
@@ -341,6 +353,9 @@ func (p *CreateMobileGatewayParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -536,6 +551,13 @@ func (p *CreateMobileGatewayParam) SetQuery(v string) {
 func (p *CreateMobileGatewayParam) GetQuery() string {
 	return p.Query
 }
+func (p *CreateMobileGatewayParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateMobileGatewayParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadMobileGatewayParam is input parameters for the sacloud API
 type ReadMobileGatewayParam struct {
@@ -549,6 +571,7 @@ type ReadMobileGatewayParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -588,6 +611,9 @@ func (p *ReadMobileGatewayParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -723,6 +749,13 @@ func (p *ReadMobileGatewayParam) SetQuery(v string) {
 func (p *ReadMobileGatewayParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReadMobileGatewayParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadMobileGatewayParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadMobileGatewayParam) SetId(v int64) {
 	p.Id = v
 }
@@ -749,6 +782,7 @@ type UpdateMobileGatewayParam struct {
 	Format             string   `json:"format"`
 	FormatFile         string   `json:"format-file"`
 	Query              string   `json:"query"`
+	QueryFile          string   `json:"query-file"`
 	Id                 int64    `json:"id"`
 }
 
@@ -806,6 +840,9 @@ func (p *UpdateMobileGatewayParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1011,6 +1048,13 @@ func (p *UpdateMobileGatewayParam) SetQuery(v string) {
 func (p *UpdateMobileGatewayParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdateMobileGatewayParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateMobileGatewayParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdateMobileGatewayParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1033,6 +1077,7 @@ type DeleteMobileGatewayParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1078,6 +1123,9 @@ func (p *DeleteMobileGatewayParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1226,6 +1274,13 @@ func (p *DeleteMobileGatewayParam) SetQuery(v string) {
 
 func (p *DeleteMobileGatewayParam) GetQuery() string {
 	return p.Query
+}
+func (p *DeleteMobileGatewayParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteMobileGatewayParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *DeleteMobileGatewayParam) SetId(v int64) {
 	p.Id = v
@@ -1939,6 +1994,7 @@ type InterfaceInfoMobileGatewayParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1978,6 +2034,9 @@ func (p *InterfaceInfoMobileGatewayParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2112,6 +2171,13 @@ func (p *InterfaceInfoMobileGatewayParam) SetQuery(v string) {
 
 func (p *InterfaceInfoMobileGatewayParam) GetQuery() string {
 	return p.Query
+}
+func (p *InterfaceInfoMobileGatewayParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *InterfaceInfoMobileGatewayParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *InterfaceInfoMobileGatewayParam) SetId(v int64) {
 	p.Id = v
@@ -2600,6 +2666,7 @@ type TrafficControlInfoMobileGatewayParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2639,6 +2706,9 @@ func (p *TrafficControlInfoMobileGatewayParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2773,6 +2843,13 @@ func (p *TrafficControlInfoMobileGatewayParam) SetQuery(v string) {
 
 func (p *TrafficControlInfoMobileGatewayParam) GetQuery() string {
 	return p.Query
+}
+func (p *TrafficControlInfoMobileGatewayParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *TrafficControlInfoMobileGatewayParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *TrafficControlInfoMobileGatewayParam) SetId(v int64) {
 	p.Id = v
@@ -3313,6 +3390,7 @@ type StaticRouteInfoMobileGatewayParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -3352,6 +3430,9 @@ func (p *StaticRouteInfoMobileGatewayParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -3486,6 +3567,13 @@ func (p *StaticRouteInfoMobileGatewayParam) SetQuery(v string) {
 
 func (p *StaticRouteInfoMobileGatewayParam) GetQuery() string {
 	return p.Query
+}
+func (p *StaticRouteInfoMobileGatewayParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *StaticRouteInfoMobileGatewayParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *StaticRouteInfoMobileGatewayParam) SetId(v int64) {
 	p.Id = v
@@ -3986,6 +4074,7 @@ type SimInfoMobileGatewayParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -4025,6 +4114,9 @@ func (p *SimInfoMobileGatewayParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -4159,6 +4251,13 @@ func (p *SimInfoMobileGatewayParam) SetQuery(v string) {
 
 func (p *SimInfoMobileGatewayParam) GetQuery() string {
 	return p.Query
+}
+func (p *SimInfoMobileGatewayParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *SimInfoMobileGatewayParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *SimInfoMobileGatewayParam) SetId(v int64) {
 	p.Id = v
@@ -4655,6 +4754,7 @@ type SimRouteInfoMobileGatewayParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -4694,6 +4794,9 @@ func (p *SimRouteInfoMobileGatewayParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -4828,6 +4931,13 @@ func (p *SimRouteInfoMobileGatewayParam) SetQuery(v string) {
 
 func (p *SimRouteInfoMobileGatewayParam) GetQuery() string {
 	return p.Query
+}
+func (p *SimRouteInfoMobileGatewayParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *SimRouteInfoMobileGatewayParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *SimRouteInfoMobileGatewayParam) SetId(v int64) {
 	p.Id = v

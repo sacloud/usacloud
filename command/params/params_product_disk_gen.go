@@ -24,6 +24,7 @@ type ListProductDiskParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListProductDiskParam return new ListProductDiskParam
@@ -74,6 +75,9 @@ func (p *ListProductDiskParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -252,6 +256,13 @@ func (p *ListProductDiskParam) SetQuery(v string) {
 func (p *ListProductDiskParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListProductDiskParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListProductDiskParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadProductDiskParam is input parameters for the sacloud API
 type ReadProductDiskParam struct {
@@ -265,6 +276,7 @@ type ReadProductDiskParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -304,6 +316,9 @@ func (p *ReadProductDiskParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -445,6 +460,13 @@ func (p *ReadProductDiskParam) SetQuery(v string) {
 
 func (p *ReadProductDiskParam) GetQuery() string {
 	return p.Query
+}
+func (p *ReadProductDiskParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadProductDiskParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *ReadProductDiskParam) SetId(v int64) {
 	p.Id = v

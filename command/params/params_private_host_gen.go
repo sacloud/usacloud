@@ -25,6 +25,7 @@ type ListPrivateHostParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListPrivateHostParam return new ListPrivateHostParam
@@ -78,6 +79,9 @@ func (p *ListPrivateHostParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -270,6 +274,13 @@ func (p *ListPrivateHostParam) SetQuery(v string) {
 func (p *ListPrivateHostParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListPrivateHostParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListPrivateHostParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreatePrivateHostParam is input parameters for the sacloud API
 type CreatePrivateHostParam struct {
@@ -287,6 +298,7 @@ type CreatePrivateHostParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewCreatePrivateHostParam return new CreatePrivateHostParam
@@ -337,6 +349,9 @@ func (p *CreatePrivateHostParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -525,6 +540,13 @@ func (p *CreatePrivateHostParam) SetQuery(v string) {
 func (p *CreatePrivateHostParam) GetQuery() string {
 	return p.Query
 }
+func (p *CreatePrivateHostParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreatePrivateHostParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadPrivateHostParam is input parameters for the sacloud API
 type ReadPrivateHostParam struct {
@@ -538,6 +560,7 @@ type ReadPrivateHostParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -577,6 +600,9 @@ func (p *ReadPrivateHostParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -712,6 +738,13 @@ func (p *ReadPrivateHostParam) SetQuery(v string) {
 func (p *ReadPrivateHostParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReadPrivateHostParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadPrivateHostParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadPrivateHostParam) SetId(v int64) {
 	p.Id = v
 }
@@ -737,6 +770,7 @@ type UpdatePrivateHostParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -791,6 +825,9 @@ func (p *UpdatePrivateHostParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -989,6 +1026,13 @@ func (p *UpdatePrivateHostParam) SetQuery(v string) {
 func (p *UpdatePrivateHostParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdatePrivateHostParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdatePrivateHostParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdatePrivateHostParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1010,6 +1054,7 @@ type DeletePrivateHostParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1052,6 +1097,9 @@ func (p *DeletePrivateHostParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1194,6 +1242,13 @@ func (p *DeletePrivateHostParam) SetQuery(v string) {
 func (p *DeletePrivateHostParam) GetQuery() string {
 	return p.Query
 }
+func (p *DeletePrivateHostParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeletePrivateHostParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *DeletePrivateHostParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1214,6 +1269,7 @@ type ServerInfoPrivateHostParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1253,6 +1309,9 @@ func (p *ServerInfoPrivateHostParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1388,6 +1447,13 @@ func (p *ServerInfoPrivateHostParam) SetQuery(v string) {
 func (p *ServerInfoPrivateHostParam) GetQuery() string {
 	return p.Query
 }
+func (p *ServerInfoPrivateHostParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ServerInfoPrivateHostParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ServerInfoPrivateHostParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1410,6 +1476,7 @@ type ServerAddPrivateHostParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1455,6 +1522,9 @@ func (p *ServerAddPrivateHostParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1618,6 +1688,13 @@ func (p *ServerAddPrivateHostParam) SetQuery(v string) {
 func (p *ServerAddPrivateHostParam) GetQuery() string {
 	return p.Query
 }
+func (p *ServerAddPrivateHostParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ServerAddPrivateHostParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ServerAddPrivateHostParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1640,6 +1717,7 @@ type ServerDeletePrivateHostParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1685,6 +1763,9 @@ func (p *ServerDeletePrivateHostParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1847,6 +1928,13 @@ func (p *ServerDeletePrivateHostParam) SetQuery(v string) {
 
 func (p *ServerDeletePrivateHostParam) GetQuery() string {
 	return p.Query
+}
+func (p *ServerDeletePrivateHostParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ServerDeletePrivateHostParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *ServerDeletePrivateHostParam) SetId(v int64) {
 	p.Id = v

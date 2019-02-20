@@ -103,6 +103,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -189,6 +193,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						listParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						listParam.QueryFile = c.String("query-file")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -323,6 +330,9 @@ func init() {
 					if c.IsSet("query") {
 						listParam.Query = c.String("query")
 					}
+					if c.IsSet("query-file") {
+						listParam.QueryFile = c.String("query-file")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -415,6 +425,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -486,6 +500,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						ptrAddParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						ptrAddParam.QueryFile = c.String("query-file")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -605,6 +622,9 @@ func init() {
 					if c.IsSet("query") {
 						ptrAddParam.Query = c.String("query")
 					}
+					if c.IsSet("query-file") {
+						ptrAddParam.QueryFile = c.String("query-file")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -698,6 +718,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -763,6 +787,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						ptrReadParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						ptrReadParam.QueryFile = c.String("query-file")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -876,6 +903,9 @@ func init() {
 					if c.IsSet("query") {
 						ptrReadParam.Query = c.String("query")
 					}
+					if c.IsSet("query-file") {
+						ptrReadParam.QueryFile = c.String("query-file")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -968,6 +998,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -1039,6 +1073,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						ptrUpdateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						ptrUpdateParam.QueryFile = c.String("query-file")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1158,6 +1195,9 @@ func init() {
 					if c.IsSet("query") {
 						ptrUpdateParam.Query = c.String("query")
 					}
+					if c.IsSet("query-file") {
+						ptrUpdateParam.QueryFile = c.String("query-file")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -1256,6 +1296,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -1324,6 +1368,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						ptrDeleteParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						ptrDeleteParam.QueryFile = c.String("query-file")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1439,6 +1486,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						ptrDeleteParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						ptrDeleteParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -1598,6 +1648,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("ipv6", "list", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("ipv6", "list", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -1658,6 +1713,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("ipv6", "ptr-add", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("ipv6", "ptr-add", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -1708,6 +1768,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("ipv6", "ptr-delete", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("ipv6", "ptr-delete", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -1749,6 +1814,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("ipv6", "ptr-read", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("ipv6", "ptr-read", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
@@ -1804,6 +1874,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("ipv6", "ptr-update", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("ipv6", "ptr-update", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,

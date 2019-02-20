@@ -24,6 +24,7 @@ type ListBridgeParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListBridgeParam return new ListBridgeParam
@@ -74,6 +75,9 @@ func (p *ListBridgeParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -252,6 +256,13 @@ func (p *ListBridgeParam) SetQuery(v string) {
 func (p *ListBridgeParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListBridgeParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListBridgeParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateBridgeParam is input parameters for the sacloud API
 type CreateBridgeParam struct {
@@ -267,6 +278,7 @@ type CreateBridgeParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewCreateBridgeParam return new CreateBridgeParam
@@ -311,6 +323,9 @@ func (p *CreateBridgeParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -471,6 +486,13 @@ func (p *CreateBridgeParam) SetQuery(v string) {
 func (p *CreateBridgeParam) GetQuery() string {
 	return p.Query
 }
+func (p *CreateBridgeParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateBridgeParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadBridgeParam is input parameters for the sacloud API
 type ReadBridgeParam struct {
@@ -483,6 +505,7 @@ type ReadBridgeParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -519,6 +542,9 @@ func (p *ReadBridgeParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -647,6 +673,13 @@ func (p *ReadBridgeParam) SetQuery(v string) {
 func (p *ReadBridgeParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReadBridgeParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadBridgeParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadBridgeParam) SetId(v int64) {
 	p.Id = v
 }
@@ -669,6 +702,7 @@ type UpdateBridgeParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -714,6 +748,9 @@ func (p *UpdateBridgeParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -877,6 +914,13 @@ func (p *UpdateBridgeParam) SetQuery(v string) {
 func (p *UpdateBridgeParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdateBridgeParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateBridgeParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdateBridgeParam) SetId(v int64) {
 	p.Id = v
 }
@@ -897,6 +941,7 @@ type DeleteBridgeParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -936,6 +981,9 @@ func (p *DeleteBridgeParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1070,6 +1118,13 @@ func (p *DeleteBridgeParam) SetQuery(v string) {
 
 func (p *DeleteBridgeParam) GetQuery() string {
 	return p.Query
+}
+func (p *DeleteBridgeParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteBridgeParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *DeleteBridgeParam) SetId(v int64) {
 	p.Id = v

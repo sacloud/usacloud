@@ -25,6 +25,7 @@ type ListSIMParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListSIMParam return new ListSIMParam
@@ -78,6 +79,9 @@ func (p *ListSIMParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -270,6 +274,13 @@ func (p *ListSIMParam) SetQuery(v string) {
 func (p *ListSIMParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListSIMParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListSIMParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateSIMParam is input parameters for the sacloud API
 type CreateSIMParam struct {
@@ -292,6 +303,7 @@ type CreateSIMParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewCreateSIMParam return new CreateSIMParam
@@ -357,6 +369,9 @@ func (p *CreateSIMParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -614,6 +629,13 @@ func (p *CreateSIMParam) SetQuery(v string) {
 func (p *CreateSIMParam) GetQuery() string {
 	return p.Query
 }
+func (p *CreateSIMParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateSIMParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadSIMParam is input parameters for the sacloud API
 type ReadSIMParam struct {
@@ -627,6 +649,7 @@ type ReadSIMParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -666,6 +689,9 @@ func (p *ReadSIMParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -801,6 +827,13 @@ func (p *ReadSIMParam) SetQuery(v string) {
 func (p *ReadSIMParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReadSIMParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadSIMParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadSIMParam) SetId(v int64) {
 	p.Id = v
 }
@@ -826,6 +859,7 @@ type UpdateSIMParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -880,6 +914,9 @@ func (p *UpdateSIMParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1078,6 +1115,13 @@ func (p *UpdateSIMParam) SetQuery(v string) {
 func (p *UpdateSIMParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdateSIMParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateSIMParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdateSIMParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1228,6 +1272,7 @@ type CarrierInfoSIMParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1267,6 +1312,9 @@ func (p *CarrierInfoSIMParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1401,6 +1449,13 @@ func (p *CarrierInfoSIMParam) SetQuery(v string) {
 
 func (p *CarrierInfoSIMParam) GetQuery() string {
 	return p.Query
+}
+func (p *CarrierInfoSIMParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CarrierInfoSIMParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *CarrierInfoSIMParam) SetId(v int64) {
 	p.Id = v
@@ -2331,6 +2386,7 @@ type LogsSIMParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2379,6 +2435,9 @@ func (p *LogsSIMParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2535,6 +2594,13 @@ func (p *LogsSIMParam) SetQuery(v string) {
 func (p *LogsSIMParam) GetQuery() string {
 	return p.Query
 }
+func (p *LogsSIMParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *LogsSIMParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *LogsSIMParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2558,6 +2624,7 @@ type MonitorSIMParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2609,6 +2676,9 @@ func (p *MonitorSIMParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2785,6 +2855,13 @@ func (p *MonitorSIMParam) SetQuery(v string) {
 
 func (p *MonitorSIMParam) GetQuery() string {
 	return p.Query
+}
+func (p *MonitorSIMParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorSIMParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *MonitorSIMParam) SetId(v int64) {
 	p.Id = v

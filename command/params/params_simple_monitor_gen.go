@@ -26,6 +26,7 @@ type ListSimpleMonitorParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListSimpleMonitorParam return new ListSimpleMonitorParam
@@ -82,6 +83,9 @@ func (p *ListSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -288,6 +292,13 @@ func (p *ListSimpleMonitorParam) SetQuery(v string) {
 func (p *ListSimpleMonitorParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListSimpleMonitorParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListSimpleMonitorParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateSimpleMonitorParam is input parameters for the sacloud API
 type CreateSimpleMonitorParam struct {
@@ -321,6 +332,7 @@ type CreateSimpleMonitorParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewCreateSimpleMonitorParam return new CreateSimpleMonitorParam
@@ -426,6 +438,9 @@ func (p *CreateSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -768,6 +783,13 @@ func (p *CreateSimpleMonitorParam) SetQuery(v string) {
 func (p *CreateSimpleMonitorParam) GetQuery() string {
 	return p.Query
 }
+func (p *CreateSimpleMonitorParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateSimpleMonitorParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadSimpleMonitorParam is input parameters for the sacloud API
 type ReadSimpleMonitorParam struct {
@@ -781,6 +803,7 @@ type ReadSimpleMonitorParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -820,6 +843,9 @@ func (p *ReadSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -955,6 +981,13 @@ func (p *ReadSimpleMonitorParam) SetQuery(v string) {
 func (p *ReadSimpleMonitorParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReadSimpleMonitorParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadSimpleMonitorParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadSimpleMonitorParam) SetId(v int64) {
 	p.Id = v
 }
@@ -995,6 +1028,7 @@ type UpdateSimpleMonitorParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1094,6 +1128,9 @@ func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1425,6 +1462,13 @@ func (p *UpdateSimpleMonitorParam) SetQuery(v string) {
 func (p *UpdateSimpleMonitorParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdateSimpleMonitorParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdateSimpleMonitorParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1446,6 +1490,7 @@ type DeleteSimpleMonitorParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1488,6 +1533,9 @@ func (p *DeleteSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1630,6 +1678,13 @@ func (p *DeleteSimpleMonitorParam) SetQuery(v string) {
 func (p *DeleteSimpleMonitorParam) GetQuery() string {
 	return p.Query
 }
+func (p *DeleteSimpleMonitorParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteSimpleMonitorParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *DeleteSimpleMonitorParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1650,6 +1705,7 @@ type HealthSimpleMonitorParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1689,6 +1745,9 @@ func (p *HealthSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1823,6 +1882,13 @@ func (p *HealthSimpleMonitorParam) SetQuery(v string) {
 
 func (p *HealthSimpleMonitorParam) GetQuery() string {
 	return p.Query
+}
+func (p *HealthSimpleMonitorParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *HealthSimpleMonitorParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *HealthSimpleMonitorParam) SetId(v int64) {
 	p.Id = v

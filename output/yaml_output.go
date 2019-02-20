@@ -9,9 +9,8 @@ import (
 )
 
 type yamlOutput struct {
-	out   io.Writer
-	err   io.Writer
-	query string
+	out io.Writer
+	err io.Writer
 }
 
 func NewYAMLOutput(out io.Writer, err io.Writer) Output {

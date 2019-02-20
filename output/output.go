@@ -18,6 +18,7 @@ type Option interface {
 	GetFormatFile() string
 	GetQuiet() bool
 	GetQuery() string
+	GetQueryFile() string
 }
 
 type TableType int //go:generate stringer -type=OutputTableType :: manual

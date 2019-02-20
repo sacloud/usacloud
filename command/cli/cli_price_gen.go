@@ -93,6 +93,10 @@ func init() {
 				Name:  "query",
 				Usage: "JMESPath query(using when '--output-type' is json only)",
 			},
+			&cli.StringFlag{
+				Name:  "query-file",
+				Usage: "JMESPath query from file(using when '--output-type' is json only)",
+			},
 		},
 		Subcommands: []*cli.Command{
 			{
@@ -161,6 +165,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
 					},
 				},
 				ShellComplete: func(c *cli.Context) {
@@ -242,6 +250,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						listParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						listParam.QueryFile = c.String("query-file")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -370,6 +381,9 @@ func init() {
 					if c.IsSet("query") {
 						listParam.Query = c.String("query")
 					}
+					if c.IsSet("query-file") {
+						listParam.QueryFile = c.String("query-file")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -484,6 +498,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("price", "list", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("price", "list", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,

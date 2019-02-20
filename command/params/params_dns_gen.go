@@ -25,6 +25,7 @@ type ListDNSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListDNSParam return new ListDNSParam
@@ -78,6 +79,9 @@ func (p *ListDNSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -270,6 +274,13 @@ func (p *ListDNSParam) SetQuery(v string) {
 func (p *ListDNSParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListDNSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListDNSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // RecordInfoDNSParam is input parameters for the sacloud API
 type RecordInfoDNSParam struct {
@@ -285,6 +296,7 @@ type RecordInfoDNSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -330,6 +342,9 @@ func (p *RecordInfoDNSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -493,6 +508,13 @@ func (p *RecordInfoDNSParam) SetQuery(v string) {
 func (p *RecordInfoDNSParam) GetQuery() string {
 	return p.Query
 }
+func (p *RecordInfoDNSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *RecordInfoDNSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *RecordInfoDNSParam) SetId(v int64) {
 	p.Id = v
 }
@@ -517,6 +539,7 @@ type CreateDNSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewCreateDNSParam return new CreateDNSParam
@@ -567,6 +590,9 @@ func (p *CreateDNSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -755,6 +781,13 @@ func (p *CreateDNSParam) SetQuery(v string) {
 func (p *CreateDNSParam) GetQuery() string {
 	return p.Query
 }
+func (p *CreateDNSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateDNSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // RecordAddDNSParam is input parameters for the sacloud API
 type RecordAddDNSParam struct {
@@ -778,6 +811,7 @@ type RecordAddDNSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -851,6 +885,9 @@ func (p *RecordAddDNSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1126,6 +1163,13 @@ func (p *RecordAddDNSParam) SetQuery(v string) {
 func (p *RecordAddDNSParam) GetQuery() string {
 	return p.Query
 }
+func (p *RecordAddDNSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *RecordAddDNSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *RecordAddDNSParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1146,6 +1190,7 @@ type ReadDNSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1185,6 +1230,9 @@ func (p *ReadDNSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1320,6 +1368,13 @@ func (p *ReadDNSParam) SetQuery(v string) {
 func (p *ReadDNSParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReadDNSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadDNSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadDNSParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1351,6 +1406,7 @@ type RecordUpdateDNSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1423,6 +1479,9 @@ func (p *RecordUpdateDNSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1698,6 +1757,13 @@ func (p *RecordUpdateDNSParam) SetQuery(v string) {
 func (p *RecordUpdateDNSParam) GetQuery() string {
 	return p.Query
 }
+func (p *RecordUpdateDNSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *RecordUpdateDNSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *RecordUpdateDNSParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1720,6 +1786,7 @@ type RecordDeleteDNSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1765,6 +1832,9 @@ func (p *RecordDeleteDNSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1921,6 +1991,13 @@ func (p *RecordDeleteDNSParam) SetQuery(v string) {
 func (p *RecordDeleteDNSParam) GetQuery() string {
 	return p.Query
 }
+func (p *RecordDeleteDNSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *RecordDeleteDNSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *RecordDeleteDNSParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1945,6 +2022,7 @@ type UpdateDNSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1996,6 +2074,9 @@ func (p *UpdateDNSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2180,6 +2261,13 @@ func (p *UpdateDNSParam) SetQuery(v string) {
 func (p *UpdateDNSParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdateDNSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateDNSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdateDNSParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2201,6 +2289,7 @@ type DeleteDNSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2243,6 +2332,9 @@ func (p *DeleteDNSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2384,6 +2476,13 @@ func (p *DeleteDNSParam) SetQuery(v string) {
 
 func (p *DeleteDNSParam) GetQuery() string {
 	return p.Query
+}
+func (p *DeleteDNSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteDNSParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *DeleteDNSParam) SetId(v int64) {
 	p.Id = v

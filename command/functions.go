@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"io/ioutil"
 	"reflect"
 	"strings"
 	"time"
@@ -129,7 +130,12 @@ func getOutputWriter(formatter output.Formatter) output.Output {
 	case "tsv":
 		return output.NewRowOutput(o.Out, o.Err, '\t', formatter)
 	case "json":
-		return output.NewJSONOutput(o.Out, o.Err, formatter.GetQuery())
+		query := formatter.GetQuery()
+		if query == "" {
+			bQuery, _ := ioutil.ReadFile(formatter.GetQueryFile()) // nolint: err was already checked
+			query = string(bQuery)
+		}
+		return output.NewJSONOutput(o.Out, o.Err, query)
 	case "yaml":
 		return output.NewYAMLOutput(o.Out, o.Err)
 	default:
