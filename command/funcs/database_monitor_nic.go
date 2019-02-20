@@ -52,6 +52,10 @@ func DatabaseMonitorNic(ctx command.Context, params *params.MonitorNicDatabasePa
 		return fmt.Errorf("DatabaseMonitorNic is failed: %s", err)
 	}
 
+	// sort
+	sort.Slice(receiveValues, func(i, j int) bool { return receiveValues[i].Time.Before(receiveValues[j].Time) })
+	sort.Slice(sendValues, func(i, j int) bool { return sendValues[i].Time.Before(sendValues[j].Time) })
+
 	// build key string
 	key := ""
 	buf := bytes.NewBufferString("")

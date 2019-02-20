@@ -45,6 +45,10 @@ func InternetMonitor(ctx command.Context, params *params.MonitorInternetParam) e
 		return fmt.Errorf("InternetMonitor is failed: %s", err)
 	}
 
+	// sort
+	sort.Slice(inValues, func(i, j int) bool { return inValues[i].Time.Before(inValues[j].Time) })
+	sort.Slice(outValues, func(i, j int) bool { return outValues[i].Time.Before(outValues[j].Time) })
+
 	// build key string
 	key := ""
 	buf := bytes.NewBufferString("")

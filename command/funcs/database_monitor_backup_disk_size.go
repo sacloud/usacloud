@@ -45,6 +45,10 @@ func DatabaseMonitorBackupDiskSize(ctx command.Context, params *params.MonitorBa
 		return fmt.Errorf("DatabaseMonitorBackupDiskSize is failed: %s", err)
 	}
 
+	// sort
+	sort.Slice(totalValues, func(i, j int) bool { return totalValues[i].Time.Before(totalValues[j].Time) })
+	sort.Slice(usedValues, func(i, j int) bool { return usedValues[i].Time.Before(usedValues[j].Time) })
+
 	// build key string
 	key := ""
 	buf := bytes.NewBufferString("")

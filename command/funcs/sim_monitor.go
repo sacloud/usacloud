@@ -45,6 +45,10 @@ func SIMMonitor(ctx command.Context, params *params.MonitorSIMParam) error {
 		return fmt.Errorf("SimMonitor is failed: %s", err)
 	}
 
+	// sort
+	sort.Slice(uplinkValues, func(i, j int) bool { return uplinkValues[i].Time.Before(uplinkValues[j].Time) })
+	sort.Slice(downlinkValues, func(i, j int) bool { return downlinkValues[i].Time.Before(downlinkValues[j].Time) })
+
 	// build key string
 	key := ""
 	buf := bytes.NewBufferString("")

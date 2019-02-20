@@ -45,6 +45,10 @@ func DiskMonitor(ctx command.Context, params *params.MonitorDiskParam) error {
 		return fmt.Errorf("DiskMonitor is failed: %s", err)
 	}
 
+	// sort
+	sort.Slice(reads, func(i, j int) bool { return reads[i].Time.Before(reads[j].Time) })
+	sort.Slice(writes, func(i, j int) bool { return writes[i].Time.Before(writes[j].Time) })
+
 	// build key string
 	key := ""
 	buf := bytes.NewBufferString("")

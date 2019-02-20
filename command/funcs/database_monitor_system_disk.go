@@ -51,6 +51,10 @@ func DatabaseMonitorSystemDisk(ctx command.Context, params *params.MonitorSystem
 		return fmt.Errorf("DatabaseMonitorSystemDisk is failed: %s", err)
 	}
 
+	// sort
+	sort.Slice(readValues, func(i, j int) bool { return readValues[i].Time.Before(readValues[j].Time) })
+	sort.Slice(writeValues, func(i, j int) bool { return writeValues[i].Time.Before(writeValues[j].Time) })
+
 	// build key string
 	key := ""
 	buf := bytes.NewBufferString("")

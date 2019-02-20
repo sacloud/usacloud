@@ -65,6 +65,10 @@ func ServerMonitorNic(ctx command.Context, params *params.MonitorNicServerParam)
 			return fmt.Errorf("ServerMonitorNic is failed: %s", err)
 		}
 
+		// sort
+		sort.Slice(receiveValues, func(i, j int) bool { return receiveValues[i].Time.Before(receiveValues[j].Time) })
+		sort.Slice(sendValues, func(i, j int) bool { return sendValues[i].Time.Before(sendValues[j].Time) })
+
 		// build key string
 		key := ""
 		buf := bytes.NewBufferString("")
