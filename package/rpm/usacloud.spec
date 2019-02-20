@@ -40,6 +40,14 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Feb 20 2019 <sacloud.users@gmail.com> - 0.19.0-1
+- summaryコマンドへNFS/SIM/MobileGateway追加 (by yamamoto-febc)
+- libsacloud to v1.14.0 (by yamamoto-febc)
+- アクティビティAPIでのソート順修正 (by yamamoto-febc)
+- YAML出力オプションの追加 (by yamamoto-febc)
+- --query-fileオプションの追加 (by yamamoto-febc)
+- DNSレコードのバルク更新コマンド追加 (by yamamoto-febc)
+
 * Fri Jan 25 2019 <sacloud.users@gmail.com> - 0.18.0-1
 - Usacloud Sandboxへのリンク追加 (by yamamoto-febc)
 - クーポン情報取得コマンド (by yamamoto-febc)
