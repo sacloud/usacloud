@@ -36,7 +36,7 @@ clean-all:
 tools:
 	GO111MODULE=off go get -u golang.org/x/tools/cmd/goimports
 	GO111MODULE=off go get -u github.com/motemen/gobump/cmd/gobump
-	GO111MODULE0off go get -u golang.org/x/lint/golint
+	GO111MODULE=off go get -u golang.org/x/lint/golint
 	#curl https://git.io/vp6lP | sh
 	#gometalinter --install
 
