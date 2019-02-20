@@ -12,6 +12,7 @@ require (
 	github.com/client9/misspell v0.3.4 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/fatih/color v1.7.0
+	github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
 	github.com/golang/lint v0.0.0-20181011164241-5906bd5c48cd // indirect
 	github.com/gordonklaus/ineffassign v0.0.0-20180909121442-1003c8bd00dc // indirect
 	github.com/hnakamur/go-scp v0.0.0-20170731142846-05a5990ec145

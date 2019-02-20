@@ -41,7 +41,7 @@ func Ipv4ListCompleteFlags(ctx command.Context, params *params.ListIpv4Param, fl
 			comp = param.Param.CompleteFunc
 		}
 	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
 	}
 
 	if comp != nil {
@@ -62,7 +62,7 @@ func Ipv4PtrAddCompleteFlags(ctx command.Context, params *params.PtrAddIpv4Param
 			comp = param.Param.CompleteFunc
 		}
 	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
 	}
 
 	if comp != nil {
@@ -78,7 +78,7 @@ func Ipv4PtrReadCompleteFlags(ctx command.Context, params *params.PtrReadIpv4Par
 
 	switch flagName {
 	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
 	}
 
 	if comp != nil {
@@ -99,7 +99,7 @@ func Ipv4PtrUpdateCompleteFlags(ctx command.Context, params *params.PtrUpdateIpv
 			comp = param.Param.CompleteFunc
 		}
 	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
 	}
 
 	if comp != nil {
@@ -115,7 +115,7 @@ func Ipv4PtrDeleteCompleteFlags(ctx command.Context, params *params.PtrDeleteIpv
 
 	switch flagName {
 	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
 	}
 
 	if comp != nil {

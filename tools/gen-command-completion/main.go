@@ -348,7 +348,7 @@ func {{.FuncName}}(ctx command.Context, params *params.{{.ParamName}} , flagName
 	 		comp = param.Param.CompleteFunc
 	 	}{{end}}{{end}}{{end}}
 	{{ if .HasOutputFlag }}case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
 {{ end -}}
 	}
 
