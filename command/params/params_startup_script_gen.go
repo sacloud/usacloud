@@ -27,6 +27,7 @@ type ListStartupScriptParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListStartupScriptParam return new ListStartupScriptParam
@@ -86,6 +87,9 @@ func (p *ListStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -299,6 +303,13 @@ func (p *ListStartupScriptParam) SetQuery(v string) {
 func (p *ListStartupScriptParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListStartupScriptParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListStartupScriptParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateStartupScriptParam is input parameters for the sacloud API
 type CreateStartupScriptParam struct {
@@ -318,6 +329,7 @@ type CreateStartupScriptParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewCreateStartupScriptParam return new CreateStartupScriptParam
@@ -377,6 +389,9 @@ func (p *CreateStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -602,6 +617,13 @@ func (p *CreateStartupScriptParam) SetQuery(v string) {
 func (p *CreateStartupScriptParam) GetQuery() string {
 	return p.Query
 }
+func (p *CreateStartupScriptParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateStartupScriptParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadStartupScriptParam is input parameters for the sacloud API
 type ReadStartupScriptParam struct {
@@ -615,6 +637,7 @@ type ReadStartupScriptParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -654,6 +677,9 @@ func (p *ReadStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -789,6 +815,13 @@ func (p *ReadStartupScriptParam) SetQuery(v string) {
 func (p *ReadStartupScriptParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReadStartupScriptParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadStartupScriptParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadStartupScriptParam) SetId(v int64) {
 	p.Id = v
 }
@@ -816,6 +849,7 @@ type UpdateStartupScriptParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -876,6 +910,9 @@ func (p *UpdateStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1104,6 +1141,13 @@ func (p *UpdateStartupScriptParam) SetQuery(v string) {
 func (p *UpdateStartupScriptParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdateStartupScriptParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateStartupScriptParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdateStartupScriptParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1125,6 +1169,7 @@ type DeleteStartupScriptParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1167,6 +1212,9 @@ func (p *DeleteStartupScriptParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1308,6 +1356,13 @@ func (p *DeleteStartupScriptParam) SetQuery(v string) {
 
 func (p *DeleteStartupScriptParam) GetQuery() string {
 	return p.Query
+}
+func (p *DeleteStartupScriptParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteStartupScriptParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *DeleteStartupScriptParam) SetId(v int64) {
 	p.Id = v

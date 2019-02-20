@@ -24,6 +24,7 @@ type ListSSHKeyParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListSSHKeyParam return new ListSSHKeyParam
@@ -74,6 +75,9 @@ func (p *ListSSHKeyParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -252,6 +256,13 @@ func (p *ListSSHKeyParam) SetQuery(v string) {
 func (p *ListSSHKeyParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListSSHKeyParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListSSHKeyParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateSSHKeyParam is input parameters for the sacloud API
 type CreateSSHKeyParam struct {
@@ -269,6 +280,7 @@ type CreateSSHKeyParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewCreateSSHKeyParam return new CreateSSHKeyParam
@@ -319,6 +331,9 @@ func (p *CreateSSHKeyParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -509,6 +524,13 @@ func (p *CreateSSHKeyParam) SetQuery(v string) {
 func (p *CreateSSHKeyParam) GetQuery() string {
 	return p.Query
 }
+func (p *CreateSSHKeyParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateSSHKeyParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadSSHKeyParam is input parameters for the sacloud API
 type ReadSSHKeyParam struct {
@@ -521,6 +543,7 @@ type ReadSSHKeyParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -557,6 +580,9 @@ func (p *ReadSSHKeyParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -685,6 +711,13 @@ func (p *ReadSSHKeyParam) SetQuery(v string) {
 func (p *ReadSSHKeyParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReadSSHKeyParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadSSHKeyParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadSSHKeyParam) SetId(v int64) {
 	p.Id = v
 }
@@ -707,6 +740,7 @@ type UpdateSSHKeyParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -752,6 +786,9 @@ func (p *UpdateSSHKeyParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -915,6 +952,13 @@ func (p *UpdateSSHKeyParam) SetQuery(v string) {
 func (p *UpdateSSHKeyParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdateSSHKeyParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateSSHKeyParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdateSSHKeyParam) SetId(v int64) {
 	p.Id = v
 }
@@ -935,6 +979,7 @@ type DeleteSSHKeyParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -974,6 +1019,9 @@ func (p *DeleteSSHKeyParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1109,6 +1157,13 @@ func (p *DeleteSSHKeyParam) SetQuery(v string) {
 func (p *DeleteSSHKeyParam) GetQuery() string {
 	return p.Query
 }
+func (p *DeleteSSHKeyParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteSSHKeyParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *DeleteSSHKeyParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1133,6 +1188,7 @@ type GenerateSSHKeyParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewGenerateSSHKeyParam return new GenerateSSHKeyParam
@@ -1183,6 +1239,9 @@ func (p *GenerateSSHKeyParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -1363,4 +1422,11 @@ func (p *GenerateSSHKeyParam) SetQuery(v string) {
 
 func (p *GenerateSSHKeyParam) GetQuery() string {
 	return p.Query
+}
+func (p *GenerateSSHKeyParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *GenerateSSHKeyParam) GetQueryFile() string {
+	return p.QueryFile
 }

@@ -26,6 +26,7 @@ type ListIpv6Param struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListIpv6Param return new ListIpv6Param
@@ -82,6 +83,9 @@ func (p *ListIpv6Param) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -288,6 +292,13 @@ func (p *ListIpv6Param) SetQuery(v string) {
 func (p *ListIpv6Param) GetQuery() string {
 	return p.Query
 }
+func (p *ListIpv6Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListIpv6Param) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // PtrAddIpv6Param is input parameters for the sacloud API
 type PtrAddIpv6Param struct {
@@ -302,6 +313,7 @@ type PtrAddIpv6Param struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewPtrAddIpv6Param return new PtrAddIpv6Param
@@ -343,6 +355,9 @@ func (p *PtrAddIpv6Param) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -482,6 +497,13 @@ func (p *PtrAddIpv6Param) SetQuery(v string) {
 func (p *PtrAddIpv6Param) GetQuery() string {
 	return p.Query
 }
+func (p *PtrAddIpv6Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PtrAddIpv6Param) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // PtrReadIpv6Param is input parameters for the sacloud API
 type PtrReadIpv6Param struct {
@@ -494,6 +516,7 @@ type PtrReadIpv6Param struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewPtrReadIpv6Param return new PtrReadIpv6Param
@@ -529,6 +552,9 @@ func (p *PtrReadIpv6Param) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -647,6 +673,13 @@ func (p *PtrReadIpv6Param) SetQuery(v string) {
 func (p *PtrReadIpv6Param) GetQuery() string {
 	return p.Query
 }
+func (p *PtrReadIpv6Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PtrReadIpv6Param) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // PtrUpdateIpv6Param is input parameters for the sacloud API
 type PtrUpdateIpv6Param struct {
@@ -661,6 +694,7 @@ type PtrUpdateIpv6Param struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewPtrUpdateIpv6Param return new PtrUpdateIpv6Param
@@ -702,6 +736,9 @@ func (p *PtrUpdateIpv6Param) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -841,6 +878,13 @@ func (p *PtrUpdateIpv6Param) SetQuery(v string) {
 func (p *PtrUpdateIpv6Param) GetQuery() string {
 	return p.Query
 }
+func (p *PtrUpdateIpv6Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PtrUpdateIpv6Param) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // PtrDeleteIpv6Param is input parameters for the sacloud API
 type PtrDeleteIpv6Param struct {
@@ -854,6 +898,7 @@ type PtrDeleteIpv6Param struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewPtrDeleteIpv6Param return new PtrDeleteIpv6Param
@@ -892,6 +937,9 @@ func (p *PtrDeleteIpv6Param) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -1016,4 +1064,11 @@ func (p *PtrDeleteIpv6Param) SetQuery(v string) {
 
 func (p *PtrDeleteIpv6Param) GetQuery() string {
 	return p.Query
+}
+func (p *PtrDeleteIpv6Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PtrDeleteIpv6Param) GetQueryFile() string {
+	return p.QueryFile
 }

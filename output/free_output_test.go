@@ -16,6 +16,7 @@ func (o dummyOption) GetFormat() string     { return "test ID:{{.ID}}" }
 func (o dummyOption) GetFormatFile() string { return "" }
 func (o dummyOption) GetQuiet() bool        { return false }
 func (o dummyOption) GetQuery() string      { return "" }
+func (o dummyOption) GetQueryFile() string  { return "" }
 
 func TestFreeOutput_Print(t *testing.T) {
 	buf := bytes.NewBufferString("")

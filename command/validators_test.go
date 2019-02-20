@@ -15,6 +15,7 @@ type dummyOption struct {
 	formatFile        string
 	quiet             bool
 	query             string
+	queryFile         string
 	defaultOutputType string
 }
 
@@ -24,6 +25,7 @@ func (o *dummyOption) GetFormat() string     { return o.format }
 func (o *dummyOption) GetFormatFile() string { return o.formatFile }
 func (o *dummyOption) GetQuiet() bool        { return o.quiet }
 func (o dummyOption) GetQuery() string       { return o.query }
+func (o dummyOption) GetQueryFile() string   { return o.queryFile }
 
 func TestValidateOutputOption(t *testing.T) {
 

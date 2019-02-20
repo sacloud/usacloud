@@ -25,6 +25,7 @@ type ListInternetParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListInternetParam return new ListInternetParam
@@ -78,6 +79,9 @@ func (p *ListInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -270,6 +274,13 @@ func (p *ListInternetParam) SetQuery(v string) {
 func (p *ListInternetParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListInternetParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListInternetParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateInternetParam is input parameters for the sacloud API
 type CreateInternetParam struct {
@@ -289,6 +300,7 @@ type CreateInternetParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewCreateInternetParam return new CreateInternetParam
@@ -349,6 +361,9 @@ func (p *CreateInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -579,6 +594,13 @@ func (p *CreateInternetParam) SetQuery(v string) {
 func (p *CreateInternetParam) GetQuery() string {
 	return p.Query
 }
+func (p *CreateInternetParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateInternetParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadInternetParam is input parameters for the sacloud API
 type ReadInternetParam struct {
@@ -592,6 +614,7 @@ type ReadInternetParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -631,6 +654,9 @@ func (p *ReadInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -766,6 +792,13 @@ func (p *ReadInternetParam) SetQuery(v string) {
 func (p *ReadInternetParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReadInternetParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadInternetParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadInternetParam) SetId(v int64) {
 	p.Id = v
 }
@@ -792,6 +825,7 @@ type UpdateInternetParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -849,6 +883,9 @@ func (p *UpdateInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1061,6 +1098,13 @@ func (p *UpdateInternetParam) SetQuery(v string) {
 func (p *UpdateInternetParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdateInternetParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateInternetParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdateInternetParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1082,6 +1126,7 @@ type DeleteInternetParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1124,6 +1169,9 @@ func (p *DeleteInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1266,6 +1314,13 @@ func (p *DeleteInternetParam) SetQuery(v string) {
 func (p *DeleteInternetParam) GetQuery() string {
 	return p.Query
 }
+func (p *DeleteInternetParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteInternetParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *DeleteInternetParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1288,6 +1343,7 @@ type UpdateBandwidthInternetParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1336,6 +1392,9 @@ func (p *UpdateBandwidthInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1499,6 +1558,13 @@ func (p *UpdateBandwidthInternetParam) SetQuery(v string) {
 func (p *UpdateBandwidthInternetParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdateBandwidthInternetParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateBandwidthInternetParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdateBandwidthInternetParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1519,6 +1585,7 @@ type SubnetInfoInternetParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1558,6 +1625,9 @@ func (p *SubnetInfoInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1693,6 +1763,13 @@ func (p *SubnetInfoInternetParam) SetQuery(v string) {
 func (p *SubnetInfoInternetParam) GetQuery() string {
 	return p.Query
 }
+func (p *SubnetInfoInternetParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *SubnetInfoInternetParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *SubnetInfoInternetParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1716,6 +1793,7 @@ type SubnetAddInternetParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1767,6 +1845,9 @@ func (p *SubnetAddInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1951,6 +2032,13 @@ func (p *SubnetAddInternetParam) SetQuery(v string) {
 func (p *SubnetAddInternetParam) GetQuery() string {
 	return p.Query
 }
+func (p *SubnetAddInternetParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *SubnetAddInternetParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *SubnetAddInternetParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2111,6 +2199,7 @@ type SubnetUpdateInternetParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2159,6 +2248,9 @@ func (p *SubnetUpdateInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2336,6 +2428,13 @@ func (p *SubnetUpdateInternetParam) SetQuery(v string) {
 func (p *SubnetUpdateInternetParam) GetQuery() string {
 	return p.Query
 }
+func (p *SubnetUpdateInternetParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *SubnetUpdateInternetParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *SubnetUpdateInternetParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2356,6 +2455,7 @@ type Ipv6InfoInternetParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2395,6 +2495,9 @@ func (p *Ipv6InfoInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2530,6 +2633,13 @@ func (p *Ipv6InfoInternetParam) SetQuery(v string) {
 func (p *Ipv6InfoInternetParam) GetQuery() string {
 	return p.Query
 }
+func (p *Ipv6InfoInternetParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *Ipv6InfoInternetParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *Ipv6InfoInternetParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2551,6 +2661,7 @@ type Ipv6EnableInternetParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2593,6 +2704,9 @@ func (p *Ipv6EnableInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2734,6 +2848,13 @@ func (p *Ipv6EnableInternetParam) SetQuery(v string) {
 
 func (p *Ipv6EnableInternetParam) GetQuery() string {
 	return p.Query
+}
+func (p *Ipv6EnableInternetParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *Ipv6EnableInternetParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *Ipv6EnableInternetParam) SetId(v int64) {
 	p.Id = v
@@ -2877,6 +2998,7 @@ type MonitorInternetParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2928,6 +3050,9 @@ func (p *MonitorInternetParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -3104,6 +3229,13 @@ func (p *MonitorInternetParam) SetQuery(v string) {
 
 func (p *MonitorInternetParam) GetQuery() string {
 	return p.Query
+}
+func (p *MonitorInternetParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorInternetParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *MonitorInternetParam) SetId(v int64) {
 	p.Id = v

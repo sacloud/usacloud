@@ -122,6 +122,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -205,6 +209,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						listParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						listParam.QueryFile = c.String("query-file")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -335,6 +342,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						listParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						listParam.QueryFile = c.String("query-file")
 					}
 
 					// Validate global params
@@ -505,6 +515,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 				},
 				ShellComplete: func(c *cli.Context) {
 
@@ -630,6 +644,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						createParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						createParam.QueryFile = c.String("query-file")
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -803,6 +820,9 @@ func init() {
 					if c.IsSet("query") {
 						createParam.Query = c.String("query")
 					}
+					if c.IsSet("query-file") {
+						createParam.QueryFile = c.String("query-file")
+					}
 
 					// Validate global params
 					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
@@ -900,6 +920,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -973,6 +997,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						readParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						readParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						readParam.Id = c.Int64("id")
@@ -1091,6 +1118,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						readParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						readParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						readParam.Id = c.Int64("id")
@@ -1319,6 +1349,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -1434,6 +1468,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						updateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						updateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						updateParam.Id = c.Int64("id")
@@ -1594,6 +1631,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						updateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						updateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						updateParam.Id = c.Int64("id")
@@ -1774,6 +1814,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.BoolFlag{
 						Name:    "force",
 						Aliases: []string{"f"},
@@ -1855,6 +1899,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						deleteParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						deleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("force") {
 						deleteParam.Force = c.Bool("force")
@@ -1979,6 +2026,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						deleteParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						deleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("force") {
 						deleteParam.Force = c.Bool("force")
@@ -3990,6 +4040,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -4063,6 +4117,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						backupInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						backupInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						backupInfoParam.Id = c.Int64("id")
@@ -4181,6 +4238,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						backupInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						backupInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						backupInfoParam.Id = c.Int64("id")
@@ -4350,6 +4410,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -4423,6 +4487,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						backupCreateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						backupCreateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						backupCreateParam.Id = c.Int64("id")
@@ -4541,6 +4608,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						backupCreateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						backupCreateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						backupCreateParam.Id = c.Int64("id")
@@ -4709,6 +4779,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -4785,6 +4859,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						backupRestoreParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						backupRestoreParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						backupRestoreParam.Id = c.Int64("id")
@@ -4906,6 +4983,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						backupRestoreParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						backupRestoreParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						backupRestoreParam.Id = c.Int64("id")
@@ -5074,6 +5154,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -5150,6 +5234,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						backupLockParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						backupLockParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						backupLockParam.Id = c.Int64("id")
@@ -5271,6 +5358,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						backupLockParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						backupLockParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						backupLockParam.Id = c.Int64("id")
@@ -5439,6 +5529,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -5515,6 +5609,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						backupUnlockParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						backupUnlockParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						backupUnlockParam.Id = c.Int64("id")
@@ -5636,6 +5733,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						backupUnlockParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						backupUnlockParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						backupUnlockParam.Id = c.Int64("id")
@@ -5804,6 +5904,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -5880,6 +5984,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						backupRemoveParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						backupRemoveParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						backupRemoveParam.Id = c.Int64("id")
@@ -6001,6 +6108,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						backupRemoveParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						backupRemoveParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						backupRemoveParam.Id = c.Int64("id")
@@ -6234,6 +6344,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -6355,6 +6469,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						cloneParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						cloneParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						cloneParam.Id = c.Int64("id")
@@ -6521,6 +6638,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						cloneParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						cloneParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						cloneParam.Id = c.Int64("id")
@@ -6719,6 +6839,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -6816,6 +6940,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						replicaCreateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						replicaCreateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						replicaCreateParam.Id = c.Int64("id")
@@ -6958,6 +7085,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						replicaCreateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						replicaCreateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						replicaCreateParam.Id = c.Int64("id")
@@ -7134,6 +7264,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -7216,6 +7350,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorCpuParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorCpuParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorCpuParam.Id = c.Int64("id")
@@ -7343,6 +7480,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorCpuParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorCpuParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorCpuParam.Id = c.Int64("id")
@@ -7524,6 +7664,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -7606,6 +7750,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorMemoryParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorMemoryParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorMemoryParam.Id = c.Int64("id")
@@ -7733,6 +7880,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorMemoryParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorMemoryParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorMemoryParam.Id = c.Int64("id")
@@ -7914,6 +8064,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -7996,6 +8150,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorNicParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorNicParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorNicParam.Id = c.Int64("id")
@@ -8123,6 +8280,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorNicParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorNicParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorNicParam.Id = c.Int64("id")
@@ -8304,6 +8464,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -8386,6 +8550,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorSystemDiskParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorSystemDiskParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorSystemDiskParam.Id = c.Int64("id")
@@ -8513,6 +8680,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorSystemDiskParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorSystemDiskParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorSystemDiskParam.Id = c.Int64("id")
@@ -8694,6 +8864,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -8776,6 +8950,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorBackupDiskParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorBackupDiskParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorBackupDiskParam.Id = c.Int64("id")
@@ -8903,6 +9080,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorBackupDiskParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorBackupDiskParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorBackupDiskParam.Id = c.Int64("id")
@@ -9084,6 +9264,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -9166,6 +9350,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorSystemDiskSizeParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorSystemDiskSizeParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorSystemDiskSizeParam.Id = c.Int64("id")
@@ -9293,6 +9480,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorSystemDiskSizeParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorSystemDiskSizeParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorSystemDiskSizeParam.Id = c.Int64("id")
@@ -9474,6 +9664,10 @@ func init() {
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
 					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
 					&cli.Int64Flag{
 						Name:   "id",
 						Usage:  "Set target ID",
@@ -9556,6 +9750,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorBackupDiskSizeParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorBackupDiskSizeParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorBackupDiskSizeParam.Id = c.Int64("id")
@@ -9683,6 +9880,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						monitorBackupDiskSizeParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorBackupDiskSizeParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
 						monitorBackupDiskSizeParam.Id = c.Int64("id")
@@ -10341,6 +10541,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("database", "backup-create", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "backup-create", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -10387,6 +10592,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "backup-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-info", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
@@ -10456,6 +10666,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("database", "backup-lock", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "backup-lock", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -10512,6 +10727,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "backup-remove", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-remove", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
@@ -10576,6 +10796,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("database", "backup-restore", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "backup-restore", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -10632,6 +10857,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "backup-unlock", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "backup-unlock", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
@@ -10781,6 +11011,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("database", "clone", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "clone", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -10921,6 +11156,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("database", "create", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "create", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -11006,6 +11246,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("database", "delete", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "delete", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -11072,6 +11317,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "list", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "list", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
@@ -11191,6 +11441,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "monitor-backup-disk", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -11257,6 +11512,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-backup-disk-size", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
@@ -11331,6 +11591,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("database", "monitor-cpu", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "monitor-cpu", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -11397,6 +11662,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "monitor-memory", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-memory", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
@@ -11471,6 +11741,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("database", "monitor-nic", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "monitor-nic", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -11537,6 +11812,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "monitor-system-disk", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "monitor-system-disk", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
@@ -11611,6 +11891,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("database", "monitor-system-disk-size", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
 	AppendFlagCategoryMap("database", "monitor-system-disk-size", "quiet", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -11667,6 +11952,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "read", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "read", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
@@ -11757,6 +12047,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("database", "replica-create", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "replica-create", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
@@ -11962,6 +12257,11 @@ func init() {
 		Order:       1,
 	})
 	AppendFlagCategoryMap("database", "update", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("database", "update", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,

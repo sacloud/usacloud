@@ -25,6 +25,7 @@ type ListLoadBalancerParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListLoadBalancerParam return new ListLoadBalancerParam
@@ -78,6 +79,9 @@ func (p *ListLoadBalancerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -270,6 +274,13 @@ func (p *ListLoadBalancerParam) SetQuery(v string) {
 func (p *ListLoadBalancerParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateLoadBalancerParam is input parameters for the sacloud API
 type CreateLoadBalancerParam struct {
@@ -295,6 +306,7 @@ type CreateLoadBalancerParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewCreateLoadBalancerParam return new CreateLoadBalancerParam
@@ -373,6 +385,9 @@ func (p *CreateLoadBalancerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -687,6 +702,13 @@ func (p *CreateLoadBalancerParam) SetQuery(v string) {
 func (p *CreateLoadBalancerParam) GetQuery() string {
 	return p.Query
 }
+func (p *CreateLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadLoadBalancerParam is input parameters for the sacloud API
 type ReadLoadBalancerParam struct {
@@ -700,6 +722,7 @@ type ReadLoadBalancerParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -739,6 +762,9 @@ func (p *ReadLoadBalancerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -874,6 +900,13 @@ func (p *ReadLoadBalancerParam) SetQuery(v string) {
 func (p *ReadLoadBalancerParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReadLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -899,6 +932,7 @@ type UpdateLoadBalancerParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -953,6 +987,9 @@ func (p *UpdateLoadBalancerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1151,6 +1188,13 @@ func (p *UpdateLoadBalancerParam) SetQuery(v string) {
 func (p *UpdateLoadBalancerParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdateLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdateLoadBalancerParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1173,6 +1217,7 @@ type DeleteLoadBalancerParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1218,6 +1263,9 @@ func (p *DeleteLoadBalancerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1366,6 +1414,13 @@ func (p *DeleteLoadBalancerParam) SetQuery(v string) {
 
 func (p *DeleteLoadBalancerParam) GetQuery() string {
 	return p.Query
+}
+func (p *DeleteLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *DeleteLoadBalancerParam) SetId(v int64) {
 	p.Id = v
@@ -2079,6 +2134,7 @@ type VipInfoLoadBalancerParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2118,6 +2174,9 @@ func (p *VipInfoLoadBalancerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2252,6 +2311,13 @@ func (p *VipInfoLoadBalancerParam) SetQuery(v string) {
 
 func (p *VipInfoLoadBalancerParam) GetQuery() string {
 	return p.Query
+}
+func (p *VipInfoLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *VipInfoLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *VipInfoLoadBalancerParam) SetId(v int64) {
 	p.Id = v
@@ -2855,6 +2921,7 @@ type ServerInfoLoadBalancerParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2903,6 +2970,9 @@ func (p *ServerInfoLoadBalancerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -3100,6 +3170,13 @@ func (p *ServerInfoLoadBalancerParam) SetQuery(v string) {
 
 func (p *ServerInfoLoadBalancerParam) GetQuery() string {
 	return p.Query
+}
+func (p *ServerInfoLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ServerInfoLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *ServerInfoLoadBalancerParam) SetId(v int64) {
 	p.Id = v
@@ -3893,6 +3970,7 @@ type MonitorLoadBalancerParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -3944,6 +4022,9 @@ func (p *MonitorLoadBalancerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -4120,6 +4201,13 @@ func (p *MonitorLoadBalancerParam) SetQuery(v string) {
 
 func (p *MonitorLoadBalancerParam) GetQuery() string {
 	return p.Query
+}
+func (p *MonitorLoadBalancerParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorLoadBalancerParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *MonitorLoadBalancerParam) SetId(v int64) {
 	p.Id = v

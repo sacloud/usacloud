@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"io/ioutil"
 	"strings"
 
 	"github.com/sacloud/go-jmespath"
@@ -123,10 +124,15 @@ func ValidateOutputOption(o output.Option) []error {
 	formatFile := o.GetFormatFile()
 	quiet := o.GetQuiet()
 	query := o.GetQuery()
+	queryFile := o.GetQueryFile()
 
 	// format and format-file
 	if format != "" && formatFile != "" {
 		return []error{fmt.Errorf("%q: can't set with --format-file", "--format")}
+	}
+	// query and query-file
+	if query != "" && queryFile != "" {
+		return []error{fmt.Errorf("%q: can't set with --query-file", "--query")}
 	}
 
 	// format(or format-file) with output-type
@@ -173,9 +179,19 @@ func ValidateOutputOption(o output.Option) []error {
 		return []error{fmt.Errorf("%q: can't set when --output-type is csv/tsv", "--column")}
 	}
 
+	// query-file is exists?
+	if queryFile != "" {
+		errs := schema.ValidateFileExists()("--query-file", formatFile)
+		if len(errs) > 0 {
+			return errs
+		}
+	}
 	// query only allow when outputType is json
 	if outputType != "json" && len(query) > 0 {
 		return []error{fmt.Errorf("%q: can't set when --output-type is not json", "--query")}
+	}
+	if outputType != "json" && len(queryFile) > 0 {
+		return []error{fmt.Errorf("%q: can't set when --output-type is not json", "--query-file")}
 	}
 
 	if outputType == "json" && len(query) > 0 {
@@ -185,6 +201,16 @@ func ValidateOutputOption(o output.Option) []error {
 		}
 	}
 
-	return []error{}
+	if outputType == "json" && len(queryFile) > 0 {
+		bQuery, err := ioutil.ReadFile(queryFile)
+		if err != nil {
+			return []error{fmt.Errorf("%q: can't open query file: %s", "--query-file", err)}
+		}
+		_, err = jmespath.Compile(string(bQuery))
+		if err != nil {
+			return []error{fmt.Errorf("%q: invalid JMESPath: %s", "--query-file", err)}
+		}
+	}
 
+	return []error{}
 }

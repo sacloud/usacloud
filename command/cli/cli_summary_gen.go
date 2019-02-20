@@ -70,6 +70,10 @@ func init() {
 				Name:  "query",
 				Usage: "JMESPath query(using when '--output-type' is json only)",
 			},
+			&cli.StringFlag{
+				Name:  "query-file",
+				Usage: "JMESPath query from file(using when '--output-type' is json only)",
+			},
 			&cli.BoolFlag{
 				Name:    "paid-resources-only",
 				Aliases: []string{"paid"},
@@ -120,6 +124,10 @@ func init() {
 					&cli.StringFlag{
 						Name:  "query",
 						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
 					},
 					&cli.BoolFlag{
 						Name:    "paid-resources-only",
@@ -191,6 +199,9 @@ func init() {
 					}
 					if c.IsSet("query") {
 						showParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						showParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("paid-resources-only") {
 						showParam.PaidResourcesOnly = c.Bool("paid-resources-only")
@@ -307,6 +318,9 @@ func init() {
 					if c.IsSet("query") {
 						showParam.Query = c.String("query")
 					}
+					if c.IsSet("query-file") {
+						showParam.QueryFile = c.String("query-file")
+					}
 					if c.IsSet("paid-resources-only") {
 						showParam.PaidResourcesOnly = c.Bool("paid-resources-only")
 					}
@@ -409,6 +423,11 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("summary", "show", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("summary", "show", "query-file", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,

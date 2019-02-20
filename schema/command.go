@@ -206,6 +206,15 @@ func (c *Command) BuildedParams() SortableParams {
 				Order:       60,
 			}
 		}
+		if _, ok := c.Params["query-file"]; !ok {
+			c.Params["query-file"] = &Schema{
+				Type:        TypeString,
+				HandlerType: HandlerNoop,
+				Description: "JMESPath query from file(using when '--output-type' is json only)",
+				Category:    "output",
+				Order:       65,
+			}
+		}
 	}
 
 	params := SortableParams{}

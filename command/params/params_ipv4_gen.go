@@ -24,6 +24,7 @@ type ListIpv4Param struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListIpv4Param return new ListIpv4Param
@@ -74,6 +75,9 @@ func (p *ListIpv4Param) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -252,6 +256,13 @@ func (p *ListIpv4Param) SetQuery(v string) {
 func (p *ListIpv4Param) GetQuery() string {
 	return p.Query
 }
+func (p *ListIpv4Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListIpv4Param) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // PtrAddIpv4Param is input parameters for the sacloud API
 type PtrAddIpv4Param struct {
@@ -266,6 +277,7 @@ type PtrAddIpv4Param struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewPtrAddIpv4Param return new PtrAddIpv4Param
@@ -307,6 +319,9 @@ func (p *PtrAddIpv4Param) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -446,6 +461,13 @@ func (p *PtrAddIpv4Param) SetQuery(v string) {
 func (p *PtrAddIpv4Param) GetQuery() string {
 	return p.Query
 }
+func (p *PtrAddIpv4Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PtrAddIpv4Param) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // PtrReadIpv4Param is input parameters for the sacloud API
 type PtrReadIpv4Param struct {
@@ -458,6 +480,7 @@ type PtrReadIpv4Param struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewPtrReadIpv4Param return new PtrReadIpv4Param
@@ -493,6 +516,9 @@ func (p *PtrReadIpv4Param) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -611,6 +637,13 @@ func (p *PtrReadIpv4Param) SetQuery(v string) {
 func (p *PtrReadIpv4Param) GetQuery() string {
 	return p.Query
 }
+func (p *PtrReadIpv4Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PtrReadIpv4Param) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // PtrUpdateIpv4Param is input parameters for the sacloud API
 type PtrUpdateIpv4Param struct {
@@ -625,6 +658,7 @@ type PtrUpdateIpv4Param struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewPtrUpdateIpv4Param return new PtrUpdateIpv4Param
@@ -666,6 +700,9 @@ func (p *PtrUpdateIpv4Param) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -805,6 +842,13 @@ func (p *PtrUpdateIpv4Param) SetQuery(v string) {
 func (p *PtrUpdateIpv4Param) GetQuery() string {
 	return p.Query
 }
+func (p *PtrUpdateIpv4Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PtrUpdateIpv4Param) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // PtrDeleteIpv4Param is input parameters for the sacloud API
 type PtrDeleteIpv4Param struct {
@@ -818,6 +862,7 @@ type PtrDeleteIpv4Param struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewPtrDeleteIpv4Param return new PtrDeleteIpv4Param
@@ -856,6 +901,9 @@ func (p *PtrDeleteIpv4Param) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -980,4 +1028,11 @@ func (p *PtrDeleteIpv4Param) SetQuery(v string) {
 
 func (p *PtrDeleteIpv4Param) GetQuery() string {
 	return p.Query
+}
+func (p *PtrDeleteIpv4Param) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PtrDeleteIpv4Param) GetQueryFile() string {
+	return p.QueryFile
 }

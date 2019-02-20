@@ -25,6 +25,7 @@ type ListNFSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListNFSParam return new ListNFSParam
@@ -78,6 +79,9 @@ func (p *ListNFSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -270,6 +274,13 @@ func (p *ListNFSParam) SetQuery(v string) {
 func (p *ListNFSParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListNFSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateNFSParam is input parameters for the sacloud API
 type CreateNFSParam struct {
@@ -292,6 +303,7 @@ type CreateNFSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewCreateNFSParam return new CreateNFSParam
@@ -360,6 +372,9 @@ func (p *CreateNFSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -646,6 +661,13 @@ func (p *CreateNFSParam) SetQuery(v string) {
 func (p *CreateNFSParam) GetQuery() string {
 	return p.Query
 }
+func (p *CreateNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateNFSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadNFSParam is input parameters for the sacloud API
 type ReadNFSParam struct {
@@ -659,6 +681,7 @@ type ReadNFSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -698,6 +721,9 @@ func (p *ReadNFSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -833,6 +859,13 @@ func (p *ReadNFSParam) SetQuery(v string) {
 func (p *ReadNFSParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReadNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadNFSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadNFSParam) SetId(v int64) {
 	p.Id = v
 }
@@ -858,6 +891,7 @@ type UpdateNFSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -912,6 +946,9 @@ func (p *UpdateNFSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1110,6 +1147,13 @@ func (p *UpdateNFSParam) SetQuery(v string) {
 func (p *UpdateNFSParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdateNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateNFSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdateNFSParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1132,6 +1176,7 @@ type DeleteNFSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -1177,6 +1222,9 @@ func (p *DeleteNFSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1325,6 +1373,13 @@ func (p *DeleteNFSParam) SetQuery(v string) {
 
 func (p *DeleteNFSParam) GetQuery() string {
 	return p.Query
+}
+func (p *DeleteNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteNFSParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *DeleteNFSParam) SetId(v int64) {
 	p.Id = v
@@ -2041,6 +2096,7 @@ type MonitorNicNFSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2092,6 +2148,9 @@ func (p *MonitorNicNFSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2269,6 +2328,13 @@ func (p *MonitorNicNFSParam) SetQuery(v string) {
 func (p *MonitorNicNFSParam) GetQuery() string {
 	return p.Query
 }
+func (p *MonitorNicNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorNicNFSParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *MonitorNicNFSParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2292,6 +2358,7 @@ type MonitorFreeDiskSizeNFSParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2343,6 +2410,9 @@ func (p *MonitorFreeDiskSizeNFSParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2519,6 +2589,13 @@ func (p *MonitorFreeDiskSizeNFSParam) SetQuery(v string) {
 
 func (p *MonitorFreeDiskSizeNFSParam) GetQuery() string {
 	return p.Query
+}
+func (p *MonitorFreeDiskSizeNFSParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorFreeDiskSizeNFSParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *MonitorFreeDiskSizeNFSParam) SetId(v int64) {
 	p.Id = v

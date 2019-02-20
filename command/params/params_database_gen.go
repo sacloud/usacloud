@@ -25,6 +25,7 @@ type ListDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListDatabaseParam return new ListDatabaseParam
@@ -78,6 +79,9 @@ func (p *ListDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -270,6 +274,13 @@ func (p *ListDatabaseParam) SetQuery(v string) {
 func (p *ListDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // CreateDatabaseParam is input parameters for the sacloud API
 type CreateDatabaseParam struct {
@@ -302,6 +313,7 @@ type CreateDatabaseParam struct {
 	Format              string   `json:"format"`
 	FormatFile          string   `json:"format-file"`
 	Query               string   `json:"query"`
+	QueryFile           string   `json:"query-file"`
 }
 
 // NewCreateDatabaseParam return new CreateDatabaseParam
@@ -401,6 +413,9 @@ func (p *CreateDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -841,6 +856,13 @@ func (p *CreateDatabaseParam) SetQuery(v string) {
 func (p *CreateDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *CreateDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CreateDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadDatabaseParam is input parameters for the sacloud API
 type ReadDatabaseParam struct {
@@ -854,6 +876,7 @@ type ReadDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -893,6 +916,9 @@ func (p *ReadDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1028,6 +1054,13 @@ func (p *ReadDatabaseParam) SetQuery(v string) {
 func (p *ReadDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReadDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReadDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1062,6 +1095,7 @@ type UpdateDatabaseParam struct {
 	Format              string   `json:"format"`
 	FormatFile          string   `json:"format-file"`
 	Query               string   `json:"query"`
+	QueryFile           string   `json:"query-file"`
 	Id                  int64    `json:"id"`
 }
 
@@ -1146,6 +1180,9 @@ func (p *UpdateDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -1449,6 +1486,13 @@ func (p *UpdateDatabaseParam) SetQuery(v string) {
 func (p *UpdateDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *UpdateDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *UpdateDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *UpdateDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -1470,6 +1514,7 @@ type DeleteDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Force             bool     `json:"force"`
 	Id                int64    `json:"id"`
 }
@@ -1513,6 +1558,9 @@ func (p *DeleteDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Force) {
 		p.Force = false
@@ -1657,6 +1705,13 @@ func (p *DeleteDatabaseParam) SetQuery(v string) {
 
 func (p *DeleteDatabaseParam) GetQuery() string {
 	return p.Query
+}
+func (p *DeleteDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *DeleteDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *DeleteDatabaseParam) SetForce(v bool) {
 	p.Force = v
@@ -2377,6 +2432,7 @@ type BackupInfoDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2416,6 +2472,9 @@ func (p *BackupInfoDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2551,6 +2610,13 @@ func (p *BackupInfoDatabaseParam) SetQuery(v string) {
 func (p *BackupInfoDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *BackupInfoDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *BackupInfoDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *BackupInfoDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2571,6 +2637,7 @@ type BackupCreateDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2610,6 +2677,9 @@ func (p *BackupCreateDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2745,6 +2815,13 @@ func (p *BackupCreateDatabaseParam) SetQuery(v string) {
 func (p *BackupCreateDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *BackupCreateDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *BackupCreateDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *BackupCreateDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2766,6 +2843,7 @@ type BackupRestoreDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -2808,6 +2886,9 @@ func (p *BackupRestoreDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -2964,6 +3045,13 @@ func (p *BackupRestoreDatabaseParam) SetQuery(v string) {
 func (p *BackupRestoreDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *BackupRestoreDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *BackupRestoreDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *BackupRestoreDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -2985,6 +3073,7 @@ type BackupLockDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -3027,6 +3116,9 @@ func (p *BackupLockDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -3183,6 +3275,13 @@ func (p *BackupLockDatabaseParam) SetQuery(v string) {
 func (p *BackupLockDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *BackupLockDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *BackupLockDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *BackupLockDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3204,6 +3303,7 @@ type BackupUnlockDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -3246,6 +3346,9 @@ func (p *BackupUnlockDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -3402,6 +3505,13 @@ func (p *BackupUnlockDatabaseParam) SetQuery(v string) {
 func (p *BackupUnlockDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *BackupUnlockDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *BackupUnlockDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *BackupUnlockDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3423,6 +3533,7 @@ type BackupRemoveDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -3465,6 +3576,9 @@ func (p *BackupRemoveDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -3621,6 +3735,13 @@ func (p *BackupRemoveDatabaseParam) SetQuery(v string) {
 func (p *BackupRemoveDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *BackupRemoveDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *BackupRemoveDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *BackupRemoveDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -3657,6 +3778,7 @@ type CloneDatabaseParam struct {
 	Format              string   `json:"format"`
 	FormatFile          string   `json:"format-file"`
 	Query               string   `json:"query"`
+	QueryFile           string   `json:"query-file"`
 	Id                  int64    `json:"id"`
 }
 
@@ -3748,6 +3870,9 @@ func (p *CloneDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -4114,6 +4239,13 @@ func (p *CloneDatabaseParam) SetQuery(v string) {
 func (p *CloneDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *CloneDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *CloneDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *CloneDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4142,6 +4274,7 @@ type ReplicaCreateDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -4205,6 +4338,9 @@ func (p *ReplicaCreateDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -4466,6 +4602,13 @@ func (p *ReplicaCreateDatabaseParam) SetQuery(v string) {
 func (p *ReplicaCreateDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *ReplicaCreateDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReplicaCreateDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *ReplicaCreateDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4489,6 +4632,7 @@ type MonitorCpuDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -4540,6 +4684,9 @@ func (p *MonitorCpuDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -4717,6 +4864,13 @@ func (p *MonitorCpuDatabaseParam) SetQuery(v string) {
 func (p *MonitorCpuDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *MonitorCpuDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorCpuDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *MonitorCpuDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4740,6 +4894,7 @@ type MonitorMemoryDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -4791,6 +4946,9 @@ func (p *MonitorMemoryDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -4968,6 +5126,13 @@ func (p *MonitorMemoryDatabaseParam) SetQuery(v string) {
 func (p *MonitorMemoryDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *MonitorMemoryDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorMemoryDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *MonitorMemoryDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -4991,6 +5156,7 @@ type MonitorNicDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -5042,6 +5208,9 @@ func (p *MonitorNicDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -5219,6 +5388,13 @@ func (p *MonitorNicDatabaseParam) SetQuery(v string) {
 func (p *MonitorNicDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *MonitorNicDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorNicDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *MonitorNicDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5242,6 +5418,7 @@ type MonitorSystemDiskDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -5293,6 +5470,9 @@ func (p *MonitorSystemDiskDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -5470,6 +5650,13 @@ func (p *MonitorSystemDiskDatabaseParam) SetQuery(v string) {
 func (p *MonitorSystemDiskDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *MonitorSystemDiskDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorSystemDiskDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *MonitorSystemDiskDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5493,6 +5680,7 @@ type MonitorBackupDiskDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -5544,6 +5732,9 @@ func (p *MonitorBackupDiskDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -5721,6 +5912,13 @@ func (p *MonitorBackupDiskDatabaseParam) SetQuery(v string) {
 func (p *MonitorBackupDiskDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *MonitorBackupDiskDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorBackupDiskDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *MonitorBackupDiskDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5744,6 +5942,7 @@ type MonitorSystemDiskSizeDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -5795,6 +5994,9 @@ func (p *MonitorSystemDiskSizeDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -5972,6 +6174,13 @@ func (p *MonitorSystemDiskSizeDatabaseParam) SetQuery(v string) {
 func (p *MonitorSystemDiskSizeDatabaseParam) GetQuery() string {
 	return p.Query
 }
+func (p *MonitorSystemDiskSizeDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorSystemDiskSizeDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 func (p *MonitorSystemDiskSizeDatabaseParam) SetId(v int64) {
 	p.Id = v
 }
@@ -5995,6 +6204,7 @@ type MonitorBackupDiskSizeDatabaseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -6046,6 +6256,9 @@ func (p *MonitorBackupDiskSizeDatabaseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -6222,6 +6435,13 @@ func (p *MonitorBackupDiskSizeDatabaseParam) SetQuery(v string) {
 
 func (p *MonitorBackupDiskSizeDatabaseParam) GetQuery() string {
 	return p.Query
+}
+func (p *MonitorBackupDiskSizeDatabaseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *MonitorBackupDiskSizeDatabaseParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *MonitorBackupDiskSizeDatabaseParam) SetId(v int64) {
 	p.Id = v

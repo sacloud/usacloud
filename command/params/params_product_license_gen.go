@@ -24,6 +24,7 @@ type ListProductLicenseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListProductLicenseParam return new ListProductLicenseParam
@@ -74,6 +75,9 @@ func (p *ListProductLicenseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -252,6 +256,13 @@ func (p *ListProductLicenseParam) SetQuery(v string) {
 func (p *ListProductLicenseParam) GetQuery() string {
 	return p.Query
 }
+func (p *ListProductLicenseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListProductLicenseParam) GetQueryFile() string {
+	return p.QueryFile
+}
 
 // ReadProductLicenseParam is input parameters for the sacloud API
 type ReadProductLicenseParam struct {
@@ -265,6 +276,7 @@ type ReadProductLicenseParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 	Id                int64    `json:"id"`
 }
 
@@ -304,6 +316,9 @@ func (p *ReadProductLicenseParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
 		p.Id = 0
@@ -445,6 +460,13 @@ func (p *ReadProductLicenseParam) SetQuery(v string) {
 
 func (p *ReadProductLicenseParam) GetQuery() string {
 	return p.Query
+}
+func (p *ReadProductLicenseParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ReadProductLicenseParam) GetQueryFile() string {
+	return p.QueryFile
 }
 func (p *ReadProductLicenseParam) SetId(v int64) {
 	p.Id = v

@@ -20,6 +20,7 @@ type ListCouponParam struct {
 	Format            string   `json:"format"`
 	FormatFile        string   `json:"format-file"`
 	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
 }
 
 // NewListCouponParam return new ListCouponParam
@@ -58,6 +59,9 @@ func (p *ListCouponParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Query) {
 		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
 	}
 
 }
@@ -182,4 +186,11 @@ func (p *ListCouponParam) SetQuery(v string) {
 
 func (p *ListCouponParam) GetQuery() string {
 	return p.Query
+}
+func (p *ListCouponParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ListCouponParam) GetQueryFile() string {
+	return p.QueryFile
 }
