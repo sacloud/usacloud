@@ -93,6 +93,42 @@ func DNSRecordInfoCompleteFlags(ctx command.Context, params *params.RecordInfoDN
 	}
 }
 
+func DNSRecordBulkUpdateCompleteFlags(ctx command.Context, params *params.RecordBulkUpdateDNSParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "file":
+		param := define.Resources["DNS"].Commands["record-bulk-update"].BuildedParams().Get("file")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "mode":
+		param := define.Resources["DNS"].Commands["record-bulk-update"].BuildedParams().Get("mode")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["DNS"].Commands["record-bulk-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["DNS"].Commands["record-bulk-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
 func DNSCreateCompleteFlags(ctx command.Context, params *params.CreateDNSParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 
