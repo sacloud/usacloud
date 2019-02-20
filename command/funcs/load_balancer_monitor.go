@@ -45,6 +45,10 @@ func LoadBalancerMonitor(ctx command.Context, params *params.MonitorLoadBalancer
 		return fmt.Errorf("LoadBalancerMonitor is failed: %s", err)
 	}
 
+	// sort
+	sort.Slice(receiveValues, func(i, j int) bool { return receiveValues[i].Time.Before(receiveValues[j].Time) })
+	sort.Slice(sendValues, func(i, j int) bool { return sendValues[i].Time.Before(sendValues[j].Time) })
+
 	// build key string
 	key := ""
 	buf := bytes.NewBufferString("")

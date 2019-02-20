@@ -41,6 +41,9 @@ func NFSMonitorFreeDiskSize(ctx command.Context, params *params.MonitorFreeDiskS
 		return fmt.Errorf("NFSMonitorFreeDiskSize is failed: %s", err)
 	}
 
+	// sort
+	sort.Slice(freeValues, func(i, j int) bool { return freeValues[i].Time.Before(freeValues[j].Time) })
+
 	// build key string
 	key := ""
 	buf := bytes.NewBufferString("")

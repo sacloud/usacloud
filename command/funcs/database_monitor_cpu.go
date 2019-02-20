@@ -40,6 +40,9 @@ func DatabaseMonitorCpu(ctx command.Context, params *params.MonitorCpuDatabasePa
 		return fmt.Errorf("DatabaseMonitorCpu is failed: %s", err)
 	}
 
+	// sort
+	sort.Slice(cpuValues, func(i, j int) bool { return cpuValues[i].Time.Before(cpuValues[j].Time) })
+
 	// build key string
 	key := ""
 	buf := bytes.NewBufferString("")

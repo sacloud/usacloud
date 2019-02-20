@@ -63,6 +63,9 @@ func ServerMonitorDisk(ctx command.Context, params *params.MonitorDiskServerPara
 		if err != nil {
 			return fmt.Errorf("ServerMonitorDisk is failed: %s", err)
 		}
+		// sort
+		sort.Slice(readValues, func(i, j int) bool { return readValues[i].Time.Before(readValues[j].Time) })
+		sort.Slice(writeValues, func(i, j int) bool { return writeValues[i].Time.Before(writeValues[j].Time) })
 
 		// build key string
 		key := ""
