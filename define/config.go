@@ -74,7 +74,7 @@ func ConfigResource() *schema.Resource {
 }
 
 var AllowZones = []string{"is1a", "is1b", "tk1a", "tk1v"}
-var AllowOutputTypes = []string{"table", "json", "csv", "tsv"}
+var AllowOutputTypes = []string{"table", "json", "yaml", "csv", "tsv"}
 
 func configEditParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{

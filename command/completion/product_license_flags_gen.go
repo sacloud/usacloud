@@ -41,7 +41,7 @@ func ProductLicenseListCompleteFlags(ctx command.Context, params *params.ListPro
 			comp = param.Param.CompleteFunc
 		}
 	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
 	}
 
 	if comp != nil {
@@ -62,7 +62,7 @@ func ProductLicenseReadCompleteFlags(ctx command.Context, params *params.ReadPro
 			comp = param.Param.CompleteFunc
 		}
 	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
 	}
 
 	if comp != nil {

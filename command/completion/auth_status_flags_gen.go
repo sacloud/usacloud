@@ -15,7 +15,7 @@ func AuthStatusShowCompleteFlags(ctx command.Context, params *params.ShowAuthSta
 
 	switch flagName {
 	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
 	}
 
 	if comp != nil {

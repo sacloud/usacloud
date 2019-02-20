@@ -151,7 +151,7 @@ usacloud config
   	Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [ゾーンを入力]
   
   Setting Default Output Type => 
-	Enter default-output-type[table/json/csv/tsv]: [デフォルトの出力形式を入力]
+	Enter default-output-type[table/json/yaml/csv/tsv]: [デフォルトの出力形式を入力]
 	
   Written your settings to ~/.usacloud/default/config.json
 ```

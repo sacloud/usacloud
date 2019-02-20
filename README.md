@@ -72,7 +72,7 @@ curl -s -L https://releases.usacloud.jp/usacloud/contrib/completion/bash/usaclou
     	Enter zone[is1a/is1b/tk1a/tk1v](default:tk1a): [ENTER ZONE]
     	
     Setting Default Output Type => 
-	    Enter default-output-type[table/json/csv/tsv]: 
+	    Enter default-output-type[table/json/yaml/csv/tsv]: 
    
     Written your settings to ~/.usacloud/default/config.json
 ```
@@ -322,6 +322,9 @@ COPYRIGHT:
     # JSON形式
     $ usacloud switch ls --output-type json
 
+    # YAML形式
+    $ usacloud switch ls --output-type yaml
+     
     # CSV/TSV形式
     $ usacloud switch ls --output-type csv # or tsv
 

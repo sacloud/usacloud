@@ -130,6 +130,8 @@ func getOutputWriter(formatter output.Formatter) output.Output {
 		return output.NewRowOutput(o.Out, o.Err, '\t', formatter)
 	case "json":
 		return output.NewJSONOutput(o.Out, o.Err, formatter.GetQuery())
+	case "yaml":
+		return output.NewYAMLOutput(o.Out, o.Err)
 	default:
 		return output.NewTableOutput(o.Out, o.Err, formatter)
 	}

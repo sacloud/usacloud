@@ -15,7 +15,7 @@ func CouponListCompleteFlags(ctx command.Context, params *params.ListCouponParam
 
 	switch flagName {
 	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "csv", "tsv")
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
 	}
 
 	if comp != nil {

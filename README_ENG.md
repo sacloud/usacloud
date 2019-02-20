@@ -322,6 +322,9 @@ COPYRIGHT:
     # JSON format
     $ usacloud switch ls --output-type json
 
+    # YAML format
+    $ usacloud switch ls --output-type yaml
+     
     # CSV/TSV format
     $ usacloud switch ls --output-type csv # or tsv
 
