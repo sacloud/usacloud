@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.19.0 (2019-02-20)
+
+* summaryコマンドへNFS/SIM/MobileGateway追加 #408 (yamamoto-febc)
+* libsacloud to v1.14.0 #409 (yamamoto-febc)
+* アクティビティAPIでのソート順修正 #410 (yamamoto-febc)
+* YAML出力オプションの追加 #411 (yamamoto-febc)
+* --query-fileオプションの追加 #412 (yamamoto-febc)
+* DNSレコードのバルク更新コマンド追加 #413 (yamamoto-febc)
+
+
 ## 0.18.0 (2019-01-25)
 
 * Usacloud Sandboxへのリンク追加 #399 (yamamoto-febc)
