@@ -31,6 +31,7 @@ var Resources = map[string]*schema.Resource{
 	"NFS":             NFSResource(),
 	"ObjectStorage":   ObjectStorageResource(),
 	"PacketFilter":    PacketFilterResource(),
+	"ProxyLB":         ProxyLBResource(),
 	"Price":           PriceResource(),
 	"PrivateHost":     PrivateHostResource(),
 	"ProductDisk":     ProductDiskResource(),
