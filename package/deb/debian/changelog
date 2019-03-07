@@ -1,3 +1,12 @@
+usacloud (0.20.0-1) stable; urgency=low
+
+  * ProxyLB (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/415>
+  * summaryコマンドへProxyLB追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/418>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Thu, 07 Mar 2019 02:31:20 +0000
+
 usacloud (0.19.0-1) stable; urgency=low
 
   * summaryコマンドへNFS/SIM/MobileGateway追加 (by yamamoto-febc)
