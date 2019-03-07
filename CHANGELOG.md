@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.20.0 (2019-03-07)
+
+* ProxyLB #415 (yamamoto-febc)
+
+
 ## 0.19.0 (2019-02-20)
 
 * summaryコマンドへNFS/SIM/MobileGateway追加 #408 (yamamoto-febc)

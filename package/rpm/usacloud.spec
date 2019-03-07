@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu Mar 07 2019 <sacloud.users@gmail.com> - 0.20.0-1
+- ProxyLB (by yamamoto-febc)
+
 * Wed Feb 20 2019 <sacloud.users@gmail.com> - 0.19.0-1
 - summaryコマンドへNFS/SIM/MobileGateway追加 (by yamamoto-febc)
 - libsacloud to v1.14.0 (by yamamoto-febc)
