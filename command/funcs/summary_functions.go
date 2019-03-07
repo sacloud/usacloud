@@ -89,6 +89,12 @@ var resourceCounters = []*resourceCounter{
 		paid:        true,
 	},
 	{
+		displayName: "ProxyLB",
+		finder:      countProxyLB,
+		global:      true,
+		paid:        false,
+	},
+	{
 		displayName: "GSLB",
 		finder:      countGSLB,
 		global:      true,
@@ -242,6 +248,14 @@ func countDatabase(client *api.Client) (int, error) {
 
 func countNFS(client *api.Client) (int, error) {
 	res, err := client.GetNFSAPI().Include("ID").Limit(1).Find()
+	if err != nil {
+		return 0, err
+	}
+	return int(res.Total), nil
+}
+
+func countProxyLB(client *api.Client) (int, error) {
+	res, err := client.GetProxyLBAPI().Include("ID").Limit(1).Find()
 	if err != nil {
 		return 0, err
 	}
