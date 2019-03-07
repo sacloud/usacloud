@@ -11,99 +11,6 @@ import (
 	"github.com/sacloud/usacloud/schema"
 )
 
-func ProxyLBMonitorCompleteFlags(ctx command.Context, params *params.MonitorProxyLBParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "start":
-		param := define.Resources["ProxyLB"].Commands["monitor"].BuildedParams().Get("start")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "end":
-		param := define.Resources["ProxyLB"].Commands["monitor"].BuildedParams().Get("end")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "key-format":
-		param := define.Resources["ProxyLB"].Commands["monitor"].BuildedParams().Get("key-format")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "selector":
-		param := define.Resources["ProxyLB"].Commands["monitor"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["ProxyLB"].Commands["monitor"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
-func ProxyLBBindPortInfoCompleteFlags(ctx command.Context, params *params.BindPortInfoProxyLBParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "selector":
-		param := define.Resources["ProxyLB"].Commands["bind-port-info"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["ProxyLB"].Commands["bind-port-info"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
-func ProxyLBCertificateInfoCompleteFlags(ctx command.Context, params *params.CertificateInfoProxyLBParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "selector":
-		param := define.Resources["ProxyLB"].Commands["certificate-info"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["ProxyLB"].Commands["certificate-info"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
 func ProxyLBListCompleteFlags(ctx command.Context, params *params.ListProxyLBParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 
@@ -135,109 +42,6 @@ func ProxyLBListCompleteFlags(ctx command.Context, params *params.ListProxyLBPar
 		}
 	case "sort":
 		param := define.Resources["ProxyLB"].Commands["list"].BuildedParams().Get("sort")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
-func ProxyLBServerInfoCompleteFlags(ctx command.Context, params *params.ServerInfoProxyLBParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "selector":
-		param := define.Resources["ProxyLB"].Commands["server-info"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["ProxyLB"].Commands["server-info"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
-func ProxyLBBindPortAddCompleteFlags(ctx command.Context, params *params.BindPortAddProxyLBParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "mode":
-		param := define.Resources["ProxyLB"].Commands["bind-port-add"].BuildedParams().Get("mode")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "port":
-		param := define.Resources["ProxyLB"].Commands["bind-port-add"].BuildedParams().Get("port")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "selector":
-		param := define.Resources["ProxyLB"].Commands["bind-port-add"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["ProxyLB"].Commands["bind-port-add"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
-func ProxyLBCertificateAddCompleteFlags(ctx command.Context, params *params.CertificateAddProxyLBParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "server-certificate", "server-cert":
-		param := define.Resources["ProxyLB"].Commands["certificate-add"].BuildedParams().Get("server-certificate")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "intermediate-certificate", "issuer-cert":
-		param := define.Resources["ProxyLB"].Commands["certificate-add"].BuildedParams().Get("intermediate-certificate")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "private-key":
-		param := define.Resources["ProxyLB"].Commands["certificate-add"].BuildedParams().Get("private-key")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "selector":
-		param := define.Resources["ProxyLB"].Commands["certificate-add"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["ProxyLB"].Commands["certificate-add"].BuildedParams().Get("id")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -324,129 +128,6 @@ func ProxyLBCreateCompleteFlags(ctx command.Context, params *params.CreateProxyL
 	}
 }
 
-func ProxyLBServerAddCompleteFlags(ctx command.Context, params *params.ServerAddProxyLBParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "ipaddress":
-		param := define.Resources["ProxyLB"].Commands["server-add"].BuildedParams().Get("ipaddress")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "disabled":
-		param := define.Resources["ProxyLB"].Commands["server-add"].BuildedParams().Get("disabled")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "port":
-		param := define.Resources["ProxyLB"].Commands["server-add"].BuildedParams().Get("port")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "selector":
-		param := define.Resources["ProxyLB"].Commands["server-add"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["ProxyLB"].Commands["server-add"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
-func ProxyLBBindPortUpdateCompleteFlags(ctx command.Context, params *params.BindPortUpdateProxyLBParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "index":
-		param := define.Resources["ProxyLB"].Commands["bind-port-update"].BuildedParams().Get("index")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "mode":
-		param := define.Resources["ProxyLB"].Commands["bind-port-update"].BuildedParams().Get("mode")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "port":
-		param := define.Resources["ProxyLB"].Commands["bind-port-update"].BuildedParams().Get("port")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "selector":
-		param := define.Resources["ProxyLB"].Commands["bind-port-update"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["ProxyLB"].Commands["bind-port-update"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
-func ProxyLBCertificateUpdateCompleteFlags(ctx command.Context, params *params.CertificateUpdateProxyLBParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "server-certificate", "server-cert":
-		param := define.Resources["ProxyLB"].Commands["certificate-update"].BuildedParams().Get("server-certificate")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "intermediate-certificate", "issuer-cert":
-		param := define.Resources["ProxyLB"].Commands["certificate-update"].BuildedParams().Get("intermediate-certificate")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "private-key":
-		param := define.Resources["ProxyLB"].Commands["certificate-update"].BuildedParams().Get("private-key")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "selector":
-		param := define.Resources["ProxyLB"].Commands["certificate-update"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["ProxyLB"].Commands["certificate-update"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
 func ProxyLBReadCompleteFlags(ctx command.Context, params *params.ReadProxyLBParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 
@@ -458,140 +139,6 @@ func ProxyLBReadCompleteFlags(ctx command.Context, params *params.ReadProxyLBPar
 		}
 	case "id":
 		param := define.Resources["ProxyLB"].Commands["read"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
-func ProxyLBServerUpdateCompleteFlags(ctx command.Context, params *params.ServerUpdateProxyLBParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "index":
-		param := define.Resources["ProxyLB"].Commands["server-update"].BuildedParams().Get("index")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "ipaddress":
-		param := define.Resources["ProxyLB"].Commands["server-update"].BuildedParams().Get("ipaddress")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "disabled":
-		param := define.Resources["ProxyLB"].Commands["server-update"].BuildedParams().Get("disabled")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "port":
-		param := define.Resources["ProxyLB"].Commands["server-update"].BuildedParams().Get("port")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "selector":
-		param := define.Resources["ProxyLB"].Commands["server-update"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["ProxyLB"].Commands["server-update"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
-func ProxyLBBindPortDeleteCompleteFlags(ctx command.Context, params *params.BindPortDeleteProxyLBParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "index":
-		param := define.Resources["ProxyLB"].Commands["bind-port-delete"].BuildedParams().Get("index")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "selector":
-		param := define.Resources["ProxyLB"].Commands["bind-port-delete"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["ProxyLB"].Commands["bind-port-delete"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
-func ProxyLBCertificateDeleteCompleteFlags(ctx command.Context, params *params.CertificateDeleteProxyLBParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "selector":
-		param := define.Resources["ProxyLB"].Commands["certificate-delete"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["ProxyLB"].Commands["certificate-delete"].BuildedParams().Get("id")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "output-type", "out", "o":
-		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
-	}
-
-	if comp != nil {
-		words := comp(ctx, currentValue)
-		for _, w := range words {
-			fmt.Println(w)
-		}
-	}
-}
-
-func ProxyLBServerDeleteCompleteFlags(ctx command.Context, params *params.ServerDeleteProxyLBParam, flagName string, currentValue string) {
-	var comp schema.CompletionFunc
-
-	switch flagName {
-	case "index":
-		param := define.Resources["ProxyLB"].Commands["server-delete"].BuildedParams().Get("index")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "selector":
-		param := define.Resources["ProxyLB"].Commands["server-delete"].BuildedParams().Get("selector")
-		if param != nil {
-			comp = param.Param.CompleteFunc
-		}
-	case "id":
-		param := define.Resources["ProxyLB"].Commands["server-delete"].BuildedParams().Get("id")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -694,6 +241,459 @@ func ProxyLBDeleteCompleteFlags(ctx command.Context, params *params.DeleteProxyL
 		}
 	case "id":
 		param := define.Resources["ProxyLB"].Commands["delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBBindPortInfoCompleteFlags(ctx command.Context, params *params.BindPortInfoProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["bind-port-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["bind-port-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBBindPortAddCompleteFlags(ctx command.Context, params *params.BindPortAddProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "mode":
+		param := define.Resources["ProxyLB"].Commands["bind-port-add"].BuildedParams().Get("mode")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "port":
+		param := define.Resources["ProxyLB"].Commands["bind-port-add"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["bind-port-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["bind-port-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBBindPortUpdateCompleteFlags(ctx command.Context, params *params.BindPortUpdateProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "index":
+		param := define.Resources["ProxyLB"].Commands["bind-port-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "mode":
+		param := define.Resources["ProxyLB"].Commands["bind-port-update"].BuildedParams().Get("mode")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "port":
+		param := define.Resources["ProxyLB"].Commands["bind-port-update"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["bind-port-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["bind-port-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBBindPortDeleteCompleteFlags(ctx command.Context, params *params.BindPortDeleteProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "index":
+		param := define.Resources["ProxyLB"].Commands["bind-port-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["bind-port-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["bind-port-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBServerInfoCompleteFlags(ctx command.Context, params *params.ServerInfoProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["server-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["server-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBServerAddCompleteFlags(ctx command.Context, params *params.ServerAddProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "ipaddress":
+		param := define.Resources["ProxyLB"].Commands["server-add"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "disabled":
+		param := define.Resources["ProxyLB"].Commands["server-add"].BuildedParams().Get("disabled")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "port":
+		param := define.Resources["ProxyLB"].Commands["server-add"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["server-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["server-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBServerUpdateCompleteFlags(ctx command.Context, params *params.ServerUpdateProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "index":
+		param := define.Resources["ProxyLB"].Commands["server-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "ipaddress":
+		param := define.Resources["ProxyLB"].Commands["server-update"].BuildedParams().Get("ipaddress")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "disabled":
+		param := define.Resources["ProxyLB"].Commands["server-update"].BuildedParams().Get("disabled")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "port":
+		param := define.Resources["ProxyLB"].Commands["server-update"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["server-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["server-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBServerDeleteCompleteFlags(ctx command.Context, params *params.ServerDeleteProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "index":
+		param := define.Resources["ProxyLB"].Commands["server-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["server-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["server-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBCertificateInfoCompleteFlags(ctx command.Context, params *params.CertificateInfoProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["certificate-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["certificate-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBCertificateAddCompleteFlags(ctx command.Context, params *params.CertificateAddProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "server-certificate", "server-cert":
+		param := define.Resources["ProxyLB"].Commands["certificate-add"].BuildedParams().Get("server-certificate")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "intermediate-certificate", "issuer-cert":
+		param := define.Resources["ProxyLB"].Commands["certificate-add"].BuildedParams().Get("intermediate-certificate")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "private-key":
+		param := define.Resources["ProxyLB"].Commands["certificate-add"].BuildedParams().Get("private-key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["certificate-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["certificate-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBCertificateUpdateCompleteFlags(ctx command.Context, params *params.CertificateUpdateProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "server-certificate", "server-cert":
+		param := define.Resources["ProxyLB"].Commands["certificate-update"].BuildedParams().Get("server-certificate")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "intermediate-certificate", "issuer-cert":
+		param := define.Resources["ProxyLB"].Commands["certificate-update"].BuildedParams().Get("intermediate-certificate")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "private-key":
+		param := define.Resources["ProxyLB"].Commands["certificate-update"].BuildedParams().Get("private-key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["certificate-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["certificate-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBCertificateDeleteCompleteFlags(ctx command.Context, params *params.CertificateDeleteProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["certificate-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["certificate-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBMonitorCompleteFlags(ctx command.Context, params *params.MonitorProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "start":
+		param := define.Resources["ProxyLB"].Commands["monitor"].BuildedParams().Get("start")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "end":
+		param := define.Resources["ProxyLB"].Commands["monitor"].BuildedParams().Get("end")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "key-format":
+		param := define.Resources["ProxyLB"].Commands["monitor"].BuildedParams().Get("key-format")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["monitor"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["monitor"].BuildedParams().Get("id")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

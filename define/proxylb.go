@@ -185,10 +185,39 @@ func ProxyLBResource() *schema.Resource {
 
 	return &schema.Resource{
 		Commands:            commands,
+		CommandCategories:   proxyLBCommandCategories,
 		Aliases:             []string{"enhanced-load-balancer", "proxylb"},
 		ResourceCategory:    CategoryCommonServiceItem,
 		ListResultFieldName: "CommonServiceProxyLBItems",
 	}
+}
+
+var proxyLBCommandCategories = []schema.Category{
+	{
+		Key:         "basics",
+		DisplayName: "Basics",
+		Order:       10,
+	},
+	{
+		Key:         "bind-port",
+		DisplayName: "Bind Port(s) Management",
+		Order:       20,
+	},
+	{
+		Key:         "servers",
+		DisplayName: "Real Server(s) Management",
+		Order:       30,
+	},
+	{
+		Key:         "certificate",
+		DisplayName: "Certificate(s) Management",
+		Order:       40,
+	},
+	{
+		Key:         "monitor",
+		DisplayName: "Monitoring",
+		Order:       50,
+	},
 }
 
 func proxyLBListParam() map[string]*schema.Schema {

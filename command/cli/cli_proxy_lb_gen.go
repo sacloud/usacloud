@@ -18,1170 +18,30 @@ import (
 )
 
 func init() {
-	monitorParam := params.NewMonitorProxyLBParam()
-	bindPortInfoParam := params.NewBindPortInfoProxyLBParam()
-	certificateInfoParam := params.NewCertificateInfoProxyLBParam()
 	listParam := params.NewListProxyLBParam()
-	serverInfoParam := params.NewServerInfoProxyLBParam()
-	bindPortAddParam := params.NewBindPortAddProxyLBParam()
-	certificateAddParam := params.NewCertificateAddProxyLBParam()
 	createParam := params.NewCreateProxyLBParam()
-	serverAddParam := params.NewServerAddProxyLBParam()
-	bindPortUpdateParam := params.NewBindPortUpdateProxyLBParam()
-	certificateUpdateParam := params.NewCertificateUpdateProxyLBParam()
 	readParam := params.NewReadProxyLBParam()
-	serverUpdateParam := params.NewServerUpdateProxyLBParam()
-	bindPortDeleteParam := params.NewBindPortDeleteProxyLBParam()
-	certificateDeleteParam := params.NewCertificateDeleteProxyLBParam()
-	serverDeleteParam := params.NewServerDeleteProxyLBParam()
 	updateParam := params.NewUpdateProxyLBParam()
 	deleteParam := params.NewDeleteProxyLBParam()
+	bindPortInfoParam := params.NewBindPortInfoProxyLBParam()
+	bindPortAddParam := params.NewBindPortAddProxyLBParam()
+	bindPortUpdateParam := params.NewBindPortUpdateProxyLBParam()
+	bindPortDeleteParam := params.NewBindPortDeleteProxyLBParam()
+	serverInfoParam := params.NewServerInfoProxyLBParam()
+	serverAddParam := params.NewServerAddProxyLBParam()
+	serverUpdateParam := params.NewServerUpdateProxyLBParam()
+	serverDeleteParam := params.NewServerDeleteProxyLBParam()
+	certificateInfoParam := params.NewCertificateInfoProxyLBParam()
+	certificateAddParam := params.NewCertificateAddProxyLBParam()
+	certificateUpdateParam := params.NewCertificateUpdateProxyLBParam()
+	certificateDeleteParam := params.NewCertificateDeleteProxyLBParam()
+	monitorParam := params.NewMonitorProxyLBParam()
 
 	cliCommand := &cli.Command{
 		Name:    "proxy-lb",
 		Aliases: []string{"enhanced-load-balancer", "proxylb"},
 		Usage:   "A manage commands of ProxyLB",
 		Subcommands: []*cli.Command{
-			{
-				Name:      "monitor",
-				Usage:     "Monitor ProxyLB",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:  "start",
-						Usage: "set start-time",
-					},
-					&cli.StringFlag{
-						Name:  "end",
-						Usage: "set end-time",
-					},
-					&cli.StringFlag{
-						Name:  "key-format",
-						Usage: "[Required] set monitoring value key-format",
-						Value: "sakuracloud.proxylb.{{.ID}}",
-					},
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out", "o"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
-					&cli.StringFlag{
-						Name:  "query-file",
-						Usage: "JMESPath query from file(using when '--output-type' is json only)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = monitorParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, monitorParam)
-
-					// Set option values
-					if c.IsSet("start") {
-						monitorParam.Start = c.String("start")
-					}
-					if c.IsSet("end") {
-						monitorParam.End = c.String("end")
-					}
-					if c.IsSet("key-format") {
-						monitorParam.KeyFormat = c.String("key-format")
-					}
-					if c.IsSet("selector") {
-						monitorParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("param-template") {
-						monitorParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						monitorParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						monitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						monitorParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						monitorParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						monitorParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						monitorParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						monitorParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						monitorParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						monitorParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						monitorParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.ProxyLBMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.ProxyLBMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.ProxyLBMonitorCompleteFlags(ctx, monitorParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.ProxyLBMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					monitorParam.ParamTemplate = c.String("param-template")
-					monitorParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(monitorParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewMonitorProxyLBParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.Merge(monitorParam, p, mergo.WithOverride)
-					}
-
-					// Set option values
-					if c.IsSet("start") {
-						monitorParam.Start = c.String("start")
-					}
-					if c.IsSet("end") {
-						monitorParam.End = c.String("end")
-					}
-					if c.IsSet("key-format") {
-						monitorParam.KeyFormat = c.String("key-format")
-					}
-					if c.IsSet("selector") {
-						monitorParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("param-template") {
-						monitorParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						monitorParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						monitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						monitorParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						monitorParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						monitorParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						monitorParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						monitorParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						monitorParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						monitorParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						monitorParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					var outputTypeHolder interface{} = monitorParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// Generate skeleton
-					if monitorParam.GenerateSkeleton {
-						monitorParam.GenerateSkeleton = false
-						monitorParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(monitorParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := monitorParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), monitorParam)
-
-					apiClient := ctx.GetAPIClient().ProxyLB
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(monitorParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, monitorParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.CommonServiceProxyLBItems {
-										if len(monitorParam.Selector) == 0 || hasTags(&v, monitorParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						monitorParam.SetId(id)
-						p := *monitorParam // copy struct value
-						monitorParam := &p
-						go func() {
-							err := funcs.ProxyLBMonitor(ctx, monitorParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
-
-				},
-			},
-			{
-				Name:      "bind-port-info",
-				Aliases:   []string{"bind-port-list"},
-				Usage:     "BindPortInfo ProxyLB",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out", "o"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
-					&cli.StringFlag{
-						Name:  "query-file",
-						Usage: "JMESPath query from file(using when '--output-type' is json only)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = bindPortInfoParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, bindPortInfoParam)
-
-					// Set option values
-					if c.IsSet("selector") {
-						bindPortInfoParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("param-template") {
-						bindPortInfoParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						bindPortInfoParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						bindPortInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						bindPortInfoParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						bindPortInfoParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						bindPortInfoParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						bindPortInfoParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						bindPortInfoParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						bindPortInfoParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						bindPortInfoParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						bindPortInfoParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.ProxyLBBindPortInfoCompleteArgs(ctx, bindPortInfoParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.ProxyLBBindPortInfoCompleteArgs(ctx, bindPortInfoParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.ProxyLBBindPortInfoCompleteFlags(ctx, bindPortInfoParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.ProxyLBBindPortInfoCompleteArgs(ctx, bindPortInfoParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					bindPortInfoParam.ParamTemplate = c.String("param-template")
-					bindPortInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(bindPortInfoParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewBindPortInfoProxyLBParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.Merge(bindPortInfoParam, p, mergo.WithOverride)
-					}
-
-					// Set option values
-					if c.IsSet("selector") {
-						bindPortInfoParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("param-template") {
-						bindPortInfoParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						bindPortInfoParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						bindPortInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						bindPortInfoParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						bindPortInfoParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						bindPortInfoParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						bindPortInfoParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						bindPortInfoParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						bindPortInfoParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						bindPortInfoParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						bindPortInfoParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					var outputTypeHolder interface{} = bindPortInfoParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// Generate skeleton
-					if bindPortInfoParam.GenerateSkeleton {
-						bindPortInfoParam.GenerateSkeleton = false
-						bindPortInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(bindPortInfoParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := bindPortInfoParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), bindPortInfoParam)
-
-					apiClient := ctx.GetAPIClient().ProxyLB
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(bindPortInfoParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, bindPortInfoParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bindPortInfoParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.CommonServiceProxyLBItems {
-										if len(bindPortInfoParam.Selector) == 0 || hasTags(&v, bindPortInfoParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						bindPortInfoParam.SetId(id)
-						p := *bindPortInfoParam // copy struct value
-						bindPortInfoParam := &p
-						go func() {
-							err := funcs.ProxyLBBindPortInfo(ctx, bindPortInfoParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
-
-				},
-			},
-			{
-				Name:      "certificate-info",
-				Aliases:   []string{"certificate-list", "cert-list", "cert-info"},
-				Usage:     "CertificateInfo ProxyLB",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out", "o"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
-					&cli.StringFlag{
-						Name:  "query-file",
-						Usage: "JMESPath query from file(using when '--output-type' is json only)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = certificateInfoParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, certificateInfoParam)
-
-					// Set option values
-					if c.IsSet("selector") {
-						certificateInfoParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("param-template") {
-						certificateInfoParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						certificateInfoParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						certificateInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						certificateInfoParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						certificateInfoParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						certificateInfoParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						certificateInfoParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						certificateInfoParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						certificateInfoParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						certificateInfoParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						certificateInfoParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.ProxyLBCertificateInfoCompleteArgs(ctx, certificateInfoParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.ProxyLBCertificateInfoCompleteArgs(ctx, certificateInfoParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.ProxyLBCertificateInfoCompleteFlags(ctx, certificateInfoParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.ProxyLBCertificateInfoCompleteArgs(ctx, certificateInfoParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					certificateInfoParam.ParamTemplate = c.String("param-template")
-					certificateInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(certificateInfoParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewCertificateInfoProxyLBParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.Merge(certificateInfoParam, p, mergo.WithOverride)
-					}
-
-					// Set option values
-					if c.IsSet("selector") {
-						certificateInfoParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("param-template") {
-						certificateInfoParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						certificateInfoParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						certificateInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						certificateInfoParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						certificateInfoParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						certificateInfoParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						certificateInfoParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						certificateInfoParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						certificateInfoParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						certificateInfoParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						certificateInfoParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					var outputTypeHolder interface{} = certificateInfoParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// Generate skeleton
-					if certificateInfoParam.GenerateSkeleton {
-						certificateInfoParam.GenerateSkeleton = false
-						certificateInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(certificateInfoParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := certificateInfoParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), certificateInfoParam)
-
-					apiClient := ctx.GetAPIClient().ProxyLB
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(certificateInfoParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, certificateInfoParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", certificateInfoParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.CommonServiceProxyLBItems {
-										if len(certificateInfoParam.Selector) == 0 || hasTags(&v, certificateInfoParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						certificateInfoParam.SetId(id)
-						p := *certificateInfoParam // copy struct value
-						certificateInfoParam := &p
-						go func() {
-							err := funcs.ProxyLBCertificateInfo(ctx, certificateInfoParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
-
-				},
-			},
 			{
 				Name:    "list",
 				Aliases: []string{"ls", "find", "selector"},
@@ -1513,1208 +373,6 @@ func init() {
 
 					// Run command with params
 					return funcs.ProxyLBList(ctx, listParam)
-
-				},
-			},
-			{
-				Name:      "server-info",
-				Aliases:   []string{"server-list"},
-				Usage:     "ServerInfo ProxyLB",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out", "o"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
-					&cli.StringFlag{
-						Name:  "query-file",
-						Usage: "JMESPath query from file(using when '--output-type' is json only)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = serverInfoParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, serverInfoParam)
-
-					// Set option values
-					if c.IsSet("selector") {
-						serverInfoParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("param-template") {
-						serverInfoParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						serverInfoParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						serverInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						serverInfoParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						serverInfoParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						serverInfoParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						serverInfoParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						serverInfoParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						serverInfoParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						serverInfoParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						serverInfoParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.ProxyLBServerInfoCompleteArgs(ctx, serverInfoParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.ProxyLBServerInfoCompleteArgs(ctx, serverInfoParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.ProxyLBServerInfoCompleteFlags(ctx, serverInfoParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.ProxyLBServerInfoCompleteArgs(ctx, serverInfoParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					serverInfoParam.ParamTemplate = c.String("param-template")
-					serverInfoParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(serverInfoParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewServerInfoProxyLBParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.Merge(serverInfoParam, p, mergo.WithOverride)
-					}
-
-					// Set option values
-					if c.IsSet("selector") {
-						serverInfoParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("param-template") {
-						serverInfoParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						serverInfoParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						serverInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						serverInfoParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						serverInfoParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						serverInfoParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						serverInfoParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						serverInfoParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						serverInfoParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						serverInfoParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						serverInfoParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					var outputTypeHolder interface{} = serverInfoParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// Generate skeleton
-					if serverInfoParam.GenerateSkeleton {
-						serverInfoParam.GenerateSkeleton = false
-						serverInfoParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(serverInfoParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := serverInfoParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), serverInfoParam)
-
-					apiClient := ctx.GetAPIClient().ProxyLB
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(serverInfoParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, serverInfoParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverInfoParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.CommonServiceProxyLBItems {
-										if len(serverInfoParam.Selector) == 0 || hasTags(&v, serverInfoParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						serverInfoParam.SetId(id)
-						p := *serverInfoParam // copy struct value
-						serverInfoParam := &p
-						go func() {
-							err := funcs.ProxyLBServerInfo(ctx, serverInfoParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
-
-				},
-			},
-			{
-				Name:      "bind-port-add",
-				Usage:     "BindPortAdd ProxyLB",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:  "mode",
-						Usage: "[Required] set bind mode[http/https]",
-					},
-					&cli.IntFlag{
-						Name:  "port",
-						Usage: "[Required] set port number",
-					},
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.BoolFlag{
-						Name:    "assumeyes",
-						Aliases: []string{"y"},
-						Usage:   "Assume that the answer to any question which would be asked is yes",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out", "o"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
-					&cli.StringFlag{
-						Name:  "query-file",
-						Usage: "JMESPath query from file(using when '--output-type' is json only)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = bindPortAddParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, bindPortAddParam)
-
-					// Set option values
-					if c.IsSet("mode") {
-						bindPortAddParam.Mode = c.String("mode")
-					}
-					if c.IsSet("port") {
-						bindPortAddParam.Port = c.Int("port")
-					}
-					if c.IsSet("selector") {
-						bindPortAddParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						bindPortAddParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						bindPortAddParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						bindPortAddParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						bindPortAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						bindPortAddParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						bindPortAddParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						bindPortAddParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						bindPortAddParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						bindPortAddParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						bindPortAddParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						bindPortAddParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						bindPortAddParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.ProxyLBBindPortAddCompleteArgs(ctx, bindPortAddParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.ProxyLBBindPortAddCompleteArgs(ctx, bindPortAddParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.ProxyLBBindPortAddCompleteFlags(ctx, bindPortAddParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.ProxyLBBindPortAddCompleteArgs(ctx, bindPortAddParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					bindPortAddParam.ParamTemplate = c.String("param-template")
-					bindPortAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(bindPortAddParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewBindPortAddProxyLBParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.Merge(bindPortAddParam, p, mergo.WithOverride)
-					}
-
-					// Set option values
-					if c.IsSet("mode") {
-						bindPortAddParam.Mode = c.String("mode")
-					}
-					if c.IsSet("port") {
-						bindPortAddParam.Port = c.Int("port")
-					}
-					if c.IsSet("selector") {
-						bindPortAddParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						bindPortAddParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						bindPortAddParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						bindPortAddParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						bindPortAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						bindPortAddParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						bindPortAddParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						bindPortAddParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						bindPortAddParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						bindPortAddParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						bindPortAddParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						bindPortAddParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						bindPortAddParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					var outputTypeHolder interface{} = bindPortAddParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// Generate skeleton
-					if bindPortAddParam.GenerateSkeleton {
-						bindPortAddParam.GenerateSkeleton = false
-						bindPortAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(bindPortAddParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := bindPortAddParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), bindPortAddParam)
-
-					apiClient := ctx.GetAPIClient().ProxyLB
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(bindPortAddParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, bindPortAddParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bindPortAddParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.CommonServiceProxyLBItems {
-										if len(bindPortAddParam.Selector) == 0 || hasTags(&v, bindPortAddParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					// confirm
-					if !bindPortAddParam.Assumeyes {
-						if !isTerminal() {
-							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
-						}
-						if !command.ConfirmContinue("bind-port-add", ids...) {
-							return nil
-						}
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						bindPortAddParam.SetId(id)
-						p := *bindPortAddParam // copy struct value
-						bindPortAddParam := &p
-						go func() {
-							err := funcs.ProxyLBBindPortAdd(ctx, bindPortAddParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
-
-				},
-			},
-			{
-				Name:      "certificate-add",
-				Aliases:   []string{"cert-add"},
-				Usage:     "CertificateAdd ProxyLB",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:    "server-certificate",
-						Aliases: []string{"server-cert"},
-						Usage:   "[Required] ",
-					},
-					&cli.StringFlag{
-						Name:    "intermediate-certificate",
-						Aliases: []string{"issuer-cert"},
-					},
-					&cli.StringFlag{
-						Name:  "private-key",
-						Usage: "[Required] ",
-					},
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.BoolFlag{
-						Name:    "assumeyes",
-						Aliases: []string{"y"},
-						Usage:   "Assume that the answer to any question which would be asked is yes",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out", "o"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
-					&cli.StringFlag{
-						Name:  "query-file",
-						Usage: "JMESPath query from file(using when '--output-type' is json only)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = certificateAddParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, certificateAddParam)
-
-					// Set option values
-					if c.IsSet("server-certificate") {
-						certificateAddParam.ServerCertificate = c.String("server-certificate")
-					}
-					if c.IsSet("intermediate-certificate") {
-						certificateAddParam.IntermediateCertificate = c.String("intermediate-certificate")
-					}
-					if c.IsSet("private-key") {
-						certificateAddParam.PrivateKey = c.String("private-key")
-					}
-					if c.IsSet("selector") {
-						certificateAddParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						certificateAddParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						certificateAddParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						certificateAddParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						certificateAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						certificateAddParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						certificateAddParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						certificateAddParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						certificateAddParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						certificateAddParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						certificateAddParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						certificateAddParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						certificateAddParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.ProxyLBCertificateAddCompleteArgs(ctx, certificateAddParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.ProxyLBCertificateAddCompleteArgs(ctx, certificateAddParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.ProxyLBCertificateAddCompleteFlags(ctx, certificateAddParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.ProxyLBCertificateAddCompleteArgs(ctx, certificateAddParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					certificateAddParam.ParamTemplate = c.String("param-template")
-					certificateAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(certificateAddParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewCertificateAddProxyLBParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.Merge(certificateAddParam, p, mergo.WithOverride)
-					}
-
-					// Set option values
-					if c.IsSet("server-certificate") {
-						certificateAddParam.ServerCertificate = c.String("server-certificate")
-					}
-					if c.IsSet("intermediate-certificate") {
-						certificateAddParam.IntermediateCertificate = c.String("intermediate-certificate")
-					}
-					if c.IsSet("private-key") {
-						certificateAddParam.PrivateKey = c.String("private-key")
-					}
-					if c.IsSet("selector") {
-						certificateAddParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						certificateAddParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						certificateAddParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						certificateAddParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						certificateAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						certificateAddParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						certificateAddParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						certificateAddParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						certificateAddParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						certificateAddParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						certificateAddParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						certificateAddParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						certificateAddParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					var outputTypeHolder interface{} = certificateAddParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// Generate skeleton
-					if certificateAddParam.GenerateSkeleton {
-						certificateAddParam.GenerateSkeleton = false
-						certificateAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(certificateAddParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := certificateAddParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), certificateAddParam)
-
-					apiClient := ctx.GetAPIClient().ProxyLB
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(certificateAddParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, certificateAddParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", certificateAddParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.CommonServiceProxyLBItems {
-										if len(certificateAddParam.Selector) == 0 || hasTags(&v, certificateAddParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					// confirm
-					if !certificateAddParam.Assumeyes {
-						if !isTerminal() {
-							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
-						}
-						if !command.ConfirmContinue("certificate-add", ids...) {
-							return nil
-						}
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						certificateAddParam.SetId(id)
-						p := *certificateAddParam // copy struct value
-						certificateAddParam := &p
-						go func() {
-							err := funcs.ProxyLBCertificateAdd(ctx, certificateAddParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
 
 				},
 			},
@@ -3125,1266 +783,6 @@ func init() {
 				},
 			},
 			{
-				Name:      "server-add",
-				Usage:     "ServerAdd ProxyLB",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:  "ipaddress",
-						Usage: "[Required] set target ipaddress",
-					},
-					&cli.BoolFlag{
-						Name:  "disabled",
-						Usage: "set disabled",
-					},
-					&cli.IntFlag{
-						Name:  "port",
-						Usage: "[Required] set server ports",
-					},
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.BoolFlag{
-						Name:    "assumeyes",
-						Aliases: []string{"y"},
-						Usage:   "Assume that the answer to any question which would be asked is yes",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out", "o"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
-					&cli.StringFlag{
-						Name:  "query-file",
-						Usage: "JMESPath query from file(using when '--output-type' is json only)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = serverAddParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, serverAddParam)
-
-					// Set option values
-					if c.IsSet("ipaddress") {
-						serverAddParam.Ipaddress = c.String("ipaddress")
-					}
-					if c.IsSet("disabled") {
-						serverAddParam.Disabled = c.Bool("disabled")
-					}
-					if c.IsSet("port") {
-						serverAddParam.Port = c.Int("port")
-					}
-					if c.IsSet("selector") {
-						serverAddParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						serverAddParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						serverAddParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						serverAddParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						serverAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						serverAddParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						serverAddParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						serverAddParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						serverAddParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						serverAddParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						serverAddParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						serverAddParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						serverAddParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.ProxyLBServerAddCompleteArgs(ctx, serverAddParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.ProxyLBServerAddCompleteArgs(ctx, serverAddParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.ProxyLBServerAddCompleteFlags(ctx, serverAddParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.ProxyLBServerAddCompleteArgs(ctx, serverAddParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					serverAddParam.ParamTemplate = c.String("param-template")
-					serverAddParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(serverAddParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewServerAddProxyLBParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.Merge(serverAddParam, p, mergo.WithOverride)
-					}
-
-					// Set option values
-					if c.IsSet("ipaddress") {
-						serverAddParam.Ipaddress = c.String("ipaddress")
-					}
-					if c.IsSet("disabled") {
-						serverAddParam.Disabled = c.Bool("disabled")
-					}
-					if c.IsSet("port") {
-						serverAddParam.Port = c.Int("port")
-					}
-					if c.IsSet("selector") {
-						serverAddParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						serverAddParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						serverAddParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						serverAddParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						serverAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						serverAddParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						serverAddParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						serverAddParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						serverAddParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						serverAddParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						serverAddParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						serverAddParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						serverAddParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					var outputTypeHolder interface{} = serverAddParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// Generate skeleton
-					if serverAddParam.GenerateSkeleton {
-						serverAddParam.GenerateSkeleton = false
-						serverAddParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(serverAddParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := serverAddParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), serverAddParam)
-
-					apiClient := ctx.GetAPIClient().ProxyLB
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(serverAddParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, serverAddParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverAddParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.CommonServiceProxyLBItems {
-										if len(serverAddParam.Selector) == 0 || hasTags(&v, serverAddParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					// confirm
-					if !serverAddParam.Assumeyes {
-						if !isTerminal() {
-							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
-						}
-						if !command.ConfirmContinue("server-add", ids...) {
-							return nil
-						}
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						serverAddParam.SetId(id)
-						p := *serverAddParam // copy struct value
-						serverAddParam := &p
-						go func() {
-							err := funcs.ProxyLBServerAdd(ctx, serverAddParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
-
-				},
-			},
-			{
-				Name:      "bind-port-update",
-				Usage:     "BindPortUpdate ProxyLB",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:  "index",
-						Usage: "[Required] index of target server",
-					},
-					&cli.StringFlag{
-						Name:  "mode",
-						Usage: "set bind mode[http/https]",
-					},
-					&cli.IntFlag{
-						Name:  "port",
-						Usage: "set port number",
-					},
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.BoolFlag{
-						Name:    "assumeyes",
-						Aliases: []string{"y"},
-						Usage:   "Assume that the answer to any question which would be asked is yes",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out", "o"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
-					&cli.StringFlag{
-						Name:  "query-file",
-						Usage: "JMESPath query from file(using when '--output-type' is json only)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = bindPortUpdateParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, bindPortUpdateParam)
-
-					// Set option values
-					if c.IsSet("index") {
-						bindPortUpdateParam.Index = c.Int("index")
-					}
-					if c.IsSet("mode") {
-						bindPortUpdateParam.Mode = c.String("mode")
-					}
-					if c.IsSet("port") {
-						bindPortUpdateParam.Port = c.Int("port")
-					}
-					if c.IsSet("selector") {
-						bindPortUpdateParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						bindPortUpdateParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						bindPortUpdateParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						bindPortUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						bindPortUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						bindPortUpdateParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						bindPortUpdateParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						bindPortUpdateParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						bindPortUpdateParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						bindPortUpdateParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						bindPortUpdateParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						bindPortUpdateParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						bindPortUpdateParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.ProxyLBBindPortUpdateCompleteArgs(ctx, bindPortUpdateParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.ProxyLBBindPortUpdateCompleteArgs(ctx, bindPortUpdateParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.ProxyLBBindPortUpdateCompleteFlags(ctx, bindPortUpdateParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.ProxyLBBindPortUpdateCompleteArgs(ctx, bindPortUpdateParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					bindPortUpdateParam.ParamTemplate = c.String("param-template")
-					bindPortUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(bindPortUpdateParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewBindPortUpdateProxyLBParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.Merge(bindPortUpdateParam, p, mergo.WithOverride)
-					}
-
-					// Set option values
-					if c.IsSet("index") {
-						bindPortUpdateParam.Index = c.Int("index")
-					}
-					if c.IsSet("mode") {
-						bindPortUpdateParam.Mode = c.String("mode")
-					}
-					if c.IsSet("port") {
-						bindPortUpdateParam.Port = c.Int("port")
-					}
-					if c.IsSet("selector") {
-						bindPortUpdateParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						bindPortUpdateParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						bindPortUpdateParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						bindPortUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						bindPortUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						bindPortUpdateParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						bindPortUpdateParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						bindPortUpdateParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						bindPortUpdateParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						bindPortUpdateParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						bindPortUpdateParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						bindPortUpdateParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						bindPortUpdateParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					var outputTypeHolder interface{} = bindPortUpdateParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// Generate skeleton
-					if bindPortUpdateParam.GenerateSkeleton {
-						bindPortUpdateParam.GenerateSkeleton = false
-						bindPortUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(bindPortUpdateParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := bindPortUpdateParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), bindPortUpdateParam)
-
-					apiClient := ctx.GetAPIClient().ProxyLB
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(bindPortUpdateParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, bindPortUpdateParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bindPortUpdateParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.CommonServiceProxyLBItems {
-										if len(bindPortUpdateParam.Selector) == 0 || hasTags(&v, bindPortUpdateParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					// confirm
-					if !bindPortUpdateParam.Assumeyes {
-						if !isTerminal() {
-							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
-						}
-						if !command.ConfirmContinue("bind-port-update", ids...) {
-							return nil
-						}
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						bindPortUpdateParam.SetId(id)
-						p := *bindPortUpdateParam // copy struct value
-						bindPortUpdateParam := &p
-						go func() {
-							err := funcs.ProxyLBBindPortUpdate(ctx, bindPortUpdateParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
-
-				},
-			},
-			{
-				Name:      "certificate-update",
-				Aliases:   []string{"cert-update"},
-				Usage:     "CertificateUpdate ProxyLB",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.StringFlag{
-						Name:    "server-certificate",
-						Aliases: []string{"server-cert"},
-					},
-					&cli.StringFlag{
-						Name:    "intermediate-certificate",
-						Aliases: []string{"issuer-cert"},
-					},
-					&cli.StringFlag{
-						Name: "private-key",
-					},
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.BoolFlag{
-						Name:    "assumeyes",
-						Aliases: []string{"y"},
-						Usage:   "Assume that the answer to any question which would be asked is yes",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out", "o"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
-					&cli.StringFlag{
-						Name:  "query-file",
-						Usage: "JMESPath query from file(using when '--output-type' is json only)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = certificateUpdateParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, certificateUpdateParam)
-
-					// Set option values
-					if c.IsSet("server-certificate") {
-						certificateUpdateParam.ServerCertificate = c.String("server-certificate")
-					}
-					if c.IsSet("intermediate-certificate") {
-						certificateUpdateParam.IntermediateCertificate = c.String("intermediate-certificate")
-					}
-					if c.IsSet("private-key") {
-						certificateUpdateParam.PrivateKey = c.String("private-key")
-					}
-					if c.IsSet("selector") {
-						certificateUpdateParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						certificateUpdateParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						certificateUpdateParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						certificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						certificateUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						certificateUpdateParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						certificateUpdateParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						certificateUpdateParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						certificateUpdateParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						certificateUpdateParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						certificateUpdateParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						certificateUpdateParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						certificateUpdateParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.ProxyLBCertificateUpdateCompleteArgs(ctx, certificateUpdateParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.ProxyLBCertificateUpdateCompleteArgs(ctx, certificateUpdateParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.ProxyLBCertificateUpdateCompleteFlags(ctx, certificateUpdateParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.ProxyLBCertificateUpdateCompleteArgs(ctx, certificateUpdateParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					certificateUpdateParam.ParamTemplate = c.String("param-template")
-					certificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(certificateUpdateParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewCertificateUpdateProxyLBParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.Merge(certificateUpdateParam, p, mergo.WithOverride)
-					}
-
-					// Set option values
-					if c.IsSet("server-certificate") {
-						certificateUpdateParam.ServerCertificate = c.String("server-certificate")
-					}
-					if c.IsSet("intermediate-certificate") {
-						certificateUpdateParam.IntermediateCertificate = c.String("intermediate-certificate")
-					}
-					if c.IsSet("private-key") {
-						certificateUpdateParam.PrivateKey = c.String("private-key")
-					}
-					if c.IsSet("selector") {
-						certificateUpdateParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						certificateUpdateParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						certificateUpdateParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						certificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						certificateUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						certificateUpdateParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						certificateUpdateParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						certificateUpdateParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						certificateUpdateParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						certificateUpdateParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						certificateUpdateParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						certificateUpdateParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						certificateUpdateParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					var outputTypeHolder interface{} = certificateUpdateParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// Generate skeleton
-					if certificateUpdateParam.GenerateSkeleton {
-						certificateUpdateParam.GenerateSkeleton = false
-						certificateUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(certificateUpdateParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := certificateUpdateParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), certificateUpdateParam)
-
-					apiClient := ctx.GetAPIClient().ProxyLB
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(certificateUpdateParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, certificateUpdateParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", certificateUpdateParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.CommonServiceProxyLBItems {
-										if len(certificateUpdateParam.Selector) == 0 || hasTags(&v, certificateUpdateParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					// confirm
-					if !certificateUpdateParam.Assumeyes {
-						if !isTerminal() {
-							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
-						}
-						if !command.ConfirmContinue("certificate-update", ids...) {
-							return nil
-						}
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						certificateUpdateParam.SetId(id)
-						p := *certificateUpdateParam // copy struct value
-						certificateUpdateParam := &p
-						go func() {
-							err := funcs.ProxyLBCertificateUpdate(ctx, certificateUpdateParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
-
-				},
-			},
-			{
 				Name:      "read",
 				Usage:     "Read ProxyLB",
 				ArgsUsage: "<ID or Name(only single target)>",
@@ -4742,1627 +1140,6 @@ func init() {
 						readParam := &p
 						go func() {
 							err := funcs.ProxyLBRead(ctx, readParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
-
-				},
-			},
-			{
-				Name:      "server-update",
-				Usage:     "ServerUpdate ProxyLB",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:  "index",
-						Usage: "[Required] index of target server",
-					},
-					&cli.StringFlag{
-						Name:  "ipaddress",
-						Usage: "set target ipaddress",
-					},
-					&cli.BoolFlag{
-						Name:  "disabled",
-						Usage: "set disabled",
-					},
-					&cli.IntFlag{
-						Name:  "port",
-						Usage: "set server ports",
-					},
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.BoolFlag{
-						Name:    "assumeyes",
-						Aliases: []string{"y"},
-						Usage:   "Assume that the answer to any question which would be asked is yes",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out", "o"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
-					&cli.StringFlag{
-						Name:  "query-file",
-						Usage: "JMESPath query from file(using when '--output-type' is json only)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = serverUpdateParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, serverUpdateParam)
-
-					// Set option values
-					if c.IsSet("index") {
-						serverUpdateParam.Index = c.Int("index")
-					}
-					if c.IsSet("ipaddress") {
-						serverUpdateParam.Ipaddress = c.String("ipaddress")
-					}
-					if c.IsSet("disabled") {
-						serverUpdateParam.Disabled = c.Bool("disabled")
-					}
-					if c.IsSet("port") {
-						serverUpdateParam.Port = c.Int("port")
-					}
-					if c.IsSet("selector") {
-						serverUpdateParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						serverUpdateParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						serverUpdateParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						serverUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						serverUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						serverUpdateParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						serverUpdateParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						serverUpdateParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						serverUpdateParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						serverUpdateParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						serverUpdateParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						serverUpdateParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						serverUpdateParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.ProxyLBServerUpdateCompleteArgs(ctx, serverUpdateParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.ProxyLBServerUpdateCompleteArgs(ctx, serverUpdateParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.ProxyLBServerUpdateCompleteFlags(ctx, serverUpdateParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.ProxyLBServerUpdateCompleteArgs(ctx, serverUpdateParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					serverUpdateParam.ParamTemplate = c.String("param-template")
-					serverUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(serverUpdateParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewServerUpdateProxyLBParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.Merge(serverUpdateParam, p, mergo.WithOverride)
-					}
-
-					// Set option values
-					if c.IsSet("index") {
-						serverUpdateParam.Index = c.Int("index")
-					}
-					if c.IsSet("ipaddress") {
-						serverUpdateParam.Ipaddress = c.String("ipaddress")
-					}
-					if c.IsSet("disabled") {
-						serverUpdateParam.Disabled = c.Bool("disabled")
-					}
-					if c.IsSet("port") {
-						serverUpdateParam.Port = c.Int("port")
-					}
-					if c.IsSet("selector") {
-						serverUpdateParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						serverUpdateParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						serverUpdateParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						serverUpdateParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						serverUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						serverUpdateParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						serverUpdateParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						serverUpdateParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						serverUpdateParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						serverUpdateParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						serverUpdateParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						serverUpdateParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						serverUpdateParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					var outputTypeHolder interface{} = serverUpdateParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// Generate skeleton
-					if serverUpdateParam.GenerateSkeleton {
-						serverUpdateParam.GenerateSkeleton = false
-						serverUpdateParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(serverUpdateParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := serverUpdateParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), serverUpdateParam)
-
-					apiClient := ctx.GetAPIClient().ProxyLB
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(serverUpdateParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, serverUpdateParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverUpdateParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.CommonServiceProxyLBItems {
-										if len(serverUpdateParam.Selector) == 0 || hasTags(&v, serverUpdateParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					// confirm
-					if !serverUpdateParam.Assumeyes {
-						if !isTerminal() {
-							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
-						}
-						if !command.ConfirmContinue("server-update", ids...) {
-							return nil
-						}
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						serverUpdateParam.SetId(id)
-						p := *serverUpdateParam // copy struct value
-						serverUpdateParam := &p
-						go func() {
-							err := funcs.ProxyLBServerUpdate(ctx, serverUpdateParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
-
-				},
-			},
-			{
-				Name:      "bind-port-delete",
-				Usage:     "BindPortDelete ProxyLB",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:  "index",
-						Usage: "[Required] index of target bind-port",
-					},
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.BoolFlag{
-						Name:    "assumeyes",
-						Aliases: []string{"y"},
-						Usage:   "Assume that the answer to any question which would be asked is yes",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out", "o"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
-					&cli.StringFlag{
-						Name:  "query-file",
-						Usage: "JMESPath query from file(using when '--output-type' is json only)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = bindPortDeleteParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, bindPortDeleteParam)
-
-					// Set option values
-					if c.IsSet("index") {
-						bindPortDeleteParam.Index = c.Int("index")
-					}
-					if c.IsSet("selector") {
-						bindPortDeleteParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						bindPortDeleteParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						bindPortDeleteParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						bindPortDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						bindPortDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						bindPortDeleteParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						bindPortDeleteParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						bindPortDeleteParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						bindPortDeleteParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						bindPortDeleteParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						bindPortDeleteParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						bindPortDeleteParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						bindPortDeleteParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.ProxyLBBindPortDeleteCompleteArgs(ctx, bindPortDeleteParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.ProxyLBBindPortDeleteCompleteArgs(ctx, bindPortDeleteParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.ProxyLBBindPortDeleteCompleteFlags(ctx, bindPortDeleteParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.ProxyLBBindPortDeleteCompleteArgs(ctx, bindPortDeleteParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					bindPortDeleteParam.ParamTemplate = c.String("param-template")
-					bindPortDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(bindPortDeleteParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewBindPortDeleteProxyLBParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.Merge(bindPortDeleteParam, p, mergo.WithOverride)
-					}
-
-					// Set option values
-					if c.IsSet("index") {
-						bindPortDeleteParam.Index = c.Int("index")
-					}
-					if c.IsSet("selector") {
-						bindPortDeleteParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						bindPortDeleteParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						bindPortDeleteParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						bindPortDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						bindPortDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						bindPortDeleteParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						bindPortDeleteParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						bindPortDeleteParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						bindPortDeleteParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						bindPortDeleteParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						bindPortDeleteParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						bindPortDeleteParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						bindPortDeleteParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					var outputTypeHolder interface{} = bindPortDeleteParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// Generate skeleton
-					if bindPortDeleteParam.GenerateSkeleton {
-						bindPortDeleteParam.GenerateSkeleton = false
-						bindPortDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(bindPortDeleteParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := bindPortDeleteParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), bindPortDeleteParam)
-
-					apiClient := ctx.GetAPIClient().ProxyLB
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(bindPortDeleteParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, bindPortDeleteParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bindPortDeleteParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.CommonServiceProxyLBItems {
-										if len(bindPortDeleteParam.Selector) == 0 || hasTags(&v, bindPortDeleteParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					// confirm
-					if !bindPortDeleteParam.Assumeyes {
-						if !isTerminal() {
-							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
-						}
-						if !command.ConfirmContinue("delete bind-port", ids...) {
-							return nil
-						}
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						bindPortDeleteParam.SetId(id)
-						p := *bindPortDeleteParam // copy struct value
-						bindPortDeleteParam := &p
-						go func() {
-							err := funcs.ProxyLBBindPortDelete(ctx, bindPortDeleteParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
-
-				},
-			},
-			{
-				Name:      "certificate-delete",
-				Aliases:   []string{"cert-delete"},
-				Usage:     "CertificateDelete ProxyLB",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.BoolFlag{
-						Name:    "assumeyes",
-						Aliases: []string{"y"},
-						Usage:   "Assume that the answer to any question which would be asked is yes",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out", "o"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
-					&cli.StringFlag{
-						Name:  "query-file",
-						Usage: "JMESPath query from file(using when '--output-type' is json only)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = certificateDeleteParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, certificateDeleteParam)
-
-					// Set option values
-					if c.IsSet("selector") {
-						certificateDeleteParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						certificateDeleteParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						certificateDeleteParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						certificateDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						certificateDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						certificateDeleteParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						certificateDeleteParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						certificateDeleteParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						certificateDeleteParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						certificateDeleteParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						certificateDeleteParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						certificateDeleteParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						certificateDeleteParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.ProxyLBCertificateDeleteCompleteArgs(ctx, certificateDeleteParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.ProxyLBCertificateDeleteCompleteArgs(ctx, certificateDeleteParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.ProxyLBCertificateDeleteCompleteFlags(ctx, certificateDeleteParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.ProxyLBCertificateDeleteCompleteArgs(ctx, certificateDeleteParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					certificateDeleteParam.ParamTemplate = c.String("param-template")
-					certificateDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(certificateDeleteParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewCertificateDeleteProxyLBParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.Merge(certificateDeleteParam, p, mergo.WithOverride)
-					}
-
-					// Set option values
-					if c.IsSet("selector") {
-						certificateDeleteParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						certificateDeleteParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						certificateDeleteParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						certificateDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						certificateDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						certificateDeleteParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						certificateDeleteParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						certificateDeleteParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						certificateDeleteParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						certificateDeleteParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						certificateDeleteParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						certificateDeleteParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						certificateDeleteParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					var outputTypeHolder interface{} = certificateDeleteParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// Generate skeleton
-					if certificateDeleteParam.GenerateSkeleton {
-						certificateDeleteParam.GenerateSkeleton = false
-						certificateDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(certificateDeleteParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := certificateDeleteParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), certificateDeleteParam)
-
-					apiClient := ctx.GetAPIClient().ProxyLB
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(certificateDeleteParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, certificateDeleteParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", certificateDeleteParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.CommonServiceProxyLBItems {
-										if len(certificateDeleteParam.Selector) == 0 || hasTags(&v, certificateDeleteParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					// confirm
-					if !certificateDeleteParam.Assumeyes {
-						if !isTerminal() {
-							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
-						}
-						if !command.ConfirmContinue("delete certificate", ids...) {
-							return nil
-						}
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						certificateDeleteParam.SetId(id)
-						p := *certificateDeleteParam // copy struct value
-						certificateDeleteParam := &p
-						go func() {
-							err := funcs.ProxyLBCertificateDelete(ctx, certificateDeleteParam)
-							if err != nil {
-								errs = append(errs, err)
-							}
-							wg.Done()
-						}()
-					}
-					wg.Wait()
-					return command.FlattenErrors(errs)
-
-				},
-			},
-			{
-				Name:      "server-delete",
-				Usage:     "ServerDelete ProxyLB",
-				ArgsUsage: "<ID or Name(only single target)>",
-				Flags: []cli.Flag{
-					&cli.IntFlag{
-						Name:  "index",
-						Usage: "[Required] index of target server",
-					},
-					&cli.StringSliceFlag{
-						Name:  "selector",
-						Usage: "Set target filter by tag",
-					},
-					&cli.BoolFlag{
-						Name:    "assumeyes",
-						Aliases: []string{"y"},
-						Usage:   "Assume that the answer to any question which would be asked is yes",
-					},
-					&cli.StringFlag{
-						Name:  "param-template",
-						Usage: "Set input parameter from string(JSON)",
-					},
-					&cli.StringFlag{
-						Name:  "param-template-file",
-						Usage: "Set input parameter from file",
-					},
-					&cli.BoolFlag{
-						Name:  "generate-skeleton",
-						Usage: "Output skelton of parameter JSON",
-					},
-					&cli.StringFlag{
-						Name:    "output-type",
-						Aliases: []string{"out", "o"},
-						Usage:   "Output type [table/json/csv/tsv]",
-					},
-					&cli.StringSliceFlag{
-						Name:    "column",
-						Aliases: []string{"col"},
-						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
-					},
-					&cli.BoolFlag{
-						Name:    "quiet",
-						Aliases: []string{"q"},
-						Usage:   "Only display IDs",
-					},
-					&cli.StringFlag{
-						Name:    "format",
-						Aliases: []string{"fmt"},
-						Usage:   "Output format(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "format-file",
-						Usage: "Output format from file(see text/template package document for detail)",
-					},
-					&cli.StringFlag{
-						Name:  "query",
-						Usage: "JMESPath query(using when '--output-type' is json only)",
-					},
-					&cli.StringFlag{
-						Name:  "query-file",
-						Usage: "JMESPath query from file(using when '--output-type' is json only)",
-					},
-					&cli.Int64Flag{
-						Name:   "id",
-						Usage:  "Set target ID",
-						Hidden: true,
-					},
-				},
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					// Validate global params
-					command.GlobalOption.Validate(false)
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = serverDeleteParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, serverDeleteParam)
-
-					// Set option values
-					if c.IsSet("index") {
-						serverDeleteParam.Index = c.Int("index")
-					}
-					if c.IsSet("selector") {
-						serverDeleteParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						serverDeleteParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						serverDeleteParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						serverDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						serverDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						serverDeleteParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						serverDeleteParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						serverDeleteParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						serverDeleteParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						serverDeleteParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						serverDeleteParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						serverDeleteParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						serverDeleteParam.Id = c.Int64("id")
-					}
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.ProxyLBServerDeleteCompleteArgs(ctx, serverDeleteParam, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.ProxyLBServerDeleteCompleteArgs(ctx, serverDeleteParam, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.ProxyLBServerDeleteCompleteFlags(ctx, serverDeleteParam, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.ProxyLBServerDeleteCompleteArgs(ctx, serverDeleteParam, cur, prev, commandName)
-							return
-						}
-					}
-				},
-				Action: func(c *cli.Context) error {
-
-					if err := checkConfigVersion(); err != nil {
-						return err
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return err
-					}
-
-					serverDeleteParam.ParamTemplate = c.String("param-template")
-					serverDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					strInput, err := command.GetParamTemplateValue(serverDeleteParam)
-					if err != nil {
-						return err
-					}
-					if strInput != "" {
-						p := params.NewServerDeleteProxyLBParam()
-						err := json.Unmarshal([]byte(strInput), p)
-						if err != nil {
-							return fmt.Errorf("Failed to parse JSON: %s", err)
-						}
-						mergo.Merge(serverDeleteParam, p, mergo.WithOverride)
-					}
-
-					// Set option values
-					if c.IsSet("index") {
-						serverDeleteParam.Index = c.Int("index")
-					}
-					if c.IsSet("selector") {
-						serverDeleteParam.Selector = c.StringSlice("selector")
-					}
-					if c.IsSet("assumeyes") {
-						serverDeleteParam.Assumeyes = c.Bool("assumeyes")
-					}
-					if c.IsSet("param-template") {
-						serverDeleteParam.ParamTemplate = c.String("param-template")
-					}
-					if c.IsSet("param-template-file") {
-						serverDeleteParam.ParamTemplateFile = c.String("param-template-file")
-					}
-					if c.IsSet("generate-skeleton") {
-						serverDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
-					}
-					if c.IsSet("output-type") {
-						serverDeleteParam.OutputType = c.String("output-type")
-					}
-					if c.IsSet("column") {
-						serverDeleteParam.Column = c.StringSlice("column")
-					}
-					if c.IsSet("quiet") {
-						serverDeleteParam.Quiet = c.Bool("quiet")
-					}
-					if c.IsSet("format") {
-						serverDeleteParam.Format = c.String("format")
-					}
-					if c.IsSet("format-file") {
-						serverDeleteParam.FormatFile = c.String("format-file")
-					}
-					if c.IsSet("query") {
-						serverDeleteParam.Query = c.String("query")
-					}
-					if c.IsSet("query-file") {
-						serverDeleteParam.QueryFile = c.String("query-file")
-					}
-					if c.IsSet("id") {
-						serverDeleteParam.Id = c.Int64("id")
-					}
-
-					// Validate global params
-					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
-					}
-
-					var outputTypeHolder interface{} = serverDeleteParam
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// Generate skeleton
-					if serverDeleteParam.GenerateSkeleton {
-						serverDeleteParam.GenerateSkeleton = false
-						serverDeleteParam.FillValueToSkeleton()
-						d, err := json.MarshalIndent(serverDeleteParam, "", "\t")
-						if err != nil {
-							return fmt.Errorf("Failed to Marshal JSON: %s", err)
-						}
-						fmt.Fprintln(command.GlobalOption.Out, string(d))
-						return nil
-					}
-
-					// Validate specific for each command params
-					if errors := serverDeleteParam.Validate(); len(errors) > 0 {
-						return command.FlattenErrorsWithPrefix(errors, "Options")
-					}
-
-					// create command context
-					ctx := command.NewContext(c, c.Args().Slice(), serverDeleteParam)
-
-					apiClient := ctx.GetAPIClient().ProxyLB
-					ids := []int64{}
-
-					if c.NArg() == 0 {
-
-						if len(serverDeleteParam.Selector) == 0 {
-							return fmt.Errorf("ID or Name argument or --selector option is required")
-						}
-						apiClient.Reset()
-						res, err := apiClient.Find()
-						if err != nil {
-							return fmt.Errorf("Find ID is failed: %s", err)
-						}
-						for _, v := range res.CommonServiceProxyLBItems {
-							if hasTags(&v, serverDeleteParam.Selector) {
-								ids = append(ids, v.GetID())
-							}
-						}
-						if len(ids) == 0 {
-							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverDeleteParam.Selector)
-						}
-
-					} else {
-
-						for _, arg := range c.Args().Slice() {
-
-							for _, a := range strings.Split(arg, "\n") {
-								idOrName := a
-								if id, ok := toSakuraID(idOrName); ok {
-									ids = append(ids, id)
-								} else {
-									apiClient.Reset()
-									apiClient.SetFilterBy("Name", idOrName)
-									res, err := apiClient.Find()
-									if err != nil {
-										return fmt.Errorf("Find ID is failed: %s", err)
-									}
-									if res.Count == 0 {
-										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
-									}
-									for _, v := range res.CommonServiceProxyLBItems {
-										if len(serverDeleteParam.Selector) == 0 || hasTags(&v, serverDeleteParam.Selector) {
-											ids = append(ids, v.GetID())
-										}
-									}
-								}
-							}
-
-						}
-
-					}
-
-					ids = command.UniqIDs(ids)
-					if len(ids) == 0 {
-						return fmt.Errorf("Target resource is not found")
-					}
-
-					if len(ids) != 1 {
-						return fmt.Errorf("Can't run with multiple targets: %v", ids)
-					}
-
-					// confirm
-					if !serverDeleteParam.Assumeyes {
-						if !isTerminal() {
-							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
-						}
-						if !command.ConfirmContinue("delete server", ids...) {
-							return nil
-						}
-					}
-
-					wg := sync.WaitGroup{}
-					errs := []error{}
-
-					for _, id := range ids {
-						wg.Add(1)
-						serverDeleteParam.SetId(id)
-						p := *serverDeleteParam // copy struct value
-						serverDeleteParam := &p
-						go func() {
-							err := funcs.ProxyLBServerDelete(ctx, serverDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -7248,6 +2025,5229 @@ func init() {
 
 				},
 			},
+			{
+				Name:      "bind-port-info",
+				Aliases:   []string{"bind-port-list"},
+				Usage:     "BindPortInfo ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = bindPortInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, bindPortInfoParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						bindPortInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						bindPortInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						bindPortInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						bindPortInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						bindPortInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						bindPortInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						bindPortInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						bindPortInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						bindPortInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						bindPortInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						bindPortInfoParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						bindPortInfoParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBBindPortInfoCompleteArgs(ctx, bindPortInfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBBindPortInfoCompleteArgs(ctx, bindPortInfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBBindPortInfoCompleteFlags(ctx, bindPortInfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBBindPortInfoCompleteArgs(ctx, bindPortInfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					bindPortInfoParam.ParamTemplate = c.String("param-template")
+					bindPortInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(bindPortInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewBindPortInfoProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(bindPortInfoParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						bindPortInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						bindPortInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						bindPortInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						bindPortInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						bindPortInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						bindPortInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						bindPortInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						bindPortInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						bindPortInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						bindPortInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						bindPortInfoParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						bindPortInfoParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = bindPortInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if bindPortInfoParam.GenerateSkeleton {
+						bindPortInfoParam.GenerateSkeleton = false
+						bindPortInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(bindPortInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := bindPortInfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), bindPortInfoParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(bindPortInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, bindPortInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bindPortInfoParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(bindPortInfoParam.Selector) == 0 || hasTags(&v, bindPortInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						bindPortInfoParam.SetId(id)
+						p := *bindPortInfoParam // copy struct value
+						bindPortInfoParam := &p
+						go func() {
+							err := funcs.ProxyLBBindPortInfo(ctx, bindPortInfoParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "bind-port-add",
+				Usage:     "BindPortAdd ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "mode",
+						Usage: "[Required] set bind mode[http/https]",
+					},
+					&cli.IntFlag{
+						Name:  "port",
+						Usage: "[Required] set port number",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = bindPortAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, bindPortAddParam)
+
+					// Set option values
+					if c.IsSet("mode") {
+						bindPortAddParam.Mode = c.String("mode")
+					}
+					if c.IsSet("port") {
+						bindPortAddParam.Port = c.Int("port")
+					}
+					if c.IsSet("selector") {
+						bindPortAddParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						bindPortAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						bindPortAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						bindPortAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						bindPortAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						bindPortAddParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						bindPortAddParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						bindPortAddParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						bindPortAddParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						bindPortAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						bindPortAddParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						bindPortAddParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						bindPortAddParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBBindPortAddCompleteArgs(ctx, bindPortAddParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBBindPortAddCompleteArgs(ctx, bindPortAddParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBBindPortAddCompleteFlags(ctx, bindPortAddParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBBindPortAddCompleteArgs(ctx, bindPortAddParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					bindPortAddParam.ParamTemplate = c.String("param-template")
+					bindPortAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(bindPortAddParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewBindPortAddProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(bindPortAddParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("mode") {
+						bindPortAddParam.Mode = c.String("mode")
+					}
+					if c.IsSet("port") {
+						bindPortAddParam.Port = c.Int("port")
+					}
+					if c.IsSet("selector") {
+						bindPortAddParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						bindPortAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						bindPortAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						bindPortAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						bindPortAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						bindPortAddParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						bindPortAddParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						bindPortAddParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						bindPortAddParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						bindPortAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						bindPortAddParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						bindPortAddParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						bindPortAddParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = bindPortAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if bindPortAddParam.GenerateSkeleton {
+						bindPortAddParam.GenerateSkeleton = false
+						bindPortAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(bindPortAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := bindPortAddParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), bindPortAddParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(bindPortAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, bindPortAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bindPortAddParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(bindPortAddParam.Selector) == 0 || hasTags(&v, bindPortAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !bindPortAddParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("bind-port-add", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						bindPortAddParam.SetId(id)
+						p := *bindPortAddParam // copy struct value
+						bindPortAddParam := &p
+						go func() {
+							err := funcs.ProxyLBBindPortAdd(ctx, bindPortAddParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "bind-port-update",
+				Usage:     "BindPortUpdate ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target server",
+					},
+					&cli.StringFlag{
+						Name:  "mode",
+						Usage: "set bind mode[http/https]",
+					},
+					&cli.IntFlag{
+						Name:  "port",
+						Usage: "set port number",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = bindPortUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, bindPortUpdateParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						bindPortUpdateParam.Index = c.Int("index")
+					}
+					if c.IsSet("mode") {
+						bindPortUpdateParam.Mode = c.String("mode")
+					}
+					if c.IsSet("port") {
+						bindPortUpdateParam.Port = c.Int("port")
+					}
+					if c.IsSet("selector") {
+						bindPortUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						bindPortUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						bindPortUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						bindPortUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						bindPortUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						bindPortUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						bindPortUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						bindPortUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						bindPortUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						bindPortUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						bindPortUpdateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						bindPortUpdateParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						bindPortUpdateParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBBindPortUpdateCompleteArgs(ctx, bindPortUpdateParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBBindPortUpdateCompleteArgs(ctx, bindPortUpdateParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBBindPortUpdateCompleteFlags(ctx, bindPortUpdateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBBindPortUpdateCompleteArgs(ctx, bindPortUpdateParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					bindPortUpdateParam.ParamTemplate = c.String("param-template")
+					bindPortUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(bindPortUpdateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewBindPortUpdateProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(bindPortUpdateParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						bindPortUpdateParam.Index = c.Int("index")
+					}
+					if c.IsSet("mode") {
+						bindPortUpdateParam.Mode = c.String("mode")
+					}
+					if c.IsSet("port") {
+						bindPortUpdateParam.Port = c.Int("port")
+					}
+					if c.IsSet("selector") {
+						bindPortUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						bindPortUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						bindPortUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						bindPortUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						bindPortUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						bindPortUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						bindPortUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						bindPortUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						bindPortUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						bindPortUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						bindPortUpdateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						bindPortUpdateParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						bindPortUpdateParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = bindPortUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if bindPortUpdateParam.GenerateSkeleton {
+						bindPortUpdateParam.GenerateSkeleton = false
+						bindPortUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(bindPortUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := bindPortUpdateParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), bindPortUpdateParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(bindPortUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, bindPortUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bindPortUpdateParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(bindPortUpdateParam.Selector) == 0 || hasTags(&v, bindPortUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !bindPortUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("bind-port-update", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						bindPortUpdateParam.SetId(id)
+						p := *bindPortUpdateParam // copy struct value
+						bindPortUpdateParam := &p
+						go func() {
+							err := funcs.ProxyLBBindPortUpdate(ctx, bindPortUpdateParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "bind-port-delete",
+				Usage:     "BindPortDelete ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target bind-port",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = bindPortDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, bindPortDeleteParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						bindPortDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						bindPortDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						bindPortDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						bindPortDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						bindPortDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						bindPortDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						bindPortDeleteParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						bindPortDeleteParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						bindPortDeleteParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						bindPortDeleteParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						bindPortDeleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						bindPortDeleteParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						bindPortDeleteParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						bindPortDeleteParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBBindPortDeleteCompleteArgs(ctx, bindPortDeleteParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBBindPortDeleteCompleteArgs(ctx, bindPortDeleteParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBBindPortDeleteCompleteFlags(ctx, bindPortDeleteParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBBindPortDeleteCompleteArgs(ctx, bindPortDeleteParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					bindPortDeleteParam.ParamTemplate = c.String("param-template")
+					bindPortDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(bindPortDeleteParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewBindPortDeleteProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(bindPortDeleteParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						bindPortDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						bindPortDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						bindPortDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						bindPortDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						bindPortDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						bindPortDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						bindPortDeleteParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						bindPortDeleteParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						bindPortDeleteParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						bindPortDeleteParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						bindPortDeleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						bindPortDeleteParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						bindPortDeleteParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						bindPortDeleteParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = bindPortDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if bindPortDeleteParam.GenerateSkeleton {
+						bindPortDeleteParam.GenerateSkeleton = false
+						bindPortDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(bindPortDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := bindPortDeleteParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), bindPortDeleteParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(bindPortDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, bindPortDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", bindPortDeleteParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(bindPortDeleteParam.Selector) == 0 || hasTags(&v, bindPortDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !bindPortDeleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("delete bind-port", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						bindPortDeleteParam.SetId(id)
+						p := *bindPortDeleteParam // copy struct value
+						bindPortDeleteParam := &p
+						go func() {
+							err := funcs.ProxyLBBindPortDelete(ctx, bindPortDeleteParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "server-info",
+				Aliases:   []string{"server-list"},
+				Usage:     "ServerInfo ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = serverInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, serverInfoParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						serverInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						serverInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						serverInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						serverInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						serverInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						serverInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						serverInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						serverInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						serverInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						serverInfoParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						serverInfoParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBServerInfoCompleteArgs(ctx, serverInfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBServerInfoCompleteArgs(ctx, serverInfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBServerInfoCompleteFlags(ctx, serverInfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBServerInfoCompleteArgs(ctx, serverInfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					serverInfoParam.ParamTemplate = c.String("param-template")
+					serverInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewServerInfoProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(serverInfoParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						serverInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						serverInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						serverInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						serverInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						serverInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						serverInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						serverInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						serverInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						serverInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						serverInfoParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						serverInfoParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = serverInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if serverInfoParam.GenerateSkeleton {
+						serverInfoParam.GenerateSkeleton = false
+						serverInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := serverInfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), serverInfoParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(serverInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, serverInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverInfoParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(serverInfoParam.Selector) == 0 || hasTags(&v, serverInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						serverInfoParam.SetId(id)
+						p := *serverInfoParam // copy struct value
+						serverInfoParam := &p
+						go func() {
+							err := funcs.ProxyLBServerInfo(ctx, serverInfoParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "server-add",
+				Usage:     "ServerAdd ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "ipaddress",
+						Usage: "[Required] set target ipaddress",
+					},
+					&cli.BoolFlag{
+						Name:  "disabled",
+						Usage: "set disabled",
+					},
+					&cli.IntFlag{
+						Name:  "port",
+						Usage: "[Required] set server ports",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = serverAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, serverAddParam)
+
+					// Set option values
+					if c.IsSet("ipaddress") {
+						serverAddParam.Ipaddress = c.String("ipaddress")
+					}
+					if c.IsSet("disabled") {
+						serverAddParam.Disabled = c.Bool("disabled")
+					}
+					if c.IsSet("port") {
+						serverAddParam.Port = c.Int("port")
+					}
+					if c.IsSet("selector") {
+						serverAddParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						serverAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						serverAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						serverAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						serverAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						serverAddParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						serverAddParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						serverAddParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						serverAddParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						serverAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverAddParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						serverAddParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						serverAddParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBServerAddCompleteArgs(ctx, serverAddParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBServerAddCompleteArgs(ctx, serverAddParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBServerAddCompleteFlags(ctx, serverAddParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBServerAddCompleteArgs(ctx, serverAddParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					serverAddParam.ParamTemplate = c.String("param-template")
+					serverAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverAddParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewServerAddProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(serverAddParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("ipaddress") {
+						serverAddParam.Ipaddress = c.String("ipaddress")
+					}
+					if c.IsSet("disabled") {
+						serverAddParam.Disabled = c.Bool("disabled")
+					}
+					if c.IsSet("port") {
+						serverAddParam.Port = c.Int("port")
+					}
+					if c.IsSet("selector") {
+						serverAddParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						serverAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						serverAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						serverAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						serverAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						serverAddParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						serverAddParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						serverAddParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						serverAddParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						serverAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverAddParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						serverAddParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						serverAddParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = serverAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if serverAddParam.GenerateSkeleton {
+						serverAddParam.GenerateSkeleton = false
+						serverAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := serverAddParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), serverAddParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(serverAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, serverAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverAddParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(serverAddParam.Selector) == 0 || hasTags(&v, serverAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !serverAddParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("server-add", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						serverAddParam.SetId(id)
+						p := *serverAddParam // copy struct value
+						serverAddParam := &p
+						go func() {
+							err := funcs.ProxyLBServerAdd(ctx, serverAddParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "server-update",
+				Usage:     "ServerUpdate ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target server",
+					},
+					&cli.StringFlag{
+						Name:  "ipaddress",
+						Usage: "set target ipaddress",
+					},
+					&cli.BoolFlag{
+						Name:  "disabled",
+						Usage: "set disabled",
+					},
+					&cli.IntFlag{
+						Name:  "port",
+						Usage: "set server ports",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = serverUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, serverUpdateParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						serverUpdateParam.Index = c.Int("index")
+					}
+					if c.IsSet("ipaddress") {
+						serverUpdateParam.Ipaddress = c.String("ipaddress")
+					}
+					if c.IsSet("disabled") {
+						serverUpdateParam.Disabled = c.Bool("disabled")
+					}
+					if c.IsSet("port") {
+						serverUpdateParam.Port = c.Int("port")
+					}
+					if c.IsSet("selector") {
+						serverUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						serverUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						serverUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						serverUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						serverUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						serverUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						serverUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						serverUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						serverUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						serverUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverUpdateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						serverUpdateParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						serverUpdateParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBServerUpdateCompleteArgs(ctx, serverUpdateParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBServerUpdateCompleteArgs(ctx, serverUpdateParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBServerUpdateCompleteFlags(ctx, serverUpdateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBServerUpdateCompleteArgs(ctx, serverUpdateParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					serverUpdateParam.ParamTemplate = c.String("param-template")
+					serverUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverUpdateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewServerUpdateProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(serverUpdateParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						serverUpdateParam.Index = c.Int("index")
+					}
+					if c.IsSet("ipaddress") {
+						serverUpdateParam.Ipaddress = c.String("ipaddress")
+					}
+					if c.IsSet("disabled") {
+						serverUpdateParam.Disabled = c.Bool("disabled")
+					}
+					if c.IsSet("port") {
+						serverUpdateParam.Port = c.Int("port")
+					}
+					if c.IsSet("selector") {
+						serverUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						serverUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						serverUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						serverUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						serverUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						serverUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						serverUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						serverUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						serverUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						serverUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverUpdateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						serverUpdateParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						serverUpdateParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = serverUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if serverUpdateParam.GenerateSkeleton {
+						serverUpdateParam.GenerateSkeleton = false
+						serverUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := serverUpdateParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), serverUpdateParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(serverUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, serverUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverUpdateParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(serverUpdateParam.Selector) == 0 || hasTags(&v, serverUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !serverUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("server-update", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						serverUpdateParam.SetId(id)
+						p := *serverUpdateParam // copy struct value
+						serverUpdateParam := &p
+						go func() {
+							err := funcs.ProxyLBServerUpdate(ctx, serverUpdateParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "server-delete",
+				Usage:     "ServerDelete ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target server",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = serverDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, serverDeleteParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						serverDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						serverDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						serverDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						serverDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						serverDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						serverDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						serverDeleteParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						serverDeleteParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						serverDeleteParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						serverDeleteParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						serverDeleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverDeleteParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						serverDeleteParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						serverDeleteParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBServerDeleteCompleteArgs(ctx, serverDeleteParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBServerDeleteCompleteArgs(ctx, serverDeleteParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBServerDeleteCompleteFlags(ctx, serverDeleteParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBServerDeleteCompleteArgs(ctx, serverDeleteParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					serverDeleteParam.ParamTemplate = c.String("param-template")
+					serverDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(serverDeleteParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewServerDeleteProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(serverDeleteParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						serverDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("selector") {
+						serverDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						serverDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						serverDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						serverDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						serverDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						serverDeleteParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						serverDeleteParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						serverDeleteParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						serverDeleteParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						serverDeleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						serverDeleteParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						serverDeleteParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						serverDeleteParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = serverDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if serverDeleteParam.GenerateSkeleton {
+						serverDeleteParam.GenerateSkeleton = false
+						serverDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(serverDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := serverDeleteParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), serverDeleteParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(serverDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, serverDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", serverDeleteParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(serverDeleteParam.Selector) == 0 || hasTags(&v, serverDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !serverDeleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("delete server", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						serverDeleteParam.SetId(id)
+						p := *serverDeleteParam // copy struct value
+						serverDeleteParam := &p
+						go func() {
+							err := funcs.ProxyLBServerDelete(ctx, serverDeleteParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "certificate-info",
+				Aliases:   []string{"certificate-list", "cert-list", "cert-info"},
+				Usage:     "CertificateInfo ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = certificateInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, certificateInfoParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						certificateInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						certificateInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						certificateInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						certificateInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						certificateInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						certificateInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						certificateInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						certificateInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						certificateInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						certificateInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						certificateInfoParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						certificateInfoParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBCertificateInfoCompleteArgs(ctx, certificateInfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBCertificateInfoCompleteArgs(ctx, certificateInfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBCertificateInfoCompleteFlags(ctx, certificateInfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBCertificateInfoCompleteArgs(ctx, certificateInfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					certificateInfoParam.ParamTemplate = c.String("param-template")
+					certificateInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(certificateInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewCertificateInfoProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(certificateInfoParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						certificateInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						certificateInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						certificateInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						certificateInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						certificateInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						certificateInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						certificateInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						certificateInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						certificateInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						certificateInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						certificateInfoParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						certificateInfoParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = certificateInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if certificateInfoParam.GenerateSkeleton {
+						certificateInfoParam.GenerateSkeleton = false
+						certificateInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(certificateInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := certificateInfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), certificateInfoParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(certificateInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, certificateInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", certificateInfoParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(certificateInfoParam.Selector) == 0 || hasTags(&v, certificateInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						certificateInfoParam.SetId(id)
+						p := *certificateInfoParam // copy struct value
+						certificateInfoParam := &p
+						go func() {
+							err := funcs.ProxyLBCertificateInfo(ctx, certificateInfoParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "certificate-add",
+				Aliases:   []string{"cert-add"},
+				Usage:     "CertificateAdd ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "server-certificate",
+						Aliases: []string{"server-cert"},
+						Usage:   "[Required] ",
+					},
+					&cli.StringFlag{
+						Name:    "intermediate-certificate",
+						Aliases: []string{"issuer-cert"},
+					},
+					&cli.StringFlag{
+						Name:  "private-key",
+						Usage: "[Required] ",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = certificateAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, certificateAddParam)
+
+					// Set option values
+					if c.IsSet("server-certificate") {
+						certificateAddParam.ServerCertificate = c.String("server-certificate")
+					}
+					if c.IsSet("intermediate-certificate") {
+						certificateAddParam.IntermediateCertificate = c.String("intermediate-certificate")
+					}
+					if c.IsSet("private-key") {
+						certificateAddParam.PrivateKey = c.String("private-key")
+					}
+					if c.IsSet("selector") {
+						certificateAddParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						certificateAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						certificateAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						certificateAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						certificateAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						certificateAddParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						certificateAddParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						certificateAddParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						certificateAddParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						certificateAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						certificateAddParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						certificateAddParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						certificateAddParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBCertificateAddCompleteArgs(ctx, certificateAddParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBCertificateAddCompleteArgs(ctx, certificateAddParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBCertificateAddCompleteFlags(ctx, certificateAddParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBCertificateAddCompleteArgs(ctx, certificateAddParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					certificateAddParam.ParamTemplate = c.String("param-template")
+					certificateAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(certificateAddParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewCertificateAddProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(certificateAddParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("server-certificate") {
+						certificateAddParam.ServerCertificate = c.String("server-certificate")
+					}
+					if c.IsSet("intermediate-certificate") {
+						certificateAddParam.IntermediateCertificate = c.String("intermediate-certificate")
+					}
+					if c.IsSet("private-key") {
+						certificateAddParam.PrivateKey = c.String("private-key")
+					}
+					if c.IsSet("selector") {
+						certificateAddParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						certificateAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						certificateAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						certificateAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						certificateAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						certificateAddParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						certificateAddParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						certificateAddParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						certificateAddParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						certificateAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						certificateAddParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						certificateAddParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						certificateAddParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = certificateAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if certificateAddParam.GenerateSkeleton {
+						certificateAddParam.GenerateSkeleton = false
+						certificateAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(certificateAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := certificateAddParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), certificateAddParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(certificateAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, certificateAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", certificateAddParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(certificateAddParam.Selector) == 0 || hasTags(&v, certificateAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !certificateAddParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("certificate-add", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						certificateAddParam.SetId(id)
+						p := *certificateAddParam // copy struct value
+						certificateAddParam := &p
+						go func() {
+							err := funcs.ProxyLBCertificateAdd(ctx, certificateAddParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "certificate-update",
+				Aliases:   []string{"cert-update"},
+				Usage:     "CertificateUpdate ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:    "server-certificate",
+						Aliases: []string{"server-cert"},
+					},
+					&cli.StringFlag{
+						Name:    "intermediate-certificate",
+						Aliases: []string{"issuer-cert"},
+					},
+					&cli.StringFlag{
+						Name: "private-key",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = certificateUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, certificateUpdateParam)
+
+					// Set option values
+					if c.IsSet("server-certificate") {
+						certificateUpdateParam.ServerCertificate = c.String("server-certificate")
+					}
+					if c.IsSet("intermediate-certificate") {
+						certificateUpdateParam.IntermediateCertificate = c.String("intermediate-certificate")
+					}
+					if c.IsSet("private-key") {
+						certificateUpdateParam.PrivateKey = c.String("private-key")
+					}
+					if c.IsSet("selector") {
+						certificateUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						certificateUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						certificateUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						certificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						certificateUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						certificateUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						certificateUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						certificateUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						certificateUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						certificateUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						certificateUpdateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						certificateUpdateParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						certificateUpdateParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBCertificateUpdateCompleteArgs(ctx, certificateUpdateParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBCertificateUpdateCompleteArgs(ctx, certificateUpdateParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBCertificateUpdateCompleteFlags(ctx, certificateUpdateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBCertificateUpdateCompleteArgs(ctx, certificateUpdateParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					certificateUpdateParam.ParamTemplate = c.String("param-template")
+					certificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(certificateUpdateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewCertificateUpdateProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(certificateUpdateParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("server-certificate") {
+						certificateUpdateParam.ServerCertificate = c.String("server-certificate")
+					}
+					if c.IsSet("intermediate-certificate") {
+						certificateUpdateParam.IntermediateCertificate = c.String("intermediate-certificate")
+					}
+					if c.IsSet("private-key") {
+						certificateUpdateParam.PrivateKey = c.String("private-key")
+					}
+					if c.IsSet("selector") {
+						certificateUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						certificateUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						certificateUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						certificateUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						certificateUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						certificateUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						certificateUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						certificateUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						certificateUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						certificateUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						certificateUpdateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						certificateUpdateParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						certificateUpdateParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = certificateUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if certificateUpdateParam.GenerateSkeleton {
+						certificateUpdateParam.GenerateSkeleton = false
+						certificateUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(certificateUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := certificateUpdateParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), certificateUpdateParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(certificateUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, certificateUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", certificateUpdateParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(certificateUpdateParam.Selector) == 0 || hasTags(&v, certificateUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !certificateUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("certificate-update", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						certificateUpdateParam.SetId(id)
+						p := *certificateUpdateParam // copy struct value
+						certificateUpdateParam := &p
+						go func() {
+							err := funcs.ProxyLBCertificateUpdate(ctx, certificateUpdateParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "certificate-delete",
+				Aliases:   []string{"cert-delete"},
+				Usage:     "CertificateDelete ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = certificateDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, certificateDeleteParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						certificateDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						certificateDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						certificateDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						certificateDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						certificateDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						certificateDeleteParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						certificateDeleteParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						certificateDeleteParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						certificateDeleteParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						certificateDeleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						certificateDeleteParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						certificateDeleteParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						certificateDeleteParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBCertificateDeleteCompleteArgs(ctx, certificateDeleteParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBCertificateDeleteCompleteArgs(ctx, certificateDeleteParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBCertificateDeleteCompleteFlags(ctx, certificateDeleteParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBCertificateDeleteCompleteArgs(ctx, certificateDeleteParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					certificateDeleteParam.ParamTemplate = c.String("param-template")
+					certificateDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(certificateDeleteParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewCertificateDeleteProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(certificateDeleteParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						certificateDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						certificateDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						certificateDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						certificateDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						certificateDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						certificateDeleteParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						certificateDeleteParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						certificateDeleteParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						certificateDeleteParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						certificateDeleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						certificateDeleteParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						certificateDeleteParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						certificateDeleteParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = certificateDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if certificateDeleteParam.GenerateSkeleton {
+						certificateDeleteParam.GenerateSkeleton = false
+						certificateDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(certificateDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := certificateDeleteParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), certificateDeleteParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(certificateDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, certificateDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", certificateDeleteParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(certificateDeleteParam.Selector) == 0 || hasTags(&v, certificateDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !certificateDeleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("delete certificate", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						certificateDeleteParam.SetId(id)
+						p := *certificateDeleteParam // copy struct value
+						certificateDeleteParam := &p
+						go func() {
+							err := funcs.ProxyLBCertificateDelete(ctx, certificateDeleteParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "monitor",
+				Usage:     "Monitor ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "start",
+						Usage: "set start-time",
+					},
+					&cli.StringFlag{
+						Name:  "end",
+						Usage: "set end-time",
+					},
+					&cli.StringFlag{
+						Name:  "key-format",
+						Usage: "[Required] set monitoring value key-format",
+						Value: "sakuracloud.proxylb.{{.ID}}",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = monitorParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, monitorParam)
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						monitorParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBMonitorCompleteFlags(ctx, monitorParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBMonitorCompleteArgs(ctx, monitorParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					monitorParam.ParamTemplate = c.String("param-template")
+					monitorParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(monitorParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewMonitorProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(monitorParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("start") {
+						monitorParam.Start = c.String("start")
+					}
+					if c.IsSet("end") {
+						monitorParam.End = c.String("end")
+					}
+					if c.IsSet("key-format") {
+						monitorParam.KeyFormat = c.String("key-format")
+					}
+					if c.IsSet("selector") {
+						monitorParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						monitorParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						monitorParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						monitorParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						monitorParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						monitorParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						monitorParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						monitorParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						monitorParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						monitorParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						monitorParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						monitorParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = monitorParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Generate skeleton
+					if monitorParam.GenerateSkeleton {
+						monitorParam.GenerateSkeleton = false
+						monitorParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(monitorParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := monitorParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), monitorParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(monitorParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, monitorParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", monitorParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(monitorParam.Selector) == 0 || hasTags(&v, monitorParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						monitorParam.SetId(id)
+						p := *monitorParam // copy struct value
+						monitorParam := &p
+						go func() {
+							err := funcs.ProxyLBMonitor(ctx, monitorParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
 		},
 	}
 
@@ -7262,93 +7262,93 @@ func init() {
 
 	AppendCommandCategoryMap("proxy-lb", "bind-port-add", &schema.Category{
 		Key:         "bind-port",
-		DisplayName: "Bind-Port",
-		Order:       1,
+		DisplayName: "Bind Port(s) Management",
+		Order:       20,
 	})
 	AppendCommandCategoryMap("proxy-lb", "bind-port-delete", &schema.Category{
 		Key:         "bind-port",
-		DisplayName: "Bind-Port",
-		Order:       1,
+		DisplayName: "Bind Port(s) Management",
+		Order:       20,
 	})
 	AppendCommandCategoryMap("proxy-lb", "bind-port-info", &schema.Category{
 		Key:         "bind-port",
-		DisplayName: "Bind-Port",
-		Order:       1,
+		DisplayName: "Bind Port(s) Management",
+		Order:       20,
 	})
 	AppendCommandCategoryMap("proxy-lb", "bind-port-update", &schema.Category{
 		Key:         "bind-port",
-		DisplayName: "Bind-Port",
-		Order:       1,
+		DisplayName: "Bind Port(s) Management",
+		Order:       20,
 	})
 	AppendCommandCategoryMap("proxy-lb", "certificate-add", &schema.Category{
 		Key:         "certificate",
-		DisplayName: "Certificate",
-		Order:       1,
+		DisplayName: "Certificate(s) Management",
+		Order:       40,
 	})
 	AppendCommandCategoryMap("proxy-lb", "certificate-delete", &schema.Category{
 		Key:         "certificate",
-		DisplayName: "Certificate",
-		Order:       1,
+		DisplayName: "Certificate(s) Management",
+		Order:       40,
 	})
 	AppendCommandCategoryMap("proxy-lb", "certificate-info", &schema.Category{
 		Key:         "certificate",
-		DisplayName: "Certificate",
-		Order:       1,
+		DisplayName: "Certificate(s) Management",
+		Order:       40,
 	})
 	AppendCommandCategoryMap("proxy-lb", "certificate-update", &schema.Category{
 		Key:         "certificate",
-		DisplayName: "Certificate",
-		Order:       1,
+		DisplayName: "Certificate(s) Management",
+		Order:       40,
 	})
 	AppendCommandCategoryMap("proxy-lb", "create", &schema.Category{
 		Key:         "basics",
 		DisplayName: "Basics",
-		Order:       1,
+		Order:       10,
 	})
 	AppendCommandCategoryMap("proxy-lb", "delete", &schema.Category{
 		Key:         "basics",
 		DisplayName: "Basics",
-		Order:       1,
+		Order:       10,
 	})
 	AppendCommandCategoryMap("proxy-lb", "list", &schema.Category{
 		Key:         "basics",
 		DisplayName: "Basics",
-		Order:       1,
+		Order:       10,
 	})
 	AppendCommandCategoryMap("proxy-lb", "monitor", &schema.Category{
 		Key:         "monitor",
-		DisplayName: "Monitor",
-		Order:       1,
+		DisplayName: "Monitoring",
+		Order:       50,
 	})
 	AppendCommandCategoryMap("proxy-lb", "read", &schema.Category{
 		Key:         "basics",
 		DisplayName: "Basics",
-		Order:       1,
+		Order:       10,
 	})
 	AppendCommandCategoryMap("proxy-lb", "server-add", &schema.Category{
 		Key:         "servers",
-		DisplayName: "Servers",
-		Order:       1,
+		DisplayName: "Real Server(s) Management",
+		Order:       30,
 	})
 	AppendCommandCategoryMap("proxy-lb", "server-delete", &schema.Category{
 		Key:         "servers",
-		DisplayName: "Servers",
-		Order:       1,
+		DisplayName: "Real Server(s) Management",
+		Order:       30,
 	})
 	AppendCommandCategoryMap("proxy-lb", "server-info", &schema.Category{
 		Key:         "servers",
-		DisplayName: "Servers",
-		Order:       1,
+		DisplayName: "Real Server(s) Management",
+		Order:       30,
 	})
 	AppendCommandCategoryMap("proxy-lb", "server-update", &schema.Category{
 		Key:         "servers",
-		DisplayName: "Servers",
-		Order:       1,
+		DisplayName: "Real Server(s) Management",
+		Order:       30,
 	})
 	AppendCommandCategoryMap("proxy-lb", "update", &schema.Category{
 		Key:         "basics",
 		DisplayName: "Basics",
-		Order:       1,
+		Order:       10,
 	})
 
 	// build Category-Param mapping
