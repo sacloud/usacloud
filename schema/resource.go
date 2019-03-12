@@ -16,6 +16,7 @@ type Resource struct {
 	CommandCategories   []Category
 	ResourceCategory    Category
 	SkipApplyConfigFile bool
+	ExperimentWarning   string
 }
 
 func (r *Resource) CommandCategory(key string) *Category {

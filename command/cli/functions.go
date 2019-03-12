@@ -6,12 +6,14 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/fatih/color"
 	"github.com/mattn/go-isatty"
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/profile"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/helper/migration"
+	"github.com/sacloud/usacloud/helper/printer"
 )
 
 func checkConfigVersion() error {
@@ -138,4 +140,11 @@ func isTerminal() bool {
 		return isatty.IsTerminal(fd) || isatty.IsCygwinTerminal(fd)
 	}
 	return is(os.Stdin.Fd()) && is(os.Stdout.Fd())
+}
+
+func printWarning(warn string) {
+	if warn == "" {
+		return
+	}
+	printer.Fprintf(command.GlobalOption.Err, color.New(color.FgYellow), "[WARN] %s\n", warn)
 }
