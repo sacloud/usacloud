@@ -352,6 +352,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if listParam.GenerateSkeleton {
 						listParam.GenerateSkeleton = false
@@ -761,6 +764,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if createParam.GenerateSkeleton {
 						createParam.GenerateSkeleton = false
@@ -1062,6 +1068,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if readParam.GenerateSkeleton {
@@ -1484,6 +1493,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if updateParam.GenerateSkeleton {
 						updateParam.GenerateSkeleton = false
@@ -1882,6 +1894,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if deleteParam.GenerateSkeleton {
 						deleteParam.GenerateSkeleton = false
@@ -2194,6 +2209,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if bootParam.GenerateSkeleton {
@@ -2508,6 +2526,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if shutdownParam.GenerateSkeleton {
 						shutdownParam.GenerateSkeleton = false
@@ -2821,6 +2842,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if shutdownForceParam.GenerateSkeleton {
 						shutdownForceParam.GenerateSkeleton = false
@@ -3133,6 +3157,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if resetParam.GenerateSkeleton {
 						resetParam.GenerateSkeleton = false
@@ -3434,6 +3461,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if waitForBootParam.GenerateSkeleton {
 						waitForBootParam.GenerateSkeleton = false
@@ -3724,6 +3754,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if waitForDownParam.GenerateSkeleton {
@@ -4090,6 +4123,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if vipInfoParam.GenerateSkeleton {
 						vipInfoParam.GenerateSkeleton = false
@@ -4447,6 +4483,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if vipAddParam.GenerateSkeleton {
@@ -4826,6 +4865,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if vipUpdateParam.GenerateSkeleton {
 						vipUpdateParam.GenerateSkeleton = false
@@ -5151,6 +5193,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if vipDeleteParam.GenerateSkeleton {
@@ -5561,6 +5606,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if serverInfoParam.GenerateSkeleton {
 						serverInfoParam.GenerateSkeleton = false
@@ -5948,6 +5996,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if serverAddParam.GenerateSkeleton {
@@ -6346,6 +6397,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if serverUpdateParam.GenerateSkeleton {
 						serverUpdateParam.GenerateSkeleton = false
@@ -6702,6 +6756,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if serverDeleteParam.GenerateSkeleton {
@@ -7112,6 +7169,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if monitorParam.GenerateSkeleton {

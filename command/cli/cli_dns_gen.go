@@ -342,6 +342,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if listParam.GenerateSkeleton {
 						listParam.GenerateSkeleton = false
@@ -654,6 +657,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if recordInfoParam.GenerateSkeleton {
@@ -1055,6 +1061,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if recordBulkUpdateParam.GenerateSkeleton {
@@ -1465,6 +1474,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if createParam.GenerateSkeleton {
 						createParam.GenerateSkeleton = false
@@ -1873,6 +1885,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if recordAddParam.GenerateSkeleton {
 						recordAddParam.GenerateSkeleton = false
@@ -2251,6 +2266,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if readParam.GenerateSkeleton {
@@ -2732,6 +2750,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if recordUpdateParam.GenerateSkeleton {
 						recordUpdateParam.GenerateSkeleton = false
@@ -3131,6 +3152,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if recordDeleteParam.GenerateSkeleton {
@@ -3553,6 +3577,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if updateParam.GenerateSkeleton {
 						updateParam.GenerateSkeleton = false
@@ -3939,6 +3966,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if deleteParam.GenerateSkeleton {

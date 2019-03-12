@@ -366,6 +366,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if listParam.GenerateSkeleton {
 						listParam.GenerateSkeleton = false
@@ -698,6 +701,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if createParam.GenerateSkeleton {
 						createParam.GenerateSkeleton = false
@@ -999,6 +1005,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if readParam.GenerateSkeleton {
@@ -1431,6 +1440,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if updateParam.GenerateSkeleton {
 						updateParam.GenerateSkeleton = false
@@ -1829,6 +1841,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if deleteParam.GenerateSkeleton {
 						deleteParam.GenerateSkeleton = false
@@ -2141,6 +2156,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if bootParam.GenerateSkeleton {
@@ -2455,6 +2473,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if shutdownParam.GenerateSkeleton {
 						shutdownParam.GenerateSkeleton = false
@@ -2768,6 +2789,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if shutdownForceParam.GenerateSkeleton {
 						shutdownForceParam.GenerateSkeleton = false
@@ -3080,6 +3104,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if resetParam.GenerateSkeleton {
 						resetParam.GenerateSkeleton = false
@@ -3381,6 +3408,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if waitForBootParam.GenerateSkeleton {
 						waitForBootParam.GenerateSkeleton = false
@@ -3671,6 +3701,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if waitForDownParam.GenerateSkeleton {
@@ -4038,6 +4071,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if interfaceInfoParam.GenerateSkeleton {
 						interfaceInfoParam.GenerateSkeleton = false
@@ -4376,6 +4412,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if interfaceConnectParam.GenerateSkeleton {
@@ -4716,6 +4755,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if interfaceUpdateParam.GenerateSkeleton {
 						interfaceUpdateParam.GenerateSkeleton = false
@@ -5031,6 +5073,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if interfaceDisconnectParam.GenerateSkeleton {
@@ -5411,6 +5456,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if trafficControlInfoParam.GenerateSkeleton {
 						trafficControlInfoParam.GenerateSkeleton = false
@@ -5763,6 +5811,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if trafficControlEnableParam.GenerateSkeleton {
@@ -6121,6 +6172,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if trafficControlUpdateParam.GenerateSkeleton {
 						trafficControlUpdateParam.GenerateSkeleton = false
@@ -6433,6 +6487,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if trafficControlDisableParam.GenerateSkeleton {
@@ -6810,6 +6867,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if staticRouteInfoParam.GenerateSkeleton {
 						staticRouteInfoParam.GenerateSkeleton = false
@@ -7135,6 +7195,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if staticRouteAddParam.GenerateSkeleton {
@@ -7482,6 +7545,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if staticRouteUpdateParam.GenerateSkeleton {
 						staticRouteUpdateParam.GenerateSkeleton = false
@@ -7807,6 +7873,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if staticRouteDeleteParam.GenerateSkeleton {
@@ -8188,6 +8257,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if simInfoParam.GenerateSkeleton {
 						simInfoParam.GenerateSkeleton = false
@@ -8514,6 +8586,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if simAddParam.GenerateSkeleton {
@@ -8852,6 +8927,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if simUpdateParam.GenerateSkeleton {
 						simUpdateParam.GenerateSkeleton = false
@@ -9177,6 +9255,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if simDeleteParam.GenerateSkeleton {
@@ -9558,6 +9639,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if simRouteInfoParam.GenerateSkeleton {
 						simRouteInfoParam.GenerateSkeleton = false
@@ -9883,6 +9967,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if simRouteAddParam.GenerateSkeleton {
@@ -10230,6 +10317,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if simRouteUpdateParam.GenerateSkeleton {
 						simRouteUpdateParam.GenerateSkeleton = false
@@ -10555,6 +10645,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if simRouteDeleteParam.GenerateSkeleton {
@@ -10892,6 +10985,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if dnsUpdateParam.GenerateSkeleton {
 						dnsUpdateParam.GenerateSkeleton = false
@@ -11218,6 +11314,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if logsParam.GenerateSkeleton {

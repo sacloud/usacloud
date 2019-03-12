@@ -359,6 +359,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if listParam.GenerateSkeleton {
 						listParam.GenerateSkeleton = false
@@ -836,6 +839,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if createParam.GenerateSkeleton {
 						createParam.GenerateSkeleton = false
@@ -1137,6 +1143,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if readParam.GenerateSkeleton {
@@ -1651,6 +1660,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if updateParam.GenerateSkeleton {
 						updateParam.GenerateSkeleton = false
@@ -2049,6 +2061,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if deleteParam.GenerateSkeleton {
 						deleteParam.GenerateSkeleton = false
@@ -2361,6 +2376,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if bootParam.GenerateSkeleton {
@@ -2675,6 +2693,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if shutdownParam.GenerateSkeleton {
 						shutdownParam.GenerateSkeleton = false
@@ -2988,6 +3009,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if shutdownForceParam.GenerateSkeleton {
 						shutdownForceParam.GenerateSkeleton = false
@@ -3300,6 +3324,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if resetParam.GenerateSkeleton {
 						resetParam.GenerateSkeleton = false
@@ -3601,6 +3628,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if waitForBootParam.GenerateSkeleton {
 						waitForBootParam.GenerateSkeleton = false
@@ -3891,6 +3921,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if waitForDownParam.GenerateSkeleton {
@@ -4257,6 +4290,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if backupInfoParam.GenerateSkeleton {
@@ -4627,6 +4663,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if backupCreateParam.GenerateSkeleton {
@@ -5003,6 +5042,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if backupRestoreParam.GenerateSkeleton {
 						backupRestoreParam.GenerateSkeleton = false
@@ -5377,6 +5419,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if backupLockParam.GenerateSkeleton {
@@ -5753,6 +5798,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if backupUnlockParam.GenerateSkeleton {
 						backupUnlockParam.GenerateSkeleton = false
@@ -6127,6 +6175,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if backupRemoveParam.GenerateSkeleton {
@@ -6658,6 +6709,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if cloneParam.GenerateSkeleton {
 						cloneParam.GenerateSkeleton = false
@@ -7105,6 +7159,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if replicaCreateParam.GenerateSkeleton {
 						replicaCreateParam.GenerateSkeleton = false
@@ -7499,6 +7556,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if monitorCpuParam.GenerateSkeleton {
@@ -7900,6 +7960,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if monitorMemoryParam.GenerateSkeleton {
 						monitorMemoryParam.GenerateSkeleton = false
@@ -8299,6 +8362,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if monitorNicParam.GenerateSkeleton {
@@ -8700,6 +8766,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if monitorSystemDiskParam.GenerateSkeleton {
 						monitorSystemDiskParam.GenerateSkeleton = false
@@ -9099,6 +9168,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if monitorBackupDiskParam.GenerateSkeleton {
@@ -9500,6 +9572,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if monitorSystemDiskSizeParam.GenerateSkeleton {
 						monitorSystemDiskSizeParam.GenerateSkeleton = false
@@ -9900,6 +9975,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if monitorBackupDiskSizeParam.GenerateSkeleton {
 						monitorBackupDiskSizeParam.GenerateSkeleton = false
@@ -10238,6 +10316,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if logsParam.GenerateSkeleton {

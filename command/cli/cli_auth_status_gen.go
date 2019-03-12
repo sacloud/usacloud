@@ -321,6 +321,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if showParam.GenerateSkeleton {
 						showParam.GenerateSkeleton = false

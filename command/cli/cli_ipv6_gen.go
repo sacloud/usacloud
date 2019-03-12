@@ -346,6 +346,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if listParam.GenerateSkeleton {
 						listParam.GenerateSkeleton = false
@@ -638,6 +641,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if ptrAddParam.GenerateSkeleton {
 						ptrAddParam.GenerateSkeleton = false
@@ -918,6 +924,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if ptrReadParam.GenerateSkeleton {
@@ -1211,6 +1220,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if ptrUpdateParam.GenerateSkeleton {
 						ptrUpdateParam.GenerateSkeleton = false
@@ -1502,6 +1514,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if ptrDeleteParam.GenerateSkeleton {

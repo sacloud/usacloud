@@ -189,6 +189,7 @@ func ProxyLBResource() *schema.Resource {
 		Aliases:             []string{"enhanced-load-balancer", "proxylb"},
 		ResourceCategory:    CategoryCommonServiceItem,
 		ListResultFieldName: "CommonServiceProxyLBItems",
+		ExperimentWarning:   "ProxyLB command is experimental",
 	}
 }
 

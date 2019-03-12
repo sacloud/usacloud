@@ -351,6 +351,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
+
 					// Generate skeleton
 					if listParam.GenerateSkeleton {
 						listParam.GenerateSkeleton = false
@@ -747,6 +750,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
+
 					// Generate skeleton
 					if createParam.GenerateSkeleton {
 						createParam.GenerateSkeleton = false
@@ -1048,6 +1054,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
 
 					// Generate skeleton
 					if readParam.GenerateSkeleton {
@@ -1530,6 +1539,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
+
 					// Generate skeleton
 					if updateParam.GenerateSkeleton {
 						updateParam.GenerateSkeleton = false
@@ -1917,6 +1929,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
+
 					// Generate skeleton
 					if deleteParam.GenerateSkeleton {
 						deleteParam.GenerateSkeleton = false
@@ -2292,6 +2307,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
 
 					// Generate skeleton
 					if bindPortInfoParam.GenerateSkeleton {
@@ -2692,6 +2710,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
 
 					// Generate skeleton
 					if bindPortAddParam.GenerateSkeleton {
@@ -3113,6 +3134,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
+
 					// Generate skeleton
 					if bindPortUpdateParam.GenerateSkeleton {
 						bindPortUpdateParam.GenerateSkeleton = false
@@ -3513,6 +3537,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
+
 					// Generate skeleton
 					if bindPortDeleteParam.GenerateSkeleton {
 						bindPortDeleteParam.GenerateSkeleton = false
@@ -3892,6 +3919,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
 
 					// Generate skeleton
 					if serverInfoParam.GenerateSkeleton {
@@ -4302,6 +4332,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
 
 					// Generate skeleton
 					if serverAddParam.GenerateSkeleton {
@@ -4733,6 +4766,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
+
 					// Generate skeleton
 					if serverUpdateParam.GenerateSkeleton {
 						serverUpdateParam.GenerateSkeleton = false
@@ -5133,6 +5169,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
+
 					// Generate skeleton
 					if serverDeleteParam.GenerateSkeleton {
 						serverDeleteParam.GenerateSkeleton = false
@@ -5512,6 +5551,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
 
 					// Generate skeleton
 					if certificateInfoParam.GenerateSkeleton {
@@ -5924,6 +5966,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
 
 					// Generate skeleton
 					if certificateAddParam.GenerateSkeleton {
@@ -6345,6 +6390,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
+
 					// Generate skeleton
 					if certificateUpdateParam.GenerateSkeleton {
 						certificateUpdateParam.GenerateSkeleton = false
@@ -6735,6 +6783,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
 
 					// Generate skeleton
 					if certificateDeleteParam.GenerateSkeleton {
@@ -7145,6 +7196,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("ProxyLB command is experimental")
 
 					// Generate skeleton
 					if monitorParam.GenerateSkeleton {
