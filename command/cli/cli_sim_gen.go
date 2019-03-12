@@ -347,6 +347,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if listParam.GenerateSkeleton {
 						listParam.GenerateSkeleton = false
@@ -718,6 +721,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if createParam.GenerateSkeleton {
 						createParam.GenerateSkeleton = false
@@ -1019,6 +1025,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if readParam.GenerateSkeleton {
@@ -1441,6 +1450,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if updateParam.GenerateSkeleton {
 						updateParam.GenerateSkeleton = false
@@ -1764,6 +1776,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if deleteParam.GenerateSkeleton {
@@ -2141,6 +2156,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if carrierInfoParam.GenerateSkeleton {
 						carrierInfoParam.GenerateSkeleton = false
@@ -2457,6 +2475,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if carrierUpdateParam.GenerateSkeleton {
 						carrierUpdateParam.GenerateSkeleton = false
@@ -2769,6 +2790,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if activateParam.GenerateSkeleton {
 						activateParam.GenerateSkeleton = false
@@ -3080,6 +3104,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if deactivateParam.GenerateSkeleton {
@@ -3403,6 +3430,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if imeiLockParam.GenerateSkeleton {
 						imeiLockParam.GenerateSkeleton = false
@@ -3725,6 +3755,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if ipAddParam.GenerateSkeleton {
 						ipAddParam.GenerateSkeleton = false
@@ -4041,6 +4074,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if imeiUnlockParam.GenerateSkeleton {
 						imeiUnlockParam.GenerateSkeleton = false
@@ -4353,6 +4389,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if ipDeleteParam.GenerateSkeleton {
@@ -4755,6 +4794,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if logsParam.GenerateSkeleton {
 						logsParam.GenerateSkeleton = false
@@ -5154,6 +5196,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if monitorParam.GenerateSkeleton {

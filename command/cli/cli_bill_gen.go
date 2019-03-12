@@ -287,6 +287,9 @@ func init() {
 						}
 					}
 
+					// Experiment warning
+					printWarning("")
+
 					// Generate skeleton
 					if csvParam.GenerateSkeleton {
 						csvParam.GenerateSkeleton = false
@@ -577,6 +580,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("")
 
 					// Generate skeleton
 					if listParam.GenerateSkeleton {

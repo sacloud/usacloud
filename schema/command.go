@@ -28,6 +28,7 @@ type Command struct {
 	UseCustomFlagsCompletion bool
 	NeedlessConfirm          bool
 	ConfirmMessage           string
+	ExperimentWarning        string
 
 	NoOutput bool
 

@@ -61,7 +61,7 @@ func generateSource(resource *schema.Resource) (string, error) {
 
 		ctx.C = k
 
-		params, err := buildCommandsParams(c)
+		params, err := buildCommandsParams(resource, c)
 		if err != nil {
 			return "", err
 		}
@@ -163,8 +163,7 @@ func generateSource(resource *schema.Resource) (string, error) {
 	return buf.String(), err
 }
 
-func buildCommandsParams(command *schema.Command) (map[string]interface{}, error) {
-
+func buildCommandsParams(resource *schema.Resource, command *schema.Command) (map[string]interface{}, error) {
 	var res map[string]interface{}
 
 	flags, err := buildFlagsParams(command.BuildedParams())
@@ -195,13 +194,19 @@ func buildCommandsParams(command *schema.Command) (map[string]interface{}, error
 
 	}
 
+	experimentWarning := resource.ExperimentWarning
+	if command.ExperimentWarning != "" {
+		experimentWarning = command.ExperimentWarning
+	}
+
 	res = map[string]interface{}{
-		"Name":            ctx.C,
-		"Aliases":         tools.FlattenStringList(command.Aliases),
-		"Usage":           usage,
-		"ArgsUsage":       argsUsage,
-		"Flags":           flags,
-		"ApplyConfigFile": !ctx.CurrentResource().SkipApplyConfigFile,
+		"Name":              ctx.C,
+		"Aliases":           tools.FlattenStringList(command.Aliases),
+		"Usage":             usage,
+		"ArgsUsage":         argsUsage,
+		"Flags":             flags,
+		"ApplyConfigFile":   !ctx.CurrentResource().SkipApplyConfigFile,
+		"ExperimentWarning": experimentWarning,
 	}
 
 	action, err := buildActionParams(command)
@@ -624,6 +629,9 @@ func init() {
 							v.SetOutputType(command.GlobalOption.DefaultOutputType)
 						}
 					}
+
+					// Experiment warning
+					printWarning("{{.ExperimentWarning}}")
 
 					// Generate skeleton
 					if {{.ParamName}}.GenerateSkeleton {
