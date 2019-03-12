@@ -1,3 +1,10 @@
+usacloud (0.20.1-1) stable; urgency=low
+
+  * 実験的機能への警告表示 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/421>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Tue, 12 Mar 2019 13:25:20 +0000
+
 usacloud (0.20.0-1) stable; urgency=low
 
   * ProxyLB (by yamamoto-febc)
