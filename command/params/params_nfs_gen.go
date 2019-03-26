@@ -285,7 +285,8 @@ func (p *ListNFSParam) GetQueryFile() string {
 // CreateNFSParam is input parameters for the sacloud API
 type CreateNFSParam struct {
 	SwitchId          int64    `json:"switch-id"`
-	Plan              int      `json:"plan"`
+	Plan              string   `json:"plan"`
+	Size              int      `json:"size"`
 	Ipaddress         string   `json:"ipaddress"`
 	NwMaskLen         int      `json:"nw-mask-len"`
 	DefaultRoute      string   `json:"default-route"`
@@ -310,7 +311,8 @@ type CreateNFSParam struct {
 func NewCreateNFSParam() *CreateNFSParam {
 	return &CreateNFSParam{
 
-		Plan: 100,
+		Plan: "hdd",
+		Size: 100,
 	}
 }
 
@@ -320,7 +322,10 @@ func (p *CreateNFSParam) FillValueToSkeleton() {
 		p.SwitchId = 0
 	}
 	if isEmpty(p.Plan) {
-		p.Plan = 0
+		p.Plan = ""
+	}
+	if isEmpty(p.Size) {
+		p.Size = 0
 	}
 	if isEmpty(p.Ipaddress) {
 		p.Ipaddress = ""
@@ -406,6 +411,20 @@ func (p *CreateNFSParam) Validate() []error {
 	{
 		validator := define.Resources["NFS"].Commands["create"].Params["plan"].ValidateFunc
 		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--size", p.Size)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["NFS"].Commands["create"].Params["size"].ValidateFunc
+		errs := validator("--size", p.Size)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -535,12 +554,19 @@ func (p *CreateNFSParam) SetSwitchId(v int64) {
 func (p *CreateNFSParam) GetSwitchId() int64 {
 	return p.SwitchId
 }
-func (p *CreateNFSParam) SetPlan(v int) {
+func (p *CreateNFSParam) SetPlan(v string) {
 	p.Plan = v
 }
 
-func (p *CreateNFSParam) GetPlan() int {
+func (p *CreateNFSParam) GetPlan() string {
 	return p.Plan
+}
+func (p *CreateNFSParam) SetSize(v int) {
+	p.Size = v
+}
+
+func (p *CreateNFSParam) GetSize() int {
+	return p.Size
 }
 func (p *CreateNFSParam) SetIpaddress(v string) {
 	p.Ipaddress = v

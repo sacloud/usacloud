@@ -25,12 +25,18 @@ func NFSCreate(ctx command.Context, params *params.CreateNFSParam) error {
 		Icon:         sacloud.NewResource(params.IconId),
 	}
 
-	p.Plan = sacloud.NFSPlan(params.Plan)
-
-	nfs := sacloud.NewNFS(p)
+	var plan sacloud.NFSPlan
+	switch params.Plan {
+	case "ssd":
+		plan = sacloud.NFSPlanSSD
+	case "hdd":
+		plan = sacloud.NFSPlanHDD
+	default:
+		return fmt.Errorf("NFSCreate is failed: invalid plan %s", params.Plan)
+	}
 
 	// call Create(id)
-	res, err := api.Create(nfs)
+	res, err := api.CreateWithPlan(p, plan, sacloud.NFSSize(params.Size))
 	if err != nil {
 		return fmt.Errorf("NFSCreate is failed: %s", err)
 	}

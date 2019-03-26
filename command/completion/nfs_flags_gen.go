@@ -71,6 +71,11 @@ func NFSCreateCompleteFlags(ctx command.Context, params *params.CreateNFSParam, 
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "size":
+		param := define.Resources["NFS"].Commands["create"].BuildedParams().Get("size")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "ipaddress", "ip":
 		param := define.Resources["NFS"].Commands["create"].BuildedParams().Get("ipaddress")
 		if param != nil {
