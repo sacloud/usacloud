@@ -256,6 +256,37 @@ func ProxyLBDeleteCompleteFlags(ctx command.Context, params *params.DeleteProxyL
 	}
 }
 
+func ProxyLBPlanChangeCompleteFlags(ctx command.Context, params *params.PlanChangeProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "plan":
+		param := define.Resources["ProxyLB"].Commands["plan-change"].BuildedParams().Get("plan")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["plan-change"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["plan-change"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
 func ProxyLBBindPortInfoCompleteFlags(ctx command.Context, params *params.BindPortInfoProxyLBParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 

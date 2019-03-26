@@ -53,6 +53,16 @@ func ProxyLBResource() *schema.Resource {
 			Category:      "basics",
 			Order:         50,
 		},
+		"plan-change": {
+			Type:             schema.CommandManipulateMulti,
+			Params:           proxyLBPlanChangeParam(),
+			Usage:            "Change ProxyLB plan",
+			IncludeFields:    proxyLBDetailIncludes(),
+			ExcludeFields:    proxyLBDetailExcludes(),
+			UseCustomCommand: true,
+			Category:         "basics",
+			Order:            60,
+		},
 		"bind-port-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             proxyLBBindPortListParam(),
@@ -406,6 +416,21 @@ func proxyLBUpdateParam() map[string]*schema.Schema {
 
 func proxyLBDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
+}
+
+func proxyLBPlanChangeParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"plan": {
+			Type:         schema.TypeInt,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set plan",
+			Required:     true,
+			ValidateFunc: validateInIntValues(sacloud.AllowProxyLBPlans...),
+			CompleteFunc: completeInIntValues(sacloud.AllowProxyLBPlans...),
+			Category:     "ProxyLB",
+			Order:        10,
+		},
+	}
 }
 
 func proxyLBBindPortListParam() map[string]*schema.Schema {

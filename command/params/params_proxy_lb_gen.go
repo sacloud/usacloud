@@ -1469,6 +1469,247 @@ func (p *DeleteProxyLBParam) GetId() int64 {
 	return p.Id
 }
 
+// PlanChangeProxyLBParam is input parameters for the sacloud API
+type PlanChangeProxyLBParam struct {
+	Plan              int      `json:"plan"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewPlanChangeProxyLBParam return new PlanChangeProxyLBParam
+func NewPlanChangeProxyLBParam() *PlanChangeProxyLBParam {
+	return &PlanChangeProxyLBParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *PlanChangeProxyLBParam) FillValueToSkeleton() {
+	if isEmpty(p.Plan) {
+		p.Plan = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *PlanChangeProxyLBParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ProxyLB"].Commands["plan-change"].Params["plan"].ValidateFunc
+		errs := validator("--plan", p.Plan)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *PlanChangeProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *PlanChangeProxyLBParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["plan-change"]
+}
+
+func (p *PlanChangeProxyLBParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *PlanChangeProxyLBParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *PlanChangeProxyLBParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *PlanChangeProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *PlanChangeProxyLBParam) SetPlan(v int) {
+	p.Plan = v
+}
+
+func (p *PlanChangeProxyLBParam) GetPlan() int {
+	return p.Plan
+}
+func (p *PlanChangeProxyLBParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *PlanChangeProxyLBParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *PlanChangeProxyLBParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *PlanChangeProxyLBParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *PlanChangeProxyLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *PlanChangeProxyLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *PlanChangeProxyLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *PlanChangeProxyLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *PlanChangeProxyLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *PlanChangeProxyLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *PlanChangeProxyLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *PlanChangeProxyLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *PlanChangeProxyLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *PlanChangeProxyLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *PlanChangeProxyLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *PlanChangeProxyLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *PlanChangeProxyLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *PlanChangeProxyLBParam) GetFormat() string {
+	return p.Format
+}
+func (p *PlanChangeProxyLBParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *PlanChangeProxyLBParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *PlanChangeProxyLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *PlanChangeProxyLBParam) GetQuery() string {
+	return p.Query
+}
+func (p *PlanChangeProxyLBParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *PlanChangeProxyLBParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *PlanChangeProxyLBParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *PlanChangeProxyLBParam) GetId() int64 {
+	return p.Id
+}
+
 // BindPortInfoProxyLBParam is input parameters for the sacloud API
 type BindPortInfoProxyLBParam struct {
 	Selector          []string `json:"selector"`
