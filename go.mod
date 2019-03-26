@@ -23,7 +23,7 @@ require (
 	github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
 	github.com/sacloud/ftps v0.0.0-20171205062625-42fc0f9886fe
 	github.com/sacloud/go-jmespath v0.0.0-20190125082617-862639817e08
-	github.com/sacloud/libsacloud v1.15.5
+	github.com/sacloud/libsacloud v1.16.0
 	github.com/stretchr/testify v1.2.2
 	github.com/vaughan0/go-ini v0.0.0-20130923145212-a98ad7ee00ec // indirect
 	golang.org/x/crypto v0.0.0-20181015023909-0c41d7ab0a0e // indirect
