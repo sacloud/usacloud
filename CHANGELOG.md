@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.20.1 (2019-03-12)
+
+* 実験的機能への警告表示 #421 (yamamoto-febc)
+
+
 ## 0.20.0 (2019-03-07)
 
 * ProxyLB #415 (yamamoto-febc)

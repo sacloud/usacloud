@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Mar 12 2019 <sacloud.users@gmail.com> - 0.20.1-1
+- 実験的機能への警告表示 (by yamamoto-febc)
+
 * Thu Mar 07 2019 <sacloud.users@gmail.com> - 0.20.0-1
 - ProxyLB (by yamamoto-febc)
 - summaryコマンドへProxyLB追加 (by yamamoto-febc)
