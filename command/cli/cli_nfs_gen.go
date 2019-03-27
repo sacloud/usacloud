@@ -381,9 +381,14 @@ func init() {
 						Name:  "switch-id",
 						Usage: "[Required] set connect switch ID",
 					},
-					&cli.IntFlag{
+					&cli.StringFlag{
 						Name:  "plan",
-						Usage: "[Required] set plan[100/500/1024/2048/4096]",
+						Usage: "[Required] set plan[ssd/hdd]",
+						Value: "hdd",
+					},
+					&cli.IntFlag{
+						Name:  "size",
+						Usage: "[Required] set plan[100/500/1024/2048/4096/8192/12288]",
 						Value: 100,
 					},
 					&cli.StringFlag{
@@ -508,7 +513,10 @@ func init() {
 						createParam.SwitchId = c.Int64("switch-id")
 					}
 					if c.IsSet("plan") {
-						createParam.Plan = c.Int("plan")
+						createParam.Plan = c.String("plan")
+					}
+					if c.IsSet("size") {
+						createParam.Size = c.Int("size")
 					}
 					if c.IsSet("ipaddress") {
 						createParam.Ipaddress = c.String("ipaddress")
@@ -653,7 +661,10 @@ func init() {
 						createParam.SwitchId = c.Int64("switch-id")
 					}
 					if c.IsSet("plan") {
-						createParam.Plan = c.Int("plan")
+						createParam.Plan = c.String("plan")
+					}
+					if c.IsSet("size") {
+						createParam.Size = c.Int("size")
 					}
 					if c.IsSet("ipaddress") {
 						createParam.Ipaddress = c.String("ipaddress")
@@ -4819,6 +4830,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("nfs", "create", "size", &schema.Category{
+		Key:         "nfs",
+		DisplayName: "NFS options",
+		Order:       10,
 	})
 	AppendFlagCategoryMap("nfs", "create", "switch-id", &schema.Category{
 		Key:         "nfs",
