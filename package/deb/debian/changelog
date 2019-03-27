@@ -1,3 +1,12 @@
+usacloud (0.21.0-1) stable; urgency=low
+
+  * エンハンスドLBでのプラン変更 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/423>
+  * NFSへのSSDプラン追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/424>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Wed, 27 Mar 2019 00:24:01 +0000
+
 usacloud (0.20.1-1) stable; urgency=low
 
   * 実験的機能への警告表示 (by yamamoto-febc)
