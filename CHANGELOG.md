@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.21.0 (2019-03-27)
+
+* エンハンスドLBでのプラン変更 #423 (yamamoto-febc)
+* NFSへのSSDプラン追加 #424 (yamamoto-febc)
+
+
 ## 0.20.1 (2019-03-12)
 
 * 実験的機能への警告表示 #421 (yamamoto-febc)

@@ -40,6 +40,10 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Mar 27 2019 <sacloud.users@gmail.com> - 0.21.0-1
+- エンハンスドLBでのプラン変更 (by yamamoto-febc)
+- NFSへのSSDプラン追加 (by yamamoto-febc)
+
 * Tue Mar 12 2019 <sacloud.users@gmail.com> - 0.20.1-1
 - 実験的機能への警告表示 (by yamamoto-febc)
 
