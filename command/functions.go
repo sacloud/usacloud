@@ -3,6 +3,7 @@ package command
 import (
 	"fmt"
 	"io/ioutil"
+	"net/http"
 	"reflect"
 	"strings"
 	"time"
@@ -111,6 +112,11 @@ func createAPIClient() *api.Client {
 	}
 	if GlobalOption.RetryIntervalSec >= 0 {
 		c.RetryInterval = time.Duration(GlobalOption.RetryIntervalSec) * time.Second
+	}
+	if GlobalOption.APIRequestTimeout > 0 {
+		c.HTTPClient = &http.Client{
+			Timeout: time.Duration(GlobalOption.APIRequestTimeout) * time.Second,
+		}
 	}
 
 	return c

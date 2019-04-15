@@ -73,6 +73,10 @@ func applyConfigFromFile(c FlagHandler) error {
 		c.Set("retry-interval", fmt.Sprintf("%d", v.RetryIntervalSec))
 		command.GlobalOption.RetryIntervalSec = v.RetryIntervalSec
 	}
+	if !c.IsSet("api-request-timeout") && v.APIRequestTimeout > 0 {
+		c.Set("api-request-timeout", fmt.Sprintf("%d", v.APIRequestTimeout))
+		command.GlobalOption.APIRequestTimeout = v.APIRequestTimeout
+	}
 	if !c.IsSet("no-color") && v.NoColor {
 		c.Set("no-color", "true")
 		command.GlobalOption.NoColor = v.NoColor
