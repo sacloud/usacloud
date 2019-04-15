@@ -20,6 +20,7 @@ type Option struct {
 	AcceptLanguage    string
 	RetryMax          int
 	RetryIntervalSec  int64
+	APIRequestTimeout int
 	Zones             []string
 	APIRootURL        string
 	TraceMode         bool
@@ -107,6 +108,12 @@ var GlobalFlags = []cli.Flag{
 		Usage:       "API client retry interval seconds",
 		EnvVars:     []string{"SAKURACLOUD_RETRY_INTERVAL"},
 		Destination: &GlobalOption.RetryIntervalSec,
+	},
+	&cli.IntFlag{
+		Name:        "api-request-timeout",
+		Usage:       "Maximum wait time(seconds) for calling SakuraCloud API",
+		EnvVars:     []string{"SAKURACLOUD_API_REQUEST_TIMEOUT"},
+		Destination: &GlobalOption.APIRequestTimeout,
 	},
 	&cli.BoolFlag{
 		Name:        "no-color",

@@ -77,6 +77,7 @@ type ConfigFileValue struct {
 	AcceptLanguage    string   `json:",omitempty"`
 	RetryMax          int      `json:",omitempty"`
 	RetryIntervalSec  int64    `json:",omitempty"`
+	APIRequestTimeout int      `json:",omitempty"`
 	NoColor           bool     `json:",omitempty"`
 	DefaultOutputType string   `json:",omitempty"`
 	Zones             []string `json:",omitempty"`
