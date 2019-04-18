@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.22.0 (2019-04-18)
+
+* APIリクエスト時の*http.Clientタイムアウト指定機能 #426 (yamamoto-febc)
+* スイッチ+ルータでの5000Mbpsプラン #428 (yamamoto-febc)
+
+
 ## 0.21.0 (2019-03-27)
 
 * エンハンスドLBでのプラン変更 #423 (yamamoto-febc)
