@@ -1,3 +1,12 @@
+usacloud (0.22.0-1) stable; urgency=low
+
+  * APIリクエスト時の*http.Clientタイムアウト指定機能 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/426>
+  * スイッチ+ルータでの5000Mbpsプラン (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/428>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Thu, 18 Apr 2019 03:00:46 +0000
+
 usacloud (0.21.0-1) stable; urgency=low
 
   * エンハンスドLBでのプラン変更 (by yamamoto-febc)
