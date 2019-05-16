@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.23.0 (2019-05-16)
+
+* コア専有プラン #430 (yamamoto-febc)
+* Add test codes #431 (yamamoto-febc)
+
+
 ## 0.22.0 (2019-04-18)
 
 * APIリクエスト時の*http.Clientタイムアウト指定機能 #426 (yamamoto-febc)

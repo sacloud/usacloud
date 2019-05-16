@@ -40,6 +40,10 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu May 16 2019 <sacloud.users@gmail.com> - 0.23.0-1
+- コア専有プラン (by yamamoto-febc)
+- Add test codes (by yamamoto-febc)
+
 * Thu Apr 18 2019 <sacloud.users@gmail.com> - 0.22.0-1
 - APIリクエスト時の*http.Clientタイムアウト指定機能 (by yamamoto-febc)
 - スイッチ+ルータでの5000Mbpsプラン (by yamamoto-febc)
