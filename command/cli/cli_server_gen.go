@@ -410,6 +410,11 @@ func init() {
 						Usage: "[Required] set memory size(GB)",
 						Value: 1,
 					},
+					&cli.StringFlag{
+						Name:  "commitment",
+						Usage: "set plan of core assignment",
+						Value: "standard",
+					},
 					&cli.Int64Flag{
 						Name:  "private-host-id",
 						Usage: "set private-host-id",
@@ -677,6 +682,9 @@ func init() {
 					if c.IsSet("memory") {
 						buildParam.Memory = c.Int("memory")
 					}
+					if c.IsSet("commitment") {
+						buildParam.Commitment = c.String("commitment")
+					}
 					if c.IsSet("private-host-id") {
 						buildParam.PrivateHostId = c.Int64("private-host-id")
 					}
@@ -917,6 +925,9 @@ func init() {
 					}
 					if c.IsSet("memory") {
 						buildParam.Memory = c.Int("memory")
+					}
+					if c.IsSet("commitment") {
+						buildParam.Commitment = c.String("commitment")
 					}
 					if c.IsSet("private-host-id") {
 						buildParam.PrivateHostId = c.Int64("private-host-id")
@@ -2356,6 +2367,11 @@ func init() {
 						Name:  "memory",
 						Usage: "[Required] set memory size(GB)",
 					},
+					&cli.StringFlag{
+						Name:  "commitment",
+						Usage: "set plan of core assignment",
+						Value: "standard",
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
@@ -2458,6 +2474,9 @@ func init() {
 					}
 					if c.IsSet("memory") {
 						planChangeParam.Memory = c.Int("memory")
+					}
+					if c.IsSet("commitment") {
+						planChangeParam.Commitment = c.String("commitment")
 					}
 					if c.IsSet("selector") {
 						planChangeParam.Selector = c.StringSlice("selector")
@@ -2588,6 +2607,9 @@ func init() {
 					}
 					if c.IsSet("memory") {
 						planChangeParam.Memory = c.Int("memory")
+					}
+					if c.IsSet("commitment") {
+						planChangeParam.Commitment = c.String("commitment")
 					}
 					if c.IsSet("selector") {
 						planChangeParam.Selector = c.StringSlice("selector")
@@ -13442,6 +13464,11 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("server", "build", "commitment", &schema.Category{
+		Key:         "server-plan",
+		DisplayName: "For server-plan options",
+		Order:       10,
+	})
 	AppendFlagCategoryMap("server", "build", "core", &schema.Category{
 		Key:         "server-plan",
 		DisplayName: "For server-plan options",
@@ -14661,6 +14688,11 @@ func init() {
 		Key:         "output",
 		DisplayName: "Output options",
 		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("server", "plan-change", "commitment", &schema.Category{
+		Key:         "server-plan",
+		DisplayName: "Server-Plan options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("server", "plan-change", "core", &schema.Category{
 		Key:         "plan",

@@ -396,6 +396,10 @@ func serverListColumns() []output.ColumnDef {
 			Format:  "%sMB",
 		},
 		{
+			Name:    "Commitment",
+			Sources: []string{"ServerPlan.Commitment"},
+		},
+		{
 			Name: "IPAddress",
 			FormatFunc: func(values map[string]string) string {
 				if scope, ok := values["Interfaces.0.Switch.Scope"]; ok {
@@ -646,6 +650,16 @@ func serverBuildParam() map[string]*schema.Schema {
 			Category:     "server-plan",
 			Order:        20,
 		},
+		"commitment": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set plan of core assignment",
+			DefaultValue: "standard",
+			ValidateFunc: validateInStrValues("standard", "dedicatedcpu"),
+			CompleteFunc: completeInStrValues("standard", "dedicatedcpu"),
+			Category:     "server-plan",
+			Order:        30,
+		},
 		"private-host-id": {
 			Type:         schema.TypeInt64,
 			HandlerType:  schema.HandlerNoop,
@@ -653,7 +667,7 @@ func serverBuildParam() map[string]*schema.Schema {
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completePrivateHostID(),
 			Category:     "server-plan",
-			Order:        30,
+			Order:        40,
 		},
 		/*
 		 === disk ===
@@ -1298,6 +1312,16 @@ func serverPlanChangeParam() map[string]*schema.Schema {
 			Required:     true,
 			Category:     "plan",
 			Order:        20,
+		},
+		"commitment": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set plan of core assignment",
+			DefaultValue: "standard",
+			ValidateFunc: validateInStrValues("standard", "dedicatedcpu"),
+			CompleteFunc: completeInStrValues("standard", "dedicatedcpu"),
+			Category:     "server-plan",
+			Order:        30,
 		},
 	}
 }

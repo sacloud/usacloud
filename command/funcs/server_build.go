@@ -228,6 +228,7 @@ func handleServerCommonParams(sb serverBuilder, ctx command.Context, params *par
 
 	sb.SetCore(params.GetCore())
 	sb.SetMemory(params.GetMemory())
+	sb.SetCommitment(sacloud.ECommitment(params.Commitment))
 	sb.SetPrivateHostID(params.PrivateHostId)
 	sb.SetServerName(params.GetName())
 	sb.SetDescription(params.GetDescription())
