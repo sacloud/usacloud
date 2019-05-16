@@ -101,6 +101,7 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 	param := &params.BuildServerParam{
 		Core:                    2,
 		Memory:                  4,
+		Commitment:              "standard",
 		DiskMode:                "create",
 		OsType:                  "centos",
 		DiskPlan:                "hdd",
@@ -157,6 +158,7 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 		b := i.(serverBuilder)
 		b.SetCore(param.Core)
 		b.SetMemory(param.Memory)
+		b.SetCommitment(sacloud.ECommitment(param.Commitment))
 		b.SetServerName(param.Name)
 		b.SetDescription(param.Description)
 		b.SetTags(param.Tags)
