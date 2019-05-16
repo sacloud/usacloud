@@ -1,3 +1,12 @@
+usacloud (0.23.0-1) stable; urgency=low
+
+  * コア専有プラン (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/430>
+  * Add test codes (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/431>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Thu, 16 May 2019 09:31:37 +0000
+
 usacloud (0.22.0-1) stable; urgency=low
 
   * APIリクエスト時の*http.Clientタイムアウト指定機能 (by yamamoto-febc)
