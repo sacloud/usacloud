@@ -22,7 +22,9 @@ func ServerPlanChange(ctx command.Context, params *params.PlanChangeServerParam)
 		return fmt.Errorf("ServerPlanChange is failed: %s", "server is running")
 	}
 
-	plan, err := client.GetProductServerAPI().GetBySpec(params.Core, params.Memory, sacloud.PlanDefault)
+	plan, err := client.GetProductServerAPI().GetBySpecCommitment(
+		params.Core, params.Memory, sacloud.PlanDefault, sacloud.ECommitment(params.Commitment),
+	)
 	if err != nil {
 		return fmt.Errorf("ServerPlanChange is failed: plan is invalid: %s", err)
 	}

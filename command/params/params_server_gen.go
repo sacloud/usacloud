@@ -286,6 +286,7 @@ func (p *ListServerParam) GetQueryFile() string {
 type BuildServerParam struct {
 	Core                    int      `json:"core"`
 	Memory                  int      `json:"memory"`
+	Commitment              string   `json:"commitment"`
 	PrivateHostId           int64    `json:"private-host-id"`
 	DiskMode                string   `json:"disk-mode"`
 	OsType                  string   `json:"os-type"`
@@ -344,6 +345,7 @@ func NewBuildServerParam() *BuildServerParam {
 
 		Core:                    1,
 		Memory:                  1,
+		Commitment:              "standard",
 		DiskMode:                "create",
 		DiskPlan:                "ssd",
 		DiskConnection:          "virtio",
@@ -363,6 +365,9 @@ func (p *BuildServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Memory) {
 		p.Memory = 0
+	}
+	if isEmpty(p.Commitment) {
+		p.Commitment = ""
 	}
 	if isEmpty(p.PrivateHostId) {
 		p.PrivateHostId = 0
@@ -530,6 +535,13 @@ func (p *BuildServerParam) Validate() []error {
 	{
 		validator := validateRequired
 		errs := validator("--memory", p.Memory)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["build"].Params["commitment"].ValidateFunc
+		errs := validator("--commitment", p.Commitment)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -805,6 +817,13 @@ func (p *BuildServerParam) SetMemory(v int) {
 
 func (p *BuildServerParam) GetMemory() int {
 	return p.Memory
+}
+func (p *BuildServerParam) SetCommitment(v string) {
+	p.Commitment = v
+}
+
+func (p *BuildServerParam) GetCommitment() string {
+	return p.Commitment
 }
 func (p *BuildServerParam) SetPrivateHostId(v int64) {
 	p.PrivateHostId = v
@@ -1913,6 +1932,7 @@ func (p *DeleteServerParam) GetId() int64 {
 type PlanChangeServerParam struct {
 	Core              int      `json:"core"`
 	Memory            int      `json:"memory"`
+	Commitment        string   `json:"commitment"`
 	Selector          []string `json:"selector"`
 	Assumeyes         bool     `json:"assumeyes"`
 	ParamTemplate     string   `json:"param-template"`
@@ -1930,7 +1950,10 @@ type PlanChangeServerParam struct {
 
 // NewPlanChangeServerParam return new PlanChangeServerParam
 func NewPlanChangeServerParam() *PlanChangeServerParam {
-	return &PlanChangeServerParam{}
+	return &PlanChangeServerParam{
+
+		Commitment: "standard",
+	}
 }
 
 // FillValueToSkeleton fill values to empty fields
@@ -1940,6 +1963,9 @@ func (p *PlanChangeServerParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.Memory) {
 		p.Memory = 0
+	}
+	if isEmpty(p.Commitment) {
+		p.Commitment = ""
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -1996,6 +2022,13 @@ func (p *PlanChangeServerParam) Validate() []error {
 	{
 		validator := validateRequired
 		errs := validator("--memory", p.Memory)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["Server"].Commands["plan-change"].Params["commitment"].ValidateFunc
+		errs := validator("--commitment", p.Commitment)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -2068,6 +2101,13 @@ func (p *PlanChangeServerParam) SetMemory(v int) {
 
 func (p *PlanChangeServerParam) GetMemory() int {
 	return p.Memory
+}
+func (p *PlanChangeServerParam) SetCommitment(v string) {
+	p.Commitment = v
+}
+
+func (p *PlanChangeServerParam) GetCommitment() string {
+	return p.Commitment
 }
 func (p *PlanChangeServerParam) SetSelector(v []string) {
 	p.Selector = v

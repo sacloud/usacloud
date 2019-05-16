@@ -71,6 +71,11 @@ func ServerBuildCompleteFlags(ctx command.Context, params *params.BuildServerPar
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "commitment":
+		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("commitment")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "private-host-id":
 		param := define.Resources["Server"].Commands["build"].BuildedParams().Get("private-host-id")
 		if param != nil {
@@ -402,6 +407,11 @@ func ServerPlanChangeCompleteFlags(ctx command.Context, params *params.PlanChang
 		}
 	case "memory":
 		param := define.Resources["Server"].Commands["plan-change"].BuildedParams().Get("memory")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "commitment":
+		param := define.Resources["Server"].Commands["plan-change"].BuildedParams().Get("commitment")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
