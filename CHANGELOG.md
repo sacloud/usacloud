@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.23.1 (2019-06-14)
+
+* CAA Recordの作成 #433 (yamamoto-febc)
+
+
 ## 0.23.0 (2019-05-16)
 
 * コア専有プラン #430 (yamamoto-febc)
