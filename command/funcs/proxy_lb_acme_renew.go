@@ -18,7 +18,7 @@ func ProxyLBAcmeRenew(ctx command.Context, params *params.AcmeRenewProxyLBParam)
 	}
 
 	if !p.Settings.ProxyLB.LetsEncrypt.Enabled {
-		return errors.New("Let's Encrypt is disabbled. Please update ACME settings")
+		return errors.New("let's encrypt setting is disabled. Please update the settings")
 	}
 
 	// call manipurate functions
