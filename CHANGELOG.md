@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.24.0 (2019-06-26)
+
+* エンハンスドロードバランサの機能拡充 #435 (yamamoto-febc)
+
+
 ## 0.23.1 (2019-06-14)
 
 * CAA Recordの作成 #433 (yamamoto-febc)

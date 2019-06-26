@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Jun 26 2019 <sacloud.users@gmail.com> - 0.24.0-1
+- エンハンスドロードバランサの機能拡充 (by yamamoto-febc)
+
 * Fri Jun 14 2019 <sacloud.users@gmail.com> - 0.23.1-1
 - CAA Recordの作成 (by yamamoto-febc)
 
