@@ -382,7 +382,7 @@ func init() {
 					},
 					&cli.StringFlag{
 						Name:  "type",
-						Usage: "set record type[A/AAAA/NS/CNAME/MX/TXT/SRV]",
+						Usage: "set record type[A/AAAA/NS/CNAME/MX/TXT/SRV/CAA]",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",

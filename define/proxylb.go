@@ -102,6 +102,33 @@ func ProxyLBResource() *schema.Resource {
 			Category:           "bind-port",
 			Order:              40,
 		},
+		"acme-info": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             proxyLBACMEInfoParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: proxyLBACMEInfoColumns(),
+			UseCustomCommand:   true,
+			NeedlessConfirm:    true,
+			Category:           "acme",
+			Order:              10,
+		},
+		"acme-setting": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             proxyLBACMESettingParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: proxyLBACMEInfoColumns(),
+			UseCustomCommand:   true,
+			Category:           "acme",
+			Order:              20,
+		},
+		"acme-renew": {
+			Type:             schema.CommandManipulateSingle,
+			Params:           proxyLBACMERenewParam(),
+			NoOutput:         true,
+			UseCustomCommand: true,
+			Category:         "acme",
+			Order:            30,
+		},
 		"server-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             proxyLBServerListParam(),
@@ -199,7 +226,6 @@ func ProxyLBResource() *schema.Resource {
 		Aliases:             []string{"enhanced-load-balancer", "proxylb"},
 		ResourceCategory:    CategoryCommonServiceItem,
 		ListResultFieldName: "CommonServiceProxyLBItems",
-		ExperimentWarning:   "ProxyLB command is experimental",
 	}
 }
 
@@ -213,6 +239,11 @@ var proxyLBCommandCategories = []schema.Category{
 		Key:         "bind-port",
 		DisplayName: "Bind Port(s) Management",
 		Order:       20,
+	},
+	{
+		Key:         "acme",
+		DisplayName: "ACME settings",
+		Order:       25,
 	},
 	{
 		Key:         "servers",
@@ -255,6 +286,21 @@ func proxyLBBindPortListColumns() []output.ColumnDef {
 		{Name: "__ORDER__"}, // magic column name(generated on demand)
 		{Name: "ProxyMode"},
 		{Name: "Port"},
+		{
+			Name:    "RedirectToHTTPS",
+			Sources: []string{"RedirectToHttps"},
+		},
+		{
+			Name:    "SupportHTTP2",
+			Sources: []string{"SupportHttp2"},
+		},
+	}
+}
+
+func proxyLBACMEInfoColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "Enabled"},
+		{Name: "CommonName"},
 	}
 }
 
@@ -458,6 +504,20 @@ func proxyLBBindPortAddParam() map[string]*schema.Schema {
 			Category:     "bind-port",
 			Order:        20,
 		},
+		"redirect-to-https": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "enable to redirect to https",
+			Category:    "bind-port",
+			Order:       30,
+		},
+		"support-http2": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "enable http/2",
+			Category:    "bind-port",
+			Order:       40,
+		},
 	}
 }
 func proxyLBBindPortUpdateParam() map[string]*schema.Schema {
@@ -487,6 +547,20 @@ func proxyLBBindPortUpdateParam() map[string]*schema.Schema {
 			Category:     "bind-port",
 			Order:        20,
 		},
+		"redirect-to-https": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "enable to redirect to https",
+			Category:    "bind-port",
+			Order:       30,
+		},
+		"support-http2": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "enable http/2",
+			Category:    "bind-port",
+			Order:       40,
+		},
 	}
 }
 
@@ -501,6 +575,40 @@ func proxyLBBindPortDeleteParam() map[string]*schema.Schema {
 			Order:       1,
 		},
 	}
+}
+
+func proxyLBACMEInfoParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
+}
+
+func proxyLBACMESettingParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"accept-tos": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "the flag of accept Let's Encrypt's terms of services: https://letsencrypt.org/repository/",
+			Category:    "acme",
+			Order:       10,
+		},
+		"common-name": {
+			Type:        schema.TypeString,
+			HandlerType: schema.HandlerNoop,
+			Description: "set common name",
+			Category:    "acme",
+			Order:       20,
+		},
+		"disable": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "the flag of disable Let's Encrypt",
+			Category:    "acme",
+			Order:       30,
+		},
+	}
+}
+
+func proxyLBACMERenewParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
 }
 
 func proxyLBServerListParam() map[string]*schema.Schema {

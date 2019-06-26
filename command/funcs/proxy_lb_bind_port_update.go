@@ -33,6 +33,12 @@ func ProxyLBBindPortUpdate(ctx command.Context, params *params.BindPortUpdatePro
 	if ctx.IsSet("port") {
 		bindPort.Port = params.Port
 	}
+	if ctx.IsSet("redirect-to-https") {
+		bindPort.RedirectToHTTPS = params.RedirectToHttps
+	}
+	if ctx.IsSet("support-http2") {
+		bindPort.SupportHTTP2 = params.SupportHttp2
+	}
 
 	p, e = api.UpdateSetting(params.Id, p)
 	if e != nil {

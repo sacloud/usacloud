@@ -23,7 +23,7 @@ func ProxyLBBindPortAdd(ctx command.Context, params *params.BindPortAddProxyLBPa
 		}
 	}
 
-	p.AddBindPort(params.Mode, params.Port)
+	p.AddBindPort(params.Mode, params.Port, params.RedirectToHttps, params.SupportHttp2)
 	p, e = api.UpdateSetting(params.Id, p)
 	if e != nil {
 		return fmt.Errorf("ProxyLBBindPortAdd is failed: %s", e)

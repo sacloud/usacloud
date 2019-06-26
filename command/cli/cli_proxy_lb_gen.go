@@ -28,6 +28,9 @@ func init() {
 	bindPortAddParam := params.NewBindPortAddProxyLBParam()
 	bindPortUpdateParam := params.NewBindPortUpdateProxyLBParam()
 	bindPortDeleteParam := params.NewBindPortDeleteProxyLBParam()
+	acmeInfoParam := params.NewAcmeInfoProxyLBParam()
+	acmeSettingParam := params.NewAcmeSettingProxyLBParam()
+	acmeRenewParam := params.NewAcmeRenewProxyLBParam()
 	serverInfoParam := params.NewServerInfoProxyLBParam()
 	serverAddParam := params.NewServerAddProxyLBParam()
 	serverUpdateParam := params.NewServerUpdateProxyLBParam()
@@ -353,7 +356,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if listParam.GenerateSkeleton {
@@ -752,7 +755,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if createParam.GenerateSkeleton {
@@ -1057,7 +1060,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if readParam.GenerateSkeleton {
@@ -1541,7 +1544,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if updateParam.GenerateSkeleton {
@@ -1931,7 +1934,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if deleteParam.GenerateSkeleton {
@@ -2330,7 +2333,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if planChangeParam.GenerateSkeleton {
@@ -2709,7 +2712,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if bindPortInfoParam.GenerateSkeleton {
@@ -2826,6 +2829,14 @@ func init() {
 						Name:  "port",
 						Usage: "[Required] set port number",
 					},
+					&cli.BoolFlag{
+						Name:  "redirect-to-https",
+						Usage: "enable to redirect to https",
+					},
+					&cli.BoolFlag{
+						Name:  "support-http2",
+						Usage: "enable http/2",
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
@@ -2928,6 +2939,12 @@ func init() {
 					}
 					if c.IsSet("port") {
 						bindPortAddParam.Port = c.Int("port")
+					}
+					if c.IsSet("redirect-to-https") {
+						bindPortAddParam.RedirectToHttps = c.Bool("redirect-to-https")
+					}
+					if c.IsSet("support-http2") {
+						bindPortAddParam.SupportHttp2 = c.Bool("support-http2")
 					}
 					if c.IsSet("selector") {
 						bindPortAddParam.Selector = c.StringSlice("selector")
@@ -3059,6 +3076,12 @@ func init() {
 					if c.IsSet("port") {
 						bindPortAddParam.Port = c.Int("port")
 					}
+					if c.IsSet("redirect-to-https") {
+						bindPortAddParam.RedirectToHttps = c.Bool("redirect-to-https")
+					}
+					if c.IsSet("support-http2") {
+						bindPortAddParam.SupportHttp2 = c.Bool("support-http2")
+					}
 					if c.IsSet("selector") {
 						bindPortAddParam.Selector = c.StringSlice("selector")
 					}
@@ -3112,7 +3135,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if bindPortAddParam.GenerateSkeleton {
@@ -3243,6 +3266,14 @@ func init() {
 						Name:  "port",
 						Usage: "set port number",
 					},
+					&cli.BoolFlag{
+						Name:  "redirect-to-https",
+						Usage: "enable to redirect to https",
+					},
+					&cli.BoolFlag{
+						Name:  "support-http2",
+						Usage: "enable http/2",
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
@@ -3348,6 +3379,12 @@ func init() {
 					}
 					if c.IsSet("port") {
 						bindPortUpdateParam.Port = c.Int("port")
+					}
+					if c.IsSet("redirect-to-https") {
+						bindPortUpdateParam.RedirectToHttps = c.Bool("redirect-to-https")
+					}
+					if c.IsSet("support-http2") {
+						bindPortUpdateParam.SupportHttp2 = c.Bool("support-http2")
 					}
 					if c.IsSet("selector") {
 						bindPortUpdateParam.Selector = c.StringSlice("selector")
@@ -3482,6 +3519,12 @@ func init() {
 					if c.IsSet("port") {
 						bindPortUpdateParam.Port = c.Int("port")
 					}
+					if c.IsSet("redirect-to-https") {
+						bindPortUpdateParam.RedirectToHttps = c.Bool("redirect-to-https")
+					}
+					if c.IsSet("support-http2") {
+						bindPortUpdateParam.SupportHttp2 = c.Bool("support-http2")
+					}
 					if c.IsSet("selector") {
 						bindPortUpdateParam.Selector = c.StringSlice("selector")
 					}
@@ -3535,7 +3578,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if bindPortUpdateParam.GenerateSkeleton {
@@ -3938,7 +3981,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if bindPortDeleteParam.GenerateSkeleton {
@@ -4041,6 +4084,1120 @@ func init() {
 						bindPortDeleteParam := &p
 						go func() {
 							err := funcs.ProxyLBBindPortDelete(ctx, bindPortDeleteParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "acme-info",
+				Usage:     "AcmeInfo ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = acmeInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, acmeInfoParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						acmeInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						acmeInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						acmeInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						acmeInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						acmeInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						acmeInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						acmeInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						acmeInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						acmeInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						acmeInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						acmeInfoParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						acmeInfoParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBAcmeInfoCompleteArgs(ctx, acmeInfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBAcmeInfoCompleteArgs(ctx, acmeInfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBAcmeInfoCompleteFlags(ctx, acmeInfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBAcmeInfoCompleteArgs(ctx, acmeInfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					acmeInfoParam.ParamTemplate = c.String("param-template")
+					acmeInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(acmeInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewAcmeInfoProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(acmeInfoParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						acmeInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						acmeInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						acmeInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						acmeInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						acmeInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						acmeInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						acmeInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						acmeInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						acmeInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						acmeInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						acmeInfoParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						acmeInfoParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = acmeInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Experiment warning
+					printWarning("")
+
+					// Generate skeleton
+					if acmeInfoParam.GenerateSkeleton {
+						acmeInfoParam.GenerateSkeleton = false
+						acmeInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(acmeInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := acmeInfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), acmeInfoParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(acmeInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, acmeInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", acmeInfoParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(acmeInfoParam.Selector) == 0 || hasTags(&v, acmeInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						acmeInfoParam.SetId(id)
+						p := *acmeInfoParam // copy struct value
+						acmeInfoParam := &p
+						go func() {
+							err := funcs.ProxyLBAcmeInfo(ctx, acmeInfoParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "acme-setting",
+				Usage:     "AcmeSetting ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.BoolFlag{
+						Name:  "accept-tos",
+						Usage: "the flag of accept Let's Encrypt's terms of services: https://letsencrypt.org/repository/",
+					},
+					&cli.StringFlag{
+						Name:  "common-name",
+						Usage: "set common name",
+					},
+					&cli.BoolFlag{
+						Name:  "disable",
+						Usage: "the flag of disable Let's Encrypt",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = acmeSettingParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, acmeSettingParam)
+
+					// Set option values
+					if c.IsSet("accept-tos") {
+						acmeSettingParam.AcceptTos = c.Bool("accept-tos")
+					}
+					if c.IsSet("common-name") {
+						acmeSettingParam.CommonName = c.String("common-name")
+					}
+					if c.IsSet("disable") {
+						acmeSettingParam.Disable = c.Bool("disable")
+					}
+					if c.IsSet("selector") {
+						acmeSettingParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						acmeSettingParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						acmeSettingParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						acmeSettingParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						acmeSettingParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						acmeSettingParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						acmeSettingParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						acmeSettingParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						acmeSettingParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						acmeSettingParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						acmeSettingParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						acmeSettingParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						acmeSettingParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBAcmeSettingCompleteArgs(ctx, acmeSettingParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBAcmeSettingCompleteArgs(ctx, acmeSettingParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBAcmeSettingCompleteFlags(ctx, acmeSettingParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBAcmeSettingCompleteArgs(ctx, acmeSettingParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					acmeSettingParam.ParamTemplate = c.String("param-template")
+					acmeSettingParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(acmeSettingParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewAcmeSettingProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(acmeSettingParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("accept-tos") {
+						acmeSettingParam.AcceptTos = c.Bool("accept-tos")
+					}
+					if c.IsSet("common-name") {
+						acmeSettingParam.CommonName = c.String("common-name")
+					}
+					if c.IsSet("disable") {
+						acmeSettingParam.Disable = c.Bool("disable")
+					}
+					if c.IsSet("selector") {
+						acmeSettingParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						acmeSettingParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						acmeSettingParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						acmeSettingParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						acmeSettingParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						acmeSettingParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						acmeSettingParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						acmeSettingParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						acmeSettingParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						acmeSettingParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						acmeSettingParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						acmeSettingParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						acmeSettingParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = acmeSettingParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Experiment warning
+					printWarning("")
+
+					// Generate skeleton
+					if acmeSettingParam.GenerateSkeleton {
+						acmeSettingParam.GenerateSkeleton = false
+						acmeSettingParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(acmeSettingParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := acmeSettingParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), acmeSettingParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(acmeSettingParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, acmeSettingParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", acmeSettingParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(acmeSettingParam.Selector) == 0 || hasTags(&v, acmeSettingParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !acmeSettingParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("acme-setting", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						acmeSettingParam.SetId(id)
+						p := *acmeSettingParam // copy struct value
+						acmeSettingParam := &p
+						go func() {
+							err := funcs.ProxyLBAcmeSetting(ctx, acmeSettingParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "acme-renew",
+				Usage:     "AcmeRenew ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = acmeRenewParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, acmeRenewParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						acmeRenewParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						acmeRenewParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						acmeRenewParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						acmeRenewParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						acmeRenewParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						acmeRenewParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBAcmeRenewCompleteArgs(ctx, acmeRenewParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBAcmeRenewCompleteArgs(ctx, acmeRenewParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBAcmeRenewCompleteFlags(ctx, acmeRenewParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBAcmeRenewCompleteArgs(ctx, acmeRenewParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					acmeRenewParam.ParamTemplate = c.String("param-template")
+					acmeRenewParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(acmeRenewParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewAcmeRenewProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(acmeRenewParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						acmeRenewParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						acmeRenewParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						acmeRenewParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						acmeRenewParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						acmeRenewParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("id") {
+						acmeRenewParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = acmeRenewParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Experiment warning
+					printWarning("")
+
+					// Generate skeleton
+					if acmeRenewParam.GenerateSkeleton {
+						acmeRenewParam.GenerateSkeleton = false
+						acmeRenewParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(acmeRenewParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := acmeRenewParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), acmeRenewParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(acmeRenewParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, acmeRenewParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", acmeRenewParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(acmeRenewParam.Selector) == 0 || hasTags(&v, acmeRenewParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !acmeRenewParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("acme-renew", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						acmeRenewParam.SetId(id)
+						p := *acmeRenewParam // copy struct value
+						acmeRenewParam := &p
+						go func() {
+							err := funcs.ProxyLBAcmeRenew(ctx, acmeRenewParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -4321,7 +5478,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if serverInfoParam.GenerateSkeleton {
@@ -4734,7 +5891,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if serverAddParam.GenerateSkeleton {
@@ -5167,7 +6324,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if serverUpdateParam.GenerateSkeleton {
@@ -5570,7 +6727,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if serverDeleteParam.GenerateSkeleton {
@@ -5953,7 +7110,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if certificateInfoParam.GenerateSkeleton {
@@ -6368,7 +7525,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if certificateAddParam.GenerateSkeleton {
@@ -6791,7 +7948,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if certificateUpdateParam.GenerateSkeleton {
@@ -7185,7 +8342,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if certificateDeleteParam.GenerateSkeleton {
@@ -7598,7 +8755,7 @@ func init() {
 					}
 
 					// Experiment warning
-					printWarning("ProxyLB command is experimental")
+					printWarning("")
 
 					// Generate skeleton
 					if monitorParam.GenerateSkeleton {
@@ -7714,6 +8871,21 @@ func init() {
 
 	// build Category-Command mapping
 
+	AppendCommandCategoryMap("proxy-lb", "acme-info", &schema.Category{
+		Key:         "acme",
+		DisplayName: "ACME settings",
+		Order:       25,
+	})
+	AppendCommandCategoryMap("proxy-lb", "acme-renew", &schema.Category{
+		Key:         "acme",
+		DisplayName: "ACME settings",
+		Order:       25,
+	})
+	AppendCommandCategoryMap("proxy-lb", "acme-setting", &schema.Category{
+		Key:         "acme",
+		DisplayName: "ACME settings",
+		Order:       25,
+	})
 	AppendCommandCategoryMap("proxy-lb", "bind-port-add", &schema.Category{
 		Key:         "bind-port",
 		DisplayName: "Bind Port(s) Management",
@@ -7812,6 +8984,176 @@ func init() {
 
 	// build Category-Param mapping
 
+	AppendFlagCategoryMap("proxy-lb", "acme-info", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-info", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-info", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-info", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-info", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-info", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-info", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-info", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-renew", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-renew", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-renew", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-renew", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-renew", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-renew", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "accept-tos", &schema.Category{
+		Key:         "acme",
+		DisplayName: "Acme options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "common-name", &schema.Category{
+		Key:         "acme",
+		DisplayName: "Acme options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "disable", &schema.Category{
+		Key:         "acme",
+		DisplayName: "Acme options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "acme-setting", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
 	AppendFlagCategoryMap("proxy-lb", "bind-port-add", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -7882,10 +9224,20 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("proxy-lb", "bind-port-add", "redirect-to-https", &schema.Category{
+		Key:         "bind-port",
+		DisplayName: "Bind-Port options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("proxy-lb", "bind-port-add", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("proxy-lb", "bind-port-add", "support-http2", &schema.Category{
+		Key:         "bind-port",
+		DisplayName: "Bind-Port options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("proxy-lb", "bind-port-delete", "assumeyes", &schema.Category{
 		Key:         "Input",
@@ -8092,10 +9444,20 @@ func init() {
 		DisplayName: "Output options",
 		Order:       2147483637,
 	})
+	AppendFlagCategoryMap("proxy-lb", "bind-port-update", "redirect-to-https", &schema.Category{
+		Key:         "bind-port",
+		DisplayName: "Bind-Port options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("proxy-lb", "bind-port-update", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("proxy-lb", "bind-port-update", "support-http2", &schema.Category{
+		Key:         "bind-port",
+		DisplayName: "Bind-Port options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("proxy-lb", "certificate-add", "assumeyes", &schema.Category{
 		Key:         "Input",
