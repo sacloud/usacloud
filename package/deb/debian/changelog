@@ -1,3 +1,10 @@
+usacloud (0.24.0-1) stable; urgency=low
+
+  * エンハンスドロードバランサの機能拡充 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/435>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Wed, 26 Jun 2019 03:29:53 +0000
+
 usacloud (0.23.1-1) stable; urgency=low
 
   * CAA Recordの作成 (by yamamoto-febc)
