@@ -1,6 +1,7 @@
 package funcs
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/sacloud/usacloud/command"
@@ -14,6 +15,11 @@ func ProxyLBAcmeSetting(ctx command.Context, params *params.AcmeSettingProxyLBPa
 	p, e := api.Read(params.Id)
 	if e != nil {
 		return fmt.Errorf("ProxyLBAcmeSetting is failed: %s", e)
+	}
+
+	// validate params
+	if !params.Disable && !params.AcceptTos {
+		return errors.New("--accept-tos=true is required to enable Let's Encrypt setting")
 	}
 
 	// set params
