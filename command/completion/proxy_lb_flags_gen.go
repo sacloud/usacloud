@@ -327,6 +327,16 @@ func ProxyLBBindPortAddCompleteFlags(ctx command.Context, params *params.BindPor
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "redirect-to-https":
+		param := define.Resources["ProxyLB"].Commands["bind-port-add"].BuildedParams().Get("redirect-to-https")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "support-http2":
+		param := define.Resources["ProxyLB"].Commands["bind-port-add"].BuildedParams().Get("support-http2")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "selector":
 		param := define.Resources["ProxyLB"].Commands["bind-port-add"].BuildedParams().Get("selector")
 		if param != nil {
@@ -365,6 +375,16 @@ func ProxyLBBindPortUpdateCompleteFlags(ctx command.Context, params *params.Bind
 		}
 	case "port":
 		param := define.Resources["ProxyLB"].Commands["bind-port-update"].BuildedParams().Get("port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "redirect-to-https":
+		param := define.Resources["ProxyLB"].Commands["bind-port-update"].BuildedParams().Get("redirect-to-https")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "support-http2":
+		param := define.Resources["ProxyLB"].Commands["bind-port-update"].BuildedParams().Get("support-http2")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
@@ -411,6 +431,97 @@ func ProxyLBBindPortDeleteCompleteFlags(ctx command.Context, params *params.Bind
 		}
 	case "output-type", "out", "o":
 		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBAcmeInfoCompleteFlags(ctx command.Context, params *params.AcmeInfoProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["acme-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["acme-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBAcmeSettingCompleteFlags(ctx command.Context, params *params.AcmeSettingProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "accept-tos":
+		param := define.Resources["ProxyLB"].Commands["acme-setting"].BuildedParams().Get("accept-tos")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "common-name":
+		param := define.Resources["ProxyLB"].Commands["acme-setting"].BuildedParams().Get("common-name")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "disable":
+		param := define.Resources["ProxyLB"].Commands["acme-setting"].BuildedParams().Get("disable")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["acme-setting"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["acme-setting"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBAcmeRenewCompleteFlags(ctx command.Context, params *params.AcmeRenewProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["acme-renew"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["acme-renew"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	}
 
 	if comp != nil {

@@ -265,6 +265,99 @@ func ProxyLBBindPortDeleteCompleteArgs(ctx command.Context, params *params.BindP
 
 }
 
+func ProxyLBAcmeInfoCompleteArgs(ctx command.Context, params *params.AcmeInfoProxyLBParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetProxyLBAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.CommonServiceProxyLBItems {
+		fmt.Println(res.CommonServiceProxyLBItems[i].ID)
+		var target interface{} = &res.CommonServiceProxyLBItems[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func ProxyLBAcmeSettingCompleteArgs(ctx command.Context, params *params.AcmeSettingProxyLBParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetProxyLBAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.CommonServiceProxyLBItems {
+		fmt.Println(res.CommonServiceProxyLBItems[i].ID)
+		var target interface{} = &res.CommonServiceProxyLBItems[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func ProxyLBAcmeRenewCompleteArgs(ctx command.Context, params *params.AcmeRenewProxyLBParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetProxyLBAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.CommonServiceProxyLBItems {
+		fmt.Println(res.CommonServiceProxyLBItems[i].ID)
+		var target interface{} = &res.CommonServiceProxyLBItems[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
 func ProxyLBServerInfoCompleteArgs(ctx command.Context, params *params.ServerInfoProxyLBParam, cur, prev, commandName string) {
 
 	if !command.GlobalOption.Valid {
