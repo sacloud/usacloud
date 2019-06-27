@@ -86,6 +86,11 @@ func ProxyLBCreateCompleteFlags(ctx command.Context, params *params.CreateProxyL
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "sticky-session":
+		param := define.Resources["ProxyLB"].Commands["create"].BuildedParams().Get("sticky-session")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "sorry-server-ipaddress":
 		param := define.Resources["ProxyLB"].Commands["create"].BuildedParams().Get("sorry-server-ipaddress")
 		if param != nil {
@@ -175,6 +180,11 @@ func ProxyLBUpdateCompleteFlags(ctx command.Context, params *params.UpdateProxyL
 		}
 	case "delay-loop":
 		param := define.Resources["ProxyLB"].Commands["update"].BuildedParams().Get("delay-loop")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "sticky-session":
+		param := define.Resources["ProxyLB"].Commands["update"].BuildedParams().Get("sticky-session")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

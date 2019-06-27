@@ -411,6 +411,10 @@ func init() {
 						Usage: "[Required] set delay-loop of healthcheck",
 						Value: 10,
 					},
+					&cli.BoolFlag{
+						Name:  "sticky-session",
+						Usage: "enable sticky-session",
+					},
 					&cli.StringFlag{
 						Name:  "sorry-server-ipaddress",
 						Usage: "set sorry-server ip address",
@@ -538,6 +542,9 @@ func init() {
 					}
 					if c.IsSet("delay-loop") {
 						createParam.DelayLoop = c.Int("delay-loop")
+					}
+					if c.IsSet("sticky-session") {
+						createParam.StickySession = c.Bool("sticky-session")
 					}
 					if c.IsSet("sorry-server-ipaddress") {
 						createParam.SorryServerIpaddress = c.String("sorry-server-ipaddress")
@@ -689,6 +696,9 @@ func init() {
 					}
 					if c.IsSet("delay-loop") {
 						createParam.DelayLoop = c.Int("delay-loop")
+					}
+					if c.IsSet("sticky-session") {
+						createParam.StickySession = c.Bool("sticky-session")
 					}
 					if c.IsSet("sorry-server-ipaddress") {
 						createParam.SorryServerIpaddress = c.String("sorry-server-ipaddress")
@@ -1185,6 +1195,10 @@ func init() {
 						Name:  "delay-loop",
 						Usage: "set delay-loop of healthcheck",
 					},
+					&cli.BoolFlag{
+						Name:  "sticky-session",
+						Usage: "enable sticky-session",
+					},
 					&cli.StringFlag{
 						Name:  "sorry-server-ipaddress",
 						Usage: "set sorry-server ip address",
@@ -1318,6 +1332,9 @@ func init() {
 					}
 					if c.IsSet("delay-loop") {
 						updateParam.DelayLoop = c.Int("delay-loop")
+					}
+					if c.IsSet("sticky-session") {
+						updateParam.StickySession = c.Bool("sticky-session")
 					}
 					if c.IsSet("sorry-server-ipaddress") {
 						updateParam.SorryServerIpaddress = c.String("sorry-server-ipaddress")
@@ -1472,6 +1489,9 @@ func init() {
 					}
 					if c.IsSet("delay-loop") {
 						updateParam.DelayLoop = c.Int("delay-loop")
+					}
+					if c.IsSet("sticky-session") {
+						updateParam.StickySession = c.Bool("sticky-session")
 					}
 					if c.IsSet("sorry-server-ipaddress") {
 						updateParam.SorryServerIpaddress = c.String("sorry-server-ipaddress")
@@ -9849,6 +9869,11 @@ func init() {
 		DisplayName: "ProxyLB options",
 		Order:       1,
 	})
+	AppendFlagCategoryMap("proxy-lb", "create", "sticky-session", &schema.Category{
+		Key:         "ProxyLB",
+		DisplayName: "ProxyLB options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("proxy-lb", "create", "tags", &schema.Category{
 		Key:         "common",
 		DisplayName: "Common options",
@@ -10605,6 +10630,11 @@ func init() {
 		Order:       1,
 	})
 	AppendFlagCategoryMap("proxy-lb", "update", "sorry-server-port", &schema.Category{
+		Key:         "ProxyLB",
+		DisplayName: "ProxyLB options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("proxy-lb", "update", "sticky-session", &schema.Category{
 		Key:         "ProxyLB",
 		DisplayName: "ProxyLB options",
 		Order:       1,
