@@ -278,6 +278,14 @@ func proxyLBListColumns() []output.ColumnDef {
 			Name:    "VIP",
 			Sources: []string{"Status.VirtualIPAddress"},
 		},
+		{
+			Name:    "FQDN",
+			Sources: []string{"Status.FQDN"},
+		},
+		{
+			Name:    "StickySession",
+			Sources: []string{"Settings.ProxyLB.StickySession.Enabled"},
+		},
 	}
 }
 
@@ -379,6 +387,13 @@ func proxyLBCreateParam() map[string]*schema.Schema {
 			Category:     "ProxyLB",
 			Order:        60,
 		},
+		"sticky-session": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "enable sticky-session",
+			Category:    "ProxyLB",
+			Order:       70,
+		},
 		"sorry-server-ipaddress": {
 			Type:        schema.TypeString,
 			HandlerType: schema.HandlerNoop,
@@ -392,7 +407,7 @@ func proxyLBCreateParam() map[string]*schema.Schema {
 			Description:  "set sorry-server ports",
 			ValidateFunc: validateIntRange(1, 65535),
 			Category:     "ProxyLB",
-			Order:        80,
+			Order:        85,
 		},
 		"name":        paramRequiredName,
 		"description": paramDescription,
@@ -437,6 +452,13 @@ func proxyLBUpdateParam() map[string]*schema.Schema {
 			ValidateFunc: validateIntRange(10, 60),
 			Category:     "ProxyLB",
 			Order:        60,
+		},
+		"sticky-session": {
+			Type:        schema.TypeBool,
+			HandlerType: schema.HandlerNoop,
+			Description: "enable sticky-session",
+			Category:    "ProxyLB",
+			Order:       70,
 		},
 		"sorry-server-ipaddress": {
 			Type:        schema.TypeString,

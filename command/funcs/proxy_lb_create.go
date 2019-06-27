@@ -37,6 +37,13 @@ func ProxyLBCreate(ctx command.Context, params *params.CreateProxyLBParam) error
 		return fmt.Errorf("invalid protocol: %s", protocol)
 	}
 
+	if params.StickySession {
+		p.Settings.ProxyLB.StickySession = sacloud.ProxyLBSessionSetting{
+			Enabled: true,
+			Method:  sacloud.ProxyLBStickySessionDefaultMethod,
+		}
+	}
+
 	p.SetSorryServer(params.SorryServerIpaddress, params.SorryServerPort)
 
 	// call Create(id)

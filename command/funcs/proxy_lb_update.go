@@ -3,6 +3,7 @@ package funcs
 import (
 	"fmt"
 
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 )
@@ -70,6 +71,19 @@ func ProxyLBUpdate(ctx command.Context, params *params.UpdateProxyLBParam) error
 		p.SetTCPHealthCheck(params.DelayLoop)
 	default:
 		return fmt.Errorf("invalid protocol: %s", protocol)
+	}
+
+	if ctx.IsSet("sticky-session") {
+		if params.StickySession {
+			p.Settings.ProxyLB.StickySession = sacloud.ProxyLBSessionSetting{
+				Enabled: true,
+				Method:  sacloud.ProxyLBStickySessionDefaultMethod,
+			}
+		} else {
+			p.Settings.ProxyLB.StickySession = sacloud.ProxyLBSessionSetting{
+				Enabled: false,
+			}
+		}
 	}
 
 	if ctx.IsSet("sorry-server-ipaddress") || ctx.IsSet("sorry-server-port") {

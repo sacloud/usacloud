@@ -289,6 +289,7 @@ type CreateProxyLBParam struct {
 	HostHeader           string   `json:"host-header"`
 	Path                 string   `json:"path"`
 	DelayLoop            int      `json:"delay-loop"`
+	StickySession        bool     `json:"sticky-session"`
 	SorryServerIpaddress string   `json:"sorry-server-ipaddress"`
 	SorryServerPort      int      `json:"sorry-server-port"`
 	Name                 string   `json:"name"`
@@ -335,6 +336,9 @@ func (p *CreateProxyLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.DelayLoop) {
 		p.DelayLoop = 0
+	}
+	if isEmpty(p.StickySession) {
+		p.StickySession = false
 	}
 	if isEmpty(p.SorryServerIpaddress) {
 		p.SorryServerIpaddress = ""
@@ -552,6 +556,13 @@ func (p *CreateProxyLBParam) SetDelayLoop(v int) {
 
 func (p *CreateProxyLBParam) GetDelayLoop() int {
 	return p.DelayLoop
+}
+func (p *CreateProxyLBParam) SetStickySession(v bool) {
+	p.StickySession = v
+}
+
+func (p *CreateProxyLBParam) GetStickySession() bool {
+	return p.StickySession
 }
 func (p *CreateProxyLBParam) SetSorryServerIpaddress(v string) {
 	p.SorryServerIpaddress = v
@@ -884,6 +895,7 @@ type UpdateProxyLBParam struct {
 	HostHeader           string   `json:"host-header"`
 	Path                 string   `json:"path"`
 	DelayLoop            int      `json:"delay-loop"`
+	StickySession        bool     `json:"sticky-session"`
 	SorryServerIpaddress string   `json:"sorry-server-ipaddress"`
 	SorryServerPort      int      `json:"sorry-server-port"`
 	Selector             []string `json:"selector"`
@@ -923,6 +935,9 @@ func (p *UpdateProxyLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.DelayLoop) {
 		p.DelayLoop = 0
+	}
+	if isEmpty(p.StickySession) {
+		p.StickySession = false
 	}
 	if isEmpty(p.SorryServerIpaddress) {
 		p.SorryServerIpaddress = ""
@@ -1118,6 +1133,13 @@ func (p *UpdateProxyLBParam) SetDelayLoop(v int) {
 
 func (p *UpdateProxyLBParam) GetDelayLoop() int {
 	return p.DelayLoop
+}
+func (p *UpdateProxyLBParam) SetStickySession(v bool) {
+	p.StickySession = v
+}
+
+func (p *UpdateProxyLBParam) GetStickySession() bool {
+	return p.StickySession
 }
 func (p *UpdateProxyLBParam) SetSorryServerIpaddress(v string) {
 	p.SorryServerIpaddress = v
