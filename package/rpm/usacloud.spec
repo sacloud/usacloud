@@ -40,6 +40,10 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu Jun 27 2019 <sacloud.users@gmail.com> - 0.25.0-1
+- libsacloud v1.25.0 - k3OS (by yamamoto-febc)
+- エンハンスドロードバランサでのセッション維持機能 (by yamamoto-febc)
+
 * Wed Jun 26 2019 <sacloud.users@gmail.com> - 0.24.0-1
 - エンハンスドロードバランサの機能拡充 (by yamamoto-febc)
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.25.0 (2019-06-27)
+
+* libsacloud v1.25.0 - k3OS #437 (yamamoto-febc)
+* エンハンスドロードバランサでのセッション維持機能 #438 (yamamoto-febc)
+
+
 ## 0.24.0 (2019-06-26)
 
 * エンハンスドロードバランサの機能拡充 #435 (yamamoto-febc)
