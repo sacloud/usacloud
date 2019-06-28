@@ -1,3 +1,10 @@
+usacloud (0.25.1-1) stable; urgency=low
+
+  * Use libsacloud v1.25.1 - fix database apis (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/440>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Fri, 28 Jun 2019 06:37:16 +0000
+
 usacloud (0.25.0-1) stable; urgency=low
 
   * libsacloud v1.25.0 - k3OS (by yamamoto-febc)

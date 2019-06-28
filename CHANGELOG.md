@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.25.1 (2019-06-28)
+
+* Use libsacloud v1.25.1 - fix database apis #440 (yamamoto-febc)
+
+
 ## 0.25.0 (2019-06-27)
 
 * libsacloud v1.25.0 - k3OS #437 (yamamoto-febc)
