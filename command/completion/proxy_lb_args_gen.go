@@ -265,6 +265,130 @@ func ProxyLBBindPortDeleteCompleteArgs(ctx command.Context, params *params.BindP
 
 }
 
+func ProxyLBResponseHeaderInfoCompleteArgs(ctx command.Context, params *params.ResponseHeaderInfoProxyLBParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetProxyLBAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.CommonServiceProxyLBItems {
+		fmt.Println(res.CommonServiceProxyLBItems[i].ID)
+		var target interface{} = &res.CommonServiceProxyLBItems[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func ProxyLBResponseHeaderAddCompleteArgs(ctx command.Context, params *params.ResponseHeaderAddProxyLBParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetProxyLBAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.CommonServiceProxyLBItems {
+		fmt.Println(res.CommonServiceProxyLBItems[i].ID)
+		var target interface{} = &res.CommonServiceProxyLBItems[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func ProxyLBResponseHeaderUpdateCompleteArgs(ctx command.Context, params *params.ResponseHeaderUpdateProxyLBParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetProxyLBAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.CommonServiceProxyLBItems {
+		fmt.Println(res.CommonServiceProxyLBItems[i].ID)
+		var target interface{} = &res.CommonServiceProxyLBItems[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
+func ProxyLBResponseHeaderDeleteCompleteArgs(ctx command.Context, params *params.ResponseHeaderDeleteProxyLBParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetProxyLBAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.CommonServiceProxyLBItems {
+		fmt.Println(res.CommonServiceProxyLBItems[i].ID)
+		var target interface{} = &res.CommonServiceProxyLBItems[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
 func ProxyLBAcmeInfoCompleteArgs(ctx command.Context, params *params.AcmeInfoProxyLBParam, cur, prev, commandName string) {
 
 	if !command.GlobalOption.Valid {

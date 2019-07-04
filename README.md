@@ -113,54 +113,65 @@ VERSION:
    NN.NN.NN, build xxxxxx
 
 COMMANDS:
-   config, profile                  A manage command of APIKey settings
-   auth-status                      A manage commands of AuthStatus
-   private-host                     A manage commands of PrivateHost
-   server                           A manage commands of Server
-   archive                          A manage commands of Archive
-   auto-backup                      A manage commands of AutoBackup
-   disk                             A manage commands of Disk
-   iso-image                        A manage commands of ISOImage
-   bridge                           A manage commands of Bridge
-   interface                        A manage commands of Interface
-   internet                         A manage commands of Internet
-   ipv4                             A manage commands of IPv4
-   ipv6                             A manage commands of IPv6
-   packet-filter                    A manage commands of PacketFilter
-   switch                           A manage commands of Switch
-   database                         A manage commands of Database
-   load-balancer                    A manage commands of LoadBalancer
-   nfs                              A manage commands of NFS
-   vpc-router                       A manage commands of VPCRouter
-   dns                              A manage commands of DNS
-   gslb                             A manage commands of GSLB
-   simple-monitor                   A manage commands of SimpleMonitor
-   icon                             A manage commands of Icon
-   license                          A manage commands of License
-   ssh-key                          A manage commands of SSHKey
-   startup-script, note             A manage commands of StartupScript
-   bill                             A manage commands of Bill
-   object-storage, ojs              A manage commands of ObjectStorage
-   web-accel                        A manage commands of WebAccel
-   price, public-price              A manage commands of Price
-   product-disk, disk-plan          A manage commands of ProductDisk
-   product-internet, internet-plan  A manage commands of ProductInternet
-   product-license, license-info    A manage commands of ProductLicense
-   product-server, server-plan      A manage commands of ProductServer
-   region                           A manage commands of Region
-   zone                             A manage commands of Zone
-   summary                          Show summary of resource usage
+   config, profile                            A manage command of APIKey settings
+   auth-status                                A manage commands of AuthStatus
+   private-host                               A manage commands of PrivateHost
+   server                                     A manage commands of Server
+   archive                                    A manage commands of Archive
+   auto-backup                                A manage commands of AutoBackup
+   disk                                       A manage commands of Disk
+   iso-image                                  A manage commands of ISOImage
+   bridge                                     A manage commands of Bridge
+   interface                                  A manage commands of Interface
+   internet                                   A manage commands of Internet
+   ipv4                                       A manage commands of IPv4
+   ipv6                                       A manage commands of IPv6
+   packet-filter                              A manage commands of PacketFilter
+   switch                                     A manage commands of Switch
+   database                                   A manage commands of Database
+   load-balancer                              A manage commands of LoadBalancer
+   mobile-gateway, mgw                        A manage commands of MobileGateway
+   nfs                                        A manage commands of NFS
+   vpc-router                                 A manage commands of VPCRouter
+   dns                                        A manage commands of DNS
+   gslb                                       A manage commands of GSLB
+   proxy-lb, enhanced-load-balancer, proxylb  A manage commands of ProxyLB
+   sim                                        A manage commands of SIM
+   simple-monitor                             A manage commands of SimpleMonitor
+   icon                                       A manage commands of Icon
+   license                                    A manage commands of License
+   ssh-key                                    A manage commands of SSHKey
+   startup-script, note                       A manage commands of StartupScript
+   bill                                       A manage commands of Bill
+   coupon                                     A manage commands of Coupon
+   object-storage, ojs                        A manage commands of ObjectStorage
+   self                                       Show self info
+   web-accel                                  A manage commands of WebAccel
+   price, public-price                        A manage commands of Price
+   product-disk, disk-plan                    A manage commands of ProductDisk
+   product-internet, internet-plan            A manage commands of ProductInternet
+   product-license, license-info              A manage commands of ProductLicense
+   product-server, server-plan                A manage commands of ProductServer
+   region                                     A manage commands of Region
+   zone                                       A manage commands of Zone
+   summary                                    Show summary of resource usage
 
 GLOBAL OPTIONS:
    --token value                    API Token of SakuraCloud (default: none) [$SAKURACLOUD_ACCESS_TOKEN]
    --secret value                   API Secret of SakuraCloud (default: none) [$SAKURACLOUD_ACCESS_TOKEN_SECRET]
    --zone value                     Target zone of SakuraCloud (default: tk1a) [$SAKURACLOUD_ZONE]
    --config value, --profile value  Config(Profile) name [$USACLOUD_PROFILE]
+   --timeout value                  Number of timeout minutes for polling functions (default: 20) [$SAKURACLOUD_TIMEOUT]
+   --accept-language value          Accept-Language Header [$SAKURACLOUD_ACCEPT_LANGUAGE]
+   --retry-max value                Number of API-Client retries (default: 0) [$SAKURACLOUD_RETRY_MAX]
+   --retry-interval value           API client retry interval seconds (default: 0) [$SAKURACLOUD_RETRY_INTERVAL]
+   --api-request-timeout value      Maximum wait time(seconds) for calling SakuraCloud API (default: 0) [$SAKURACLOUD_API_REQUEST_TIMEOUT]
+   --no-color                       Flag of not using ANSI color output (default: false) [$NO_COLOR]
    --help, -h                       show help (default: false)
    --version, -v                    print the version (default: false)
 
 COPYRIGHT:
-   Copyright (C) 2017 Kazumichi Yamamoto.
+   Copyright (C) 2017-2019 Kazumichi Yamamoto.
 ```   
 
 
