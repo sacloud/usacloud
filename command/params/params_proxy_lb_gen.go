@@ -2751,6 +2751,1025 @@ func (p *BindPortDeleteProxyLBParam) GetId() int64 {
 	return p.Id
 }
 
+// ResponseHeaderInfoProxyLBParam is input parameters for the sacloud API
+type ResponseHeaderInfoProxyLBParam struct {
+	PortIndex         int      `json:"port-index"`
+	Selector          []string `json:"selector"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewResponseHeaderInfoProxyLBParam return new ResponseHeaderInfoProxyLBParam
+func NewResponseHeaderInfoProxyLBParam() *ResponseHeaderInfoProxyLBParam {
+	return &ResponseHeaderInfoProxyLBParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ResponseHeaderInfoProxyLBParam) FillValueToSkeleton() {
+	if isEmpty(p.PortIndex) {
+		p.PortIndex = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *ResponseHeaderInfoProxyLBParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--port-index", p.PortIndex)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["response-header-info"]
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) SetPortIndex(v int) {
+	p.PortIndex = v
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetPortIndex() int {
+	return p.PortIndex
+}
+func (p *ResponseHeaderInfoProxyLBParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ResponseHeaderInfoProxyLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ResponseHeaderInfoProxyLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ResponseHeaderInfoProxyLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ResponseHeaderInfoProxyLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ResponseHeaderInfoProxyLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ResponseHeaderInfoProxyLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ResponseHeaderInfoProxyLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetFormat() string {
+	return p.Format
+}
+func (p *ResponseHeaderInfoProxyLBParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ResponseHeaderInfoProxyLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetQuery() string {
+	return p.Query
+}
+func (p *ResponseHeaderInfoProxyLBParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ResponseHeaderInfoProxyLBParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ResponseHeaderInfoProxyLBParam) GetId() int64 {
+	return p.Id
+}
+
+// ResponseHeaderAddProxyLBParam is input parameters for the sacloud API
+type ResponseHeaderAddProxyLBParam struct {
+	PortIndex         int      `json:"port-index"`
+	Header            string   `json:"header"`
+	Value             string   `json:"value"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewResponseHeaderAddProxyLBParam return new ResponseHeaderAddProxyLBParam
+func NewResponseHeaderAddProxyLBParam() *ResponseHeaderAddProxyLBParam {
+	return &ResponseHeaderAddProxyLBParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ResponseHeaderAddProxyLBParam) FillValueToSkeleton() {
+	if isEmpty(p.PortIndex) {
+		p.PortIndex = 0
+	}
+	if isEmpty(p.Header) {
+		p.Header = ""
+	}
+	if isEmpty(p.Value) {
+		p.Value = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *ResponseHeaderAddProxyLBParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--port-index", p.PortIndex)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--header", p.Header)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--value", p.Value)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["response-header-add"]
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *ResponseHeaderAddProxyLBParam) SetPortIndex(v int) {
+	p.PortIndex = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetPortIndex() int {
+	return p.PortIndex
+}
+func (p *ResponseHeaderAddProxyLBParam) SetHeader(v string) {
+	p.Header = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetHeader() string {
+	return p.Header
+}
+func (p *ResponseHeaderAddProxyLBParam) SetValue(v string) {
+	p.Value = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetValue() string {
+	return p.Value
+}
+func (p *ResponseHeaderAddProxyLBParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ResponseHeaderAddProxyLBParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ResponseHeaderAddProxyLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ResponseHeaderAddProxyLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ResponseHeaderAddProxyLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ResponseHeaderAddProxyLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ResponseHeaderAddProxyLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ResponseHeaderAddProxyLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ResponseHeaderAddProxyLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetFormat() string {
+	return p.Format
+}
+func (p *ResponseHeaderAddProxyLBParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ResponseHeaderAddProxyLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetQuery() string {
+	return p.Query
+}
+func (p *ResponseHeaderAddProxyLBParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ResponseHeaderAddProxyLBParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ResponseHeaderAddProxyLBParam) GetId() int64 {
+	return p.Id
+}
+
+// ResponseHeaderUpdateProxyLBParam is input parameters for the sacloud API
+type ResponseHeaderUpdateProxyLBParam struct {
+	Index             int      `json:"index"`
+	PortIndex         int      `json:"port-index"`
+	Header            string   `json:"header"`
+	Value             string   `json:"value"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewResponseHeaderUpdateProxyLBParam return new ResponseHeaderUpdateProxyLBParam
+func NewResponseHeaderUpdateProxyLBParam() *ResponseHeaderUpdateProxyLBParam {
+	return &ResponseHeaderUpdateProxyLBParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ResponseHeaderUpdateProxyLBParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.PortIndex) {
+		p.PortIndex = 0
+	}
+	if isEmpty(p.Header) {
+		p.Header = ""
+	}
+	if isEmpty(p.Value) {
+		p.Value = ""
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *ResponseHeaderUpdateProxyLBParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--port-index", p.PortIndex)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["response-header-update"]
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetIndex() int {
+	return p.Index
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetPortIndex(v int) {
+	p.PortIndex = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetPortIndex() int {
+	return p.PortIndex
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetHeader(v string) {
+	p.Header = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetHeader() string {
+	return p.Header
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetValue(v string) {
+	p.Value = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetValue() string {
+	return p.Value
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetFormat() string {
+	return p.Format
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetQuery() string {
+	return p.Query
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ResponseHeaderUpdateProxyLBParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ResponseHeaderUpdateProxyLBParam) GetId() int64 {
+	return p.Id
+}
+
+// ResponseHeaderDeleteProxyLBParam is input parameters for the sacloud API
+type ResponseHeaderDeleteProxyLBParam struct {
+	Index             int      `json:"index"`
+	PortIndex         int      `json:"port-index"`
+	Selector          []string `json:"selector"`
+	Assumeyes         bool     `json:"assumeyes"`
+	ParamTemplate     string   `json:"param-template"`
+	ParamTemplateFile string   `json:"param-template-file"`
+	GenerateSkeleton  bool     `json:"generate-skeleton"`
+	OutputType        string   `json:"output-type"`
+	Column            []string `json:"column"`
+	Quiet             bool     `json:"quiet"`
+	Format            string   `json:"format"`
+	FormatFile        string   `json:"format-file"`
+	Query             string   `json:"query"`
+	QueryFile         string   `json:"query-file"`
+	Id                int64    `json:"id"`
+}
+
+// NewResponseHeaderDeleteProxyLBParam return new ResponseHeaderDeleteProxyLBParam
+func NewResponseHeaderDeleteProxyLBParam() *ResponseHeaderDeleteProxyLBParam {
+	return &ResponseHeaderDeleteProxyLBParam{}
+}
+
+// FillValueToSkeleton fill values to empty fields
+func (p *ResponseHeaderDeleteProxyLBParam) FillValueToSkeleton() {
+	if isEmpty(p.Index) {
+		p.Index = 0
+	}
+	if isEmpty(p.PortIndex) {
+		p.PortIndex = 0
+	}
+	if isEmpty(p.Selector) {
+		p.Selector = []string{""}
+	}
+	if isEmpty(p.Assumeyes) {
+		p.Assumeyes = false
+	}
+	if isEmpty(p.ParamTemplate) {
+		p.ParamTemplate = ""
+	}
+	if isEmpty(p.ParamTemplateFile) {
+		p.ParamTemplateFile = ""
+	}
+	if isEmpty(p.GenerateSkeleton) {
+		p.GenerateSkeleton = false
+	}
+	if isEmpty(p.OutputType) {
+		p.OutputType = ""
+	}
+	if isEmpty(p.Column) {
+		p.Column = []string{""}
+	}
+	if isEmpty(p.Quiet) {
+		p.Quiet = false
+	}
+	if isEmpty(p.Format) {
+		p.Format = ""
+	}
+	if isEmpty(p.FormatFile) {
+		p.FormatFile = ""
+	}
+	if isEmpty(p.Query) {
+		p.Query = ""
+	}
+	if isEmpty(p.QueryFile) {
+		p.QueryFile = ""
+	}
+	if isEmpty(p.Id) {
+		p.Id = 0
+	}
+
+}
+
+// Validate checks current values in model
+func (p *ResponseHeaderDeleteProxyLBParam) Validate() []error {
+	errors := []error{}
+	{
+		validator := validateRequired
+		errs := validator("--index", p.Index)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateRequired
+		errs := validator("--port-index", p.PortIndex)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := validateSakuraID
+		errs := validator("--id", p.Id)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	{
+		validator := schema.ValidateInStrValues(define.AllowOutputTypes...)
+		errs := validator("--output-type", p.OutputType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateInputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		errs := validateOutputOption(p)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+
+	return errors
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetResourceDef() *schema.Resource {
+	return define.Resources["ProxyLB"]
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetCommandDef() *schema.Command {
+	return p.GetResourceDef().Commands["response-header-delete"]
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetIncludeFields() []string {
+	return p.GetCommandDef().IncludeFields
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetExcludeFields() []string {
+	return p.GetCommandDef().ExcludeFields
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetTableType() output.TableType {
+	return p.GetCommandDef().TableType
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetColumnDefs() []output.ColumnDef {
+	return p.GetCommandDef().TableColumnDefines
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) SetIndex(v int) {
+	p.Index = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetIndex() int {
+	return p.Index
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetPortIndex(v int) {
+	p.PortIndex = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetPortIndex() int {
+	return p.PortIndex
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetSelector(v []string) {
+	p.Selector = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetSelector() []string {
+	return p.Selector
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetAssumeyes(v bool) {
+	p.Assumeyes = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetAssumeyes() bool {
+	return p.Assumeyes
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetParamTemplate(v string) {
+	p.ParamTemplate = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetParamTemplate() string {
+	return p.ParamTemplate
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetParamTemplateFile(v string) {
+	p.ParamTemplateFile = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetParamTemplateFile() string {
+	return p.ParamTemplateFile
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetGenerateSkeleton(v bool) {
+	p.GenerateSkeleton = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetGenerateSkeleton() bool {
+	return p.GenerateSkeleton
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetOutputType(v string) {
+	p.OutputType = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetOutputType() string {
+	return p.OutputType
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetColumn(v []string) {
+	p.Column = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetColumn() []string {
+	return p.Column
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetQuiet(v bool) {
+	p.Quiet = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetQuiet() bool {
+	return p.Quiet
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetFormat(v string) {
+	p.Format = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetFormat() string {
+	return p.Format
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetFormatFile(v string) {
+	p.FormatFile = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetFormatFile() string {
+	return p.FormatFile
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetQuery(v string) {
+	p.Query = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetQuery() string {
+	return p.Query
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetQueryFile(v string) {
+	p.QueryFile = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetQueryFile() string {
+	return p.QueryFile
+}
+func (p *ResponseHeaderDeleteProxyLBParam) SetId(v int64) {
+	p.Id = v
+}
+
+func (p *ResponseHeaderDeleteProxyLBParam) GetId() int64 {
+	return p.Id
+}
+
 // AcmeInfoProxyLBParam is input parameters for the sacloud API
 type AcmeInfoProxyLBParam struct {
 	Selector          []string `json:"selector"`

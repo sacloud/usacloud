@@ -102,6 +102,45 @@ func ProxyLBResource() *schema.Resource {
 			Category:           "bind-port",
 			Order:              40,
 		},
+		"response-header-info": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             proxyLBResponseHeaderListParam(),
+			Aliases:            []string{"response-header-list"},
+			TableType:          output.TableSimple,
+			TableColumnDefines: proxyLBResponseHeaderListColumns(),
+			UseCustomCommand:   true,
+			NeedlessConfirm:    true,
+			Category:           "response-header",
+			Order:              10,
+		},
+		"response-header-add": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             proxyLBResponseHeaderAddParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: proxyLBResponseHeaderListColumns(),
+			UseCustomCommand:   true,
+			Category:           "response-header",
+			Order:              20,
+		},
+		"response-header-update": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             proxyLBResponseHeaderUpdateParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: proxyLBResponseHeaderListColumns(),
+			UseCustomCommand:   true,
+			Category:           "response-header",
+			Order:              30,
+		},
+		"response-header-delete": {
+			Type:               schema.CommandManipulateSingle,
+			Params:             proxyLBResponseHeaderDeleteParam(),
+			TableType:          output.TableSimple,
+			TableColumnDefines: proxyLBResponseHeaderListColumns(),
+			UseCustomCommand:   true,
+			ConfirmMessage:     "delete response-header",
+			Category:           "response-header",
+			Order:              40,
+		},
 		"acme-info": {
 			Type:               schema.CommandManipulateSingle,
 			Params:             proxyLBACMEInfoParam(),
@@ -241,6 +280,11 @@ var proxyLBCommandCategories = []schema.Category{
 		Order:       20,
 	},
 	{
+		Key:         "response-header",
+		DisplayName: "Additional Response Header(s) Management",
+		Order:       22,
+	},
+	{
 		Key:         "acme",
 		DisplayName: "ACME settings",
 		Order:       25,
@@ -302,6 +346,14 @@ func proxyLBBindPortListColumns() []output.ColumnDef {
 			Name:    "SupportHTTP2",
 			Sources: []string{"SupportHttp2"},
 		},
+	}
+}
+
+func proxyLBResponseHeaderListColumns() []output.ColumnDef {
+	return []output.ColumnDef{
+		{Name: "__ORDER__"}, // magic column name(generated on demand)
+		{Name: "Header"},
+		{Name: "Value"},
 	}
 }
 
@@ -595,6 +647,103 @@ func proxyLBBindPortDeleteParam() map[string]*schema.Schema {
 			Required:    true,
 			Category:    "bind-port",
 			Order:       1,
+		},
+	}
+}
+
+func proxyLBResponseHeaderListParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"port-index": {
+			Type:        schema.TypeInt,
+			HandlerType: schema.HandlerNoop,
+			Description: "index of target bind-port",
+			Required:    true,
+			Category:    "response-header",
+			Order:       2,
+		},
+	}
+}
+
+func proxyLBResponseHeaderAddParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"port-index": {
+			Type:        schema.TypeInt,
+			HandlerType: schema.HandlerNoop,
+			Description: "index of target bind-port",
+			Required:    true,
+			Category:    "response-header",
+			Order:       2,
+		},
+		"header": {
+			Type:        schema.TypeString,
+			HandlerType: schema.HandlerNoop,
+			Description: "set Header",
+			Required:    true,
+			Category:    "response-header",
+			Order:       10,
+		},
+		"value": {
+			Type:        schema.TypeString,
+			HandlerType: schema.HandlerNoop,
+			Description: "set Value",
+			Required:    true,
+			Category:    "response-header",
+			Order:       20,
+		},
+	}
+}
+func proxyLBResponseHeaderUpdateParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"index": {
+			Type:        schema.TypeInt,
+			HandlerType: schema.HandlerNoop,
+			Description: "index of target server",
+			Required:    true,
+			Category:    "server",
+			Order:       1,
+		},
+		"port-index": {
+			Type:        schema.TypeInt,
+			HandlerType: schema.HandlerNoop,
+			Description: "index of target bind-port",
+			Required:    true,
+			Category:    "response-header",
+			Order:       2,
+		},
+		"header": {
+			Type:        schema.TypeString,
+			HandlerType: schema.HandlerNoop,
+			Description: "set Header",
+			Category:    "response-header",
+			Order:       10,
+		},
+		"value": {
+			Type:        schema.TypeString,
+			HandlerType: schema.HandlerNoop,
+			Description: "set Value",
+			Category:    "response-header",
+			Order:       20,
+		},
+	}
+}
+
+func proxyLBResponseHeaderDeleteParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"index": {
+			Type:        schema.TypeInt,
+			HandlerType: schema.HandlerNoop,
+			Description: "index of target bind-port",
+			Required:    true,
+			Category:    "bind-port",
+			Order:       1,
+		},
+		"port-index": {
+			Type:        schema.TypeInt,
+			HandlerType: schema.HandlerNoop,
+			Description: "index of target bind-port",
+			Required:    true,
+			Category:    "response-header",
+			Order:       2,
 		},
 	}
 }

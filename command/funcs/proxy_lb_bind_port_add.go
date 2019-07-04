@@ -3,6 +3,7 @@ package funcs
 import (
 	"fmt"
 
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/params"
 )
@@ -23,7 +24,7 @@ func ProxyLBBindPortAdd(ctx command.Context, params *params.BindPortAddProxyLBPa
 		}
 	}
 
-	p.AddBindPort(params.Mode, params.Port, params.RedirectToHttps, params.SupportHttp2)
+	p.AddBindPort(params.Mode, params.Port, params.RedirectToHttps, params.SupportHttp2, []*sacloud.ProxyLBResponseHeader{})
 	p, e = api.UpdateSetting(params.Id, p)
 	if e != nil {
 		return fmt.Errorf("ProxyLBBindPortAdd is failed: %s", e)

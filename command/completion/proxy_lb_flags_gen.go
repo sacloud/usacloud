@@ -451,6 +451,160 @@ func ProxyLBBindPortDeleteCompleteFlags(ctx command.Context, params *params.Bind
 	}
 }
 
+func ProxyLBResponseHeaderInfoCompleteFlags(ctx command.Context, params *params.ResponseHeaderInfoProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "port-index":
+		param := define.Resources["ProxyLB"].Commands["response-header-info"].BuildedParams().Get("port-index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["response-header-info"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["response-header-info"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBResponseHeaderAddCompleteFlags(ctx command.Context, params *params.ResponseHeaderAddProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "port-index":
+		param := define.Resources["ProxyLB"].Commands["response-header-add"].BuildedParams().Get("port-index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "header":
+		param := define.Resources["ProxyLB"].Commands["response-header-add"].BuildedParams().Get("header")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "value":
+		param := define.Resources["ProxyLB"].Commands["response-header-add"].BuildedParams().Get("value")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["response-header-add"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["response-header-add"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBResponseHeaderUpdateCompleteFlags(ctx command.Context, params *params.ResponseHeaderUpdateProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "index":
+		param := define.Resources["ProxyLB"].Commands["response-header-update"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "port-index":
+		param := define.Resources["ProxyLB"].Commands["response-header-update"].BuildedParams().Get("port-index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "header":
+		param := define.Resources["ProxyLB"].Commands["response-header-update"].BuildedParams().Get("header")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "value":
+		param := define.Resources["ProxyLB"].Commands["response-header-update"].BuildedParams().Get("value")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["response-header-update"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["response-header-update"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
+func ProxyLBResponseHeaderDeleteCompleteFlags(ctx command.Context, params *params.ResponseHeaderDeleteProxyLBParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "index":
+		param := define.Resources["ProxyLB"].Commands["response-header-delete"].BuildedParams().Get("index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "port-index":
+		param := define.Resources["ProxyLB"].Commands["response-header-delete"].BuildedParams().Get("port-index")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["ProxyLB"].Commands["response-header-delete"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["ProxyLB"].Commands["response-header-delete"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
 func ProxyLBAcmeInfoCompleteFlags(ctx command.Context, params *params.AcmeInfoProxyLBParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 

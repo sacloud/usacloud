@@ -28,6 +28,10 @@ func init() {
 	bindPortAddParam := params.NewBindPortAddProxyLBParam()
 	bindPortUpdateParam := params.NewBindPortUpdateProxyLBParam()
 	bindPortDeleteParam := params.NewBindPortDeleteProxyLBParam()
+	responseHeaderInfoParam := params.NewResponseHeaderInfoProxyLBParam()
+	responseHeaderAddParam := params.NewResponseHeaderAddProxyLBParam()
+	responseHeaderUpdateParam := params.NewResponseHeaderUpdateProxyLBParam()
+	responseHeaderDeleteParam := params.NewResponseHeaderDeleteProxyLBParam()
 	acmeInfoParam := params.NewAcmeInfoProxyLBParam()
 	acmeSettingParam := params.NewAcmeSettingProxyLBParam()
 	acmeRenewParam := params.NewAcmeRenewProxyLBParam()
@@ -4104,6 +4108,1658 @@ func init() {
 						bindPortDeleteParam := &p
 						go func() {
 							err := funcs.ProxyLBBindPortDelete(ctx, bindPortDeleteParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "response-header-info",
+				Aliases:   []string{"response-header-list"},
+				Usage:     "ResponseHeaderInfo ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "port-index",
+						Usage: "[Required] index of target bind-port",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = responseHeaderInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, responseHeaderInfoParam)
+
+					// Set option values
+					if c.IsSet("port-index") {
+						responseHeaderInfoParam.PortIndex = c.Int("port-index")
+					}
+					if c.IsSet("selector") {
+						responseHeaderInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						responseHeaderInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						responseHeaderInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						responseHeaderInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						responseHeaderInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						responseHeaderInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						responseHeaderInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						responseHeaderInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						responseHeaderInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						responseHeaderInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						responseHeaderInfoParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						responseHeaderInfoParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBResponseHeaderInfoCompleteArgs(ctx, responseHeaderInfoParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBResponseHeaderInfoCompleteArgs(ctx, responseHeaderInfoParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBResponseHeaderInfoCompleteFlags(ctx, responseHeaderInfoParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBResponseHeaderInfoCompleteArgs(ctx, responseHeaderInfoParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					responseHeaderInfoParam.ParamTemplate = c.String("param-template")
+					responseHeaderInfoParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(responseHeaderInfoParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewResponseHeaderInfoProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(responseHeaderInfoParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("port-index") {
+						responseHeaderInfoParam.PortIndex = c.Int("port-index")
+					}
+					if c.IsSet("selector") {
+						responseHeaderInfoParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("param-template") {
+						responseHeaderInfoParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						responseHeaderInfoParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						responseHeaderInfoParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						responseHeaderInfoParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						responseHeaderInfoParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						responseHeaderInfoParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						responseHeaderInfoParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						responseHeaderInfoParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						responseHeaderInfoParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						responseHeaderInfoParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						responseHeaderInfoParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = responseHeaderInfoParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Experiment warning
+					printWarning("")
+
+					// Generate skeleton
+					if responseHeaderInfoParam.GenerateSkeleton {
+						responseHeaderInfoParam.GenerateSkeleton = false
+						responseHeaderInfoParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(responseHeaderInfoParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := responseHeaderInfoParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), responseHeaderInfoParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(responseHeaderInfoParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, responseHeaderInfoParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", responseHeaderInfoParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(responseHeaderInfoParam.Selector) == 0 || hasTags(&v, responseHeaderInfoParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						responseHeaderInfoParam.SetId(id)
+						p := *responseHeaderInfoParam // copy struct value
+						responseHeaderInfoParam := &p
+						go func() {
+							err := funcs.ProxyLBResponseHeaderInfo(ctx, responseHeaderInfoParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "response-header-add",
+				Usage:     "ResponseHeaderAdd ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "port-index",
+						Usage: "[Required] index of target bind-port",
+					},
+					&cli.StringFlag{
+						Name:  "header",
+						Usage: "[Required] set Header",
+					},
+					&cli.StringFlag{
+						Name:  "value",
+						Usage: "[Required] set Value",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = responseHeaderAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, responseHeaderAddParam)
+
+					// Set option values
+					if c.IsSet("port-index") {
+						responseHeaderAddParam.PortIndex = c.Int("port-index")
+					}
+					if c.IsSet("header") {
+						responseHeaderAddParam.Header = c.String("header")
+					}
+					if c.IsSet("value") {
+						responseHeaderAddParam.Value = c.String("value")
+					}
+					if c.IsSet("selector") {
+						responseHeaderAddParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						responseHeaderAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						responseHeaderAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						responseHeaderAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						responseHeaderAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						responseHeaderAddParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						responseHeaderAddParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						responseHeaderAddParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						responseHeaderAddParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						responseHeaderAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						responseHeaderAddParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						responseHeaderAddParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						responseHeaderAddParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBResponseHeaderAddCompleteArgs(ctx, responseHeaderAddParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBResponseHeaderAddCompleteArgs(ctx, responseHeaderAddParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBResponseHeaderAddCompleteFlags(ctx, responseHeaderAddParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBResponseHeaderAddCompleteArgs(ctx, responseHeaderAddParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					responseHeaderAddParam.ParamTemplate = c.String("param-template")
+					responseHeaderAddParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(responseHeaderAddParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewResponseHeaderAddProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(responseHeaderAddParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("port-index") {
+						responseHeaderAddParam.PortIndex = c.Int("port-index")
+					}
+					if c.IsSet("header") {
+						responseHeaderAddParam.Header = c.String("header")
+					}
+					if c.IsSet("value") {
+						responseHeaderAddParam.Value = c.String("value")
+					}
+					if c.IsSet("selector") {
+						responseHeaderAddParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						responseHeaderAddParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						responseHeaderAddParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						responseHeaderAddParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						responseHeaderAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						responseHeaderAddParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						responseHeaderAddParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						responseHeaderAddParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						responseHeaderAddParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						responseHeaderAddParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						responseHeaderAddParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						responseHeaderAddParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						responseHeaderAddParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = responseHeaderAddParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Experiment warning
+					printWarning("")
+
+					// Generate skeleton
+					if responseHeaderAddParam.GenerateSkeleton {
+						responseHeaderAddParam.GenerateSkeleton = false
+						responseHeaderAddParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(responseHeaderAddParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := responseHeaderAddParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), responseHeaderAddParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(responseHeaderAddParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, responseHeaderAddParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", responseHeaderAddParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(responseHeaderAddParam.Selector) == 0 || hasTags(&v, responseHeaderAddParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !responseHeaderAddParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("response-header-add", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						responseHeaderAddParam.SetId(id)
+						p := *responseHeaderAddParam // copy struct value
+						responseHeaderAddParam := &p
+						go func() {
+							err := funcs.ProxyLBResponseHeaderAdd(ctx, responseHeaderAddParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "response-header-update",
+				Usage:     "ResponseHeaderUpdate ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target server",
+					},
+					&cli.IntFlag{
+						Name:  "port-index",
+						Usage: "[Required] index of target bind-port",
+					},
+					&cli.StringFlag{
+						Name:  "header",
+						Usage: "set Header",
+					},
+					&cli.StringFlag{
+						Name:  "value",
+						Usage: "set Value",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = responseHeaderUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, responseHeaderUpdateParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						responseHeaderUpdateParam.Index = c.Int("index")
+					}
+					if c.IsSet("port-index") {
+						responseHeaderUpdateParam.PortIndex = c.Int("port-index")
+					}
+					if c.IsSet("header") {
+						responseHeaderUpdateParam.Header = c.String("header")
+					}
+					if c.IsSet("value") {
+						responseHeaderUpdateParam.Value = c.String("value")
+					}
+					if c.IsSet("selector") {
+						responseHeaderUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						responseHeaderUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						responseHeaderUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						responseHeaderUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						responseHeaderUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						responseHeaderUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						responseHeaderUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						responseHeaderUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						responseHeaderUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						responseHeaderUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						responseHeaderUpdateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						responseHeaderUpdateParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						responseHeaderUpdateParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBResponseHeaderUpdateCompleteArgs(ctx, responseHeaderUpdateParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBResponseHeaderUpdateCompleteArgs(ctx, responseHeaderUpdateParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBResponseHeaderUpdateCompleteFlags(ctx, responseHeaderUpdateParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBResponseHeaderUpdateCompleteArgs(ctx, responseHeaderUpdateParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					responseHeaderUpdateParam.ParamTemplate = c.String("param-template")
+					responseHeaderUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(responseHeaderUpdateParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewResponseHeaderUpdateProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(responseHeaderUpdateParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						responseHeaderUpdateParam.Index = c.Int("index")
+					}
+					if c.IsSet("port-index") {
+						responseHeaderUpdateParam.PortIndex = c.Int("port-index")
+					}
+					if c.IsSet("header") {
+						responseHeaderUpdateParam.Header = c.String("header")
+					}
+					if c.IsSet("value") {
+						responseHeaderUpdateParam.Value = c.String("value")
+					}
+					if c.IsSet("selector") {
+						responseHeaderUpdateParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						responseHeaderUpdateParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						responseHeaderUpdateParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						responseHeaderUpdateParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						responseHeaderUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						responseHeaderUpdateParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						responseHeaderUpdateParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						responseHeaderUpdateParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						responseHeaderUpdateParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						responseHeaderUpdateParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						responseHeaderUpdateParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						responseHeaderUpdateParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						responseHeaderUpdateParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = responseHeaderUpdateParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Experiment warning
+					printWarning("")
+
+					// Generate skeleton
+					if responseHeaderUpdateParam.GenerateSkeleton {
+						responseHeaderUpdateParam.GenerateSkeleton = false
+						responseHeaderUpdateParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(responseHeaderUpdateParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := responseHeaderUpdateParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), responseHeaderUpdateParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(responseHeaderUpdateParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, responseHeaderUpdateParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", responseHeaderUpdateParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(responseHeaderUpdateParam.Selector) == 0 || hasTags(&v, responseHeaderUpdateParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !responseHeaderUpdateParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("response-header-update", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						responseHeaderUpdateParam.SetId(id)
+						p := *responseHeaderUpdateParam // copy struct value
+						responseHeaderUpdateParam := &p
+						go func() {
+							err := funcs.ProxyLBResponseHeaderUpdate(ctx, responseHeaderUpdateParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
+				Name:      "response-header-delete",
+				Usage:     "ResponseHeaderDelete ProxyLB",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.IntFlag{
+						Name:  "index",
+						Usage: "[Required] index of target bind-port",
+					},
+					&cli.IntFlag{
+						Name:  "port-index",
+						Usage: "[Required] index of target bind-port",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = responseHeaderDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, responseHeaderDeleteParam)
+
+					// Set option values
+					if c.IsSet("index") {
+						responseHeaderDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("port-index") {
+						responseHeaderDeleteParam.PortIndex = c.Int("port-index")
+					}
+					if c.IsSet("selector") {
+						responseHeaderDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						responseHeaderDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						responseHeaderDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						responseHeaderDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						responseHeaderDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						responseHeaderDeleteParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						responseHeaderDeleteParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						responseHeaderDeleteParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						responseHeaderDeleteParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						responseHeaderDeleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						responseHeaderDeleteParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						responseHeaderDeleteParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						responseHeaderDeleteParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.ProxyLBResponseHeaderDeleteCompleteArgs(ctx, responseHeaderDeleteParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.ProxyLBResponseHeaderDeleteCompleteArgs(ctx, responseHeaderDeleteParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.ProxyLBResponseHeaderDeleteCompleteFlags(ctx, responseHeaderDeleteParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.ProxyLBResponseHeaderDeleteCompleteArgs(ctx, responseHeaderDeleteParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					responseHeaderDeleteParam.ParamTemplate = c.String("param-template")
+					responseHeaderDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(responseHeaderDeleteParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewResponseHeaderDeleteProxyLBParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(responseHeaderDeleteParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("index") {
+						responseHeaderDeleteParam.Index = c.Int("index")
+					}
+					if c.IsSet("port-index") {
+						responseHeaderDeleteParam.PortIndex = c.Int("port-index")
+					}
+					if c.IsSet("selector") {
+						responseHeaderDeleteParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						responseHeaderDeleteParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						responseHeaderDeleteParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						responseHeaderDeleteParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						responseHeaderDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						responseHeaderDeleteParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						responseHeaderDeleteParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						responseHeaderDeleteParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						responseHeaderDeleteParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						responseHeaderDeleteParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						responseHeaderDeleteParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						responseHeaderDeleteParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						responseHeaderDeleteParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = responseHeaderDeleteParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Experiment warning
+					printWarning("")
+
+					// Generate skeleton
+					if responseHeaderDeleteParam.GenerateSkeleton {
+						responseHeaderDeleteParam.GenerateSkeleton = false
+						responseHeaderDeleteParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(responseHeaderDeleteParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := responseHeaderDeleteParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), responseHeaderDeleteParam)
+
+					apiClient := ctx.GetAPIClient().ProxyLB
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(responseHeaderDeleteParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.CommonServiceProxyLBItems {
+							if hasTags(&v, responseHeaderDeleteParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", responseHeaderDeleteParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.CommonServiceProxyLBItems {
+										if len(responseHeaderDeleteParam.Selector) == 0 || hasTags(&v, responseHeaderDeleteParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !responseHeaderDeleteParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("delete response-header", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						responseHeaderDeleteParam.SetId(id)
+						p := *responseHeaderDeleteParam // copy struct value
+						responseHeaderDeleteParam := &p
+						go func() {
+							err := funcs.ProxyLBResponseHeaderDelete(ctx, responseHeaderDeleteParam)
 							if err != nil {
 								errs = append(errs, err)
 							}
@@ -8976,6 +10632,26 @@ func init() {
 		DisplayName: "Basics",
 		Order:       10,
 	})
+	AppendCommandCategoryMap("proxy-lb", "response-header-add", &schema.Category{
+		Key:         "response-header",
+		DisplayName: "Additional Response Header(s) Management",
+		Order:       22,
+	})
+	AppendCommandCategoryMap("proxy-lb", "response-header-delete", &schema.Category{
+		Key:         "response-header",
+		DisplayName: "Additional Response Header(s) Management",
+		Order:       22,
+	})
+	AppendCommandCategoryMap("proxy-lb", "response-header-info", &schema.Category{
+		Key:         "response-header",
+		DisplayName: "Additional Response Header(s) Management",
+		Order:       22,
+	})
+	AppendCommandCategoryMap("proxy-lb", "response-header-update", &schema.Category{
+		Key:         "response-header",
+		DisplayName: "Additional Response Header(s) Management",
+		Order:       22,
+	})
 	AppendCommandCategoryMap("proxy-lb", "server-add", &schema.Category{
 		Key:         "servers",
 		DisplayName: "Real Server(s) Management",
@@ -10228,6 +11904,311 @@ func init() {
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "header", &schema.Category{
+		Key:         "response-header",
+		DisplayName: "Response-Header options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "port-index", &schema.Category{
+		Key:         "response-header",
+		DisplayName: "Response-Header options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-add", "value", &schema.Category{
+		Key:         "response-header",
+		DisplayName: "Response-Header options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "index", &schema.Category{
+		Key:         "bind-port",
+		DisplayName: "Bind-Port options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "port-index", &schema.Category{
+		Key:         "response-header",
+		DisplayName: "Response-Header options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-delete", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-info", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-info", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-info", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-info", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-info", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-info", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-info", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-info", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-info", "port-index", &schema.Category{
+		Key:         "response-header",
+		DisplayName: "Response-Header options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-info", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-info", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-info", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "header", &schema.Category{
+		Key:         "response-header",
+		DisplayName: "Response-Header options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "index", &schema.Category{
+		Key:         "server",
+		DisplayName: "Server options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "port-index", &schema.Category{
+		Key:         "response-header",
+		DisplayName: "Response-Header options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("proxy-lb", "response-header-update", "value", &schema.Category{
+		Key:         "response-header",
+		DisplayName: "Response-Header options",
+		Order:       1,
 	})
 	AppendFlagCategoryMap("proxy-lb", "server-add", "assumeyes", &schema.Category{
 		Key:         "Input",
