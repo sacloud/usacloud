@@ -1,3 +1,10 @@
+usacloud (0.26.0-1) stable; urgency=low
+
+  * エンハンスドロードバランサでのカスタムレスポンスヘッダ設定 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/442>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Thu, 04 Jul 2019 07:15:36 +0000
+
 usacloud (0.25.1-1) stable; urgency=low
 
   * Use libsacloud v1.25.1 - fix database apis (by yamamoto-febc)

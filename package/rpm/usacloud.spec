@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu Jul 04 2019 <sacloud.users@gmail.com> - 0.26.0-1
+- エンハンスドロードバランサでのカスタムレスポンスヘッダ設定 (by yamamoto-febc)
+
 * Fri Jun 28 2019 <sacloud.users@gmail.com> - 0.25.1-1
 - Use libsacloud v1.25.1 - fix database apis (by yamamoto-febc)
 
