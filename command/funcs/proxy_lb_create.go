@@ -46,6 +46,10 @@ func ProxyLBCreate(ctx command.Context, params *params.CreateProxyLBParam) error
 
 	p.SetSorryServer(params.SorryServerIpaddress, params.SorryServerPort)
 
+	p.Settings.ProxyLB.Timeout = &sacloud.ProxyLBTimeout{
+		InactiveSec: params.Timeout,
+	}
+
 	// call Create(id)
 	res, err := api.Create(p)
 	if err != nil {

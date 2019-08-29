@@ -90,6 +90,12 @@ func ProxyLBUpdate(ctx command.Context, params *params.UpdateProxyLBParam) error
 		p.SetSorryServer(params.SorryServerIpaddress, params.SorryServerPort)
 	}
 
+	if ctx.IsSet("timeout") {
+		p.Settings.ProxyLB.Timeout = &sacloud.ProxyLBTimeout{
+			InactiveSec: params.Timeout,
+		}
+	}
+
 	// call Update(id)
 	res, err := api.Update(params.Id, p)
 	if err != nil {

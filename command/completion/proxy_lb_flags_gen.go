@@ -101,6 +101,11 @@ func ProxyLBCreateCompleteFlags(ctx command.Context, params *params.CreateProxyL
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "timeout":
+		param := define.Resources["ProxyLB"].Commands["create"].BuildedParams().Get("timeout")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "name":
 		param := define.Resources["ProxyLB"].Commands["create"].BuildedParams().Get("name")
 		if param != nil {
@@ -195,6 +200,11 @@ func ProxyLBUpdateCompleteFlags(ctx command.Context, params *params.UpdateProxyL
 		}
 	case "sorry-server-port":
 		param := define.Resources["ProxyLB"].Commands["update"].BuildedParams().Get("sorry-server-port")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "timeout":
+		param := define.Resources["ProxyLB"].Commands["update"].BuildedParams().Get("timeout")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
