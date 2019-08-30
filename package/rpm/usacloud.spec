@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Fri Aug 30 2019 <sacloud.users@gmail.com> - 0.27.1-1
+- 0.27.0のリリースビルドエラーによる再リリース (by yamamoto-febc)
+
 * Fri Aug 30 2019 <sacloud.users@gmail.com> - 0.27.0-1
 - エンハンスドロードバランサ更新 (by yamamoto-febc)
 
