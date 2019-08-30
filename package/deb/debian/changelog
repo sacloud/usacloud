@@ -1,3 +1,10 @@
+usacloud (0.27.1-1) stable; urgency=low
+
+  * 0.27.0リリースビルドエラーによる再リリース (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Fri, 30 Aug 2019 00:26:07 +0000
+
 usacloud (0.27.0-1) stable; urgency=low
 
   * エンハンスドロードバランサ更新 (by yamamoto-febc)
