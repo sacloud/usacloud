@@ -427,6 +427,11 @@ func init() {
 						Name:  "sorry-server-port",
 						Usage: "set sorry-server ports",
 					},
+					&cli.IntFlag{
+						Name:  "timeout",
+						Usage: "set timeout",
+						Value: 10,
+					},
 					&cli.StringFlag{
 						Name:  "name",
 						Usage: "[Required] set resource display name",
@@ -555,6 +560,9 @@ func init() {
 					}
 					if c.IsSet("sorry-server-port") {
 						createParam.SorryServerPort = c.Int("sorry-server-port")
+					}
+					if c.IsSet("timeout") {
+						createParam.Timeout = c.Int("timeout")
 					}
 					if c.IsSet("name") {
 						createParam.Name = c.String("name")
@@ -709,6 +717,9 @@ func init() {
 					}
 					if c.IsSet("sorry-server-port") {
 						createParam.SorryServerPort = c.Int("sorry-server-port")
+					}
+					if c.IsSet("timeout") {
+						createParam.Timeout = c.Int("timeout")
 					}
 					if c.IsSet("name") {
 						createParam.Name = c.String("name")
@@ -1211,6 +1222,11 @@ func init() {
 						Name:  "sorry-server-port",
 						Usage: "set sorry-server ports",
 					},
+					&cli.IntFlag{
+						Name:  "timeout",
+						Usage: "set timeout",
+						Value: 10,
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
@@ -1345,6 +1361,9 @@ func init() {
 					}
 					if c.IsSet("sorry-server-port") {
 						updateParam.SorryServerPort = c.Int("sorry-server-port")
+					}
+					if c.IsSet("timeout") {
+						updateParam.Timeout = c.Int("timeout")
 					}
 					if c.IsSet("selector") {
 						updateParam.Selector = c.StringSlice("selector")
@@ -1502,6 +1521,9 @@ func init() {
 					}
 					if c.IsSet("sorry-server-port") {
 						updateParam.SorryServerPort = c.Int("sorry-server-port")
+					}
+					if c.IsSet("timeout") {
+						updateParam.Timeout = c.Int("timeout")
 					}
 					if c.IsSet("selector") {
 						updateParam.Selector = c.StringSlice("selector")
@@ -11555,6 +11577,11 @@ func init() {
 		DisplayName: "Common options",
 		Order:       2147483617,
 	})
+	AppendFlagCategoryMap("proxy-lb", "create", "timeout", &schema.Category{
+		Key:         "ProxyLB",
+		DisplayName: "ProxyLB options",
+		Order:       1,
+	})
 	AppendFlagCategoryMap("proxy-lb", "delete", "assumeyes", &schema.Category{
 		Key:         "Input",
 		DisplayName: "Input options",
@@ -12624,6 +12651,11 @@ func init() {
 		Key:         "common",
 		DisplayName: "Common options",
 		Order:       2147483617,
+	})
+	AppendFlagCategoryMap("proxy-lb", "update", "timeout", &schema.Category{
+		Key:         "ProxyLB",
+		DisplayName: "ProxyLB options",
+		Order:       1,
 	})
 
 	// append command to GlobalContext

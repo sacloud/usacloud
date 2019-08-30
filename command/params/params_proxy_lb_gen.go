@@ -292,6 +292,7 @@ type CreateProxyLBParam struct {
 	StickySession        bool     `json:"sticky-session"`
 	SorryServerIpaddress string   `json:"sorry-server-ipaddress"`
 	SorryServerPort      int      `json:"sorry-server-port"`
+	Timeout              int      `json:"timeout"`
 	Name                 string   `json:"name"`
 	Description          string   `json:"description"`
 	Tags                 []string `json:"tags"`
@@ -317,6 +318,7 @@ func NewCreateProxyLBParam() *CreateProxyLBParam {
 		Protocol:  "tcp",
 		Path:      "/",
 		DelayLoop: 10,
+		Timeout:   10,
 	}
 }
 
@@ -345,6 +347,9 @@ func (p *CreateProxyLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.SorryServerPort) {
 		p.SorryServerPort = 0
+	}
+	if isEmpty(p.Timeout) {
+		p.Timeout = 0
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -435,6 +440,13 @@ func (p *CreateProxyLBParam) Validate() []error {
 	{
 		validator := define.Resources["ProxyLB"].Commands["create"].Params["sorry-server-port"].ValidateFunc
 		errs := validator("--sorry-server-port", p.SorryServerPort)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ProxyLB"].Commands["create"].Params["timeout"].ValidateFunc
+		errs := validator("--timeout", p.Timeout)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -577,6 +589,13 @@ func (p *CreateProxyLBParam) SetSorryServerPort(v int) {
 
 func (p *CreateProxyLBParam) GetSorryServerPort() int {
 	return p.SorryServerPort
+}
+func (p *CreateProxyLBParam) SetTimeout(v int) {
+	p.Timeout = v
+}
+
+func (p *CreateProxyLBParam) GetTimeout() int {
+	return p.Timeout
 }
 func (p *CreateProxyLBParam) SetName(v string) {
 	p.Name = v
@@ -898,6 +917,7 @@ type UpdateProxyLBParam struct {
 	StickySession        bool     `json:"sticky-session"`
 	SorryServerIpaddress string   `json:"sorry-server-ipaddress"`
 	SorryServerPort      int      `json:"sorry-server-port"`
+	Timeout              int      `json:"timeout"`
 	Selector             []string `json:"selector"`
 	Name                 string   `json:"name"`
 	Description          string   `json:"description"`
@@ -919,7 +939,10 @@ type UpdateProxyLBParam struct {
 
 // NewUpdateProxyLBParam return new UpdateProxyLBParam
 func NewUpdateProxyLBParam() *UpdateProxyLBParam {
-	return &UpdateProxyLBParam{}
+	return &UpdateProxyLBParam{
+
+		Timeout: 10,
+	}
 }
 
 // FillValueToSkeleton fill values to empty fields
@@ -944,6 +967,9 @@ func (p *UpdateProxyLBParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.SorryServerPort) {
 		p.SorryServerPort = 0
+	}
+	if isEmpty(p.Timeout) {
+		p.Timeout = 0
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -1019,6 +1045,13 @@ func (p *UpdateProxyLBParam) Validate() []error {
 	{
 		validator := define.Resources["ProxyLB"].Commands["update"].Params["sorry-server-port"].ValidateFunc
 		errs := validator("--sorry-server-port", p.SorryServerPort)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["ProxyLB"].Commands["update"].Params["timeout"].ValidateFunc
+		errs := validator("--timeout", p.Timeout)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1154,6 +1187,13 @@ func (p *UpdateProxyLBParam) SetSorryServerPort(v int) {
 
 func (p *UpdateProxyLBParam) GetSorryServerPort() int {
 	return p.SorryServerPort
+}
+func (p *UpdateProxyLBParam) SetTimeout(v int) {
+	p.Timeout = v
+}
+
+func (p *UpdateProxyLBParam) GetTimeout() int {
+	return p.Timeout
 }
 func (p *UpdateProxyLBParam) SetSelector(v []string) {
 	p.Selector = v
