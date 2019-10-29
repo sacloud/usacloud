@@ -206,7 +206,7 @@ func dnsRecordListParam() map[string]*schema.Schema {
 		"type": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
-			Description:  "set record type[A/AAAA/NS/CNAME/MX/TXT/SRV/CAA]",
+			Description:  "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA]",
 			ValidateFunc: validateInStrValues(allowDNSTypes...),
 			CompleteFunc: completeInStrValues(allowDNSTypes...),
 			Category:     "record",
@@ -216,8 +216,8 @@ func dnsRecordListParam() map[string]*schema.Schema {
 }
 
 var allowDNSTypes = []string{
-	"a", "aaaa", "ns", "cname", "mx", "txt", "srv", "caa",
-	"A", "AAAA", "NS", "CNAME", "MX", "TXT", "SRV", "CAA",
+	"a", "aaaa", "alias", "ns", "cname", "mx", "txt", "srv", "caa",
+	"A", "AAAA", "ALIAS", "NS", "CNAME", "MX", "TXT", "SRV", "CAA",
 }
 
 func dnsRecordBulkUpdateParam() map[string]*schema.Schema {
@@ -260,7 +260,7 @@ func dnsRecordAddParam() map[string]*schema.Schema {
 		"type": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
-			Description:  "set record type[A/AAAA/NS/CNAME/MX/TXT/SRV]",
+			Description:  "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV]",
 			Required:     true,
 			ValidateFunc: validateInStrValues(allowDNSTypes...),
 			CompleteFunc: completeInStrValues(allowDNSTypes...),
@@ -350,7 +350,7 @@ func dnsRecordUpdateParam() map[string]*schema.Schema {
 		"type": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
-			Description:  "set record type[A/AAAA/NS/CNAME/MX/TXT/SRV]",
+			Description:  "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV]",
 			ValidateFunc: validateInStrValues(allowDNSTypes...),
 			CompleteFunc: completeInStrValues(allowDNSTypes...),
 			Category:     "record",
