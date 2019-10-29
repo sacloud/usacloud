@@ -141,6 +141,37 @@ func DiskEditCompleteArgs(ctx command.Context, params *params.EditDiskParam, cur
 
 }
 
+func DiskResizePartitionCompleteArgs(ctx command.Context, params *params.ResizePartitionDiskParam, cur, prev, commandName string) {
+
+	if !command.GlobalOption.Valid {
+		return
+	}
+
+	client := ctx.GetAPIClient()
+	finder := client.GetDiskAPI()
+	finder.SetEmpty()
+
+	// call Find()
+	res, err := finder.Find()
+	if err != nil {
+		return
+	}
+
+	type nameHolder interface {
+		GetName() string
+	}
+
+	for i := range res.Disks {
+		fmt.Println(res.Disks[i].ID)
+		var target interface{} = &res.Disks[i]
+		if v, ok := target.(nameHolder); ok {
+			fmt.Println(v.GetName())
+		}
+
+	}
+
+}
+
 func DiskReinstallFromArchiveCompleteArgs(ctx command.Context, params *params.ReinstallFromArchiveDiskParam, cur, prev, commandName string) {
 
 	if !command.GlobalOption.Valid {

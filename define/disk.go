@@ -64,6 +64,15 @@ func DiskResource() *schema.Resource {
 			Category:         "edit",
 			Order:            10,
 		},
+		"resize-partition": {
+			Type:             schema.CommandManipulateMulti,
+			Params:           diskResizePartitionParam(),
+			IncludeFields:    diskDetailIncludes(),
+			ExcludeFields:    diskDetailExcludes(),
+			UseCustomCommand: true,
+			Category:         "edit",
+			Order:            20,
+		},
 		"reinstall-from-archive": {
 			Type:             schema.CommandManipulateMulti,
 			Params:           diskReinstallFromArchiveParam(),
@@ -440,6 +449,10 @@ func diskConfigParam() map[string]*schema.Schema {
 			Order:           50,
 		},
 	}
+}
+
+func diskResizePartitionParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{}
 }
 
 func diskWaitForCopyParam() map[string]*schema.Schema {

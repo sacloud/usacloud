@@ -312,6 +312,32 @@ func DiskEditCompleteFlags(ctx command.Context, params *params.EditDiskParam, fl
 	}
 }
 
+func DiskResizePartitionCompleteFlags(ctx command.Context, params *params.ResizePartitionDiskParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "selector":
+		param := define.Resources["Disk"].Commands["resize-partition"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["Disk"].Commands["resize-partition"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
 func DiskReinstallFromArchiveCompleteFlags(ctx command.Context, params *params.ReinstallFromArchiveDiskParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 
