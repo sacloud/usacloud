@@ -319,6 +319,7 @@ type CreateSimpleMonitorParam struct {
 	NotifyEmail       bool     `json:"notify-email"`
 	EmailType         string   `json:"email-type"`
 	SlackWebhook      string   `json:"slack-webhook"`
+	NotifyInterval    int      `json:"notify-interval"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
 	IconId            int64    `json:"icon-id"`
@@ -339,11 +340,12 @@ type CreateSimpleMonitorParam struct {
 func NewCreateSimpleMonitorParam() *CreateSimpleMonitorParam {
 	return &CreateSimpleMonitorParam{
 
-		Protocol:      "ping",
-		DelayLoop:     1,
-		RemainingDays: 30,
-		NotifyEmail:   true,
-		EmailType:     "text",
+		Protocol:       "ping",
+		DelayLoop:      1,
+		RemainingDays:  30,
+		NotifyEmail:    true,
+		EmailType:      "text",
+		NotifyInterval: 2,
 	}
 }
 
@@ -399,6 +401,9 @@ func (p *CreateSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.SlackWebhook) {
 		p.SlackWebhook = ""
+	}
+	if isEmpty(p.NotifyInterval) {
+		p.NotifyInterval = 0
 	}
 	if isEmpty(p.Description) {
 		p.Description = ""
@@ -500,6 +505,13 @@ func (p *CreateSimpleMonitorParam) Validate() []error {
 	{
 		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["email-type"].ValidateFunc
 		errs := validator("--email-type", p.EmailType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["create"].Params["notify-interval"].ValidateFunc
+		errs := validator("--notify-interval", p.NotifyInterval)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -691,6 +703,13 @@ func (p *CreateSimpleMonitorParam) SetSlackWebhook(v string) {
 
 func (p *CreateSimpleMonitorParam) GetSlackWebhook() string {
 	return p.SlackWebhook
+}
+func (p *CreateSimpleMonitorParam) SetNotifyInterval(v int) {
+	p.NotifyInterval = v
+}
+
+func (p *CreateSimpleMonitorParam) GetNotifyInterval() int {
+	return p.NotifyInterval
 }
 func (p *CreateSimpleMonitorParam) SetDescription(v string) {
 	p.Description = v
@@ -1014,6 +1033,7 @@ type UpdateSimpleMonitorParam struct {
 	NotifyEmail       bool     `json:"notify-email"`
 	EmailType         string   `json:"email-type"`
 	SlackWebhook      string   `json:"slack-webhook"`
+	NotifyInterval    int      `json:"notify-interval"`
 	Selector          []string `json:"selector"`
 	Description       string   `json:"description"`
 	Tags              []string `json:"tags"`
@@ -1034,7 +1054,10 @@ type UpdateSimpleMonitorParam struct {
 
 // NewUpdateSimpleMonitorParam return new UpdateSimpleMonitorParam
 func NewUpdateSimpleMonitorParam() *UpdateSimpleMonitorParam {
-	return &UpdateSimpleMonitorParam{}
+	return &UpdateSimpleMonitorParam{
+
+		NotifyInterval: 2,
+	}
 }
 
 // FillValueToSkeleton fill values to empty fields
@@ -1086,6 +1109,9 @@ func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 	}
 	if isEmpty(p.SlackWebhook) {
 		p.SlackWebhook = ""
+	}
+	if isEmpty(p.NotifyInterval) {
+		p.NotifyInterval = 0
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -1172,6 +1198,13 @@ func (p *UpdateSimpleMonitorParam) Validate() []error {
 	{
 		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["email-type"].ValidateFunc
 		errs := validator("--email-type", p.EmailType)
+		if errs != nil {
+			errors = append(errors, errs...)
+		}
+	}
+	{
+		validator := define.Resources["SimpleMonitor"].Commands["update"].Params["notify-interval"].ValidateFunc
+		errs := validator("--notify-interval", p.NotifyInterval)
 		if errs != nil {
 			errors = append(errors, errs...)
 		}
@@ -1363,6 +1396,13 @@ func (p *UpdateSimpleMonitorParam) SetSlackWebhook(v string) {
 
 func (p *UpdateSimpleMonitorParam) GetSlackWebhook() string {
 	return p.SlackWebhook
+}
+func (p *UpdateSimpleMonitorParam) SetNotifyInterval(v int) {
+	p.NotifyInterval = v
+}
+
+func (p *UpdateSimpleMonitorParam) GetNotifyInterval() int {
+	return p.NotifyInterval
 }
 func (p *UpdateSimpleMonitorParam) SetSelector(v []string) {
 	p.Selector = v

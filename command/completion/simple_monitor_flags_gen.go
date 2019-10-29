@@ -151,6 +151,11 @@ func SimpleMonitorCreateCompleteFlags(ctx command.Context, params *params.Create
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}
+	case "notify-interval":
+		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("notify-interval")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
 	case "description", "desc":
 		param := define.Resources["SimpleMonitor"].Commands["create"].BuildedParams().Get("description")
 		if param != nil {
@@ -285,6 +290,11 @@ func SimpleMonitorUpdateCompleteFlags(ctx command.Context, params *params.Update
 		}
 	case "slack-webhook":
 		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("slack-webhook")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "notify-interval":
+		param := define.Resources["SimpleMonitor"].Commands["update"].BuildedParams().Get("notify-interval")
 		if param != nil {
 			comp = param.Param.CompleteFunc
 		}

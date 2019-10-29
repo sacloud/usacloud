@@ -159,6 +159,12 @@ func SimpleMonitorUpdate(ctx command.Context, params *params.UpdateSimpleMonitor
 		}
 	}
 
+	if ctx.IsSet("notify-interval") {
+		if params.NotifyInterval > 0 {
+			p.SetNotifyInterval(params.NotifyInterval * 60 * 60)
+		}
+	}
+
 	if ctx.IsSet("description") {
 		p.SetDescription(params.Description)
 	}
