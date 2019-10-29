@@ -17,7 +17,7 @@ default: test build
 
 .PHONY: run
 run:
-	go run $(CURDIR)/main.go $(ARGS)
+	go run -mod=vendor $(CURDIR)/main.go $(ARGS)
 
 .PHONY: clean
 clean:
@@ -40,17 +40,17 @@ tools:
 	GO111MODULE=off go get -u golang.org/x/lint/golint
 
 contrib/completion/bash/usacloud: define/*.go
-	go run tools/gen-bash-completion/main.go
+	go run -mod=vendor tools/gen-bash-completion/main.go
 
 .PHONY: gen
 gen: command/cli/*_gen.go command/completion/*_gen.go command/funcs/*_gen.go command/params/*_gen.go
 
 .PHONY: gen-force
 gen-force: clean-all contrib/completion/bash/usacloud
-	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES); goimports -l -w $(GOFMT_FILES)
+	go generate -mod=vendor $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES); goimports -l -w $(GOFMT_FILES)
 
 command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-funcs/*.go tools/gen-input-models/*.go
-	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
+	go generate -mod=vendor $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES)
 
 .PHONY: build build-x build-darwin build-windows build-linux
 build: bin/usacloud
@@ -101,7 +101,7 @@ deb: rpm
 
 .PHONY: test
 test: 
-	go test $(TEST) $(TESTARGS) -v -timeout=30m -parallel=4 ;
+	go test -mod=vendor $(TEST) $(TESTARGS) -v -timeout=30m -parallel=4 ;
 
 .PHONY: integration-test
 integration-test: bin/usacloud
