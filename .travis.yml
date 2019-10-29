@@ -3,7 +3,7 @@ services:
 - docker
 language: go
 go:
-- "1.12.x"
+- "1.13.x"
 env:
   global:
   - PATH=/home/travis/gopath/bin:$PATH DEBIAN_FRONTEND=noninteractive
@@ -30,9 +30,9 @@ before_deploy:
     docker pull sacloud/deb-build:latest;
     make rpm deb;
   fi
-- go get github.com/aktau/github-release
+- GO111MODULE=off go get github.com/aktau/github-release
 - mkdir -p ~/bin
-- (go get github.com/github/hub && cd $GOPATH/src/github.com/github/hub && script/build -o ~/bin/hub)
+- (GO111MODULE=off go get github.com/github/hub && cd $GOPATH/src/github.com/github/hub && script/build -o ~/bin/hub)
 - echo $TRAVIS_BRANCH
 - git config --add remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
 - git fetch
