@@ -1,3 +1,24 @@
+usacloud (0.28.0-1) stable; urgency=low
+
+  * Go v1.13 / libsacloud v1.28.1 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/450>
+  * Aliasレコード (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/451>
+  * Use go module mirror (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/452>
+  * シンプル監視での再通知間隔の設定 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/453>
+  * vendoring (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/454>
+  * Use alpine 3.10 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/455>
+  * ディスクの修正APIでのBackgroundパラメータの利用 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/456>
+  * パーティションリサイズを行うサブコマンドを追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/457>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Tue, 29 Oct 2019 23:57:55 +0000
+
 usacloud (0.27.1-1) stable; urgency=low
 
   * 0.27.0リリースビルドエラーによる再リリース (by yamamoto-febc)

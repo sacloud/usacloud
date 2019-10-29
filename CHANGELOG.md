@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.28.0 (2019-10-29)
+
+* Go v1.13 / libsacloud v1.28.1 #450 (yamamoto-febc)
+* Aliasレコード #451 (yamamoto-febc)
+* Use go module mirror #452 (yamamoto-febc)
+* シンプル監視での再通知間隔の設定 #453 (yamamoto-febc)
+* vendoring #454 (yamamoto-febc)
+* Use alpine 3.10 #455 (yamamoto-febc)
+* ディスクの修正APIでのBackgroundパラメータの利用 #456 (yamamoto-febc)
+* パーティションリサイズを行うサブコマンドを追加 #457 (yamamoto-febc)
+
+
 ## 0.27.1 (2019-08-30)
 
 * 0.27.0のリリースビルドエラーのため再リリースしたバージョン (yamamoto-febc)
