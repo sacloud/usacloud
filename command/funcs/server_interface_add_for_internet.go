@@ -59,8 +59,12 @@ func ServerInterfaceAddForInternet(ctx command.Context, params *params.Interface
 	if !params.WithoutDiskEdit {
 		// disk edit
 		editParam := diskAPI.NewCondig()
+		editParam.SetBackground(true)
 		_, err := diskAPI.Config(p.GetDisks()[0].ID, editParam)
 		if err != nil {
+			return fmt.Errorf("ServerInterfaceAddForInternet is failed: %s", err)
+		}
+		if err := diskAPI.SleepWhileCopying(p.GetDisks()[0].ID, client.DefaultTimeoutDuration); err != nil {
 			return fmt.Errorf("ServerInterfaceAddForInternet is failed: %s", err)
 		}
 	}

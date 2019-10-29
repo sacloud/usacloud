@@ -27,6 +27,11 @@ func DiskEdit(ctx command.Context, params *params.EditDiskParam) error {
 				errChan <- err
 				return
 			}
+			if err := api.SleepWhileCopying(params.Id, client.DefaultTimeoutDuration); err != nil {
+				errChan <- err
+				return
+			}
+
 			compChan <- true
 		},
 	)
@@ -45,6 +50,7 @@ func DiskEdit(ctx command.Context, params *params.EditDiskParam) error {
 
 func buildDiskEditValue(ctx command.Context, params *params.EditDiskParam) *sacloud.DiskEditValue {
 	p := ctx.GetAPIClient().GetDiskAPI().NewCondig()
+	p.SetBackground(true)
 
 	// set params
 	if ctx.IsSet("hostname") {

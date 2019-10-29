@@ -69,6 +69,7 @@ func ServerInterfaceAddForRouter(ctx command.Context, params *params.InterfaceAd
 	if !params.WithoutDiskEdit {
 		// disk edit
 		editParam := diskAPI.NewCondig()
+		editParam.SetBackground(true)
 
 		if params.Ipaddress != "" {
 			editParam.SetUserIPAddress(params.Ipaddress)
@@ -83,6 +84,9 @@ func ServerInterfaceAddForRouter(ctx command.Context, params *params.InterfaceAd
 		_, err := diskAPI.Config(p.GetDisks()[0].ID, editParam)
 		if err != nil {
 			return fmt.Errorf("ServerInterfaceAddForRouter is failed: %s", err)
+		}
+		if err := diskAPI.SleepWhileCopying(p.GetDisks()[0].ID, client.DefaultTimeoutDuration); err != nil {
+			return fmt.Errorf("ServerInterfaceAddForInternet is failed: %s", err)
 		}
 	}
 
