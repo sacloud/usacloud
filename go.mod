@@ -1,5 +1,7 @@
 module github.com/sacloud/usacloud
 
+go 1.13
+
 require (
 	github.com/astaxie/flatmap v0.0.0-20160505145528-c0e84c00d8d5
 	github.com/bitly/go-simplejson v0.5.0
@@ -23,7 +25,7 @@ require (
 	github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
 	github.com/sacloud/ftps v0.0.0-20171205062625-42fc0f9886fe
 	github.com/sacloud/go-jmespath v0.0.0-20190125082617-862639817e08
-	github.com/sacloud/libsacloud v1.27.1
+	github.com/sacloud/libsacloud v1.28.1
 	github.com/skratchdot/open-golang v0.0.0-20190402232053-79abb63cd66e // indirect
 	github.com/stretchr/testify v1.3.0
 	github.com/vaughan0/go-ini v0.0.0-20130923145212-a98ad7ee00ec // indirect
