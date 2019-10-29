@@ -24,6 +24,7 @@ func init() {
 	updateParam := params.NewUpdateDiskParam()
 	deleteParam := params.NewDeleteDiskParam()
 	editParam := params.NewEditDiskParam()
+	resizePartitionParam := params.NewResizePartitionDiskParam()
 	reinstallFromArchiveParam := params.NewReinstallFromArchiveDiskParam()
 	reinstallFromDiskParam := params.NewReinstallFromDiskDiskParam()
 	reinstallToBlankParam := params.NewReinstallToBlankDiskParam()
@@ -2490,6 +2491,395 @@ func init() {
 				},
 			},
 			{
+				Name:      "resize-partition",
+				Usage:     "ResizePartition Disk",
+				ArgsUsage: "<ID or Name(allow multiple target)>",
+				Flags: []cli.Flag{
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = resizePartitionParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, resizePartitionParam)
+
+					// Set option values
+					if c.IsSet("selector") {
+						resizePartitionParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						resizePartitionParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						resizePartitionParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						resizePartitionParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						resizePartitionParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						resizePartitionParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						resizePartitionParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						resizePartitionParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						resizePartitionParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						resizePartitionParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						resizePartitionParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						resizePartitionParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						resizePartitionParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.DiskResizePartitionCompleteArgs(ctx, resizePartitionParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.DiskResizePartitionCompleteArgs(ctx, resizePartitionParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.DiskResizePartitionCompleteFlags(ctx, resizePartitionParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.DiskResizePartitionCompleteArgs(ctx, resizePartitionParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					resizePartitionParam.ParamTemplate = c.String("param-template")
+					resizePartitionParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(resizePartitionParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewResizePartitionDiskParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(resizePartitionParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("selector") {
+						resizePartitionParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						resizePartitionParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						resizePartitionParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						resizePartitionParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						resizePartitionParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						resizePartitionParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						resizePartitionParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						resizePartitionParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						resizePartitionParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						resizePartitionParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						resizePartitionParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						resizePartitionParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						resizePartitionParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = resizePartitionParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Experiment warning
+					printWarning("")
+
+					// Generate skeleton
+					if resizePartitionParam.GenerateSkeleton {
+						resizePartitionParam.GenerateSkeleton = false
+						resizePartitionParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(resizePartitionParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := resizePartitionParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), resizePartitionParam)
+
+					apiClient := ctx.GetAPIClient().Disk
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(resizePartitionParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.Disks {
+							if hasTags(&v, resizePartitionParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", resizePartitionParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.Disks {
+										if len(resizePartitionParam.Selector) == 0 || hasTags(&v, resizePartitionParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					// confirm
+					if !resizePartitionParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("resize-partition", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						resizePartitionParam.SetId(id)
+						p := *resizePartitionParam // copy struct value
+						resizePartitionParam := &p
+						go func() {
+							err := funcs.DiskResizePartition(ctx, resizePartitionParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
 				Name:      "reinstall-from-archive",
 				Usage:     "ReinstallFromArchive Disk",
 				ArgsUsage: "<ID or Name(allow multiple target)>",
@@ -4879,6 +5269,11 @@ func init() {
 		DisplayName: "Re-Install",
 		Order:       25,
 	})
+	AppendCommandCategoryMap("disk", "resize-partition", &schema.Category{
+		Key:         "edit",
+		DisplayName: "Disk Edit",
+		Order:       20,
+	})
 	AppendCommandCategoryMap("disk", "server-connect", &schema.Category{
 		Key:         "server",
 		DisplayName: "Server Connection Management",
@@ -5523,6 +5918,71 @@ func init() {
 		Order:       2147483627,
 	})
 	AppendFlagCategoryMap("disk", "reinstall-to-blank", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("disk", "resize-partition", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("disk", "resize-partition", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("disk", "resize-partition", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("disk", "resize-partition", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("disk", "resize-partition", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("disk", "resize-partition", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("disk", "resize-partition", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("disk", "resize-partition", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("disk", "resize-partition", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("disk", "resize-partition", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("disk", "resize-partition", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("disk", "resize-partition", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("disk", "resize-partition", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,
