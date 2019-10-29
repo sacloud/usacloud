@@ -6,6 +6,7 @@ BIN_NAME?=usacloud
 CURRENT_VERSION = $(shell git log --merges --oneline | perl -ne 'if(m/^.+Merge pull request \#[0-9]+ from .+\/bump-version-([0-9\.]+)/){print $$1;exit}')
 GO_FILES?=$(shell find . -name '*.go')
 export GO111MODULE=on
+export GOPROXY=https://proxy.golang.org
 
 BUILD_LDFLAGS = "-s -w \
 	  -X github.com/sacloud/usacloud/version.Revision=`git rev-parse --short HEAD` \
