@@ -456,6 +456,11 @@ func init() {
 						Name:  "slack-webhook",
 						Usage: "set slack-webhook URL",
 					},
+					&cli.IntFlag{
+						Name:  "notify-interval",
+						Usage: "set notify-interval(hours)",
+						Value: 2,
+					},
 					&cli.StringFlag{
 						Name:    "description",
 						Aliases: []string{"desc"},
@@ -607,6 +612,9 @@ func init() {
 					}
 					if c.IsSet("slack-webhook") {
 						createParam.SlackWebhook = c.String("slack-webhook")
+					}
+					if c.IsSet("notify-interval") {
+						createParam.NotifyInterval = c.Int("notify-interval")
 					}
 					if c.IsSet("description") {
 						createParam.Description = c.String("description")
@@ -785,6 +793,9 @@ func init() {
 					}
 					if c.IsSet("slack-webhook") {
 						createParam.SlackWebhook = c.String("slack-webhook")
+					}
+					if c.IsSet("notify-interval") {
+						createParam.NotifyInterval = c.Int("notify-interval")
 					}
 					if c.IsSet("description") {
 						createParam.Description = c.String("description")
@@ -1323,6 +1334,11 @@ func init() {
 						Name:  "slack-webhook",
 						Usage: "set slack-webhook URL",
 					},
+					&cli.IntFlag{
+						Name:  "notify-interval",
+						Usage: "set notify-interval(hours)",
+						Value: 2,
+					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
 						Usage: "Set target filter by tag",
@@ -1480,6 +1496,9 @@ func init() {
 					}
 					if c.IsSet("slack-webhook") {
 						updateParam.SlackWebhook = c.String("slack-webhook")
+					}
+					if c.IsSet("notify-interval") {
+						updateParam.NotifyInterval = c.Int("notify-interval")
 					}
 					if c.IsSet("selector") {
 						updateParam.Selector = c.StringSlice("selector")
@@ -1661,6 +1680,9 @@ func init() {
 					}
 					if c.IsSet("slack-webhook") {
 						updateParam.SlackWebhook = c.String("slack-webhook")
+					}
+					if c.IsSet("notify-interval") {
+						updateParam.NotifyInterval = c.Int("notify-interval")
 					}
 					if c.IsSet("selector") {
 						updateParam.Selector = c.StringSlice("selector")
@@ -2711,6 +2733,11 @@ func init() {
 		DisplayName: "Notify options",
 		Order:       30,
 	})
+	AppendFlagCategoryMap("simple-monitor", "create", "notify-interval", &schema.Category{
+		Key:         "notify",
+		DisplayName: "Notify options",
+		Order:       30,
+	})
 	AppendFlagCategoryMap("simple-monitor", "create", "output-type", &schema.Category{
 		Key:         "output",
 		DisplayName: "Output options",
@@ -3137,6 +3164,11 @@ func init() {
 		Order:       2147483647,
 	})
 	AppendFlagCategoryMap("simple-monitor", "update", "notify-email", &schema.Category{
+		Key:         "notify",
+		DisplayName: "Notify options",
+		Order:       30,
+	})
+	AppendFlagCategoryMap("simple-monitor", "update", "notify-interval", &schema.Category{
 		Key:         "notify",
 		DisplayName: "Notify options",
 		Order:       30,

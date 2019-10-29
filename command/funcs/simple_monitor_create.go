@@ -103,6 +103,10 @@ func SimpleMonitorCreate(ctx command.Context, params *params.CreateSimpleMonitor
 		p.EnableNofitySlack(params.SlackWebhook)
 	}
 
+	if params.NotifyInterval > 0 {
+		p.SetNotifyInterval(params.NotifyInterval * 60 * 60)
+	}
+
 	p.SetIconByID(params.IconId)
 	p.SetDescription(params.Description)
 	p.SetTags(params.Tags)
