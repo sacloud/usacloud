@@ -1,3 +1,10 @@
+usacloud (0.29.0-1) stable; urgency=low
+
+  * ウェブアクセラレータでの証明書登録 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/459>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Wed, 30 Oct 2019 05:58:36 +0000
+
 usacloud (0.28.0-1) stable; urgency=low
 
   * Go v1.13 / libsacloud v1.28.1 (by yamamoto-febc)

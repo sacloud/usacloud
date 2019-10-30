@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.29.0 (2019-10-30)
+
+* ウェブアクセラレータでの証明書登録 #459 (yamamoto-febc)
+
+
 ## 0.28.0 (2019-10-29)
 
 * Go v1.13 / libsacloud v1.28.1 #450 (yamamoto-febc)
