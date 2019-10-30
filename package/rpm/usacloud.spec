@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Oct 30 2019 <sacloud.users@gmail.com> - 0.29.0-1
+- ウェブアクセラレータでの証明書登録 (by yamamoto-febc)
+
 * Tue Oct 29 2019 <sacloud.users@gmail.com> - 0.28.0-1
 - Go v1.13 / libsacloud v1.28.1 (by yamamoto-febc)
 - Aliasレコード (by yamamoto-febc)
