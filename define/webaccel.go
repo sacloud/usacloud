@@ -37,6 +37,16 @@ func WebAccelResource() *schema.Resource {
 			Category:         "certificate",
 			Order:            10,
 		},
+		"certificate-new": {
+			Type:             schema.CommandManipulateSingle,
+			Aliases:          []string{"cert-new", "cert-create", "certificate-create"},
+			Params:           webAccelCertCreateParam(),
+			IncludeFields:    webAccelCertIncludes(),
+			ExcludeFields:    webAccelCertExcludes(),
+			UseCustomCommand: true,
+			Category:         "certificate",
+			Order:            15,
+		},
 		"certificate-update": {
 			Type:             schema.CommandManipulateSingle,
 			Aliases:          []string{"cert-update"},
@@ -174,6 +184,43 @@ func webAccelReadParam() map[string]*schema.Schema {
 
 func webAccelCertInfoParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{}
+}
+
+func webAccelCertCreateParam() map[string]*schema.Schema {
+	return map[string]*schema.Schema{
+		"cert": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set certificate(from file)",
+			ValidateFunc: validateFileExists(),
+			Category:     "cert",
+			Order:        10,
+		},
+		"key": {
+			Type:         schema.TypeString,
+			HandlerType:  schema.HandlerNoop,
+			Description:  "set private key(from file)",
+			ValidateFunc: validateFileExists(),
+			Category:     "cert",
+			Order:        20,
+		},
+		"cert-content": {
+			Type:          schema.TypeString,
+			HandlerType:   schema.HandlerNoop,
+			Description:   "set certificate(from text)",
+			ConflictsWith: []string{"cert"},
+			Category:      "cert",
+			Order:         30,
+		},
+		"key-content": {
+			Type:          schema.TypeString,
+			HandlerType:   schema.HandlerNoop,
+			Description:   "set private key(from text)",
+			ConflictsWith: []string{"key"},
+			Category:      "cert",
+			Order:         40,
+		},
+	}
 }
 
 func webAccelCertUpdateParam() map[string]*schema.Schema {
