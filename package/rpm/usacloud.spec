@@ -40,6 +40,16 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Oct 29 2019 <sacloud.users@gmail.com> - 0.28.0-1
+- Go v1.13 / libsacloud v1.28.1 (by yamamoto-febc)
+- Aliasレコード (by yamamoto-febc)
+- Use go module mirror (by yamamoto-febc)
+- シンプル監視での再通知間隔の設定 (by yamamoto-febc)
+- vendoring (by yamamoto-febc)
+- Use alpine 3.10 (by yamamoto-febc)
+- ディスクの修正APIでのBackgroundパラメータの利用 (by yamamoto-febc)
+- パーティションリサイズを行うサブコマンドを追加 (by yamamoto-febc)
+
 * Fri Aug 30 2019 <sacloud.users@gmail.com> - 0.27.1-1
 - 0.27.0のリリースビルドエラーによる再リリース (by yamamoto-febc)
 
