@@ -21,6 +21,7 @@ func init() {
 	listParam := params.NewListWebAccelParam()
 	readParam := params.NewReadWebAccelParam()
 	certificateInfoParam := params.NewCertificateInfoWebAccelParam()
+	certificateNewParam := params.NewCertificateNewWebAccelParam()
 	certificateUpdateParam := params.NewCertificateUpdateWebAccelParam()
 	deleteCacheParam := params.NewDeleteCacheWebAccelParam()
 
@@ -1048,6 +1049,440 @@ func init() {
 				},
 			},
 			{
+				Name:      "certificate-new",
+				Aliases:   []string{"cert-new", "cert-create", "certificate-create"},
+				Usage:     "CertificateNew WebAccel",
+				ArgsUsage: "<ID or Name(only single target)>",
+				Flags: []cli.Flag{
+					&cli.StringFlag{
+						Name:  "cert",
+						Usage: "set certificate(from file)",
+					},
+					&cli.StringFlag{
+						Name:  "key",
+						Usage: "set private key(from file)",
+					},
+					&cli.StringFlag{
+						Name:  "cert-content",
+						Usage: "set certificate(from text)",
+					},
+					&cli.StringFlag{
+						Name:  "key-content",
+						Usage: "set private key(from text)",
+					},
+					&cli.StringSliceFlag{
+						Name:  "selector",
+						Usage: "Set target filter by tag",
+					},
+					&cli.BoolFlag{
+						Name:    "assumeyes",
+						Aliases: []string{"y"},
+						Usage:   "Assume that the answer to any question which would be asked is yes",
+					},
+					&cli.StringFlag{
+						Name:  "param-template",
+						Usage: "Set input parameter from string(JSON)",
+					},
+					&cli.StringFlag{
+						Name:  "param-template-file",
+						Usage: "Set input parameter from file",
+					},
+					&cli.BoolFlag{
+						Name:  "generate-skeleton",
+						Usage: "Output skelton of parameter JSON",
+					},
+					&cli.StringFlag{
+						Name:    "output-type",
+						Aliases: []string{"out", "o"},
+						Usage:   "Output type [table/json/csv/tsv]",
+					},
+					&cli.StringSliceFlag{
+						Name:    "column",
+						Aliases: []string{"col"},
+						Usage:   "Output columns(using when '--output-type' is in [csv/tsv] only)",
+					},
+					&cli.BoolFlag{
+						Name:    "quiet",
+						Aliases: []string{"q"},
+						Usage:   "Only display IDs",
+					},
+					&cli.StringFlag{
+						Name:    "format",
+						Aliases: []string{"fmt"},
+						Usage:   "Output format(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "format-file",
+						Usage: "Output format from file(see text/template package document for detail)",
+					},
+					&cli.StringFlag{
+						Name:  "query",
+						Usage: "JMESPath query(using when '--output-type' is json only)",
+					},
+					&cli.StringFlag{
+						Name:  "query-file",
+						Usage: "JMESPath query from file(using when '--output-type' is json only)",
+					},
+					&cli.Int64Flag{
+						Name:   "id",
+						Usage:  "Set target ID",
+						Hidden: true,
+					},
+				},
+				ShellComplete: func(c *cli.Context) {
+
+					if c.NArg() < 3 { // invalid args
+						return
+					}
+
+					if err := checkConfigVersion(); err != nil {
+						return
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return
+					}
+
+					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
+					args := c.Args().Slice()
+					commandName := args[c.NArg()-1]
+					prev := args[c.NArg()-2]
+					cur := args[c.NArg()-3]
+
+					// set real args
+					realArgs := args[0 : c.NArg()-3]
+
+					// Validate global params
+					command.GlobalOption.Validate(false)
+
+					// set default output-type
+					// when params have output-type option and have empty value
+					var outputTypeHolder interface{} = certificateNewParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// build command context
+					ctx := command.NewContext(c, realArgs, certificateNewParam)
+
+					// Set option values
+					if c.IsSet("cert") {
+						certificateNewParam.Cert = c.String("cert")
+					}
+					if c.IsSet("key") {
+						certificateNewParam.Key = c.String("key")
+					}
+					if c.IsSet("cert-content") {
+						certificateNewParam.CertContent = c.String("cert-content")
+					}
+					if c.IsSet("key-content") {
+						certificateNewParam.KeyContent = c.String("key-content")
+					}
+					if c.IsSet("selector") {
+						certificateNewParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						certificateNewParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						certificateNewParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						certificateNewParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						certificateNewParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						certificateNewParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						certificateNewParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						certificateNewParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						certificateNewParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						certificateNewParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						certificateNewParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						certificateNewParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						certificateNewParam.Id = c.Int64("id")
+					}
+
+					if strings.HasPrefix(prev, "-") {
+						// prev if flag , is values setted?
+						if strings.Contains(prev, "=") {
+							if strings.HasPrefix(cur, "-") {
+								completion.FlagNames(c, commandName)
+								return
+							} else {
+								completion.WebAccelCertificateNewCompleteArgs(ctx, certificateNewParam, cur, prev, commandName)
+								return
+							}
+						}
+
+						// cleanup flag name
+						name := prev
+						for {
+							if !strings.HasPrefix(name, "-") {
+								break
+							}
+							name = strings.Replace(name, "-", "", 1)
+						}
+
+						// flag is exists? , is BoolFlag?
+						exists := false
+						for _, flag := range c.App.Command(commandName).Flags {
+
+							for _, n := range flag.Names() {
+								if n == name {
+									exists = true
+									break
+								}
+							}
+
+							if exists {
+								if _, ok := flag.(*cli.BoolFlag); ok {
+									if strings.HasPrefix(cur, "-") {
+										completion.FlagNames(c, commandName)
+										return
+									} else {
+										completion.WebAccelCertificateNewCompleteArgs(ctx, certificateNewParam, cur, prev, commandName)
+										return
+									}
+								} else {
+									// prev is flag , call completion func of each flags
+									completion.WebAccelCertificateNewCompleteFlags(ctx, certificateNewParam, name, cur)
+									return
+								}
+							}
+						}
+						// here, prev is wrong, so noop.
+					} else {
+						if strings.HasPrefix(cur, "-") {
+							completion.FlagNames(c, commandName)
+							return
+						} else {
+							completion.WebAccelCertificateNewCompleteArgs(ctx, certificateNewParam, cur, prev, commandName)
+							return
+						}
+					}
+				},
+				Action: func(c *cli.Context) error {
+
+					if err := checkConfigVersion(); err != nil {
+						return err
+					}
+					if err := applyConfigFromFile(c); err != nil {
+						return err
+					}
+
+					certificateNewParam.ParamTemplate = c.String("param-template")
+					certificateNewParam.ParamTemplateFile = c.String("param-template-file")
+					strInput, err := command.GetParamTemplateValue(certificateNewParam)
+					if err != nil {
+						return err
+					}
+					if strInput != "" {
+						p := params.NewCertificateNewWebAccelParam()
+						err := json.Unmarshal([]byte(strInput), p)
+						if err != nil {
+							return fmt.Errorf("Failed to parse JSON: %s", err)
+						}
+						mergo.Merge(certificateNewParam, p, mergo.WithOverride)
+					}
+
+					// Set option values
+					if c.IsSet("cert") {
+						certificateNewParam.Cert = c.String("cert")
+					}
+					if c.IsSet("key") {
+						certificateNewParam.Key = c.String("key")
+					}
+					if c.IsSet("cert-content") {
+						certificateNewParam.CertContent = c.String("cert-content")
+					}
+					if c.IsSet("key-content") {
+						certificateNewParam.KeyContent = c.String("key-content")
+					}
+					if c.IsSet("selector") {
+						certificateNewParam.Selector = c.StringSlice("selector")
+					}
+					if c.IsSet("assumeyes") {
+						certificateNewParam.Assumeyes = c.Bool("assumeyes")
+					}
+					if c.IsSet("param-template") {
+						certificateNewParam.ParamTemplate = c.String("param-template")
+					}
+					if c.IsSet("param-template-file") {
+						certificateNewParam.ParamTemplateFile = c.String("param-template-file")
+					}
+					if c.IsSet("generate-skeleton") {
+						certificateNewParam.GenerateSkeleton = c.Bool("generate-skeleton")
+					}
+					if c.IsSet("output-type") {
+						certificateNewParam.OutputType = c.String("output-type")
+					}
+					if c.IsSet("column") {
+						certificateNewParam.Column = c.StringSlice("column")
+					}
+					if c.IsSet("quiet") {
+						certificateNewParam.Quiet = c.Bool("quiet")
+					}
+					if c.IsSet("format") {
+						certificateNewParam.Format = c.String("format")
+					}
+					if c.IsSet("format-file") {
+						certificateNewParam.FormatFile = c.String("format-file")
+					}
+					if c.IsSet("query") {
+						certificateNewParam.Query = c.String("query")
+					}
+					if c.IsSet("query-file") {
+						certificateNewParam.QueryFile = c.String("query-file")
+					}
+					if c.IsSet("id") {
+						certificateNewParam.Id = c.Int64("id")
+					}
+
+					// Validate global params
+					if errors := command.GlobalOption.Validate(false); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "GlobalOptions")
+					}
+
+					var outputTypeHolder interface{} = certificateNewParam
+					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
+						if v.GetOutputType() == "" {
+							v.SetOutputType(command.GlobalOption.DefaultOutputType)
+						}
+					}
+
+					// Experiment warning
+					printWarning("")
+
+					// Generate skeleton
+					if certificateNewParam.GenerateSkeleton {
+						certificateNewParam.GenerateSkeleton = false
+						certificateNewParam.FillValueToSkeleton()
+						d, err := json.MarshalIndent(certificateNewParam, "", "\t")
+						if err != nil {
+							return fmt.Errorf("Failed to Marshal JSON: %s", err)
+						}
+						fmt.Fprintln(command.GlobalOption.Out, string(d))
+						return nil
+					}
+
+					// Validate specific for each command params
+					if errors := certificateNewParam.Validate(); len(errors) > 0 {
+						return command.FlattenErrorsWithPrefix(errors, "Options")
+					}
+
+					// create command context
+					ctx := command.NewContext(c, c.Args().Slice(), certificateNewParam)
+
+					apiClient := ctx.GetAPIClient().WebAccel
+					ids := []int64{}
+
+					if c.NArg() == 0 {
+
+						if len(certificateNewParam.Selector) == 0 {
+							return fmt.Errorf("ID or Name argument or --selector option is required")
+						}
+						apiClient.Reset()
+						res, err := apiClient.Find()
+						if err != nil {
+							return fmt.Errorf("Find ID is failed: %s", err)
+						}
+						for _, v := range res.WebAccelSites {
+							if hasTags(&v, certificateNewParam.Selector) {
+								ids = append(ids, v.GetID())
+							}
+						}
+						if len(ids) == 0 {
+							return fmt.Errorf("Find ID is failed: Not Found[with search param tags=%s]", certificateNewParam.Selector)
+						}
+
+					} else {
+
+						for _, arg := range c.Args().Slice() {
+
+							for _, a := range strings.Split(arg, "\n") {
+								idOrName := a
+								if id, ok := toSakuraID(idOrName); ok {
+									ids = append(ids, id)
+								} else {
+									apiClient.Reset()
+									apiClient.SetFilterBy("Name", idOrName)
+									res, err := apiClient.Find()
+									if err != nil {
+										return fmt.Errorf("Find ID is failed: %s", err)
+									}
+									if res.Count == 0 {
+										return fmt.Errorf("Find ID is failed: Not Found[with search param %q]", idOrName)
+									}
+									for _, v := range res.WebAccelSites {
+										if len(certificateNewParam.Selector) == 0 || hasTags(&v, certificateNewParam.Selector) {
+											ids = append(ids, v.GetID())
+										}
+									}
+								}
+							}
+
+						}
+
+					}
+
+					ids = command.UniqIDs(ids)
+					if len(ids) == 0 {
+						return fmt.Errorf("Target resource is not found")
+					}
+
+					if len(ids) != 1 {
+						return fmt.Errorf("Can't run with multiple targets: %v", ids)
+					}
+
+					// confirm
+					if !certificateNewParam.Assumeyes {
+						if !isTerminal() {
+							return fmt.Errorf("When using redirect/pipe, specify --assumeyes(-y) option")
+						}
+						if !command.ConfirmContinue("certificate-new", ids...) {
+							return nil
+						}
+					}
+
+					wg := sync.WaitGroup{}
+					errs := []error{}
+
+					for _, id := range ids {
+						wg.Add(1)
+						certificateNewParam.SetId(id)
+						p := *certificateNewParam // copy struct value
+						certificateNewParam := &p
+						go func() {
+							err := funcs.WebAccelCertificateNew(ctx, certificateNewParam)
+							if err != nil {
+								errs = append(errs, err)
+							}
+							wg.Done()
+						}()
+					}
+					wg.Wait()
+					return command.FlattenErrors(errs)
+
+				},
+			},
+			{
 				Name:      "certificate-update",
 				Aliases:   []string{"cert-update"},
 				Usage:     "CertificateUpdate WebAccel",
@@ -1794,6 +2229,11 @@ func init() {
 		DisplayName: "Certificate Management",
 		Order:       20,
 	})
+	AppendCommandCategoryMap("web-accel", "certificate-new", &schema.Category{
+		Key:         "certificate",
+		DisplayName: "Certificate Management",
+		Order:       20,
+	})
 	AppendCommandCategoryMap("web-accel", "certificate-update", &schema.Category{
 		Key:         "certificate",
 		DisplayName: "Certificate Management",
@@ -1873,6 +2313,91 @@ func init() {
 		Order:       2147483637,
 	})
 	AppendFlagCategoryMap("web-accel", "certificate-info", "selector", &schema.Category{
+		Key:         "filter",
+		DisplayName: "Filter options",
+		Order:       2147483587,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "assumeyes", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "cert", &schema.Category{
+		Key:         "cert",
+		DisplayName: "Cert options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "cert-content", &schema.Category{
+		Key:         "cert",
+		DisplayName: "Cert options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "column", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "format", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "format-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "generate-skeleton", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "id", &schema.Category{
+		Key:         "default",
+		DisplayName: "Other options",
+		Order:       2147483647,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "key", &schema.Category{
+		Key:         "cert",
+		DisplayName: "Cert options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "key-content", &schema.Category{
+		Key:         "cert",
+		DisplayName: "Cert options",
+		Order:       1,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "output-type", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "param-template", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "param-template-file", &schema.Category{
+		Key:         "Input",
+		DisplayName: "Input options",
+		Order:       2147483627,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "query", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "query-file", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "quiet", &schema.Category{
+		Key:         "output",
+		DisplayName: "Output options",
+		Order:       2147483637,
+	})
+	AppendFlagCategoryMap("web-accel", "certificate-new", "selector", &schema.Category{
 		Key:         "filter",
 		DisplayName: "Filter options",
 		Order:       2147483587,

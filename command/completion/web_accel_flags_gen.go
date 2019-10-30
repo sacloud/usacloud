@@ -79,6 +79,52 @@ func WebAccelCertificateInfoCompleteFlags(ctx command.Context, params *params.Ce
 	}
 }
 
+func WebAccelCertificateNewCompleteFlags(ctx command.Context, params *params.CertificateNewWebAccelParam, flagName string, currentValue string) {
+	var comp schema.CompletionFunc
+
+	switch flagName {
+	case "cert":
+		param := define.Resources["WebAccel"].Commands["certificate-new"].BuildedParams().Get("cert")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "key":
+		param := define.Resources["WebAccel"].Commands["certificate-new"].BuildedParams().Get("key")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "cert-content":
+		param := define.Resources["WebAccel"].Commands["certificate-new"].BuildedParams().Get("cert-content")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "key-content":
+		param := define.Resources["WebAccel"].Commands["certificate-new"].BuildedParams().Get("key-content")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "selector":
+		param := define.Resources["WebAccel"].Commands["certificate-new"].BuildedParams().Get("selector")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "id":
+		param := define.Resources["WebAccel"].Commands["certificate-new"].BuildedParams().Get("id")
+		if param != nil {
+			comp = param.Param.CompleteFunc
+		}
+	case "output-type", "out", "o":
+		comp = schema.CompleteInStrValues("json", "yaml", "csv", "tsv")
+	}
+
+	if comp != nil {
+		words := comp(ctx, currentValue)
+		for _, w := range words {
+			fmt.Println(w)
+		}
+	}
+}
+
 func WebAccelCertificateUpdateCompleteFlags(ctx command.Context, params *params.CertificateUpdateWebAccelParam, flagName string, currentValue string) {
 	var comp schema.CompletionFunc
 
