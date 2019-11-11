@@ -21,7 +21,7 @@ func PrivateHostCreate(ctx command.Context, params *params.CreatePrivateHostPara
 	p.SetIconByID(params.IconId)
 
 	// set plan(There have only one plan now)
-	plans, err := client.Product.GetProductPrivateHostAPI().Find()
+	plans, err := client.Product.GetProductPrivateHostAPI().FilterBy("Class", "dynamic").Find()
 	if err != nil || len(plans.PrivateHostPlans) == 0 {
 		return fmt.Errorf("PrivateHostCreate is failed: can't find any private-host plan %s", err)
 	}
