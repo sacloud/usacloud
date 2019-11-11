@@ -1,3 +1,12 @@
+usacloud (0.29.1-1) stable; urgency=low
+
+  * 専有ホストのプラン検索パラメータ (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/463>
+  * k3OS利用時のデフォルトユーザー名検出処理の修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/464>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Mon, 11 Nov 2019 02:13:20 +0000
+
 usacloud (0.29.0-1) stable; urgency=low
 
   * ウェブアクセラレータでの証明書登録 (by yamamoto-febc)

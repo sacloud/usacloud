@@ -40,6 +40,10 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Mon Nov 11 2019 <sacloud.users@gmail.com> - 0.29.1-1
+- 専有ホストのプラン検索パラメータ (by yamamoto-febc)
+- k3OS利用時のデフォルトユーザー名検出処理の修正 (by yamamoto-febc)
+
 * Wed Oct 30 2019 <sacloud.users@gmail.com> - 0.29.0-1
 - ウェブアクセラレータでの証明書登録 (by yamamoto-febc)
 
