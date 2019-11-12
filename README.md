@@ -453,10 +453,6 @@ $ make docker-integration-test
 
 ## License
 
- `usacloud` Copyright (C) 2017-2019 Kazumichi Yamamoto.
+ `usacloud` Copyright (C) 2017-2019 The Usacloud Authors.
 
   This project is published under [Apache 2.0 License](LICENSE.txt).
-  
-## Author
-
-  * [Usacloud Authors](AUTHORS)

@@ -4,7 +4,7 @@ site_description: Usacloud日本語ドキュメント
 site_author: '@yamamoto-febc'
 repo_url: https://github.com/sacloud/usacloud
 repo_name: usacloud
-copyright: Copyright (C) 2017 Kazumichi Yamamoto.
+copyright: Copyright (C) 2017-2019 The Usacloud Authors.
 google_analytics: ['UA-63739336-4','auto']
 theme: readthedocs
 extra_css:
