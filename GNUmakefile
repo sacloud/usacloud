@@ -1,10 +1,29 @@
-TEST?=$$(go list ./... | grep -v vendor)
-VETARGS?=-all
-GOFMT_FILES?=$$(find . -name '*.go' | grep -v vendor)
-GOGEN_FILES?=$$(go list ./... | grep -v vendor)
-BIN_NAME?=usacloud
-CURRENT_VERSION = $(shell git log --merges --oneline | perl -ne 'if(m/^.+Merge pull request \#[0-9]+ from .+\/bump-version-([0-9\.]+)/){print $$1;exit}')
-GO_FILES?=$(shell find . -name '*.go')
+#
+# Copyright 2017-2019 The Usacloud Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+TEST            ?=$$(go list ./... | grep -v vendor)
+VETARGS         ?=-all
+GOFMT_FILES     ?=$$(find . -name '*.go' | grep -v vendor)
+GOGEN_FILES     ?=$$(go list ./... | grep -v vendor)
+BIN_NAME        ?=usacloud
+CURRENT_VERSION := $(shell git log --merges --oneline | perl -ne 'if(m/^.+Merge pull request \#[0-9]+ from .+\/bump-version-([0-9\.]+)/){print $$1;exit}')
+GO_FILES        ?=$(shell find . -name '*.go')
+AUTHOR          ?="The Usacloud Authors"
+COPYRIGHT_YEAR  ?="2017-2019"
+COPYRIGHT_FILES ?=$$(find . \( -name "*.dockerfile" -or -name "*.go" -or -name "*.sh" -or -name "*.pl" -or -name "*.bats" -or -name "*.bash" \) -print | grep -v "/vendor/")
+
 export GO111MODULE=on
 export GOPROXY=https://proxy.golang.org
 
@@ -38,6 +57,7 @@ tools:
 	GO111MODULE=off go get -u golang.org/x/tools/cmd/goimports
 	GO111MODULE=off go get -u github.com/motemen/gobump/cmd/gobump
 	GO111MODULE=off go get -u golang.org/x/lint/golint
+	GO111MODULE=off go get github.com/sacloud/addlicense
 
 contrib/completion/bash/usacloud: define/*.go
 	go run -mod=vendor tools/gen-bash-completion/main.go
@@ -168,3 +188,6 @@ version:
 
 git-tag:
 	git tag v`gobump show -r`
+
+set-license:
+	@addlicense -c $(AUTHOR) -y $(COPYRIGHT_YEAR) $(COPYRIGHT_FILES)

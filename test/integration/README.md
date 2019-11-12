@@ -70,7 +70,7 @@ usacloudコマンドの実行にはヘルパー関数`usacloud_run`(標準エラ
 - `jq`
 - `genisoimage`(利用する場合は`helpers.bash`で定義されている`MK_ISO_CMD`環境変数経由で利用してください)
 
-ライブラリを追加したい場合は[scripts/Dockerfile.bats](/scripts/Dockerfile.bats)を編集してインストールするようにしてください。
+ライブラリを追加したい場合は[scripts/bats.dockerfile](/scripts/bats.dockerfile)を編集してインストールするようにしてください。
 
 ### その他注意点
 
