@@ -2883,7 +2883,7 @@ func init() {
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "mode",
-						Usage: "[Required] set bind mode[http/https]",
+						Usage: "[Required] set bind mode[http/https/tcp]",
 					},
 					&cli.IntFlag{
 						Name:  "port",
@@ -3320,7 +3320,7 @@ func init() {
 					},
 					&cli.StringFlag{
 						Name:  "mode",
-						Usage: "set bind mode[http/https]",
+						Usage: "set bind mode[http/https/tcp]",
 					},
 					&cli.IntFlag{
 						Name:  "port",
