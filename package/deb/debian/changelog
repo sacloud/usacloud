@@ -1,3 +1,18 @@
+usacloud (0.30.0-1) stable; urgency=low
+
+  * ライセンスヘッダの追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/467>
+  * コピーライト表記の修正 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/468>
+  * VPCルータ 4000Mbpsプラン (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/474>
+  * PTRレコード (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/475>
+  * エンハンスドロードバランサでのTCPサポート (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/476>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Tue, 19 Nov 2019 01:47:14 +0000
+
 usacloud (0.29.1-1) stable; urgency=low
 
   * 専有ホストのプラン検索パラメータ (by yamamoto-febc)
