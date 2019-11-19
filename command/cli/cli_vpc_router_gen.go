@@ -436,7 +436,7 @@ func init() {
 				Flags: []cli.Flag{
 					&cli.StringFlag{
 						Name:  "plan",
-						Usage: "[Required] set plan[standard/premium/highspec]",
+						Usage: "[Required] set plan[standard/premium/highspec/highspec1600/highspec4000]",
 						Value: "standard",
 					},
 					&cli.Int64Flag{
