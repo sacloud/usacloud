@@ -396,7 +396,7 @@ func init() {
 					},
 					&cli.StringFlag{
 						Name:  "type",
-						Usage: "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA]",
+						Usage: "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]",
 					},
 					&cli.StringSliceFlag{
 						Name:  "selector",
@@ -1537,7 +1537,7 @@ func init() {
 					},
 					&cli.StringFlag{
 						Name:  "type",
-						Usage: "[Required] set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV]",
+						Usage: "[Required] set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]",
 					},
 					&cli.StringFlag{
 						Name:  "value",
@@ -2401,7 +2401,7 @@ func init() {
 					},
 					&cli.StringFlag{
 						Name:  "type",
-						Usage: "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV]",
+						Usage: "set record type[A/AAAA/ALIAS/NS/CNAME/MX/TXT/SRV/CAA/PTR]",
 					},
 					&cli.StringFlag{
 						Name:  "value",
