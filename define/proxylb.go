@@ -15,6 +15,9 @@
 package define
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -594,7 +597,7 @@ func proxyLBBindPortAddParam() map[string]*schema.Schema {
 		"mode": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
-			Description:  "set bind mode[http/https]",
+			Description:  fmt.Sprintf("set bind mode[%s]", strings.Join(sacloud.AllowProxyLBBindModes, "/")),
 			Required:     true,
 			ValidateFunc: validateInStrValues(sacloud.AllowProxyLBBindModes...),
 			CompleteFunc: completeInStrValues(sacloud.AllowProxyLBBindModes...),
@@ -639,7 +642,7 @@ func proxyLBBindPortUpdateParam() map[string]*schema.Schema {
 		"mode": {
 			Type:         schema.TypeString,
 			HandlerType:  schema.HandlerNoop,
-			Description:  "set bind mode[http/https]",
+			Description:  fmt.Sprintf("set bind mode[%s]", strings.Join(sacloud.AllowProxyLBBindModes, "/")),
 			ValidateFunc: validateInStrValues(sacloud.AllowProxyLBBindModes...),
 			CompleteFunc: completeInStrValues(sacloud.AllowProxyLBBindModes...),
 			Category:     "bind-port",

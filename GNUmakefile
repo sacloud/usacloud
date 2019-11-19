@@ -66,7 +66,8 @@ contrib/completion/bash/usacloud: define/*.go
 gen: command/cli/*_gen.go command/completion/*_gen.go command/funcs/*_gen.go command/params/*_gen.go
 
 .PHONY: gen-force
-gen-force: clean-all contrib/completion/bash/usacloud
+gen-force: clean-all contrib/completion/bash/usacloud _gen-force set-license
+_gen-force: 
 	go generate -mod=vendor $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES); goimports -l -w $(GOFMT_FILES)
 
 command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-funcs/*.go tools/gen-input-models/*.go
