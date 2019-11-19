@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.30.0 (2019-11-19)
+
+* ライセンスヘッダの追加 #467 (yamamoto-febc)
+* コピーライト表記の修正 #468 (yamamoto-febc)
+* VPCルータ 4000Mbpsプラン #474 (yamamoto-febc)
+* PTRレコード #475 (yamamoto-febc)
+* エンハンスドロードバランサでのTCPサポート #476 (yamamoto-febc)
+
+
 ## 0.29.1 (2019-11-11)
 
 * 専有ホストのプラン検索パラメータ #463 (yamamoto-febc)

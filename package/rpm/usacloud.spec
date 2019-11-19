@@ -40,6 +40,13 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Tue Nov 19 2019 <sacloud.users@gmail.com> - 0.30.0-1
+- ライセンスヘッダの追加 (by yamamoto-febc)
+- コピーライト表記の修正 (by yamamoto-febc)
+- VPCルータ 4000Mbpsプラン (by yamamoto-febc)
+- PTRレコード (by yamamoto-febc)
+- エンハンスドロードバランサでのTCPサポート (by yamamoto-febc)
+
 * Mon Nov 11 2019 <sacloud.users@gmail.com> - 0.29.1-1
 - 専有ホストのプラン検索パラメータ (by yamamoto-febc)
 - k3OS利用時のデフォルトユーザー名検出処理の修正 (by yamamoto-febc)
