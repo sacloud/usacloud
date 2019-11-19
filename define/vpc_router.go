@@ -710,7 +710,8 @@ func vpcRouterListColumns() []output.ColumnDef {
 				{
 					"1": "standard",
 					"2": "premium",
-					"3": "highspec",
+					"3": "highspec1600",
+					"4": "highspec4000",
 				},
 			},
 		},
@@ -922,7 +923,7 @@ func vpcRouterDetailExcludes() []string {
 	return []string{}
 }
 
-var allowVPCRouterPlans = []string{"standard", "premium", "highspec"}
+var allowVPCRouterPlans = []string{"standard", "premium", "highspec", "highspec1600", "highspec4000"}
 
 func vpcRouterCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
@@ -931,7 +932,7 @@ func vpcRouterCreateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Required:     true,
 			DefaultValue: "standard",
-			Description:  "set plan[standard/premium/highspec]",
+			Description:  fmt.Sprintf("set plan[%s]", strings.Join(allowVPCRouterPlans, "/")),
 			ValidateFunc: validateInStrValues(allowVPCRouterPlans...),
 			CompleteFunc: completeInStrValues(allowVPCRouterPlans...),
 			Category:     "router",

@@ -35,7 +35,7 @@ func VPCRouterCreate(ctx command.Context, params *params.CreateVPCRouterParam) e
 		targets := []string{"switch-id", "vip", "ipaddress1", "ipaddress2"}
 		for _, t := range targets {
 			if !ctx.IsSet(t) {
-				return fmt.Errorf("%q: is required when plan is [premium/highspec]", t)
+				return fmt.Errorf("%q: is required when plan is [premium/highspec/highspec1600/highspec4000]", t)
 			}
 		}
 	}
@@ -53,8 +53,17 @@ func VPCRouterCreate(ctx command.Context, params *params.CreateVPCRouterParam) e
 			params.Vrid,
 			[]string{},
 		)
-	case "highspec":
+	case "highspec", "highspec1600":
 		p.SetHighSpecPlan(
+			fmt.Sprintf("%d", params.SwitchId),
+			params.Vip,
+			params.Ipaddress1,
+			params.Ipaddress2,
+			params.Vrid,
+			[]string{},
+		)
+	case "highspec4000":
+		p.SetHighSpec4000MbpsPlan(
 			fmt.Sprintf("%d", params.SwitchId),
 			params.Vip,
 			params.Ipaddress1,
