@@ -1,3 +1,10 @@
+usacloud (0.31.0-1) stable; urgency=low
+
+  * os_typeに指定可能な値の追加 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/478>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Wed, 20 Nov 2019 23:47:42 +0000
+
 usacloud (0.30.0-1) stable; urgency=low
 
   * ライセンスヘッダの追加 (by yamamoto-febc)
