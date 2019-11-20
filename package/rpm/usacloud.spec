@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Nov 20 2019 <sacloud.users@gmail.com> - 0.31.0-1
+- os_typeに指定可能な値の追加 (by yamamoto-febc)
+
 * Tue Nov 19 2019 <sacloud.users@gmail.com> - 0.30.0-1
 - ライセンスヘッダの追加 (by yamamoto-febc)
 - コピーライト表記の修正 (by yamamoto-febc)
