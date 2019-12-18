@@ -1,3 +1,10 @@
+usacloud (0.31.1-1) stable; urgency=low
+
+  * エンハンスドロードバランサのスキーマ変更 (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/481>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Wed, 18 Dec 2019 07:54:57 +0000
+
 usacloud (0.31.0-1) stable; urgency=low
 
   * os_typeに指定可能な値の追加 (by yamamoto-febc)
