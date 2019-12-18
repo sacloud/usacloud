@@ -39,7 +39,7 @@ func ProxyLBCertificateInfo(ctx command.Context, params *params.CertificateInfoP
 	}
 
 	var list []interface{}
-	if cert.ServerCertificate != "" && cert.PrivateKey != "" {
+	if cert.PrimaryCert != nil && cert.PrimaryCert.ServerCertificate != "" && cert.PrimaryCert.PrivateKey != "" {
 		list = append(list, buildProxyLBCertInfo(cert))
 	}
 
@@ -55,7 +55,7 @@ type proxyLBCertInfo struct {
 
 func buildProxyLBCertInfo(cert *sacloud.ProxyLBCertificates) *proxyLBCertInfo {
 	ci := &proxyLBCertInfo{ProxyLBCertificates: cert}
-	block, _ := pem.Decode([]byte(cert.ServerCertificate)) // ignore err
+	block, _ := pem.Decode([]byte(cert.PrimaryCert.ServerCertificate)) // ignore err
 	if block != nil {
 		c, err := x509.ParseCertificate(block.Bytes) // ignore err
 		if err == nil {

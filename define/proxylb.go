@@ -396,7 +396,7 @@ func proxyLBCertListColumns() []output.ColumnDef {
 		{Name: "CommonName"},
 		{Name: "IPAddress"},
 		{Name: "Issuer"},
-		{Name: "CertificateEndDate"},
+		{Name: "PrimaryCert.CertificateEndDate"},
 	}
 }
 

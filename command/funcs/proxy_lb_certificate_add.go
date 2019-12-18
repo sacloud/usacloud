@@ -32,9 +32,11 @@ func ProxyLBCertificateAdd(ctx command.Context, params *params.CertificateAddPro
 	}
 
 	cert := &sacloud.ProxyLBCertificates{
-		ServerCertificate:       params.ServerCertificate,
-		IntermediateCertificate: params.IntermediateCertificate,
-		PrivateKey:              params.PrivateKey,
+		PrimaryCert: &sacloud.ProxyLBCertificate{
+			ServerCertificate:       params.ServerCertificate,
+			IntermediateCertificate: params.IntermediateCertificate,
+			PrivateKey:              params.PrivateKey,
+		},
 	}
 
 	if _, err := api.SetCertificates(p.ID, cert); err != nil {
