@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Wed Dec 18 2019 <sacloud.users@gmail.com> - 0.31.1-1
+- エンハンスドロードバランサのスキーマ変更 (by yamamoto-febc)
+
 * Wed Nov 20 2019 <sacloud.users@gmail.com> - 0.31.0-1
 - os_typeに指定可能な値の追加 (by yamamoto-febc)
 
