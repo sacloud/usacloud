@@ -35,13 +35,13 @@ func ProxyLBCertificateUpdate(ctx command.Context, params *params.CertificateUpd
 		return fmt.Errorf("ProxyLBCertificateUpdate is failed: %s", err)
 	}
 	if ctx.IsSet("server-certificate") {
-		cert.ServerCertificate = params.ServerCertificate
+		cert.PrimaryCert.ServerCertificate = params.ServerCertificate
 	}
 	if ctx.IsSet("intermediate-certificate") {
-		cert.IntermediateCertificate = params.IntermediateCertificate
+		cert.PrimaryCert.IntermediateCertificate = params.IntermediateCertificate
 	}
 	if ctx.IsSet("private-key") {
-		cert.PrivateKey = params.PrivateKey
+		cert.PrimaryCert.PrivateKey = params.PrivateKey
 	}
 
 	if _, err := api.SetCertificates(p.ID, cert); err != nil {

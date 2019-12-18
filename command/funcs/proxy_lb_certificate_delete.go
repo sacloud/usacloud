@@ -46,7 +46,7 @@ func ProxyLBCertificateDelete(ctx command.Context, params *params.CertificateDel
 	}
 
 	var list []interface{}
-	if cert.ServerCertificate != "" && cert.PrivateKey != "" {
+	if cert.PrimaryCert != nil && cert.PrimaryCert.ServerCertificate != "" && cert.PrimaryCert.PrivateKey != "" {
 		list = append(list, buildProxyLBCertInfo(cert))
 	}
 
