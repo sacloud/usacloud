@@ -161,7 +161,7 @@ GLOBAL OPTIONS:
    --version, -v                    print the version (default: false)
 
 COPYRIGHT:
-   Copyright (C) 2017 Kazumichi Yamamoto.
+   Copyright (C) 2017-2020 Usacloud Authors.
 ```
 
 
@@ -451,6 +451,6 @@ You can generate static files with the `mkdocs` command.
 
 ## License
 
- `usacloud` Copyright (C) 2017-2019 The Usacloud Authors.
+ `usacloud` Copyright (C) 2017-2020 The Usacloud Authors.
 
   This project is published under [Apache 2.0 License](LICENSE.txt).

@@ -17,7 +17,7 @@ import (
 var (
 	appName      = "usacloud"
 	appUsage     = "CLI client for SakuraCloud"
-	appCopyright = "Copyright (C) 2017-2019 The Usacloud Authors"
+	appCopyright = "Copyright (C) 2017-2020 The Usacloud Authors"
 )
 
 func main() {

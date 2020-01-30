@@ -1,5 +1,5 @@
 #
-# Copyright 2017-2019 The Usacloud Authors
+# Copyright 2017-2020 The Usacloud Authors
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ BIN_NAME        ?=usacloud
 CURRENT_VERSION := $(shell git log --merges --oneline | perl -ne 'if(m/^.+Merge pull request \#[0-9]+ from .+\/bump-version-([0-9\.]+)/){print $$1;exit}')
 GO_FILES        ?=$(shell find . -name '*.go')
 AUTHOR          ?="The Usacloud Authors"
-COPYRIGHT_YEAR  ?="2017-2019"
+COPYRIGHT_YEAR  ?="2017-2020"
 COPYRIGHT_FILES ?=$$(find . \( -name "*.dockerfile" -or -name "*.go" -or -name "*.sh" -or -name "*.pl" -or -name "*.bats" -or -name "*.bash" \) -print | grep -v "/vendor/")
 
 export GO111MODULE=on
