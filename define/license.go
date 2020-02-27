@@ -107,7 +107,7 @@ func licenseCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"name": paramRequiredName,
 		"license-info-id": {
-			Type:            schema.TypeInt64,
+			Type:            schema.TypeId,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetLicenseInfoByID",
 			Description:     "set LicenseInfo ID",

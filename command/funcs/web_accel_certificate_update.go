@@ -68,7 +68,7 @@ func WebAccelCertificateUpdate(ctx command.Context, params *params.CertificateUp
 	}
 
 	// Update
-	res, err := api.UpdateCertificate(fmt.Sprintf("%d", params.Id), p)
+	res, err := api.UpdateCertificate(params.Id, p)
 	if err != nil {
 		return fmt.Errorf("WebAccelCertificateUpdate is failed: %s", err)
 	}

@@ -23,6 +23,7 @@ import (
 	"sync"
 
 	"github.com/imdario/mergo"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
 	"github.com/sacloud/usacloud/command/funcs"
@@ -178,7 +179,7 @@ func init() {
 						listParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = c.Int64Slice("id")
+						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("scope") {
 						listParam.Scope = c.String("scope")
@@ -187,10 +188,10 @@ func init() {
 						listParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("source-archive-id") {
-						listParam.SourceArchiveId = c.Int64("source-archive-id")
+						listParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
 					}
 					if c.IsSet("source-disk-id") {
-						listParam.SourceDiskId = c.Int64("source-disk-id")
+						listParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
 					}
 					if c.IsSet("from") {
 						listParam.From = c.Int("from")
@@ -320,7 +321,7 @@ func init() {
 						listParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = c.Int64Slice("id")
+						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("scope") {
 						listParam.Scope = c.String("scope")
@@ -329,10 +330,10 @@ func init() {
 						listParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("source-archive-id") {
-						listParam.SourceArchiveId = c.Int64("source-archive-id")
+						listParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
 					}
 					if c.IsSet("source-disk-id") {
-						listParam.SourceDiskId = c.Int64("source-disk-id")
+						listParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
 					}
 					if c.IsSet("from") {
 						listParam.From = c.Int("from")
@@ -540,10 +541,10 @@ func init() {
 
 					// Set option values
 					if c.IsSet("source-disk-id") {
-						createParam.SourceDiskId = c.Int64("source-disk-id")
+						createParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
 					}
 					if c.IsSet("source-archive-id") {
-						createParam.SourceArchiveId = c.Int64("source-archive-id")
+						createParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
 					}
 					if c.IsSet("size") {
 						createParam.Size = c.Int("size")
@@ -561,7 +562,7 @@ func init() {
 						createParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = c.Int64("icon-id")
+						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
 						createParam.Assumeyes = c.Bool("assumeyes")
@@ -682,10 +683,10 @@ func init() {
 
 					// Set option values
 					if c.IsSet("source-disk-id") {
-						createParam.SourceDiskId = c.Int64("source-disk-id")
+						createParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
 					}
 					if c.IsSet("source-archive-id") {
-						createParam.SourceArchiveId = c.Int64("source-archive-id")
+						createParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
 					}
 					if c.IsSet("size") {
 						createParam.Size = c.Int("size")
@@ -703,7 +704,7 @@ func init() {
 						createParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = c.Int64("icon-id")
+						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
 						createParam.Assumeyes = c.Bool("assumeyes")
@@ -920,7 +921,7 @@ func init() {
 						readParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = c.Int64("id")
+						readParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1041,7 +1042,7 @@ func init() {
 						readParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = c.Int64("id")
+						readParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1080,7 +1081,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), readParam)
 
 					apiClient := ctx.GetAPIClient().Archive
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -1293,7 +1294,7 @@ func init() {
 						updateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = c.Int64("icon-id")
+						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
 						updateParam.Assumeyes = c.Bool("assumeyes")
@@ -1329,7 +1330,7 @@ func init() {
 						updateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = c.Int64("id")
+						updateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1429,7 +1430,7 @@ func init() {
 						updateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = c.Int64("icon-id")
+						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
 						updateParam.Assumeyes = c.Bool("assumeyes")
@@ -1465,7 +1466,7 @@ func init() {
 						updateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = c.Int64("id")
+						updateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1504,7 +1505,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
 
 					apiClient := ctx.GetAPIClient().Archive
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -1731,7 +1732,7 @@ func init() {
 						deleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = c.Int64("id")
+						deleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1855,7 +1856,7 @@ func init() {
 						deleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = c.Int64("id")
+						deleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1894,7 +1895,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
 
 					apiClient := ctx.GetAPIClient().Archive
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -2127,7 +2128,7 @@ func init() {
 						uploadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						uploadParam.Id = c.Int64("id")
+						uploadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -2254,7 +2255,7 @@ func init() {
 						uploadParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						uploadParam.Id = c.Int64("id")
+						uploadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2293,7 +2294,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), uploadParam)
 
 					apiClient := ctx.GetAPIClient().Archive
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -2477,7 +2478,7 @@ func init() {
 						downloadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						downloadParam.Id = c.Int64("id")
+						downloadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -2583,7 +2584,7 @@ func init() {
 						downloadParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						downloadParam.Id = c.Int64("id")
+						downloadParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2622,7 +2623,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), downloadParam)
 
 					apiClient := ctx.GetAPIClient().Archive
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -2852,7 +2853,7 @@ func init() {
 						ftpOpenParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						ftpOpenParam.Id = c.Int64("id")
+						ftpOpenParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -2976,7 +2977,7 @@ func init() {
 						ftpOpenParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						ftpOpenParam.Id = c.Int64("id")
+						ftpOpenParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3015,7 +3016,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), ftpOpenParam)
 
 					apiClient := ctx.GetAPIClient().Archive
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -3188,7 +3189,7 @@ func init() {
 						ftpCloseParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						ftpCloseParam.Id = c.Int64("id")
+						ftpCloseParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -3291,7 +3292,7 @@ func init() {
 						ftpCloseParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						ftpCloseParam.Id = c.Int64("id")
+						ftpCloseParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3330,7 +3331,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), ftpCloseParam)
 
 					apiClient := ctx.GetAPIClient().Archive
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -3495,7 +3496,7 @@ func init() {
 						waitForCopyParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForCopyParam.Id = c.Int64("id")
+						waitForCopyParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -3595,7 +3596,7 @@ func init() {
 						waitForCopyParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForCopyParam.Id = c.Int64("id")
+						waitForCopyParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3634,7 +3635,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), waitForCopyParam)
 
 					apiClient := ctx.GetAPIClient().Archive
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 

@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -210,7 +210,7 @@ func (api *ZoneAPI) SetSortByName(reverse bool) {
 // }
 
 // Read 読み取り
-func (api *ZoneAPI) Read(id int64) (*sacloud.Zone, error) {
+func (api *ZoneAPI) Read(id sacloud.ID) (*sacloud.Zone, error) {
 	return api.request(func(res *sacloud.Response) error {
 		return api.read(id, nil, res)
 	})

@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -219,21 +219,21 @@ func (api *CDROMAPI) New() *sacloud.CDROM {
 //}
 
 // Read 読み取り
-func (api *CDROMAPI) Read(id int64) (*sacloud.CDROM, error) {
+func (api *CDROMAPI) Read(id sacloud.ID) (*sacloud.CDROM, error) {
 	return api.request(func(res *sacloud.Response) error {
 		return api.read(id, nil, res)
 	})
 }
 
 // Update 更新
-func (api *CDROMAPI) Update(id int64, value *sacloud.CDROM) (*sacloud.CDROM, error) {
+func (api *CDROMAPI) Update(id sacloud.ID, value *sacloud.CDROM) (*sacloud.CDROM, error) {
 	return api.request(func(res *sacloud.Response) error {
 		return api.update(id, api.createRequest(value), res)
 	})
 }
 
 // Delete 削除
-func (api *CDROMAPI) Delete(id int64) (*sacloud.CDROM, error) {
+func (api *CDROMAPI) Delete(id sacloud.ID) (*sacloud.CDROM, error) {
 	return api.request(func(res *sacloud.Response) error {
 		return api.delete(id, nil, res)
 	})

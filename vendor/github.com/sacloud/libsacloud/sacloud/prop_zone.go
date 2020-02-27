@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ func (p *propZone) GetZone() *Zone {
 }
 
 // GetZoneID ゾーンID 取得
-func (p *propZone) GetZoneID() int64 {
+func (p *propZone) GetZoneID() ID {
 	if p.Zone == nil {
 		return -1
 	}
@@ -58,7 +58,7 @@ func (p *propZone) GetRegion() *Region {
 }
 
 // GetRegionID リージョンID 取得
-func (p *propZone) GetRegionID() int64 {
+func (p *propZone) GetRegionID() ID {
 	if p.Zone == nil {
 		return -1
 	}

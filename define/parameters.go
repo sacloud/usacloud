@@ -17,6 +17,8 @@ package define
 import (
 	"fmt"
 
+	"github.com/sacloud/libsacloud/sacloud"
+
 	"github.com/sacloud/usacloud/schema"
 )
 
@@ -59,7 +61,7 @@ var (
 
 func getParamResourceShortID(resourceName string, digit int) *schema.Schema {
 	return &schema.Schema{
-		Type:         schema.TypeInt64,
+		Type:         schema.TypeId,
 		HandlerType:  schema.HandlerPathThrough,
 		Description:  fmt.Sprintf("set %s", resourceName),
 		Required:     true,
@@ -68,7 +70,7 @@ func getParamResourceShortID(resourceName string, digit int) *schema.Schema {
 }
 
 var paramIconResourceID = &schema.Schema{
-	Type:            schema.TypeInt64,
+	Type:            schema.TypeId,
 	HandlerType:     schema.HandlerPathThrough,
 	DestinationProp: "SetIconByID",
 	Description:     "set Icon ID",
@@ -89,7 +91,7 @@ var CommonListParam = map[string]*schema.Schema{
 		Order:         1,
 	},
 	"id": {
-		Type:            schema.TypeIntList,
+		Type:            schema.TypeIdList,
 		HandlerType:     schema.HandlerAndParams,
 		DestinationProp: "ID",
 		Description:     "set filter by id(s)",
@@ -191,7 +193,7 @@ func filterListByTags(_ []interface{}, item interface{}, param interface{}) bool
 
 var paramSourceArchiveIDCond = map[string]*schema.Schema{
 	"source-archive-id": {
-		Type:         schema.TypeInt64,
+		Type:         schema.TypeId,
 		HandlerType:  schema.HandlerFilterFunc,
 		FilterFunc:   filterBySourceArchiveID,
 		Description:  "set filter by source-archive-id",
@@ -203,7 +205,7 @@ var paramSourceArchiveIDCond = map[string]*schema.Schema{
 
 var paramSourceDiskCond = map[string]*schema.Schema{
 	"source-disk-id": {
-		Type:         schema.TypeInt64,
+		Type:         schema.TypeId,
 		HandlerType:  schema.HandlerFilterFunc,
 		FilterFunc:   filterBySourceDiskID,
 		Description:  "set filter by source-disk-id",
@@ -216,7 +218,7 @@ var paramSourceDiskCond = map[string]*schema.Schema{
 func filterBySourceArchiveID(_ []interface{}, item interface{}, param interface{}) bool {
 
 	type archiveIDHandler interface {
-		GetSourceArchiveID() int64
+		GetSourceArchiveID() sacloud.ID
 	}
 
 	archiveIDHolder, ok := item.(archiveIDHandler)
@@ -224,7 +226,7 @@ func filterBySourceArchiveID(_ []interface{}, item interface{}, param interface{
 		return false
 	}
 
-	id := param.(int64)
+	id := param.(sacloud.ID)
 	if id == 0 {
 		return true
 	}
@@ -235,7 +237,7 @@ func filterBySourceArchiveID(_ []interface{}, item interface{}, param interface{
 func filterBySourceDiskID(_ []interface{}, item interface{}, param interface{}) bool {
 
 	type diskIDHandler interface {
-		GetSourceDiskID() int64
+		GetSourceDiskID() sacloud.ID
 	}
 
 	diskIDHolder, ok := item.(diskIDHandler)
@@ -243,7 +245,7 @@ func filterBySourceDiskID(_ []interface{}, item interface{}, param interface{}) 
 		return false
 	}
 
-	id := param.(int64)
+	id := param.(sacloud.ID)
 	if id == 0 {
 		return true
 	}

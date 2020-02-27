@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,22 +25,22 @@ import (
 
 // ListAutoBackupParam is input parameters for the sacloud API
 type ListAutoBackupParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListAutoBackupParam return new ListAutoBackupParam
@@ -53,7 +54,7 @@ func (p *ListAutoBackupParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -190,11 +191,11 @@ func (p *ListAutoBackupParam) SetName(v []string) {
 func (p *ListAutoBackupParam) GetName() []string {
 	return p.Name
 }
-func (p *ListAutoBackupParam) SetId(v []int64) {
+func (p *ListAutoBackupParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListAutoBackupParam) GetId() []int64 {
+func (p *ListAutoBackupParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListAutoBackupParam) SetTags(v []string) {
@@ -298,24 +299,24 @@ func (p *ListAutoBackupParam) GetQueryFile() string {
 
 // CreateAutoBackupParam is input parameters for the sacloud API
 type CreateAutoBackupParam struct {
-	DiskId            int64    `json:"disk-id"`
-	Weekdays          []string `json:"weekdays"`
-	Generation        int      `json:"generation"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	DiskId            sacloud.ID `json:"disk-id"`
+	Weekdays          []string   `json:"weekdays"`
+	Generation        int        `json:"generation"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreateAutoBackupParam return new CreateAutoBackupParam
@@ -330,7 +331,7 @@ func NewCreateAutoBackupParam() *CreateAutoBackupParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *CreateAutoBackupParam) FillValueToSkeleton() {
 	if isEmpty(p.DiskId) {
-		p.DiskId = 0
+		p.DiskId = sacloud.ID(0)
 	}
 	if isEmpty(p.Weekdays) {
 		p.Weekdays = []string{""}
@@ -348,7 +349,7 @@ func (p *CreateAutoBackupParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -514,11 +515,11 @@ func (p *CreateAutoBackupParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreateAutoBackupParam) SetDiskId(v int64) {
+func (p *CreateAutoBackupParam) SetDiskId(v sacloud.ID) {
 	p.DiskId = v
 }
 
-func (p *CreateAutoBackupParam) GetDiskId() int64 {
+func (p *CreateAutoBackupParam) GetDiskId() sacloud.ID {
 	return p.DiskId
 }
 func (p *CreateAutoBackupParam) SetWeekdays(v []string) {
@@ -556,11 +557,11 @@ func (p *CreateAutoBackupParam) SetTags(v []string) {
 func (p *CreateAutoBackupParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateAutoBackupParam) SetIconId(v int64) {
+func (p *CreateAutoBackupParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateAutoBackupParam) GetIconId() int64 {
+func (p *CreateAutoBackupParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateAutoBackupParam) SetAssumeyes(v bool) {
@@ -643,18 +644,18 @@ func (p *CreateAutoBackupParam) GetQueryFile() string {
 
 // ReadAutoBackupParam is input parameters for the sacloud API
 type ReadAutoBackupParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadAutoBackupParam return new ReadAutoBackupParam
@@ -698,7 +699,7 @@ func (p *ReadAutoBackupParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -838,35 +839,35 @@ func (p *ReadAutoBackupParam) SetQueryFile(v string) {
 func (p *ReadAutoBackupParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadAutoBackupParam) SetId(v int64) {
+func (p *ReadAutoBackupParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadAutoBackupParam) GetId() int64 {
+func (p *ReadAutoBackupParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateAutoBackupParam is input parameters for the sacloud API
 type UpdateAutoBackupParam struct {
-	Weekdays          []string `json:"weekdays"`
-	Generation        int      `json:"generation"`
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Weekdays          []string   `json:"weekdays"`
+	Generation        int        `json:"generation"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateAutoBackupParam return new UpdateAutoBackupParam
@@ -895,7 +896,7 @@ func (p *UpdateAutoBackupParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -931,7 +932,7 @@ func (p *UpdateAutoBackupParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1078,11 +1079,11 @@ func (p *UpdateAutoBackupParam) SetTags(v []string) {
 func (p *UpdateAutoBackupParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateAutoBackupParam) SetIconId(v int64) {
+func (p *UpdateAutoBackupParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateAutoBackupParam) GetIconId() int64 {
+func (p *UpdateAutoBackupParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateAutoBackupParam) SetAssumeyes(v bool) {
@@ -1162,29 +1163,29 @@ func (p *UpdateAutoBackupParam) SetQueryFile(v string) {
 func (p *UpdateAutoBackupParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateAutoBackupParam) SetId(v int64) {
+func (p *UpdateAutoBackupParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateAutoBackupParam) GetId() int64 {
+func (p *UpdateAutoBackupParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteAutoBackupParam is input parameters for the sacloud API
 type DeleteAutoBackupParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteAutoBackupParam return new DeleteAutoBackupParam
@@ -1231,7 +1232,7 @@ func (p *DeleteAutoBackupParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1378,10 +1379,10 @@ func (p *DeleteAutoBackupParam) SetQueryFile(v string) {
 func (p *DeleteAutoBackupParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteAutoBackupParam) SetId(v int64) {
+func (p *DeleteAutoBackupParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteAutoBackupParam) GetId() int64 {
+func (p *DeleteAutoBackupParam) GetId() sacloud.ID {
 	return p.Id
 }

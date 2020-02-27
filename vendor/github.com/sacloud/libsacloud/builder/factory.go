@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@ package builder
 
 import (
 	"fmt"
+	"github.com/sacloud/libsacloud/sacloud"
 
 	"github.com/sacloud/libsacloud/sacloud/ostype"
 )
@@ -90,18 +91,18 @@ func ServerBlankDisk(client APIClient, name string) BlankDiskServerBuilder {
 }
 
 // ServerFromExistsDisk 既存ディスクを接続するビルダー
-func ServerFromExistsDisk(client APIClient, name string, sourceDiskID int64) ConnectDiskServerBuilder {
+func ServerFromExistsDisk(client APIClient, name string, sourceDiskID sacloud.ID) ConnectDiskServerBuilder {
 	b := newServerBuilder(client, name)
 	b.hasCommonProperty = true
 	b.hasNetworkInterfaceProperty = true
 	b.hasAdditionalDiskProperty = true
 
-	b.connectDiskIDs = []int64{sourceDiskID}
+	b.connectDiskIDs = []sacloud.ID{sourceDiskID}
 	return b
 }
 
 // ServerFromDisk 既存ディスクをコピーして新たなディスクを作成するビルダー
-func ServerFromDisk(client APIClient, name string, sourceDiskID int64) CommonServerBuilder {
+func ServerFromDisk(client APIClient, name string, sourceDiskID sacloud.ID) CommonServerBuilder {
 	b := newServerBuilder(client, name)
 	b.hasCommonProperty = true
 	b.hasNetworkInterfaceProperty = true
@@ -117,7 +118,7 @@ func ServerFromDisk(client APIClient, name string, sourceDiskID int64) CommonSer
 }
 
 // ServerFromArchive 既存アーカイブをコピーして新たなディスクを作成するビルダー
-func ServerFromArchive(client APIClient, name string, sourceArchiveID int64) CommonServerBuilder {
+func ServerFromArchive(client APIClient, name string, sourceArchiveID sacloud.ID) CommonServerBuilder {
 	b := newServerBuilder(client, name)
 	b.hasCommonProperty = true
 	b.hasNetworkInterfaceProperty = true
@@ -174,13 +175,13 @@ func (b *serverBuilder) serverPublicArchiveWindows(os ostype.ArchiveOSTypes) {
 	b.disk.forceEditDisk = true
 }
 
-func (b *serverBuilder) serverFromDisk(sourceDiskID int64) {
+func (b *serverBuilder) serverFromDisk(sourceDiskID sacloud.ID) {
 	b.disk = Disk(b.client, b.serverName)
 	b.disk.sourceArchiveID = 0
 	b.disk.sourceDiskID = sourceDiskID
 }
 
-func (b *serverBuilder) serverFromArchive(sourceArchiveID int64) {
+func (b *serverBuilder) serverFromArchive(sourceArchiveID sacloud.ID) {
 
 	b.disk = Disk(b.client, b.serverName)
 	b.disk.sourceArchiveID = sourceArchiveID

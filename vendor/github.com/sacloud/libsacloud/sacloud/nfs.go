@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ type NFSRemark struct {
 }
 
 // SetRemarkPlanID プランID設定
-func (n NFSRemark) SetRemarkPlanID(planID int64) {
+func (n NFSRemark) SetRemarkPlanID(planID ID) {
 	if n.Plan == nil {
 		n.Plan = &struct {
 			ID json.Number `json:",omitempty"`
@@ -119,7 +119,7 @@ func AllowNFSSSDPlanSizes() []int {
 
 // CreateNFSValue NFS作成用パラメーター
 type CreateNFSValue struct {
-	SwitchID        string    // 接続先スイッチID
+	SwitchID        ID        // 接続先スイッチID
 	IPAddress       string    // IPアドレス
 	MaskLen         int       // ネットワークマスク長
 	DefaultRoute    string    // デフォルトルート
@@ -205,7 +205,7 @@ type NFSPlans struct {
 }
 
 // FindPlanID プランとサイズからプランIDを取得
-func (p NFSPlans) FindPlanID(plan NFSPlan, size NFSSize) int64 {
+func (p NFSPlans) FindPlanID(plan NFSPlan, size NFSSize) ID {
 	var plans []NFSPlanValue
 	switch plan {
 	case NFSPlanHDD:
@@ -218,11 +218,7 @@ func (p NFSPlans) FindPlanID(plan NFSPlan, size NFSSize) int64 {
 
 	for _, plan := range plans {
 		if plan.Availability == "available" && plan.Size == int(size) {
-			res, err := plan.PlanID.Int64()
-			if err != nil {
-				return -1
-			}
-			return res
+			return plan.PlanID
 		}
 	}
 
@@ -230,23 +226,17 @@ func (p NFSPlans) FindPlanID(plan NFSPlan, size NFSSize) int64 {
 }
 
 // FindByPlanID プランIDから該当プランを取得
-func (p NFSPlans) FindByPlanID(planID int64) (NFSPlan, *NFSPlanValue) {
+func (p NFSPlans) FindByPlanID(planID ID) (NFSPlan, *NFSPlanValue) {
 
 	for _, plan := range p.SSD {
-		id, err := plan.PlanID.Int64()
-		if err != nil {
-			continue
-		}
+		id := plan.PlanID
 		if id == planID {
 			return NFSPlanSSD, &plan
 		}
 	}
 
 	for _, plan := range p.HDD {
-		id, err := plan.PlanID.Int64()
-		if err != nil {
-			continue
-		}
+		id := plan.PlanID
 		if id == planID {
 			return NFSPlanHDD, &plan
 		}
@@ -256,7 +246,7 @@ func (p NFSPlans) FindByPlanID(planID int64) (NFSPlan, *NFSPlanValue) {
 
 // NFSPlanValue NFSプラン
 type NFSPlanValue struct {
-	Size         int         `json:"size"`
-	Availability string      `json:"availability"`
-	PlanID       json.Number `json:"planId"`
+	Size         int    `json:"size"`
+	Availability string `json:"availability"`
+	PlanID       ID     `json:"planId"`
 }

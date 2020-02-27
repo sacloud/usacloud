@@ -361,7 +361,7 @@ func simCreateParam() map[string]*schema.Schema {
 			Order:        520,
 		},
 		"icon-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),

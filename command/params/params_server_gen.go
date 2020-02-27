@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,22 +25,22 @@ import (
 
 // ListServerParam is input parameters for the sacloud API
 type ListServerParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListServerParam return new ListServerParam
@@ -53,7 +54,7 @@ func (p *ListServerParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -190,11 +191,11 @@ func (p *ListServerParam) SetName(v []string) {
 func (p *ListServerParam) GetName() []string {
 	return p.Name
 }
-func (p *ListServerParam) SetId(v []int64) {
+func (p *ListServerParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListServerParam) GetId() []int64 {
+func (p *ListServerParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListServerParam) SetTags(v []string) {
@@ -298,59 +299,59 @@ func (p *ListServerParam) GetQueryFile() string {
 
 // BuildServerParam is input parameters for the sacloud API
 type BuildServerParam struct {
-	Core                    int      `json:"core"`
-	Memory                  int      `json:"memory"`
-	Commitment              string   `json:"commitment"`
-	PrivateHostId           int64    `json:"private-host-id"`
-	DiskMode                string   `json:"disk-mode"`
-	OsType                  string   `json:"os-type"`
-	DiskPlan                string   `json:"disk-plan"`
-	DiskConnection          string   `json:"disk-connection"`
-	DiskSize                int      `json:"disk-size"`
-	SourceArchiveId         int64    `json:"source-archive-id"`
-	SourceDiskId            int64    `json:"source-disk-id"`
-	DistantFrom             []int64  `json:"distant-from"`
-	DiskId                  int64    `json:"disk-id"`
-	IsoImageId              int64    `json:"iso-image-id"`
-	NetworkMode             string   `json:"network-mode"`
-	InterfaceDriver         string   `json:"interface-driver"`
-	PacketFilterId          int64    `json:"packet-filter-id"`
-	SwitchId                int64    `json:"switch-id"`
-	Hostname                string   `json:"hostname"`
-	Password                string   `json:"password"`
-	DisablePasswordAuth     bool     `json:"disable-password-auth"`
-	Ipaddress               string   `json:"ipaddress"`
-	NwMasklen               int      `json:"nw-masklen"`
-	DefaultRoute            string   `json:"default-route"`
-	StartupScripts          []string `json:"startup-scripts"`
-	StartupScriptIds        []int64  `json:"startup-script-ids"`
-	StartupScriptsEphemeral bool     `json:"startup-scripts-ephemeral"`
-	SshKeyMode              string   `json:"ssh-key-mode"`
-	SshKeyName              string   `json:"ssh-key-name"`
-	SshKeyIds               []int64  `json:"ssh-key-ids"`
-	SshKeyPassPhrase        string   `json:"ssh-key-pass-phrase"`
-	SshKeyDescription       string   `json:"ssh-key-description"`
-	SshKeyPrivateKeyOutput  string   `json:"ssh-key-private-key-output"`
-	SshKeyPublicKeys        []string `json:"ssh-key-public-keys"`
-	SshKeyPublicKeyFiles    []string `json:"ssh-key-public-key-files"`
-	SshKeyEphemeral         bool     `json:"ssh-key-ephemeral"`
-	Name                    string   `json:"name"`
-	Description             string   `json:"description"`
-	Tags                    []string `json:"tags"`
-	IconId                  int64    `json:"icon-id"`
-	Assumeyes               bool     `json:"assumeyes"`
-	ParamTemplate           string   `json:"param-template"`
-	ParamTemplateFile       string   `json:"param-template-file"`
-	GenerateSkeleton        bool     `json:"generate-skeleton"`
-	OutputType              string   `json:"output-type"`
-	Column                  []string `json:"column"`
-	Quiet                   bool     `json:"quiet"`
-	Format                  string   `json:"format"`
-	FormatFile              string   `json:"format-file"`
-	Query                   string   `json:"query"`
-	QueryFile               string   `json:"query-file"`
-	UsKeyboard              bool     `json:"us-keyboard"`
-	DisableBootAfterCreate  bool     `json:"disable-boot-after-create"`
+	Core                    int          `json:"core"`
+	Memory                  int          `json:"memory"`
+	Commitment              string       `json:"commitment"`
+	PrivateHostId           sacloud.ID   `json:"private-host-id"`
+	DiskMode                string       `json:"disk-mode"`
+	OsType                  string       `json:"os-type"`
+	DiskPlan                string       `json:"disk-plan"`
+	DiskConnection          string       `json:"disk-connection"`
+	DiskSize                int          `json:"disk-size"`
+	SourceArchiveId         sacloud.ID   `json:"source-archive-id"`
+	SourceDiskId            sacloud.ID   `json:"source-disk-id"`
+	DistantFrom             []sacloud.ID `json:"distant-from"`
+	DiskId                  sacloud.ID   `json:"disk-id"`
+	IsoImageId              sacloud.ID   `json:"iso-image-id"`
+	NetworkMode             string       `json:"network-mode"`
+	InterfaceDriver         string       `json:"interface-driver"`
+	PacketFilterId          sacloud.ID   `json:"packet-filter-id"`
+	SwitchId                sacloud.ID   `json:"switch-id"`
+	Hostname                string       `json:"hostname"`
+	Password                string       `json:"password"`
+	DisablePasswordAuth     bool         `json:"disable-password-auth"`
+	Ipaddress               string       `json:"ipaddress"`
+	NwMasklen               int          `json:"nw-masklen"`
+	DefaultRoute            string       `json:"default-route"`
+	StartupScripts          []string     `json:"startup-scripts"`
+	StartupScriptIds        []sacloud.ID `json:"startup-script-ids"`
+	StartupScriptsEphemeral bool         `json:"startup-scripts-ephemeral"`
+	SshKeyMode              string       `json:"ssh-key-mode"`
+	SshKeyName              string       `json:"ssh-key-name"`
+	SshKeyIds               []sacloud.ID `json:"ssh-key-ids"`
+	SshKeyPassPhrase        string       `json:"ssh-key-pass-phrase"`
+	SshKeyDescription       string       `json:"ssh-key-description"`
+	SshKeyPrivateKeyOutput  string       `json:"ssh-key-private-key-output"`
+	SshKeyPublicKeys        []string     `json:"ssh-key-public-keys"`
+	SshKeyPublicKeyFiles    []string     `json:"ssh-key-public-key-files"`
+	SshKeyEphemeral         bool         `json:"ssh-key-ephemeral"`
+	Name                    string       `json:"name"`
+	Description             string       `json:"description"`
+	Tags                    []string     `json:"tags"`
+	IconId                  sacloud.ID   `json:"icon-id"`
+	Assumeyes               bool         `json:"assumeyes"`
+	ParamTemplate           string       `json:"param-template"`
+	ParamTemplateFile       string       `json:"param-template-file"`
+	GenerateSkeleton        bool         `json:"generate-skeleton"`
+	OutputType              string       `json:"output-type"`
+	Column                  []string     `json:"column"`
+	Quiet                   bool         `json:"quiet"`
+	Format                  string       `json:"format"`
+	FormatFile              string       `json:"format-file"`
+	Query                   string       `json:"query"`
+	QueryFile               string       `json:"query-file"`
+	UsKeyboard              bool         `json:"us-keyboard"`
+	DisableBootAfterCreate  bool         `json:"disable-boot-after-create"`
 }
 
 // NewBuildServerParam return new BuildServerParam
@@ -384,7 +385,7 @@ func (p *BuildServerParam) FillValueToSkeleton() {
 		p.Commitment = ""
 	}
 	if isEmpty(p.PrivateHostId) {
-		p.PrivateHostId = 0
+		p.PrivateHostId = sacloud.ID(0)
 	}
 	if isEmpty(p.DiskMode) {
 		p.DiskMode = ""
@@ -402,19 +403,19 @@ func (p *BuildServerParam) FillValueToSkeleton() {
 		p.DiskSize = 0
 	}
 	if isEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = 0
+		p.SourceArchiveId = sacloud.ID(0)
 	}
 	if isEmpty(p.SourceDiskId) {
-		p.SourceDiskId = 0
+		p.SourceDiskId = sacloud.ID(0)
 	}
 	if isEmpty(p.DistantFrom) {
-		p.DistantFrom = []int64{0}
+		p.DistantFrom = []sacloud.ID{}
 	}
 	if isEmpty(p.DiskId) {
-		p.DiskId = 0
+		p.DiskId = sacloud.ID(0)
 	}
 	if isEmpty(p.IsoImageId) {
-		p.IsoImageId = 0
+		p.IsoImageId = sacloud.ID(0)
 	}
 	if isEmpty(p.NetworkMode) {
 		p.NetworkMode = ""
@@ -423,10 +424,10 @@ func (p *BuildServerParam) FillValueToSkeleton() {
 		p.InterfaceDriver = ""
 	}
 	if isEmpty(p.PacketFilterId) {
-		p.PacketFilterId = 0
+		p.PacketFilterId = sacloud.ID(0)
 	}
 	if isEmpty(p.SwitchId) {
-		p.SwitchId = 0
+		p.SwitchId = sacloud.ID(0)
 	}
 	if isEmpty(p.Hostname) {
 		p.Hostname = ""
@@ -450,7 +451,7 @@ func (p *BuildServerParam) FillValueToSkeleton() {
 		p.StartupScripts = []string{""}
 	}
 	if isEmpty(p.StartupScriptIds) {
-		p.StartupScriptIds = []int64{0}
+		p.StartupScriptIds = []sacloud.ID{}
 	}
 	if isEmpty(p.StartupScriptsEphemeral) {
 		p.StartupScriptsEphemeral = false
@@ -462,7 +463,7 @@ func (p *BuildServerParam) FillValueToSkeleton() {
 		p.SshKeyName = ""
 	}
 	if isEmpty(p.SshKeyIds) {
-		p.SshKeyIds = []int64{0}
+		p.SshKeyIds = []sacloud.ID{}
 	}
 	if isEmpty(p.SshKeyPassPhrase) {
 		p.SshKeyPassPhrase = ""
@@ -492,7 +493,7 @@ func (p *BuildServerParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -839,11 +840,11 @@ func (p *BuildServerParam) SetCommitment(v string) {
 func (p *BuildServerParam) GetCommitment() string {
 	return p.Commitment
 }
-func (p *BuildServerParam) SetPrivateHostId(v int64) {
+func (p *BuildServerParam) SetPrivateHostId(v sacloud.ID) {
 	p.PrivateHostId = v
 }
 
-func (p *BuildServerParam) GetPrivateHostId() int64 {
+func (p *BuildServerParam) GetPrivateHostId() sacloud.ID {
 	return p.PrivateHostId
 }
 func (p *BuildServerParam) SetDiskMode(v string) {
@@ -881,39 +882,39 @@ func (p *BuildServerParam) SetDiskSize(v int) {
 func (p *BuildServerParam) GetDiskSize() int {
 	return p.DiskSize
 }
-func (p *BuildServerParam) SetSourceArchiveId(v int64) {
+func (p *BuildServerParam) SetSourceArchiveId(v sacloud.ID) {
 	p.SourceArchiveId = v
 }
 
-func (p *BuildServerParam) GetSourceArchiveId() int64 {
+func (p *BuildServerParam) GetSourceArchiveId() sacloud.ID {
 	return p.SourceArchiveId
 }
-func (p *BuildServerParam) SetSourceDiskId(v int64) {
+func (p *BuildServerParam) SetSourceDiskId(v sacloud.ID) {
 	p.SourceDiskId = v
 }
 
-func (p *BuildServerParam) GetSourceDiskId() int64 {
+func (p *BuildServerParam) GetSourceDiskId() sacloud.ID {
 	return p.SourceDiskId
 }
-func (p *BuildServerParam) SetDistantFrom(v []int64) {
+func (p *BuildServerParam) SetDistantFrom(v []sacloud.ID) {
 	p.DistantFrom = v
 }
 
-func (p *BuildServerParam) GetDistantFrom() []int64 {
+func (p *BuildServerParam) GetDistantFrom() []sacloud.ID {
 	return p.DistantFrom
 }
-func (p *BuildServerParam) SetDiskId(v int64) {
+func (p *BuildServerParam) SetDiskId(v sacloud.ID) {
 	p.DiskId = v
 }
 
-func (p *BuildServerParam) GetDiskId() int64 {
+func (p *BuildServerParam) GetDiskId() sacloud.ID {
 	return p.DiskId
 }
-func (p *BuildServerParam) SetIsoImageId(v int64) {
+func (p *BuildServerParam) SetIsoImageId(v sacloud.ID) {
 	p.IsoImageId = v
 }
 
-func (p *BuildServerParam) GetIsoImageId() int64 {
+func (p *BuildServerParam) GetIsoImageId() sacloud.ID {
 	return p.IsoImageId
 }
 func (p *BuildServerParam) SetNetworkMode(v string) {
@@ -930,18 +931,18 @@ func (p *BuildServerParam) SetInterfaceDriver(v string) {
 func (p *BuildServerParam) GetInterfaceDriver() string {
 	return p.InterfaceDriver
 }
-func (p *BuildServerParam) SetPacketFilterId(v int64) {
+func (p *BuildServerParam) SetPacketFilterId(v sacloud.ID) {
 	p.PacketFilterId = v
 }
 
-func (p *BuildServerParam) GetPacketFilterId() int64 {
+func (p *BuildServerParam) GetPacketFilterId() sacloud.ID {
 	return p.PacketFilterId
 }
-func (p *BuildServerParam) SetSwitchId(v int64) {
+func (p *BuildServerParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
 
-func (p *BuildServerParam) GetSwitchId() int64 {
+func (p *BuildServerParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
 func (p *BuildServerParam) SetHostname(v string) {
@@ -993,11 +994,11 @@ func (p *BuildServerParam) SetStartupScripts(v []string) {
 func (p *BuildServerParam) GetStartupScripts() []string {
 	return p.StartupScripts
 }
-func (p *BuildServerParam) SetStartupScriptIds(v []int64) {
+func (p *BuildServerParam) SetStartupScriptIds(v []sacloud.ID) {
 	p.StartupScriptIds = v
 }
 
-func (p *BuildServerParam) GetStartupScriptIds() []int64 {
+func (p *BuildServerParam) GetStartupScriptIds() []sacloud.ID {
 	return p.StartupScriptIds
 }
 func (p *BuildServerParam) SetStartupScriptsEphemeral(v bool) {
@@ -1021,11 +1022,11 @@ func (p *BuildServerParam) SetSshKeyName(v string) {
 func (p *BuildServerParam) GetSshKeyName() string {
 	return p.SshKeyName
 }
-func (p *BuildServerParam) SetSshKeyIds(v []int64) {
+func (p *BuildServerParam) SetSshKeyIds(v []sacloud.ID) {
 	p.SshKeyIds = v
 }
 
-func (p *BuildServerParam) GetSshKeyIds() []int64 {
+func (p *BuildServerParam) GetSshKeyIds() []sacloud.ID {
 	return p.SshKeyIds
 }
 func (p *BuildServerParam) SetSshKeyPassPhrase(v string) {
@@ -1091,11 +1092,11 @@ func (p *BuildServerParam) SetTags(v []string) {
 func (p *BuildServerParam) GetTags() []string {
 	return p.Tags
 }
-func (p *BuildServerParam) SetIconId(v int64) {
+func (p *BuildServerParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *BuildServerParam) GetIconId() int64 {
+func (p *BuildServerParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *BuildServerParam) SetAssumeyes(v bool) {
@@ -1192,18 +1193,18 @@ func (p *BuildServerParam) GetDisableBootAfterCreate() bool {
 
 // ReadServerParam is input parameters for the sacloud API
 type ReadServerParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadServerParam return new ReadServerParam
@@ -1247,7 +1248,7 @@ func (p *ReadServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1387,34 +1388,34 @@ func (p *ReadServerParam) SetQueryFile(v string) {
 func (p *ReadServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadServerParam) SetId(v int64) {
+func (p *ReadServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadServerParam) GetId() int64 {
+func (p *ReadServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateServerParam is input parameters for the sacloud API
 type UpdateServerParam struct {
-	InterfaceDriver   string   `json:"interface-driver"`
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	InterfaceDriver   string     `json:"interface-driver"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateServerParam return new UpdateServerParam
@@ -1443,7 +1444,7 @@ func (p *UpdateServerParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1479,7 +1480,7 @@ func (p *UpdateServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1612,11 +1613,11 @@ func (p *UpdateServerParam) SetTags(v []string) {
 func (p *UpdateServerParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateServerParam) SetIconId(v int64) {
+func (p *UpdateServerParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateServerParam) GetIconId() int64 {
+func (p *UpdateServerParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateServerParam) SetAssumeyes(v bool) {
@@ -1696,31 +1697,31 @@ func (p *UpdateServerParam) SetQueryFile(v string) {
 func (p *UpdateServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateServerParam) SetId(v int64) {
+func (p *UpdateServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateServerParam) GetId() int64 {
+func (p *UpdateServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteServerParam is input parameters for the sacloud API
 type DeleteServerParam struct {
-	Force             bool     `json:"force"`
-	WithoutDisk       bool     `json:"without-disk"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Force             bool       `json:"force"`
+	WithoutDisk       bool       `json:"without-disk"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteServerParam return new DeleteServerParam
@@ -1773,7 +1774,7 @@ func (p *DeleteServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1934,32 +1935,32 @@ func (p *DeleteServerParam) SetQueryFile(v string) {
 func (p *DeleteServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteServerParam) SetId(v int64) {
+func (p *DeleteServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteServerParam) GetId() int64 {
+func (p *DeleteServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // PlanChangeServerParam is input parameters for the sacloud API
 type PlanChangeServerParam struct {
-	Core              int      `json:"core"`
-	Memory            int      `json:"memory"`
-	Commitment        string   `json:"commitment"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Core              int        `json:"core"`
+	Memory            int        `json:"memory"`
+	Commitment        string     `json:"commitment"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewPlanChangeServerParam return new PlanChangeServerParam
@@ -2018,7 +2019,7 @@ func (p *PlanChangeServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2207,22 +2208,22 @@ func (p *PlanChangeServerParam) SetQueryFile(v string) {
 func (p *PlanChangeServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *PlanChangeServerParam) SetId(v int64) {
+func (p *PlanChangeServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *PlanChangeServerParam) GetId() int64 {
+func (p *PlanChangeServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // BootServerParam is input parameters for the sacloud API
 type BootServerParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewBootServerParam return new BootServerParam
@@ -2248,7 +2249,7 @@ func (p *BootServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2326,22 +2327,22 @@ func (p *BootServerParam) SetGenerateSkeleton(v bool) {
 func (p *BootServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *BootServerParam) SetId(v int64) {
+func (p *BootServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BootServerParam) GetId() int64 {
+func (p *BootServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ShutdownServerParam is input parameters for the sacloud API
 type ShutdownServerParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewShutdownServerParam return new ShutdownServerParam
@@ -2367,7 +2368,7 @@ func (p *ShutdownServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2445,22 +2446,22 @@ func (p *ShutdownServerParam) SetGenerateSkeleton(v bool) {
 func (p *ShutdownServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ShutdownServerParam) SetId(v int64) {
+func (p *ShutdownServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ShutdownServerParam) GetId() int64 {
+func (p *ShutdownServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ShutdownForceServerParam is input parameters for the sacloud API
 type ShutdownForceServerParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewShutdownForceServerParam return new ShutdownForceServerParam
@@ -2486,7 +2487,7 @@ func (p *ShutdownForceServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2564,22 +2565,22 @@ func (p *ShutdownForceServerParam) SetGenerateSkeleton(v bool) {
 func (p *ShutdownForceServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ShutdownForceServerParam) SetId(v int64) {
+func (p *ShutdownForceServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ShutdownForceServerParam) GetId() int64 {
+func (p *ShutdownForceServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ResetServerParam is input parameters for the sacloud API
 type ResetServerParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewResetServerParam return new ResetServerParam
@@ -2605,7 +2606,7 @@ func (p *ResetServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2683,21 +2684,21 @@ func (p *ResetServerParam) SetGenerateSkeleton(v bool) {
 func (p *ResetServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ResetServerParam) SetId(v int64) {
+func (p *ResetServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResetServerParam) GetId() int64 {
+func (p *ResetServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // WaitForBootServerParam is input parameters for the sacloud API
 type WaitForBootServerParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewWaitForBootServerParam return new WaitForBootServerParam
@@ -2720,7 +2721,7 @@ func (p *WaitForBootServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2791,21 +2792,21 @@ func (p *WaitForBootServerParam) SetGenerateSkeleton(v bool) {
 func (p *WaitForBootServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForBootServerParam) SetId(v int64) {
+func (p *WaitForBootServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForBootServerParam) GetId() int64 {
+func (p *WaitForBootServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // WaitForDownServerParam is input parameters for the sacloud API
 type WaitForDownServerParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewWaitForDownServerParam return new WaitForDownServerParam
@@ -2828,7 +2829,7 @@ func (p *WaitForDownServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2899,26 +2900,26 @@ func (p *WaitForDownServerParam) SetGenerateSkeleton(v bool) {
 func (p *WaitForDownServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForDownServerParam) SetId(v int64) {
+func (p *WaitForDownServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForDownServerParam) GetId() int64 {
+func (p *WaitForDownServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SshServerParam is input parameters for the sacloud API
 type SshServerParam struct {
-	Key               string   `json:"key"`
-	User              string   `json:"user"`
-	Port              int      `json:"port"`
-	Password          string   `json:"password"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Quiet             bool     `json:"quiet"`
-	Id                int64    `json:"id"`
+	Key               string     `json:"key"`
+	User              string     `json:"user"`
+	Port              int        `json:"port"`
+	Password          string     `json:"password"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Quiet             bool       `json:"quiet"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSshServerParam return new SshServerParam
@@ -2959,7 +2960,7 @@ func (p *SshServerParam) FillValueToSkeleton() {
 		p.Quiet = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3079,25 +3080,25 @@ func (p *SshServerParam) SetQuiet(v bool) {
 func (p *SshServerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *SshServerParam) SetId(v int64) {
+func (p *SshServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SshServerParam) GetId() int64 {
+func (p *SshServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SshExecServerParam is input parameters for the sacloud API
 type SshExecServerParam struct {
-	Key               string `json:"key"`
-	User              string `json:"user"`
-	Port              int    `json:"port"`
-	Password          string `json:"password"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Quiet             bool   `json:"quiet"`
-	Id                int64  `json:"id"`
+	Key               string     `json:"key"`
+	User              string     `json:"user"`
+	Port              int        `json:"port"`
+	Password          string     `json:"password"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Quiet             bool       `json:"quiet"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSshExecServerParam return new SshExecServerParam
@@ -3135,7 +3136,7 @@ func (p *SshExecServerParam) FillValueToSkeleton() {
 		p.Quiet = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3248,11 +3249,11 @@ func (p *SshExecServerParam) SetQuiet(v bool) {
 func (p *SshExecServerParam) GetQuiet() bool {
 	return p.Quiet
 }
-func (p *SshExecServerParam) SetId(v int64) {
+func (p *SshExecServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SshExecServerParam) GetId() int64 {
+func (p *SshExecServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
@@ -3431,12 +3432,12 @@ func (p *ScpServerParam) GetQuiet() bool {
 
 // VncServerParam is input parameters for the sacloud API
 type VncServerParam struct {
-	WaitForBoot       bool     `json:"wait-for-boot"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	WaitForBoot       bool       `json:"wait-for-boot"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewVncServerParam return new VncServerParam
@@ -3462,7 +3463,7 @@ func (p *VncServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3540,29 +3541,29 @@ func (p *VncServerParam) SetGenerateSkeleton(v bool) {
 func (p *VncServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *VncServerParam) SetId(v int64) {
+func (p *VncServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *VncServerParam) GetId() int64 {
+func (p *VncServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // VncInfoServerParam is input parameters for the sacloud API
 type VncInfoServerParam struct {
-	WaitForBoot       bool     `json:"wait-for-boot"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	WaitForBoot       bool       `json:"wait-for-boot"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewVncInfoServerParam return new VncInfoServerParam
@@ -3609,7 +3610,7 @@ func (p *VncInfoServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3756,34 +3757,34 @@ func (p *VncInfoServerParam) SetQueryFile(v string) {
 func (p *VncInfoServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *VncInfoServerParam) SetId(v int64) {
+func (p *VncInfoServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *VncInfoServerParam) GetId() int64 {
+func (p *VncInfoServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // VncSendServerParam is input parameters for the sacloud API
 type VncSendServerParam struct {
-	Command           string   `json:"command"`
-	CommandFile       string   `json:"command-file"`
-	UseUsKeyboard     bool     `json:"use-us-keyboard"`
-	Debug             bool     `json:"debug"`
-	WaitForBoot       bool     `json:"wait-for-boot"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Command           string     `json:"command"`
+	CommandFile       string     `json:"command-file"`
+	UseUsKeyboard     bool       `json:"use-us-keyboard"`
+	Debug             bool       `json:"debug"`
+	WaitForBoot       bool       `json:"wait-for-boot"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewVncSendServerParam return new VncSendServerParam
@@ -3845,7 +3846,7 @@ func (p *VncSendServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4043,31 +4044,31 @@ func (p *VncSendServerParam) SetQueryFile(v string) {
 func (p *VncSendServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *VncSendServerParam) SetId(v int64) {
+func (p *VncSendServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *VncSendServerParam) GetId() int64 {
+func (p *VncSendServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // VncSnapshotServerParam is input parameters for the sacloud API
 type VncSnapshotServerParam struct {
-	WaitForBoot       bool     `json:"wait-for-boot"`
-	OutputPath        string   `json:"output-path"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	WaitForBoot       bool       `json:"wait-for-boot"`
+	OutputPath        string     `json:"output-path"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewVncSnapshotServerParam return new VncSnapshotServerParam
@@ -4120,7 +4121,7 @@ func (p *VncSnapshotServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4281,23 +4282,23 @@ func (p *VncSnapshotServerParam) SetQueryFile(v string) {
 func (p *VncSnapshotServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *VncSnapshotServerParam) SetId(v int64) {
+func (p *VncSnapshotServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *VncSnapshotServerParam) GetId() int64 {
+func (p *VncSnapshotServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // RemoteDesktopServerParam is input parameters for the sacloud API
 type RemoteDesktopServerParam struct {
-	User              string   `json:"user"`
-	Port              int      `json:"port"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	User              string     `json:"user"`
+	Port              int        `json:"port"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewRemoteDesktopServerParam return new RemoteDesktopServerParam
@@ -4330,7 +4331,7 @@ func (p *RemoteDesktopServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4429,30 +4430,30 @@ func (p *RemoteDesktopServerParam) SetGenerateSkeleton(v bool) {
 func (p *RemoteDesktopServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *RemoteDesktopServerParam) SetId(v int64) {
+func (p *RemoteDesktopServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RemoteDesktopServerParam) GetId() int64 {
+func (p *RemoteDesktopServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // RemoteDesktopInfoServerParam is input parameters for the sacloud API
 type RemoteDesktopInfoServerParam struct {
-	User              string   `json:"user"`
-	Port              int      `json:"port"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	User              string     `json:"user"`
+	Port              int        `json:"port"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewRemoteDesktopInfoServerParam return new RemoteDesktopInfoServerParam
@@ -4506,7 +4507,7 @@ func (p *RemoteDesktopInfoServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4674,28 +4675,28 @@ func (p *RemoteDesktopInfoServerParam) SetQueryFile(v string) {
 func (p *RemoteDesktopInfoServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RemoteDesktopInfoServerParam) SetId(v int64) {
+func (p *RemoteDesktopInfoServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RemoteDesktopInfoServerParam) GetId() int64 {
+func (p *RemoteDesktopInfoServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DiskInfoServerParam is input parameters for the sacloud API
 type DiskInfoServerParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDiskInfoServerParam return new DiskInfoServerParam
@@ -4739,7 +4740,7 @@ func (p *DiskInfoServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4879,23 +4880,23 @@ func (p *DiskInfoServerParam) SetQueryFile(v string) {
 func (p *DiskInfoServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DiskInfoServerParam) SetId(v int64) {
+func (p *DiskInfoServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DiskInfoServerParam) GetId() int64 {
+func (p *DiskInfoServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DiskConnectServerParam is input parameters for the sacloud API
 type DiskConnectServerParam struct {
-	DiskId            int64    `json:"disk-id"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	DiskId            sacloud.ID `json:"disk-id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDiskConnectServerParam return new DiskConnectServerParam
@@ -4906,7 +4907,7 @@ func NewDiskConnectServerParam() *DiskConnectServerParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *DiskConnectServerParam) FillValueToSkeleton() {
 	if isEmpty(p.DiskId) {
-		p.DiskId = 0
+		p.DiskId = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -4924,7 +4925,7 @@ func (p *DiskConnectServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4981,11 +4982,11 @@ func (p *DiskConnectServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DiskConnectServerParam) SetDiskId(v int64) {
+func (p *DiskConnectServerParam) SetDiskId(v sacloud.ID) {
 	p.DiskId = v
 }
 
-func (p *DiskConnectServerParam) GetDiskId() int64 {
+func (p *DiskConnectServerParam) GetDiskId() sacloud.ID {
 	return p.DiskId
 }
 func (p *DiskConnectServerParam) SetSelector(v []string) {
@@ -5023,23 +5024,23 @@ func (p *DiskConnectServerParam) SetGenerateSkeleton(v bool) {
 func (p *DiskConnectServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DiskConnectServerParam) SetId(v int64) {
+func (p *DiskConnectServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DiskConnectServerParam) GetId() int64 {
+func (p *DiskConnectServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DiskDisconnectServerParam is input parameters for the sacloud API
 type DiskDisconnectServerParam struct {
-	DiskId            int64    `json:"disk-id"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	DiskId            sacloud.ID `json:"disk-id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDiskDisconnectServerParam return new DiskDisconnectServerParam
@@ -5050,7 +5051,7 @@ func NewDiskDisconnectServerParam() *DiskDisconnectServerParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *DiskDisconnectServerParam) FillValueToSkeleton() {
 	if isEmpty(p.DiskId) {
-		p.DiskId = 0
+		p.DiskId = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -5068,7 +5069,7 @@ func (p *DiskDisconnectServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5125,11 +5126,11 @@ func (p *DiskDisconnectServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *DiskDisconnectServerParam) SetDiskId(v int64) {
+func (p *DiskDisconnectServerParam) SetDiskId(v sacloud.ID) {
 	p.DiskId = v
 }
 
-func (p *DiskDisconnectServerParam) GetDiskId() int64 {
+func (p *DiskDisconnectServerParam) GetDiskId() sacloud.ID {
 	return p.DiskId
 }
 func (p *DiskDisconnectServerParam) SetSelector(v []string) {
@@ -5167,28 +5168,28 @@ func (p *DiskDisconnectServerParam) SetGenerateSkeleton(v bool) {
 func (p *DiskDisconnectServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DiskDisconnectServerParam) SetId(v int64) {
+func (p *DiskDisconnectServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DiskDisconnectServerParam) GetId() int64 {
+func (p *DiskDisconnectServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // InterfaceInfoServerParam is input parameters for the sacloud API
 type InterfaceInfoServerParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewInterfaceInfoServerParam return new InterfaceInfoServerParam
@@ -5232,7 +5233,7 @@ func (p *InterfaceInfoServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5372,23 +5373,23 @@ func (p *InterfaceInfoServerParam) SetQueryFile(v string) {
 func (p *InterfaceInfoServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *InterfaceInfoServerParam) SetId(v int64) {
+func (p *InterfaceInfoServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *InterfaceInfoServerParam) GetId() int64 {
+func (p *InterfaceInfoServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // InterfaceAddForInternetServerParam is input parameters for the sacloud API
 type InterfaceAddForInternetServerParam struct {
-	WithoutDiskEdit   bool     `json:"without-disk-edit"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	WithoutDiskEdit   bool       `json:"without-disk-edit"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewInterfaceAddForInternetServerParam return new InterfaceAddForInternetServerParam
@@ -5417,7 +5418,7 @@ func (p *InterfaceAddForInternetServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5502,27 +5503,27 @@ func (p *InterfaceAddForInternetServerParam) SetGenerateSkeleton(v bool) {
 func (p *InterfaceAddForInternetServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *InterfaceAddForInternetServerParam) SetId(v int64) {
+func (p *InterfaceAddForInternetServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *InterfaceAddForInternetServerParam) GetId() int64 {
+func (p *InterfaceAddForInternetServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // InterfaceAddForRouterServerParam is input parameters for the sacloud API
 type InterfaceAddForRouterServerParam struct {
-	SwitchId          int64    `json:"switch-id"`
-	WithoutDiskEdit   bool     `json:"without-disk-edit"`
-	Ipaddress         string   `json:"ipaddress"`
-	DefaultRoute      string   `json:"default-route"`
-	NwMasklen         int      `json:"nw-masklen"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	SwitchId          sacloud.ID `json:"switch-id"`
+	WithoutDiskEdit   bool       `json:"without-disk-edit"`
+	Ipaddress         string     `json:"ipaddress"`
+	DefaultRoute      string     `json:"default-route"`
+	NwMasklen         int        `json:"nw-masklen"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewInterfaceAddForRouterServerParam return new InterfaceAddForRouterServerParam
@@ -5536,7 +5537,7 @@ func NewInterfaceAddForRouterServerParam() *InterfaceAddForRouterServerParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *InterfaceAddForRouterServerParam) FillValueToSkeleton() {
 	if isEmpty(p.SwitchId) {
-		p.SwitchId = 0
+		p.SwitchId = sacloud.ID(0)
 	}
 	if isEmpty(p.WithoutDiskEdit) {
 		p.WithoutDiskEdit = false
@@ -5566,7 +5567,7 @@ func (p *InterfaceAddForRouterServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5644,11 +5645,11 @@ func (p *InterfaceAddForRouterServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *InterfaceAddForRouterServerParam) SetSwitchId(v int64) {
+func (p *InterfaceAddForRouterServerParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
 
-func (p *InterfaceAddForRouterServerParam) GetSwitchId() int64 {
+func (p *InterfaceAddForRouterServerParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
 func (p *InterfaceAddForRouterServerParam) SetWithoutDiskEdit(v bool) {
@@ -5714,27 +5715,27 @@ func (p *InterfaceAddForRouterServerParam) SetGenerateSkeleton(v bool) {
 func (p *InterfaceAddForRouterServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *InterfaceAddForRouterServerParam) SetId(v int64) {
+func (p *InterfaceAddForRouterServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *InterfaceAddForRouterServerParam) GetId() int64 {
+func (p *InterfaceAddForRouterServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // InterfaceAddForSwitchServerParam is input parameters for the sacloud API
 type InterfaceAddForSwitchServerParam struct {
-	SwitchId          int64    `json:"switch-id"`
-	WithoutDiskEdit   bool     `json:"without-disk-edit"`
-	Ipaddress         string   `json:"ipaddress"`
-	DefaultRoute      string   `json:"default-route"`
-	NwMasklen         int      `json:"nw-masklen"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	SwitchId          sacloud.ID `json:"switch-id"`
+	WithoutDiskEdit   bool       `json:"without-disk-edit"`
+	Ipaddress         string     `json:"ipaddress"`
+	DefaultRoute      string     `json:"default-route"`
+	NwMasklen         int        `json:"nw-masklen"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewInterfaceAddForSwitchServerParam return new InterfaceAddForSwitchServerParam
@@ -5748,7 +5749,7 @@ func NewInterfaceAddForSwitchServerParam() *InterfaceAddForSwitchServerParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *InterfaceAddForSwitchServerParam) FillValueToSkeleton() {
 	if isEmpty(p.SwitchId) {
-		p.SwitchId = 0
+		p.SwitchId = sacloud.ID(0)
 	}
 	if isEmpty(p.WithoutDiskEdit) {
 		p.WithoutDiskEdit = false
@@ -5778,7 +5779,7 @@ func (p *InterfaceAddForSwitchServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5856,11 +5857,11 @@ func (p *InterfaceAddForSwitchServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *InterfaceAddForSwitchServerParam) SetSwitchId(v int64) {
+func (p *InterfaceAddForSwitchServerParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
 
-func (p *InterfaceAddForSwitchServerParam) GetSwitchId() int64 {
+func (p *InterfaceAddForSwitchServerParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
 func (p *InterfaceAddForSwitchServerParam) SetWithoutDiskEdit(v bool) {
@@ -5926,22 +5927,22 @@ func (p *InterfaceAddForSwitchServerParam) SetGenerateSkeleton(v bool) {
 func (p *InterfaceAddForSwitchServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *InterfaceAddForSwitchServerParam) SetId(v int64) {
+func (p *InterfaceAddForSwitchServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *InterfaceAddForSwitchServerParam) GetId() int64 {
+func (p *InterfaceAddForSwitchServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // InterfaceAddDisconnectedServerParam is input parameters for the sacloud API
 type InterfaceAddDisconnectedServerParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewInterfaceAddDisconnectedServerParam return new InterfaceAddDisconnectedServerParam
@@ -5967,7 +5968,7 @@ func (p *InterfaceAddDisconnectedServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -6045,28 +6046,28 @@ func (p *InterfaceAddDisconnectedServerParam) SetGenerateSkeleton(v bool) {
 func (p *InterfaceAddDisconnectedServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *InterfaceAddDisconnectedServerParam) SetId(v int64) {
+func (p *InterfaceAddDisconnectedServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *InterfaceAddDisconnectedServerParam) GetId() int64 {
+func (p *InterfaceAddDisconnectedServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // IsoInfoServerParam is input parameters for the sacloud API
 type IsoInfoServerParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewIsoInfoServerParam return new IsoInfoServerParam
@@ -6110,7 +6111,7 @@ func (p *IsoInfoServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -6250,29 +6251,29 @@ func (p *IsoInfoServerParam) SetQueryFile(v string) {
 func (p *IsoInfoServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *IsoInfoServerParam) SetId(v int64) {
+func (p *IsoInfoServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *IsoInfoServerParam) GetId() int64 {
+func (p *IsoInfoServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // IsoInsertServerParam is input parameters for the sacloud API
 type IsoInsertServerParam struct {
-	IsoImageId        int64    `json:"iso-image-id"`
-	Size              int      `json:"size"`
-	IsoFile           string   `json:"iso-file"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	IsoImageId        sacloud.ID `json:"iso-image-id"`
+	Size              int        `json:"size"`
+	IsoFile           string     `json:"iso-file"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewIsoInsertServerParam return new IsoInsertServerParam
@@ -6286,7 +6287,7 @@ func NewIsoInsertServerParam() *IsoInsertServerParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *IsoInsertServerParam) FillValueToSkeleton() {
 	if isEmpty(p.IsoImageId) {
-		p.IsoImageId = 0
+		p.IsoImageId = sacloud.ID(0)
 	}
 	if isEmpty(p.Size) {
 		p.Size = 0
@@ -6304,7 +6305,7 @@ func (p *IsoInsertServerParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -6322,7 +6323,7 @@ func (p *IsoInsertServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -6407,11 +6408,11 @@ func (p *IsoInsertServerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *IsoInsertServerParam) SetIsoImageId(v int64) {
+func (p *IsoInsertServerParam) SetIsoImageId(v sacloud.ID) {
 	p.IsoImageId = v
 }
 
-func (p *IsoInsertServerParam) GetIsoImageId() int64 {
+func (p *IsoInsertServerParam) GetIsoImageId() sacloud.ID {
 	return p.IsoImageId
 }
 func (p *IsoInsertServerParam) SetSize(v int) {
@@ -6449,11 +6450,11 @@ func (p *IsoInsertServerParam) SetTags(v []string) {
 func (p *IsoInsertServerParam) GetTags() []string {
 	return p.Tags
 }
-func (p *IsoInsertServerParam) SetIconId(v int64) {
+func (p *IsoInsertServerParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *IsoInsertServerParam) GetIconId() int64 {
+func (p *IsoInsertServerParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *IsoInsertServerParam) SetSelector(v []string) {
@@ -6491,22 +6492,22 @@ func (p *IsoInsertServerParam) SetGenerateSkeleton(v bool) {
 func (p *IsoInsertServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *IsoInsertServerParam) SetId(v int64) {
+func (p *IsoInsertServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *IsoInsertServerParam) GetId() int64 {
+func (p *IsoInsertServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // IsoEjectServerParam is input parameters for the sacloud API
 type IsoEjectServerParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewIsoEjectServerParam return new IsoEjectServerParam
@@ -6532,7 +6533,7 @@ func (p *IsoEjectServerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -6610,31 +6611,31 @@ func (p *IsoEjectServerParam) SetGenerateSkeleton(v bool) {
 func (p *IsoEjectServerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *IsoEjectServerParam) SetId(v int64) {
+func (p *IsoEjectServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *IsoEjectServerParam) GetId() int64 {
+func (p *IsoEjectServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // MonitorCpuServerParam is input parameters for the sacloud API
 type MonitorCpuServerParam struct {
-	Start             string   `json:"start"`
-	End               string   `json:"end"`
-	KeyFormat         string   `json:"key-format"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Start             string     `json:"start"`
+	End               string     `json:"end"`
+	KeyFormat         string     `json:"key-format"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewMonitorCpuServerParam return new MonitorCpuServerParam
@@ -6690,7 +6691,7 @@ func (p *MonitorCpuServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -6872,32 +6873,32 @@ func (p *MonitorCpuServerParam) SetQueryFile(v string) {
 func (p *MonitorCpuServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorCpuServerParam) SetId(v int64) {
+func (p *MonitorCpuServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorCpuServerParam) GetId() int64 {
+func (p *MonitorCpuServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // MonitorNicServerParam is input parameters for the sacloud API
 type MonitorNicServerParam struct {
-	Start             string   `json:"start"`
-	End               string   `json:"end"`
-	Index             []int64  `json:"index"`
-	KeyFormat         string   `json:"key-format"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Start             string     `json:"start"`
+	End               string     `json:"end"`
+	Index             []int64    `json:"index"`
+	KeyFormat         string     `json:"key-format"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewMonitorNicServerParam return new MonitorNicServerParam
@@ -6956,7 +6957,7 @@ func (p *MonitorNicServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -7145,32 +7146,32 @@ func (p *MonitorNicServerParam) SetQueryFile(v string) {
 func (p *MonitorNicServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorNicServerParam) SetId(v int64) {
+func (p *MonitorNicServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorNicServerParam) GetId() int64 {
+func (p *MonitorNicServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // MonitorDiskServerParam is input parameters for the sacloud API
 type MonitorDiskServerParam struct {
-	Start             string   `json:"start"`
-	End               string   `json:"end"`
-	Index             []int64  `json:"index"`
-	KeyFormat         string   `json:"key-format"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Start             string     `json:"start"`
+	End               string     `json:"end"`
+	Index             []int64    `json:"index"`
+	KeyFormat         string     `json:"key-format"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewMonitorDiskServerParam return new MonitorDiskServerParam
@@ -7229,7 +7230,7 @@ func (p *MonitorDiskServerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -7418,11 +7419,11 @@ func (p *MonitorDiskServerParam) SetQueryFile(v string) {
 func (p *MonitorDiskServerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorDiskServerParam) SetId(v int64) {
+func (p *MonitorDiskServerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorDiskServerParam) GetId() int64 {
+func (p *MonitorDiskServerParam) GetId() sacloud.ID {
 	return p.Id
 }
 

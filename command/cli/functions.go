@@ -17,8 +17,9 @@ package cli
 import (
 	"fmt"
 	"os"
-	"strconv"
 	"strings"
+
+	"github.com/sacloud/libsacloud/sacloud"
 
 	"github.com/fatih/color"
 	"github.com/mattn/go-isatty"
@@ -124,12 +125,16 @@ func applyConfigFromFile(c FlagHandler) error {
 	return nil
 }
 
-func toSakuraID(id string) (int64, bool) {
-	i, err := strconv.ParseInt(id, 10, 64)
-	if err != nil {
-		return 0, false
+func toSakuraID(id string) (sacloud.ID, bool) {
+	return sacloud.StringID(id), true
+}
+
+func toSakuraIDs(ids []int64) []sacloud.ID {
+	var res []sacloud.ID
+	for _, v := range ids {
+		res = append(res, sacloud.ID(v))
 	}
-	return i, true
+	return res
 }
 
 func hasTags(target interface{}, tags []string) bool {

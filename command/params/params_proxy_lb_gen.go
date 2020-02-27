@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,22 +25,22 @@ import (
 
 // ListProxyLBParam is input parameters for the sacloud API
 type ListProxyLBParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListProxyLBParam return new ListProxyLBParam
@@ -53,7 +54,7 @@ func (p *ListProxyLBParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -190,11 +191,11 @@ func (p *ListProxyLBParam) SetName(v []string) {
 func (p *ListProxyLBParam) GetName() []string {
 	return p.Name
 }
-func (p *ListProxyLBParam) SetId(v []int64) {
+func (p *ListProxyLBParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListProxyLBParam) GetId() []int64 {
+func (p *ListProxyLBParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListProxyLBParam) SetTags(v []string) {
@@ -298,30 +299,30 @@ func (p *ListProxyLBParam) GetQueryFile() string {
 
 // CreateProxyLBParam is input parameters for the sacloud API
 type CreateProxyLBParam struct {
-	Plan                 int      `json:"plan"`
-	Protocol             string   `json:"protocol"`
-	HostHeader           string   `json:"host-header"`
-	Path                 string   `json:"path"`
-	DelayLoop            int      `json:"delay-loop"`
-	StickySession        bool     `json:"sticky-session"`
-	SorryServerIpaddress string   `json:"sorry-server-ipaddress"`
-	SorryServerPort      int      `json:"sorry-server-port"`
-	Timeout              int      `json:"timeout"`
-	Name                 string   `json:"name"`
-	Description          string   `json:"description"`
-	Tags                 []string `json:"tags"`
-	IconId               int64    `json:"icon-id"`
-	Assumeyes            bool     `json:"assumeyes"`
-	ParamTemplate        string   `json:"param-template"`
-	ParamTemplateFile    string   `json:"param-template-file"`
-	GenerateSkeleton     bool     `json:"generate-skeleton"`
-	OutputType           string   `json:"output-type"`
-	Column               []string `json:"column"`
-	Quiet                bool     `json:"quiet"`
-	Format               string   `json:"format"`
-	FormatFile           string   `json:"format-file"`
-	Query                string   `json:"query"`
-	QueryFile            string   `json:"query-file"`
+	Plan                 int        `json:"plan"`
+	Protocol             string     `json:"protocol"`
+	HostHeader           string     `json:"host-header"`
+	Path                 string     `json:"path"`
+	DelayLoop            int        `json:"delay-loop"`
+	StickySession        bool       `json:"sticky-session"`
+	SorryServerIpaddress string     `json:"sorry-server-ipaddress"`
+	SorryServerPort      int        `json:"sorry-server-port"`
+	Timeout              int        `json:"timeout"`
+	Name                 string     `json:"name"`
+	Description          string     `json:"description"`
+	Tags                 []string   `json:"tags"`
+	IconId               sacloud.ID `json:"icon-id"`
+	Assumeyes            bool       `json:"assumeyes"`
+	ParamTemplate        string     `json:"param-template"`
+	ParamTemplateFile    string     `json:"param-template-file"`
+	GenerateSkeleton     bool       `json:"generate-skeleton"`
+	OutputType           string     `json:"output-type"`
+	Column               []string   `json:"column"`
+	Quiet                bool       `json:"quiet"`
+	Format               string     `json:"format"`
+	FormatFile           string     `json:"format-file"`
+	Query                string     `json:"query"`
+	QueryFile            string     `json:"query-file"`
 }
 
 // NewCreateProxyLBParam return new CreateProxyLBParam
@@ -375,7 +376,7 @@ func (p *CreateProxyLBParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -632,11 +633,11 @@ func (p *CreateProxyLBParam) SetTags(v []string) {
 func (p *CreateProxyLBParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateProxyLBParam) SetIconId(v int64) {
+func (p *CreateProxyLBParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateProxyLBParam) GetIconId() int64 {
+func (p *CreateProxyLBParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateProxyLBParam) SetAssumeyes(v bool) {
@@ -719,18 +720,18 @@ func (p *CreateProxyLBParam) GetQueryFile() string {
 
 // ReadProxyLBParam is input parameters for the sacloud API
 type ReadProxyLBParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadProxyLBParam return new ReadProxyLBParam
@@ -774,7 +775,7 @@ func (p *ReadProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -914,41 +915,41 @@ func (p *ReadProxyLBParam) SetQueryFile(v string) {
 func (p *ReadProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadProxyLBParam) SetId(v int64) {
+func (p *ReadProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadProxyLBParam) GetId() int64 {
+func (p *ReadProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateProxyLBParam is input parameters for the sacloud API
 type UpdateProxyLBParam struct {
-	Protocol             string   `json:"protocol"`
-	HostHeader           string   `json:"host-header"`
-	Path                 string   `json:"path"`
-	DelayLoop            int      `json:"delay-loop"`
-	StickySession        bool     `json:"sticky-session"`
-	SorryServerIpaddress string   `json:"sorry-server-ipaddress"`
-	SorryServerPort      int      `json:"sorry-server-port"`
-	Timeout              int      `json:"timeout"`
-	Selector             []string `json:"selector"`
-	Name                 string   `json:"name"`
-	Description          string   `json:"description"`
-	Tags                 []string `json:"tags"`
-	IconId               int64    `json:"icon-id"`
-	Assumeyes            bool     `json:"assumeyes"`
-	ParamTemplate        string   `json:"param-template"`
-	ParamTemplateFile    string   `json:"param-template-file"`
-	GenerateSkeleton     bool     `json:"generate-skeleton"`
-	OutputType           string   `json:"output-type"`
-	Column               []string `json:"column"`
-	Quiet                bool     `json:"quiet"`
-	Format               string   `json:"format"`
-	FormatFile           string   `json:"format-file"`
-	Query                string   `json:"query"`
-	QueryFile            string   `json:"query-file"`
-	Id                   int64    `json:"id"`
+	Protocol             string     `json:"protocol"`
+	HostHeader           string     `json:"host-header"`
+	Path                 string     `json:"path"`
+	DelayLoop            int        `json:"delay-loop"`
+	StickySession        bool       `json:"sticky-session"`
+	SorryServerIpaddress string     `json:"sorry-server-ipaddress"`
+	SorryServerPort      int        `json:"sorry-server-port"`
+	Timeout              int        `json:"timeout"`
+	Selector             []string   `json:"selector"`
+	Name                 string     `json:"name"`
+	Description          string     `json:"description"`
+	Tags                 []string   `json:"tags"`
+	IconId               sacloud.ID `json:"icon-id"`
+	Assumeyes            bool       `json:"assumeyes"`
+	ParamTemplate        string     `json:"param-template"`
+	ParamTemplateFile    string     `json:"param-template-file"`
+	GenerateSkeleton     bool       `json:"generate-skeleton"`
+	OutputType           string     `json:"output-type"`
+	Column               []string   `json:"column"`
+	Quiet                bool       `json:"quiet"`
+	Format               string     `json:"format"`
+	FormatFile           string     `json:"format-file"`
+	Query                string     `json:"query"`
+	QueryFile            string     `json:"query-file"`
+	Id                   sacloud.ID `json:"id"`
 }
 
 // NewUpdateProxyLBParam return new UpdateProxyLBParam
@@ -998,7 +999,7 @@ func (p *UpdateProxyLBParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1034,7 +1035,7 @@ func (p *UpdateProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1237,11 +1238,11 @@ func (p *UpdateProxyLBParam) SetTags(v []string) {
 func (p *UpdateProxyLBParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateProxyLBParam) SetIconId(v int64) {
+func (p *UpdateProxyLBParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateProxyLBParam) GetIconId() int64 {
+func (p *UpdateProxyLBParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateProxyLBParam) SetAssumeyes(v bool) {
@@ -1321,29 +1322,29 @@ func (p *UpdateProxyLBParam) SetQueryFile(v string) {
 func (p *UpdateProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateProxyLBParam) SetId(v int64) {
+func (p *UpdateProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateProxyLBParam) GetId() int64 {
+func (p *UpdateProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteProxyLBParam is input parameters for the sacloud API
 type DeleteProxyLBParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteProxyLBParam return new DeleteProxyLBParam
@@ -1390,7 +1391,7 @@ func (p *DeleteProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1537,30 +1538,30 @@ func (p *DeleteProxyLBParam) SetQueryFile(v string) {
 func (p *DeleteProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteProxyLBParam) SetId(v int64) {
+func (p *DeleteProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteProxyLBParam) GetId() int64 {
+func (p *DeleteProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // PlanChangeProxyLBParam is input parameters for the sacloud API
 type PlanChangeProxyLBParam struct {
-	Plan              int      `json:"plan"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Plan              int        `json:"plan"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewPlanChangeProxyLBParam return new PlanChangeProxyLBParam
@@ -1610,7 +1611,7 @@ func (p *PlanChangeProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1778,28 +1779,28 @@ func (p *PlanChangeProxyLBParam) SetQueryFile(v string) {
 func (p *PlanChangeProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *PlanChangeProxyLBParam) SetId(v int64) {
+func (p *PlanChangeProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *PlanChangeProxyLBParam) GetId() int64 {
+func (p *PlanChangeProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // BindPortInfoProxyLBParam is input parameters for the sacloud API
 type BindPortInfoProxyLBParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewBindPortInfoProxyLBParam return new BindPortInfoProxyLBParam
@@ -1843,7 +1844,7 @@ func (p *BindPortInfoProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1983,33 +1984,33 @@ func (p *BindPortInfoProxyLBParam) SetQueryFile(v string) {
 func (p *BindPortInfoProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *BindPortInfoProxyLBParam) SetId(v int64) {
+func (p *BindPortInfoProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BindPortInfoProxyLBParam) GetId() int64 {
+func (p *BindPortInfoProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // BindPortAddProxyLBParam is input parameters for the sacloud API
 type BindPortAddProxyLBParam struct {
-	Mode              string   `json:"mode"`
-	Port              int      `json:"port"`
-	RedirectToHttps   bool     `json:"redirect-to-https"`
-	SupportHttp2      bool     `json:"support-http2"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Mode              string     `json:"mode"`
+	Port              int        `json:"port"`
+	RedirectToHttps   bool       `json:"redirect-to-https"`
+	SupportHttp2      bool       `json:"support-http2"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewBindPortAddProxyLBParam return new BindPortAddProxyLBParam
@@ -2068,7 +2069,7 @@ func (p *BindPortAddProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2271,34 +2272,34 @@ func (p *BindPortAddProxyLBParam) SetQueryFile(v string) {
 func (p *BindPortAddProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *BindPortAddProxyLBParam) SetId(v int64) {
+func (p *BindPortAddProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BindPortAddProxyLBParam) GetId() int64 {
+func (p *BindPortAddProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // BindPortUpdateProxyLBParam is input parameters for the sacloud API
 type BindPortUpdateProxyLBParam struct {
-	Index             int      `json:"index"`
-	Mode              string   `json:"mode"`
-	Port              int      `json:"port"`
-	RedirectToHttps   bool     `json:"redirect-to-https"`
-	SupportHttp2      bool     `json:"support-http2"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Mode              string     `json:"mode"`
+	Port              int        `json:"port"`
+	RedirectToHttps   bool       `json:"redirect-to-https"`
+	SupportHttp2      bool       `json:"support-http2"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewBindPortUpdateProxyLBParam return new BindPortUpdateProxyLBParam
@@ -2360,7 +2361,7 @@ func (p *BindPortUpdateProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2563,30 +2564,30 @@ func (p *BindPortUpdateProxyLBParam) SetQueryFile(v string) {
 func (p *BindPortUpdateProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *BindPortUpdateProxyLBParam) SetId(v int64) {
+func (p *BindPortUpdateProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BindPortUpdateProxyLBParam) GetId() int64 {
+func (p *BindPortUpdateProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // BindPortDeleteProxyLBParam is input parameters for the sacloud API
 type BindPortDeleteProxyLBParam struct {
-	Index             int      `json:"index"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewBindPortDeleteProxyLBParam return new BindPortDeleteProxyLBParam
@@ -2636,7 +2637,7 @@ func (p *BindPortDeleteProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2797,29 +2798,29 @@ func (p *BindPortDeleteProxyLBParam) SetQueryFile(v string) {
 func (p *BindPortDeleteProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *BindPortDeleteProxyLBParam) SetId(v int64) {
+func (p *BindPortDeleteProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BindPortDeleteProxyLBParam) GetId() int64 {
+func (p *BindPortDeleteProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ResponseHeaderInfoProxyLBParam is input parameters for the sacloud API
 type ResponseHeaderInfoProxyLBParam struct {
-	PortIndex         int      `json:"port-index"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	PortIndex         int        `json:"port-index"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewResponseHeaderInfoProxyLBParam return new ResponseHeaderInfoProxyLBParam
@@ -2866,7 +2867,7 @@ func (p *ResponseHeaderInfoProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3020,32 +3021,32 @@ func (p *ResponseHeaderInfoProxyLBParam) SetQueryFile(v string) {
 func (p *ResponseHeaderInfoProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ResponseHeaderInfoProxyLBParam) SetId(v int64) {
+func (p *ResponseHeaderInfoProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResponseHeaderInfoProxyLBParam) GetId() int64 {
+func (p *ResponseHeaderInfoProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ResponseHeaderAddProxyLBParam is input parameters for the sacloud API
 type ResponseHeaderAddProxyLBParam struct {
-	PortIndex         int      `json:"port-index"`
-	Header            string   `json:"header"`
-	Value             string   `json:"value"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	PortIndex         int        `json:"port-index"`
+	Header            string     `json:"header"`
+	Value             string     `json:"value"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewResponseHeaderAddProxyLBParam return new ResponseHeaderAddProxyLBParam
@@ -3101,7 +3102,7 @@ func (p *ResponseHeaderAddProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3290,33 +3291,33 @@ func (p *ResponseHeaderAddProxyLBParam) SetQueryFile(v string) {
 func (p *ResponseHeaderAddProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ResponseHeaderAddProxyLBParam) SetId(v int64) {
+func (p *ResponseHeaderAddProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResponseHeaderAddProxyLBParam) GetId() int64 {
+func (p *ResponseHeaderAddProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ResponseHeaderUpdateProxyLBParam is input parameters for the sacloud API
 type ResponseHeaderUpdateProxyLBParam struct {
-	Index             int      `json:"index"`
-	PortIndex         int      `json:"port-index"`
-	Header            string   `json:"header"`
-	Value             string   `json:"value"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	PortIndex         int        `json:"port-index"`
+	Header            string     `json:"header"`
+	Value             string     `json:"value"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewResponseHeaderUpdateProxyLBParam return new ResponseHeaderUpdateProxyLBParam
@@ -3375,7 +3376,7 @@ func (p *ResponseHeaderUpdateProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3564,31 +3565,31 @@ func (p *ResponseHeaderUpdateProxyLBParam) SetQueryFile(v string) {
 func (p *ResponseHeaderUpdateProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ResponseHeaderUpdateProxyLBParam) SetId(v int64) {
+func (p *ResponseHeaderUpdateProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResponseHeaderUpdateProxyLBParam) GetId() int64 {
+func (p *ResponseHeaderUpdateProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ResponseHeaderDeleteProxyLBParam is input parameters for the sacloud API
 type ResponseHeaderDeleteProxyLBParam struct {
-	Index             int      `json:"index"`
-	PortIndex         int      `json:"port-index"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	PortIndex         int        `json:"port-index"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewResponseHeaderDeleteProxyLBParam return new ResponseHeaderDeleteProxyLBParam
@@ -3641,7 +3642,7 @@ func (p *ResponseHeaderDeleteProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3816,28 +3817,28 @@ func (p *ResponseHeaderDeleteProxyLBParam) SetQueryFile(v string) {
 func (p *ResponseHeaderDeleteProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ResponseHeaderDeleteProxyLBParam) SetId(v int64) {
+func (p *ResponseHeaderDeleteProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResponseHeaderDeleteProxyLBParam) GetId() int64 {
+func (p *ResponseHeaderDeleteProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // AcmeInfoProxyLBParam is input parameters for the sacloud API
 type AcmeInfoProxyLBParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewAcmeInfoProxyLBParam return new AcmeInfoProxyLBParam
@@ -3881,7 +3882,7 @@ func (p *AcmeInfoProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4021,32 +4022,32 @@ func (p *AcmeInfoProxyLBParam) SetQueryFile(v string) {
 func (p *AcmeInfoProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *AcmeInfoProxyLBParam) SetId(v int64) {
+func (p *AcmeInfoProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *AcmeInfoProxyLBParam) GetId() int64 {
+func (p *AcmeInfoProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // AcmeSettingProxyLBParam is input parameters for the sacloud API
 type AcmeSettingProxyLBParam struct {
-	AcceptTos         bool     `json:"accept-tos"`
-	CommonName        string   `json:"common-name"`
-	Disable           bool     `json:"disable"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	AcceptTos         bool       `json:"accept-tos"`
+	CommonName        string     `json:"common-name"`
+	Disable           bool       `json:"disable"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewAcmeSettingProxyLBParam return new AcmeSettingProxyLBParam
@@ -4102,7 +4103,7 @@ func (p *AcmeSettingProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4270,22 +4271,22 @@ func (p *AcmeSettingProxyLBParam) SetQueryFile(v string) {
 func (p *AcmeSettingProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *AcmeSettingProxyLBParam) SetId(v int64) {
+func (p *AcmeSettingProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *AcmeSettingProxyLBParam) GetId() int64 {
+func (p *AcmeSettingProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // AcmeRenewProxyLBParam is input parameters for the sacloud API
 type AcmeRenewProxyLBParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewAcmeRenewProxyLBParam return new AcmeRenewProxyLBParam
@@ -4311,7 +4312,7 @@ func (p *AcmeRenewProxyLBParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4389,28 +4390,28 @@ func (p *AcmeRenewProxyLBParam) SetGenerateSkeleton(v bool) {
 func (p *AcmeRenewProxyLBParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *AcmeRenewProxyLBParam) SetId(v int64) {
+func (p *AcmeRenewProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *AcmeRenewProxyLBParam) GetId() int64 {
+func (p *AcmeRenewProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerInfoProxyLBParam is input parameters for the sacloud API
 type ServerInfoProxyLBParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerInfoProxyLBParam return new ServerInfoProxyLBParam
@@ -4454,7 +4455,7 @@ func (p *ServerInfoProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4594,32 +4595,32 @@ func (p *ServerInfoProxyLBParam) SetQueryFile(v string) {
 func (p *ServerInfoProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerInfoProxyLBParam) SetId(v int64) {
+func (p *ServerInfoProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerInfoProxyLBParam) GetId() int64 {
+func (p *ServerInfoProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerAddProxyLBParam is input parameters for the sacloud API
 type ServerAddProxyLBParam struct {
-	Ipaddress         string   `json:"ipaddress"`
-	Disabled          bool     `json:"disabled"`
-	Port              int      `json:"port"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Ipaddress         string     `json:"ipaddress"`
+	Disabled          bool       `json:"disabled"`
+	Port              int        `json:"port"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerAddProxyLBParam return new ServerAddProxyLBParam
@@ -4675,7 +4676,7 @@ func (p *ServerAddProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4871,33 +4872,33 @@ func (p *ServerAddProxyLBParam) SetQueryFile(v string) {
 func (p *ServerAddProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerAddProxyLBParam) SetId(v int64) {
+func (p *ServerAddProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerAddProxyLBParam) GetId() int64 {
+func (p *ServerAddProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerUpdateProxyLBParam is input parameters for the sacloud API
 type ServerUpdateProxyLBParam struct {
-	Index             int      `json:"index"`
-	Ipaddress         string   `json:"ipaddress"`
-	Disabled          bool     `json:"disabled"`
-	Port              int      `json:"port"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Ipaddress         string     `json:"ipaddress"`
+	Disabled          bool       `json:"disabled"`
+	Port              int        `json:"port"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerUpdateProxyLBParam return new ServerUpdateProxyLBParam
@@ -4956,7 +4957,7 @@ func (p *ServerUpdateProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5152,30 +5153,30 @@ func (p *ServerUpdateProxyLBParam) SetQueryFile(v string) {
 func (p *ServerUpdateProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerUpdateProxyLBParam) SetId(v int64) {
+func (p *ServerUpdateProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerUpdateProxyLBParam) GetId() int64 {
+func (p *ServerUpdateProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerDeleteProxyLBParam is input parameters for the sacloud API
 type ServerDeleteProxyLBParam struct {
-	Index             int      `json:"index"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerDeleteProxyLBParam return new ServerDeleteProxyLBParam
@@ -5225,7 +5226,7 @@ func (p *ServerDeleteProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5386,28 +5387,28 @@ func (p *ServerDeleteProxyLBParam) SetQueryFile(v string) {
 func (p *ServerDeleteProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerDeleteProxyLBParam) SetId(v int64) {
+func (p *ServerDeleteProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerDeleteProxyLBParam) GetId() int64 {
+func (p *ServerDeleteProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // CertificateInfoProxyLBParam is input parameters for the sacloud API
 type CertificateInfoProxyLBParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewCertificateInfoProxyLBParam return new CertificateInfoProxyLBParam
@@ -5451,7 +5452,7 @@ func (p *CertificateInfoProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5591,32 +5592,32 @@ func (p *CertificateInfoProxyLBParam) SetQueryFile(v string) {
 func (p *CertificateInfoProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateInfoProxyLBParam) SetId(v int64) {
+func (p *CertificateInfoProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateInfoProxyLBParam) GetId() int64 {
+func (p *CertificateInfoProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // CertificateAddProxyLBParam is input parameters for the sacloud API
 type CertificateAddProxyLBParam struct {
-	ServerCertificate       string   `json:"server-certificate"`
-	IntermediateCertificate string   `json:"intermediate-certificate"`
-	PrivateKey              string   `json:"private-key"`
-	Selector                []string `json:"selector"`
-	Assumeyes               bool     `json:"assumeyes"`
-	ParamTemplate           string   `json:"param-template"`
-	ParamTemplateFile       string   `json:"param-template-file"`
-	GenerateSkeleton        bool     `json:"generate-skeleton"`
-	OutputType              string   `json:"output-type"`
-	Column                  []string `json:"column"`
-	Quiet                   bool     `json:"quiet"`
-	Format                  string   `json:"format"`
-	FormatFile              string   `json:"format-file"`
-	Query                   string   `json:"query"`
-	QueryFile               string   `json:"query-file"`
-	Id                      int64    `json:"id"`
+	ServerCertificate       string     `json:"server-certificate"`
+	IntermediateCertificate string     `json:"intermediate-certificate"`
+	PrivateKey              string     `json:"private-key"`
+	Selector                []string   `json:"selector"`
+	Assumeyes               bool       `json:"assumeyes"`
+	ParamTemplate           string     `json:"param-template"`
+	ParamTemplateFile       string     `json:"param-template-file"`
+	GenerateSkeleton        bool       `json:"generate-skeleton"`
+	OutputType              string     `json:"output-type"`
+	Column                  []string   `json:"column"`
+	Quiet                   bool       `json:"quiet"`
+	Format                  string     `json:"format"`
+	FormatFile              string     `json:"format-file"`
+	Query                   string     `json:"query"`
+	QueryFile               string     `json:"query-file"`
+	Id                      sacloud.ID `json:"id"`
 }
 
 // NewCertificateAddProxyLBParam return new CertificateAddProxyLBParam
@@ -5672,7 +5673,7 @@ func (p *CertificateAddProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5854,32 +5855,32 @@ func (p *CertificateAddProxyLBParam) SetQueryFile(v string) {
 func (p *CertificateAddProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateAddProxyLBParam) SetId(v int64) {
+func (p *CertificateAddProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateAddProxyLBParam) GetId() int64 {
+func (p *CertificateAddProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // CertificateUpdateProxyLBParam is input parameters for the sacloud API
 type CertificateUpdateProxyLBParam struct {
-	ServerCertificate       string   `json:"server-certificate"`
-	IntermediateCertificate string   `json:"intermediate-certificate"`
-	PrivateKey              string   `json:"private-key"`
-	Selector                []string `json:"selector"`
-	Assumeyes               bool     `json:"assumeyes"`
-	ParamTemplate           string   `json:"param-template"`
-	ParamTemplateFile       string   `json:"param-template-file"`
-	GenerateSkeleton        bool     `json:"generate-skeleton"`
-	OutputType              string   `json:"output-type"`
-	Column                  []string `json:"column"`
-	Quiet                   bool     `json:"quiet"`
-	Format                  string   `json:"format"`
-	FormatFile              string   `json:"format-file"`
-	Query                   string   `json:"query"`
-	QueryFile               string   `json:"query-file"`
-	Id                      int64    `json:"id"`
+	ServerCertificate       string     `json:"server-certificate"`
+	IntermediateCertificate string     `json:"intermediate-certificate"`
+	PrivateKey              string     `json:"private-key"`
+	Selector                []string   `json:"selector"`
+	Assumeyes               bool       `json:"assumeyes"`
+	ParamTemplate           string     `json:"param-template"`
+	ParamTemplateFile       string     `json:"param-template-file"`
+	GenerateSkeleton        bool       `json:"generate-skeleton"`
+	OutputType              string     `json:"output-type"`
+	Column                  []string   `json:"column"`
+	Quiet                   bool       `json:"quiet"`
+	Format                  string     `json:"format"`
+	FormatFile              string     `json:"format-file"`
+	Query                   string     `json:"query"`
+	QueryFile               string     `json:"query-file"`
+	Id                      sacloud.ID `json:"id"`
 }
 
 // NewCertificateUpdateProxyLBParam return new CertificateUpdateProxyLBParam
@@ -5935,7 +5936,7 @@ func (p *CertificateUpdateProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -6103,29 +6104,29 @@ func (p *CertificateUpdateProxyLBParam) SetQueryFile(v string) {
 func (p *CertificateUpdateProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateUpdateProxyLBParam) SetId(v int64) {
+func (p *CertificateUpdateProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateUpdateProxyLBParam) GetId() int64 {
+func (p *CertificateUpdateProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // CertificateDeleteProxyLBParam is input parameters for the sacloud API
 type CertificateDeleteProxyLBParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewCertificateDeleteProxyLBParam return new CertificateDeleteProxyLBParam
@@ -6172,7 +6173,7 @@ func (p *CertificateDeleteProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -6319,31 +6320,31 @@ func (p *CertificateDeleteProxyLBParam) SetQueryFile(v string) {
 func (p *CertificateDeleteProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateDeleteProxyLBParam) SetId(v int64) {
+func (p *CertificateDeleteProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateDeleteProxyLBParam) GetId() int64 {
+func (p *CertificateDeleteProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // MonitorProxyLBParam is input parameters for the sacloud API
 type MonitorProxyLBParam struct {
-	Start             string   `json:"start"`
-	End               string   `json:"end"`
-	KeyFormat         string   `json:"key-format"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Start             string     `json:"start"`
+	End               string     `json:"end"`
+	KeyFormat         string     `json:"key-format"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewMonitorProxyLBParam return new MonitorProxyLBParam
@@ -6399,7 +6400,7 @@ func (p *MonitorProxyLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -6581,10 +6582,10 @@ func (p *MonitorProxyLBParam) SetQueryFile(v string) {
 func (p *MonitorProxyLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorProxyLBParam) SetId(v int64) {
+func (p *MonitorProxyLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorProxyLBParam) GetId() int64 {
+func (p *MonitorProxyLBParam) GetId() sacloud.ID {
 	return p.Id
 }

@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,12 +25,12 @@ import (
 
 // CsvBillParam is input parameters for the sacloud API
 type CsvBillParam struct {
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	NoHeader          bool   `json:"no-header"`
-	BillOutput        string `json:"bill-output"`
-	BillId            int64  `json:"bill-id"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	NoHeader          bool       `json:"no-header"`
+	BillOutput        string     `json:"bill-output"`
+	BillId            sacloud.ID `json:"bill-id"`
 }
 
 // NewCsvBillParam return new CsvBillParam
@@ -55,7 +56,7 @@ func (p *CsvBillParam) FillValueToSkeleton() {
 		p.BillOutput = ""
 	}
 	if isEmpty(p.BillId) {
-		p.BillId = 0
+		p.BillId = sacloud.ID(0)
 	}
 
 }
@@ -133,11 +134,11 @@ func (p *CsvBillParam) SetBillOutput(v string) {
 func (p *CsvBillParam) GetBillOutput() string {
 	return p.BillOutput
 }
-func (p *CsvBillParam) SetBillId(v int64) {
+func (p *CsvBillParam) SetBillId(v sacloud.ID) {
 	p.BillId = v
 }
 
-func (p *CsvBillParam) GetBillId() int64 {
+func (p *CsvBillParam) GetBillId() sacloud.ID {
 	return p.BillId
 }
 

@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,22 +25,22 @@ import (
 
 // ListSwitchParam is input parameters for the sacloud API
 type ListSwitchParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListSwitchParam return new ListSwitchParam
@@ -53,7 +54,7 @@ func (p *ListSwitchParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -190,11 +191,11 @@ func (p *ListSwitchParam) SetName(v []string) {
 func (p *ListSwitchParam) GetName() []string {
 	return p.Name
 }
-func (p *ListSwitchParam) SetId(v []int64) {
+func (p *ListSwitchParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListSwitchParam) GetId() []int64 {
+func (p *ListSwitchParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListSwitchParam) SetTags(v []string) {
@@ -298,21 +299,21 @@ func (p *ListSwitchParam) GetQueryFile() string {
 
 // CreateSwitchParam is input parameters for the sacloud API
 type CreateSwitchParam struct {
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreateSwitchParam return new CreateSwitchParam
@@ -332,7 +333,7 @@ func (p *CreateSwitchParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -477,11 +478,11 @@ func (p *CreateSwitchParam) SetTags(v []string) {
 func (p *CreateSwitchParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateSwitchParam) SetIconId(v int64) {
+func (p *CreateSwitchParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateSwitchParam) GetIconId() int64 {
+func (p *CreateSwitchParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateSwitchParam) SetAssumeyes(v bool) {
@@ -564,18 +565,18 @@ func (p *CreateSwitchParam) GetQueryFile() string {
 
 // ReadSwitchParam is input parameters for the sacloud API
 type ReadSwitchParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadSwitchParam return new ReadSwitchParam
@@ -619,7 +620,7 @@ func (p *ReadSwitchParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -759,33 +760,33 @@ func (p *ReadSwitchParam) SetQueryFile(v string) {
 func (p *ReadSwitchParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadSwitchParam) SetId(v int64) {
+func (p *ReadSwitchParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadSwitchParam) GetId() int64 {
+func (p *ReadSwitchParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateSwitchParam is input parameters for the sacloud API
 type UpdateSwitchParam struct {
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateSwitchParam return new UpdateSwitchParam
@@ -808,7 +809,7 @@ func (p *UpdateSwitchParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -844,7 +845,7 @@ func (p *UpdateSwitchParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -963,11 +964,11 @@ func (p *UpdateSwitchParam) SetTags(v []string) {
 func (p *UpdateSwitchParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateSwitchParam) SetIconId(v int64) {
+func (p *UpdateSwitchParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateSwitchParam) GetIconId() int64 {
+func (p *UpdateSwitchParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateSwitchParam) SetAssumeyes(v bool) {
@@ -1047,29 +1048,29 @@ func (p *UpdateSwitchParam) SetQueryFile(v string) {
 func (p *UpdateSwitchParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateSwitchParam) SetId(v int64) {
+func (p *UpdateSwitchParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateSwitchParam) GetId() int64 {
+func (p *UpdateSwitchParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteSwitchParam is input parameters for the sacloud API
 type DeleteSwitchParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteSwitchParam return new DeleteSwitchParam
@@ -1116,7 +1117,7 @@ func (p *DeleteSwitchParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1263,23 +1264,23 @@ func (p *DeleteSwitchParam) SetQueryFile(v string) {
 func (p *DeleteSwitchParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteSwitchParam) SetId(v int64) {
+func (p *DeleteSwitchParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteSwitchParam) GetId() int64 {
+func (p *DeleteSwitchParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // BridgeConnectSwitchParam is input parameters for the sacloud API
 type BridgeConnectSwitchParam struct {
-	BridgeId          int64    `json:"bridge-id"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	BridgeId          sacloud.ID `json:"bridge-id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewBridgeConnectSwitchParam return new BridgeConnectSwitchParam
@@ -1290,7 +1291,7 @@ func NewBridgeConnectSwitchParam() *BridgeConnectSwitchParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *BridgeConnectSwitchParam) FillValueToSkeleton() {
 	if isEmpty(p.BridgeId) {
-		p.BridgeId = 0
+		p.BridgeId = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -1308,7 +1309,7 @@ func (p *BridgeConnectSwitchParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1365,11 +1366,11 @@ func (p *BridgeConnectSwitchParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *BridgeConnectSwitchParam) SetBridgeId(v int64) {
+func (p *BridgeConnectSwitchParam) SetBridgeId(v sacloud.ID) {
 	p.BridgeId = v
 }
 
-func (p *BridgeConnectSwitchParam) GetBridgeId() int64 {
+func (p *BridgeConnectSwitchParam) GetBridgeId() sacloud.ID {
 	return p.BridgeId
 }
 func (p *BridgeConnectSwitchParam) SetSelector(v []string) {
@@ -1407,22 +1408,22 @@ func (p *BridgeConnectSwitchParam) SetGenerateSkeleton(v bool) {
 func (p *BridgeConnectSwitchParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *BridgeConnectSwitchParam) SetId(v int64) {
+func (p *BridgeConnectSwitchParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BridgeConnectSwitchParam) GetId() int64 {
+func (p *BridgeConnectSwitchParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // BridgeDisconnectSwitchParam is input parameters for the sacloud API
 type BridgeDisconnectSwitchParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewBridgeDisconnectSwitchParam return new BridgeDisconnectSwitchParam
@@ -1448,7 +1449,7 @@ func (p *BridgeDisconnectSwitchParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1526,10 +1527,10 @@ func (p *BridgeDisconnectSwitchParam) SetGenerateSkeleton(v bool) {
 func (p *BridgeDisconnectSwitchParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *BridgeDisconnectSwitchParam) SetId(v int64) {
+func (p *BridgeDisconnectSwitchParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BridgeDisconnectSwitchParam) GetId() int64 {
+func (p *BridgeDisconnectSwitchParam) GetId() sacloud.ID {
 	return p.Id
 }

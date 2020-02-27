@@ -34,7 +34,7 @@ func LoadBalancerCreate(ctx command.Context, params *params.CreateLoadBalancerPa
 	}
 
 	p := &sacloud.CreateLoadBalancerValue{
-		SwitchID:     fmt.Sprintf("%d", params.SwitchId),
+		SwitchID:     params.SwitchId,
 		VRID:         params.Vrid,
 		IPAddress1:   params.Ipaddress1,
 		MaskLen:      params.NwMaskLen,

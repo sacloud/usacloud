@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,21 +25,21 @@ import (
 
 // ListLicenseParam is input parameters for the sacloud API
 type ListLicenseParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListLicenseParam return new ListLicenseParam
@@ -52,7 +53,7 @@ func (p *ListLicenseParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.From) {
 		p.From = 0
@@ -179,11 +180,11 @@ func (p *ListLicenseParam) SetName(v []string) {
 func (p *ListLicenseParam) GetName() []string {
 	return p.Name
 }
-func (p *ListLicenseParam) SetId(v []int64) {
+func (p *ListLicenseParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListLicenseParam) GetId() []int64 {
+func (p *ListLicenseParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListLicenseParam) SetFrom(v int) {
@@ -280,19 +281,19 @@ func (p *ListLicenseParam) GetQueryFile() string {
 
 // CreateLicenseParam is input parameters for the sacloud API
 type CreateLicenseParam struct {
-	LicenseInfoId     int64    `json:"license-info-id"`
-	Name              string   `json:"name"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	LicenseInfoId     sacloud.ID `json:"license-info-id"`
+	Name              string     `json:"name"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreateLicenseParam return new CreateLicenseParam
@@ -303,7 +304,7 @@ func NewCreateLicenseParam() *CreateLicenseParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *CreateLicenseParam) FillValueToSkeleton() {
 	if isEmpty(p.LicenseInfoId) {
-		p.LicenseInfoId = 0
+		p.LicenseInfoId = sacloud.ID(0)
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -409,11 +410,11 @@ func (p *CreateLicenseParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreateLicenseParam) SetLicenseInfoId(v int64) {
+func (p *CreateLicenseParam) SetLicenseInfoId(v sacloud.ID) {
 	p.LicenseInfoId = v
 }
 
-func (p *CreateLicenseParam) GetLicenseInfoId() int64 {
+func (p *CreateLicenseParam) GetLicenseInfoId() sacloud.ID {
 	return p.LicenseInfoId
 }
 func (p *CreateLicenseParam) SetName(v string) {
@@ -503,17 +504,17 @@ func (p *CreateLicenseParam) GetQueryFile() string {
 
 // ReadLicenseParam is input parameters for the sacloud API
 type ReadLicenseParam struct {
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadLicenseParam return new ReadLicenseParam
@@ -554,7 +555,7 @@ func (p *ReadLicenseParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -687,29 +688,29 @@ func (p *ReadLicenseParam) SetQueryFile(v string) {
 func (p *ReadLicenseParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadLicenseParam) SetId(v int64) {
+func (p *ReadLicenseParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadLicenseParam) GetId() int64 {
+func (p *ReadLicenseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateLicenseParam is input parameters for the sacloud API
 type UpdateLicenseParam struct {
-	Name              string   `json:"name"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Name              string     `json:"name"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateLicenseParam return new UpdateLicenseParam
@@ -756,7 +757,7 @@ func (p *UpdateLicenseParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -910,28 +911,28 @@ func (p *UpdateLicenseParam) SetQueryFile(v string) {
 func (p *UpdateLicenseParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateLicenseParam) SetId(v int64) {
+func (p *UpdateLicenseParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateLicenseParam) GetId() int64 {
+func (p *UpdateLicenseParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteLicenseParam is input parameters for the sacloud API
 type DeleteLicenseParam struct {
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteLicenseParam return new DeleteLicenseParam
@@ -975,7 +976,7 @@ func (p *DeleteLicenseParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1115,10 +1116,10 @@ func (p *DeleteLicenseParam) SetQueryFile(v string) {
 func (p *DeleteLicenseParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteLicenseParam) SetId(v int64) {
+func (p *DeleteLicenseParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteLicenseParam) GetId() int64 {
+func (p *DeleteLicenseParam) GetId() sacloud.ID {
 	return p.Id
 }

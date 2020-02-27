@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ type Subnet struct {
 	IPAddresses    []*IPAddress `json:",omitempty"` // IPv4アドレス範囲
 	NetworkAddress string       `json:",omitempty"` // ネットワークアドレス
 	NetworkMaskLen int          `json:",omitempty"` // ネットワークマスク長
-	ServiceID      int64        `json:",omitempty"` // サービスID
+	ServiceID      ID           `json:",omitempty"` // サービスID
 	StaticRoute    string       `json:",omitempty"` // スタティックルート
 	NextHop        string       `json:",omitempty"` // ネクストホップ
 	Switch         *Switch      `json:",omitempty"` // スイッチ

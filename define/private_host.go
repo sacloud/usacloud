@@ -184,7 +184,7 @@ func privateHostServerInfoParam() map[string]*schema.Schema {
 func privateHostServerUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"server-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set server ID",
 			Required:     true,

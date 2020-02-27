@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@ const (
 	// DefaultDescription 説明 (デフォルト値)
 	DefaultDescription = ""
 	// DefaultIconID アイコンID(デフォルト値)
-	DefaultIconID = int64(0)
+	DefaultIconID = sacloud.EmptyID
 	// DefaultBootAfterCreate サーバー作成後すぐに起動フラグ(デフォルト値)
 	DefaultBootAfterCreate = true
 )
@@ -106,14 +106,14 @@ type CommonProperty interface {
 	SetDescription(description string)
 
 	// GetIconID アイコンID 取得
-	GetIconID() int64
+	GetIconID() sacloud.ID
 	// SetIconID アイコンID 設定
-	SetIconID(iconID int64)
+	SetIconID(iconID sacloud.ID)
 
 	// GetPrivateHostID アイコンID 取得
-	GetPrivateHostID() int64
+	GetPrivateHostID() sacloud.ID
 	// SetPrivateHostID アイコンID 設定
-	SetPrivateHostID(privateHostID int64)
+	SetPrivateHostID(privateHostID sacloud.ID)
 
 	// IsBootAfterCreate サーバー作成後すぐに起動フラグ 取得
 	IsBootAfterCreate() bool
@@ -126,9 +126,9 @@ type CommonProperty interface {
 	SetTags(tags []string)
 
 	// GetISOImageID ISOイメージ(CDROM)ID 取得
-	GetISOImageID() int64
+	GetISOImageID() sacloud.ID
 	// SetISOImageID ISOイメージ(CDROM)ID 設定
-	SetISOImageID(id int64)
+	SetISOImageID(id sacloud.ID)
 }
 
 // NetworkInterfaceProperty NIC関連プロパティ
@@ -149,9 +149,9 @@ type NetworkInterfaceProperty interface {
 	AddDisconnectedNIC()
 
 	// GetPacketFilterIDs パケットフィルタID 取得
-	GetPacketFilterIDs() []int64
+	GetPacketFilterIDs() []sacloud.ID
 	// SetPacketFilterIDs パケットフィルタID 設定
-	SetPacketFilterIDs(ids []int64)
+	SetPacketFilterIDs(ids []sacloud.ID)
 }
 
 // DiskProperty ディスク関連プロパティ
@@ -162,11 +162,11 @@ type DiskProperty interface {
 	SetDiskSize(diskSize int)
 
 	// GetDistantFrom ストレージ隔離対象ディスク 取得
-	GetDistantFrom() []int64
+	GetDistantFrom() []sacloud.ID
 	// SetDistantFrom ストレージ隔離対象ディスク 設定
-	SetDistantFrom(distantFrom []int64)
+	SetDistantFrom(distantFrom []sacloud.ID)
 	// AddDistantFrom ストレージ隔離対象ディスク 追加
-	AddDistantFrom(diskID int64)
+	AddDistantFrom(diskID sacloud.ID)
 	// ClearDistantFrom ストレージ隔離対象ディスク クリア
 	ClearDistantFrom()
 
@@ -216,10 +216,10 @@ type DiskEventProperty interface {
 // DiskSourceProperty コピー元アーカイブ/ディスクプロパティ
 type DiskSourceProperty interface {
 	// GetSourceArchiveID ソースアーカイブID 取得
-	GetSourceArchiveID() int64
+	GetSourceArchiveID() sacloud.ID
 
 	// GetSourceDiskID ソースディスクID 設定
-	GetSourceDiskID() int64
+	GetSourceDiskID() sacloud.ID
 }
 
 // DiskEditProperty ディスクの修正関連プロパティ
@@ -258,11 +258,11 @@ type DiskEditProperty interface {
 	// GetSSHKeys 公開鍵 取得
 	GetSSHKeys() []string
 	// GetSSHKeyIds 公開鍵ID 取得
-	GetSSHKeyIds() []int64
+	GetSSHKeyIds() []sacloud.ID
 	// AddSSHKey 公開鍵 追加
 	AddSSHKey(sshKey string)
 	// AddSSHKeyID 公開鍵ID 追加
-	AddSSHKeyID(sshKeyID int64)
+	AddSSHKeyID(sshKeyID sacloud.ID)
 	// ClearSSHKey 公開鍵 クリア
 	ClearSSHKey()
 	// ClearSSHKeyIDs 公開鍵ID クリア
@@ -275,11 +275,11 @@ type DiskEditProperty interface {
 	// GetNotes スタートアップスクリプト 取得
 	GetNotes() []string
 	// AddNoteID スタートアップスクリプト 追加
-	AddNoteID(noteID int64)
+	AddNoteID(noteID sacloud.ID)
 	// ClearNoteIDs スタートアップスクリプト クリア
 	ClearNoteIDs()
 	// GetNoteIDs スタートアップスクリプトID 取得
-	GetNoteIDs() []int64
+	GetNoteIDs() []sacloud.ID
 
 	// IsSSHKeysEphemeral ディスク作成後の公開鍵削除フラグ 取得
 	IsSSHKeysEphemeral() bool

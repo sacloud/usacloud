@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,21 +25,21 @@ import (
 
 // ListPacketFilterParam is input parameters for the sacloud API
 type ListPacketFilterParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListPacketFilterParam return new ListPacketFilterParam
@@ -52,7 +53,7 @@ func (p *ListPacketFilterParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.From) {
 		p.From = 0
@@ -179,11 +180,11 @@ func (p *ListPacketFilterParam) SetName(v []string) {
 func (p *ListPacketFilterParam) GetName() []string {
 	return p.Name
 }
-func (p *ListPacketFilterParam) SetId(v []int64) {
+func (p *ListPacketFilterParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListPacketFilterParam) GetId() []int64 {
+func (p *ListPacketFilterParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListPacketFilterParam) SetFrom(v int) {
@@ -510,17 +511,17 @@ func (p *CreatePacketFilterParam) GetQueryFile() string {
 
 // ReadPacketFilterParam is input parameters for the sacloud API
 type ReadPacketFilterParam struct {
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadPacketFilterParam return new ReadPacketFilterParam
@@ -561,7 +562,7 @@ func (p *ReadPacketFilterParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -694,30 +695,30 @@ func (p *ReadPacketFilterParam) SetQueryFile(v string) {
 func (p *ReadPacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadPacketFilterParam) SetId(v int64) {
+func (p *ReadPacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadPacketFilterParam) GetId() int64 {
+func (p *ReadPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdatePacketFilterParam is input parameters for the sacloud API
 type UpdatePacketFilterParam struct {
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdatePacketFilterParam return new UpdatePacketFilterParam
@@ -767,7 +768,7 @@ func (p *UpdatePacketFilterParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -935,28 +936,28 @@ func (p *UpdatePacketFilterParam) SetQueryFile(v string) {
 func (p *UpdatePacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdatePacketFilterParam) SetId(v int64) {
+func (p *UpdatePacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdatePacketFilterParam) GetId() int64 {
+func (p *UpdatePacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeletePacketFilterParam is input parameters for the sacloud API
 type DeletePacketFilterParam struct {
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeletePacketFilterParam return new DeletePacketFilterParam
@@ -1000,7 +1001,7 @@ func (p *DeletePacketFilterParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1140,27 +1141,27 @@ func (p *DeletePacketFilterParam) SetQueryFile(v string) {
 func (p *DeletePacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeletePacketFilterParam) SetId(v int64) {
+func (p *DeletePacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeletePacketFilterParam) GetId() int64 {
+func (p *DeletePacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // RuleInfoPacketFilterParam is input parameters for the sacloud API
 type RuleInfoPacketFilterParam struct {
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewRuleInfoPacketFilterParam return new RuleInfoPacketFilterParam
@@ -1201,7 +1202,7 @@ func (p *RuleInfoPacketFilterParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1334,35 +1335,35 @@ func (p *RuleInfoPacketFilterParam) SetQueryFile(v string) {
 func (p *RuleInfoPacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RuleInfoPacketFilterParam) SetId(v int64) {
+func (p *RuleInfoPacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RuleInfoPacketFilterParam) GetId() int64 {
+func (p *RuleInfoPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // RuleAddPacketFilterParam is input parameters for the sacloud API
 type RuleAddPacketFilterParam struct {
-	Index             int      `json:"index"`
-	Protocol          string   `json:"protocol"`
-	SourceNetwork     string   `json:"source-network"`
-	SourcePort        string   `json:"source-port"`
-	DestinationPort   string   `json:"destination-port"`
-	Action            string   `json:"action"`
-	Description       string   `json:"description"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Protocol          string     `json:"protocol"`
+	SourceNetwork     string     `json:"source-network"`
+	SourcePort        string     `json:"source-port"`
+	DestinationPort   string     `json:"destination-port"`
+	Action            string     `json:"action"`
+	Description       string     `json:"description"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewRuleAddPacketFilterParam return new RuleAddPacketFilterParam
@@ -1430,7 +1431,7 @@ func (p *RuleAddPacketFilterParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1661,35 +1662,35 @@ func (p *RuleAddPacketFilterParam) SetQueryFile(v string) {
 func (p *RuleAddPacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RuleAddPacketFilterParam) SetId(v int64) {
+func (p *RuleAddPacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RuleAddPacketFilterParam) GetId() int64 {
+func (p *RuleAddPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // RuleUpdatePacketFilterParam is input parameters for the sacloud API
 type RuleUpdatePacketFilterParam struct {
-	Index             int      `json:"index"`
-	Protocol          string   `json:"protocol"`
-	SourceNetwork     string   `json:"source-network"`
-	SourcePort        string   `json:"source-port"`
-	DestinationPort   string   `json:"destination-port"`
-	Action            string   `json:"action"`
-	Description       string   `json:"description"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Protocol          string     `json:"protocol"`
+	SourceNetwork     string     `json:"source-network"`
+	SourcePort        string     `json:"source-port"`
+	DestinationPort   string     `json:"destination-port"`
+	Action            string     `json:"action"`
+	Description       string     `json:"description"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewRuleUpdatePacketFilterParam return new RuleUpdatePacketFilterParam
@@ -1754,7 +1755,7 @@ func (p *RuleUpdatePacketFilterParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1992,29 +1993,29 @@ func (p *RuleUpdatePacketFilterParam) SetQueryFile(v string) {
 func (p *RuleUpdatePacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RuleUpdatePacketFilterParam) SetId(v int64) {
+func (p *RuleUpdatePacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RuleUpdatePacketFilterParam) GetId() int64 {
+func (p *RuleUpdatePacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // RuleDeletePacketFilterParam is input parameters for the sacloud API
 type RuleDeletePacketFilterParam struct {
-	Index             int      `json:"index"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewRuleDeletePacketFilterParam return new RuleDeletePacketFilterParam
@@ -2061,7 +2062,7 @@ func (p *RuleDeletePacketFilterParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2215,22 +2216,22 @@ func (p *RuleDeletePacketFilterParam) SetQueryFile(v string) {
 func (p *RuleDeletePacketFilterParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RuleDeletePacketFilterParam) SetId(v int64) {
+func (p *RuleDeletePacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RuleDeletePacketFilterParam) GetId() int64 {
+func (p *RuleDeletePacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // InterfaceConnectPacketFilterParam is input parameters for the sacloud API
 type InterfaceConnectPacketFilterParam struct {
-	InterfaceId       int64  `json:"interface-id"`
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	InterfaceId       sacloud.ID `json:"interface-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewInterfaceConnectPacketFilterParam return new InterfaceConnectPacketFilterParam
@@ -2241,7 +2242,7 @@ func NewInterfaceConnectPacketFilterParam() *InterfaceConnectPacketFilterParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *InterfaceConnectPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.InterfaceId) {
-		p.InterfaceId = 0
+		p.InterfaceId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -2256,7 +2257,7 @@ func (p *InterfaceConnectPacketFilterParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2313,11 +2314,11 @@ func (p *InterfaceConnectPacketFilterParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *InterfaceConnectPacketFilterParam) SetInterfaceId(v int64) {
+func (p *InterfaceConnectPacketFilterParam) SetInterfaceId(v sacloud.ID) {
 	p.InterfaceId = v
 }
 
-func (p *InterfaceConnectPacketFilterParam) GetInterfaceId() int64 {
+func (p *InterfaceConnectPacketFilterParam) GetInterfaceId() sacloud.ID {
 	return p.InterfaceId
 }
 func (p *InterfaceConnectPacketFilterParam) SetAssumeyes(v bool) {
@@ -2348,22 +2349,22 @@ func (p *InterfaceConnectPacketFilterParam) SetGenerateSkeleton(v bool) {
 func (p *InterfaceConnectPacketFilterParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *InterfaceConnectPacketFilterParam) SetId(v int64) {
+func (p *InterfaceConnectPacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *InterfaceConnectPacketFilterParam) GetId() int64 {
+func (p *InterfaceConnectPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // InterfaceDisconnectPacketFilterParam is input parameters for the sacloud API
 type InterfaceDisconnectPacketFilterParam struct {
-	InterfaceId       int64  `json:"interface-id"`
-	Assumeyes         bool   `json:"assumeyes"`
-	ParamTemplate     string `json:"param-template"`
-	ParamTemplateFile string `json:"param-template-file"`
-	GenerateSkeleton  bool   `json:"generate-skeleton"`
-	Id                int64  `json:"id"`
+	InterfaceId       sacloud.ID `json:"interface-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewInterfaceDisconnectPacketFilterParam return new InterfaceDisconnectPacketFilterParam
@@ -2374,7 +2375,7 @@ func NewInterfaceDisconnectPacketFilterParam() *InterfaceDisconnectPacketFilterP
 // FillValueToSkeleton fill values to empty fields
 func (p *InterfaceDisconnectPacketFilterParam) FillValueToSkeleton() {
 	if isEmpty(p.InterfaceId) {
-		p.InterfaceId = 0
+		p.InterfaceId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -2389,7 +2390,7 @@ func (p *InterfaceDisconnectPacketFilterParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2446,11 +2447,11 @@ func (p *InterfaceDisconnectPacketFilterParam) GetColumnDefs() []output.ColumnDe
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *InterfaceDisconnectPacketFilterParam) SetInterfaceId(v int64) {
+func (p *InterfaceDisconnectPacketFilterParam) SetInterfaceId(v sacloud.ID) {
 	p.InterfaceId = v
 }
 
-func (p *InterfaceDisconnectPacketFilterParam) GetInterfaceId() int64 {
+func (p *InterfaceDisconnectPacketFilterParam) GetInterfaceId() sacloud.ID {
 	return p.InterfaceId
 }
 func (p *InterfaceDisconnectPacketFilterParam) SetAssumeyes(v bool) {
@@ -2481,10 +2482,10 @@ func (p *InterfaceDisconnectPacketFilterParam) SetGenerateSkeleton(v bool) {
 func (p *InterfaceDisconnectPacketFilterParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *InterfaceDisconnectPacketFilterParam) SetId(v int64) {
+func (p *InterfaceDisconnectPacketFilterParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *InterfaceDisconnectPacketFilterParam) GetId() int64 {
+func (p *InterfaceDisconnectPacketFilterParam) GetId() sacloud.ID {
 	return p.Id
 }

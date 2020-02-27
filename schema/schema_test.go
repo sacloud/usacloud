@@ -163,6 +163,8 @@ func TestSchema_NeedSliceValueHandlers(t *testing.T) {
 		TypeFloat:      false,
 		TypeStringList: true,
 		TypeIntList:    true,
+		TypeId:         false,
+		TypeIdList:     true,
 	}
 
 	needSliceValueHandlers := []HandlerType{

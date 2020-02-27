@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,21 +25,21 @@ import (
 
 // ListBridgeParam is input parameters for the sacloud API
 type ListBridgeParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListBridgeParam return new ListBridgeParam
@@ -52,7 +53,7 @@ func (p *ListBridgeParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.From) {
 		p.From = 0
@@ -179,11 +180,11 @@ func (p *ListBridgeParam) SetName(v []string) {
 func (p *ListBridgeParam) GetName() []string {
 	return p.Name
 }
-func (p *ListBridgeParam) SetId(v []int64) {
+func (p *ListBridgeParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListBridgeParam) GetId() []int64 {
+func (p *ListBridgeParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListBridgeParam) SetFrom(v int) {
@@ -510,17 +511,17 @@ func (p *CreateBridgeParam) GetQueryFile() string {
 
 // ReadBridgeParam is input parameters for the sacloud API
 type ReadBridgeParam struct {
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadBridgeParam return new ReadBridgeParam
@@ -561,7 +562,7 @@ func (p *ReadBridgeParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -694,30 +695,30 @@ func (p *ReadBridgeParam) SetQueryFile(v string) {
 func (p *ReadBridgeParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadBridgeParam) SetId(v int64) {
+func (p *ReadBridgeParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadBridgeParam) GetId() int64 {
+func (p *ReadBridgeParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateBridgeParam is input parameters for the sacloud API
 type UpdateBridgeParam struct {
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateBridgeParam return new UpdateBridgeParam
@@ -767,7 +768,7 @@ func (p *UpdateBridgeParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -935,28 +936,28 @@ func (p *UpdateBridgeParam) SetQueryFile(v string) {
 func (p *UpdateBridgeParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateBridgeParam) SetId(v int64) {
+func (p *UpdateBridgeParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateBridgeParam) GetId() int64 {
+func (p *UpdateBridgeParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteBridgeParam is input parameters for the sacloud API
 type DeleteBridgeParam struct {
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteBridgeParam return new DeleteBridgeParam
@@ -1000,7 +1001,7 @@ func (p *DeleteBridgeParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1140,10 +1141,10 @@ func (p *DeleteBridgeParam) SetQueryFile(v string) {
 func (p *DeleteBridgeParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteBridgeParam) SetId(v int64) {
+func (p *DeleteBridgeParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteBridgeParam) GetId() int64 {
+func (p *DeleteBridgeParam) GetId() sacloud.ID {
 	return p.Id
 }

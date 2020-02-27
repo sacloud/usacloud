@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@ func (p *propPrivateHostPlan) SetPrivateHostPlan(plan *ProductPrivateHost) {
 }
 
 // SetPrivateHostPlanByID 専有ホストプラン設定
-func (p *propPrivateHostPlan) SetPrivateHostPlanByID(planID int64) {
+func (p *propPrivateHostPlan) SetPrivateHostPlanByID(planID ID) {
 	if p.Plan == nil {
 		p.Plan = &ProductPrivateHost{}
 	}

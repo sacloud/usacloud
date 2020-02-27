@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,23 +25,23 @@ import (
 
 // ListSimpleMonitorParam is input parameters for the sacloud API
 type ListSimpleMonitorParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Tags              []string `json:"tags"`
-	Health            string   `json:"health"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Tags              []string     `json:"tags"`
+	Health            string       `json:"health"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListSimpleMonitorParam return new ListSimpleMonitorParam
@@ -54,7 +55,7 @@ func (p *ListSimpleMonitorParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -201,11 +202,11 @@ func (p *ListSimpleMonitorParam) SetName(v []string) {
 func (p *ListSimpleMonitorParam) GetName() []string {
 	return p.Name
 }
-func (p *ListSimpleMonitorParam) SetId(v []int64) {
+func (p *ListSimpleMonitorParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListSimpleMonitorParam) GetId() []int64 {
+func (p *ListSimpleMonitorParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListSimpleMonitorParam) SetTags(v []string) {
@@ -316,38 +317,38 @@ func (p *ListSimpleMonitorParam) GetQueryFile() string {
 
 // CreateSimpleMonitorParam is input parameters for the sacloud API
 type CreateSimpleMonitorParam struct {
-	Target            string   `json:"target"`
-	Protocol          string   `json:"protocol"`
-	Port              int      `json:"port"`
-	DelayLoop         int      `json:"delay-loop"`
-	Disabled          bool     `json:"disabled"`
-	HostHeader        string   `json:"host-header"`
-	Path              string   `json:"path"`
-	ResponseCode      int      `json:"response-code"`
-	Sni               bool     `json:"sni"`
-	Username          string   `json:"username"`
-	Password          string   `json:"password"`
-	DnsQname          string   `json:"dns-qname"`
-	DnsExcepted       string   `json:"dns-excepted"`
-	RemainingDays     int      `json:"remaining-days"`
-	NotifyEmail       bool     `json:"notify-email"`
-	EmailType         string   `json:"email-type"`
-	SlackWebhook      string   `json:"slack-webhook"`
-	NotifyInterval    int      `json:"notify-interval"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Target            string     `json:"target"`
+	Protocol          string     `json:"protocol"`
+	Port              int        `json:"port"`
+	DelayLoop         int        `json:"delay-loop"`
+	Disabled          bool       `json:"disabled"`
+	HostHeader        string     `json:"host-header"`
+	Path              string     `json:"path"`
+	ResponseCode      int        `json:"response-code"`
+	Sni               bool       `json:"sni"`
+	Username          string     `json:"username"`
+	Password          string     `json:"password"`
+	DnsQname          string     `json:"dns-qname"`
+	DnsExcepted       string     `json:"dns-excepted"`
+	RemainingDays     int        `json:"remaining-days"`
+	NotifyEmail       bool       `json:"notify-email"`
+	EmailType         string     `json:"email-type"`
+	SlackWebhook      string     `json:"slack-webhook"`
+	NotifyInterval    int        `json:"notify-interval"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreateSimpleMonitorParam return new CreateSimpleMonitorParam
@@ -426,7 +427,7 @@ func (p *CreateSimpleMonitorParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -739,11 +740,11 @@ func (p *CreateSimpleMonitorParam) SetTags(v []string) {
 func (p *CreateSimpleMonitorParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateSimpleMonitorParam) SetIconId(v int64) {
+func (p *CreateSimpleMonitorParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateSimpleMonitorParam) GetIconId() int64 {
+func (p *CreateSimpleMonitorParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateSimpleMonitorParam) SetAssumeyes(v bool) {
@@ -826,18 +827,18 @@ func (p *CreateSimpleMonitorParam) GetQueryFile() string {
 
 // ReadSimpleMonitorParam is input parameters for the sacloud API
 type ReadSimpleMonitorParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadSimpleMonitorParam return new ReadSimpleMonitorParam
@@ -881,7 +882,7 @@ func (p *ReadSimpleMonitorParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1021,49 +1022,49 @@ func (p *ReadSimpleMonitorParam) SetQueryFile(v string) {
 func (p *ReadSimpleMonitorParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadSimpleMonitorParam) SetId(v int64) {
+func (p *ReadSimpleMonitorParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadSimpleMonitorParam) GetId() int64 {
+func (p *ReadSimpleMonitorParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateSimpleMonitorParam is input parameters for the sacloud API
 type UpdateSimpleMonitorParam struct {
-	Protocol          string   `json:"protocol"`
-	Port              int      `json:"port"`
-	DelayLoop         int      `json:"delay-loop"`
-	Disabled          bool     `json:"disabled"`
-	HostHeader        string   `json:"host-header"`
-	Path              string   `json:"path"`
-	ResponseCode      int      `json:"response-code"`
-	Sni               bool     `json:"sni"`
-	Username          string   `json:"username"`
-	Password          string   `json:"password"`
-	DnsQname          string   `json:"dns-qname"`
-	DnsExcepted       string   `json:"dns-excepted"`
-	RemainingDays     int      `json:"remaining-days"`
-	NotifyEmail       bool     `json:"notify-email"`
-	EmailType         string   `json:"email-type"`
-	SlackWebhook      string   `json:"slack-webhook"`
-	NotifyInterval    int      `json:"notify-interval"`
-	Selector          []string `json:"selector"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Protocol          string     `json:"protocol"`
+	Port              int        `json:"port"`
+	DelayLoop         int        `json:"delay-loop"`
+	Disabled          bool       `json:"disabled"`
+	HostHeader        string     `json:"host-header"`
+	Path              string     `json:"path"`
+	ResponseCode      int        `json:"response-code"`
+	Sni               bool       `json:"sni"`
+	Username          string     `json:"username"`
+	Password          string     `json:"password"`
+	DnsQname          string     `json:"dns-qname"`
+	DnsExcepted       string     `json:"dns-excepted"`
+	RemainingDays     int        `json:"remaining-days"`
+	NotifyEmail       bool       `json:"notify-email"`
+	EmailType         string     `json:"email-type"`
+	SlackWebhook      string     `json:"slack-webhook"`
+	NotifyInterval    int        `json:"notify-interval"`
+	Selector          []string   `json:"selector"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateSimpleMonitorParam return new UpdateSimpleMonitorParam
@@ -1137,7 +1138,7 @@ func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1173,7 +1174,7 @@ func (p *UpdateSimpleMonitorParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1439,11 +1440,11 @@ func (p *UpdateSimpleMonitorParam) SetTags(v []string) {
 func (p *UpdateSimpleMonitorParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateSimpleMonitorParam) SetIconId(v int64) {
+func (p *UpdateSimpleMonitorParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateSimpleMonitorParam) GetIconId() int64 {
+func (p *UpdateSimpleMonitorParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateSimpleMonitorParam) SetAssumeyes(v bool) {
@@ -1523,29 +1524,29 @@ func (p *UpdateSimpleMonitorParam) SetQueryFile(v string) {
 func (p *UpdateSimpleMonitorParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateSimpleMonitorParam) SetId(v int64) {
+func (p *UpdateSimpleMonitorParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateSimpleMonitorParam) GetId() int64 {
+func (p *UpdateSimpleMonitorParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteSimpleMonitorParam is input parameters for the sacloud API
 type DeleteSimpleMonitorParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteSimpleMonitorParam return new DeleteSimpleMonitorParam
@@ -1592,7 +1593,7 @@ func (p *DeleteSimpleMonitorParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1739,28 +1740,28 @@ func (p *DeleteSimpleMonitorParam) SetQueryFile(v string) {
 func (p *DeleteSimpleMonitorParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteSimpleMonitorParam) SetId(v int64) {
+func (p *DeleteSimpleMonitorParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteSimpleMonitorParam) GetId() int64 {
+func (p *DeleteSimpleMonitorParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // HealthSimpleMonitorParam is input parameters for the sacloud API
 type HealthSimpleMonitorParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewHealthSimpleMonitorParam return new HealthSimpleMonitorParam
@@ -1804,7 +1805,7 @@ func (p *HealthSimpleMonitorParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1944,10 +1945,10 @@ func (p *HealthSimpleMonitorParam) SetQueryFile(v string) {
 func (p *HealthSimpleMonitorParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *HealthSimpleMonitorParam) SetId(v int64) {
+func (p *HealthSimpleMonitorParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *HealthSimpleMonitorParam) GetId() int64 {
+func (p *HealthSimpleMonitorParam) GetId() sacloud.ID {
 	return p.Id
 }

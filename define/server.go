@@ -675,7 +675,7 @@ func serverBuildParam() map[string]*schema.Schema {
 			Order:        30,
 		},
 		"private-host-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set private-host-id",
 			ValidateFunc: validateSakuraID(),
@@ -738,7 +738,7 @@ func serverBuildParam() map[string]*schema.Schema {
 		},
 
 		"source-archive-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source disk ID",
 			ValidateFunc: validateSakuraID(),
@@ -747,7 +747,7 @@ func serverBuildParam() map[string]*schema.Schema {
 			Order:        60,
 		},
 		"source-disk-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source disk ID",
 			ValidateFunc: validateSakuraID(),
@@ -756,7 +756,7 @@ func serverBuildParam() map[string]*schema.Schema {
 			Order:        70,
 		},
 		"distant-from": {
-			Type:         schema.TypeIntList,
+			Type:         schema.TypeIdList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set distant from disk IDs",
 			ValidateFunc: validateIntSlice(validateSakuraID()),
@@ -765,7 +765,7 @@ func serverBuildParam() map[string]*schema.Schema {
 			Order:        80,
 		},
 		"disk-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect disk ID",
 			ValidateFunc: validateSakuraID(),
@@ -778,7 +778,7 @@ func serverBuildParam() map[string]*schema.Schema {
 		  === iso image ===
 		*/
 		"iso-image-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set iso-image ID",
 			ValidateFunc: validateSakuraID(),
@@ -812,7 +812,7 @@ func serverBuildParam() map[string]*schema.Schema {
 			Order:        20,
 		},
 		"packet-filter-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set packet filter ID",
 			ValidateFunc: validateSakuraID(),
@@ -821,7 +821,7 @@ func serverBuildParam() map[string]*schema.Schema {
 			Order:        30,
 		},
 		"switch-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
@@ -893,7 +893,7 @@ func serverBuildParam() map[string]*schema.Schema {
 			Order:       10,
 		},
 		"startup-script-ids": {
-			Type:         schema.TypeIntList,
+			Type:         schema.TypeIdList,
 			Aliases:      []string{"note-ids"},
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set startup script ID(s)",
@@ -928,7 +928,7 @@ func serverBuildParam() map[string]*schema.Schema {
 			Order:       20,
 		},
 		"ssh-key-ids": {
-			Type:         schema.TypeIntList,
+			Type:         schema.TypeIdList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set ssh-key ID(s)",
 			ValidateFunc: validateIntSlice(validateSakuraID()),
@@ -1013,7 +1013,7 @@ func serverBuildParam() map[string]*schema.Schema {
 			Order:        30,
 		},
 		"icon-id": {
-			Type:            schema.TypeInt64,
+			Type:            schema.TypeId,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetIconByID",
 			Description:     "set Icon ID",
@@ -1347,7 +1347,7 @@ func serverISOImageInfoParam() map[string]*schema.Schema {
 func serverISOImageInsertParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"iso-image-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set iso-image ID",
 			ValidateFunc: validateSakuraID(),
@@ -1398,7 +1398,7 @@ func serverISOImageInsertParam() map[string]*schema.Schema {
 			Order:        50,
 		},
 		"icon-id": {
-			Type:            schema.TypeInt64,
+			Type:            schema.TypeId,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetIconByID",
 			Description:     "set Icon ID",
@@ -1421,7 +1421,7 @@ func serverDiskInfoParam() map[string]*schema.Schema {
 func serverDiskConnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"disk-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set target disk ID",
 			Required:     true,
@@ -1436,7 +1436,7 @@ func serverDiskConnectParam() map[string]*schema.Schema {
 func serverDiskDisconnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"disk-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set target disk ID",
 			Required:     true,
@@ -1466,7 +1466,7 @@ func serverInterfaceAddForInternetParam() map[string]*schema.Schema {
 func serverInterfaceAddForRouterParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"switch-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect switch(connected to router) ID",
 			Required:     true,
@@ -1515,7 +1515,7 @@ func serverInterfaceAddForRouterParam() map[string]*schema.Schema {
 func serverInterfaceAddForSwitchParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"switch-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect switch ID",
 			Required:     true,

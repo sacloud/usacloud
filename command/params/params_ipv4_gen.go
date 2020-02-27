@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,21 +25,21 @@ import (
 
 // ListIpv4Param is input parameters for the sacloud API
 type ListIpv4Param struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListIpv4Param return new ListIpv4Param
@@ -52,7 +53,7 @@ func (p *ListIpv4Param) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.From) {
 		p.From = 0
@@ -179,11 +180,11 @@ func (p *ListIpv4Param) SetName(v []string) {
 func (p *ListIpv4Param) GetName() []string {
 	return p.Name
 }
-func (p *ListIpv4Param) SetId(v []int64) {
+func (p *ListIpv4Param) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListIpv4Param) GetId() []int64 {
+func (p *ListIpv4Param) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListIpv4Param) SetFrom(v int) {

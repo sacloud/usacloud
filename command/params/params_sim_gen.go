@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,22 +25,22 @@ import (
 
 // ListSIMParam is input parameters for the sacloud API
 type ListSIMParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListSIMParam return new ListSIMParam
@@ -53,7 +54,7 @@ func (p *ListSIMParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -190,11 +191,11 @@ func (p *ListSIMParam) SetName(v []string) {
 func (p *ListSIMParam) GetName() []string {
 	return p.Name
 }
-func (p *ListSIMParam) SetId(v []int64) {
+func (p *ListSIMParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListSIMParam) GetId() []int64 {
+func (p *ListSIMParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListSIMParam) SetTags(v []string) {
@@ -298,26 +299,26 @@ func (p *ListSIMParam) GetQueryFile() string {
 
 // CreateSIMParam is input parameters for the sacloud API
 type CreateSIMParam struct {
-	Iccid             string   `json:"iccid"`
-	Passcode          string   `json:"passcode"`
-	Disabled          bool     `json:"disabled"`
-	Imei              string   `json:"imei"`
-	Carrier           []string `json:"carrier"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Iccid             string     `json:"iccid"`
+	Passcode          string     `json:"passcode"`
+	Disabled          bool       `json:"disabled"`
+	Imei              string     `json:"imei"`
+	Carrier           []string   `json:"carrier"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreateSIMParam return new CreateSIMParam
@@ -352,7 +353,7 @@ func (p *CreateSIMParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -566,11 +567,11 @@ func (p *CreateSIMParam) SetTags(v []string) {
 func (p *CreateSIMParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateSIMParam) SetIconId(v int64) {
+func (p *CreateSIMParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateSIMParam) GetIconId() int64 {
+func (p *CreateSIMParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateSIMParam) SetAssumeyes(v bool) {
@@ -653,18 +654,18 @@ func (p *CreateSIMParam) GetQueryFile() string {
 
 // ReadSIMParam is input parameters for the sacloud API
 type ReadSIMParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadSIMParam return new ReadSIMParam
@@ -708,7 +709,7 @@ func (p *ReadSIMParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -848,33 +849,33 @@ func (p *ReadSIMParam) SetQueryFile(v string) {
 func (p *ReadSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadSIMParam) SetId(v int64) {
+func (p *ReadSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadSIMParam) GetId() int64 {
+func (p *ReadSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateSIMParam is input parameters for the sacloud API
 type UpdateSIMParam struct {
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateSIMParam return new UpdateSIMParam
@@ -897,7 +898,7 @@ func (p *UpdateSIMParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -933,7 +934,7 @@ func (p *UpdateSIMParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1052,11 +1053,11 @@ func (p *UpdateSIMParam) SetTags(v []string) {
 func (p *UpdateSIMParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateSIMParam) SetIconId(v int64) {
+func (p *UpdateSIMParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateSIMParam) GetIconId() int64 {
+func (p *UpdateSIMParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateSIMParam) SetAssumeyes(v bool) {
@@ -1136,23 +1137,23 @@ func (p *UpdateSIMParam) SetQueryFile(v string) {
 func (p *UpdateSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateSIMParam) SetId(v int64) {
+func (p *UpdateSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateSIMParam) GetId() int64 {
+func (p *UpdateSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteSIMParam is input parameters for the sacloud API
 type DeleteSIMParam struct {
-	Force             bool     `json:"force"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Force             bool       `json:"force"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteSIMParam return new DeleteSIMParam
@@ -1181,7 +1182,7 @@ func (p *DeleteSIMParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1266,28 +1267,28 @@ func (p *DeleteSIMParam) SetGenerateSkeleton(v bool) {
 func (p *DeleteSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeleteSIMParam) SetId(v int64) {
+func (p *DeleteSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteSIMParam) GetId() int64 {
+func (p *DeleteSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // CarrierInfoSIMParam is input parameters for the sacloud API
 type CarrierInfoSIMParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewCarrierInfoSIMParam return new CarrierInfoSIMParam
@@ -1331,7 +1332,7 @@ func (p *CarrierInfoSIMParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1471,23 +1472,23 @@ func (p *CarrierInfoSIMParam) SetQueryFile(v string) {
 func (p *CarrierInfoSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CarrierInfoSIMParam) SetId(v int64) {
+func (p *CarrierInfoSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CarrierInfoSIMParam) GetId() int64 {
+func (p *CarrierInfoSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // CarrierUpdateSIMParam is input parameters for the sacloud API
 type CarrierUpdateSIMParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
-	Carrier           []string `json:"carrier"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
+	Carrier           []string   `json:"carrier"`
 }
 
 // NewCarrierUpdateSIMParam return new CarrierUpdateSIMParam
@@ -1513,7 +1514,7 @@ func (p *CarrierUpdateSIMParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 	if isEmpty(p.Carrier) {
 		p.Carrier = []string{""}
@@ -1614,11 +1615,11 @@ func (p *CarrierUpdateSIMParam) SetGenerateSkeleton(v bool) {
 func (p *CarrierUpdateSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *CarrierUpdateSIMParam) SetId(v int64) {
+func (p *CarrierUpdateSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CarrierUpdateSIMParam) GetId() int64 {
+func (p *CarrierUpdateSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 func (p *CarrierUpdateSIMParam) SetCarrier(v []string) {
@@ -1631,12 +1632,12 @@ func (p *CarrierUpdateSIMParam) GetCarrier() []string {
 
 // ActivateSIMParam is input parameters for the sacloud API
 type ActivateSIMParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewActivateSIMParam return new ActivateSIMParam
@@ -1662,7 +1663,7 @@ func (p *ActivateSIMParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1740,22 +1741,22 @@ func (p *ActivateSIMParam) SetGenerateSkeleton(v bool) {
 func (p *ActivateSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ActivateSIMParam) SetId(v int64) {
+func (p *ActivateSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ActivateSIMParam) GetId() int64 {
+func (p *ActivateSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeactivateSIMParam is input parameters for the sacloud API
 type DeactivateSIMParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeactivateSIMParam return new DeactivateSIMParam
@@ -1781,7 +1782,7 @@ func (p *DeactivateSIMParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1859,23 +1860,23 @@ func (p *DeactivateSIMParam) SetGenerateSkeleton(v bool) {
 func (p *DeactivateSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DeactivateSIMParam) SetId(v int64) {
+func (p *DeactivateSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeactivateSIMParam) GetId() int64 {
+func (p *DeactivateSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ImeiLockSIMParam is input parameters for the sacloud API
 type ImeiLockSIMParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
-	Imei              string   `json:"imei"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
+	Imei              string     `json:"imei"`
 }
 
 // NewImeiLockSIMParam return new ImeiLockSIMParam
@@ -1901,7 +1902,7 @@ func (p *ImeiLockSIMParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 	if isEmpty(p.Imei) {
 		p.Imei = ""
@@ -1989,11 +1990,11 @@ func (p *ImeiLockSIMParam) SetGenerateSkeleton(v bool) {
 func (p *ImeiLockSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ImeiLockSIMParam) SetId(v int64) {
+func (p *ImeiLockSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ImeiLockSIMParam) GetId() int64 {
+func (p *ImeiLockSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 func (p *ImeiLockSIMParam) SetImei(v string) {
@@ -2006,13 +2007,13 @@ func (p *ImeiLockSIMParam) GetImei() string {
 
 // IpAddSIMParam is input parameters for the sacloud API
 type IpAddSIMParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
-	Ip                string   `json:"ip"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
+	Ip                string     `json:"ip"`
 }
 
 // NewIpAddSIMParam return new IpAddSIMParam
@@ -2038,7 +2039,7 @@ func (p *IpAddSIMParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 	if isEmpty(p.Ip) {
 		p.Ip = ""
@@ -2133,11 +2134,11 @@ func (p *IpAddSIMParam) SetGenerateSkeleton(v bool) {
 func (p *IpAddSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *IpAddSIMParam) SetId(v int64) {
+func (p *IpAddSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *IpAddSIMParam) GetId() int64 {
+func (p *IpAddSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 func (p *IpAddSIMParam) SetIp(v string) {
@@ -2150,12 +2151,12 @@ func (p *IpAddSIMParam) GetIp() string {
 
 // ImeiUnlockSIMParam is input parameters for the sacloud API
 type ImeiUnlockSIMParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewImeiUnlockSIMParam return new ImeiUnlockSIMParam
@@ -2181,7 +2182,7 @@ func (p *ImeiUnlockSIMParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2259,22 +2260,22 @@ func (p *ImeiUnlockSIMParam) SetGenerateSkeleton(v bool) {
 func (p *ImeiUnlockSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ImeiUnlockSIMParam) SetId(v int64) {
+func (p *ImeiUnlockSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ImeiUnlockSIMParam) GetId() int64 {
+func (p *ImeiUnlockSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // IpDeleteSIMParam is input parameters for the sacloud API
 type IpDeleteSIMParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewIpDeleteSIMParam return new IpDeleteSIMParam
@@ -2300,7 +2301,7 @@ func (p *IpDeleteSIMParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2378,30 +2379,30 @@ func (p *IpDeleteSIMParam) SetGenerateSkeleton(v bool) {
 func (p *IpDeleteSIMParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *IpDeleteSIMParam) SetId(v int64) {
+func (p *IpDeleteSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *IpDeleteSIMParam) GetId() int64 {
+func (p *IpDeleteSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // LogsSIMParam is input parameters for the sacloud API
 type LogsSIMParam struct {
-	Follow            bool     `json:"follow"`
-	RefreshInterval   int64    `json:"refresh-interval"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Follow            bool       `json:"follow"`
+	RefreshInterval   int64      `json:"refresh-interval"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewLogsSIMParam return new LogsSIMParam
@@ -2454,7 +2455,7 @@ func (p *LogsSIMParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2615,31 +2616,31 @@ func (p *LogsSIMParam) SetQueryFile(v string) {
 func (p *LogsSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *LogsSIMParam) SetId(v int64) {
+func (p *LogsSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *LogsSIMParam) GetId() int64 {
+func (p *LogsSIMParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // MonitorSIMParam is input parameters for the sacloud API
 type MonitorSIMParam struct {
-	Start             string   `json:"start"`
-	End               string   `json:"end"`
-	KeyFormat         string   `json:"key-format"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Start             string     `json:"start"`
+	End               string     `json:"end"`
+	KeyFormat         string     `json:"key-format"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewMonitorSIMParam return new MonitorSIMParam
@@ -2695,7 +2696,7 @@ func (p *MonitorSIMParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2877,10 +2878,10 @@ func (p *MonitorSIMParam) SetQueryFile(v string) {
 func (p *MonitorSIMParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorSIMParam) SetId(v int64) {
+func (p *MonitorSIMParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorSIMParam) GetId() int64 {
+func (p *MonitorSIMParam) GetId() sacloud.ID {
 	return p.Id
 }

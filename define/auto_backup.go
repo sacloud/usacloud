@@ -127,7 +127,7 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 		"tags":        paramTags,
 		"icon-id":     paramIconResourceID,
 		"disk-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set target diskID ",
 			Required:     true,

@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,21 +25,21 @@ import (
 
 // ListZoneParam is input parameters for the sacloud API
 type ListZoneParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListZoneParam return new ListZoneParam
@@ -52,7 +53,7 @@ func (p *ListZoneParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.From) {
 		p.From = 0
@@ -179,11 +180,11 @@ func (p *ListZoneParam) SetName(v []string) {
 func (p *ListZoneParam) GetName() []string {
 	return p.Name
 }
-func (p *ListZoneParam) SetId(v []int64) {
+func (p *ListZoneParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListZoneParam) GetId() []int64 {
+func (p *ListZoneParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListZoneParam) SetFrom(v int) {
@@ -280,18 +281,18 @@ func (p *ListZoneParam) GetQueryFile() string {
 
 // ReadZoneParam is input parameters for the sacloud API
 type ReadZoneParam struct {
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadZoneParam return new ReadZoneParam
@@ -335,7 +336,7 @@ func (p *ReadZoneParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -482,10 +483,10 @@ func (p *ReadZoneParam) SetQueryFile(v string) {
 func (p *ReadZoneParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadZoneParam) SetId(v int64) {
+func (p *ReadZoneParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadZoneParam) GetId() int64 {
+func (p *ReadZoneParam) GetId() sacloud.ID {
 	return p.Id
 }

@@ -30,12 +30,16 @@ func DiskCreate(ctx command.Context, params *params.CreateDiskParam) error {
 	p := api.New()
 
 	// set params
+	var distantFrom []sacloud.ID
+	for _, id := range params.DistantFrom {
+		distantFrom = append(distantFrom, sacloud.ID(id))
+	}
 
 	p.SetDescription(params.Description)
 	p.SetIconByID(params.IconId)
 	p.SetDiskPlan(params.Plan)
 	p.SetSizeGB(params.Size)
-	p.SetDistantFrom(params.DistantFrom)
+	p.SetDistantFrom(distantFrom)
 	p.SetName(params.Name)
 	p.SetTags(params.Tags)
 	p.SetDiskConnection(sacloud.EDiskConnection(params.Connection))

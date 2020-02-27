@@ -148,7 +148,7 @@ func interfaceDetailExcludes() []string {
 func interfaceCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"server-id": {
-			Type:            schema.TypeInt64,
+			Type:            schema.TypeId,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetServerID",
 			Description:     "set server ID",
@@ -186,7 +186,7 @@ func interfaceDeleteParam() map[string]*schema.Schema {
 func interfacePacketFilterConnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"packet-filter-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set packet filter ID",
 			Required:     true,
@@ -201,7 +201,7 @@ func interfacePacketFilterConnectParam() map[string]*schema.Schema {
 func interfacePacketFilterDisconnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"packet-filter-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set packet filter ID",
 			Required:     true,

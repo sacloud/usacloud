@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,22 +25,22 @@ import (
 
 // ListDNSParam is input parameters for the sacloud API
 type ListDNSParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListDNSParam return new ListDNSParam
@@ -53,7 +54,7 @@ func (p *ListDNSParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -190,11 +191,11 @@ func (p *ListDNSParam) SetName(v []string) {
 func (p *ListDNSParam) GetName() []string {
 	return p.Name
 }
-func (p *ListDNSParam) SetId(v []int64) {
+func (p *ListDNSParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListDNSParam) GetId() []int64 {
+func (p *ListDNSParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListDNSParam) SetTags(v []string) {
@@ -298,20 +299,20 @@ func (p *ListDNSParam) GetQueryFile() string {
 
 // RecordInfoDNSParam is input parameters for the sacloud API
 type RecordInfoDNSParam struct {
-	Name              string   `json:"name"`
-	Type              string   `json:"type"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Name              string     `json:"name"`
+	Type              string     `json:"type"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewRecordInfoDNSParam return new RecordInfoDNSParam
@@ -361,7 +362,7 @@ func (p *RecordInfoDNSParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -529,31 +530,31 @@ func (p *RecordInfoDNSParam) SetQueryFile(v string) {
 func (p *RecordInfoDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RecordInfoDNSParam) SetId(v int64) {
+func (p *RecordInfoDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RecordInfoDNSParam) GetId() int64 {
+func (p *RecordInfoDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // RecordBulkUpdateDNSParam is input parameters for the sacloud API
 type RecordBulkUpdateDNSParam struct {
-	File              string   `json:"file"`
-	Mode              string   `json:"mode"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	File              string     `json:"file"`
+	Mode              string     `json:"mode"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewRecordBulkUpdateDNSParam return new RecordBulkUpdateDNSParam
@@ -609,7 +610,7 @@ func (p *RecordBulkUpdateDNSParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -798,31 +799,31 @@ func (p *RecordBulkUpdateDNSParam) SetQueryFile(v string) {
 func (p *RecordBulkUpdateDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RecordBulkUpdateDNSParam) SetId(v int64) {
+func (p *RecordBulkUpdateDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RecordBulkUpdateDNSParam) GetId() int64 {
+func (p *RecordBulkUpdateDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // CreateDNSParam is input parameters for the sacloud API
 type CreateDNSParam struct {
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreateDNSParam return new CreateDNSParam
@@ -842,7 +843,7 @@ func (p *CreateDNSParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -987,11 +988,11 @@ func (p *CreateDNSParam) SetTags(v []string) {
 func (p *CreateDNSParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateDNSParam) SetIconId(v int64) {
+func (p *CreateDNSParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateDNSParam) GetIconId() int64 {
+func (p *CreateDNSParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateDNSParam) SetAssumeyes(v bool) {
@@ -1074,28 +1075,28 @@ func (p *CreateDNSParam) GetQueryFile() string {
 
 // RecordAddDNSParam is input parameters for the sacloud API
 type RecordAddDNSParam struct {
-	Name              string   `json:"name"`
-	Type              string   `json:"type"`
-	Value             string   `json:"value"`
-	Ttl               int      `json:"ttl"`
-	MxPriority        int      `json:"mx-priority"`
-	SrvPriority       int      `json:"srv-priority"`
-	SrvWeight         int      `json:"srv-weight"`
-	SrvPort           int      `json:"srv-port"`
-	SrvTarget         string   `json:"srv-target"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Name              string     `json:"name"`
+	Type              string     `json:"type"`
+	Value             string     `json:"value"`
+	Ttl               int        `json:"ttl"`
+	MxPriority        int        `json:"mx-priority"`
+	SrvPriority       int        `json:"srv-priority"`
+	SrvWeight         int        `json:"srv-weight"`
+	SrvPort           int        `json:"srv-port"`
+	SrvTarget         string     `json:"srv-target"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewRecordAddDNSParam return new RecordAddDNSParam
@@ -1173,7 +1174,7 @@ func (p *RecordAddDNSParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1453,28 +1454,28 @@ func (p *RecordAddDNSParam) SetQueryFile(v string) {
 func (p *RecordAddDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RecordAddDNSParam) SetId(v int64) {
+func (p *RecordAddDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RecordAddDNSParam) GetId() int64 {
+func (p *RecordAddDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ReadDNSParam is input parameters for the sacloud API
 type ReadDNSParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadDNSParam return new ReadDNSParam
@@ -1518,7 +1519,7 @@ func (p *ReadDNSParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1658,39 +1659,39 @@ func (p *ReadDNSParam) SetQueryFile(v string) {
 func (p *ReadDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadDNSParam) SetId(v int64) {
+func (p *ReadDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadDNSParam) GetId() int64 {
+func (p *ReadDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // RecordUpdateDNSParam is input parameters for the sacloud API
 type RecordUpdateDNSParam struct {
-	Index             int      `json:"index"`
-	Name              string   `json:"name"`
-	Type              string   `json:"type"`
-	Value             string   `json:"value"`
-	Ttl               int      `json:"ttl"`
-	MxPriority        int      `json:"mx-priority"`
-	SrvPriority       int      `json:"srv-priority"`
-	SrvWeight         int      `json:"srv-weight"`
-	SrvPort           int      `json:"srv-port"`
-	SrvTarget         string   `json:"srv-target"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Name              string     `json:"name"`
+	Type              string     `json:"type"`
+	Value             string     `json:"value"`
+	Ttl               int        `json:"ttl"`
+	MxPriority        int        `json:"mx-priority"`
+	SrvPriority       int        `json:"srv-priority"`
+	SrvWeight         int        `json:"srv-weight"`
+	SrvPort           int        `json:"srv-port"`
+	SrvTarget         string     `json:"srv-target"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewRecordUpdateDNSParam return new RecordUpdateDNSParam
@@ -1767,7 +1768,7 @@ func (p *RecordUpdateDNSParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2047,30 +2048,30 @@ func (p *RecordUpdateDNSParam) SetQueryFile(v string) {
 func (p *RecordUpdateDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RecordUpdateDNSParam) SetId(v int64) {
+func (p *RecordUpdateDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RecordUpdateDNSParam) GetId() int64 {
+func (p *RecordUpdateDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // RecordDeleteDNSParam is input parameters for the sacloud API
 type RecordDeleteDNSParam struct {
-	Index             int      `json:"index"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewRecordDeleteDNSParam return new RecordDeleteDNSParam
@@ -2120,7 +2121,7 @@ func (p *RecordDeleteDNSParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2281,32 +2282,32 @@ func (p *RecordDeleteDNSParam) SetQueryFile(v string) {
 func (p *RecordDeleteDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *RecordDeleteDNSParam) SetId(v int64) {
+func (p *RecordDeleteDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *RecordDeleteDNSParam) GetId() int64 {
+func (p *RecordDeleteDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateDNSParam is input parameters for the sacloud API
 type UpdateDNSParam struct {
-	Selector          []string `json:"selector"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateDNSParam return new UpdateDNSParam
@@ -2326,7 +2327,7 @@ func (p *UpdateDNSParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -2362,7 +2363,7 @@ func (p *UpdateDNSParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2467,11 +2468,11 @@ func (p *UpdateDNSParam) SetTags(v []string) {
 func (p *UpdateDNSParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateDNSParam) SetIconId(v int64) {
+func (p *UpdateDNSParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateDNSParam) GetIconId() int64 {
+func (p *UpdateDNSParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateDNSParam) SetAssumeyes(v bool) {
@@ -2551,29 +2552,29 @@ func (p *UpdateDNSParam) SetQueryFile(v string) {
 func (p *UpdateDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateDNSParam) SetId(v int64) {
+func (p *UpdateDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateDNSParam) GetId() int64 {
+func (p *UpdateDNSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteDNSParam is input parameters for the sacloud API
 type DeleteDNSParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteDNSParam return new DeleteDNSParam
@@ -2620,7 +2621,7 @@ func (p *DeleteDNSParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2767,10 +2768,10 @@ func (p *DeleteDNSParam) SetQueryFile(v string) {
 func (p *DeleteDNSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteDNSParam) SetId(v int64) {
+func (p *DeleteDNSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteDNSParam) GetId() int64 {
+func (p *DeleteDNSParam) GetId() sacloud.ID {
 	return p.Id
 }

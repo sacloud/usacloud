@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ type IPv6Addr struct {
 }
 
 // GetIPv6NetID IPv6アドレスが所属するIPv6NetのIDを取得
-func (a *IPv6Addr) GetIPv6NetID() int64 {
+func (a *IPv6Addr) GetIPv6NetID() ID {
 	if a.IPv6Net != nil {
 		return a.IPv6Net.ID
 	}
@@ -32,7 +32,7 @@ func (a *IPv6Addr) GetIPv6NetID() int64 {
 }
 
 // GetInternetID IPv6アドレスを所有するルータ+スイッチ(Internet)のIDを取得
-func (a *IPv6Addr) GetInternetID() int64 {
+func (a *IPv6Addr) GetInternetID() ID {
 	if a.IPv6Net != nil && a.IPv6Net.Switch != nil && a.IPv6Net.Switch.Internet != nil {
 		return a.IPv6Net.Switch.Internet.ID
 	}

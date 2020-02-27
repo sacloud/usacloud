@@ -23,6 +23,7 @@ import (
 	"sync"
 
 	"github.com/imdario/mergo"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
 	"github.com/sacloud/usacloud/command/funcs"
@@ -158,7 +159,7 @@ func init() {
 						listParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = c.Int64Slice("id")
+						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("from") {
 						listParam.From = c.Int("from")
@@ -288,7 +289,7 @@ func init() {
 						listParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = c.Int64Slice("id")
+						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("from") {
 						listParam.From = c.Int("from")
@@ -441,7 +442,7 @@ func init() {
 
 					// Set option values
 					if c.IsSet("packet-filter-id") {
-						packetFilterConnectParam.PacketFilterId = c.Int64("packet-filter-id")
+						packetFilterConnectParam.PacketFilterId = sacloud.ID(c.Int64("packet-filter-id"))
 					}
 					if c.IsSet("assumeyes") {
 						packetFilterConnectParam.Assumeyes = c.Bool("assumeyes")
@@ -456,7 +457,7 @@ func init() {
 						packetFilterConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						packetFilterConnectParam.Id = c.Int64("id")
+						packetFilterConnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -544,7 +545,7 @@ func init() {
 
 					// Set option values
 					if c.IsSet("packet-filter-id") {
-						packetFilterConnectParam.PacketFilterId = c.Int64("packet-filter-id")
+						packetFilterConnectParam.PacketFilterId = sacloud.ID(c.Int64("packet-filter-id"))
 					}
 					if c.IsSet("assumeyes") {
 						packetFilterConnectParam.Assumeyes = c.Bool("assumeyes")
@@ -559,7 +560,7 @@ func init() {
 						packetFilterConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						packetFilterConnectParam.Id = c.Int64("id")
+						packetFilterConnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -598,7 +599,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), packetFilterConnectParam)
 
 					apiClient := ctx.GetAPIClient().Interface
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -767,7 +768,7 @@ func init() {
 
 					// Set option values
 					if c.IsSet("server-id") {
-						createParam.ServerId = c.Int64("server-id")
+						createParam.ServerId = sacloud.ID(c.Int64("server-id"))
 					}
 					if c.IsSet("assumeyes") {
 						createParam.Assumeyes = c.Bool("assumeyes")
@@ -888,7 +889,7 @@ func init() {
 
 					// Set option values
 					if c.IsSet("server-id") {
-						createParam.ServerId = c.Int64("server-id")
+						createParam.ServerId = sacloud.ID(c.Int64("server-id"))
 					}
 					if c.IsSet("assumeyes") {
 						createParam.Assumeyes = c.Bool("assumeyes")
@@ -1045,7 +1046,7 @@ func init() {
 
 					// Set option values
 					if c.IsSet("packet-filter-id") {
-						packetFilterDisconnectParam.PacketFilterId = c.Int64("packet-filter-id")
+						packetFilterDisconnectParam.PacketFilterId = sacloud.ID(c.Int64("packet-filter-id"))
 					}
 					if c.IsSet("assumeyes") {
 						packetFilterDisconnectParam.Assumeyes = c.Bool("assumeyes")
@@ -1060,7 +1061,7 @@ func init() {
 						packetFilterDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						packetFilterDisconnectParam.Id = c.Int64("id")
+						packetFilterDisconnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1148,7 +1149,7 @@ func init() {
 
 					// Set option values
 					if c.IsSet("packet-filter-id") {
-						packetFilterDisconnectParam.PacketFilterId = c.Int64("packet-filter-id")
+						packetFilterDisconnectParam.PacketFilterId = sacloud.ID(c.Int64("packet-filter-id"))
 					}
 					if c.IsSet("assumeyes") {
 						packetFilterDisconnectParam.Assumeyes = c.Bool("assumeyes")
@@ -1163,7 +1164,7 @@ func init() {
 						packetFilterDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						packetFilterDisconnectParam.Id = c.Int64("id")
+						packetFilterDisconnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1202,7 +1203,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), packetFilterDisconnectParam)
 
 					apiClient := ctx.GetAPIClient().Interface
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -1398,7 +1399,7 @@ func init() {
 						readParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = c.Int64("id")
+						readParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1516,7 +1517,7 @@ func init() {
 						readParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = c.Int64("id")
+						readParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1555,7 +1556,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), readParam)
 
 					apiClient := ctx.GetAPIClient().Interface
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -1760,7 +1761,7 @@ func init() {
 						updateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = c.Int64("id")
+						updateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1884,7 +1885,7 @@ func init() {
 						updateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = c.Int64("id")
+						updateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1923,7 +1924,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
 
 					apiClient := ctx.GetAPIClient().Interface
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -2128,7 +2129,7 @@ func init() {
 						deleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = c.Int64("id")
+						deleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -2249,7 +2250,7 @@ func init() {
 						deleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = c.Int64("id")
+						deleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2288,7 +2289,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
 
 					apiClient := ctx.GetAPIClient().Interface
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 

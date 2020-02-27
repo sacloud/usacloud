@@ -588,7 +588,7 @@ func mobileGatewayCreateParam() map[string]*schema.Schema {
 			Order:        520,
 		},
 		"icon-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
@@ -662,7 +662,7 @@ func mobileGatewayInterfaceInfoParam() map[string]*schema.Schema {
 func mobileGatewayInterfaceConnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"switch-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
@@ -929,7 +929,7 @@ func mobileGatewaySIMInfoParam() map[string]*schema.Schema {
 func mobileGatewaySIMAddParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"sim-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeSIMID(),
@@ -953,7 +953,7 @@ func mobileGatewaySIMAddParam() map[string]*schema.Schema {
 func mobileGatewaySIMUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"sim-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeSIMID(),
@@ -976,7 +976,7 @@ func mobileGatewaySIMUpdateParam() map[string]*schema.Schema {
 func mobileGatewaySIMDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"sim-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			ValidateFunc: validateSakuraID(),
 			CompleteFunc: completeSIMID(),
@@ -1003,7 +1003,7 @@ func mobileGatewaySIMRouteAddParam() map[string]*schema.Schema {
 			Order:        10,
 		},
 		"sim": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set sim",
 			Required:     true,
@@ -1033,7 +1033,7 @@ func mobileGatewaySIMRouteUpdateParam() map[string]*schema.Schema {
 			Order:        10,
 		},
 		"sim": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set sim",
 			ValidateFunc: validateSakuraID(),

@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -80,15 +80,15 @@ type DiskBuilder struct {
 
 	name            string
 	size            int
-	distantFrom     []int64
+	distantFrom     []sacloud.ID
 	planID          sacloud.DiskPlanID
 	connection      sacloud.EDiskConnection
-	sourceArchiveID int64
-	sourceDiskID    int64
+	sourceArchiveID sacloud.ID
+	sourceDiskID    sacloud.ID
 	description     string
 	tags            []string
-	iconID          int64
-	serverID        int64
+	iconID          sacloud.ID
+	serverID        sacloud.ID
 
 	ipAddress          string
 	networkMaskLen     int
@@ -98,10 +98,10 @@ type DiskBuilder struct {
 	disablePWAuth      bool
 	sshKeys            []string
 	isSSHKeysEphemeral bool
-	sshKeyIDs          []int64
+	sshKeyIDs          []sacloud.ID
 	notes              []string
 	isNotesEphemeral   bool
-	noteIDs            []int64
+	noteIDs            []sacloud.ID
 
 	// for sshkey generate
 	generateSSHKeyName        string
@@ -166,24 +166,24 @@ func (b *DiskBuilder) SetSize(size int) {
 }
 
 // GetDistantFrom ストレージ隔離対象ディスク 取得
-func (b *DiskBuilder) GetDistantFrom() []int64 {
+func (b *DiskBuilder) GetDistantFrom() []sacloud.ID {
 	return b.distantFrom
 }
 
 // SetDistantFrom ストレージ隔離対象ディスク 設定
-func (b *DiskBuilder) SetDistantFrom(diskIDs []int64) {
+func (b *DiskBuilder) SetDistantFrom(diskIDs []sacloud.ID) {
 	b.distantFrom = diskIDs
 }
 
 // AddDistantFrom ストレージ隔離対象ディスク 追加
-func (b *DiskBuilder) AddDistantFrom(diskID int64) *DiskBuilder {
+func (b *DiskBuilder) AddDistantFrom(diskID sacloud.ID) *DiskBuilder {
 	b.distantFrom = append(b.distantFrom, diskID)
 	return b
 }
 
 // ClearDistantFrom ストレージ隔離対象ディスク クリア
 func (b *DiskBuilder) ClearDistantFrom() {
-	b.distantFrom = []int64{}
+	b.distantFrom = []sacloud.ID{}
 }
 
 // GetPlanID ディスクプラン(SSD/HDD) 取得
@@ -219,23 +219,23 @@ func (b *DiskBuilder) SetConnection(connection sacloud.EDiskConnection) {
 }
 
 // GetSourceArchiveID ソースアーカイブID 取得
-func (b *DiskBuilder) GetSourceArchiveID() int64 {
+func (b *DiskBuilder) GetSourceArchiveID() sacloud.ID {
 	return b.sourceArchiveID
 }
 
 // SetSourceArchiveID ソースアーカイブID 設定
-func (b *DiskBuilder) SetSourceArchiveID(id int64) {
+func (b *DiskBuilder) SetSourceArchiveID(id sacloud.ID) {
 	b.sourceArchiveID = id
 	b.sourceDiskID = 0
 }
 
 // GetSourceDiskID ソースディスクID 取得
-func (b *DiskBuilder) GetSourceDiskID() int64 {
+func (b *DiskBuilder) GetSourceDiskID() sacloud.ID {
 	return b.sourceDiskID
 }
 
 // SetSourceDiskID ソースディスクID 設定
-func (b *DiskBuilder) SetSourceDiskID(id int64) {
+func (b *DiskBuilder) SetSourceDiskID(id sacloud.ID) {
 	b.sourceArchiveID = 0
 	b.sourceDiskID = id
 }
@@ -261,22 +261,22 @@ func (b *DiskBuilder) SetTags(tags []string) {
 }
 
 // GetIconID アイコンID 取得
-func (b *DiskBuilder) GetIconID() int64 {
+func (b *DiskBuilder) GetIconID() sacloud.ID {
 	return b.iconID
 }
 
 // SetIconID アイコンID 設定
-func (b *DiskBuilder) SetIconID(id int64) {
+func (b *DiskBuilder) SetIconID(id sacloud.ID) {
 	b.iconID = id
 }
 
 // GetServerID サーバーID 取得
-func (b *DiskBuilder) GetServerID() int64 {
+func (b *DiskBuilder) GetServerID() sacloud.ID {
 	return b.serverID
 }
 
 // SetServerID サーバーID 設定
-func (b *DiskBuilder) SetServerID(id int64) {
+func (b *DiskBuilder) SetServerID(id sacloud.ID) {
 	b.serverID = id
 }
 
@@ -341,17 +341,17 @@ func (b *DiskBuilder) SetDisablePWAuth(disable bool) {
 }
 
 // AddSSHKeyID 公開鍵ID 追加
-func (b *DiskBuilder) AddSSHKeyID(sshKeyID int64) {
+func (b *DiskBuilder) AddSSHKeyID(sshKeyID sacloud.ID) {
 	b.sshKeyIDs = append(b.sshKeyIDs, sshKeyID)
 }
 
 // ClearSSHKeyIDs 公開鍵ID クリア
 func (b *DiskBuilder) ClearSSHKeyIDs() {
-	b.sshKeyIDs = []int64{}
+	b.sshKeyIDs = []sacloud.ID{}
 }
 
 // GetSSHKeyIds 公開鍵ID 取得
-func (b *DiskBuilder) GetSSHKeyIds() []int64 {
+func (b *DiskBuilder) GetSSHKeyIds() []sacloud.ID {
 	return b.sshKeyIDs
 }
 
@@ -386,17 +386,17 @@ func (b *DiskBuilder) GetNotes() []string {
 }
 
 // AddNoteID スタートアップスクリプトID 追加
-func (b *DiskBuilder) AddNoteID(noteID int64) {
+func (b *DiskBuilder) AddNoteID(noteID sacloud.ID) {
 	b.noteIDs = append(b.noteIDs, noteID)
 }
 
 // ClearNoteIDs スタートアップスクリプトID クリア
 func (b *DiskBuilder) ClearNoteIDs() {
-	b.noteIDs = []int64{}
+	b.noteIDs = []sacloud.ID{}
 }
 
 // GetNoteIDs スタートアップスクリプトID 取得
-func (b *DiskBuilder) GetNoteIDs() []int64 {
+func (b *DiskBuilder) GetNoteIDs() []sacloud.ID {
 	return b.noteIDs
 }
 

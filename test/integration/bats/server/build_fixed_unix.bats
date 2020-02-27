@@ -19,10 +19,10 @@ load ${BASE_TEST_DIR}/helpers.bash
 password="$TMP_PASSWORD"
 hostname=${TEST_TARGET_NAME}01
 
-@test "Usacloud: should be able to build server with using FixedUnix(SophosUTM)" {
+@test "Usacloud: should be able to build server with using FixedUnix(opnsense)" {
 
   run usacloud_run_with_stderr server build -y -q \
-          --os-type sophos-utm \
+          --os-type opnsense \
           --password "$password" \
           --disk-size 100 \
           --name "$hostname"

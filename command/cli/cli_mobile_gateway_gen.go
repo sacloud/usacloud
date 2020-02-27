@@ -23,6 +23,7 @@ import (
 	"sync"
 
 	"github.com/imdario/mergo"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
 	"github.com/sacloud/usacloud/command/funcs"
@@ -190,7 +191,7 @@ func init() {
 						listParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = c.Int64Slice("id")
+						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
 						listParam.Tags = c.StringSlice("tags")
@@ -323,7 +324,7 @@ func init() {
 						listParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = c.Int64Slice("id")
+						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("tags") {
 						listParam.Tags = c.StringSlice("tags")
@@ -534,7 +535,7 @@ func init() {
 						createParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = c.Int64("icon-id")
+						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
 						createParam.Assumeyes = c.Bool("assumeyes")
@@ -667,7 +668,7 @@ func init() {
 						createParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = c.Int64("icon-id")
+						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
 						createParam.Assumeyes = c.Bool("assumeyes")
@@ -884,7 +885,7 @@ func init() {
 						readParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = c.Int64("id")
+						readParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1005,7 +1006,7 @@ func init() {
 						readParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = c.Int64("id")
+						readParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1044,7 +1045,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), readParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -1264,7 +1265,7 @@ func init() {
 						updateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = c.Int64("icon-id")
+						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
 						updateParam.Assumeyes = c.Bool("assumeyes")
@@ -1300,7 +1301,7 @@ func init() {
 						updateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = c.Int64("id")
+						updateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1403,7 +1404,7 @@ func init() {
 						updateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = c.Int64("icon-id")
+						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
 						updateParam.Assumeyes = c.Bool("assumeyes")
@@ -1439,7 +1440,7 @@ func init() {
 						updateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = c.Int64("id")
+						updateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1478,7 +1479,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -1713,7 +1714,7 @@ func init() {
 						deleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = c.Int64("id")
+						deleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1840,7 +1841,7 @@ func init() {
 						deleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = c.Int64("id")
+						deleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1879,7 +1880,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -2053,7 +2054,7 @@ func init() {
 						bootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						bootParam.Id = c.Int64("id")
+						bootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -2156,7 +2157,7 @@ func init() {
 						bootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						bootParam.Id = c.Int64("id")
+						bootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2195,7 +2196,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), bootParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -2369,7 +2370,7 @@ func init() {
 						shutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						shutdownParam.Id = c.Int64("id")
+						shutdownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -2472,7 +2473,7 @@ func init() {
 						shutdownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						shutdownParam.Id = c.Int64("id")
+						shutdownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2511,7 +2512,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), shutdownParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -2685,7 +2686,7 @@ func init() {
 						shutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						shutdownForceParam.Id = c.Int64("id")
+						shutdownForceParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -2788,7 +2789,7 @@ func init() {
 						shutdownForceParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						shutdownForceParam.Id = c.Int64("id")
+						shutdownForceParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2827,7 +2828,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), shutdownForceParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -3000,7 +3001,7 @@ func init() {
 						resetParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						resetParam.Id = c.Int64("id")
+						resetParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -3103,7 +3104,7 @@ func init() {
 						resetParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						resetParam.Id = c.Int64("id")
+						resetParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3142,7 +3143,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), resetParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -3307,7 +3308,7 @@ func init() {
 						waitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForBootParam.Id = c.Int64("id")
+						waitForBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -3407,7 +3408,7 @@ func init() {
 						waitForBootParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForBootParam.Id = c.Int64("id")
+						waitForBootParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3446,7 +3447,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), waitForBootParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -3601,7 +3602,7 @@ func init() {
 						waitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForDownParam.Id = c.Int64("id")
+						waitForDownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -3701,7 +3702,7 @@ func init() {
 						waitForDownParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForDownParam.Id = c.Int64("id")
+						waitForDownParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3740,7 +3741,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), waitForDownParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -3949,7 +3950,7 @@ func init() {
 						interfaceInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						interfaceInfoParam.Id = c.Int64("id")
+						interfaceInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -4070,7 +4071,7 @@ func init() {
 						interfaceInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						interfaceInfoParam.Id = c.Int64("id")
+						interfaceInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4109,7 +4110,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), interfaceInfoParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -4279,7 +4280,7 @@ func init() {
 						interfaceConnectParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("switch-id") {
-						interfaceConnectParam.SwitchId = c.Int64("switch-id")
+						interfaceConnectParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
 					if c.IsSet("nw-masklen") {
 						interfaceConnectParam.NwMasklen = c.Int("nw-masklen")
@@ -4300,7 +4301,7 @@ func init() {
 						interfaceConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						interfaceConnectParam.Id = c.Int64("id")
+						interfaceConnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -4391,7 +4392,7 @@ func init() {
 						interfaceConnectParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("switch-id") {
-						interfaceConnectParam.SwitchId = c.Int64("switch-id")
+						interfaceConnectParam.SwitchId = sacloud.ID(c.Int64("switch-id"))
 					}
 					if c.IsSet("nw-masklen") {
 						interfaceConnectParam.NwMasklen = c.Int("nw-masklen")
@@ -4412,7 +4413,7 @@ func init() {
 						interfaceConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						interfaceConnectParam.Id = c.Int64("id")
+						interfaceConnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4451,7 +4452,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), interfaceConnectParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -4645,7 +4646,7 @@ func init() {
 						interfaceUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						interfaceUpdateParam.Id = c.Int64("id")
+						interfaceUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -4754,7 +4755,7 @@ func init() {
 						interfaceUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						interfaceUpdateParam.Id = c.Int64("id")
+						interfaceUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4793,7 +4794,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), interfaceUpdateParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -4970,7 +4971,7 @@ func init() {
 						interfaceDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						interfaceDisconnectParam.Id = c.Int64("id")
+						interfaceDisconnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -5073,7 +5074,7 @@ func init() {
 						interfaceDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						interfaceDisconnectParam.Id = c.Int64("id")
+						interfaceDisconnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5112,7 +5113,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), interfaceDisconnectParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -5334,7 +5335,7 @@ func init() {
 						trafficControlInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						trafficControlInfoParam.Id = c.Int64("id")
+						trafficControlInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -5455,7 +5456,7 @@ func init() {
 						trafficControlInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						trafficControlInfoParam.Id = c.Int64("id")
+						trafficControlInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5494,7 +5495,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), trafficControlInfoParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -5693,7 +5694,7 @@ func init() {
 						trafficControlEnableParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						trafficControlEnableParam.Id = c.Int64("id")
+						trafficControlEnableParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -5811,7 +5812,7 @@ func init() {
 						trafficControlEnableParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						trafficControlEnableParam.Id = c.Int64("id")
+						trafficControlEnableParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5850,7 +5851,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), trafficControlEnableParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -6053,7 +6054,7 @@ func init() {
 						trafficControlUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						trafficControlUpdateParam.Id = c.Int64("id")
+						trafficControlUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -6171,7 +6172,7 @@ func init() {
 						trafficControlUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						trafficControlUpdateParam.Id = c.Int64("id")
+						trafficControlUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6210,7 +6211,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), trafficControlUpdateParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -6384,7 +6385,7 @@ func init() {
 						trafficControlDisableParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						trafficControlDisableParam.Id = c.Int64("id")
+						trafficControlDisableParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -6487,7 +6488,7 @@ func init() {
 						trafficControlDisableParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						trafficControlDisableParam.Id = c.Int64("id")
+						trafficControlDisableParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6526,7 +6527,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), trafficControlDisableParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -6745,7 +6746,7 @@ func init() {
 						staticRouteInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						staticRouteInfoParam.Id = c.Int64("id")
+						staticRouteInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -6866,7 +6867,7 @@ func init() {
 						staticRouteInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						staticRouteInfoParam.Id = c.Int64("id")
+						staticRouteInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -6905,7 +6906,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), staticRouteInfoParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -7086,7 +7087,7 @@ func init() {
 						staticRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						staticRouteAddParam.Id = c.Int64("id")
+						staticRouteAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -7195,7 +7196,7 @@ func init() {
 						staticRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						staticRouteAddParam.Id = c.Int64("id")
+						staticRouteAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -7234,7 +7235,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), staticRouteAddParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -7432,7 +7433,7 @@ func init() {
 						staticRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						staticRouteUpdateParam.Id = c.Int64("id")
+						staticRouteUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -7544,7 +7545,7 @@ func init() {
 						staticRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						staticRouteUpdateParam.Id = c.Int64("id")
+						staticRouteUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -7583,7 +7584,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), staticRouteUpdateParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -7767,7 +7768,7 @@ func init() {
 						staticRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						staticRouteDeleteParam.Id = c.Int64("id")
+						staticRouteDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -7873,7 +7874,7 @@ func init() {
 						staticRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						staticRouteDeleteParam.Id = c.Int64("id")
+						staticRouteDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -7912,7 +7913,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), staticRouteDeleteParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -8135,7 +8136,7 @@ func init() {
 						simInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						simInfoParam.Id = c.Int64("id")
+						simInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -8256,7 +8257,7 @@ func init() {
 						simInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						simInfoParam.Id = c.Int64("id")
+						simInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -8295,7 +8296,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), simInfoParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -8459,7 +8460,7 @@ func init() {
 						simAddParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("sim-id") {
-						simAddParam.SimId = c.Int64("sim-id")
+						simAddParam.SimId = sacloud.ID(c.Int64("sim-id"))
 					}
 					if c.IsSet("selector") {
 						simAddParam.Selector = c.StringSlice("selector")
@@ -8477,7 +8478,7 @@ func init() {
 						simAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simAddParam.Id = c.Int64("id")
+						simAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -8568,7 +8569,7 @@ func init() {
 						simAddParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("sim-id") {
-						simAddParam.SimId = c.Int64("sim-id")
+						simAddParam.SimId = sacloud.ID(c.Int64("sim-id"))
 					}
 					if c.IsSet("selector") {
 						simAddParam.Selector = c.StringSlice("selector")
@@ -8586,7 +8587,7 @@ func init() {
 						simAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simAddParam.Id = c.Int64("id")
+						simAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -8625,7 +8626,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), simAddParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -8799,7 +8800,7 @@ func init() {
 						simUpdateParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("sim-id") {
-						simUpdateParam.SimId = c.Int64("sim-id")
+						simUpdateParam.SimId = sacloud.ID(c.Int64("sim-id"))
 					}
 					if c.IsSet("selector") {
 						simUpdateParam.Selector = c.StringSlice("selector")
@@ -8817,7 +8818,7 @@ func init() {
 						simUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simUpdateParam.Id = c.Int64("id")
+						simUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -8908,7 +8909,7 @@ func init() {
 						simUpdateParam.Ipaddress = c.String("ipaddress")
 					}
 					if c.IsSet("sim-id") {
-						simUpdateParam.SimId = c.Int64("sim-id")
+						simUpdateParam.SimId = sacloud.ID(c.Int64("sim-id"))
 					}
 					if c.IsSet("selector") {
 						simUpdateParam.Selector = c.StringSlice("selector")
@@ -8926,7 +8927,7 @@ func init() {
 						simUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simUpdateParam.Id = c.Int64("id")
+						simUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -8965,7 +8966,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), simUpdateParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -9131,7 +9132,7 @@ func init() {
 
 					// Set option values
 					if c.IsSet("sim-id") {
-						simDeleteParam.SimId = c.Int64("sim-id")
+						simDeleteParam.SimId = sacloud.ID(c.Int64("sim-id"))
 					}
 					if c.IsSet("selector") {
 						simDeleteParam.Selector = c.StringSlice("selector")
@@ -9149,7 +9150,7 @@ func init() {
 						simDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simDeleteParam.Id = c.Int64("id")
+						simDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -9237,7 +9238,7 @@ func init() {
 
 					// Set option values
 					if c.IsSet("sim-id") {
-						simDeleteParam.SimId = c.Int64("sim-id")
+						simDeleteParam.SimId = sacloud.ID(c.Int64("sim-id"))
 					}
 					if c.IsSet("selector") {
 						simDeleteParam.Selector = c.StringSlice("selector")
@@ -9255,7 +9256,7 @@ func init() {
 						simDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simDeleteParam.Id = c.Int64("id")
+						simDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -9294,7 +9295,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), simDeleteParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -9517,7 +9518,7 @@ func init() {
 						simRouteInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						simRouteInfoParam.Id = c.Int64("id")
+						simRouteInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -9638,7 +9639,7 @@ func init() {
 						simRouteInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						simRouteInfoParam.Id = c.Int64("id")
+						simRouteInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -9677,7 +9678,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), simRouteInfoParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -9840,7 +9841,7 @@ func init() {
 						simRouteAddParam.Prefix = c.String("prefix")
 					}
 					if c.IsSet("sim") {
-						simRouteAddParam.Sim = c.Int64("sim")
+						simRouteAddParam.Sim = sacloud.ID(c.Int64("sim"))
 					}
 					if c.IsSet("selector") {
 						simRouteAddParam.Selector = c.StringSlice("selector")
@@ -9858,7 +9859,7 @@ func init() {
 						simRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simRouteAddParam.Id = c.Int64("id")
+						simRouteAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -9949,7 +9950,7 @@ func init() {
 						simRouteAddParam.Prefix = c.String("prefix")
 					}
 					if c.IsSet("sim") {
-						simRouteAddParam.Sim = c.Int64("sim")
+						simRouteAddParam.Sim = sacloud.ID(c.Int64("sim"))
 					}
 					if c.IsSet("selector") {
 						simRouteAddParam.Selector = c.StringSlice("selector")
@@ -9967,7 +9968,7 @@ func init() {
 						simRouteAddParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simRouteAddParam.Id = c.Int64("id")
+						simRouteAddParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -10006,7 +10007,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), simRouteAddParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -10186,7 +10187,7 @@ func init() {
 						simRouteUpdateParam.Prefix = c.String("prefix")
 					}
 					if c.IsSet("sim") {
-						simRouteUpdateParam.Sim = c.Int64("sim")
+						simRouteUpdateParam.Sim = sacloud.ID(c.Int64("sim"))
 					}
 					if c.IsSet("selector") {
 						simRouteUpdateParam.Selector = c.StringSlice("selector")
@@ -10204,7 +10205,7 @@ func init() {
 						simRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simRouteUpdateParam.Id = c.Int64("id")
+						simRouteUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -10298,7 +10299,7 @@ func init() {
 						simRouteUpdateParam.Prefix = c.String("prefix")
 					}
 					if c.IsSet("sim") {
-						simRouteUpdateParam.Sim = c.Int64("sim")
+						simRouteUpdateParam.Sim = sacloud.ID(c.Int64("sim"))
 					}
 					if c.IsSet("selector") {
 						simRouteUpdateParam.Selector = c.StringSlice("selector")
@@ -10316,7 +10317,7 @@ func init() {
 						simRouteUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simRouteUpdateParam.Id = c.Int64("id")
+						simRouteUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -10355,7 +10356,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), simRouteUpdateParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -10539,7 +10540,7 @@ func init() {
 						simRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simRouteDeleteParam.Id = c.Int64("id")
+						simRouteDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -10645,7 +10646,7 @@ func init() {
 						simRouteDeleteParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						simRouteDeleteParam.Id = c.Int64("id")
+						simRouteDeleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -10684,7 +10685,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), simRouteDeleteParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -10875,7 +10876,7 @@ func init() {
 						dnsUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						dnsUpdateParam.Id = c.Int64("id")
+						dnsUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -10984,7 +10985,7 @@ func init() {
 						dnsUpdateParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						dnsUpdateParam.Id = c.Int64("id")
+						dnsUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -11023,7 +11024,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), dnsUpdateParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -11208,7 +11209,7 @@ func init() {
 						logsParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						logsParam.Id = c.Int64("id")
+						logsParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -11314,7 +11315,7 @@ func init() {
 						logsParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						logsParam.Id = c.Int64("id")
+						logsParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -11353,7 +11354,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), logsParam)
 
 					apiClient := ctx.GetAPIClient().MobileGateway
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 

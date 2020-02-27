@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,23 +25,23 @@ import (
 
 // ListIpv6Param is input parameters for the sacloud API
 type ListIpv6Param struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Ipv6netId         int64    `json:"ipv6net-id"`
-	InternetId        int64    `json:"internet-id"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Ipv6netId         sacloud.ID   `json:"ipv6net-id"`
+	InternetId        sacloud.ID   `json:"internet-id"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListIpv6Param return new ListIpv6Param
@@ -54,13 +55,13 @@ func (p *ListIpv6Param) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Ipv6netId) {
-		p.Ipv6netId = 0
+		p.Ipv6netId = sacloud.ID(0)
 	}
 	if isEmpty(p.InternetId) {
-		p.InternetId = 0
+		p.InternetId = sacloud.ID(0)
 	}
 	if isEmpty(p.From) {
 		p.From = 0
@@ -201,25 +202,25 @@ func (p *ListIpv6Param) SetName(v []string) {
 func (p *ListIpv6Param) GetName() []string {
 	return p.Name
 }
-func (p *ListIpv6Param) SetId(v []int64) {
+func (p *ListIpv6Param) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListIpv6Param) GetId() []int64 {
+func (p *ListIpv6Param) GetId() []sacloud.ID {
 	return p.Id
 }
-func (p *ListIpv6Param) SetIpv6netId(v int64) {
+func (p *ListIpv6Param) SetIpv6netId(v sacloud.ID) {
 	p.Ipv6netId = v
 }
 
-func (p *ListIpv6Param) GetIpv6netId() int64 {
+func (p *ListIpv6Param) GetIpv6netId() sacloud.ID {
 	return p.Ipv6netId
 }
-func (p *ListIpv6Param) SetInternetId(v int64) {
+func (p *ListIpv6Param) SetInternetId(v sacloud.ID) {
 	p.InternetId = v
 }
 
-func (p *ListIpv6Param) GetInternetId() int64 {
+func (p *ListIpv6Param) GetInternetId() sacloud.ID {
 	return p.InternetId
 }
 func (p *ListIpv6Param) SetFrom(v int) {

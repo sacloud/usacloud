@@ -22,6 +22,7 @@ import (
 	"strings"
 
 	"github.com/imdario/mergo"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
 	"github.com/sacloud/usacloud/command/funcs"
@@ -183,7 +184,7 @@ func init() {
 						csvParam.BillOutput = c.String("bill-output")
 					}
 					if c.IsSet("bill-id") {
-						csvParam.BillId = c.Int64("bill-id")
+						csvParam.BillId = sacloud.ID(c.Int64("bill-id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -286,7 +287,7 @@ func init() {
 						csvParam.BillOutput = c.String("bill-output")
 					}
 					if c.IsSet("bill-id") {
-						csvParam.BillId = c.Int64("bill-id")
+						csvParam.BillId = sacloud.ID(c.Int64("bill-id"))
 					}
 
 					// Validate global params

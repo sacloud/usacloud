@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,25 +16,25 @@ package sacloud
 
 // propDistantFrom ストレージ隔離対象ディスク内包型
 type propDistantFrom struct {
-	DistantFrom []int64 `json:",omitempty"` // ストレージ隔離対象ディスク
+	DistantFrom []ID `json:",omitempty"` // ストレージ隔離対象ディスク
 }
 
 // GetDistantFrom ストレージ隔離対象ディスク 取得
-func (p *propDistantFrom) GetDistantFrom() []int64 {
+func (p *propDistantFrom) GetDistantFrom() []ID {
 	return p.DistantFrom
 }
 
 // SetDistantFrom ストレージ隔離対象ディスク 設定
-func (p *propDistantFrom) SetDistantFrom(ids []int64) {
+func (p *propDistantFrom) SetDistantFrom(ids []ID) {
 	p.DistantFrom = ids
 }
 
 // AddDistantFrom ストレージ隔離対象ディスク 追加
-func (p *propDistantFrom) AddDistantFrom(id int64) {
+func (p *propDistantFrom) AddDistantFrom(id ID) {
 	p.DistantFrom = append(p.DistantFrom, id)
 }
 
 // ClearDistantFrom ストレージ隔離対象ディスク クリア
 func (p *propDistantFrom) ClearDistantFrom() {
-	p.DistantFrom = []int64{}
+	p.DistantFrom = []ID{}
 }

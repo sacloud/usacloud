@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,11 +20,11 @@ type propOriginalArchiveID struct {
 }
 
 // GetOriginalArchiveID プランID 取得
-func (p *propOriginalArchiveID) GetOriginalArchiveID() int64 {
+func (p *propOriginalArchiveID) GetOriginalArchiveID() ID {
 	if p.OriginalArchive == nil {
-		return -1
+		return EmptyID
 	}
-	return p.OriginalArchive.GetID()
+	return p.OriginalArchive.ID
 }
 
 // GetStrOriginalArchiveID プランID(文字列) 取得
@@ -32,5 +32,5 @@ func (p *propOriginalArchiveID) GetStrOriginalArchiveID() string {
 	if p.OriginalArchive == nil {
 		return ""
 	}
-	return p.OriginalArchive.GetStrID()
+	return p.OriginalArchive.ID.String()
 }

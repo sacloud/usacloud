@@ -304,8 +304,27 @@ var setDefaultTemplate = `if c.IsSet("%s") {
 }
 `
 
+var setDefaultIdTemplate = `if c.IsSet("%s") {
+	%s.%s = sacloud.ID(c.%s("%s"))
+}
+`
+
+var setDefaultIdListTemplate = `if c.IsSet("%s") {
+	%s.%s = toSakuraIDs(c.%s("%s"))
+}
+`
+
 var setDefaultWithEnvTemplate = `if c.IsSet("%s") || command.IsEmpty(%s.%s) {
 	%s.%s = c.%s("%s")
+}
+`
+
+var setDefaultIdWithEnvTemplate = `if c.IsSet("%s") || command.IsEmpty(%s.%s) {
+	%s.%s = sacloud.ID(c.%s("%s"))
+}
+`
+var setDefaultIdListWithEnvTemplate = `if c.IsSet("%s") || command.IsEmpty(%s.%s) {
+	%s.%s = toSakuraIDs(c.%s("%s"))
 }
 `
 
@@ -330,11 +349,29 @@ func buildActionParams(command *schema.Command) (map[string]interface{}, error) 
 
 		if valueFuncName != "" {
 			if len(p.EnvVars) == 0 {
-				setDefault += fmt.Sprintf(setDefaultTemplate,
-					flagName, paramName, propName, valueFuncName, flagName)
+				switch p.Type {
+				case schema.TypeId:
+					setDefault += fmt.Sprintf(setDefaultIdTemplate,
+						flagName, paramName, propName, valueFuncName, flagName)
+				case schema.TypeIdList:
+					setDefault += fmt.Sprintf(setDefaultIdListTemplate,
+						flagName, paramName, propName, valueFuncName, flagName)
+				default:
+					setDefault += fmt.Sprintf(setDefaultTemplate,
+						flagName, paramName, propName, valueFuncName, flagName)
+				}
 			} else {
-				setDefault += fmt.Sprintf(setDefaultWithEnvTemplate,
-					flagName, paramName, propName, paramName, propName, valueFuncName, flagName)
+				switch p.Type {
+				case schema.TypeId:
+					setDefault += fmt.Sprintf(setDefaultIdWithEnvTemplate,
+						flagName, paramName, propName, paramName, propName, valueFuncName, flagName)
+				case schema.TypeIdList:
+					setDefault += fmt.Sprintf(setDefaultIdListWithEnvTemplate,
+						flagName, paramName, propName, paramName, propName, valueFuncName, flagName)
+				default:
+					setDefault += fmt.Sprintf(setDefaultWithEnvTemplate,
+						flagName, paramName, propName, paramName, propName, valueFuncName, flagName)
+				}
 			}
 		}
 	}
@@ -389,6 +426,10 @@ func getFlagTypeString(t schema.ValueType) (string, error) {
 		return "Int64SliceFlag", nil
 	case schema.TypeStringList:
 		return "StringSliceFlag", nil
+	case schema.TypeId:
+		return "Int64Flag", nil
+	case schema.TypeIdList:
+		return "Int64SliceFlag", nil
 	}
 
 	return "", fmt.Errorf("Inalid type: %v", t)
@@ -410,6 +451,10 @@ func getFlagValueFuncString(t schema.ValueType) (string, error) {
 		return "Int64Slice", nil
 	case schema.TypeStringList:
 		return "StringSlice", nil
+	case schema.TypeId:
+		return "Int64", nil
+	case schema.TypeIdList:
+		return "Int64Slice", nil
 	}
 
 	return "", fmt.Errorf("Inalid type: %v", t)
@@ -664,7 +709,7 @@ func init() {
 						return fmt.Errorf("ID argument is required")
 					}
 					c.Set("id", c.Args().First())
-					{{.ParamName}}.SetId(c.Int64("id"))
+					{{.ParamName}}.SetId(sacloud.ID(c.Int64("id")))
 					{{ end }}
 
 					// Validate specific for each command params
@@ -677,7 +722,7 @@ func init() {
 
 					{{if and .IdParamRequired (not .IsNeedIDOnlyType) }}
 					apiClient := ctx.GetAPIClient().{{.CommandResourceName}}
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 						{{ if .NoSelector }}

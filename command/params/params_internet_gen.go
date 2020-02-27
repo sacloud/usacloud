@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,22 +25,22 @@ import (
 
 // ListInternetParam is input parameters for the sacloud API
 type ListInternetParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListInternetParam return new ListInternetParam
@@ -53,7 +54,7 @@ func (p *ListInternetParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -190,11 +191,11 @@ func (p *ListInternetParam) SetName(v []string) {
 func (p *ListInternetParam) GetName() []string {
 	return p.Name
 }
-func (p *ListInternetParam) SetId(v []int64) {
+func (p *ListInternetParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListInternetParam) GetId() []int64 {
+func (p *ListInternetParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListInternetParam) SetTags(v []string) {
@@ -298,23 +299,23 @@ func (p *ListInternetParam) GetQueryFile() string {
 
 // CreateInternetParam is input parameters for the sacloud API
 type CreateInternetParam struct {
-	NwMasklen         int      `json:"nw-masklen"`
-	BandWidth         int      `json:"band-width"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	NwMasklen         int        `json:"nw-masklen"`
+	BandWidth         int        `json:"band-width"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreateInternetParam return new CreateInternetParam
@@ -344,7 +345,7 @@ func (p *CreateInternetParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -531,11 +532,11 @@ func (p *CreateInternetParam) SetTags(v []string) {
 func (p *CreateInternetParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateInternetParam) SetIconId(v int64) {
+func (p *CreateInternetParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateInternetParam) GetIconId() int64 {
+func (p *CreateInternetParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateInternetParam) SetAssumeyes(v bool) {
@@ -618,18 +619,18 @@ func (p *CreateInternetParam) GetQueryFile() string {
 
 // ReadInternetParam is input parameters for the sacloud API
 type ReadInternetParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadInternetParam return new ReadInternetParam
@@ -673,7 +674,7 @@ func (p *ReadInternetParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -813,34 +814,34 @@ func (p *ReadInternetParam) SetQueryFile(v string) {
 func (p *ReadInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadInternetParam) SetId(v int64) {
+func (p *ReadInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadInternetParam) GetId() int64 {
+func (p *ReadInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateInternetParam is input parameters for the sacloud API
 type UpdateInternetParam struct {
-	BandWidth         int      `json:"band-width"`
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	BandWidth         int        `json:"band-width"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateInternetParam return new UpdateInternetParam
@@ -866,7 +867,7 @@ func (p *UpdateInternetParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -902,7 +903,7 @@ func (p *UpdateInternetParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1035,11 +1036,11 @@ func (p *UpdateInternetParam) SetTags(v []string) {
 func (p *UpdateInternetParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateInternetParam) SetIconId(v int64) {
+func (p *UpdateInternetParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateInternetParam) GetIconId() int64 {
+func (p *UpdateInternetParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateInternetParam) SetAssumeyes(v bool) {
@@ -1119,29 +1120,29 @@ func (p *UpdateInternetParam) SetQueryFile(v string) {
 func (p *UpdateInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateInternetParam) SetId(v int64) {
+func (p *UpdateInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateInternetParam) GetId() int64 {
+func (p *UpdateInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteInternetParam is input parameters for the sacloud API
 type DeleteInternetParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteInternetParam return new DeleteInternetParam
@@ -1188,7 +1189,7 @@ func (p *DeleteInternetParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1335,30 +1336,30 @@ func (p *DeleteInternetParam) SetQueryFile(v string) {
 func (p *DeleteInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteInternetParam) SetId(v int64) {
+func (p *DeleteInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteInternetParam) GetId() int64 {
+func (p *DeleteInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateBandwidthInternetParam is input parameters for the sacloud API
 type UpdateBandwidthInternetParam struct {
-	BandWidth         int      `json:"band-width"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	BandWidth         int        `json:"band-width"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateBandwidthInternetParam return new UpdateBandwidthInternetParam
@@ -1411,7 +1412,7 @@ func (p *UpdateBandwidthInternetParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1579,28 +1580,28 @@ func (p *UpdateBandwidthInternetParam) SetQueryFile(v string) {
 func (p *UpdateBandwidthInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateBandwidthInternetParam) SetId(v int64) {
+func (p *UpdateBandwidthInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateBandwidthInternetParam) GetId() int64 {
+func (p *UpdateBandwidthInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SubnetInfoInternetParam is input parameters for the sacloud API
 type SubnetInfoInternetParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSubnetInfoInternetParam return new SubnetInfoInternetParam
@@ -1644,7 +1645,7 @@ func (p *SubnetInfoInternetParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1784,31 +1785,31 @@ func (p *SubnetInfoInternetParam) SetQueryFile(v string) {
 func (p *SubnetInfoInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *SubnetInfoInternetParam) SetId(v int64) {
+func (p *SubnetInfoInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SubnetInfoInternetParam) GetId() int64 {
+func (p *SubnetInfoInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SubnetAddInternetParam is input parameters for the sacloud API
 type SubnetAddInternetParam struct {
-	NextHop           string   `json:"next-hop"`
-	NwMasklen         int      `json:"nw-masklen"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	NextHop           string     `json:"next-hop"`
+	NwMasklen         int        `json:"nw-masklen"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSubnetAddInternetParam return new SubnetAddInternetParam
@@ -1864,7 +1865,7 @@ func (p *SubnetAddInternetParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2053,23 +2054,23 @@ func (p *SubnetAddInternetParam) SetQueryFile(v string) {
 func (p *SubnetAddInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *SubnetAddInternetParam) SetId(v int64) {
+func (p *SubnetAddInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SubnetAddInternetParam) GetId() int64 {
+func (p *SubnetAddInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SubnetDeleteInternetParam is input parameters for the sacloud API
 type SubnetDeleteInternetParam struct {
-	SubnetId          int64    `json:"subnet-id"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	SubnetId          sacloud.ID `json:"subnet-id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSubnetDeleteInternetParam return new SubnetDeleteInternetParam
@@ -2080,7 +2081,7 @@ func NewSubnetDeleteInternetParam() *SubnetDeleteInternetParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *SubnetDeleteInternetParam) FillValueToSkeleton() {
 	if isEmpty(p.SubnetId) {
-		p.SubnetId = 0
+		p.SubnetId = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -2098,7 +2099,7 @@ func (p *SubnetDeleteInternetParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2148,11 +2149,11 @@ func (p *SubnetDeleteInternetParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *SubnetDeleteInternetParam) SetSubnetId(v int64) {
+func (p *SubnetDeleteInternetParam) SetSubnetId(v sacloud.ID) {
 	p.SubnetId = v
 }
 
-func (p *SubnetDeleteInternetParam) GetSubnetId() int64 {
+func (p *SubnetDeleteInternetParam) GetSubnetId() sacloud.ID {
 	return p.SubnetId
 }
 func (p *SubnetDeleteInternetParam) SetSelector(v []string) {
@@ -2190,31 +2191,31 @@ func (p *SubnetDeleteInternetParam) SetGenerateSkeleton(v bool) {
 func (p *SubnetDeleteInternetParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *SubnetDeleteInternetParam) SetId(v int64) {
+func (p *SubnetDeleteInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SubnetDeleteInternetParam) GetId() int64 {
+func (p *SubnetDeleteInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SubnetUpdateInternetParam is input parameters for the sacloud API
 type SubnetUpdateInternetParam struct {
-	NextHop           string   `json:"next-hop"`
-	SubnetId          int64    `json:"subnet-id"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	NextHop           string     `json:"next-hop"`
+	SubnetId          sacloud.ID `json:"subnet-id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSubnetUpdateInternetParam return new SubnetUpdateInternetParam
@@ -2228,7 +2229,7 @@ func (p *SubnetUpdateInternetParam) FillValueToSkeleton() {
 		p.NextHop = ""
 	}
 	if isEmpty(p.SubnetId) {
-		p.SubnetId = 0
+		p.SubnetId = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -2267,7 +2268,7 @@ func (p *SubnetUpdateInternetParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2358,11 +2359,11 @@ func (p *SubnetUpdateInternetParam) SetNextHop(v string) {
 func (p *SubnetUpdateInternetParam) GetNextHop() string {
 	return p.NextHop
 }
-func (p *SubnetUpdateInternetParam) SetSubnetId(v int64) {
+func (p *SubnetUpdateInternetParam) SetSubnetId(v sacloud.ID) {
 	p.SubnetId = v
 }
 
-func (p *SubnetUpdateInternetParam) GetSubnetId() int64 {
+func (p *SubnetUpdateInternetParam) GetSubnetId() sacloud.ID {
 	return p.SubnetId
 }
 func (p *SubnetUpdateInternetParam) SetSelector(v []string) {
@@ -2449,28 +2450,28 @@ func (p *SubnetUpdateInternetParam) SetQueryFile(v string) {
 func (p *SubnetUpdateInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *SubnetUpdateInternetParam) SetId(v int64) {
+func (p *SubnetUpdateInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SubnetUpdateInternetParam) GetId() int64 {
+func (p *SubnetUpdateInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // Ipv6InfoInternetParam is input parameters for the sacloud API
 type Ipv6InfoInternetParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewIpv6InfoInternetParam return new Ipv6InfoInternetParam
@@ -2514,7 +2515,7 @@ func (p *Ipv6InfoInternetParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2654,29 +2655,29 @@ func (p *Ipv6InfoInternetParam) SetQueryFile(v string) {
 func (p *Ipv6InfoInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *Ipv6InfoInternetParam) SetId(v int64) {
+func (p *Ipv6InfoInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *Ipv6InfoInternetParam) GetId() int64 {
+func (p *Ipv6InfoInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // Ipv6EnableInternetParam is input parameters for the sacloud API
 type Ipv6EnableInternetParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewIpv6EnableInternetParam return new Ipv6EnableInternetParam
@@ -2723,7 +2724,7 @@ func (p *Ipv6EnableInternetParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2870,22 +2871,22 @@ func (p *Ipv6EnableInternetParam) SetQueryFile(v string) {
 func (p *Ipv6EnableInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *Ipv6EnableInternetParam) SetId(v int64) {
+func (p *Ipv6EnableInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *Ipv6EnableInternetParam) GetId() int64 {
+func (p *Ipv6EnableInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // Ipv6DisableInternetParam is input parameters for the sacloud API
 type Ipv6DisableInternetParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewIpv6DisableInternetParam return new Ipv6DisableInternetParam
@@ -2911,7 +2912,7 @@ func (p *Ipv6DisableInternetParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2989,31 +2990,31 @@ func (p *Ipv6DisableInternetParam) SetGenerateSkeleton(v bool) {
 func (p *Ipv6DisableInternetParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *Ipv6DisableInternetParam) SetId(v int64) {
+func (p *Ipv6DisableInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *Ipv6DisableInternetParam) GetId() int64 {
+func (p *Ipv6DisableInternetParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // MonitorInternetParam is input parameters for the sacloud API
 type MonitorInternetParam struct {
-	Start             string   `json:"start"`
-	End               string   `json:"end"`
-	KeyFormat         string   `json:"key-format"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Start             string     `json:"start"`
+	End               string     `json:"end"`
+	KeyFormat         string     `json:"key-format"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewMonitorInternetParam return new MonitorInternetParam
@@ -3069,7 +3070,7 @@ func (p *MonitorInternetParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3251,10 +3252,10 @@ func (p *MonitorInternetParam) SetQueryFile(v string) {
 func (p *MonitorInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorInternetParam) SetId(v int64) {
+func (p *MonitorInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorInternetParam) GetId() int64 {
+func (p *MonitorInternetParam) GetId() sacloud.ID {
 	return p.Id
 }

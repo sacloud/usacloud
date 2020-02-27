@@ -439,7 +439,7 @@ func databaseDetailExcludes() []string {
 func databaseCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"switch-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
@@ -604,7 +604,7 @@ func databaseCreateParam() map[string]*schema.Schema {
 			Order:        520,
 		},
 		"icon-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
@@ -722,7 +722,7 @@ func databaseUpdateParam() map[string]*schema.Schema {
 			Order:        520,
 		},
 		"icon-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
@@ -799,7 +799,7 @@ func databaseBackupManipulateParam() map[string]*schema.Schema {
 func databaseCloneParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"switch-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
@@ -932,7 +932,7 @@ func databaseCloneParam() map[string]*schema.Schema {
 			Order:        520,
 		},
 		"icon-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
@@ -946,7 +946,7 @@ func databaseCloneParam() map[string]*schema.Schema {
 func databaseReplicaCreateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"switch-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
@@ -1007,7 +1007,7 @@ func databaseReplicaCreateParam() map[string]*schema.Schema {
 			Order:        520,
 		},
 		"icon-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
@@ -1114,7 +1114,7 @@ func databaseLogParam() map[string]*schema.Schema {
 			Order:       20,
 		},
 		"refresh-interval": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			ValidateFunc: validateIntRange(1, math.MaxInt32),
 			DefaultValue: int64(3),

@@ -187,7 +187,7 @@ func switchDeleteParam() map[string]*schema.Schema {
 func switchConnectBridgeParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"bridge-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerPathThrough,
 			Description:  "set Bridge ID",
 			Required:     true,

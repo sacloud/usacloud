@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -197,21 +197,21 @@ func (api *DiskAPI) New() *sacloud.Disk {
 //}
 
 // Read 読み取り
-func (api *DiskAPI) Read(id int64) (*sacloud.Disk, error) {
+func (api *DiskAPI) Read(id sacloud.ID) (*sacloud.Disk, error) {
 	return api.request(func(res *sacloud.Response) error {
 		return api.read(id, nil, res)
 	})
 }
 
 // Update 更新
-func (api *DiskAPI) Update(id int64, value *sacloud.Disk) (*sacloud.Disk, error) {
+func (api *DiskAPI) Update(id sacloud.ID, value *sacloud.Disk) (*sacloud.Disk, error) {
 	return api.request(func(res *sacloud.Response) error {
 		return api.update(id, api.createRequest(value), res)
 	})
 }
 
 // Delete 削除
-func (api *DiskAPI) Delete(id int64) (*sacloud.Disk, error) {
+func (api *DiskAPI) Delete(id sacloud.ID) (*sacloud.Disk, error) {
 	return api.request(func(res *sacloud.Response) error {
 		return api.delete(id, nil, res)
 	})

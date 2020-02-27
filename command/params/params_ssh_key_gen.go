@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,21 +25,21 @@ import (
 
 // ListSSHKeyParam is input parameters for the sacloud API
 type ListSSHKeyParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListSSHKeyParam return new ListSSHKeyParam
@@ -52,7 +53,7 @@ func (p *ListSSHKeyParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.From) {
 		p.From = 0
@@ -179,11 +180,11 @@ func (p *ListSSHKeyParam) SetName(v []string) {
 func (p *ListSSHKeyParam) GetName() []string {
 	return p.Name
 }
-func (p *ListSSHKeyParam) SetId(v []int64) {
+func (p *ListSSHKeyParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListSSHKeyParam) GetId() []int64 {
+func (p *ListSSHKeyParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListSSHKeyParam) SetFrom(v int) {
@@ -548,17 +549,17 @@ func (p *CreateSSHKeyParam) GetQueryFile() string {
 
 // ReadSSHKeyParam is input parameters for the sacloud API
 type ReadSSHKeyParam struct {
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadSSHKeyParam return new ReadSSHKeyParam
@@ -599,7 +600,7 @@ func (p *ReadSSHKeyParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -732,30 +733,30 @@ func (p *ReadSSHKeyParam) SetQueryFile(v string) {
 func (p *ReadSSHKeyParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadSSHKeyParam) SetId(v int64) {
+func (p *ReadSSHKeyParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadSSHKeyParam) GetId() int64 {
+func (p *ReadSSHKeyParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateSSHKeyParam is input parameters for the sacloud API
 type UpdateSSHKeyParam struct {
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateSSHKeyParam return new UpdateSSHKeyParam
@@ -805,7 +806,7 @@ func (p *UpdateSSHKeyParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -973,28 +974,28 @@ func (p *UpdateSSHKeyParam) SetQueryFile(v string) {
 func (p *UpdateSSHKeyParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateSSHKeyParam) SetId(v int64) {
+func (p *UpdateSSHKeyParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateSSHKeyParam) GetId() int64 {
+func (p *UpdateSSHKeyParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteSSHKeyParam is input parameters for the sacloud API
 type DeleteSSHKeyParam struct {
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteSSHKeyParam return new DeleteSSHKeyParam
@@ -1038,7 +1039,7 @@ func (p *DeleteSSHKeyParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1178,11 +1179,11 @@ func (p *DeleteSSHKeyParam) SetQueryFile(v string) {
 func (p *DeleteSSHKeyParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteSSHKeyParam) SetId(v int64) {
+func (p *DeleteSSHKeyParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteSSHKeyParam) GetId() int64 {
+func (p *DeleteSSHKeyParam) GetId() sacloud.ID {
 	return p.Id
 }
 

@@ -58,7 +58,7 @@ func DatabaseReplicaCreate(ctx command.Context, params *params.ReplicaCreateData
 		Plan:              sacloud.DatabasePlan(p.Plan.ID),
 		DefaultUser:       p.Settings.DBConf.Common.DefaultUser,
 		UserPassword:      p.Settings.DBConf.Common.UserPassword,
-		SwitchID:          fmt.Sprintf("%d", params.SwitchId),
+		SwitchID:          params.SwitchId,
 		IPAddress1:        params.Ipaddress1,
 		MaskLen:           params.NwMaskLen,
 		DefaultRoute:      params.DefaultRoute,

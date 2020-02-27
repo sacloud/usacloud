@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -63,14 +63,14 @@ const (
 
 var (
 	// DiskPlanHDD HDDプラン
-	DiskPlanHDD = &Resource{ID: int64(DiskPlanHDDID)}
+	DiskPlanHDD = DiskPlanHDDID.ToResource()
 	// DiskPlanSSD SSDプラン
-	DiskPlanSSD = &Resource{ID: int64(DiskPlanSSDID)}
+	DiskPlanSSD = DiskPlanSSDID.ToResource()
 )
 
 // ToResource ディスクプランIDからリソースへの変換
 func (d DiskPlanID) ToResource() *Resource {
-	return &Resource{ID: int64(d)}
+	return &Resource{ID: ID(d)}
 }
 
 // CreateNewDisk ディスクの作成

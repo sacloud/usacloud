@@ -26,12 +26,14 @@ const (
 	TypeString
 	TypeIntList
 	TypeStringList
+	TypeId
+	TypeIdList
 )
 
 // IsSliceType return true if type is TypeIntList or TypeStringList
 func (v ValueType) IsSliceType() bool {
 	switch v {
-	case TypeIntList, TypeStringList:
+	case TypeIntList, TypeStringList, TypeIdList:
 		return true
 	default:
 		return false

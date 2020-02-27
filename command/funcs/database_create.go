@@ -43,7 +43,7 @@ func DatabaseCreate(ctx command.Context, params *params.CreateDatabaseParam) err
 		p = sacloud.NewCreateMariaDBDatabaseValue()
 	}
 
-	p.SwitchID = fmt.Sprintf("%d", sw.ID)
+	p.SwitchID = sw.ID
 	p.Plan = sacloud.DatabasePlan(params.Plan)
 	p.DefaultUser = params.Username
 	p.UserPassword = params.Password

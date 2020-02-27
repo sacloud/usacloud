@@ -101,7 +101,7 @@ func (c *Command) BuildedParams() SortableParams {
 	if c.Type.IsRequiredIDType() {
 		if _, ok := c.Params["id"]; !ok {
 			c.Params["id"] = &Schema{
-				Type:        TypeInt64,
+				Type:        TypeId,
 				HandlerType: HandlerPathThrough,
 				Description: "Set target ID",
 				SakuraID:    true,

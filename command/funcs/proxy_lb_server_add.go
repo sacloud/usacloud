@@ -37,7 +37,7 @@ func ProxyLBServerAdd(ctx command.Context, params *params.ServerAddProxyLBParam)
 		}
 	}
 
-	p.AddServer(params.Ipaddress, params.Port, !params.Disabled)
+	p.AddServer(params.Ipaddress, params.Port, !params.Disabled, "") // TODO サーバーグループ対応
 
 	p, e = api.UpdateSetting(params.Id, p)
 	if e != nil {

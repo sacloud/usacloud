@@ -49,7 +49,7 @@ func Ipv6List(ctx command.Context, params *params.ListIpv6Param) error {
 	}
 
 	list := []interface{}{}
-	ipv6NetCache := map[int64]*sacloud.IPv6Net{}
+	ipv6NetCache := map[sacloud.ID]*sacloud.IPv6Net{}
 	for i := range res.IPv6Addrs {
 
 		n, err := findIPv6NetIfAbsent(client, res.IPv6Addrs[i].IPv6Net.ID, ipv6NetCache)
@@ -73,7 +73,7 @@ func Ipv6List(ctx command.Context, params *params.ListIpv6Param) error {
 
 }
 
-func findIPv6NetIfAbsent(client *api.Client, id int64, cache map[int64]*sacloud.IPv6Net) (*sacloud.IPv6Net, error) {
+func findIPv6NetIfAbsent(client *api.Client, id sacloud.ID, cache map[sacloud.ID]*sacloud.IPv6Net) (*sacloud.IPv6Net, error) {
 	if n, ok := cache[id]; ok {
 		return n, nil
 	}
