@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,21 +25,21 @@ import (
 
 // ListProductInternetParam is input parameters for the sacloud API
 type ListProductInternetParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListProductInternetParam return new ListProductInternetParam
@@ -52,7 +53,7 @@ func (p *ListProductInternetParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.From) {
 		p.From = 0
@@ -179,11 +180,11 @@ func (p *ListProductInternetParam) SetName(v []string) {
 func (p *ListProductInternetParam) GetName() []string {
 	return p.Name
 }
-func (p *ListProductInternetParam) SetId(v []int64) {
+func (p *ListProductInternetParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListProductInternetParam) GetId() []int64 {
+func (p *ListProductInternetParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListProductInternetParam) SetFrom(v int) {
@@ -280,18 +281,18 @@ func (p *ListProductInternetParam) GetQueryFile() string {
 
 // ReadProductInternetParam is input parameters for the sacloud API
 type ReadProductInternetParam struct {
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadProductInternetParam return new ReadProductInternetParam
@@ -335,7 +336,7 @@ func (p *ReadProductInternetParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -482,10 +483,10 @@ func (p *ReadProductInternetParam) SetQueryFile(v string) {
 func (p *ReadProductInternetParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadProductInternetParam) SetId(v int64) {
+func (p *ReadProductInternetParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadProductInternetParam) GetId() int64 {
+func (p *ReadProductInternetParam) GetId() sacloud.ID {
 	return p.Id
 }

@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,28 +35,28 @@ type serverBuilder struct {
 	commitment      sacloud.ECommitment
 	interfaceDriver sacloud.EInterfaceDriver
 	description     string
-	iconID          int64
+	iconID          sacloud.ID
 	tags            []string
 	bootAfterCreate bool
 
 	// CDROM
-	isoImageID int64
+	isoImageID sacloud.ID
 
 	// privateHost
-	privateHostID int64
+	privateHostID sacloud.ID
 
 	// for nic
 	nicConnections     []string
 	displayIPAddresses []string
 
 	// for PacketFilter
-	packetFilterIDs []int64
+	packetFilterIDs []sacloud.ID
 
 	// for disks
 	disk            *DiskBuilder
 	additionalDisks []*DiskBuilder
 
-	connectDiskIDs []int64
+	connectDiskIDs []sacloud.ID
 
 	currentBuildValue  *ServerBuildValue
 	currentBuildResult *ServerBuildResult
@@ -434,22 +434,22 @@ func (b *serverBuilder) SetDescription(description string) {
 }
 
 // GetIconID アイコンID 取得
-func (b *serverBuilder) GetIconID() int64 {
+func (b *serverBuilder) GetIconID() sacloud.ID {
 	return b.iconID
 }
 
 // SetIconID アイコンID 設定
-func (b *serverBuilder) SetIconID(iconID int64) {
+func (b *serverBuilder) SetIconID(iconID sacloud.ID) {
 	b.iconID = iconID
 }
 
 // GetPrivateHostID 専有ホストID 取得
-func (b *serverBuilder) GetPrivateHostID() int64 {
+func (b *serverBuilder) GetPrivateHostID() sacloud.ID {
 	return b.privateHostID
 }
 
 // SetPrivateHostID 専有ホストID 設定
-func (b *serverBuilder) SetPrivateHostID(privateHostID int64) {
+func (b *serverBuilder) SetPrivateHostID(privateHostID sacloud.ID) {
 	b.privateHostID = privateHostID
 }
 
@@ -474,12 +474,12 @@ func (b *serverBuilder) SetTags(tags []string) {
 }
 
 // GetISOImageID ISOイメージ(CDROM)ID 取得
-func (b *serverBuilder) GetISOImageID() int64 {
+func (b *serverBuilder) GetISOImageID() sacloud.ID {
 	return b.isoImageID
 }
 
 // SetISOImageID ISOイメージ(CDROM)ID 設定
-func (b *serverBuilder) SetISOImageID(id int64) {
+func (b *serverBuilder) SetISOImageID(id sacloud.ID) {
 	b.isoImageID = id
 }
 
@@ -520,12 +520,12 @@ func (b *serverBuilder) AddDisconnectedNIC() {
 }
 
 // GetPacketFilterIDs パケットフィルタID 取得
-func (b *serverBuilder) GetPacketFilterIDs() []int64 {
+func (b *serverBuilder) GetPacketFilterIDs() []sacloud.ID {
 	return b.packetFilterIDs
 }
 
 // SetPacketFilterIDs パケットフィルタID 設定
-func (b *serverBuilder) SetPacketFilterIDs(ids []int64) {
+func (b *serverBuilder) SetPacketFilterIDs(ids []sacloud.ID) {
 	b.packetFilterIDs = ids
 }
 
@@ -544,17 +544,17 @@ func (b *serverBuilder) SetDiskSize(diskSize int) {
 }
 
 // GetDistantFrom ストレージ隔離対象ディスク 取得
-func (b *serverBuilder) GetDistantFrom() []int64 {
+func (b *serverBuilder) GetDistantFrom() []sacloud.ID {
 	return b.disk.GetDistantFrom()
 }
 
 // SetDistantFrom ストレージ隔離対象ディスク 設定
-func (b *serverBuilder) SetDistantFrom(distantFrom []int64) {
+func (b *serverBuilder) SetDistantFrom(distantFrom []sacloud.ID) {
 	b.disk.SetDistantFrom(distantFrom)
 }
 
 // AddDistantFrom ストレージ隔離対象ディスク 追加
-func (b *serverBuilder) AddDistantFrom(diskID int64) {
+func (b *serverBuilder) AddDistantFrom(diskID sacloud.ID) {
 	b.disk.AddDistantFrom(diskID)
 }
 
@@ -593,12 +593,12 @@ func (b *serverBuilder) SetDiskConnection(diskConnection sacloud.EDiskConnection
 ---------------------------------------------------------*/
 
 // GetSourceArchiveID ソースアーカイブID 取得
-func (b *serverBuilder) GetSourceArchiveID() int64 {
+func (b *serverBuilder) GetSourceArchiveID() sacloud.ID {
 	return b.disk.GetSourceArchiveID()
 }
 
 // GetSourceDiskID ソースディスクID 設定
-func (b *serverBuilder) GetSourceDiskID() int64 {
+func (b *serverBuilder) GetSourceDiskID() sacloud.ID {
 	return b.disk.GetSourceDiskID()
 }
 
@@ -678,7 +678,7 @@ func (b *serverBuilder) GetSSHKeys() []string {
 }
 
 // AddSSHKeyID 公開鍵ID 追加
-func (b *serverBuilder) AddSSHKeyID(sshKeyID int64) {
+func (b *serverBuilder) AddSSHKeyID(sshKeyID sacloud.ID) {
 	b.disk.AddSSHKeyID(sshKeyID)
 }
 
@@ -688,7 +688,7 @@ func (b *serverBuilder) ClearSSHKeyIDs() {
 }
 
 // GetSSHKeyIds 公開鍵ID 取得
-func (b *serverBuilder) GetSSHKeyIds() []int64 {
+func (b *serverBuilder) GetSSHKeyIds() []sacloud.ID {
 	return b.disk.GetSSHKeyIds()
 }
 
@@ -708,7 +708,7 @@ func (b *serverBuilder) GetNotes() []string {
 }
 
 // AddNoteID スタートアップスクリプト 追加
-func (b *serverBuilder) AddNoteID(noteID int64) {
+func (b *serverBuilder) AddNoteID(noteID sacloud.ID) {
 	b.disk.AddNoteID(noteID)
 }
 
@@ -718,7 +718,7 @@ func (b *serverBuilder) ClearNoteIDs() {
 }
 
 // GetNoteIDs スタートアップスクリプトID 取得
-func (b *serverBuilder) GetNoteIDs() []int64 {
+func (b *serverBuilder) GetNoteIDs() []sacloud.ID {
 	return b.disk.GetNoteIDs()
 }
 

@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,25 +25,25 @@ import (
 
 // ListArchiveParam is input parameters for the sacloud API
 type ListArchiveParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Scope             string   `json:"scope"`
-	Tags              []string `json:"tags"`
-	SourceArchiveId   int64    `json:"source-archive-id"`
-	SourceDiskId      int64    `json:"source-disk-id"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Scope             string       `json:"scope"`
+	Tags              []string     `json:"tags"`
+	SourceArchiveId   sacloud.ID   `json:"source-archive-id"`
+	SourceDiskId      sacloud.ID   `json:"source-disk-id"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListArchiveParam return new ListArchiveParam
@@ -56,7 +57,7 @@ func (p *ListArchiveParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Scope) {
 		p.Scope = ""
@@ -65,10 +66,10 @@ func (p *ListArchiveParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = 0
+		p.SourceArchiveId = sacloud.ID(0)
 	}
 	if isEmpty(p.SourceDiskId) {
-		p.SourceDiskId = 0
+		p.SourceDiskId = sacloud.ID(0)
 	}
 	if isEmpty(p.From) {
 		p.From = 0
@@ -223,11 +224,11 @@ func (p *ListArchiveParam) SetName(v []string) {
 func (p *ListArchiveParam) GetName() []string {
 	return p.Name
 }
-func (p *ListArchiveParam) SetId(v []int64) {
+func (p *ListArchiveParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListArchiveParam) GetId() []int64 {
+func (p *ListArchiveParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListArchiveParam) SetScope(v string) {
@@ -244,18 +245,18 @@ func (p *ListArchiveParam) SetTags(v []string) {
 func (p *ListArchiveParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListArchiveParam) SetSourceArchiveId(v int64) {
+func (p *ListArchiveParam) SetSourceArchiveId(v sacloud.ID) {
 	p.SourceArchiveId = v
 }
 
-func (p *ListArchiveParam) GetSourceArchiveId() int64 {
+func (p *ListArchiveParam) GetSourceArchiveId() sacloud.ID {
 	return p.SourceArchiveId
 }
-func (p *ListArchiveParam) SetSourceDiskId(v int64) {
+func (p *ListArchiveParam) SetSourceDiskId(v sacloud.ID) {
 	p.SourceDiskId = v
 }
 
-func (p *ListArchiveParam) GetSourceDiskId() int64 {
+func (p *ListArchiveParam) GetSourceDiskId() sacloud.ID {
 	return p.SourceDiskId
 }
 func (p *ListArchiveParam) SetFrom(v int) {
@@ -352,25 +353,25 @@ func (p *ListArchiveParam) GetQueryFile() string {
 
 // CreateArchiveParam is input parameters for the sacloud API
 type CreateArchiveParam struct {
-	SourceDiskId      int64    `json:"source-disk-id"`
-	SourceArchiveId   int64    `json:"source-archive-id"`
-	Size              int      `json:"size"`
-	ArchiveFile       string   `json:"archive-file"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	SourceDiskId      sacloud.ID `json:"source-disk-id"`
+	SourceArchiveId   sacloud.ID `json:"source-archive-id"`
+	Size              int        `json:"size"`
+	ArchiveFile       string     `json:"archive-file"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreateArchiveParam return new CreateArchiveParam
@@ -381,10 +382,10 @@ func NewCreateArchiveParam() *CreateArchiveParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *CreateArchiveParam) FillValueToSkeleton() {
 	if isEmpty(p.SourceDiskId) {
-		p.SourceDiskId = 0
+		p.SourceDiskId = sacloud.ID(0)
 	}
 	if isEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = 0
+		p.SourceArchiveId = sacloud.ID(0)
 	}
 	if isEmpty(p.Size) {
 		p.Size = 0
@@ -402,7 +403,7 @@ func (p *CreateArchiveParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -596,18 +597,18 @@ func (p *CreateArchiveParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreateArchiveParam) SetSourceDiskId(v int64) {
+func (p *CreateArchiveParam) SetSourceDiskId(v sacloud.ID) {
 	p.SourceDiskId = v
 }
 
-func (p *CreateArchiveParam) GetSourceDiskId() int64 {
+func (p *CreateArchiveParam) GetSourceDiskId() sacloud.ID {
 	return p.SourceDiskId
 }
-func (p *CreateArchiveParam) SetSourceArchiveId(v int64) {
+func (p *CreateArchiveParam) SetSourceArchiveId(v sacloud.ID) {
 	p.SourceArchiveId = v
 }
 
-func (p *CreateArchiveParam) GetSourceArchiveId() int64 {
+func (p *CreateArchiveParam) GetSourceArchiveId() sacloud.ID {
 	return p.SourceArchiveId
 }
 func (p *CreateArchiveParam) SetSize(v int) {
@@ -645,11 +646,11 @@ func (p *CreateArchiveParam) SetTags(v []string) {
 func (p *CreateArchiveParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateArchiveParam) SetIconId(v int64) {
+func (p *CreateArchiveParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateArchiveParam) GetIconId() int64 {
+func (p *CreateArchiveParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateArchiveParam) SetAssumeyes(v bool) {
@@ -732,18 +733,18 @@ func (p *CreateArchiveParam) GetQueryFile() string {
 
 // ReadArchiveParam is input parameters for the sacloud API
 type ReadArchiveParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadArchiveParam return new ReadArchiveParam
@@ -787,7 +788,7 @@ func (p *ReadArchiveParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -927,33 +928,33 @@ func (p *ReadArchiveParam) SetQueryFile(v string) {
 func (p *ReadArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadArchiveParam) SetId(v int64) {
+func (p *ReadArchiveParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadArchiveParam) GetId() int64 {
+func (p *ReadArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateArchiveParam is input parameters for the sacloud API
 type UpdateArchiveParam struct {
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateArchiveParam return new UpdateArchiveParam
@@ -976,7 +977,7 @@ func (p *UpdateArchiveParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1012,7 +1013,7 @@ func (p *UpdateArchiveParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1131,11 +1132,11 @@ func (p *UpdateArchiveParam) SetTags(v []string) {
 func (p *UpdateArchiveParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateArchiveParam) SetIconId(v int64) {
+func (p *UpdateArchiveParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateArchiveParam) GetIconId() int64 {
+func (p *UpdateArchiveParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateArchiveParam) SetAssumeyes(v bool) {
@@ -1215,29 +1216,29 @@ func (p *UpdateArchiveParam) SetQueryFile(v string) {
 func (p *UpdateArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateArchiveParam) SetId(v int64) {
+func (p *UpdateArchiveParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateArchiveParam) GetId() int64 {
+func (p *UpdateArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteArchiveParam is input parameters for the sacloud API
 type DeleteArchiveParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteArchiveParam return new DeleteArchiveParam
@@ -1284,7 +1285,7 @@ func (p *DeleteArchiveParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1431,30 +1432,30 @@ func (p *DeleteArchiveParam) SetQueryFile(v string) {
 func (p *DeleteArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteArchiveParam) SetId(v int64) {
+func (p *DeleteArchiveParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteArchiveParam) GetId() int64 {
+func (p *DeleteArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UploadArchiveParam is input parameters for the sacloud API
 type UploadArchiveParam struct {
-	ArchiveFile       string   `json:"archive-file"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	ArchiveFile       string     `json:"archive-file"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUploadArchiveParam return new UploadArchiveParam
@@ -1504,7 +1505,7 @@ func (p *UploadArchiveParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1665,23 +1666,23 @@ func (p *UploadArchiveParam) SetQueryFile(v string) {
 func (p *UploadArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UploadArchiveParam) SetId(v int64) {
+func (p *UploadArchiveParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UploadArchiveParam) GetId() int64 {
+func (p *UploadArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DownloadArchiveParam is input parameters for the sacloud API
 type DownloadArchiveParam struct {
-	FileDestination   string   `json:"file-destination"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	FileDestination   string     `json:"file-destination"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDownloadArchiveParam return new DownloadArchiveParam
@@ -1710,7 +1711,7 @@ func (p *DownloadArchiveParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1795,29 +1796,29 @@ func (p *DownloadArchiveParam) SetGenerateSkeleton(v bool) {
 func (p *DownloadArchiveParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DownloadArchiveParam) SetId(v int64) {
+func (p *DownloadArchiveParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DownloadArchiveParam) GetId() int64 {
+func (p *DownloadArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // FtpOpenArchiveParam is input parameters for the sacloud API
 type FtpOpenArchiveParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewFtpOpenArchiveParam return new FtpOpenArchiveParam
@@ -1864,7 +1865,7 @@ func (p *FtpOpenArchiveParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2011,22 +2012,22 @@ func (p *FtpOpenArchiveParam) SetQueryFile(v string) {
 func (p *FtpOpenArchiveParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *FtpOpenArchiveParam) SetId(v int64) {
+func (p *FtpOpenArchiveParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *FtpOpenArchiveParam) GetId() int64 {
+func (p *FtpOpenArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // FtpCloseArchiveParam is input parameters for the sacloud API
 type FtpCloseArchiveParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewFtpCloseArchiveParam return new FtpCloseArchiveParam
@@ -2052,7 +2053,7 @@ func (p *FtpCloseArchiveParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2130,21 +2131,21 @@ func (p *FtpCloseArchiveParam) SetGenerateSkeleton(v bool) {
 func (p *FtpCloseArchiveParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *FtpCloseArchiveParam) SetId(v int64) {
+func (p *FtpCloseArchiveParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *FtpCloseArchiveParam) GetId() int64 {
+func (p *FtpCloseArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // WaitForCopyArchiveParam is input parameters for the sacloud API
 type WaitForCopyArchiveParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewWaitForCopyArchiveParam return new WaitForCopyArchiveParam
@@ -2167,7 +2168,7 @@ func (p *WaitForCopyArchiveParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2238,10 +2239,10 @@ func (p *WaitForCopyArchiveParam) SetGenerateSkeleton(v bool) {
 func (p *WaitForCopyArchiveParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForCopyArchiveParam) SetId(v int64) {
+func (p *WaitForCopyArchiveParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForCopyArchiveParam) GetId() int64 {
+func (p *WaitForCopyArchiveParam) GetId() sacloud.ID {
 	return p.Id
 }

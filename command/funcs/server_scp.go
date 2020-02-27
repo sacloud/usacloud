@@ -20,8 +20,9 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
+
+	"github.com/sacloud/libsacloud/sacloud"
 
 	"github.com/hnakamur/go-scp"
 	"github.com/sacloud/libsacloud/api"
@@ -195,16 +196,15 @@ func ServerScp(ctx command.Context, params *params.ScpServerParam) error {
 	return nil
 }
 
-func parseScpArgs(api *api.ServerAPI, arg string) (int64, []string, error) {
+func parseScpArgs(api *api.ServerAPI, arg string) (sacloud.ID, []string, error) {
 
 	tokens := strings.Split(arg, ":")
 
 	if len(tokens) > 1 {
 
 		strID := tokens[0]
-		id, err := strconv.ParseInt(strID, 10, 64)
-		if err != nil {
-
+		id := sacloud.StringID(strID)
+		if !id.IsEmpty() {
 			api.Reset()
 			api.SetNameLike(strID)
 			res, err := api.Find()
@@ -226,7 +226,7 @@ func parseScpArgs(api *api.ServerAPI, arg string) (int64, []string, error) {
 
 		}
 		if len(fmt.Sprintf("%d", id)) != 12 {
-			return -1, []string{}, fmt.Errorf("ID is invalid: %s", err)
+			return -1, []string{}, fmt.Errorf("ID[%q] is invalid format", strID)
 		}
 
 		return id, tokens, nil

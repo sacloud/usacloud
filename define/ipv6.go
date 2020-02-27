@@ -88,7 +88,7 @@ func ipv6ListParam() map[string]*schema.Schema {
 
 var paramIPv6NetIDCond = map[string]*schema.Schema{
 	"ipv6net-id": {
-		Type:         schema.TypeInt64,
+		Type:         schema.TypeId,
 		HandlerType:  schema.HandlerFilterFunc,
 		FilterFunc:   filterByIPv6NetID,
 		Description:  "set filter by ipv6net-id",
@@ -100,7 +100,7 @@ var paramIPv6NetIDCond = map[string]*schema.Schema{
 
 var paramInternetIDCond = map[string]*schema.Schema{
 	"internet-id": {
-		Type:         schema.TypeInt64,
+		Type:         schema.TypeId,
 		HandlerType:  schema.HandlerFilterFunc,
 		FilterFunc:   filterByInternetID,
 		Description:  "set filter by internet-id",

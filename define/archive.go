@@ -179,7 +179,7 @@ func archiveCreateParam() map[string]*schema.Schema {
 		"tags":        paramTags,
 		"icon-id":     paramIconResourceID,
 		"source-disk-id": {
-			Type:            schema.TypeInt64,
+			Type:            schema.TypeId,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetSourceDisk",
 			Description:     "set source disk ID",
@@ -190,7 +190,7 @@ func archiveCreateParam() map[string]*schema.Schema {
 			Order:           10,
 		},
 		"source-archive-id": {
-			Type:            schema.TypeInt64,
+			Type:            schema.TypeId,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetSourceArchive",
 			Description:     "set source archive ID",

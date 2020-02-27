@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,22 +25,22 @@ import (
 
 // ListLoadBalancerParam is input parameters for the sacloud API
 type ListLoadBalancerParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListLoadBalancerParam return new ListLoadBalancerParam
@@ -53,7 +54,7 @@ func (p *ListLoadBalancerParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -190,11 +191,11 @@ func (p *ListLoadBalancerParam) SetName(v []string) {
 func (p *ListLoadBalancerParam) GetName() []string {
 	return p.Name
 }
-func (p *ListLoadBalancerParam) SetId(v []int64) {
+func (p *ListLoadBalancerParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListLoadBalancerParam) GetId() []int64 {
+func (p *ListLoadBalancerParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListLoadBalancerParam) SetTags(v []string) {
@@ -298,29 +299,29 @@ func (p *ListLoadBalancerParam) GetQueryFile() string {
 
 // CreateLoadBalancerParam is input parameters for the sacloud API
 type CreateLoadBalancerParam struct {
-	SwitchId          int64    `json:"switch-id"`
-	Vrid              int      `json:"vrid"`
-	HighAvailability  bool     `json:"high-availability"`
-	Plan              string   `json:"plan"`
-	Ipaddress1        string   `json:"ipaddress1"`
-	Ipaddress2        string   `json:"ipaddress2"`
-	NwMaskLen         int      `json:"nw-mask-len"`
-	DefaultRoute      string   `json:"default-route"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	SwitchId          sacloud.ID `json:"switch-id"`
+	Vrid              int        `json:"vrid"`
+	HighAvailability  bool       `json:"high-availability"`
+	Plan              string     `json:"plan"`
+	Ipaddress1        string     `json:"ipaddress1"`
+	Ipaddress2        string     `json:"ipaddress2"`
+	NwMaskLen         int        `json:"nw-mask-len"`
+	DefaultRoute      string     `json:"default-route"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreateLoadBalancerParam return new CreateLoadBalancerParam
@@ -335,7 +336,7 @@ func NewCreateLoadBalancerParam() *CreateLoadBalancerParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *CreateLoadBalancerParam) FillValueToSkeleton() {
 	if isEmpty(p.SwitchId) {
-		p.SwitchId = 0
+		p.SwitchId = sacloud.ID(0)
 	}
 	if isEmpty(p.Vrid) {
 		p.Vrid = 0
@@ -368,7 +369,7 @@ func (p *CreateLoadBalancerParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -562,11 +563,11 @@ func (p *CreateLoadBalancerParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreateLoadBalancerParam) SetSwitchId(v int64) {
+func (p *CreateLoadBalancerParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
 
-func (p *CreateLoadBalancerParam) GetSwitchId() int64 {
+func (p *CreateLoadBalancerParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
 func (p *CreateLoadBalancerParam) SetVrid(v int) {
@@ -639,11 +640,11 @@ func (p *CreateLoadBalancerParam) SetTags(v []string) {
 func (p *CreateLoadBalancerParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateLoadBalancerParam) SetIconId(v int64) {
+func (p *CreateLoadBalancerParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateLoadBalancerParam) GetIconId() int64 {
+func (p *CreateLoadBalancerParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateLoadBalancerParam) SetAssumeyes(v bool) {
@@ -726,18 +727,18 @@ func (p *CreateLoadBalancerParam) GetQueryFile() string {
 
 // ReadLoadBalancerParam is input parameters for the sacloud API
 type ReadLoadBalancerParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadLoadBalancerParam return new ReadLoadBalancerParam
@@ -781,7 +782,7 @@ func (p *ReadLoadBalancerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -921,33 +922,33 @@ func (p *ReadLoadBalancerParam) SetQueryFile(v string) {
 func (p *ReadLoadBalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadLoadBalancerParam) SetId(v int64) {
+func (p *ReadLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadLoadBalancerParam) GetId() int64 {
+func (p *ReadLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateLoadBalancerParam is input parameters for the sacloud API
 type UpdateLoadBalancerParam struct {
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateLoadBalancerParam return new UpdateLoadBalancerParam
@@ -970,7 +971,7 @@ func (p *UpdateLoadBalancerParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1006,7 +1007,7 @@ func (p *UpdateLoadBalancerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1125,11 +1126,11 @@ func (p *UpdateLoadBalancerParam) SetTags(v []string) {
 func (p *UpdateLoadBalancerParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateLoadBalancerParam) SetIconId(v int64) {
+func (p *UpdateLoadBalancerParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateLoadBalancerParam) GetIconId() int64 {
+func (p *UpdateLoadBalancerParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateLoadBalancerParam) SetAssumeyes(v bool) {
@@ -1209,30 +1210,30 @@ func (p *UpdateLoadBalancerParam) SetQueryFile(v string) {
 func (p *UpdateLoadBalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateLoadBalancerParam) SetId(v int64) {
+func (p *UpdateLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateLoadBalancerParam) GetId() int64 {
+func (p *UpdateLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteLoadBalancerParam is input parameters for the sacloud API
 type DeleteLoadBalancerParam struct {
-	Force             bool     `json:"force"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Force             bool       `json:"force"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteLoadBalancerParam return new DeleteLoadBalancerParam
@@ -1282,7 +1283,7 @@ func (p *DeleteLoadBalancerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1436,22 +1437,22 @@ func (p *DeleteLoadBalancerParam) SetQueryFile(v string) {
 func (p *DeleteLoadBalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteLoadBalancerParam) SetId(v int64) {
+func (p *DeleteLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteLoadBalancerParam) GetId() int64 {
+func (p *DeleteLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // BootLoadBalancerParam is input parameters for the sacloud API
 type BootLoadBalancerParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewBootLoadBalancerParam return new BootLoadBalancerParam
@@ -1477,7 +1478,7 @@ func (p *BootLoadBalancerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1555,22 +1556,22 @@ func (p *BootLoadBalancerParam) SetGenerateSkeleton(v bool) {
 func (p *BootLoadBalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *BootLoadBalancerParam) SetId(v int64) {
+func (p *BootLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BootLoadBalancerParam) GetId() int64 {
+func (p *BootLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ShutdownLoadBalancerParam is input parameters for the sacloud API
 type ShutdownLoadBalancerParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewShutdownLoadBalancerParam return new ShutdownLoadBalancerParam
@@ -1596,7 +1597,7 @@ func (p *ShutdownLoadBalancerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1674,22 +1675,22 @@ func (p *ShutdownLoadBalancerParam) SetGenerateSkeleton(v bool) {
 func (p *ShutdownLoadBalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ShutdownLoadBalancerParam) SetId(v int64) {
+func (p *ShutdownLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ShutdownLoadBalancerParam) GetId() int64 {
+func (p *ShutdownLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ShutdownForceLoadBalancerParam is input parameters for the sacloud API
 type ShutdownForceLoadBalancerParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewShutdownForceLoadBalancerParam return new ShutdownForceLoadBalancerParam
@@ -1715,7 +1716,7 @@ func (p *ShutdownForceLoadBalancerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1793,22 +1794,22 @@ func (p *ShutdownForceLoadBalancerParam) SetGenerateSkeleton(v bool) {
 func (p *ShutdownForceLoadBalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ShutdownForceLoadBalancerParam) SetId(v int64) {
+func (p *ShutdownForceLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ShutdownForceLoadBalancerParam) GetId() int64 {
+func (p *ShutdownForceLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ResetLoadBalancerParam is input parameters for the sacloud API
 type ResetLoadBalancerParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewResetLoadBalancerParam return new ResetLoadBalancerParam
@@ -1834,7 +1835,7 @@ func (p *ResetLoadBalancerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1912,21 +1913,21 @@ func (p *ResetLoadBalancerParam) SetGenerateSkeleton(v bool) {
 func (p *ResetLoadBalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ResetLoadBalancerParam) SetId(v int64) {
+func (p *ResetLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResetLoadBalancerParam) GetId() int64 {
+func (p *ResetLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // WaitForBootLoadBalancerParam is input parameters for the sacloud API
 type WaitForBootLoadBalancerParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewWaitForBootLoadBalancerParam return new WaitForBootLoadBalancerParam
@@ -1949,7 +1950,7 @@ func (p *WaitForBootLoadBalancerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2020,21 +2021,21 @@ func (p *WaitForBootLoadBalancerParam) SetGenerateSkeleton(v bool) {
 func (p *WaitForBootLoadBalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForBootLoadBalancerParam) SetId(v int64) {
+func (p *WaitForBootLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForBootLoadBalancerParam) GetId() int64 {
+func (p *WaitForBootLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // WaitForDownLoadBalancerParam is input parameters for the sacloud API
 type WaitForDownLoadBalancerParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewWaitForDownLoadBalancerParam return new WaitForDownLoadBalancerParam
@@ -2057,7 +2058,7 @@ func (p *WaitForDownLoadBalancerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2128,28 +2129,28 @@ func (p *WaitForDownLoadBalancerParam) SetGenerateSkeleton(v bool) {
 func (p *WaitForDownLoadBalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForDownLoadBalancerParam) SetId(v int64) {
+func (p *WaitForDownLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForDownLoadBalancerParam) GetId() int64 {
+func (p *WaitForDownLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // VipInfoLoadBalancerParam is input parameters for the sacloud API
 type VipInfoLoadBalancerParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewVipInfoLoadBalancerParam return new VipInfoLoadBalancerParam
@@ -2193,7 +2194,7 @@ func (p *VipInfoLoadBalancerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2333,27 +2334,27 @@ func (p *VipInfoLoadBalancerParam) SetQueryFile(v string) {
 func (p *VipInfoLoadBalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *VipInfoLoadBalancerParam) SetId(v int64) {
+func (p *VipInfoLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *VipInfoLoadBalancerParam) GetId() int64 {
+func (p *VipInfoLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // VipAddLoadBalancerParam is input parameters for the sacloud API
 type VipAddLoadBalancerParam struct {
-	Vip               string   `json:"vip"`
-	Port              int      `json:"port"`
-	DelayLoop         int      `json:"delay-loop"`
-	SorryServer       string   `json:"sorry-server"`
-	Description       string   `json:"description"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Vip               string     `json:"vip"`
+	Port              int        `json:"port"`
+	DelayLoop         int        `json:"delay-loop"`
+	SorryServer       string     `json:"sorry-server"`
+	Description       string     `json:"description"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewVipAddLoadBalancerParam return new VipAddLoadBalancerParam
@@ -2397,7 +2398,7 @@ func (p *VipAddLoadBalancerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2552,28 +2553,28 @@ func (p *VipAddLoadBalancerParam) SetGenerateSkeleton(v bool) {
 func (p *VipAddLoadBalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *VipAddLoadBalancerParam) SetId(v int64) {
+func (p *VipAddLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *VipAddLoadBalancerParam) GetId() int64 {
+func (p *VipAddLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // VipUpdateLoadBalancerParam is input parameters for the sacloud API
 type VipUpdateLoadBalancerParam struct {
-	Index             int      `json:"index"`
-	Vip               string   `json:"vip"`
-	Port              int      `json:"port"`
-	DelayLoop         int      `json:"delay-loop"`
-	SorryServer       string   `json:"sorry-server"`
-	Description       string   `json:"description"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Vip               string     `json:"vip"`
+	Port              int        `json:"port"`
+	DelayLoop         int        `json:"delay-loop"`
+	SorryServer       string     `json:"sorry-server"`
+	Description       string     `json:"description"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewVipUpdateLoadBalancerParam return new VipUpdateLoadBalancerParam
@@ -2620,7 +2621,7 @@ func (p *VipUpdateLoadBalancerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2775,23 +2776,23 @@ func (p *VipUpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
 func (p *VipUpdateLoadBalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *VipUpdateLoadBalancerParam) SetId(v int64) {
+func (p *VipUpdateLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *VipUpdateLoadBalancerParam) GetId() int64 {
+func (p *VipUpdateLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // VipDeleteLoadBalancerParam is input parameters for the sacloud API
 type VipDeleteLoadBalancerParam struct {
-	Index             int      `json:"index"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewVipDeleteLoadBalancerParam return new VipDeleteLoadBalancerParam
@@ -2820,7 +2821,7 @@ func (p *VipDeleteLoadBalancerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2912,31 +2913,31 @@ func (p *VipDeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
 func (p *VipDeleteLoadBalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *VipDeleteLoadBalancerParam) SetId(v int64) {
+func (p *VipDeleteLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *VipDeleteLoadBalancerParam) GetId() int64 {
+func (p *VipDeleteLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerInfoLoadBalancerParam is input parameters for the sacloud API
 type ServerInfoLoadBalancerParam struct {
-	VipIndex          int      `json:"vip-index"`
-	Vip               string   `json:"vip"`
-	Port              int      `json:"port"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	VipIndex          int        `json:"vip-index"`
+	Vip               string     `json:"vip"`
+	Port              int        `json:"port"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerInfoLoadBalancerParam return new ServerInfoLoadBalancerParam
@@ -2989,7 +2990,7 @@ func (p *ServerInfoLoadBalancerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3192,30 +3193,30 @@ func (p *ServerInfoLoadBalancerParam) SetQueryFile(v string) {
 func (p *ServerInfoLoadBalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerInfoLoadBalancerParam) SetId(v int64) {
+func (p *ServerInfoLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerInfoLoadBalancerParam) GetId() int64 {
+func (p *ServerInfoLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerAddLoadBalancerParam is input parameters for the sacloud API
 type ServerAddLoadBalancerParam struct {
-	VipIndex          int      `json:"vip-index"`
-	Vip               string   `json:"vip"`
-	Port              int      `json:"port"`
-	Ipaddress         string   `json:"ipaddress"`
-	Protocol          string   `json:"protocol"`
-	Path              string   `json:"path"`
-	ResponseCode      int      `json:"response-code"`
-	Disabled          bool     `json:"disabled"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	VipIndex          int        `json:"vip-index"`
+	Vip               string     `json:"vip"`
+	Port              int        `json:"port"`
+	Ipaddress         string     `json:"ipaddress"`
+	Protocol          string     `json:"protocol"`
+	Path              string     `json:"path"`
+	ResponseCode      int        `json:"response-code"`
+	Disabled          bool       `json:"disabled"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerAddLoadBalancerParam return new ServerAddLoadBalancerParam
@@ -3268,7 +3269,7 @@ func (p *ServerAddLoadBalancerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3472,30 +3473,30 @@ func (p *ServerAddLoadBalancerParam) SetGenerateSkeleton(v bool) {
 func (p *ServerAddLoadBalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerAddLoadBalancerParam) SetId(v int64) {
+func (p *ServerAddLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerAddLoadBalancerParam) GetId() int64 {
+func (p *ServerAddLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerUpdateLoadBalancerParam is input parameters for the sacloud API
 type ServerUpdateLoadBalancerParam struct {
-	VipIndex          int      `json:"vip-index"`
-	Vip               string   `json:"vip"`
-	Port              int      `json:"port"`
-	Ipaddress         string   `json:"ipaddress"`
-	Protocol          string   `json:"protocol"`
-	Path              string   `json:"path"`
-	ResponseCode      int      `json:"response-code"`
-	Disabled          bool     `json:"disabled"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	VipIndex          int        `json:"vip-index"`
+	Vip               string     `json:"vip"`
+	Port              int        `json:"port"`
+	Ipaddress         string     `json:"ipaddress"`
+	Protocol          string     `json:"protocol"`
+	Path              string     `json:"path"`
+	ResponseCode      int        `json:"response-code"`
+	Disabled          bool       `json:"disabled"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerUpdateLoadBalancerParam return new ServerUpdateLoadBalancerParam
@@ -3545,7 +3546,7 @@ func (p *ServerUpdateLoadBalancerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3742,26 +3743,26 @@ func (p *ServerUpdateLoadBalancerParam) SetGenerateSkeleton(v bool) {
 func (p *ServerUpdateLoadBalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerUpdateLoadBalancerParam) SetId(v int64) {
+func (p *ServerUpdateLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerUpdateLoadBalancerParam) GetId() int64 {
+func (p *ServerUpdateLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerDeleteLoadBalancerParam is input parameters for the sacloud API
 type ServerDeleteLoadBalancerParam struct {
-	VipIndex          int      `json:"vip-index"`
-	Vip               string   `json:"vip"`
-	Port              int      `json:"port"`
-	Ipaddress         string   `json:"ipaddress"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	VipIndex          int        `json:"vip-index"`
+	Vip               string     `json:"vip"`
+	Port              int        `json:"port"`
+	Ipaddress         string     `json:"ipaddress"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerDeleteLoadBalancerParam return new ServerDeleteLoadBalancerParam
@@ -3799,7 +3800,7 @@ func (p *ServerDeleteLoadBalancerParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3961,31 +3962,31 @@ func (p *ServerDeleteLoadBalancerParam) SetGenerateSkeleton(v bool) {
 func (p *ServerDeleteLoadBalancerParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerDeleteLoadBalancerParam) SetId(v int64) {
+func (p *ServerDeleteLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerDeleteLoadBalancerParam) GetId() int64 {
+func (p *ServerDeleteLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // MonitorLoadBalancerParam is input parameters for the sacloud API
 type MonitorLoadBalancerParam struct {
-	Start             string   `json:"start"`
-	End               string   `json:"end"`
-	KeyFormat         string   `json:"key-format"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Start             string     `json:"start"`
+	End               string     `json:"end"`
+	KeyFormat         string     `json:"key-format"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewMonitorLoadBalancerParam return new MonitorLoadBalancerParam
@@ -4041,7 +4042,7 @@ func (p *MonitorLoadBalancerParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4223,10 +4224,10 @@ func (p *MonitorLoadBalancerParam) SetQueryFile(v string) {
 func (p *MonitorLoadBalancerParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorLoadBalancerParam) SetId(v int64) {
+func (p *MonitorLoadBalancerParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorLoadBalancerParam) GetId() int64 {
+func (p *MonitorLoadBalancerParam) GetId() sacloud.ID {
 	return p.Id
 }

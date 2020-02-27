@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -212,21 +212,21 @@ func (api *InternetAPI) Create(value *sacloud.Internet) (*sacloud.Internet, erro
 }
 
 // Read 読み取り
-func (api *InternetAPI) Read(id int64) (*sacloud.Internet, error) {
+func (api *InternetAPI) Read(id sacloud.ID) (*sacloud.Internet, error) {
 	return api.request(func(res *sacloud.Response) error {
 		return api.read(id, nil, res)
 	})
 }
 
 // Update 更新
-func (api *InternetAPI) Update(id int64, value *sacloud.Internet) (*sacloud.Internet, error) {
+func (api *InternetAPI) Update(id sacloud.ID, value *sacloud.Internet) (*sacloud.Internet, error) {
 	return api.request(func(res *sacloud.Response) error {
 		return api.update(id, api.createRequest(value), res)
 	})
 }
 
 // Delete 削除
-func (api *InternetAPI) Delete(id int64) (*sacloud.Internet, error) {
+func (api *InternetAPI) Delete(id sacloud.ID) (*sacloud.Internet, error) {
 	return api.request(func(res *sacloud.Response) error {
 		return api.delete(id, nil, res)
 	})

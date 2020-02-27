@@ -33,7 +33,7 @@ func SimpleMonitorHealth(ctx command.Context, params *params.HealthSimpleMonitor
 	}
 
 	output := struct {
-		ID int64
+		ID sacloud.ID
 		*sacloud.SimpleMonitorHealthCheckStatus
 	}{
 		ID:                             params.Id,

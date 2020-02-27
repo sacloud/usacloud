@@ -25,7 +25,7 @@ func WebAccelCertificateInfo(ctx command.Context, params *params.CertificateInfo
 
 	client := ctx.GetAPIClient()
 	api := client.GetWebAccelAPI()
-	p, e := api.ReadCertificate(fmt.Sprintf("%d", params.Id))
+	p, e := api.ReadCertificate(params.Id)
 	if e != nil {
 		return fmt.Errorf("WebAccelCertificateInfo is failed: %s", e)
 	}

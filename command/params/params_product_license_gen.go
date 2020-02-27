@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,21 +25,21 @@ import (
 
 // ListProductLicenseParam is input parameters for the sacloud API
 type ListProductLicenseParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListProductLicenseParam return new ListProductLicenseParam
@@ -52,7 +53,7 @@ func (p *ListProductLicenseParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.From) {
 		p.From = 0
@@ -179,11 +180,11 @@ func (p *ListProductLicenseParam) SetName(v []string) {
 func (p *ListProductLicenseParam) GetName() []string {
 	return p.Name
 }
-func (p *ListProductLicenseParam) SetId(v []int64) {
+func (p *ListProductLicenseParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListProductLicenseParam) GetId() []int64 {
+func (p *ListProductLicenseParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListProductLicenseParam) SetFrom(v int) {
@@ -280,18 +281,18 @@ func (p *ListProductLicenseParam) GetQueryFile() string {
 
 // ReadProductLicenseParam is input parameters for the sacloud API
 type ReadProductLicenseParam struct {
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadProductLicenseParam return new ReadProductLicenseParam
@@ -335,7 +336,7 @@ func (p *ReadProductLicenseParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -482,10 +483,10 @@ func (p *ReadProductLicenseParam) SetQueryFile(v string) {
 func (p *ReadProductLicenseParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadProductLicenseParam) SetId(v int64) {
+func (p *ReadProductLicenseParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadProductLicenseParam) GetId() int64 {
+func (p *ReadProductLicenseParam) GetId() sacloud.ID {
 	return p.Id
 }

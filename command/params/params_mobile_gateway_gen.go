@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,22 +25,22 @@ import (
 
 // ListMobileGatewayParam is input parameters for the sacloud API
 type ListMobileGatewayParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListMobileGatewayParam return new ListMobileGatewayParam
@@ -53,7 +54,7 @@ func (p *ListMobileGatewayParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -190,11 +191,11 @@ func (p *ListMobileGatewayParam) SetName(v []string) {
 func (p *ListMobileGatewayParam) GetName() []string {
 	return p.Name
 }
-func (p *ListMobileGatewayParam) SetId(v []int64) {
+func (p *ListMobileGatewayParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListMobileGatewayParam) GetId() []int64 {
+func (p *ListMobileGatewayParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListMobileGatewayParam) SetTags(v []string) {
@@ -298,22 +299,22 @@ func (p *ListMobileGatewayParam) GetQueryFile() string {
 
 // CreateMobileGatewayParam is input parameters for the sacloud API
 type CreateMobileGatewayParam struct {
-	InternetConnection bool     `json:"internet-connection"`
-	Name               string   `json:"name"`
-	Description        string   `json:"description"`
-	Tags               []string `json:"tags"`
-	IconId             int64    `json:"icon-id"`
-	Assumeyes          bool     `json:"assumeyes"`
-	ParamTemplate      string   `json:"param-template"`
-	ParamTemplateFile  string   `json:"param-template-file"`
-	GenerateSkeleton   bool     `json:"generate-skeleton"`
-	OutputType         string   `json:"output-type"`
-	Column             []string `json:"column"`
-	Quiet              bool     `json:"quiet"`
-	Format             string   `json:"format"`
-	FormatFile         string   `json:"format-file"`
-	Query              string   `json:"query"`
-	QueryFile          string   `json:"query-file"`
+	InternetConnection bool       `json:"internet-connection"`
+	Name               string     `json:"name"`
+	Description        string     `json:"description"`
+	Tags               []string   `json:"tags"`
+	IconId             sacloud.ID `json:"icon-id"`
+	Assumeyes          bool       `json:"assumeyes"`
+	ParamTemplate      string     `json:"param-template"`
+	ParamTemplateFile  string     `json:"param-template-file"`
+	GenerateSkeleton   bool       `json:"generate-skeleton"`
+	OutputType         string     `json:"output-type"`
+	Column             []string   `json:"column"`
+	Quiet              bool       `json:"quiet"`
+	Format             string     `json:"format"`
+	FormatFile         string     `json:"format-file"`
+	Query              string     `json:"query"`
+	QueryFile          string     `json:"query-file"`
 }
 
 // NewCreateMobileGatewayParam return new CreateMobileGatewayParam
@@ -336,7 +337,7 @@ func (p *CreateMobileGatewayParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -488,11 +489,11 @@ func (p *CreateMobileGatewayParam) SetTags(v []string) {
 func (p *CreateMobileGatewayParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateMobileGatewayParam) SetIconId(v int64) {
+func (p *CreateMobileGatewayParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateMobileGatewayParam) GetIconId() int64 {
+func (p *CreateMobileGatewayParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateMobileGatewayParam) SetAssumeyes(v bool) {
@@ -575,18 +576,18 @@ func (p *CreateMobileGatewayParam) GetQueryFile() string {
 
 // ReadMobileGatewayParam is input parameters for the sacloud API
 type ReadMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadMobileGatewayParam return new ReadMobileGatewayParam
@@ -630,7 +631,7 @@ func (p *ReadMobileGatewayParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -770,34 +771,34 @@ func (p *ReadMobileGatewayParam) SetQueryFile(v string) {
 func (p *ReadMobileGatewayParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadMobileGatewayParam) SetId(v int64) {
+func (p *ReadMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadMobileGatewayParam) GetId() int64 {
+func (p *ReadMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateMobileGatewayParam is input parameters for the sacloud API
 type UpdateMobileGatewayParam struct {
-	InternetConnection bool     `json:"internet-connection"`
-	Selector           []string `json:"selector"`
-	Name               string   `json:"name"`
-	Description        string   `json:"description"`
-	Tags               []string `json:"tags"`
-	IconId             int64    `json:"icon-id"`
-	Assumeyes          bool     `json:"assumeyes"`
-	ParamTemplate      string   `json:"param-template"`
-	ParamTemplateFile  string   `json:"param-template-file"`
-	GenerateSkeleton   bool     `json:"generate-skeleton"`
-	OutputType         string   `json:"output-type"`
-	Column             []string `json:"column"`
-	Quiet              bool     `json:"quiet"`
-	Format             string   `json:"format"`
-	FormatFile         string   `json:"format-file"`
-	Query              string   `json:"query"`
-	QueryFile          string   `json:"query-file"`
-	Id                 int64    `json:"id"`
+	InternetConnection bool       `json:"internet-connection"`
+	Selector           []string   `json:"selector"`
+	Name               string     `json:"name"`
+	Description        string     `json:"description"`
+	Tags               []string   `json:"tags"`
+	IconId             sacloud.ID `json:"icon-id"`
+	Assumeyes          bool       `json:"assumeyes"`
+	ParamTemplate      string     `json:"param-template"`
+	ParamTemplateFile  string     `json:"param-template-file"`
+	GenerateSkeleton   bool       `json:"generate-skeleton"`
+	OutputType         string     `json:"output-type"`
+	Column             []string   `json:"column"`
+	Quiet              bool       `json:"quiet"`
+	Format             string     `json:"format"`
+	FormatFile         string     `json:"format-file"`
+	Query              string     `json:"query"`
+	QueryFile          string     `json:"query-file"`
+	Id                 sacloud.ID `json:"id"`
 }
 
 // NewUpdateMobileGatewayParam return new UpdateMobileGatewayParam
@@ -823,7 +824,7 @@ func (p *UpdateMobileGatewayParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -859,7 +860,7 @@ func (p *UpdateMobileGatewayParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -985,11 +986,11 @@ func (p *UpdateMobileGatewayParam) SetTags(v []string) {
 func (p *UpdateMobileGatewayParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateMobileGatewayParam) SetIconId(v int64) {
+func (p *UpdateMobileGatewayParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateMobileGatewayParam) GetIconId() int64 {
+func (p *UpdateMobileGatewayParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateMobileGatewayParam) SetAssumeyes(v bool) {
@@ -1069,30 +1070,30 @@ func (p *UpdateMobileGatewayParam) SetQueryFile(v string) {
 func (p *UpdateMobileGatewayParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateMobileGatewayParam) SetId(v int64) {
+func (p *UpdateMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateMobileGatewayParam) GetId() int64 {
+func (p *UpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteMobileGatewayParam is input parameters for the sacloud API
 type DeleteMobileGatewayParam struct {
-	Force             bool     `json:"force"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Force             bool       `json:"force"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteMobileGatewayParam return new DeleteMobileGatewayParam
@@ -1142,7 +1143,7 @@ func (p *DeleteMobileGatewayParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1296,22 +1297,22 @@ func (p *DeleteMobileGatewayParam) SetQueryFile(v string) {
 func (p *DeleteMobileGatewayParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteMobileGatewayParam) SetId(v int64) {
+func (p *DeleteMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteMobileGatewayParam) GetId() int64 {
+func (p *DeleteMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // BootMobileGatewayParam is input parameters for the sacloud API
 type BootMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewBootMobileGatewayParam return new BootMobileGatewayParam
@@ -1337,7 +1338,7 @@ func (p *BootMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1415,22 +1416,22 @@ func (p *BootMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *BootMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *BootMobileGatewayParam) SetId(v int64) {
+func (p *BootMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BootMobileGatewayParam) GetId() int64 {
+func (p *BootMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ShutdownMobileGatewayParam is input parameters for the sacloud API
 type ShutdownMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewShutdownMobileGatewayParam return new ShutdownMobileGatewayParam
@@ -1456,7 +1457,7 @@ func (p *ShutdownMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1534,22 +1535,22 @@ func (p *ShutdownMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *ShutdownMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ShutdownMobileGatewayParam) SetId(v int64) {
+func (p *ShutdownMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ShutdownMobileGatewayParam) GetId() int64 {
+func (p *ShutdownMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ShutdownForceMobileGatewayParam is input parameters for the sacloud API
 type ShutdownForceMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewShutdownForceMobileGatewayParam return new ShutdownForceMobileGatewayParam
@@ -1575,7 +1576,7 @@ func (p *ShutdownForceMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1653,22 +1654,22 @@ func (p *ShutdownForceMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *ShutdownForceMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ShutdownForceMobileGatewayParam) SetId(v int64) {
+func (p *ShutdownForceMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ShutdownForceMobileGatewayParam) GetId() int64 {
+func (p *ShutdownForceMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ResetMobileGatewayParam is input parameters for the sacloud API
 type ResetMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewResetMobileGatewayParam return new ResetMobileGatewayParam
@@ -1694,7 +1695,7 @@ func (p *ResetMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1772,21 +1773,21 @@ func (p *ResetMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *ResetMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ResetMobileGatewayParam) SetId(v int64) {
+func (p *ResetMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResetMobileGatewayParam) GetId() int64 {
+func (p *ResetMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // WaitForBootMobileGatewayParam is input parameters for the sacloud API
 type WaitForBootMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewWaitForBootMobileGatewayParam return new WaitForBootMobileGatewayParam
@@ -1809,7 +1810,7 @@ func (p *WaitForBootMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1880,21 +1881,21 @@ func (p *WaitForBootMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *WaitForBootMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForBootMobileGatewayParam) SetId(v int64) {
+func (p *WaitForBootMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForBootMobileGatewayParam) GetId() int64 {
+func (p *WaitForBootMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // WaitForDownMobileGatewayParam is input parameters for the sacloud API
 type WaitForDownMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewWaitForDownMobileGatewayParam return new WaitForDownMobileGatewayParam
@@ -1917,7 +1918,7 @@ func (p *WaitForDownMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1988,28 +1989,28 @@ func (p *WaitForDownMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *WaitForDownMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForDownMobileGatewayParam) SetId(v int64) {
+func (p *WaitForDownMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForDownMobileGatewayParam) GetId() int64 {
+func (p *WaitForDownMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // InterfaceInfoMobileGatewayParam is input parameters for the sacloud API
 type InterfaceInfoMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewInterfaceInfoMobileGatewayParam return new InterfaceInfoMobileGatewayParam
@@ -2053,7 +2054,7 @@ func (p *InterfaceInfoMobileGatewayParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2193,25 +2194,25 @@ func (p *InterfaceInfoMobileGatewayParam) SetQueryFile(v string) {
 func (p *InterfaceInfoMobileGatewayParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *InterfaceInfoMobileGatewayParam) SetId(v int64) {
+func (p *InterfaceInfoMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *InterfaceInfoMobileGatewayParam) GetId() int64 {
+func (p *InterfaceInfoMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // InterfaceConnectMobileGatewayParam is input parameters for the sacloud API
 type InterfaceConnectMobileGatewayParam struct {
-	Ipaddress         string   `json:"ipaddress"`
-	SwitchId          int64    `json:"switch-id"`
-	NwMasklen         int      `json:"nw-masklen"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Ipaddress         string     `json:"ipaddress"`
+	SwitchId          sacloud.ID `json:"switch-id"`
+	NwMasklen         int        `json:"nw-masklen"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewInterfaceConnectMobileGatewayParam return new InterfaceConnectMobileGatewayParam
@@ -2228,7 +2229,7 @@ func (p *InterfaceConnectMobileGatewayParam) FillValueToSkeleton() {
 		p.Ipaddress = ""
 	}
 	if isEmpty(p.SwitchId) {
-		p.SwitchId = 0
+		p.SwitchId = sacloud.ID(0)
 	}
 	if isEmpty(p.NwMasklen) {
 		p.NwMasklen = 0
@@ -2249,7 +2250,7 @@ func (p *InterfaceConnectMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2334,11 +2335,11 @@ func (p *InterfaceConnectMobileGatewayParam) SetIpaddress(v string) {
 func (p *InterfaceConnectMobileGatewayParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *InterfaceConnectMobileGatewayParam) SetSwitchId(v int64) {
+func (p *InterfaceConnectMobileGatewayParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
 
-func (p *InterfaceConnectMobileGatewayParam) GetSwitchId() int64 {
+func (p *InterfaceConnectMobileGatewayParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
 func (p *InterfaceConnectMobileGatewayParam) SetNwMasklen(v int) {
@@ -2383,24 +2384,24 @@ func (p *InterfaceConnectMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *InterfaceConnectMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *InterfaceConnectMobileGatewayParam) SetId(v int64) {
+func (p *InterfaceConnectMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *InterfaceConnectMobileGatewayParam) GetId() int64 {
+func (p *InterfaceConnectMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // InterfaceUpdateMobileGatewayParam is input parameters for the sacloud API
 type InterfaceUpdateMobileGatewayParam struct {
-	Ipaddress         string   `json:"ipaddress"`
-	NwMasklen         int      `json:"nw-masklen"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Ipaddress         string     `json:"ipaddress"`
+	NwMasklen         int        `json:"nw-masklen"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewInterfaceUpdateMobileGatewayParam return new InterfaceUpdateMobileGatewayParam
@@ -2435,7 +2436,7 @@ func (p *InterfaceUpdateMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2541,22 +2542,22 @@ func (p *InterfaceUpdateMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *InterfaceUpdateMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *InterfaceUpdateMobileGatewayParam) SetId(v int64) {
+func (p *InterfaceUpdateMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *InterfaceUpdateMobileGatewayParam) GetId() int64 {
+func (p *InterfaceUpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // InterfaceDisconnectMobileGatewayParam is input parameters for the sacloud API
 type InterfaceDisconnectMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewInterfaceDisconnectMobileGatewayParam return new InterfaceDisconnectMobileGatewayParam
@@ -2582,7 +2583,7 @@ func (p *InterfaceDisconnectMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2660,28 +2661,28 @@ func (p *InterfaceDisconnectMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *InterfaceDisconnectMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *InterfaceDisconnectMobileGatewayParam) SetId(v int64) {
+func (p *InterfaceDisconnectMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *InterfaceDisconnectMobileGatewayParam) GetId() int64 {
+func (p *InterfaceDisconnectMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // TrafficControlInfoMobileGatewayParam is input parameters for the sacloud API
 type TrafficControlInfoMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewTrafficControlInfoMobileGatewayParam return new TrafficControlInfoMobileGatewayParam
@@ -2725,7 +2726,7 @@ func (p *TrafficControlInfoMobileGatewayParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2865,27 +2866,27 @@ func (p *TrafficControlInfoMobileGatewayParam) SetQueryFile(v string) {
 func (p *TrafficControlInfoMobileGatewayParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *TrafficControlInfoMobileGatewayParam) SetId(v int64) {
+func (p *TrafficControlInfoMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *TrafficControlInfoMobileGatewayParam) GetId() int64 {
+func (p *TrafficControlInfoMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // TrafficControlEnableMobileGatewayParam is input parameters for the sacloud API
 type TrafficControlEnableMobileGatewayParam struct {
-	Quota              int      `json:"quota"`
-	BandWidthLimit     int      `json:"band-width-limit"`
-	EnableEmail        bool     `json:"enable-email"`
-	SlackWebhookUrl    string   `json:"slack-webhook-url"`
-	AutoTrafficShaping bool     `json:"auto-traffic-shaping"`
-	Selector           []string `json:"selector"`
-	Assumeyes          bool     `json:"assumeyes"`
-	ParamTemplate      string   `json:"param-template"`
-	ParamTemplateFile  string   `json:"param-template-file"`
-	GenerateSkeleton   bool     `json:"generate-skeleton"`
-	Id                 int64    `json:"id"`
+	Quota              int        `json:"quota"`
+	BandWidthLimit     int        `json:"band-width-limit"`
+	EnableEmail        bool       `json:"enable-email"`
+	SlackWebhookUrl    string     `json:"slack-webhook-url"`
+	AutoTrafficShaping bool       `json:"auto-traffic-shaping"`
+	Selector           []string   `json:"selector"`
+	Assumeyes          bool       `json:"assumeyes"`
+	ParamTemplate      string     `json:"param-template"`
+	ParamTemplateFile  string     `json:"param-template-file"`
+	GenerateSkeleton   bool       `json:"generate-skeleton"`
+	Id                 sacloud.ID `json:"id"`
 }
 
 // NewTrafficControlEnableMobileGatewayParam return new TrafficControlEnableMobileGatewayParam
@@ -2929,7 +2930,7 @@ func (p *TrafficControlEnableMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3070,27 +3071,27 @@ func (p *TrafficControlEnableMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *TrafficControlEnableMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *TrafficControlEnableMobileGatewayParam) SetId(v int64) {
+func (p *TrafficControlEnableMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *TrafficControlEnableMobileGatewayParam) GetId() int64 {
+func (p *TrafficControlEnableMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // TrafficControlUpdateMobileGatewayParam is input parameters for the sacloud API
 type TrafficControlUpdateMobileGatewayParam struct {
-	Quota              int      `json:"quota"`
-	BandWidthLimit     int      `json:"band-width-limit"`
-	EnableEmail        bool     `json:"enable-email"`
-	SlackWebhookUrl    string   `json:"slack-webhook-url"`
-	AutoTrafficShaping bool     `json:"auto-traffic-shaping"`
-	Selector           []string `json:"selector"`
-	Assumeyes          bool     `json:"assumeyes"`
-	ParamTemplate      string   `json:"param-template"`
-	ParamTemplateFile  string   `json:"param-template-file"`
-	GenerateSkeleton   bool     `json:"generate-skeleton"`
-	Id                 int64    `json:"id"`
+	Quota              int        `json:"quota"`
+	BandWidthLimit     int        `json:"band-width-limit"`
+	EnableEmail        bool       `json:"enable-email"`
+	SlackWebhookUrl    string     `json:"slack-webhook-url"`
+	AutoTrafficShaping bool       `json:"auto-traffic-shaping"`
+	Selector           []string   `json:"selector"`
+	Assumeyes          bool       `json:"assumeyes"`
+	ParamTemplate      string     `json:"param-template"`
+	ParamTemplateFile  string     `json:"param-template-file"`
+	GenerateSkeleton   bool       `json:"generate-skeleton"`
+	Id                 sacloud.ID `json:"id"`
 }
 
 // NewTrafficControlUpdateMobileGatewayParam return new TrafficControlUpdateMobileGatewayParam
@@ -3131,7 +3132,7 @@ func (p *TrafficControlUpdateMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3265,22 +3266,22 @@ func (p *TrafficControlUpdateMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *TrafficControlUpdateMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *TrafficControlUpdateMobileGatewayParam) SetId(v int64) {
+func (p *TrafficControlUpdateMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *TrafficControlUpdateMobileGatewayParam) GetId() int64 {
+func (p *TrafficControlUpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // TrafficControlDisableMobileGatewayParam is input parameters for the sacloud API
 type TrafficControlDisableMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewTrafficControlDisableMobileGatewayParam return new TrafficControlDisableMobileGatewayParam
@@ -3306,7 +3307,7 @@ func (p *TrafficControlDisableMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3384,28 +3385,28 @@ func (p *TrafficControlDisableMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *TrafficControlDisableMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *TrafficControlDisableMobileGatewayParam) SetId(v int64) {
+func (p *TrafficControlDisableMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *TrafficControlDisableMobileGatewayParam) GetId() int64 {
+func (p *TrafficControlDisableMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // StaticRouteInfoMobileGatewayParam is input parameters for the sacloud API
 type StaticRouteInfoMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewStaticRouteInfoMobileGatewayParam return new StaticRouteInfoMobileGatewayParam
@@ -3449,7 +3450,7 @@ func (p *StaticRouteInfoMobileGatewayParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3589,24 +3590,24 @@ func (p *StaticRouteInfoMobileGatewayParam) SetQueryFile(v string) {
 func (p *StaticRouteInfoMobileGatewayParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *StaticRouteInfoMobileGatewayParam) SetId(v int64) {
+func (p *StaticRouteInfoMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *StaticRouteInfoMobileGatewayParam) GetId() int64 {
+func (p *StaticRouteInfoMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // StaticRouteAddMobileGatewayParam is input parameters for the sacloud API
 type StaticRouteAddMobileGatewayParam struct {
-	Prefix            string   `json:"prefix"`
-	NextHop           string   `json:"next-hop"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Prefix            string     `json:"prefix"`
+	NextHop           string     `json:"next-hop"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewStaticRouteAddMobileGatewayParam return new StaticRouteAddMobileGatewayParam
@@ -3638,7 +3639,7 @@ func (p *StaticRouteAddMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3758,25 +3759,25 @@ func (p *StaticRouteAddMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *StaticRouteAddMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *StaticRouteAddMobileGatewayParam) SetId(v int64) {
+func (p *StaticRouteAddMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *StaticRouteAddMobileGatewayParam) GetId() int64 {
+func (p *StaticRouteAddMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // StaticRouteUpdateMobileGatewayParam is input parameters for the sacloud API
 type StaticRouteUpdateMobileGatewayParam struct {
-	Index             int      `json:"index"`
-	Prefix            string   `json:"prefix"`
-	NextHop           string   `json:"next-hop"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Prefix            string     `json:"prefix"`
+	NextHop           string     `json:"next-hop"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewStaticRouteUpdateMobileGatewayParam return new StaticRouteUpdateMobileGatewayParam
@@ -3811,7 +3812,7 @@ func (p *StaticRouteUpdateMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3931,23 +3932,23 @@ func (p *StaticRouteUpdateMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *StaticRouteUpdateMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *StaticRouteUpdateMobileGatewayParam) SetId(v int64) {
+func (p *StaticRouteUpdateMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *StaticRouteUpdateMobileGatewayParam) GetId() int64 {
+func (p *StaticRouteUpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // StaticRouteDeleteMobileGatewayParam is input parameters for the sacloud API
 type StaticRouteDeleteMobileGatewayParam struct {
-	Index             int      `json:"index"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewStaticRouteDeleteMobileGatewayParam return new StaticRouteDeleteMobileGatewayParam
@@ -3976,7 +3977,7 @@ func (p *StaticRouteDeleteMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4068,28 +4069,28 @@ func (p *StaticRouteDeleteMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *StaticRouteDeleteMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *StaticRouteDeleteMobileGatewayParam) SetId(v int64) {
+func (p *StaticRouteDeleteMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *StaticRouteDeleteMobileGatewayParam) GetId() int64 {
+func (p *StaticRouteDeleteMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SimInfoMobileGatewayParam is input parameters for the sacloud API
 type SimInfoMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSimInfoMobileGatewayParam return new SimInfoMobileGatewayParam
@@ -4133,7 +4134,7 @@ func (p *SimInfoMobileGatewayParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4273,24 +4274,24 @@ func (p *SimInfoMobileGatewayParam) SetQueryFile(v string) {
 func (p *SimInfoMobileGatewayParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *SimInfoMobileGatewayParam) SetId(v int64) {
+func (p *SimInfoMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SimInfoMobileGatewayParam) GetId() int64 {
+func (p *SimInfoMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SimAddMobileGatewayParam is input parameters for the sacloud API
 type SimAddMobileGatewayParam struct {
-	Ipaddress         string   `json:"ipaddress"`
-	SimId             int64    `json:"sim-id"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Ipaddress         string     `json:"ipaddress"`
+	SimId             sacloud.ID `json:"sim-id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSimAddMobileGatewayParam return new SimAddMobileGatewayParam
@@ -4304,7 +4305,7 @@ func (p *SimAddMobileGatewayParam) FillValueToSkeleton() {
 		p.Ipaddress = ""
 	}
 	if isEmpty(p.SimId) {
-		p.SimId = 0
+		p.SimId = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -4322,7 +4323,7 @@ func (p *SimAddMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4400,11 +4401,11 @@ func (p *SimAddMobileGatewayParam) SetIpaddress(v string) {
 func (p *SimAddMobileGatewayParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *SimAddMobileGatewayParam) SetSimId(v int64) {
+func (p *SimAddMobileGatewayParam) SetSimId(v sacloud.ID) {
 	p.SimId = v
 }
 
-func (p *SimAddMobileGatewayParam) GetSimId() int64 {
+func (p *SimAddMobileGatewayParam) GetSimId() sacloud.ID {
 	return p.SimId
 }
 func (p *SimAddMobileGatewayParam) SetSelector(v []string) {
@@ -4442,24 +4443,24 @@ func (p *SimAddMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *SimAddMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *SimAddMobileGatewayParam) SetId(v int64) {
+func (p *SimAddMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SimAddMobileGatewayParam) GetId() int64 {
+func (p *SimAddMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SimUpdateMobileGatewayParam is input parameters for the sacloud API
 type SimUpdateMobileGatewayParam struct {
-	Ipaddress         string   `json:"ipaddress"`
-	SimId             int64    `json:"sim-id"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Ipaddress         string     `json:"ipaddress"`
+	SimId             sacloud.ID `json:"sim-id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSimUpdateMobileGatewayParam return new SimUpdateMobileGatewayParam
@@ -4473,7 +4474,7 @@ func (p *SimUpdateMobileGatewayParam) FillValueToSkeleton() {
 		p.Ipaddress = ""
 	}
 	if isEmpty(p.SimId) {
-		p.SimId = 0
+		p.SimId = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -4491,7 +4492,7 @@ func (p *SimUpdateMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4562,11 +4563,11 @@ func (p *SimUpdateMobileGatewayParam) SetIpaddress(v string) {
 func (p *SimUpdateMobileGatewayParam) GetIpaddress() string {
 	return p.Ipaddress
 }
-func (p *SimUpdateMobileGatewayParam) SetSimId(v int64) {
+func (p *SimUpdateMobileGatewayParam) SetSimId(v sacloud.ID) {
 	p.SimId = v
 }
 
-func (p *SimUpdateMobileGatewayParam) GetSimId() int64 {
+func (p *SimUpdateMobileGatewayParam) GetSimId() sacloud.ID {
 	return p.SimId
 }
 func (p *SimUpdateMobileGatewayParam) SetSelector(v []string) {
@@ -4604,23 +4605,23 @@ func (p *SimUpdateMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *SimUpdateMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *SimUpdateMobileGatewayParam) SetId(v int64) {
+func (p *SimUpdateMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SimUpdateMobileGatewayParam) GetId() int64 {
+func (p *SimUpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SimDeleteMobileGatewayParam is input parameters for the sacloud API
 type SimDeleteMobileGatewayParam struct {
-	SimId             int64    `json:"sim-id"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	SimId             sacloud.ID `json:"sim-id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSimDeleteMobileGatewayParam return new SimDeleteMobileGatewayParam
@@ -4631,7 +4632,7 @@ func NewSimDeleteMobileGatewayParam() *SimDeleteMobileGatewayParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *SimDeleteMobileGatewayParam) FillValueToSkeleton() {
 	if isEmpty(p.SimId) {
-		p.SimId = 0
+		p.SimId = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -4649,7 +4650,7 @@ func (p *SimDeleteMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4706,11 +4707,11 @@ func (p *SimDeleteMobileGatewayParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *SimDeleteMobileGatewayParam) SetSimId(v int64) {
+func (p *SimDeleteMobileGatewayParam) SetSimId(v sacloud.ID) {
 	p.SimId = v
 }
 
-func (p *SimDeleteMobileGatewayParam) GetSimId() int64 {
+func (p *SimDeleteMobileGatewayParam) GetSimId() sacloud.ID {
 	return p.SimId
 }
 func (p *SimDeleteMobileGatewayParam) SetSelector(v []string) {
@@ -4748,28 +4749,28 @@ func (p *SimDeleteMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *SimDeleteMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *SimDeleteMobileGatewayParam) SetId(v int64) {
+func (p *SimDeleteMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SimDeleteMobileGatewayParam) GetId() int64 {
+func (p *SimDeleteMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SimRouteInfoMobileGatewayParam is input parameters for the sacloud API
 type SimRouteInfoMobileGatewayParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSimRouteInfoMobileGatewayParam return new SimRouteInfoMobileGatewayParam
@@ -4813,7 +4814,7 @@ func (p *SimRouteInfoMobileGatewayParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -4953,24 +4954,24 @@ func (p *SimRouteInfoMobileGatewayParam) SetQueryFile(v string) {
 func (p *SimRouteInfoMobileGatewayParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *SimRouteInfoMobileGatewayParam) SetId(v int64) {
+func (p *SimRouteInfoMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SimRouteInfoMobileGatewayParam) GetId() int64 {
+func (p *SimRouteInfoMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SimRouteAddMobileGatewayParam is input parameters for the sacloud API
 type SimRouteAddMobileGatewayParam struct {
-	Prefix            string   `json:"prefix"`
-	Sim               int64    `json:"sim"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Prefix            string     `json:"prefix"`
+	Sim               sacloud.ID `json:"sim"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSimRouteAddMobileGatewayParam return new SimRouteAddMobileGatewayParam
@@ -4984,7 +4985,7 @@ func (p *SimRouteAddMobileGatewayParam) FillValueToSkeleton() {
 		p.Prefix = ""
 	}
 	if isEmpty(p.Sim) {
-		p.Sim = 0
+		p.Sim = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -5002,7 +5003,7 @@ func (p *SimRouteAddMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5080,11 +5081,11 @@ func (p *SimRouteAddMobileGatewayParam) SetPrefix(v string) {
 func (p *SimRouteAddMobileGatewayParam) GetPrefix() string {
 	return p.Prefix
 }
-func (p *SimRouteAddMobileGatewayParam) SetSim(v int64) {
+func (p *SimRouteAddMobileGatewayParam) SetSim(v sacloud.ID) {
 	p.Sim = v
 }
 
-func (p *SimRouteAddMobileGatewayParam) GetSim() int64 {
+func (p *SimRouteAddMobileGatewayParam) GetSim() sacloud.ID {
 	return p.Sim
 }
 func (p *SimRouteAddMobileGatewayParam) SetSelector(v []string) {
@@ -5122,25 +5123,25 @@ func (p *SimRouteAddMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *SimRouteAddMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *SimRouteAddMobileGatewayParam) SetId(v int64) {
+func (p *SimRouteAddMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SimRouteAddMobileGatewayParam) GetId() int64 {
+func (p *SimRouteAddMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SimRouteUpdateMobileGatewayParam is input parameters for the sacloud API
 type SimRouteUpdateMobileGatewayParam struct {
-	Index             int      `json:"index"`
-	Prefix            string   `json:"prefix"`
-	Sim               int64    `json:"sim"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Prefix            string     `json:"prefix"`
+	Sim               sacloud.ID `json:"sim"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSimRouteUpdateMobileGatewayParam return new SimRouteUpdateMobileGatewayParam
@@ -5157,7 +5158,7 @@ func (p *SimRouteUpdateMobileGatewayParam) FillValueToSkeleton() {
 		p.Prefix = ""
 	}
 	if isEmpty(p.Sim) {
-		p.Sim = 0
+		p.Sim = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -5175,7 +5176,7 @@ func (p *SimRouteUpdateMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5253,11 +5254,11 @@ func (p *SimRouteUpdateMobileGatewayParam) SetPrefix(v string) {
 func (p *SimRouteUpdateMobileGatewayParam) GetPrefix() string {
 	return p.Prefix
 }
-func (p *SimRouteUpdateMobileGatewayParam) SetSim(v int64) {
+func (p *SimRouteUpdateMobileGatewayParam) SetSim(v sacloud.ID) {
 	p.Sim = v
 }
 
-func (p *SimRouteUpdateMobileGatewayParam) GetSim() int64 {
+func (p *SimRouteUpdateMobileGatewayParam) GetSim() sacloud.ID {
 	return p.Sim
 }
 func (p *SimRouteUpdateMobileGatewayParam) SetSelector(v []string) {
@@ -5295,23 +5296,23 @@ func (p *SimRouteUpdateMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *SimRouteUpdateMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *SimRouteUpdateMobileGatewayParam) SetId(v int64) {
+func (p *SimRouteUpdateMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SimRouteUpdateMobileGatewayParam) GetId() int64 {
+func (p *SimRouteUpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // SimRouteDeleteMobileGatewayParam is input parameters for the sacloud API
 type SimRouteDeleteMobileGatewayParam struct {
-	Index             int      `json:"index"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewSimRouteDeleteMobileGatewayParam return new SimRouteDeleteMobileGatewayParam
@@ -5340,7 +5341,7 @@ func (p *SimRouteDeleteMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5432,24 +5433,24 @@ func (p *SimRouteDeleteMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *SimRouteDeleteMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *SimRouteDeleteMobileGatewayParam) SetId(v int64) {
+func (p *SimRouteDeleteMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *SimRouteDeleteMobileGatewayParam) GetId() int64 {
+func (p *SimRouteDeleteMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DnsUpdateMobileGatewayParam is input parameters for the sacloud API
 type DnsUpdateMobileGatewayParam struct {
-	Dns1              string   `json:"dns1"`
-	Dns2              string   `json:"dns2"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Dns1              string     `json:"dns1"`
+	Dns2              string     `json:"dns2"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDnsUpdateMobileGatewayParam return new DnsUpdateMobileGatewayParam
@@ -5481,7 +5482,7 @@ func (p *DnsUpdateMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5601,23 +5602,23 @@ func (p *DnsUpdateMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *DnsUpdateMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DnsUpdateMobileGatewayParam) SetId(v int64) {
+func (p *DnsUpdateMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DnsUpdateMobileGatewayParam) GetId() int64 {
+func (p *DnsUpdateMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // LogsMobileGatewayParam is input parameters for the sacloud API
 type LogsMobileGatewayParam struct {
-	Follow            bool     `json:"follow"`
-	RefreshInterval   int64    `json:"refresh-interval"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Follow            bool       `json:"follow"`
+	RefreshInterval   int64      `json:"refresh-interval"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewLogsMobileGatewayParam return new LogsMobileGatewayParam
@@ -5649,7 +5650,7 @@ func (p *LogsMobileGatewayParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -5741,10 +5742,10 @@ func (p *LogsMobileGatewayParam) SetGenerateSkeleton(v bool) {
 func (p *LogsMobileGatewayParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *LogsMobileGatewayParam) SetId(v int64) {
+func (p *LogsMobileGatewayParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *LogsMobileGatewayParam) GetId() int64 {
+func (p *LogsMobileGatewayParam) GetId() sacloud.ID {
 	return p.Id
 }

@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -200,18 +201,18 @@ func (p *ListWebAccelParam) GetQueryFile() string {
 
 // ReadWebAccelParam is input parameters for the sacloud API
 type ReadWebAccelParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadWebAccelParam return new ReadWebAccelParam
@@ -255,7 +256,7 @@ func (p *ReadWebAccelParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -395,28 +396,28 @@ func (p *ReadWebAccelParam) SetQueryFile(v string) {
 func (p *ReadWebAccelParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadWebAccelParam) SetId(v int64) {
+func (p *ReadWebAccelParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadWebAccelParam) GetId() int64 {
+func (p *ReadWebAccelParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // CertificateInfoWebAccelParam is input parameters for the sacloud API
 type CertificateInfoWebAccelParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewCertificateInfoWebAccelParam return new CertificateInfoWebAccelParam
@@ -460,7 +461,7 @@ func (p *CertificateInfoWebAccelParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -600,33 +601,33 @@ func (p *CertificateInfoWebAccelParam) SetQueryFile(v string) {
 func (p *CertificateInfoWebAccelParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateInfoWebAccelParam) SetId(v int64) {
+func (p *CertificateInfoWebAccelParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateInfoWebAccelParam) GetId() int64 {
+func (p *CertificateInfoWebAccelParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // CertificateNewWebAccelParam is input parameters for the sacloud API
 type CertificateNewWebAccelParam struct {
-	Cert              string   `json:"cert"`
-	Key               string   `json:"key"`
-	CertContent       string   `json:"cert-content"`
-	KeyContent        string   `json:"key-content"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Cert              string     `json:"cert"`
+	Key               string     `json:"key"`
+	CertContent       string     `json:"cert-content"`
+	KeyContent        string     `json:"key-content"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewCertificateNewWebAccelParam return new CertificateNewWebAccelParam
@@ -685,7 +686,7 @@ func (p *CertificateNewWebAccelParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -892,33 +893,33 @@ func (p *CertificateNewWebAccelParam) SetQueryFile(v string) {
 func (p *CertificateNewWebAccelParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateNewWebAccelParam) SetId(v int64) {
+func (p *CertificateNewWebAccelParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateNewWebAccelParam) GetId() int64 {
+func (p *CertificateNewWebAccelParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // CertificateUpdateWebAccelParam is input parameters for the sacloud API
 type CertificateUpdateWebAccelParam struct {
-	Cert              string   `json:"cert"`
-	Key               string   `json:"key"`
-	CertContent       string   `json:"cert-content"`
-	KeyContent        string   `json:"key-content"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Cert              string     `json:"cert"`
+	Key               string     `json:"key"`
+	CertContent       string     `json:"cert-content"`
+	KeyContent        string     `json:"key-content"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewCertificateUpdateWebAccelParam return new CertificateUpdateWebAccelParam
@@ -977,7 +978,7 @@ func (p *CertificateUpdateWebAccelParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1184,11 +1185,11 @@ func (p *CertificateUpdateWebAccelParam) SetQueryFile(v string) {
 func (p *CertificateUpdateWebAccelParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *CertificateUpdateWebAccelParam) SetId(v int64) {
+func (p *CertificateUpdateWebAccelParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *CertificateUpdateWebAccelParam) GetId() int64 {
+func (p *CertificateUpdateWebAccelParam) GetId() sacloud.ID {
 	return p.Id
 }
 

@@ -148,7 +148,7 @@ func handleNetworkParams(sb serverBuilder, ctx command.Context, params *params.B
 		}
 
 		if params.PacketFilterId != sacloud.EmptyID {
-			sb.SetPacketFilterIDs([]int64{params.PacketFilterId})
+			sb.SetPacketFilterIDs([]sacloud.ID{params.PacketFilterId})
 		}
 	}
 

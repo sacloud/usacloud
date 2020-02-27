@@ -22,6 +22,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/sacloud/libsacloud/sacloud"
+
 	"github.com/sacloud/libsacloud/api"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/version"
@@ -163,12 +165,12 @@ func getOutputWriter(formatter output.Formatter) output.Output {
 	}
 }
 
-func StringIDs(ids []int64) []string {
+func StringIDs(ids []sacloud.ID) []string {
 	var strIDs []string
 
 	for _, v := range ids {
 		if v != 0 {
-			strIDs = append(strIDs, fmt.Sprintf("%d", v))
+			strIDs = append(strIDs, v.String())
 		}
 	}
 
@@ -191,7 +193,7 @@ func Confirm(msg string) bool {
 	return input == "y" || input == "yes"
 }
 
-func ConfirmContinue(target string, ids ...int64) bool {
+func ConfirmContinue(target string, ids ...sacloud.ID) bool {
 	if len(ids) == 0 {
 		return Confirm(fmt.Sprintf("Are you sure you want to %s?", target))
 	}
@@ -201,9 +203,9 @@ func ConfirmContinue(target string, ids ...int64) bool {
 	return Confirm(fmt.Sprintf("%s\nAre you sure you want to %s?", msg, target))
 }
 
-func UniqIDs(elements []int64) []int64 {
-	encountered := map[int64]bool{}
-	result := []int64{}
+func UniqIDs(elements []sacloud.ID) []sacloud.ID {
+	encountered := map[sacloud.ID]bool{}
+	result := []sacloud.ID{}
 	for v := range elements {
 		if !encountered[elements[v]] {
 			encountered[elements[v]] = true

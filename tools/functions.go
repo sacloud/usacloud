@@ -20,6 +20,8 @@ import (
 	"log"
 	"strings"
 
+	"github.com/sacloud/libsacloud/sacloud"
+
 	"github.com/huandu/xstrings"
 )
 
@@ -146,4 +148,16 @@ func FlattenFloat64List(list []float64) string {
 		return strings.Join(tmp, ",")
 	}
 	return ""
+}
+
+func FlattenIDList(list []sacloud.ID) string {
+	if len(list) > 0 {
+		tmp := []string{}
+		for _, s := range list {
+			tmp = append(tmp, fmt.Sprintf("sacloud.ID(%d)", s.Int64()))
+		}
+		return strings.Join(tmp, ",")
+	}
+	return ""
+
 }

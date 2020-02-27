@@ -314,7 +314,7 @@ func diskCreateParam() map[string]*schema.Schema {
 			Order:           20,
 		},
 		"source-archive-id": {
-			Type:            schema.TypeInt64,
+			Type:            schema.TypeId,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetSourceArchive",
 			Description:     "set source disk ID",
@@ -325,7 +325,7 @@ func diskCreateParam() map[string]*schema.Schema {
 			Order:           30,
 		},
 		"source-disk-id": {
-			Type:            schema.TypeInt64,
+			Type:            schema.TypeId,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetSourceDisk",
 			Description:     "set source disk ID",
@@ -348,7 +348,7 @@ func diskCreateParam() map[string]*schema.Schema {
 			Order:           50,
 		},
 		"distant-from": {
-			Type:         schema.TypeIntList,
+			Type:         schema.TypeIdList,
 			HandlerType:  schema.HandlerPathThrough,
 			Description:  "set distant from disk IDs",
 			ValidateFunc: validateIntSlice(validateSakuraID()),
@@ -404,7 +404,7 @@ func diskConfigParam() map[string]*schema.Schema {
 			Order:       20,
 		},
 		"ssh-key-ids": {
-			Type:            schema.TypeIntList,
+			Type:            schema.TypeIdList,
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetSSHKeys",
 			Description:     "set ssh-key ID(s)",
@@ -452,7 +452,7 @@ func diskConfigParam() map[string]*schema.Schema {
 			Order:           42,
 		},
 		"startup-script-ids": {
-			Type:            schema.TypeIntList,
+			Type:            schema.TypeIdList,
 			Aliases:         []string{"note-ids"},
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetNotes",
@@ -476,7 +476,7 @@ func diskWaitForCopyParam() map[string]*schema.Schema {
 func diskReinstallFromArchiveParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"source-archive-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source archive ID",
 			Required:     true,
@@ -486,7 +486,7 @@ func diskReinstallFromArchiveParam() map[string]*schema.Schema {
 			Order:        10,
 		},
 		"distant-from": {
-			Type:         schema.TypeIntList,
+			Type:         schema.TypeIdList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set distant from disk IDs",
 			ValidateFunc: validateIntSlice(validateSakuraID()),
@@ -500,7 +500,7 @@ func diskReinstallFromArchiveParam() map[string]*schema.Schema {
 func diskReinstallFromDiskParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"source-disk-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set source disk ID",
 			Required:     true,
@@ -510,7 +510,7 @@ func diskReinstallFromDiskParam() map[string]*schema.Schema {
 			Order:        10,
 		},
 		"distant-from": {
-			Type:         schema.TypeIntList,
+			Type:         schema.TypeIdList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set distant from disk IDs",
 			ValidateFunc: validateIntSlice(validateSakuraID()),
@@ -524,7 +524,7 @@ func diskReinstallFromDiskParam() map[string]*schema.Schema {
 func diskReinstallToBlankParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"distant-from": {
-			Type:         schema.TypeIntList,
+			Type:         schema.TypeIdList,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set distant from disk IDs",
 			ValidateFunc: validateIntSlice(validateSakuraID()),
@@ -538,7 +538,7 @@ func diskReinstallToBlankParam() map[string]*schema.Schema {
 func diskServerConnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"server-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set target server ID",
 			Required:     true,

@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,26 +25,26 @@ import (
 
 // ListDiskParam is input parameters for the sacloud API
 type ListDiskParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Scope             string   `json:"scope"`
-	Tags              []string `json:"tags"`
-	SourceArchiveId   int64    `json:"source-archive-id"`
-	SourceDiskId      int64    `json:"source-disk-id"`
-	Storage           string   `json:"storage"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Scope             string       `json:"scope"`
+	Tags              []string     `json:"tags"`
+	SourceArchiveId   sacloud.ID   `json:"source-archive-id"`
+	SourceDiskId      sacloud.ID   `json:"source-disk-id"`
+	Storage           string       `json:"storage"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListDiskParam return new ListDiskParam
@@ -57,7 +58,7 @@ func (p *ListDiskParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Scope) {
 		p.Scope = ""
@@ -66,10 +67,10 @@ func (p *ListDiskParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = 0
+		p.SourceArchiveId = sacloud.ID(0)
 	}
 	if isEmpty(p.SourceDiskId) {
-		p.SourceDiskId = 0
+		p.SourceDiskId = sacloud.ID(0)
 	}
 	if isEmpty(p.Storage) {
 		p.Storage = ""
@@ -227,11 +228,11 @@ func (p *ListDiskParam) SetName(v []string) {
 func (p *ListDiskParam) GetName() []string {
 	return p.Name
 }
-func (p *ListDiskParam) SetId(v []int64) {
+func (p *ListDiskParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListDiskParam) GetId() []int64 {
+func (p *ListDiskParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListDiskParam) SetScope(v string) {
@@ -248,18 +249,18 @@ func (p *ListDiskParam) SetTags(v []string) {
 func (p *ListDiskParam) GetTags() []string {
 	return p.Tags
 }
-func (p *ListDiskParam) SetSourceArchiveId(v int64) {
+func (p *ListDiskParam) SetSourceArchiveId(v sacloud.ID) {
 	p.SourceArchiveId = v
 }
 
-func (p *ListDiskParam) GetSourceArchiveId() int64 {
+func (p *ListDiskParam) GetSourceArchiveId() sacloud.ID {
 	return p.SourceArchiveId
 }
-func (p *ListDiskParam) SetSourceDiskId(v int64) {
+func (p *ListDiskParam) SetSourceDiskId(v sacloud.ID) {
 	p.SourceDiskId = v
 }
 
-func (p *ListDiskParam) GetSourceDiskId() int64 {
+func (p *ListDiskParam) GetSourceDiskId() sacloud.ID {
 	return p.SourceDiskId
 }
 func (p *ListDiskParam) SetStorage(v string) {
@@ -363,27 +364,27 @@ func (p *ListDiskParam) GetQueryFile() string {
 
 // CreateDiskParam is input parameters for the sacloud API
 type CreateDiskParam struct {
-	Plan              string   `json:"plan"`
-	Connection        string   `json:"connection"`
-	SourceArchiveId   int64    `json:"source-archive-id"`
-	SourceDiskId      int64    `json:"source-disk-id"`
-	Size              int      `json:"size"`
-	DistantFrom       []int64  `json:"distant-from"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Plan              string       `json:"plan"`
+	Connection        string       `json:"connection"`
+	SourceArchiveId   sacloud.ID   `json:"source-archive-id"`
+	SourceDiskId      sacloud.ID   `json:"source-disk-id"`
+	Size              int          `json:"size"`
+	DistantFrom       []sacloud.ID `json:"distant-from"`
+	Name              string       `json:"name"`
+	Description       string       `json:"description"`
+	Tags              []string     `json:"tags"`
+	IconId            sacloud.ID   `json:"icon-id"`
+	Assumeyes         bool         `json:"assumeyes"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewCreateDiskParam return new CreateDiskParam
@@ -405,16 +406,16 @@ func (p *CreateDiskParam) FillValueToSkeleton() {
 		p.Connection = ""
 	}
 	if isEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = 0
+		p.SourceArchiveId = sacloud.ID(0)
 	}
 	if isEmpty(p.SourceDiskId) {
-		p.SourceDiskId = 0
+		p.SourceDiskId = sacloud.ID(0)
 	}
 	if isEmpty(p.Size) {
 		p.Size = 0
 	}
 	if isEmpty(p.DistantFrom) {
-		p.DistantFrom = []int64{0}
+		p.DistantFrom = []sacloud.ID{}
 	}
 	if isEmpty(p.Name) {
 		p.Name = ""
@@ -426,7 +427,7 @@ func (p *CreateDiskParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -645,18 +646,18 @@ func (p *CreateDiskParam) SetConnection(v string) {
 func (p *CreateDiskParam) GetConnection() string {
 	return p.Connection
 }
-func (p *CreateDiskParam) SetSourceArchiveId(v int64) {
+func (p *CreateDiskParam) SetSourceArchiveId(v sacloud.ID) {
 	p.SourceArchiveId = v
 }
 
-func (p *CreateDiskParam) GetSourceArchiveId() int64 {
+func (p *CreateDiskParam) GetSourceArchiveId() sacloud.ID {
 	return p.SourceArchiveId
 }
-func (p *CreateDiskParam) SetSourceDiskId(v int64) {
+func (p *CreateDiskParam) SetSourceDiskId(v sacloud.ID) {
 	p.SourceDiskId = v
 }
 
-func (p *CreateDiskParam) GetSourceDiskId() int64 {
+func (p *CreateDiskParam) GetSourceDiskId() sacloud.ID {
 	return p.SourceDiskId
 }
 func (p *CreateDiskParam) SetSize(v int) {
@@ -666,11 +667,11 @@ func (p *CreateDiskParam) SetSize(v int) {
 func (p *CreateDiskParam) GetSize() int {
 	return p.Size
 }
-func (p *CreateDiskParam) SetDistantFrom(v []int64) {
+func (p *CreateDiskParam) SetDistantFrom(v []sacloud.ID) {
 	p.DistantFrom = v
 }
 
-func (p *CreateDiskParam) GetDistantFrom() []int64 {
+func (p *CreateDiskParam) GetDistantFrom() []sacloud.ID {
 	return p.DistantFrom
 }
 func (p *CreateDiskParam) SetName(v string) {
@@ -694,11 +695,11 @@ func (p *CreateDiskParam) SetTags(v []string) {
 func (p *CreateDiskParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateDiskParam) SetIconId(v int64) {
+func (p *CreateDiskParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateDiskParam) GetIconId() int64 {
+func (p *CreateDiskParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateDiskParam) SetAssumeyes(v bool) {
@@ -781,18 +782,18 @@ func (p *CreateDiskParam) GetQueryFile() string {
 
 // ReadDiskParam is input parameters for the sacloud API
 type ReadDiskParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadDiskParam return new ReadDiskParam
@@ -836,7 +837,7 @@ func (p *ReadDiskParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -976,34 +977,34 @@ func (p *ReadDiskParam) SetQueryFile(v string) {
 func (p *ReadDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadDiskParam) SetId(v int64) {
+func (p *ReadDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadDiskParam) GetId() int64 {
+func (p *ReadDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateDiskParam is input parameters for the sacloud API
 type UpdateDiskParam struct {
-	Connection        string   `json:"connection"`
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Connection        string     `json:"connection"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateDiskParam return new UpdateDiskParam
@@ -1029,7 +1030,7 @@ func (p *UpdateDiskParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1065,7 +1066,7 @@ func (p *UpdateDiskParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1198,11 +1199,11 @@ func (p *UpdateDiskParam) SetTags(v []string) {
 func (p *UpdateDiskParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateDiskParam) SetIconId(v int64) {
+func (p *UpdateDiskParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateDiskParam) GetIconId() int64 {
+func (p *UpdateDiskParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateDiskParam) SetAssumeyes(v bool) {
@@ -1282,29 +1283,29 @@ func (p *UpdateDiskParam) SetQueryFile(v string) {
 func (p *UpdateDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateDiskParam) SetId(v int64) {
+func (p *UpdateDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateDiskParam) GetId() int64 {
+func (p *UpdateDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteDiskParam is input parameters for the sacloud API
 type DeleteDiskParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteDiskParam return new DeleteDiskParam
@@ -1351,7 +1352,7 @@ func (p *DeleteDiskParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1498,37 +1499,37 @@ func (p *DeleteDiskParam) SetQueryFile(v string) {
 func (p *DeleteDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteDiskParam) SetId(v int64) {
+func (p *DeleteDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteDiskParam) GetId() int64 {
+func (p *DeleteDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // EditDiskParam is input parameters for the sacloud API
 type EditDiskParam struct {
-	Hostname            string   `json:"hostname"`
-	Password            string   `json:"password"`
-	SshKeyIds           []int64  `json:"ssh-key-ids"`
-	DisablePasswordAuth bool     `json:"disable-password-auth"`
-	Ipaddress           string   `json:"ipaddress"`
-	DefaultRoute        string   `json:"default-route"`
-	NwMasklen           int      `json:"nw-masklen"`
-	StartupScriptIds    []int64  `json:"startup-script-ids"`
-	Selector            []string `json:"selector"`
-	Assumeyes           bool     `json:"assumeyes"`
-	ParamTemplate       string   `json:"param-template"`
-	ParamTemplateFile   string   `json:"param-template-file"`
-	GenerateSkeleton    bool     `json:"generate-skeleton"`
-	OutputType          string   `json:"output-type"`
-	Column              []string `json:"column"`
-	Quiet               bool     `json:"quiet"`
-	Format              string   `json:"format"`
-	FormatFile          string   `json:"format-file"`
-	Query               string   `json:"query"`
-	QueryFile           string   `json:"query-file"`
-	Id                  int64    `json:"id"`
+	Hostname            string       `json:"hostname"`
+	Password            string       `json:"password"`
+	SshKeyIds           []sacloud.ID `json:"ssh-key-ids"`
+	DisablePasswordAuth bool         `json:"disable-password-auth"`
+	Ipaddress           string       `json:"ipaddress"`
+	DefaultRoute        string       `json:"default-route"`
+	NwMasklen           int          `json:"nw-masklen"`
+	StartupScriptIds    []sacloud.ID `json:"startup-script-ids"`
+	Selector            []string     `json:"selector"`
+	Assumeyes           bool         `json:"assumeyes"`
+	ParamTemplate       string       `json:"param-template"`
+	ParamTemplateFile   string       `json:"param-template-file"`
+	GenerateSkeleton    bool         `json:"generate-skeleton"`
+	OutputType          string       `json:"output-type"`
+	Column              []string     `json:"column"`
+	Quiet               bool         `json:"quiet"`
+	Format              string       `json:"format"`
+	FormatFile          string       `json:"format-file"`
+	Query               string       `json:"query"`
+	QueryFile           string       `json:"query-file"`
+	Id                  sacloud.ID   `json:"id"`
 }
 
 // NewEditDiskParam return new EditDiskParam
@@ -1548,7 +1549,7 @@ func (p *EditDiskParam) FillValueToSkeleton() {
 		p.Password = ""
 	}
 	if isEmpty(p.SshKeyIds) {
-		p.SshKeyIds = []int64{0}
+		p.SshKeyIds = []sacloud.ID{}
 	}
 	if isEmpty(p.DisablePasswordAuth) {
 		p.DisablePasswordAuth = false
@@ -1563,7 +1564,7 @@ func (p *EditDiskParam) FillValueToSkeleton() {
 		p.NwMasklen = 0
 	}
 	if isEmpty(p.StartupScriptIds) {
-		p.StartupScriptIds = []int64{0}
+		p.StartupScriptIds = []sacloud.ID{}
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -1602,7 +1603,7 @@ func (p *EditDiskParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1700,11 +1701,11 @@ func (p *EditDiskParam) SetPassword(v string) {
 func (p *EditDiskParam) GetPassword() string {
 	return p.Password
 }
-func (p *EditDiskParam) SetSshKeyIds(v []int64) {
+func (p *EditDiskParam) SetSshKeyIds(v []sacloud.ID) {
 	p.SshKeyIds = v
 }
 
-func (p *EditDiskParam) GetSshKeyIds() []int64 {
+func (p *EditDiskParam) GetSshKeyIds() []sacloud.ID {
 	return p.SshKeyIds
 }
 func (p *EditDiskParam) SetDisablePasswordAuth(v bool) {
@@ -1735,11 +1736,11 @@ func (p *EditDiskParam) SetNwMasklen(v int) {
 func (p *EditDiskParam) GetNwMasklen() int {
 	return p.NwMasklen
 }
-func (p *EditDiskParam) SetStartupScriptIds(v []int64) {
+func (p *EditDiskParam) SetStartupScriptIds(v []sacloud.ID) {
 	p.StartupScriptIds = v
 }
 
-func (p *EditDiskParam) GetStartupScriptIds() []int64 {
+func (p *EditDiskParam) GetStartupScriptIds() []sacloud.ID {
 	return p.StartupScriptIds
 }
 func (p *EditDiskParam) SetSelector(v []string) {
@@ -1826,29 +1827,29 @@ func (p *EditDiskParam) SetQueryFile(v string) {
 func (p *EditDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *EditDiskParam) SetId(v int64) {
+func (p *EditDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *EditDiskParam) GetId() int64 {
+func (p *EditDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ResizePartitionDiskParam is input parameters for the sacloud API
 type ResizePartitionDiskParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewResizePartitionDiskParam return new ResizePartitionDiskParam
@@ -1895,7 +1896,7 @@ func (p *ResizePartitionDiskParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2042,24 +2043,24 @@ func (p *ResizePartitionDiskParam) SetQueryFile(v string) {
 func (p *ResizePartitionDiskParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ResizePartitionDiskParam) SetId(v int64) {
+func (p *ResizePartitionDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResizePartitionDiskParam) GetId() int64 {
+func (p *ResizePartitionDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ReinstallFromArchiveDiskParam is input parameters for the sacloud API
 type ReinstallFromArchiveDiskParam struct {
-	SourceArchiveId   int64    `json:"source-archive-id"`
-	DistantFrom       []int64  `json:"distant-from"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	SourceArchiveId   sacloud.ID   `json:"source-archive-id"`
+	DistantFrom       []sacloud.ID `json:"distant-from"`
+	Selector          []string     `json:"selector"`
+	Assumeyes         bool         `json:"assumeyes"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	Id                sacloud.ID   `json:"id"`
 }
 
 // NewReinstallFromArchiveDiskParam return new ReinstallFromArchiveDiskParam
@@ -2070,10 +2071,10 @@ func NewReinstallFromArchiveDiskParam() *ReinstallFromArchiveDiskParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *ReinstallFromArchiveDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.SourceArchiveId) {
-		p.SourceArchiveId = 0
+		p.SourceArchiveId = sacloud.ID(0)
 	}
 	if isEmpty(p.DistantFrom) {
-		p.DistantFrom = []int64{0}
+		p.DistantFrom = []sacloud.ID{}
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -2091,7 +2092,7 @@ func (p *ReinstallFromArchiveDiskParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2155,18 +2156,18 @@ func (p *ReinstallFromArchiveDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReinstallFromArchiveDiskParam) SetSourceArchiveId(v int64) {
+func (p *ReinstallFromArchiveDiskParam) SetSourceArchiveId(v sacloud.ID) {
 	p.SourceArchiveId = v
 }
 
-func (p *ReinstallFromArchiveDiskParam) GetSourceArchiveId() int64 {
+func (p *ReinstallFromArchiveDiskParam) GetSourceArchiveId() sacloud.ID {
 	return p.SourceArchiveId
 }
-func (p *ReinstallFromArchiveDiskParam) SetDistantFrom(v []int64) {
+func (p *ReinstallFromArchiveDiskParam) SetDistantFrom(v []sacloud.ID) {
 	p.DistantFrom = v
 }
 
-func (p *ReinstallFromArchiveDiskParam) GetDistantFrom() []int64 {
+func (p *ReinstallFromArchiveDiskParam) GetDistantFrom() []sacloud.ID {
 	return p.DistantFrom
 }
 func (p *ReinstallFromArchiveDiskParam) SetSelector(v []string) {
@@ -2204,24 +2205,24 @@ func (p *ReinstallFromArchiveDiskParam) SetGenerateSkeleton(v bool) {
 func (p *ReinstallFromArchiveDiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReinstallFromArchiveDiskParam) SetId(v int64) {
+func (p *ReinstallFromArchiveDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReinstallFromArchiveDiskParam) GetId() int64 {
+func (p *ReinstallFromArchiveDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ReinstallFromDiskDiskParam is input parameters for the sacloud API
 type ReinstallFromDiskDiskParam struct {
-	SourceDiskId      int64    `json:"source-disk-id"`
-	DistantFrom       []int64  `json:"distant-from"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	SourceDiskId      sacloud.ID   `json:"source-disk-id"`
+	DistantFrom       []sacloud.ID `json:"distant-from"`
+	Selector          []string     `json:"selector"`
+	Assumeyes         bool         `json:"assumeyes"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	Id                sacloud.ID   `json:"id"`
 }
 
 // NewReinstallFromDiskDiskParam return new ReinstallFromDiskDiskParam
@@ -2232,10 +2233,10 @@ func NewReinstallFromDiskDiskParam() *ReinstallFromDiskDiskParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *ReinstallFromDiskDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.SourceDiskId) {
-		p.SourceDiskId = 0
+		p.SourceDiskId = sacloud.ID(0)
 	}
 	if isEmpty(p.DistantFrom) {
-		p.DistantFrom = []int64{0}
+		p.DistantFrom = []sacloud.ID{}
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -2253,7 +2254,7 @@ func (p *ReinstallFromDiskDiskParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2317,18 +2318,18 @@ func (p *ReinstallFromDiskDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReinstallFromDiskDiskParam) SetSourceDiskId(v int64) {
+func (p *ReinstallFromDiskDiskParam) SetSourceDiskId(v sacloud.ID) {
 	p.SourceDiskId = v
 }
 
-func (p *ReinstallFromDiskDiskParam) GetSourceDiskId() int64 {
+func (p *ReinstallFromDiskDiskParam) GetSourceDiskId() sacloud.ID {
 	return p.SourceDiskId
 }
-func (p *ReinstallFromDiskDiskParam) SetDistantFrom(v []int64) {
+func (p *ReinstallFromDiskDiskParam) SetDistantFrom(v []sacloud.ID) {
 	p.DistantFrom = v
 }
 
-func (p *ReinstallFromDiskDiskParam) GetDistantFrom() []int64 {
+func (p *ReinstallFromDiskDiskParam) GetDistantFrom() []sacloud.ID {
 	return p.DistantFrom
 }
 func (p *ReinstallFromDiskDiskParam) SetSelector(v []string) {
@@ -2366,23 +2367,23 @@ func (p *ReinstallFromDiskDiskParam) SetGenerateSkeleton(v bool) {
 func (p *ReinstallFromDiskDiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReinstallFromDiskDiskParam) SetId(v int64) {
+func (p *ReinstallFromDiskDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReinstallFromDiskDiskParam) GetId() int64 {
+func (p *ReinstallFromDiskDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ReinstallToBlankDiskParam is input parameters for the sacloud API
 type ReinstallToBlankDiskParam struct {
-	DistantFrom       []int64  `json:"distant-from"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	DistantFrom       []sacloud.ID `json:"distant-from"`
+	Selector          []string     `json:"selector"`
+	Assumeyes         bool         `json:"assumeyes"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	Id                sacloud.ID   `json:"id"`
 }
 
 // NewReinstallToBlankDiskParam return new ReinstallToBlankDiskParam
@@ -2393,7 +2394,7 @@ func NewReinstallToBlankDiskParam() *ReinstallToBlankDiskParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *ReinstallToBlankDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.DistantFrom) {
-		p.DistantFrom = []int64{0}
+		p.DistantFrom = []sacloud.ID{}
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -2411,7 +2412,7 @@ func (p *ReinstallToBlankDiskParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2461,11 +2462,11 @@ func (p *ReinstallToBlankDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ReinstallToBlankDiskParam) SetDistantFrom(v []int64) {
+func (p *ReinstallToBlankDiskParam) SetDistantFrom(v []sacloud.ID) {
 	p.DistantFrom = v
 }
 
-func (p *ReinstallToBlankDiskParam) GetDistantFrom() []int64 {
+func (p *ReinstallToBlankDiskParam) GetDistantFrom() []sacloud.ID {
 	return p.DistantFrom
 }
 func (p *ReinstallToBlankDiskParam) SetSelector(v []string) {
@@ -2503,23 +2504,23 @@ func (p *ReinstallToBlankDiskParam) SetGenerateSkeleton(v bool) {
 func (p *ReinstallToBlankDiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ReinstallToBlankDiskParam) SetId(v int64) {
+func (p *ReinstallToBlankDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReinstallToBlankDiskParam) GetId() int64 {
+func (p *ReinstallToBlankDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerConnectDiskParam is input parameters for the sacloud API
 type ServerConnectDiskParam struct {
-	ServerId          int64    `json:"server-id"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	ServerId          sacloud.ID `json:"server-id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerConnectDiskParam return new ServerConnectDiskParam
@@ -2530,7 +2531,7 @@ func NewServerConnectDiskParam() *ServerConnectDiskParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *ServerConnectDiskParam) FillValueToSkeleton() {
 	if isEmpty(p.ServerId) {
-		p.ServerId = 0
+		p.ServerId = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -2548,7 +2549,7 @@ func (p *ServerConnectDiskParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2605,11 +2606,11 @@ func (p *ServerConnectDiskParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerConnectDiskParam) SetServerId(v int64) {
+func (p *ServerConnectDiskParam) SetServerId(v sacloud.ID) {
 	p.ServerId = v
 }
 
-func (p *ServerConnectDiskParam) GetServerId() int64 {
+func (p *ServerConnectDiskParam) GetServerId() sacloud.ID {
 	return p.ServerId
 }
 func (p *ServerConnectDiskParam) SetSelector(v []string) {
@@ -2647,22 +2648,22 @@ func (p *ServerConnectDiskParam) SetGenerateSkeleton(v bool) {
 func (p *ServerConnectDiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerConnectDiskParam) SetId(v int64) {
+func (p *ServerConnectDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerConnectDiskParam) GetId() int64 {
+func (p *ServerConnectDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerDisconnectDiskParam is input parameters for the sacloud API
 type ServerDisconnectDiskParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerDisconnectDiskParam return new ServerDisconnectDiskParam
@@ -2688,7 +2689,7 @@ func (p *ServerDisconnectDiskParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2766,31 +2767,31 @@ func (p *ServerDisconnectDiskParam) SetGenerateSkeleton(v bool) {
 func (p *ServerDisconnectDiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ServerDisconnectDiskParam) SetId(v int64) {
+func (p *ServerDisconnectDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerDisconnectDiskParam) GetId() int64 {
+func (p *ServerDisconnectDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // MonitorDiskParam is input parameters for the sacloud API
 type MonitorDiskParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	End               string   `json:"end"`
-	Id                int64    `json:"id"`
-	KeyFormat         string   `json:"key-format"`
-	Start             string   `json:"start"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	End               string     `json:"end"`
+	Id                sacloud.ID `json:"id"`
+	KeyFormat         string     `json:"key-format"`
+	Start             string     `json:"start"`
 }
 
 // NewMonitorDiskParam return new MonitorDiskParam
@@ -2840,7 +2841,7 @@ func (p *MonitorDiskParam) FillValueToSkeleton() {
 		p.End = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 	if isEmpty(p.KeyFormat) {
 		p.KeyFormat = ""
@@ -3014,11 +3015,11 @@ func (p *MonitorDiskParam) SetEnd(v string) {
 func (p *MonitorDiskParam) GetEnd() string {
 	return p.End
 }
-func (p *MonitorDiskParam) SetId(v int64) {
+func (p *MonitorDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorDiskParam) GetId() int64 {
+func (p *MonitorDiskParam) GetId() sacloud.ID {
 	return p.Id
 }
 func (p *MonitorDiskParam) SetKeyFormat(v string) {
@@ -3038,11 +3039,11 @@ func (p *MonitorDiskParam) GetStart() string {
 
 // WaitForCopyDiskParam is input parameters for the sacloud API
 type WaitForCopyDiskParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewWaitForCopyDiskParam return new WaitForCopyDiskParam
@@ -3065,7 +3066,7 @@ func (p *WaitForCopyDiskParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -3136,10 +3137,10 @@ func (p *WaitForCopyDiskParam) SetGenerateSkeleton(v bool) {
 func (p *WaitForCopyDiskParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForCopyDiskParam) SetId(v int64) {
+func (p *WaitForCopyDiskParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForCopyDiskParam) GetId() int64 {
+func (p *WaitForCopyDiskParam) GetId() sacloud.ID {
 	return p.Id
 }

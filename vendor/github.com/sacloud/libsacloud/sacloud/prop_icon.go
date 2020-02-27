@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,9 +25,9 @@ func (p *propIcon) GetIcon() *Icon {
 }
 
 // GetIconID アイコンIDを取得
-func (p *propIcon) GetIconID() int64 {
+func (p *propIcon) GetIconID() ID {
 	if p.HasIcon() {
-		return p.Icon.GetID()
+		return p.Icon.ID
 	}
 	return -1
 }
@@ -46,7 +46,7 @@ func (p *propIcon) HasIcon() bool {
 }
 
 // SetIconByID 指定のアイコンIDを設定
-func (p *propIcon) SetIconByID(id int64) {
+func (p *propIcon) SetIconByID(id ID) {
 	p.Icon = &Icon{Resource: NewResource(id)}
 }
 

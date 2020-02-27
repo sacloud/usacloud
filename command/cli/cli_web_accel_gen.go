@@ -23,6 +23,7 @@ import (
 	"sync"
 
 	"github.com/imdario/mergo"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
 	"github.com/sacloud/usacloud/command/funcs"
@@ -448,7 +449,7 @@ func init() {
 						readParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = c.Int64("id")
+						readParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -569,7 +570,7 @@ func init() {
 						readParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = c.Int64("id")
+						readParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -608,7 +609,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), readParam)
 
 					apiClient := ctx.GetAPIClient().WebAccel
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -821,7 +822,7 @@ func init() {
 						certificateInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						certificateInfoParam.Id = c.Int64("id")
+						certificateInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -942,7 +943,7 @@ func init() {
 						certificateInfoParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						certificateInfoParam.Id = c.Int64("id")
+						certificateInfoParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -981,7 +982,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), certificateInfoParam)
 
 					apiClient := ctx.GetAPIClient().WebAccel
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -1230,7 +1231,7 @@ func init() {
 						certificateNewParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						certificateNewParam.Id = c.Int64("id")
+						certificateNewParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1366,7 +1367,7 @@ func init() {
 						certificateNewParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						certificateNewParam.Id = c.Int64("id")
+						certificateNewParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1405,7 +1406,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), certificateNewParam)
 
 					apiClient := ctx.GetAPIClient().WebAccel
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -1664,7 +1665,7 @@ func init() {
 						certificateUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						certificateUpdateParam.Id = c.Int64("id")
+						certificateUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1800,7 +1801,7 @@ func init() {
 						certificateUpdateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						certificateUpdateParam.Id = c.Int64("id")
+						certificateUpdateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1839,7 +1840,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), certificateUpdateParam)
 
 					apiClient := ctx.GetAPIClient().WebAccel
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 

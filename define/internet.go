@@ -385,7 +385,7 @@ func internetSubnetAddParam() map[string]*schema.Schema {
 func internetSubnetUpdateParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"subnet-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set Target Subnet ID",
 			ValidateFunc: validateSakuraShortID(12),
@@ -408,7 +408,7 @@ func internetSubnetUpdateParam() map[string]*schema.Schema {
 func internetSubnetDeleteParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"subnet-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set Target Subnet ID",
 			ValidateFunc: validateSakuraShortID(12),

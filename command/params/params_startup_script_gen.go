@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,24 +25,24 @@ import (
 
 // ListStartupScriptParam is input parameters for the sacloud API
 type ListStartupScriptParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Scope             string   `json:"scope"`
-	Tags              []string `json:"tags"`
-	Class             []string `json:"class"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Scope             string       `json:"scope"`
+	Tags              []string     `json:"tags"`
+	Class             []string     `json:"class"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListStartupScriptParam return new ListStartupScriptParam
@@ -55,7 +56,7 @@ func (p *ListStartupScriptParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Scope) {
 		p.Scope = ""
@@ -205,11 +206,11 @@ func (p *ListStartupScriptParam) SetName(v []string) {
 func (p *ListStartupScriptParam) GetName() []string {
 	return p.Name
 }
-func (p *ListStartupScriptParam) SetId(v []int64) {
+func (p *ListStartupScriptParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListStartupScriptParam) GetId() []int64 {
+func (p *ListStartupScriptParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListStartupScriptParam) SetScope(v string) {
@@ -327,23 +328,23 @@ func (p *ListStartupScriptParam) GetQueryFile() string {
 
 // CreateStartupScriptParam is input parameters for the sacloud API
 type CreateStartupScriptParam struct {
-	Script            string   `json:"script"`
-	ScriptContent     string   `json:"script-content"`
-	Class             string   `json:"class"`
-	Name              string   `json:"name"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Script            string     `json:"script"`
+	ScriptContent     string     `json:"script-content"`
+	Class             string     `json:"class"`
+	Name              string     `json:"name"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreateStartupScriptParam return new CreateStartupScriptParam
@@ -372,7 +373,7 @@ func (p *CreateStartupScriptParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -554,11 +555,11 @@ func (p *CreateStartupScriptParam) SetTags(v []string) {
 func (p *CreateStartupScriptParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateStartupScriptParam) SetIconId(v int64) {
+func (p *CreateStartupScriptParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateStartupScriptParam) GetIconId() int64 {
+func (p *CreateStartupScriptParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateStartupScriptParam) SetAssumeyes(v bool) {
@@ -641,18 +642,18 @@ func (p *CreateStartupScriptParam) GetQueryFile() string {
 
 // ReadStartupScriptParam is input parameters for the sacloud API
 type ReadStartupScriptParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadStartupScriptParam return new ReadStartupScriptParam
@@ -696,7 +697,7 @@ func (p *ReadStartupScriptParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -836,35 +837,35 @@ func (p *ReadStartupScriptParam) SetQueryFile(v string) {
 func (p *ReadStartupScriptParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadStartupScriptParam) SetId(v int64) {
+func (p *ReadStartupScriptParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadStartupScriptParam) GetId() int64 {
+func (p *ReadStartupScriptParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateStartupScriptParam is input parameters for the sacloud API
 type UpdateStartupScriptParam struct {
-	Script            string   `json:"script"`
-	ScriptContent     string   `json:"script-content"`
-	Class             string   `json:"class"`
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Script            string     `json:"script"`
+	ScriptContent     string     `json:"script-content"`
+	Class             string     `json:"class"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateStartupScriptParam return new UpdateStartupScriptParam
@@ -893,7 +894,7 @@ func (p *UpdateStartupScriptParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -929,7 +930,7 @@ func (p *UpdateStartupScriptParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1078,11 +1079,11 @@ func (p *UpdateStartupScriptParam) SetTags(v []string) {
 func (p *UpdateStartupScriptParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateStartupScriptParam) SetIconId(v int64) {
+func (p *UpdateStartupScriptParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateStartupScriptParam) GetIconId() int64 {
+func (p *UpdateStartupScriptParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateStartupScriptParam) SetAssumeyes(v bool) {
@@ -1162,29 +1163,29 @@ func (p *UpdateStartupScriptParam) SetQueryFile(v string) {
 func (p *UpdateStartupScriptParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateStartupScriptParam) SetId(v int64) {
+func (p *UpdateStartupScriptParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateStartupScriptParam) GetId() int64 {
+func (p *UpdateStartupScriptParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteStartupScriptParam is input parameters for the sacloud API
 type DeleteStartupScriptParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteStartupScriptParam return new DeleteStartupScriptParam
@@ -1231,7 +1232,7 @@ func (p *DeleteStartupScriptParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1378,10 +1379,10 @@ func (p *DeleteStartupScriptParam) SetQueryFile(v string) {
 func (p *DeleteStartupScriptParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteStartupScriptParam) SetId(v int64) {
+func (p *DeleteStartupScriptParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteStartupScriptParam) GetId() int64 {
+func (p *DeleteStartupScriptParam) GetId() sacloud.ID {
 	return p.Id
 }

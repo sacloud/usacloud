@@ -65,7 +65,7 @@ func DatabaseClone(ctx command.Context, params *params.CloneDatabaseParam) error
 		BackupTime:      params.BackupTime,
 		BackupDayOfWeek: params.BackupWeekdays,
 		WebUI:           params.EnableWebUi,
-		SwitchID:        fmt.Sprintf("%d", params.SwitchId),
+		SwitchID:        params.SwitchId,
 		IPAddress1:      params.Ipaddress1,
 		MaskLen:         params.NwMaskLen,
 		DefaultRoute:    params.DefaultRoute,

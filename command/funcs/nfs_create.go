@@ -29,7 +29,7 @@ func NFSCreate(ctx command.Context, params *params.CreateNFSParam) error {
 	api := client.GetNFSAPI()
 
 	p := &sacloud.CreateNFSValue{
-		SwitchID:     fmt.Sprintf("%d", params.SwitchId),
+		SwitchID:     params.SwitchId,
 		IPAddress:    params.Ipaddress,
 		MaskLen:      params.NwMaskLen,
 		DefaultRoute: params.DefaultRoute,

@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,22 +25,22 @@ import (
 
 // ListGSLBParam is input parameters for the sacloud API
 type ListGSLBParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListGSLBParam return new ListGSLBParam
@@ -53,7 +54,7 @@ func (p *ListGSLBParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -190,11 +191,11 @@ func (p *ListGSLBParam) SetName(v []string) {
 func (p *ListGSLBParam) GetName() []string {
 	return p.Name
 }
-func (p *ListGSLBParam) SetId(v []int64) {
+func (p *ListGSLBParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListGSLBParam) GetId() []int64 {
+func (p *ListGSLBParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListGSLBParam) SetTags(v []string) {
@@ -298,18 +299,18 @@ func (p *ListGSLBParam) GetQueryFile() string {
 
 // ServerInfoGSLBParam is input parameters for the sacloud API
 type ServerInfoGSLBParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerInfoGSLBParam return new ServerInfoGSLBParam
@@ -353,7 +354,7 @@ func (p *ServerInfoGSLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -493,39 +494,39 @@ func (p *ServerInfoGSLBParam) SetQueryFile(v string) {
 func (p *ServerInfoGSLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerInfoGSLBParam) SetId(v int64) {
+func (p *ServerInfoGSLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerInfoGSLBParam) GetId() int64 {
+func (p *ServerInfoGSLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // CreateGSLBParam is input parameters for the sacloud API
 type CreateGSLBParam struct {
-	Protocol          string   `json:"protocol"`
-	HostHeader        string   `json:"host-header"`
-	Path              string   `json:"path"`
-	ResponseCode      int      `json:"response-code"`
-	Port              int      `json:"port"`
-	DelayLoop         int      `json:"delay-loop"`
-	Weighted          bool     `json:"weighted"`
-	SorryServer       string   `json:"sorry-server"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Protocol          string     `json:"protocol"`
+	HostHeader        string     `json:"host-header"`
+	Path              string     `json:"path"`
+	ResponseCode      int        `json:"response-code"`
+	Port              int        `json:"port"`
+	DelayLoop         int        `json:"delay-loop"`
+	Weighted          bool       `json:"weighted"`
+	SorryServer       string     `json:"sorry-server"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreateGSLBParam return new CreateGSLBParam
@@ -576,7 +577,7 @@ func (p *CreateGSLBParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -812,11 +813,11 @@ func (p *CreateGSLBParam) SetTags(v []string) {
 func (p *CreateGSLBParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateGSLBParam) SetIconId(v int64) {
+func (p *CreateGSLBParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateGSLBParam) GetIconId() int64 {
+func (p *CreateGSLBParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateGSLBParam) SetAssumeyes(v bool) {
@@ -899,22 +900,22 @@ func (p *CreateGSLBParam) GetQueryFile() string {
 
 // ServerAddGSLBParam is input parameters for the sacloud API
 type ServerAddGSLBParam struct {
-	Ipaddress         string   `json:"ipaddress"`
-	Disabled          bool     `json:"disabled"`
-	Weight            int      `json:"weight"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Ipaddress         string     `json:"ipaddress"`
+	Disabled          bool       `json:"disabled"`
+	Weight            int        `json:"weight"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerAddGSLBParam return new ServerAddGSLBParam
@@ -970,7 +971,7 @@ func (p *ServerAddGSLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1152,28 +1153,28 @@ func (p *ServerAddGSLBParam) SetQueryFile(v string) {
 func (p *ServerAddGSLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerAddGSLBParam) SetId(v int64) {
+func (p *ServerAddGSLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerAddGSLBParam) GetId() int64 {
+func (p *ServerAddGSLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ReadGSLBParam is input parameters for the sacloud API
 type ReadGSLBParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadGSLBParam return new ReadGSLBParam
@@ -1217,7 +1218,7 @@ func (p *ReadGSLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1357,33 +1358,33 @@ func (p *ReadGSLBParam) SetQueryFile(v string) {
 func (p *ReadGSLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadGSLBParam) SetId(v int64) {
+func (p *ReadGSLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadGSLBParam) GetId() int64 {
+func (p *ReadGSLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerUpdateGSLBParam is input parameters for the sacloud API
 type ServerUpdateGSLBParam struct {
-	Index             int      `json:"index"`
-	Ipaddress         string   `json:"ipaddress"`
-	Disabled          bool     `json:"disabled"`
-	Weight            int      `json:"weight"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Ipaddress         string     `json:"ipaddress"`
+	Disabled          bool       `json:"disabled"`
+	Weight            int        `json:"weight"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerUpdateGSLBParam return new ServerUpdateGSLBParam
@@ -1442,7 +1443,7 @@ func (p *ServerUpdateGSLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1638,30 +1639,30 @@ func (p *ServerUpdateGSLBParam) SetQueryFile(v string) {
 func (p *ServerUpdateGSLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerUpdateGSLBParam) SetId(v int64) {
+func (p *ServerUpdateGSLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerUpdateGSLBParam) GetId() int64 {
+func (p *ServerUpdateGSLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerDeleteGSLBParam is input parameters for the sacloud API
 type ServerDeleteGSLBParam struct {
-	Index             int      `json:"index"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Index             int        `json:"index"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerDeleteGSLBParam return new ServerDeleteGSLBParam
@@ -1711,7 +1712,7 @@ func (p *ServerDeleteGSLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1872,41 +1873,41 @@ func (p *ServerDeleteGSLBParam) SetQueryFile(v string) {
 func (p *ServerDeleteGSLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerDeleteGSLBParam) SetId(v int64) {
+func (p *ServerDeleteGSLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerDeleteGSLBParam) GetId() int64 {
+func (p *ServerDeleteGSLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateGSLBParam is input parameters for the sacloud API
 type UpdateGSLBParam struct {
-	Protocol          string   `json:"protocol"`
-	HostHeader        string   `json:"host-header"`
-	Path              string   `json:"path"`
-	ResponseCode      int      `json:"response-code"`
-	Port              int      `json:"port"`
-	DelayLoop         int      `json:"delay-loop"`
-	Weighted          bool     `json:"weighted"`
-	SorryServer       string   `json:"sorry-server"`
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Protocol          string     `json:"protocol"`
+	HostHeader        string     `json:"host-header"`
+	Path              string     `json:"path"`
+	ResponseCode      int        `json:"response-code"`
+	Port              int        `json:"port"`
+	DelayLoop         int        `json:"delay-loop"`
+	Weighted          bool       `json:"weighted"`
+	SorryServer       string     `json:"sorry-server"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateGSLBParam return new UpdateGSLBParam
@@ -1953,7 +1954,7 @@ func (p *UpdateGSLBParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -1989,7 +1990,7 @@ func (p *UpdateGSLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2185,11 +2186,11 @@ func (p *UpdateGSLBParam) SetTags(v []string) {
 func (p *UpdateGSLBParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateGSLBParam) SetIconId(v int64) {
+func (p *UpdateGSLBParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateGSLBParam) GetIconId() int64 {
+func (p *UpdateGSLBParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateGSLBParam) SetAssumeyes(v bool) {
@@ -2269,29 +2270,29 @@ func (p *UpdateGSLBParam) SetQueryFile(v string) {
 func (p *UpdateGSLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateGSLBParam) SetId(v int64) {
+func (p *UpdateGSLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateGSLBParam) GetId() int64 {
+func (p *UpdateGSLBParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteGSLBParam is input parameters for the sacloud API
 type DeleteGSLBParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteGSLBParam return new DeleteGSLBParam
@@ -2338,7 +2339,7 @@ func (p *DeleteGSLBParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2485,10 +2486,10 @@ func (p *DeleteGSLBParam) SetQueryFile(v string) {
 func (p *DeleteGSLBParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteGSLBParam) SetId(v int64) {
+func (p *DeleteGSLBParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteGSLBParam) GetId() int64 {
+func (p *DeleteGSLBParam) GetId() sacloud.ID {
 	return p.Id
 }

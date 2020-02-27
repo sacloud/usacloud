@@ -357,7 +357,7 @@ func packetFilterRuleDeleteParam() map[string]*schema.Schema {
 func packetFilterInterfaceConnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"interface-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set interface ID",
 			Required:     true,
@@ -372,7 +372,7 @@ func packetFilterInterfaceConnectParam() map[string]*schema.Schema {
 func packetFilterInterfaceDisconnectParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"interface-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set interface ID",
 			Required:     true,

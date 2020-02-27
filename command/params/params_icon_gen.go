@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,23 +25,23 @@ import (
 
 // ListIconParam is input parameters for the sacloud API
 type ListIconParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Scope             string   `json:"scope"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Scope             string       `json:"scope"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListIconParam return new ListIconParam
@@ -54,7 +55,7 @@ func (p *ListIconParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Scope) {
 		p.Scope = ""
@@ -201,11 +202,11 @@ func (p *ListIconParam) SetName(v []string) {
 func (p *ListIconParam) GetName() []string {
 	return p.Name
 }
-func (p *ListIconParam) SetId(v []int64) {
+func (p *ListIconParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListIconParam) GetId() []int64 {
+func (p *ListIconParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListIconParam) SetScope(v string) {
@@ -571,18 +572,18 @@ func (p *CreateIconParam) GetQueryFile() string {
 
 // ReadIconParam is input parameters for the sacloud API
 type ReadIconParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadIconParam return new ReadIconParam
@@ -626,7 +627,7 @@ func (p *ReadIconParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -766,31 +767,31 @@ func (p *ReadIconParam) SetQueryFile(v string) {
 func (p *ReadIconParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadIconParam) SetId(v int64) {
+func (p *ReadIconParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadIconParam) GetId() int64 {
+func (p *ReadIconParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateIconParam is input parameters for the sacloud API
 type UpdateIconParam struct {
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Tags              []string `json:"tags"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Tags              []string   `json:"tags"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateIconParam return new UpdateIconParam
@@ -843,7 +844,7 @@ func (p *UpdateIconParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1018,29 +1019,29 @@ func (p *UpdateIconParam) SetQueryFile(v string) {
 func (p *UpdateIconParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateIconParam) SetId(v int64) {
+func (p *UpdateIconParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateIconParam) GetId() int64 {
+func (p *UpdateIconParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteIconParam is input parameters for the sacloud API
 type DeleteIconParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteIconParam return new DeleteIconParam
@@ -1087,7 +1088,7 @@ func (p *DeleteIconParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1234,10 +1235,10 @@ func (p *DeleteIconParam) SetQueryFile(v string) {
 func (p *DeleteIconParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteIconParam) SetId(v int64) {
+func (p *DeleteIconParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteIconParam) GetId() int64 {
+func (p *DeleteIconParam) GetId() sacloud.ID {
 	return p.Id
 }

@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,23 +25,23 @@ import (
 
 // ListISOImageParam is input parameters for the sacloud API
 type ListISOImageParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Scope             string   `json:"scope"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Scope             string       `json:"scope"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListISOImageParam return new ListISOImageParam
@@ -54,7 +55,7 @@ func (p *ListISOImageParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Scope) {
 		p.Scope = ""
@@ -201,11 +202,11 @@ func (p *ListISOImageParam) SetName(v []string) {
 func (p *ListISOImageParam) GetName() []string {
 	return p.Name
 }
-func (p *ListISOImageParam) SetId(v []int64) {
+func (p *ListISOImageParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListISOImageParam) GetId() []int64 {
+func (p *ListISOImageParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListISOImageParam) SetScope(v string) {
@@ -316,23 +317,23 @@ func (p *ListISOImageParam) GetQueryFile() string {
 
 // CreateISOImageParam is input parameters for the sacloud API
 type CreateISOImageParam struct {
-	Size              int      `json:"size"`
-	IsoFile           string   `json:"iso-file"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Size              int        `json:"size"`
+	IsoFile           string     `json:"iso-file"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreateISOImageParam return new CreateISOImageParam
@@ -361,7 +362,7 @@ func (p *CreateISOImageParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -541,11 +542,11 @@ func (p *CreateISOImageParam) SetTags(v []string) {
 func (p *CreateISOImageParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateISOImageParam) SetIconId(v int64) {
+func (p *CreateISOImageParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateISOImageParam) GetIconId() int64 {
+func (p *CreateISOImageParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateISOImageParam) SetAssumeyes(v bool) {
@@ -628,18 +629,18 @@ func (p *CreateISOImageParam) GetQueryFile() string {
 
 // ReadISOImageParam is input parameters for the sacloud API
 type ReadISOImageParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadISOImageParam return new ReadISOImageParam
@@ -683,7 +684,7 @@ func (p *ReadISOImageParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -823,33 +824,33 @@ func (p *ReadISOImageParam) SetQueryFile(v string) {
 func (p *ReadISOImageParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadISOImageParam) SetId(v int64) {
+func (p *ReadISOImageParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadISOImageParam) GetId() int64 {
+func (p *ReadISOImageParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateISOImageParam is input parameters for the sacloud API
 type UpdateISOImageParam struct {
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateISOImageParam return new UpdateISOImageParam
@@ -872,7 +873,7 @@ func (p *UpdateISOImageParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -908,7 +909,7 @@ func (p *UpdateISOImageParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1027,11 +1028,11 @@ func (p *UpdateISOImageParam) SetTags(v []string) {
 func (p *UpdateISOImageParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateISOImageParam) SetIconId(v int64) {
+func (p *UpdateISOImageParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateISOImageParam) GetIconId() int64 {
+func (p *UpdateISOImageParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateISOImageParam) SetAssumeyes(v bool) {
@@ -1111,29 +1112,29 @@ func (p *UpdateISOImageParam) SetQueryFile(v string) {
 func (p *UpdateISOImageParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateISOImageParam) SetId(v int64) {
+func (p *UpdateISOImageParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateISOImageParam) GetId() int64 {
+func (p *UpdateISOImageParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteISOImageParam is input parameters for the sacloud API
 type DeleteISOImageParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteISOImageParam return new DeleteISOImageParam
@@ -1180,7 +1181,7 @@ func (p *DeleteISOImageParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1327,30 +1328,30 @@ func (p *DeleteISOImageParam) SetQueryFile(v string) {
 func (p *DeleteISOImageParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteISOImageParam) SetId(v int64) {
+func (p *DeleteISOImageParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteISOImageParam) GetId() int64 {
+func (p *DeleteISOImageParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UploadISOImageParam is input parameters for the sacloud API
 type UploadISOImageParam struct {
-	IsoFile           string   `json:"iso-file"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	IsoFile           string     `json:"iso-file"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUploadISOImageParam return new UploadISOImageParam
@@ -1400,7 +1401,7 @@ func (p *UploadISOImageParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1561,23 +1562,23 @@ func (p *UploadISOImageParam) SetQueryFile(v string) {
 func (p *UploadISOImageParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UploadISOImageParam) SetId(v int64) {
+func (p *UploadISOImageParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UploadISOImageParam) GetId() int64 {
+func (p *UploadISOImageParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DownloadISOImageParam is input parameters for the sacloud API
 type DownloadISOImageParam struct {
-	FileDestination   string   `json:"file-destination"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	FileDestination   string     `json:"file-destination"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDownloadISOImageParam return new DownloadISOImageParam
@@ -1606,7 +1607,7 @@ func (p *DownloadISOImageParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1691,29 +1692,29 @@ func (p *DownloadISOImageParam) SetGenerateSkeleton(v bool) {
 func (p *DownloadISOImageParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *DownloadISOImageParam) SetId(v int64) {
+func (p *DownloadISOImageParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DownloadISOImageParam) GetId() int64 {
+func (p *DownloadISOImageParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // FtpOpenISOImageParam is input parameters for the sacloud API
 type FtpOpenISOImageParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewFtpOpenISOImageParam return new FtpOpenISOImageParam
@@ -1760,7 +1761,7 @@ func (p *FtpOpenISOImageParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1907,22 +1908,22 @@ func (p *FtpOpenISOImageParam) SetQueryFile(v string) {
 func (p *FtpOpenISOImageParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *FtpOpenISOImageParam) SetId(v int64) {
+func (p *FtpOpenISOImageParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *FtpOpenISOImageParam) GetId() int64 {
+func (p *FtpOpenISOImageParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // FtpCloseISOImageParam is input parameters for the sacloud API
 type FtpCloseISOImageParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewFtpCloseISOImageParam return new FtpCloseISOImageParam
@@ -1948,7 +1949,7 @@ func (p *FtpCloseISOImageParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2026,10 +2027,10 @@ func (p *FtpCloseISOImageParam) SetGenerateSkeleton(v bool) {
 func (p *FtpCloseISOImageParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *FtpCloseISOImageParam) SetId(v int64) {
+func (p *FtpCloseISOImageParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *FtpCloseISOImageParam) GetId() int64 {
+func (p *FtpCloseISOImageParam) GetId() sacloud.ID {
 	return p.Id
 }

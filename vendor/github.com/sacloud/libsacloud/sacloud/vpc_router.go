@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -124,7 +124,7 @@ func (v *VPCRouter) SetHighSpec4000MbpsPlan(switchID string, virtualIPAddress st
 
 func (v *VPCRouter) setPremiumServices(switchID string, virtualIPAddress string, ipAddress1 string, ipAddress2 string, vrid int, ipAliases []string) {
 	v.Remark.Switch = &ApplianceRemarkSwitch{
-		ID: switchID,
+		ID: StringID(switchID),
 	}
 	v.Remark.Servers = []interface{}{
 		map[string]string{"IPAddress": ipAddress1},

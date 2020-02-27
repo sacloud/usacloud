@@ -37,7 +37,7 @@ type sortable interface {
 	SetSortBy(key string, reverse bool)
 }
 
-func getSSHPrivateKeyStorePath(serverID int64) (string, error) {
+func getSSHPrivateKeyStorePath(serverID sacloud.ID) (string, error) {
 	homeDir, err := homedir.Dir()
 	if err != nil {
 		return "", fmt.Errorf("getting HomeDir is failed:%s", err)
@@ -45,7 +45,7 @@ func getSSHPrivateKeyStorePath(serverID int64) (string, error) {
 	return filepath.Join(homeDir, ".ssh", fmt.Sprintf("sacloud_pkey_%d", serverID)), nil
 }
 
-func getSSHDefaultUserName(client *api.Client, serverID int64) (string, error) {
+func getSSHDefaultUserName(client *api.Client, serverID sacloud.ID) (string, error) {
 
 	// read server
 	server, err := client.GetServerAPI().Read(serverID)
@@ -60,7 +60,7 @@ func getSSHDefaultUserName(client *api.Client, serverID int64) (string, error) {
 	return getSSHDefaultUserNameDiskRec(client, server.Disks[0].ID)
 }
 
-func getSSHDefaultUserNameDiskRec(client *api.Client, diskID int64) (string, error) {
+func getSSHDefaultUserNameDiskRec(client *api.Client, diskID sacloud.ID) (string, error) {
 
 	disk, err := client.GetDiskAPI().Read(diskID)
 	if err != nil {
@@ -79,7 +79,7 @@ func getSSHDefaultUserNameDiskRec(client *api.Client, diskID int64) (string, err
 	return "", nil
 }
 
-func getSSHDefaultUserNameArchiveRec(client *api.Client, archiveID int64) (string, error) {
+func getSSHDefaultUserNameArchiveRec(client *api.Client, archiveID sacloud.ID) (string, error) {
 	// read archive
 	archive, err := client.GetArchiveAPI().Read(archiveID)
 	if err != nil {

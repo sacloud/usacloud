@@ -939,7 +939,7 @@ func vpcRouterCreateParam() map[string]*schema.Schema {
 			Order:        10,
 		},
 		"switch-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
@@ -1025,7 +1025,7 @@ func vpcRouterCreateParam() map[string]*schema.Schema {
 			Order:        530,
 		},
 		"icon-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
@@ -1117,7 +1117,7 @@ func vpcRouterInterfaceConnectParam() map[string]*schema.Schema {
 			Order:        10,
 		},
 		"switch-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
@@ -1186,7 +1186,7 @@ func vpcRouterInterfaceUpdateParam() map[string]*schema.Schema {
 			Order:        10,
 		},
 		"switch-id": {
-			Type:         schema.TypeInt64,
+			Type:         schema.TypeId,
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),

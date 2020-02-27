@@ -22,6 +22,7 @@ import (
 	"strings"
 
 	"github.com/imdario/mergo"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
 	"github.com/sacloud/usacloud/command/funcs"
@@ -164,13 +165,13 @@ func init() {
 						listParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = c.Int64Slice("id")
+						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("ipv6net-id") {
-						listParam.Ipv6netId = c.Int64("ipv6net-id")
+						listParam.Ipv6netId = sacloud.ID(c.Int64("ipv6net-id"))
 					}
 					if c.IsSet("internet-id") {
-						listParam.InternetId = c.Int64("internet-id")
+						listParam.InternetId = sacloud.ID(c.Int64("internet-id"))
 					}
 					if c.IsSet("from") {
 						listParam.From = c.Int("from")
@@ -300,13 +301,13 @@ func init() {
 						listParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = c.Int64Slice("id")
+						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("ipv6net-id") {
-						listParam.Ipv6netId = c.Int64("ipv6net-id")
+						listParam.Ipv6netId = sacloud.ID(c.Int64("ipv6net-id"))
 					}
 					if c.IsSet("internet-id") {
-						listParam.InternetId = c.Int64("internet-id")
+						listParam.InternetId = sacloud.ID(c.Int64("internet-id"))
 					}
 					if c.IsSet("from") {
 						listParam.From = c.Int("from")

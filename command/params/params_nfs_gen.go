@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,22 +25,22 @@ import (
 
 // ListNFSParam is input parameters for the sacloud API
 type ListNFSParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListNFSParam return new ListNFSParam
@@ -53,7 +54,7 @@ func (p *ListNFSParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -190,11 +191,11 @@ func (p *ListNFSParam) SetName(v []string) {
 func (p *ListNFSParam) GetName() []string {
 	return p.Name
 }
-func (p *ListNFSParam) SetId(v []int64) {
+func (p *ListNFSParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListNFSParam) GetId() []int64 {
+func (p *ListNFSParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListNFSParam) SetTags(v []string) {
@@ -298,27 +299,27 @@ func (p *ListNFSParam) GetQueryFile() string {
 
 // CreateNFSParam is input parameters for the sacloud API
 type CreateNFSParam struct {
-	SwitchId          int64    `json:"switch-id"`
-	Plan              string   `json:"plan"`
-	Size              int      `json:"size"`
-	Ipaddress         string   `json:"ipaddress"`
-	NwMaskLen         int      `json:"nw-mask-len"`
-	DefaultRoute      string   `json:"default-route"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	SwitchId          sacloud.ID `json:"switch-id"`
+	Plan              string     `json:"plan"`
+	Size              int        `json:"size"`
+	Ipaddress         string     `json:"ipaddress"`
+	NwMaskLen         int        `json:"nw-mask-len"`
+	DefaultRoute      string     `json:"default-route"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreateNFSParam return new CreateNFSParam
@@ -333,7 +334,7 @@ func NewCreateNFSParam() *CreateNFSParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *CreateNFSParam) FillValueToSkeleton() {
 	if isEmpty(p.SwitchId) {
-		p.SwitchId = 0
+		p.SwitchId = sacloud.ID(0)
 	}
 	if isEmpty(p.Plan) {
 		p.Plan = ""
@@ -360,7 +361,7 @@ func (p *CreateNFSParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -561,11 +562,11 @@ func (p *CreateNFSParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *CreateNFSParam) SetSwitchId(v int64) {
+func (p *CreateNFSParam) SetSwitchId(v sacloud.ID) {
 	p.SwitchId = v
 }
 
-func (p *CreateNFSParam) GetSwitchId() int64 {
+func (p *CreateNFSParam) GetSwitchId() sacloud.ID {
 	return p.SwitchId
 }
 func (p *CreateNFSParam) SetPlan(v string) {
@@ -624,11 +625,11 @@ func (p *CreateNFSParam) SetTags(v []string) {
 func (p *CreateNFSParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreateNFSParam) SetIconId(v int64) {
+func (p *CreateNFSParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreateNFSParam) GetIconId() int64 {
+func (p *CreateNFSParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreateNFSParam) SetAssumeyes(v bool) {
@@ -711,18 +712,18 @@ func (p *CreateNFSParam) GetQueryFile() string {
 
 // ReadNFSParam is input parameters for the sacloud API
 type ReadNFSParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadNFSParam return new ReadNFSParam
@@ -766,7 +767,7 @@ func (p *ReadNFSParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -906,33 +907,33 @@ func (p *ReadNFSParam) SetQueryFile(v string) {
 func (p *ReadNFSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadNFSParam) SetId(v int64) {
+func (p *ReadNFSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadNFSParam) GetId() int64 {
+func (p *ReadNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdateNFSParam is input parameters for the sacloud API
 type UpdateNFSParam struct {
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdateNFSParam return new UpdateNFSParam
@@ -955,7 +956,7 @@ func (p *UpdateNFSParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -991,7 +992,7 @@ func (p *UpdateNFSParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1110,11 +1111,11 @@ func (p *UpdateNFSParam) SetTags(v []string) {
 func (p *UpdateNFSParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdateNFSParam) SetIconId(v int64) {
+func (p *UpdateNFSParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdateNFSParam) GetIconId() int64 {
+func (p *UpdateNFSParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdateNFSParam) SetAssumeyes(v bool) {
@@ -1194,30 +1195,30 @@ func (p *UpdateNFSParam) SetQueryFile(v string) {
 func (p *UpdateNFSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdateNFSParam) SetId(v int64) {
+func (p *UpdateNFSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdateNFSParam) GetId() int64 {
+func (p *UpdateNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeleteNFSParam is input parameters for the sacloud API
 type DeleteNFSParam struct {
-	Force             bool     `json:"force"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Force             bool       `json:"force"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeleteNFSParam return new DeleteNFSParam
@@ -1267,7 +1268,7 @@ func (p *DeleteNFSParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1421,22 +1422,22 @@ func (p *DeleteNFSParam) SetQueryFile(v string) {
 func (p *DeleteNFSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeleteNFSParam) SetId(v int64) {
+func (p *DeleteNFSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeleteNFSParam) GetId() int64 {
+func (p *DeleteNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // BootNFSParam is input parameters for the sacloud API
 type BootNFSParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewBootNFSParam return new BootNFSParam
@@ -1462,7 +1463,7 @@ func (p *BootNFSParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1540,22 +1541,22 @@ func (p *BootNFSParam) SetGenerateSkeleton(v bool) {
 func (p *BootNFSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *BootNFSParam) SetId(v int64) {
+func (p *BootNFSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *BootNFSParam) GetId() int64 {
+func (p *BootNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ShutdownNFSParam is input parameters for the sacloud API
 type ShutdownNFSParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewShutdownNFSParam return new ShutdownNFSParam
@@ -1581,7 +1582,7 @@ func (p *ShutdownNFSParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1659,22 +1660,22 @@ func (p *ShutdownNFSParam) SetGenerateSkeleton(v bool) {
 func (p *ShutdownNFSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ShutdownNFSParam) SetId(v int64) {
+func (p *ShutdownNFSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ShutdownNFSParam) GetId() int64 {
+func (p *ShutdownNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ShutdownForceNFSParam is input parameters for the sacloud API
 type ShutdownForceNFSParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewShutdownForceNFSParam return new ShutdownForceNFSParam
@@ -1700,7 +1701,7 @@ func (p *ShutdownForceNFSParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1778,22 +1779,22 @@ func (p *ShutdownForceNFSParam) SetGenerateSkeleton(v bool) {
 func (p *ShutdownForceNFSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ShutdownForceNFSParam) SetId(v int64) {
+func (p *ShutdownForceNFSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ShutdownForceNFSParam) GetId() int64 {
+func (p *ShutdownForceNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ResetNFSParam is input parameters for the sacloud API
 type ResetNFSParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewResetNFSParam return new ResetNFSParam
@@ -1819,7 +1820,7 @@ func (p *ResetNFSParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1897,21 +1898,21 @@ func (p *ResetNFSParam) SetGenerateSkeleton(v bool) {
 func (p *ResetNFSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *ResetNFSParam) SetId(v int64) {
+func (p *ResetNFSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ResetNFSParam) GetId() int64 {
+func (p *ResetNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // WaitForBootNFSParam is input parameters for the sacloud API
 type WaitForBootNFSParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewWaitForBootNFSParam return new WaitForBootNFSParam
@@ -1934,7 +1935,7 @@ func (p *WaitForBootNFSParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2005,21 +2006,21 @@ func (p *WaitForBootNFSParam) SetGenerateSkeleton(v bool) {
 func (p *WaitForBootNFSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForBootNFSParam) SetId(v int64) {
+func (p *WaitForBootNFSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForBootNFSParam) GetId() int64 {
+func (p *WaitForBootNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // WaitForDownNFSParam is input parameters for the sacloud API
 type WaitForDownNFSParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewWaitForDownNFSParam return new WaitForDownNFSParam
@@ -2042,7 +2043,7 @@ func (p *WaitForDownNFSParam) FillValueToSkeleton() {
 		p.GenerateSkeleton = false
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2113,31 +2114,31 @@ func (p *WaitForDownNFSParam) SetGenerateSkeleton(v bool) {
 func (p *WaitForDownNFSParam) GetGenerateSkeleton() bool {
 	return p.GenerateSkeleton
 }
-func (p *WaitForDownNFSParam) SetId(v int64) {
+func (p *WaitForDownNFSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *WaitForDownNFSParam) GetId() int64 {
+func (p *WaitForDownNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // MonitorNicNFSParam is input parameters for the sacloud API
 type MonitorNicNFSParam struct {
-	Start             string   `json:"start"`
-	End               string   `json:"end"`
-	KeyFormat         string   `json:"key-format"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Start             string     `json:"start"`
+	End               string     `json:"end"`
+	KeyFormat         string     `json:"key-format"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewMonitorNicNFSParam return new MonitorNicNFSParam
@@ -2193,7 +2194,7 @@ func (p *MonitorNicNFSParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2375,31 +2376,31 @@ func (p *MonitorNicNFSParam) SetQueryFile(v string) {
 func (p *MonitorNicNFSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorNicNFSParam) SetId(v int64) {
+func (p *MonitorNicNFSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorNicNFSParam) GetId() int64 {
+func (p *MonitorNicNFSParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // MonitorFreeDiskSizeNFSParam is input parameters for the sacloud API
 type MonitorFreeDiskSizeNFSParam struct {
-	Start             string   `json:"start"`
-	End               string   `json:"end"`
-	KeyFormat         string   `json:"key-format"`
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Start             string     `json:"start"`
+	End               string     `json:"end"`
+	KeyFormat         string     `json:"key-format"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewMonitorFreeDiskSizeNFSParam return new MonitorFreeDiskSizeNFSParam
@@ -2455,7 +2456,7 @@ func (p *MonitorFreeDiskSizeNFSParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -2637,10 +2638,10 @@ func (p *MonitorFreeDiskSizeNFSParam) SetQueryFile(v string) {
 func (p *MonitorFreeDiskSizeNFSParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *MonitorFreeDiskSizeNFSParam) SetId(v int64) {
+func (p *MonitorFreeDiskSizeNFSParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *MonitorFreeDiskSizeNFSParam) GetId() int64 {
+func (p *MonitorFreeDiskSizeNFSParam) GetId() sacloud.ID {
 	return p.Id
 }

@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@ package builder
 
 import (
 	"fmt"
+	"github.com/sacloud/libsacloud/sacloud"
 	"strings"
 )
 
@@ -24,10 +25,10 @@ type baseBuilder struct {
 	errors []error
 }
 
-func (b *baseBuilder) toStringList(values []int64) []string {
-	keys := []string{}
+func (b *baseBuilder) toStringList(values []sacloud.ID) []string {
+	var keys []string
 	for _, k := range values {
-		keys = append(keys, fmt.Sprintf("%d", k))
+		keys = append(keys, k.String())
 	}
 	return keys
 }

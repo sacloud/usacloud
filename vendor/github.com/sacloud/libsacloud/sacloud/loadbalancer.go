@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -112,7 +112,7 @@ var (
 
 // CreateLoadBalancerValue ロードバランサー作成用パラメーター
 type CreateLoadBalancerValue struct {
-	SwitchID     string           // 接続先スイッチID
+	SwitchID     ID               // 接続先スイッチID
 	VRID         int              // VRID
 	Plan         LoadBalancerPlan // プラン
 	IPAddress1   string           // IPアドレス
@@ -144,7 +144,7 @@ func CreateNewLoadBalancerSingle(values *CreateLoadBalancerValue, settings []*Lo
 			propName:        propName{Name: values.Name},
 			propDescription: propDescription{Description: values.Description},
 			propTags:        propTags{Tags: values.Tags},
-			propPlanID:      propPlanID{Plan: &Resource{ID: int64(values.Plan)}},
+			propPlanID:      propPlanID{Plan: &Resource{ID: ID(values.Plan)}},
 			propIcon: propIcon{
 				&Icon{
 					Resource: values.Icon,

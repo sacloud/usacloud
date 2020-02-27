@@ -23,6 +23,7 @@ import (
 	"sync"
 
 	"github.com/imdario/mergo"
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/command"
 	"github.com/sacloud/usacloud/command/completion"
 	"github.com/sacloud/usacloud/command/funcs"
@@ -186,7 +187,7 @@ func init() {
 						listParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = c.Int64Slice("id")
+						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("scope") {
 						listParam.Scope = c.String("scope")
@@ -195,10 +196,10 @@ func init() {
 						listParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("source-archive-id") {
-						listParam.SourceArchiveId = c.Int64("source-archive-id")
+						listParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
 					}
 					if c.IsSet("source-disk-id") {
-						listParam.SourceDiskId = c.Int64("source-disk-id")
+						listParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
 					}
 					if c.IsSet("storage") {
 						listParam.Storage = c.String("storage")
@@ -331,7 +332,7 @@ func init() {
 						listParam.Name = c.StringSlice("name")
 					}
 					if c.IsSet("id") {
-						listParam.Id = c.Int64Slice("id")
+						listParam.Id = toSakuraIDs(c.Int64Slice("id"))
 					}
 					if c.IsSet("scope") {
 						listParam.Scope = c.String("scope")
@@ -340,10 +341,10 @@ func init() {
 						listParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("source-archive-id") {
-						listParam.SourceArchiveId = c.Int64("source-archive-id")
+						listParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
 					}
 					if c.IsSet("source-disk-id") {
-						listParam.SourceDiskId = c.Int64("source-disk-id")
+						listParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
 					}
 					if c.IsSet("storage") {
 						listParam.Storage = c.String("storage")
@@ -571,16 +572,16 @@ func init() {
 						createParam.Connection = c.String("connection")
 					}
 					if c.IsSet("source-archive-id") {
-						createParam.SourceArchiveId = c.Int64("source-archive-id")
+						createParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
 					}
 					if c.IsSet("source-disk-id") {
-						createParam.SourceDiskId = c.Int64("source-disk-id")
+						createParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
 					}
 					if c.IsSet("size") {
 						createParam.Size = c.Int("size")
 					}
 					if c.IsSet("distant-from") {
-						createParam.DistantFrom = c.Int64Slice("distant-from")
+						createParam.DistantFrom = toSakuraIDs(c.Int64Slice("distant-from"))
 					}
 					if c.IsSet("name") {
 						createParam.Name = c.String("name")
@@ -592,7 +593,7 @@ func init() {
 						createParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = c.Int64("icon-id")
+						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
 						createParam.Assumeyes = c.Bool("assumeyes")
@@ -719,16 +720,16 @@ func init() {
 						createParam.Connection = c.String("connection")
 					}
 					if c.IsSet("source-archive-id") {
-						createParam.SourceArchiveId = c.Int64("source-archive-id")
+						createParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
 					}
 					if c.IsSet("source-disk-id") {
-						createParam.SourceDiskId = c.Int64("source-disk-id")
+						createParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
 					}
 					if c.IsSet("size") {
 						createParam.Size = c.Int("size")
 					}
 					if c.IsSet("distant-from") {
-						createParam.DistantFrom = c.Int64Slice("distant-from")
+						createParam.DistantFrom = toSakuraIDs(c.Int64Slice("distant-from"))
 					}
 					if c.IsSet("name") {
 						createParam.Name = c.String("name")
@@ -740,7 +741,7 @@ func init() {
 						createParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						createParam.IconId = c.Int64("icon-id")
+						createParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
 						createParam.Assumeyes = c.Bool("assumeyes")
@@ -957,7 +958,7 @@ func init() {
 						readParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = c.Int64("id")
+						readParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1078,7 +1079,7 @@ func init() {
 						readParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						readParam.Id = c.Int64("id")
+						readParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1117,7 +1118,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), readParam)
 
 					apiClient := ctx.GetAPIClient().Disk
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -1337,7 +1338,7 @@ func init() {
 						updateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = c.Int64("icon-id")
+						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
 						updateParam.Assumeyes = c.Bool("assumeyes")
@@ -1373,7 +1374,7 @@ func init() {
 						updateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = c.Int64("id")
+						updateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1476,7 +1477,7 @@ func init() {
 						updateParam.Tags = c.StringSlice("tags")
 					}
 					if c.IsSet("icon-id") {
-						updateParam.IconId = c.Int64("icon-id")
+						updateParam.IconId = sacloud.ID(c.Int64("icon-id"))
 					}
 					if c.IsSet("assumeyes") {
 						updateParam.Assumeyes = c.Bool("assumeyes")
@@ -1512,7 +1513,7 @@ func init() {
 						updateParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						updateParam.Id = c.Int64("id")
+						updateParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1551,7 +1552,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), updateParam)
 
 					apiClient := ctx.GetAPIClient().Disk
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -1778,7 +1779,7 @@ func init() {
 						deleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = c.Int64("id")
+						deleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -1902,7 +1903,7 @@ func init() {
 						deleteParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						deleteParam.Id = c.Int64("id")
+						deleteParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -1941,7 +1942,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), deleteParam)
 
 					apiClient := ctx.GetAPIClient().Disk
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -2176,7 +2177,7 @@ func init() {
 						editParam.Password = c.String("password")
 					}
 					if c.IsSet("ssh-key-ids") {
-						editParam.SshKeyIds = c.Int64Slice("ssh-key-ids")
+						editParam.SshKeyIds = toSakuraIDs(c.Int64Slice("ssh-key-ids"))
 					}
 					if c.IsSet("disable-password-auth") {
 						editParam.DisablePasswordAuth = c.Bool("disable-password-auth")
@@ -2191,7 +2192,7 @@ func init() {
 						editParam.NwMasklen = c.Int("nw-masklen")
 					}
 					if c.IsSet("startup-script-ids") {
-						editParam.StartupScriptIds = c.Int64Slice("startup-script-ids")
+						editParam.StartupScriptIds = toSakuraIDs(c.Int64Slice("startup-script-ids"))
 					}
 					if c.IsSet("selector") {
 						editParam.Selector = c.StringSlice("selector")
@@ -2230,7 +2231,7 @@ func init() {
 						editParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						editParam.Id = c.Int64("id")
+						editParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -2324,7 +2325,7 @@ func init() {
 						editParam.Password = c.String("password")
 					}
 					if c.IsSet("ssh-key-ids") {
-						editParam.SshKeyIds = c.Int64Slice("ssh-key-ids")
+						editParam.SshKeyIds = toSakuraIDs(c.Int64Slice("ssh-key-ids"))
 					}
 					if c.IsSet("disable-password-auth") {
 						editParam.DisablePasswordAuth = c.Bool("disable-password-auth")
@@ -2339,7 +2340,7 @@ func init() {
 						editParam.NwMasklen = c.Int("nw-masklen")
 					}
 					if c.IsSet("startup-script-ids") {
-						editParam.StartupScriptIds = c.Int64Slice("startup-script-ids")
+						editParam.StartupScriptIds = toSakuraIDs(c.Int64Slice("startup-script-ids"))
 					}
 					if c.IsSet("selector") {
 						editParam.Selector = c.StringSlice("selector")
@@ -2378,7 +2379,7 @@ func init() {
 						editParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						editParam.Id = c.Int64("id")
+						editParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2417,7 +2418,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), editParam)
 
 					apiClient := ctx.GetAPIClient().Disk
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -2643,7 +2644,7 @@ func init() {
 						resizePartitionParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						resizePartitionParam.Id = c.Int64("id")
+						resizePartitionParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -2767,7 +2768,7 @@ func init() {
 						resizePartitionParam.QueryFile = c.String("query-file")
 					}
 					if c.IsSet("id") {
-						resizePartitionParam.Id = c.Int64("id")
+						resizePartitionParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -2806,7 +2807,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), resizePartitionParam)
 
 					apiClient := ctx.GetAPIClient().Disk
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -2972,10 +2973,10 @@ func init() {
 
 					// Set option values
 					if c.IsSet("source-archive-id") {
-						reinstallFromArchiveParam.SourceArchiveId = c.Int64("source-archive-id")
+						reinstallFromArchiveParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
 					}
 					if c.IsSet("distant-from") {
-						reinstallFromArchiveParam.DistantFrom = c.Int64Slice("distant-from")
+						reinstallFromArchiveParam.DistantFrom = toSakuraIDs(c.Int64Slice("distant-from"))
 					}
 					if c.IsSet("selector") {
 						reinstallFromArchiveParam.Selector = c.StringSlice("selector")
@@ -2993,7 +2994,7 @@ func init() {
 						reinstallFromArchiveParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						reinstallFromArchiveParam.Id = c.Int64("id")
+						reinstallFromArchiveParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -3081,10 +3082,10 @@ func init() {
 
 					// Set option values
 					if c.IsSet("source-archive-id") {
-						reinstallFromArchiveParam.SourceArchiveId = c.Int64("source-archive-id")
+						reinstallFromArchiveParam.SourceArchiveId = sacloud.ID(c.Int64("source-archive-id"))
 					}
 					if c.IsSet("distant-from") {
-						reinstallFromArchiveParam.DistantFrom = c.Int64Slice("distant-from")
+						reinstallFromArchiveParam.DistantFrom = toSakuraIDs(c.Int64Slice("distant-from"))
 					}
 					if c.IsSet("selector") {
 						reinstallFromArchiveParam.Selector = c.StringSlice("selector")
@@ -3102,7 +3103,7 @@ func init() {
 						reinstallFromArchiveParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						reinstallFromArchiveParam.Id = c.Int64("id")
+						reinstallFromArchiveParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3141,7 +3142,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), reinstallFromArchiveParam)
 
 					apiClient := ctx.GetAPIClient().Disk
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -3307,10 +3308,10 @@ func init() {
 
 					// Set option values
 					if c.IsSet("source-disk-id") {
-						reinstallFromDiskParam.SourceDiskId = c.Int64("source-disk-id")
+						reinstallFromDiskParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
 					}
 					if c.IsSet("distant-from") {
-						reinstallFromDiskParam.DistantFrom = c.Int64Slice("distant-from")
+						reinstallFromDiskParam.DistantFrom = toSakuraIDs(c.Int64Slice("distant-from"))
 					}
 					if c.IsSet("selector") {
 						reinstallFromDiskParam.Selector = c.StringSlice("selector")
@@ -3328,7 +3329,7 @@ func init() {
 						reinstallFromDiskParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						reinstallFromDiskParam.Id = c.Int64("id")
+						reinstallFromDiskParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -3416,10 +3417,10 @@ func init() {
 
 					// Set option values
 					if c.IsSet("source-disk-id") {
-						reinstallFromDiskParam.SourceDiskId = c.Int64("source-disk-id")
+						reinstallFromDiskParam.SourceDiskId = sacloud.ID(c.Int64("source-disk-id"))
 					}
 					if c.IsSet("distant-from") {
-						reinstallFromDiskParam.DistantFrom = c.Int64Slice("distant-from")
+						reinstallFromDiskParam.DistantFrom = toSakuraIDs(c.Int64Slice("distant-from"))
 					}
 					if c.IsSet("selector") {
 						reinstallFromDiskParam.Selector = c.StringSlice("selector")
@@ -3437,7 +3438,7 @@ func init() {
 						reinstallFromDiskParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						reinstallFromDiskParam.Id = c.Int64("id")
+						reinstallFromDiskParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3476,7 +3477,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), reinstallFromDiskParam)
 
 					apiClient := ctx.GetAPIClient().Disk
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -3638,7 +3639,7 @@ func init() {
 
 					// Set option values
 					if c.IsSet("distant-from") {
-						reinstallToBlankParam.DistantFrom = c.Int64Slice("distant-from")
+						reinstallToBlankParam.DistantFrom = toSakuraIDs(c.Int64Slice("distant-from"))
 					}
 					if c.IsSet("selector") {
 						reinstallToBlankParam.Selector = c.StringSlice("selector")
@@ -3656,7 +3657,7 @@ func init() {
 						reinstallToBlankParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						reinstallToBlankParam.Id = c.Int64("id")
+						reinstallToBlankParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -3744,7 +3745,7 @@ func init() {
 
 					// Set option values
 					if c.IsSet("distant-from") {
-						reinstallToBlankParam.DistantFrom = c.Int64Slice("distant-from")
+						reinstallToBlankParam.DistantFrom = toSakuraIDs(c.Int64Slice("distant-from"))
 					}
 					if c.IsSet("selector") {
 						reinstallToBlankParam.Selector = c.StringSlice("selector")
@@ -3762,7 +3763,7 @@ func init() {
 						reinstallToBlankParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						reinstallToBlankParam.Id = c.Int64("id")
+						reinstallToBlankParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -3801,7 +3802,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), reinstallToBlankParam)
 
 					apiClient := ctx.GetAPIClient().Disk
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -3963,7 +3964,7 @@ func init() {
 
 					// Set option values
 					if c.IsSet("server-id") {
-						serverConnectParam.ServerId = c.Int64("server-id")
+						serverConnectParam.ServerId = sacloud.ID(c.Int64("server-id"))
 					}
 					if c.IsSet("selector") {
 						serverConnectParam.Selector = c.StringSlice("selector")
@@ -3981,7 +3982,7 @@ func init() {
 						serverConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						serverConnectParam.Id = c.Int64("id")
+						serverConnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -4069,7 +4070,7 @@ func init() {
 
 					// Set option values
 					if c.IsSet("server-id") {
-						serverConnectParam.ServerId = c.Int64("server-id")
+						serverConnectParam.ServerId = sacloud.ID(c.Int64("server-id"))
 					}
 					if c.IsSet("selector") {
 						serverConnectParam.Selector = c.StringSlice("selector")
@@ -4087,7 +4088,7 @@ func init() {
 						serverConnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						serverConnectParam.Id = c.Int64("id")
+						serverConnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4126,7 +4127,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), serverConnectParam)
 
 					apiClient := ctx.GetAPIClient().Disk
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -4299,7 +4300,7 @@ func init() {
 						serverDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						serverDisconnectParam.Id = c.Int64("id")
+						serverDisconnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -4402,7 +4403,7 @@ func init() {
 						serverDisconnectParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						serverDisconnectParam.Id = c.Int64("id")
+						serverDisconnectParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -4441,7 +4442,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), serverDisconnectParam)
 
 					apiClient := ctx.GetAPIClient().Disk
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -4675,7 +4676,7 @@ func init() {
 						monitorParam.End = c.String("end")
 					}
 					if c.IsSet("id") {
-						monitorParam.Id = c.Int64("id")
+						monitorParam.Id = sacloud.ID(c.Int64("id"))
 					}
 					if c.IsSet("key-format") {
 						monitorParam.KeyFormat = c.String("key-format")
@@ -4805,7 +4806,7 @@ func init() {
 						monitorParam.End = c.String("end")
 					}
 					if c.IsSet("id") {
-						monitorParam.Id = c.Int64("id")
+						monitorParam.Id = sacloud.ID(c.Int64("id"))
 					}
 					if c.IsSet("key-format") {
 						monitorParam.KeyFormat = c.String("key-format")
@@ -4850,7 +4851,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), monitorParam)
 
 					apiClient := ctx.GetAPIClient().Disk
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 
@@ -5010,7 +5011,7 @@ func init() {
 						waitForCopyParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForCopyParam.Id = c.Int64("id")
+						waitForCopyParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					if strings.HasPrefix(prev, "-") {
@@ -5110,7 +5111,7 @@ func init() {
 						waitForCopyParam.GenerateSkeleton = c.Bool("generate-skeleton")
 					}
 					if c.IsSet("id") {
-						waitForCopyParam.Id = c.Int64("id")
+						waitForCopyParam.Id = sacloud.ID(c.Int64("id"))
 					}
 
 					// Validate global params
@@ -5149,7 +5150,7 @@ func init() {
 					ctx := command.NewContext(c, c.Args().Slice(), waitForCopyParam)
 
 					apiClient := ctx.GetAPIClient().Disk
-					ids := []int64{}
+					ids := []sacloud.ID{}
 
 					if c.NArg() == 0 {
 

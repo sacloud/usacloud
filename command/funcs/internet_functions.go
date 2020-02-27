@@ -25,7 +25,7 @@ type subnet struct {
 	IPAddressRangeEnd   string
 }
 
-func getSubnetByID(ctx command.Context, subnetID int64) (*subnet, error) {
+func getSubnetByID(ctx command.Context, subnetID sacloud.ID) (*subnet, error) {
 	client := ctx.GetAPIClient()
 	sn, err := client.GetSubnetAPI().Read(subnetID)
 	if err != nil {

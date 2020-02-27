@@ -1,4 +1,4 @@
-// Copyright 2016-2019 The Libsacloud Authors
+// Copyright 2016-2020 The Libsacloud Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -212,21 +212,21 @@ func (api *PrivateHostAPI) Create(value *sacloud.PrivateHost) (*sacloud.PrivateH
 }
 
 // Read 読み取り
-func (api *PrivateHostAPI) Read(id int64) (*sacloud.PrivateHost, error) {
+func (api *PrivateHostAPI) Read(id sacloud.ID) (*sacloud.PrivateHost, error) {
 	return api.request(func(res *sacloud.Response) error {
 		return api.read(id, nil, res)
 	})
 }
 
 // Update 更新
-func (api *PrivateHostAPI) Update(id int64, value *sacloud.PrivateHost) (*sacloud.PrivateHost, error) {
+func (api *PrivateHostAPI) Update(id sacloud.ID, value *sacloud.PrivateHost) (*sacloud.PrivateHost, error) {
 	return api.request(func(res *sacloud.Response) error {
 		return api.update(id, api.createRequest(value), res)
 	})
 }
 
 // Delete 削除
-func (api *PrivateHostAPI) Delete(id int64) (*sacloud.PrivateHost, error) {
+func (api *PrivateHostAPI) Delete(id sacloud.ID) (*sacloud.PrivateHost, error) {
 	return api.request(func(res *sacloud.Response) error {
 		return api.delete(id, nil, res)
 	})

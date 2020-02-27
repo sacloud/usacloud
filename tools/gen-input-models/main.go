@@ -24,6 +24,8 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/sacloud/libsacloud/sacloud"
+
 	"github.com/sacloud/usacloud/schema"
 	"github.com/sacloud/usacloud/tools"
 )
@@ -196,6 +198,8 @@ func buildFieldsParams(params schema.SortableParams) ([]map[string]interface{}, 
 				d = fmt.Sprintf("[]float32 {%s}", tools.FlattenFloatList(v))
 			case []float64:
 				d = fmt.Sprintf("[]float64 {%s}", tools.FlattenFloat64List(v))
+			case []sacloud.ID:
+				d = fmt.Sprintf("[]sacloud.ID {%s}", tools.FlattenIDList(v))
 
 			}
 
@@ -417,6 +421,10 @@ func getFieldTypeString(t schema.ValueType) (string, error) {
 		return "[]int64", nil
 	case schema.TypeStringList:
 		return "[]string", nil
+	case schema.TypeId:
+		return "sacloud.ID", nil
+	case schema.TypeIdList:
+		return "[]sacloud.ID", nil
 	}
 
 	return "", fmt.Errorf("Inalid type: %v", t)
@@ -438,6 +446,10 @@ func getSetEmptyStatement(t schema.ValueType) (string, error) {
 		return "[]int64{0}", nil
 	case schema.TypeStringList:
 		return `[]string{""}`, nil
+	case schema.TypeId:
+		return "sacloud.ID(0)", nil
+	case schema.TypeIdList:
+		return "[]sacloud.ID{}", nil
 	}
 
 	return "", fmt.Errorf("Inalid type: %v", t)

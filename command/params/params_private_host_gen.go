@@ -17,6 +17,7 @@
 package params
 
 import (
+	"github.com/sacloud/libsacloud/sacloud"
 	"github.com/sacloud/usacloud/define"
 	"github.com/sacloud/usacloud/output"
 	"github.com/sacloud/usacloud/schema"
@@ -24,22 +25,22 @@ import (
 
 // ListPrivateHostParam is input parameters for the sacloud API
 type ListPrivateHostParam struct {
-	Name              []string `json:"name"`
-	Id                []int64  `json:"id"`
-	Tags              []string `json:"tags"`
-	From              int      `json:"from"`
-	Max               int      `json:"max"`
-	Sort              []string `json:"sort"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              []string     `json:"name"`
+	Id                []sacloud.ID `json:"id"`
+	Tags              []string     `json:"tags"`
+	From              int          `json:"from"`
+	Max               int          `json:"max"`
+	Sort              []string     `json:"sort"`
+	ParamTemplate     string       `json:"param-template"`
+	ParamTemplateFile string       `json:"param-template-file"`
+	GenerateSkeleton  bool         `json:"generate-skeleton"`
+	OutputType        string       `json:"output-type"`
+	Column            []string     `json:"column"`
+	Quiet             bool         `json:"quiet"`
+	Format            string       `json:"format"`
+	FormatFile        string       `json:"format-file"`
+	Query             string       `json:"query"`
+	QueryFile         string       `json:"query-file"`
 }
 
 // NewListPrivateHostParam return new ListPrivateHostParam
@@ -53,7 +54,7 @@ func (p *ListPrivateHostParam) FillValueToSkeleton() {
 		p.Name = []string{""}
 	}
 	if isEmpty(p.Id) {
-		p.Id = []int64{0}
+		p.Id = []sacloud.ID{}
 	}
 	if isEmpty(p.Tags) {
 		p.Tags = []string{""}
@@ -190,11 +191,11 @@ func (p *ListPrivateHostParam) SetName(v []string) {
 func (p *ListPrivateHostParam) GetName() []string {
 	return p.Name
 }
-func (p *ListPrivateHostParam) SetId(v []int64) {
+func (p *ListPrivateHostParam) SetId(v []sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ListPrivateHostParam) GetId() []int64 {
+func (p *ListPrivateHostParam) GetId() []sacloud.ID {
 	return p.Id
 }
 func (p *ListPrivateHostParam) SetTags(v []string) {
@@ -298,21 +299,21 @@ func (p *ListPrivateHostParam) GetQueryFile() string {
 
 // CreatePrivateHostParam is input parameters for the sacloud API
 type CreatePrivateHostParam struct {
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
 }
 
 // NewCreatePrivateHostParam return new CreatePrivateHostParam
@@ -332,7 +333,7 @@ func (p *CreatePrivateHostParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -477,11 +478,11 @@ func (p *CreatePrivateHostParam) SetTags(v []string) {
 func (p *CreatePrivateHostParam) GetTags() []string {
 	return p.Tags
 }
-func (p *CreatePrivateHostParam) SetIconId(v int64) {
+func (p *CreatePrivateHostParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *CreatePrivateHostParam) GetIconId() int64 {
+func (p *CreatePrivateHostParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *CreatePrivateHostParam) SetAssumeyes(v bool) {
@@ -564,18 +565,18 @@ func (p *CreatePrivateHostParam) GetQueryFile() string {
 
 // ReadPrivateHostParam is input parameters for the sacloud API
 type ReadPrivateHostParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewReadPrivateHostParam return new ReadPrivateHostParam
@@ -619,7 +620,7 @@ func (p *ReadPrivateHostParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -759,33 +760,33 @@ func (p *ReadPrivateHostParam) SetQueryFile(v string) {
 func (p *ReadPrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ReadPrivateHostParam) SetId(v int64) {
+func (p *ReadPrivateHostParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ReadPrivateHostParam) GetId() int64 {
+func (p *ReadPrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // UpdatePrivateHostParam is input parameters for the sacloud API
 type UpdatePrivateHostParam struct {
-	Selector          []string `json:"selector"`
-	Name              string   `json:"name"`
-	Description       string   `json:"description"`
-	Tags              []string `json:"tags"`
-	IconId            int64    `json:"icon-id"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Name              string     `json:"name"`
+	Description       string     `json:"description"`
+	Tags              []string   `json:"tags"`
+	IconId            sacloud.ID `json:"icon-id"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewUpdatePrivateHostParam return new UpdatePrivateHostParam
@@ -808,7 +809,7 @@ func (p *UpdatePrivateHostParam) FillValueToSkeleton() {
 		p.Tags = []string{""}
 	}
 	if isEmpty(p.IconId) {
-		p.IconId = 0
+		p.IconId = sacloud.ID(0)
 	}
 	if isEmpty(p.Assumeyes) {
 		p.Assumeyes = false
@@ -844,7 +845,7 @@ func (p *UpdatePrivateHostParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -963,11 +964,11 @@ func (p *UpdatePrivateHostParam) SetTags(v []string) {
 func (p *UpdatePrivateHostParam) GetTags() []string {
 	return p.Tags
 }
-func (p *UpdatePrivateHostParam) SetIconId(v int64) {
+func (p *UpdatePrivateHostParam) SetIconId(v sacloud.ID) {
 	p.IconId = v
 }
 
-func (p *UpdatePrivateHostParam) GetIconId() int64 {
+func (p *UpdatePrivateHostParam) GetIconId() sacloud.ID {
 	return p.IconId
 }
 func (p *UpdatePrivateHostParam) SetAssumeyes(v bool) {
@@ -1047,29 +1048,29 @@ func (p *UpdatePrivateHostParam) SetQueryFile(v string) {
 func (p *UpdatePrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *UpdatePrivateHostParam) SetId(v int64) {
+func (p *UpdatePrivateHostParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *UpdatePrivateHostParam) GetId() int64 {
+func (p *UpdatePrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // DeletePrivateHostParam is input parameters for the sacloud API
 type DeletePrivateHostParam struct {
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewDeletePrivateHostParam return new DeletePrivateHostParam
@@ -1116,7 +1117,7 @@ func (p *DeletePrivateHostParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1263,28 +1264,28 @@ func (p *DeletePrivateHostParam) SetQueryFile(v string) {
 func (p *DeletePrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *DeletePrivateHostParam) SetId(v int64) {
+func (p *DeletePrivateHostParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *DeletePrivateHostParam) GetId() int64 {
+func (p *DeletePrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerInfoPrivateHostParam is input parameters for the sacloud API
 type ServerInfoPrivateHostParam struct {
-	Selector          []string `json:"selector"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	Selector          []string   `json:"selector"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerInfoPrivateHostParam return new ServerInfoPrivateHostParam
@@ -1328,7 +1329,7 @@ func (p *ServerInfoPrivateHostParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1468,30 +1469,30 @@ func (p *ServerInfoPrivateHostParam) SetQueryFile(v string) {
 func (p *ServerInfoPrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerInfoPrivateHostParam) SetId(v int64) {
+func (p *ServerInfoPrivateHostParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerInfoPrivateHostParam) GetId() int64 {
+func (p *ServerInfoPrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerAddPrivateHostParam is input parameters for the sacloud API
 type ServerAddPrivateHostParam struct {
-	ServerId          int64    `json:"server-id"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	ServerId          sacloud.ID `json:"server-id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerAddPrivateHostParam return new ServerAddPrivateHostParam
@@ -1502,7 +1503,7 @@ func NewServerAddPrivateHostParam() *ServerAddPrivateHostParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *ServerAddPrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.ServerId) {
-		p.ServerId = 0
+		p.ServerId = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -1541,7 +1542,7 @@ func (p *ServerAddPrivateHostParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1618,11 +1619,11 @@ func (p *ServerAddPrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerAddPrivateHostParam) SetServerId(v int64) {
+func (p *ServerAddPrivateHostParam) SetServerId(v sacloud.ID) {
 	p.ServerId = v
 }
 
-func (p *ServerAddPrivateHostParam) GetServerId() int64 {
+func (p *ServerAddPrivateHostParam) GetServerId() sacloud.ID {
 	return p.ServerId
 }
 func (p *ServerAddPrivateHostParam) SetSelector(v []string) {
@@ -1709,30 +1710,30 @@ func (p *ServerAddPrivateHostParam) SetQueryFile(v string) {
 func (p *ServerAddPrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerAddPrivateHostParam) SetId(v int64) {
+func (p *ServerAddPrivateHostParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerAddPrivateHostParam) GetId() int64 {
+func (p *ServerAddPrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
 
 // ServerDeletePrivateHostParam is input parameters for the sacloud API
 type ServerDeletePrivateHostParam struct {
-	ServerId          int64    `json:"server-id"`
-	Selector          []string `json:"selector"`
-	Assumeyes         bool     `json:"assumeyes"`
-	ParamTemplate     string   `json:"param-template"`
-	ParamTemplateFile string   `json:"param-template-file"`
-	GenerateSkeleton  bool     `json:"generate-skeleton"`
-	OutputType        string   `json:"output-type"`
-	Column            []string `json:"column"`
-	Quiet             bool     `json:"quiet"`
-	Format            string   `json:"format"`
-	FormatFile        string   `json:"format-file"`
-	Query             string   `json:"query"`
-	QueryFile         string   `json:"query-file"`
-	Id                int64    `json:"id"`
+	ServerId          sacloud.ID `json:"server-id"`
+	Selector          []string   `json:"selector"`
+	Assumeyes         bool       `json:"assumeyes"`
+	ParamTemplate     string     `json:"param-template"`
+	ParamTemplateFile string     `json:"param-template-file"`
+	GenerateSkeleton  bool       `json:"generate-skeleton"`
+	OutputType        string     `json:"output-type"`
+	Column            []string   `json:"column"`
+	Quiet             bool       `json:"quiet"`
+	Format            string     `json:"format"`
+	FormatFile        string     `json:"format-file"`
+	Query             string     `json:"query"`
+	QueryFile         string     `json:"query-file"`
+	Id                sacloud.ID `json:"id"`
 }
 
 // NewServerDeletePrivateHostParam return new ServerDeletePrivateHostParam
@@ -1743,7 +1744,7 @@ func NewServerDeletePrivateHostParam() *ServerDeletePrivateHostParam {
 // FillValueToSkeleton fill values to empty fields
 func (p *ServerDeletePrivateHostParam) FillValueToSkeleton() {
 	if isEmpty(p.ServerId) {
-		p.ServerId = 0
+		p.ServerId = sacloud.ID(0)
 	}
 	if isEmpty(p.Selector) {
 		p.Selector = []string{""}
@@ -1782,7 +1783,7 @@ func (p *ServerDeletePrivateHostParam) FillValueToSkeleton() {
 		p.QueryFile = ""
 	}
 	if isEmpty(p.Id) {
-		p.Id = 0
+		p.Id = sacloud.ID(0)
 	}
 
 }
@@ -1859,11 +1860,11 @@ func (p *ServerDeletePrivateHostParam) GetColumnDefs() []output.ColumnDef {
 	return p.GetCommandDef().TableColumnDefines
 }
 
-func (p *ServerDeletePrivateHostParam) SetServerId(v int64) {
+func (p *ServerDeletePrivateHostParam) SetServerId(v sacloud.ID) {
 	p.ServerId = v
 }
 
-func (p *ServerDeletePrivateHostParam) GetServerId() int64 {
+func (p *ServerDeletePrivateHostParam) GetServerId() sacloud.ID {
 	return p.ServerId
 }
 func (p *ServerDeletePrivateHostParam) SetSelector(v []string) {
@@ -1950,10 +1951,10 @@ func (p *ServerDeletePrivateHostParam) SetQueryFile(v string) {
 func (p *ServerDeletePrivateHostParam) GetQueryFile() string {
 	return p.QueryFile
 }
-func (p *ServerDeletePrivateHostParam) SetId(v int64) {
+func (p *ServerDeletePrivateHostParam) SetId(v sacloud.ID) {
 	p.Id = v
 }
 
-func (p *ServerDeletePrivateHostParam) GetId() int64 {
+func (p *ServerDeletePrivateHostParam) GetId() sacloud.ID {
 	return p.Id
 }
