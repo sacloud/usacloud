@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu Feb 27 2020 <sacloud.users@gmail.com> - 0.32.1-1
+- Fix converting ID when parsing arguments (by yamamoto-febc)
+
 * Thu Feb 27 2020 <sacloud.users@gmail.com> - 0.32.0-1
 - Update copyright (by yamamoto-febc)
 - Add v1 design idea (by yamamoto-febc)
