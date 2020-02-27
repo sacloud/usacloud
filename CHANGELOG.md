@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.32.0 (2020-02-27)
+
+* Update copyright #483 (yamamoto-febc)
+* Add v1 design idea #484 (yamamoto-febc)
+* Introduce sacloud.ID type for avoiding json marshaling error #487 (yamamoto-febc)
+
+
 ## 0.31.1 (2019-12-18)
 
 * エンハンスドロードバランサのスキーマ変更 #481 (yamamoto-febc)

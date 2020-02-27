@@ -1,3 +1,14 @@
+usacloud (0.32.0-1) stable; urgency=low
+
+  * Update copyright (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/483>
+  * Add v1 design idea (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/484>
+  * Introduce sacloud.ID type for avoiding json marshaling error (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/487>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Thu, 27 Feb 2020 01:20:26 +0000
+
 usacloud (0.31.1-1) stable; urgency=low
 
   * エンハンスドロードバランサのスキーマ変更 (by yamamoto-febc)
