@@ -121,7 +121,7 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 		DiskPlan:                "hdd",
 		DiskConnection:          "virtio",
 		DiskSize:                40,
-		DistantFrom:             []int64{999999999999},
+		DistantFrom:             []sacloud.ID{999999999999},
 		IsoImageId:              999999999999,
 		NetworkMode:             "switch",
 		InterfaceDriver:         "virtio",
@@ -133,7 +133,7 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 		Ipaddress:               "192.168.2.11",
 		NwMasklen:               24,
 		DefaultRoute:            "192.168.2.1",
-		StartupScriptIds:        []int64{999999999999},
+		StartupScriptIds:        []sacloud.ID{999999999999},
 		StartupScriptsEphemeral: true,
 		SshKeyMode:              "generate",
 		SshKeyName:              "dummy_keyname",
@@ -191,7 +191,7 @@ func TestServerBuild_HandleParams_FromUnix(t *testing.T) {
 	{
 		b := i.(builder.NetworkInterfaceProperty)
 		b.AddExistsSwitchConnectedNIC(fmt.Sprintf("%d", param.SwitchId))
-		b.SetPacketFilterIDs([]int64{param.PacketFilterId})
+		b.SetPacketFilterIDs([]sacloud.ID{param.PacketFilterId})
 	}
 	{
 		b := i.(builder.DiskEditProperty)
@@ -236,7 +236,7 @@ func TestServerBuild_CreateBuilder_WithConnect(t *testing.T) {
 }
 
 func TestServerBuild_CreateBuilder_FixedUnix(t *testing.T) {
-	osTypes := []string{"sophos-utm", "netwiser", "opnsense"}
+	osTypes := []string{"netwiser", "opnsense"}
 	for _, ostype := range osTypes {
 
 		t.Run(ostype, func(t *testing.T) {

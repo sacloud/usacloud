@@ -29,12 +29,12 @@ func TestDiskEdit(t *testing.T) {
 	params := &params.EditDiskParam{
 		Hostname:            "dummy",
 		Password:            "dummy",
-		SshKeyIds:           []int64{111111111111, 222222222222},
+		SshKeyIds:           []sacloud.ID{111111111111, 222222222222},
 		DisablePasswordAuth: true,
 		Ipaddress:           "192.2.0.10",
 		DefaultRoute:        "192.2.0.1",
 		NwMasklen:           24,
-		StartupScriptIds:    []int64{333333333333, 444444444444},
+		StartupScriptIds:    []sacloud.ID{333333333333, 444444444444},
 	}
 
 	ctx := &dummyCommandContext{
@@ -72,16 +72,16 @@ func TestDiskEdit(t *testing.T) {
 	}
 }
 
-func extractSSHKeyIDs(p *sacloud.DiskEditValue) []int64 {
-	var ids []int64
+func extractSSHKeyIDs(p *sacloud.DiskEditValue) []sacloud.ID {
+	var ids []sacloud.ID
 	for _, k := range p.SSHKeys {
 		ids = append(ids, k.ID)
 	}
 	return ids
 }
 
-func extractStartupScriptIDs(p *sacloud.DiskEditValue) []int64 {
-	var ids []int64
+func extractStartupScriptIDs(p *sacloud.DiskEditValue) []sacloud.ID {
+	var ids []sacloud.ID
 	for _, k := range p.Notes {
 		ids = append(ids, k.ID)
 	}
