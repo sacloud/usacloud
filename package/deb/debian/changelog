@@ -1,3 +1,10 @@
+usacloud (0.32.1-1) stable; urgency=low
+
+  * Fix converting ID when parsing arguments (by yamamoto-febc)
+    <https://github.com/sacloud/usacloud/pull/493>
+
+ -- sacloud-bot <sacloud.users@gmail.com>  Thu, 27 Feb 2020 09:09:03 +0000
+
 usacloud (0.32.0-1) stable; urgency=low
 
   * Update copyright (by yamamoto-febc)
