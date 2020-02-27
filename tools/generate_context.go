@@ -163,41 +163,11 @@ func (c *GenerateContext) CommandFuncName() string {
 	return fmt.Sprintf("%s%s", c.CamelR(), c.CamelC())
 }
 
-func (c *GenerateContext) CompleteArgsFuncName() string {
-	return fmt.Sprintf("%s%sCompleteArgs", c.CamelR(), c.CamelC())
-}
-
-func (c *GenerateContext) CompleteFlagsFuncName() string {
-	return fmt.Sprintf("%s%sCompleteFlags", c.CamelR(), c.CamelC())
-}
-
 func (c *GenerateContext) CommandFileName(useCustomCommand bool) string {
 	if useCustomCommand {
 		return fmt.Sprintf("%s_%s.go", c.SnakeR(), c.SnakeC())
 	}
 	return fmt.Sprintf("%s_%s_gen.go", c.SnakeR(), c.SnakeC())
-}
-
-func (c *GenerateContext) CommandArgsCompletionFileName(useCustom bool) string {
-	if useCustom {
-		return fmt.Sprintf("%s_%s_args.go", c.SnakeR(), c.SnakeC())
-	}
-	return fmt.Sprintf("%s_%s_args_gen.go", c.SnakeR(), c.SnakeC())
-}
-
-func (c *GenerateContext) CommandFlagsCompletionFileName(useCustom bool) string {
-	if useCustom {
-		return fmt.Sprintf("%s_%s_flags.go", c.SnakeR(), c.SnakeC())
-	}
-	return fmt.Sprintf("%s_%s_flags_gen.go", c.SnakeR(), c.SnakeC())
-}
-
-func (c *GenerateContext) ResourceArgsCompletionFileName() string {
-	return fmt.Sprintf("%s_args_gen.go", c.SnakeR())
-}
-
-func (c *GenerateContext) ResourceFlagsCompletionFileName() string {
-	return fmt.Sprintf("%s_flags_gen.go", c.SnakeR())
 }
 
 func (c *GenerateContext) CLICommandsFileName() string {

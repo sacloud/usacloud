@@ -132,7 +132,6 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 			Description:  "set target diskID ",
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
-			CompleteFunc: completeDiskID(),
 			Category:     "backup",
 			Order:        10,
 		},
@@ -144,7 +143,6 @@ func autoBackupCreateParam() map[string]*schema.Schema {
 			ValidateFunc: validateStringSlice(
 				validateInStrValues(append(sacloud.AllowAutoBackupWeekdays(), "all")...),
 			),
-			CompleteFunc: completeInStrValues(append(sacloud.AllowAutoBackupWeekdays(), "all")...),
 			DefaultValue: []string{"all"},
 			Required:     true,
 			Category:     "backup",
@@ -182,9 +180,8 @@ func autoBackupUpdateParam() map[string]*schema.Schema {
 			ValidateFunc: validateStringSlice(
 				validateInStrValues(append(sacloud.AllowAutoBackupWeekdays(), "all")...),
 			),
-			CompleteFunc: completeInStrValues(append(sacloud.AllowAutoBackupWeekdays(), "all")...),
-			Category:     "backup",
-			Order:        20,
+			Category: "backup",
+			Order:    20,
 		},
 		"generation": {
 			Type:            schema.TypeInt,

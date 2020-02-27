@@ -189,7 +189,6 @@ func privateHostServerUpdateParam() map[string]*schema.Schema {
 			Description:  "set server ID",
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
-			CompleteFunc: completeServerID(),
 			Category:     "server",
 			Order:        1,
 		},

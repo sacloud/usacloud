@@ -163,7 +163,6 @@ func isoImageCreateParam() map[string]*schema.Schema {
 			Required:     true,
 			DefaultValue: 5,
 			ValidateFunc: validateInIntValues(5, 10),
-			CompleteFunc: completeInIntValues(5, 10),
 			Category:     "ISO-Image",
 			Order:        10,
 		},

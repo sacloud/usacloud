@@ -36,12 +36,11 @@ func BillResource() *schema.Resource {
 			NeedlessConfirm:    true,
 		},
 		"csv": {
-			Type:                   schema.CommandCustom,
-			Params:                 billReadParam(),
-			UseCustomCommand:       true,
-			UseCustomArgCompletion: true,
-			NoOutput:               true, // doing manual output to GlobalOption.Out
-			NeedlessConfirm:        true,
+			Type:             schema.CommandCustom,
+			Params:           billReadParam(),
+			UseCustomCommand: true,
+			NoOutput:         true, // doing manual output to GlobalOption.Out
+			NeedlessConfirm:  true,
 		},
 	}
 
