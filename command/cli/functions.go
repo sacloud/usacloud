@@ -126,7 +126,8 @@ func applyConfigFromFile(c FlagHandler) error {
 }
 
 func toSakuraID(id string) (sacloud.ID, bool) {
-	return sacloud.StringID(id), true
+	sid := sacloud.StringID(id)
+	return sid, !sid.IsEmpty()
 }
 
 func toSakuraIDs(ids []int64) []sacloud.ID {
