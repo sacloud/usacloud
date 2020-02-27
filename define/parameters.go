@@ -75,7 +75,6 @@ var paramIconResourceID = &schema.Schema{
 	DestinationProp: "SetIconByID",
 	Description:     "set Icon ID",
 	ValidateFunc:    validateSakuraID(),
-	CompleteFunc:    completeIconID(),
 	Category:        "common",
 	Order:           540,
 }
@@ -148,7 +147,6 @@ var paramScopeCond = map[string]*schema.Schema{
 		HandlerType:  schema.HandlerFilterBy,
 		Description:  "set filter by scope('user' or 'shared')",
 		ValidateFunc: validateInStrValues(scopeCondStrings...),
-		CompleteFunc: completeInStrValues(scopeCondStrings...),
 		Category:     "filter",
 		Order:        3,
 	},

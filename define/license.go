@@ -111,7 +111,6 @@ func licenseCreateParam() map[string]*schema.Schema {
 			HandlerType:     schema.HandlerPathThrough,
 			DestinationProp: "SetLicenseInfoByID",
 			Description:     "set LicenseInfo ID",
-			CompleteFunc:    completeLicenseInfoID(),
 			Category:        "license",
 			Order:           10,
 		},

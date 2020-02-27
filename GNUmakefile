@@ -46,10 +46,8 @@ clean:
 clean-all:
 	rm -Rf bin/* ; rm -Rf tools/bin/* ; rm -f command/*_gen.go; \
 	rm -f command/cli/*_gen.go \
-	rm -f command/completion/*_gen.go \
 	rm -f command/funcs/*_gen.go \
 	rm -f command/params/*_gen.go \
-	rm -f contrib/completion/bash/usacloud
 
 
 .PHONY: tools
@@ -59,14 +57,11 @@ tools:
 	GO111MODULE=off go get -u golang.org/x/lint/golint
 	GO111MODULE=off go get github.com/sacloud/addlicense
 
-contrib/completion/bash/usacloud: define/*.go
-	go run tools/gen-bash-completion/main.go
-
 .PHONY: gen
-gen: command/cli/*_gen.go command/completion/*_gen.go command/funcs/*_gen.go command/params/*_gen.go
+gen: command/cli/*_gen.go command/funcs/*_gen.go command/params/*_gen.go
 
 .PHONY: gen-force
-gen-force: clean-all contrib/completion/bash/usacloud _gen-force set-license
+gen-force: clean-all _gen-force set-license
 _gen-force: 
 	go generate $(GOGEN_FILES); gofmt -s -l -w $(GOFMT_FILES); goimports -l -w $(GOFMT_FILES)
 
@@ -76,7 +71,7 @@ command/*_gen.go: define/*.go tools/gen-cli-commands/*.go tools/gen-command-func
 .PHONY: build build-x build-darwin build-windows build-linux
 build: bin/usacloud
 
-bin/usacloud: contrib/completion/bash/usacloud $(GO_FILES)
+bin/usacloud: $(GO_FILES)
 	OS="`go env GOOS`" ARCH="`go env GOARCH`" ARCHIVE= BUILD_LDFLAGS=$(BUILD_LDFLAGS) sh -c "'$(CURDIR)/scripts/build.sh'"
 
 build-x: build-darwin build-windows build-linux build-bsd

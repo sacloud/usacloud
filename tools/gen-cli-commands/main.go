@@ -389,22 +389,20 @@ func buildActionParams(command *schema.Command) (map[string]interface{}, error) 
 	createParamFuncName := fmt.Sprintf("params.New%s", ctx.InputModelTypeName())
 
 	res = map[string]interface{}{
-		"ParamName":             paramName,
-		"NoSelector":            command.NoSelector,
-		"CreateParamFunc":       createParamFuncName,
-		"SkipAuth":              ctx.CurrentCommand().SkipAuth,
-		"SetDefault":            setDefault,
-		"Action":                action,
-		"CompleteArgsFuncName":  ctx.CompleteArgsFuncName(),
-		"CompleteFlagsFuncName": ctx.CompleteFlagsFuncName(),
-		"NeedConfirm":           needConfirm,
-		"ConfirmMsg":            confirmMsg,
-		"IdParamRequired":       command.Type.IsRequiredIDType(),
-		"CommandResourceName":   ctx.CommandResourceName(),
-		"FindResultName":        ctx.FindResultFieldName(),
-		"IsNeedSingleID":        command.Type.IsNeedSingleIDType(),
-		"IsNeedIDOnlyType":      command.Type.IsNeedIDOnlyType(),
-		"SkipAfterSecondArgs":   command.SkipAfterSecondArgs,
+		"ParamName":           paramName,
+		"NoSelector":          command.NoSelector,
+		"CreateParamFunc":     createParamFuncName,
+		"SkipAuth":            ctx.CurrentCommand().SkipAuth,
+		"SetDefault":          setDefault,
+		"Action":              action,
+		"NeedConfirm":         needConfirm,
+		"ConfirmMsg":          confirmMsg,
+		"IdParamRequired":     command.Type.IsRequiredIDType(),
+		"CommandResourceName": ctx.CommandResourceName(),
+		"FindResultName":      ctx.FindResultFieldName(),
+		"IsNeedSingleID":      command.Type.IsNeedSingleIDType(),
+		"IsNeedIDOnlyType":    command.Type.IsNeedIDOnlyType(),
+		"SkipAfterSecondArgs": command.SkipAfterSecondArgs,
 	}
 
 	return res, nil
@@ -469,7 +467,6 @@ import (
     "github.com/sacloud/usacloud/schema"
     "github.com/sacloud/usacloud/command"
     "github.com/sacloud/usacloud/command/funcs"
-    "github.com/sacloud/usacloud/command/completion"
     "github.com/sacloud/usacloud/command/params"
     "strings"
     "encoding/json"
@@ -543,110 +540,6 @@ func init() {
 					},
 					{{ end }}
 				},{{ end }}
-				ShellComplete: func(c *cli.Context) {
-
-					if c.NArg() < 3 { // invalid args
-						return
-					}
-
-					{{ if .ApplyConfigFile }}
-					if err := checkConfigVersion(); err != nil {
-						return
-					}
-					if err := applyConfigFromFile(c); err != nil {
-						return
-					}
-					{{ end }}
-
-					// c.Args() == arg1 arg2 arg3 -- [cur] [prev] [commandName]
-					args := c.Args().Slice()
-					commandName := args[c.NArg()-1]
-					prev := args[c.NArg()-2]
-					cur := args[c.NArg()-3]
-
-					// set real args
-					realArgs := args[0 : c.NArg()-3]
-
-					{{ if .ApplyConfigFile }}
-					// Validate global params
-					command.GlobalOption.Validate(false)
-					{{ end }}
-
-					// set default output-type
-					// when params have output-type option and have empty value
-					var outputTypeHolder interface{} = {{.ParamName}}
-					if v, ok := outputTypeHolder.(command.OutputTypeHolder); ok {
-						if v.GetOutputType() == "" {
-							v.SetOutputType(command.GlobalOption.DefaultOutputType)
-						}
-					}
-
-					// build command context
-					ctx := command.NewContext(c, realArgs, {{.ParamName}})
-					{{ if .SetDefault }}
-					// Set option values
-					{{.SetDefault}}{{ end }}
-
-
-					if strings.HasPrefix(prev, "-") {
-						// prev if flag , is values setted?
-						if strings.Contains(prev, "=") {
-							if strings.HasPrefix(cur, "-") {
-								completion.FlagNames(c, commandName)
-								return
-							} else {
-								completion.{{.CompleteArgsFuncName}}(ctx , {{.ParamName}}, cur, prev, commandName)
-								return
-							}
-						}
-
-						// cleanup flag name
-						name := prev
-						for {
-							if !strings.HasPrefix(name, "-") {
-								break
-							}
-							name = strings.Replace(name, "-", "", 1)
-						}
-
-						// flag is exists? , is BoolFlag?
-						exists := false
-						for _, flag := range c.App.Command(commandName).Flags {
-
-							for _, n := range flag.Names() {
-								if n == name {
-									exists = true
-									break
-								}
-							}
-
-							if exists {
-								if _, ok := flag.(*cli.BoolFlag); ok {
-									if strings.HasPrefix(cur, "-") {
-										completion.FlagNames(c, commandName)
-										return
-									} else {
-										completion.{{.CompleteArgsFuncName}}(ctx , {{.ParamName}}, cur, prev, commandName)
-										return
-									}
-								} else {
-									// prev is flag , call completion func of each flags
-									completion.{{.CompleteFlagsFuncName}}(ctx, {{.ParamName}}, name, cur)
-									return
-								}
-							}
-						}
-						// here, prev is wrong, so noop.
-					} else {
-						if strings.HasPrefix(cur, "-") {
-							completion.FlagNames(c, commandName)
-							return
-						} else {
-							completion.{{.CompleteArgsFuncName}}(ctx , {{.ParamName}}, cur, prev, commandName)
-							return
-						}
-					}
-				},
 				Action: func(c *cli.Context) error {
 					{{ if .ApplyConfigFile }}
 					if err := checkConfigVersion(); err != nil {

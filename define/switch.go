@@ -192,7 +192,6 @@ func switchConnectBridgeParam() map[string]*schema.Schema {
 			Description:  "set Bridge ID",
 			Required:     true,
 			ValidateFunc: validateSakuraID(),
-			CompleteFunc: completeBridgeID(),
 			Category:     "bridge",
 			Order:        10,
 		},

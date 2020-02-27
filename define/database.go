@@ -443,7 +443,6 @@ func databaseCreateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
-			CompleteFunc: completeSwitchID(),
 			Required:     true,
 			Category:     "database",
 			Order:        10,
@@ -455,7 +454,6 @@ func databaseCreateParam() map[string]*schema.Schema {
 			DefaultValue: 10,
 			Description:  "set plan[10/30/90/240/500/1000]",
 			ValidateFunc: validateInIntValues(sacloud.AllowDatabasePlans()...),
-			CompleteFunc: completeInIntValues(sacloud.AllowDatabasePlans()...),
 			Category:     "database",
 			Order:        20,
 		},
@@ -466,7 +464,6 @@ func databaseCreateParam() map[string]*schema.Schema {
 			Description:  "set database type[postgresql/mariadb]",
 			Required:     true,
 			ValidateFunc: validateInStrValues("postgresql", "mariadb"),
-			CompleteFunc: completeInStrValues("postgresql", "mariadb"),
 			Category:     "database",
 			Order:        30,
 		},
@@ -525,7 +522,6 @@ func databaseCreateParam() map[string]*schema.Schema {
 			ValidateFunc: validateStringSlice(
 				validateInStrValues(append(sacloud.AllowDatabaseBackupWeekdays(), "all")...),
 			),
-			CompleteFunc: completeInStrValues(append(sacloud.AllowDatabaseBackupWeekdays(), "all")...),
 			DefaultValue: []string{"all"},
 			Category:     "database",
 			Order:        85,
@@ -535,7 +531,6 @@ func databaseCreateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set backup start time",
 			ValidateFunc: validateBackupTime(),
-			CompleteFunc: completeBackupTime(),
 			Category:     "database",
 			Order:        88,
 		},
@@ -608,7 +603,6 @@ func databaseCreateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
-			CompleteFunc: completeIconID(),
 			Category:     "common",
 			Order:        530,
 		},
@@ -682,7 +676,6 @@ func databaseUpdateParam() map[string]*schema.Schema {
 			ValidateFunc: validateStringSlice(
 				validateInStrValues(append(sacloud.AllowDatabaseBackupWeekdays(), "all")...),
 			),
-			CompleteFunc: completeInStrValues(append(sacloud.AllowDatabaseBackupWeekdays(), "all")...),
 			DefaultValue: []string{"all"},
 			Category:     "database",
 			Order:        125,
@@ -692,7 +685,6 @@ func databaseUpdateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set backup start time",
 			ValidateFunc: validateBackupTime(),
-			CompleteFunc: completeBackupTime(),
 			Category:     "database",
 			Order:        128,
 		},
@@ -726,7 +718,6 @@ func databaseUpdateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
-			CompleteFunc: completeIconID(),
 			Category:     "common",
 			Order:        530,
 		},
@@ -803,7 +794,6 @@ func databaseCloneParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
-			CompleteFunc: completeSwitchID(),
 			Category:     "database",
 			Order:        10,
 		},
@@ -814,7 +804,6 @@ func databaseCloneParam() map[string]*schema.Schema {
 			DefaultValue: 10,
 			Description:  "set plan[10/30/90/240/500/1000]",
 			ValidateFunc: validateInIntValues(sacloud.AllowDatabasePlans()...),
-			CompleteFunc: completeInIntValues(sacloud.AllowDatabasePlans()...),
 			Category:     "database",
 			Order:        20,
 		},
@@ -855,7 +844,6 @@ func databaseCloneParam() map[string]*schema.Schema {
 			ValidateFunc: validateStringSlice(
 				validateInStrValues(append(sacloud.AllowDatabaseBackupWeekdays(), "all")...),
 			),
-			CompleteFunc: completeInStrValues(append(sacloud.AllowDatabaseBackupWeekdays(), "all")...),
 			DefaultValue: []string{"all"},
 			Category:     "database",
 			Order:        85,
@@ -865,7 +853,6 @@ func databaseCloneParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set backup start time",
 			ValidateFunc: validateBackupTime(),
-			CompleteFunc: completeBackupTime(),
 			Category:     "database",
 			Order:        88,
 		},
@@ -936,7 +923,6 @@ func databaseCloneParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
-			CompleteFunc: completeIconID(),
 			Category:     "common",
 			Order:        530,
 		},
@@ -950,7 +936,6 @@ func databaseReplicaCreateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set connect switch ID",
 			ValidateFunc: validateSakuraID(),
-			CompleteFunc: completeSwitchID(),
 			Category:     "database",
 			Order:        10,
 		},
@@ -1011,7 +996,6 @@ func databaseReplicaCreateParam() map[string]*schema.Schema {
 			HandlerType:  schema.HandlerNoop,
 			Description:  "set Icon ID",
 			ValidateFunc: validateSakuraID(),
-			CompleteFunc: completeIconID(),
 			Category:     "common",
 			Order:        530,
 		},
@@ -1087,12 +1071,6 @@ func databaseMonitorSizeColumns() []output.ColumnDef {
 	}
 }
 
-var databaseLogNameCompletions = []string{
-	"all",
-	"systemctl",
-	"mariadb.log",
-}
-
 func databaseLogParam() map[string]*schema.Schema {
 	return map[string]*schema.Schema{
 		"log-name": {
@@ -1101,7 +1079,6 @@ func databaseLogParam() map[string]*schema.Schema {
 			Aliases:      []string{"name"},
 			Description:  "set target logfile name",
 			DefaultValue: "all",
-			CompleteFunc: completeInStrValues(databaseLogNameCompletions...),
 			Category:     "monitor",
 			Order:        10,
 		},

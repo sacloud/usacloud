@@ -31,18 +31,16 @@ type Command struct {
 	Category string
 	Order    int
 
-	Params                   map[string]*Schema
-	ParamCategories          []Category
-	AltResource              string // 空の場合はResourceのキーをCamelizeしてsacloud.XXXを対象とする。
-	ListResultFieldName      string
-	SkipAuth                 bool
-	SkipAfterSecondArgs      bool // trueの場合、2番目以降の引数(1番目はID or 名称)の解析を行わない
-	UseCustomCommand         bool
-	UseCustomArgCompletion   bool
-	UseCustomFlagsCompletion bool
-	NeedlessConfirm          bool
-	ConfirmMessage           string
-	ExperimentWarning        string
+	Params              map[string]*Schema
+	ParamCategories     []Category
+	AltResource         string // 空の場合はResourceのキーをCamelizeしてsacloud.XXXを対象とする。
+	ListResultFieldName string
+	SkipAuth            bool
+	SkipAfterSecondArgs bool // trueの場合、2番目以降の引数(1番目はID or 名称)の解析を行わない
+	UseCustomCommand    bool
+	NeedlessConfirm     bool
+	ConfirmMessage      string
+	ExperimentWarning   string
 
 	NoOutput bool
 
