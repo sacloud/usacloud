@@ -40,6 +40,9 @@ CLI client of the SakuraCloud
 %{_sysconfdir}/bash_completion.d/usacloud
 
 %changelog
+* Thu Mar 05 2020 <sacloud.users@gmail.com> - 0.32.2-1
+- Fix validator - use sacloud.ID#IsEmpty for validate the conflistWith rule (by yamamoto-febc)
+
 * Thu Feb 27 2020 <sacloud.users@gmail.com> - 0.32.1-1
 - Fix converting ID when parsing arguments (by yamamoto-febc)
 
