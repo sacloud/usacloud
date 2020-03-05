@@ -61,6 +61,10 @@ func IsEmpty(object interface{}) bool {
 		}
 	}
 
+	if id, ok := object.(sacloud.ID); ok {
+		return id.IsEmpty()
+	}
+
 	objValue := reflect.ValueOf(object)
 
 	switch objValue.Kind() {
