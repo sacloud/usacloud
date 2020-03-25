@@ -6,14 +6,31 @@ github.com/bitly/go-simplejson
 github.com/davecgh/go-spew/spew
 # github.com/fatih/color v1.7.0
 github.com/fatih/color
+# github.com/fatih/structs v1.1.0
+github.com/fatih/structs
+# github.com/fsnotify/fsnotify v1.4.7
+github.com/fsnotify/fsnotify
 # github.com/ghodss/yaml v1.0.1-0.20190212211648-25d852aebe32
 github.com/ghodss/yaml
+# github.com/go-playground/locales v0.12.1
+github.com/go-playground/locales
+github.com/go-playground/locales/currency
+# github.com/go-playground/universal-translator v0.16.0
+github.com/go-playground/universal-translator
+# github.com/hashicorp/go-cleanhttp v0.5.1
+github.com/hashicorp/go-cleanhttp
+# github.com/hashicorp/go-retryablehttp v0.6.4
+github.com/hashicorp/go-retryablehttp
 # github.com/hnakamur/go-scp v0.0.0-20170731142846-05a5990ec145
 github.com/hnakamur/go-scp
-# github.com/huandu/xstrings v0.0.0-20151130125119-3959339b3335
+# github.com/huandu/xstrings v1.2.0
 github.com/huandu/xstrings
 # github.com/imdario/mergo v0.3.6
 github.com/imdario/mergo
+# github.com/inconshreveable/mousetrap v1.0.0
+github.com/inconshreveable/mousetrap
+# github.com/leodido/go-urn v1.1.0
+github.com/leodido/go-urn
 # github.com/mattn/go-colorable v0.0.9
 github.com/mattn/go-colorable
 # github.com/mattn/go-isatty v0.0.7
@@ -22,18 +39,20 @@ github.com/mattn/go-isatty
 github.com/mattn/go-runewidth
 # github.com/mattn/go-tty v0.0.0-20190407112021-83fae09cc007
 github.com/mattn/go-tty
-# github.com/mitchellh/go-homedir v1.0.0
+# github.com/mitchellh/go-homedir v1.1.0
 github.com/mitchellh/go-homedir
 # github.com/mitchellh/go-vnc v0.0.0-20150629162542-723ed9867aed
 github.com/mitchellh/go-vnc
 # github.com/mitchellh/goamz v0.0.0-20150317174335-caaaea8b30ee
 github.com/mitchellh/goamz/aws
 github.com/mitchellh/goamz/s3
+# github.com/mitchellh/mapstructure v1.1.2
+github.com/mitchellh/mapstructure
 # github.com/olekukonko/tablewriter v0.0.0-20180506121414-d4647c9c7a84
 github.com/olekukonko/tablewriter
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
-# github.com/sacloud/ftps v0.0.0-20171205062625-42fc0f9886fe
+# github.com/sacloud/ftps v1.0.0
 github.com/sacloud/ftps
 # github.com/sacloud/go-jmespath v0.0.0-20190125082617-862639817e08
 github.com/sacloud/go-jmespath
@@ -45,8 +64,28 @@ github.com/sacloud/libsacloud/sacloud
 github.com/sacloud/libsacloud/sacloud/ostype
 github.com/sacloud/libsacloud/utils/mutexkv
 github.com/sacloud/libsacloud/utils/server
+# github.com/sacloud/libsacloud/v2 v2.4.1
+github.com/sacloud/libsacloud/v2
+github.com/sacloud/libsacloud/v2/pkg/cidr
+github.com/sacloud/libsacloud/v2/pkg/mapconv
+github.com/sacloud/libsacloud/v2/pkg/mutexkv
+github.com/sacloud/libsacloud/v2/pkg/size
+github.com/sacloud/libsacloud/v2/sacloud
+github.com/sacloud/libsacloud/v2/sacloud/accessor
+github.com/sacloud/libsacloud/v2/sacloud/fake
+github.com/sacloud/libsacloud/v2/sacloud/naked
+github.com/sacloud/libsacloud/v2/sacloud/profile
+github.com/sacloud/libsacloud/v2/sacloud/search
+github.com/sacloud/libsacloud/v2/sacloud/trace
+github.com/sacloud/libsacloud/v2/sacloud/types
+github.com/sacloud/libsacloud/v2/utils/builder
+github.com/sacloud/libsacloud/v2/utils/setup
 # github.com/skratchdot/open-golang v0.0.0-20190402232053-79abb63cd66e
 github.com/skratchdot/open-golang/open
+# github.com/spf13/cobra v0.0.6
+github.com/spf13/cobra
+# github.com/spf13/pflag v1.0.3
+github.com/spf13/pflag
 # github.com/stretchr/testify v1.3.0
 github.com/stretchr/testify/assert
 # github.com/vaughan0/go-ini v0.0.0-20130923145212-a98ad7ee00ec
@@ -54,7 +93,7 @@ github.com/vaughan0/go-ini
 # go.uber.org/ratelimit v0.0.0-20180316092928-c15da0234277
 go.uber.org/ratelimit
 go.uber.org/ratelimit/internal/clock
-# golang.org/x/crypto v0.0.0-20190417174047-f416ebab96af
+# golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
 golang.org/x/crypto/curve25519
 golang.org/x/crypto/ed25519
 golang.org/x/crypto/ed25519/internal/edwards25519
@@ -65,6 +104,8 @@ golang.org/x/crypto/ssh
 # golang.org/x/sys v0.0.0-20190416152802-12500544f89f
 golang.org/x/sys/cpu
 golang.org/x/sys/unix
+# gopkg.in/go-playground/validator.v9 v9.29.0
+gopkg.in/go-playground/validator.v9
 # gopkg.in/urfave/cli.v2 v2.0.0-20170215051800-04b2f4ff79cf
 gopkg.in/urfave/cli.v2
 # gopkg.in/yaml.v2 v2.2.2

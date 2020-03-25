@@ -80,7 +80,7 @@ func ToCLIFlagName(name string) string {
 
 func FlattenStringList(list []string) string {
 	if len(list) > 0 {
-		return fmt.Sprintf("\"%s\"", strings.Join(list, "\",\""))
+		return fmt.Sprintf(`"%s"`, strings.Join(list, `","`))
 	}
 	return ""
 }
