@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var objectstorageListCmd = &cobra.Command{
 	Aliases: []string{"ls"},
 	Short:   "List Objectstorage",
 	Long:    `List Objectstorage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListObjectstorageParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var objectstoragePutCmd = &cobra.Command{
 
 	Short: "Put Objectstorage",
 	Long:  `Put Objectstorage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		putParam, err := params.NewPutObjectstorageParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("put parameter: \n%s\n", debugMarshalIndent(putParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var objectstorageGetCmd = &cobra.Command{
 
 	Short: "Get Objectstorage",
 	Long:  `Get Objectstorage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		getParam, err := params.NewGetObjectstorageParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("get parameter: \n%s\n", debugMarshalIndent(getParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var objectstorageDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm", "del"},
 	Short:   "Delete Objectstorage",
 	Long:    `Delete Objectstorage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteObjectstorageParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 

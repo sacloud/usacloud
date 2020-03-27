@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var privatehostListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Privatehost",
 	Long:    `List Privatehost`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListPrivatehostParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var privatehostCreateCmd = &cobra.Command{
 
 	Short: "Create Privatehost",
 	Long:  `Create Privatehost`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreatePrivatehostParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var privatehostReadCmd = &cobra.Command{
 
 	Short: "Read Privatehost",
 	Long:  `Read Privatehost`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadPrivatehostParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var privatehostUpdateCmd = &cobra.Command{
 
 	Short: "Update Privatehost",
 	Long:  `Update Privatehost`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdatePrivatehostParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var privatehostDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Privatehost",
 	Long:    `Delete Privatehost`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeletePrivatehostParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var privatehostServerInfoCmd = &cobra.Command{
 	Aliases: []string{"server-list"},
 	Short:   "ServerInfo Privatehost",
 	Long:    `ServerInfo Privatehost`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverInfoParam, err := params.NewServerInfoPrivatehostParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-info parameter: \n%s\n", debugMarshalIndent(serverInfoParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var privatehostServerAddCmd = &cobra.Command{
 
 	Short: "ServerAdd Privatehost",
 	Long:  `ServerAdd Privatehost`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverAddParam, err := params.NewServerAddPrivatehostParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-add parameter: \n%s\n", debugMarshalIndent(serverAddParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var privatehostServerDeleteCmd = &cobra.Command{
 
 	Short: "ServerDelete Privatehost",
 	Long:  `ServerDelete Privatehost`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverDeleteParam, err := params.NewServerDeletePrivatehostParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-delete parameter: \n%s\n", debugMarshalIndent(serverDeleteParam))
+		return err
 	},
 }
 

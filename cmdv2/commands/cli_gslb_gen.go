@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var gslbListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Gslb",
 	Long:    `List Gslb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListGslbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var gslbServerInfoCmd = &cobra.Command{
 	Aliases: []string{"server-list"},
 	Short:   "ServerInfo Gslb",
 	Long:    `ServerInfo Gslb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverInfoParam, err := params.NewServerInfoGslbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-info parameter: \n%s\n", debugMarshalIndent(serverInfoParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var gslbCreateCmd = &cobra.Command{
 
 	Short: "Create Gslb",
 	Long:  `Create Gslb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateGslbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var gslbServerAddCmd = &cobra.Command{
 
 	Short: "ServerAdd Gslb",
 	Long:  `ServerAdd Gslb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverAddParam, err := params.NewServerAddGslbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-add parameter: \n%s\n", debugMarshalIndent(serverAddParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var gslbReadCmd = &cobra.Command{
 
 	Short: "Read Gslb",
 	Long:  `Read Gslb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadGslbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var gslbServerUpdateCmd = &cobra.Command{
 
 	Short: "ServerUpdate Gslb",
 	Long:  `ServerUpdate Gslb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverUpdateParam, err := params.NewServerUpdateGslbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-update parameter: \n%s\n", debugMarshalIndent(serverUpdateParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var gslbServerDeleteCmd = &cobra.Command{
 
 	Short: "ServerDelete Gslb",
 	Long:  `ServerDelete Gslb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverDeleteParam, err := params.NewServerDeleteGslbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-delete parameter: \n%s\n", debugMarshalIndent(serverDeleteParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var gslbUpdateCmd = &cobra.Command{
 
 	Short: "Update Gslb",
 	Long:  `Update Gslb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateGslbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var gslbDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Gslb",
 	Long:    `Delete Gslb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteGslbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 

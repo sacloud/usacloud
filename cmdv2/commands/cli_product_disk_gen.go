@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var productdiskListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List Productdisk (default)",
 	Long:    `List Productdisk (default)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListProductdiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var productdiskReadCmd = &cobra.Command{
 
 	Short: "Read Productdisk",
 	Long:  `Read Productdisk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadProductdiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 

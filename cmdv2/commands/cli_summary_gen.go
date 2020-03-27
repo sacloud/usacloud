@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var summaryShowCmd = &cobra.Command{
 
 	Short: "Show Summary (default)",
 	Long:  `Show Summary (default)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		showParam, err := params.NewShowSummaryParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("show parameter: \n%s\n", debugMarshalIndent(showParam))
+		return err
 	},
 }
 

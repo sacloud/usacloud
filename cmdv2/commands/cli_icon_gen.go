@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var iconListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Icon",
 	Long:    `List Icon`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListIconParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var iconCreateCmd = &cobra.Command{
 
 	Short: "Create Icon",
 	Long:  `Create Icon`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateIconParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var iconReadCmd = &cobra.Command{
 
 	Short: "Read Icon",
 	Long:  `Read Icon`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadIconParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var iconUpdateCmd = &cobra.Command{
 
 	Short: "Update Icon",
 	Long:  `Update Icon`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateIconParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var iconDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Icon",
 	Long:    `Delete Icon`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteIconParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 

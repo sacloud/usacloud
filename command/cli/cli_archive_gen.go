@@ -138,6 +138,7 @@ func init() {
 				},
 				Action: func(c *cli.Context) error {
 
+					// TODO 共通処理
 					if err := checkConfigVersion(); err != nil {
 						return err
 					}

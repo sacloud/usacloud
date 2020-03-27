@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var loadbalancerListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Loadbalancer",
 	Long:    `List Loadbalancer`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var loadbalancerCreateCmd = &cobra.Command{
 
 	Short: "Create Loadbalancer",
 	Long:  `Create Loadbalancer`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var loadbalancerReadCmd = &cobra.Command{
 
 	Short: "Read Loadbalancer",
 	Long:  `Read Loadbalancer`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var loadbalancerUpdateCmd = &cobra.Command{
 
 	Short: "Update Loadbalancer",
 	Long:  `Update Loadbalancer`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var loadbalancerDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Loadbalancer",
 	Long:    `Delete Loadbalancer`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var loadbalancerBootCmd = &cobra.Command{
 	Aliases: []string{"power-on"},
 	Short:   "Boot Loadbalancer",
 	Long:    `Boot Loadbalancer`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		bootParam, err := params.NewBootLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("boot parameter: \n%s\n", debugMarshalIndent(bootParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var loadbalancerShutdownCmd = &cobra.Command{
 	Aliases: []string{"power-off"},
 	Short:   "Shutdown Loadbalancer",
 	Long:    `Shutdown Loadbalancer`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		shutdownParam, err := params.NewShutdownLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("shutdown parameter: \n%s\n", debugMarshalIndent(shutdownParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var loadbalancerShutdownForceCmd = &cobra.Command{
 	Aliases: []string{"stop"},
 	Short:   "ShutdownForce Loadbalancer",
 	Long:    `ShutdownForce Loadbalancer`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		shutdownForceParam, err := params.NewShutdownForceLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("shutdown-force parameter: \n%s\n", debugMarshalIndent(shutdownForceParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var loadbalancerResetCmd = &cobra.Command{
 
 	Short: "Reset Loadbalancer",
 	Long:  `Reset Loadbalancer`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		resetParam, err := params.NewResetLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("reset parameter: \n%s\n", debugMarshalIndent(resetParam))
+		return err
 	},
 }
 
@@ -111,8 +141,11 @@ var loadbalancerWaitForBootCmd = &cobra.Command{
 
 	Short: "Wait until boot is completed",
 	Long:  `Wait until boot is completed`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		waitForBootParam, err := params.NewWaitForBootLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("wait-for-boot parameter: \n%s\n", debugMarshalIndent(waitForBootParam))
+		return err
 	},
 }
 
@@ -121,8 +154,11 @@ var loadbalancerWaitForDownCmd = &cobra.Command{
 
 	Short: "Wait until shutdown is completed",
 	Long:  `Wait until shutdown is completed`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		waitForDownParam, err := params.NewWaitForDownLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("wait-for-down parameter: \n%s\n", debugMarshalIndent(waitForDownParam))
+		return err
 	},
 }
 
@@ -131,8 +167,11 @@ var loadbalancerVipInfoCmd = &cobra.Command{
 
 	Short: "Show information of VIP(s)",
 	Long:  `Show information of VIP(s)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		vipInfoParam, err := params.NewVipInfoLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("vip-info parameter: \n%s\n", debugMarshalIndent(vipInfoParam))
+		return err
 	},
 }
 
@@ -141,8 +180,11 @@ var loadbalancerVipAddCmd = &cobra.Command{
 
 	Short: "Add VIP to LoadBalancer",
 	Long:  `Add VIP to LoadBalancer`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		vipAddParam, err := params.NewVipAddLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("vip-add parameter: \n%s\n", debugMarshalIndent(vipAddParam))
+		return err
 	},
 }
 
@@ -151,8 +193,11 @@ var loadbalancerVipUpdateCmd = &cobra.Command{
 
 	Short: "Update VIP",
 	Long:  `Update VIP`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		vipUpdateParam, err := params.NewVipUpdateLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("vip-update parameter: \n%s\n", debugMarshalIndent(vipUpdateParam))
+		return err
 	},
 }
 
@@ -161,8 +206,11 @@ var loadbalancerVipDeleteCmd = &cobra.Command{
 
 	Short: "Delete VIP from LoadBalancer",
 	Long:  `Delete VIP from LoadBalancer`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		vipDeleteParam, err := params.NewVipDeleteLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("vip-delete parameter: \n%s\n", debugMarshalIndent(vipDeleteParam))
+		return err
 	},
 }
 
@@ -171,8 +219,11 @@ var loadbalancerServerInfoCmd = &cobra.Command{
 
 	Short: "Show servers under VIP(s)",
 	Long:  `Show servers under VIP(s)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverInfoParam, err := params.NewServerInfoLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-info parameter: \n%s\n", debugMarshalIndent(serverInfoParam))
+		return err
 	},
 }
 
@@ -181,8 +232,11 @@ var loadbalancerServerAddCmd = &cobra.Command{
 
 	Short: "Add server under VIP(s)",
 	Long:  `Add server under VIP(s)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverAddParam, err := params.NewServerAddLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-add parameter: \n%s\n", debugMarshalIndent(serverAddParam))
+		return err
 	},
 }
 
@@ -191,8 +245,11 @@ var loadbalancerServerUpdateCmd = &cobra.Command{
 
 	Short: "Update server under VIP(s)",
 	Long:  `Update server under VIP(s)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverUpdateParam, err := params.NewServerUpdateLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-update parameter: \n%s\n", debugMarshalIndent(serverUpdateParam))
+		return err
 	},
 }
 
@@ -201,8 +258,11 @@ var loadbalancerServerDeleteCmd = &cobra.Command{
 
 	Short: "Delete server under VIP(s)",
 	Long:  `Delete server under VIP(s)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverDeleteParam, err := params.NewServerDeleteLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-delete parameter: \n%s\n", debugMarshalIndent(serverDeleteParam))
+		return err
 	},
 }
 
@@ -211,8 +271,11 @@ var loadbalancerMonitorCmd = &cobra.Command{
 
 	Short: "Monitor Loadbalancer",
 	Long:  `Monitor Loadbalancer`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorParam, err := params.NewMonitorLoadbalancerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(monitorParam))
+		return err
 	},
 }
 

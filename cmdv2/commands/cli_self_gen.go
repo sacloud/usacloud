@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var selfInfoCmd = &cobra.Command{
 
 	Short: "Info Self (default)",
 	Long:  `Info Self (default)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		infoParam, err := params.NewInfoSelfParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("info parameter: \n%s\n", debugMarshalIndent(infoParam))
+		return err
 	},
 }
 

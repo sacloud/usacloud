@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var simListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Sim",
 	Long:    `List Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var simCreateCmd = &cobra.Command{
 
 	Short: "Create Sim",
 	Long:  `Create Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var simReadCmd = &cobra.Command{
 
 	Short: "Read Sim",
 	Long:  `Read Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var simUpdateCmd = &cobra.Command{
 
 	Short: "Update Sim",
 	Long:  `Update Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var simDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Sim",
 	Long:    `Delete Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var simCarrierInfoCmd = &cobra.Command{
 	Aliases: []string{"carrier-list"},
 	Short:   "CarrierInfo Sim",
 	Long:    `CarrierInfo Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		carrierInfoParam, err := params.NewCarrierInfoSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("carrier-info parameter: \n%s\n", debugMarshalIndent(carrierInfoParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var simCarrierUpdateCmd = &cobra.Command{
 
 	Short: "CarrierUpdate Sim",
 	Long:  `CarrierUpdate Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		carrierUpdateParam, err := params.NewCarrierUpdateSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("carrier-update parameter: \n%s\n", debugMarshalIndent(carrierUpdateParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var simActivateCmd = &cobra.Command{
 
 	Short: "Activate Sim",
 	Long:  `Activate Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		activateParam, err := params.NewActivateSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("activate parameter: \n%s\n", debugMarshalIndent(activateParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var simDeactivateCmd = &cobra.Command{
 
 	Short: "Deactivate Sim",
 	Long:  `Deactivate Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deactivateParam, err := params.NewDeactivateSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("deactivate parameter: \n%s\n", debugMarshalIndent(deactivateParam))
+		return err
 	},
 }
 
@@ -111,8 +141,11 @@ var simImeiLockCmd = &cobra.Command{
 
 	Short: "ImeiLock Sim",
 	Long:  `ImeiLock Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		imeiLockParam, err := params.NewImeiLockSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("imei-lock parameter: \n%s\n", debugMarshalIndent(imeiLockParam))
+		return err
 	},
 }
 
@@ -121,8 +154,11 @@ var simIpAddCmd = &cobra.Command{
 
 	Short: "IpAdd Sim",
 	Long:  `IpAdd Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ipAddParam, err := params.NewIpAddSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ip-add parameter: \n%s\n", debugMarshalIndent(ipAddParam))
+		return err
 	},
 }
 
@@ -131,8 +167,11 @@ var simImeiUnlockCmd = &cobra.Command{
 
 	Short: "ImeiUnlock Sim",
 	Long:  `ImeiUnlock Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		imeiUnlockParam, err := params.NewImeiUnlockSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("imei-unlock parameter: \n%s\n", debugMarshalIndent(imeiUnlockParam))
+		return err
 	},
 }
 
@@ -141,8 +180,11 @@ var simIpDeleteCmd = &cobra.Command{
 	Aliases: []string{"ip-del"},
 	Short:   "IpDelete Sim",
 	Long:    `IpDelete Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ipDeleteParam, err := params.NewIpDeleteSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ip-delete parameter: \n%s\n", debugMarshalIndent(ipDeleteParam))
+		return err
 	},
 }
 
@@ -151,8 +193,11 @@ var simLogsCmd = &cobra.Command{
 
 	Short: "Logs Sim",
 	Long:  `Logs Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		logsParam, err := params.NewLogsSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("logs parameter: \n%s\n", debugMarshalIndent(logsParam))
+		return err
 	},
 }
 
@@ -161,8 +206,11 @@ var simMonitorCmd = &cobra.Command{
 
 	Short: "Monitor Sim",
 	Long:  `Monitor Sim`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorParam, err := params.NewMonitorSimParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(monitorParam))
+		return err
 	},
 }
 

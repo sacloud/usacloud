@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var isoimageListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Isoimage",
 	Long:    `List Isoimage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListIsoimageParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var isoimageCreateCmd = &cobra.Command{
 
 	Short: "Create Isoimage",
 	Long:  `Create Isoimage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateIsoimageParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var isoimageReadCmd = &cobra.Command{
 
 	Short: "Read Isoimage",
 	Long:  `Read Isoimage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadIsoimageParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var isoimageUpdateCmd = &cobra.Command{
 
 	Short: "Update Isoimage",
 	Long:  `Update Isoimage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateIsoimageParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var isoimageDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Isoimage",
 	Long:    `Delete Isoimage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteIsoimageParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var isoimageUploadCmd = &cobra.Command{
 
 	Short: "Upload Isoimage",
 	Long:  `Upload Isoimage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		uploadParam, err := params.NewUploadIsoimageParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("upload parameter: \n%s\n", debugMarshalIndent(uploadParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var isoimageDownloadCmd = &cobra.Command{
 
 	Short: "Download Isoimage",
 	Long:  `Download Isoimage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		downloadParam, err := params.NewDownloadIsoimageParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("download parameter: \n%s\n", debugMarshalIndent(downloadParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var isoimageFtpOpenCmd = &cobra.Command{
 
 	Short: "FtpOpen Isoimage",
 	Long:  `FtpOpen Isoimage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ftpOpenParam, err := params.NewFtpOpenIsoimageParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ftp-open parameter: \n%s\n", debugMarshalIndent(ftpOpenParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var isoimageFtpCloseCmd = &cobra.Command{
 
 	Short: "FtpClose Isoimage",
 	Long:  `FtpClose Isoimage`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ftpCloseParam, err := params.NewFtpCloseIsoimageParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ftp-close parameter: \n%s\n", debugMarshalIndent(ftpCloseParam))
+		return err
 	},
 }
 

@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var internetListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Internet",
 	Long:    `List Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var internetCreateCmd = &cobra.Command{
 
 	Short: "Create Internet",
 	Long:  `Create Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var internetReadCmd = &cobra.Command{
 
 	Short: "Read Internet",
 	Long:  `Read Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var internetUpdateCmd = &cobra.Command{
 
 	Short: "Update Internet",
 	Long:  `Update Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var internetDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Internet",
 	Long:    `Delete Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var internetUpdateBandwidthCmd = &cobra.Command{
 
 	Short: "UpdateBandwidth Internet",
 	Long:  `UpdateBandwidth Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateBandwidthParam, err := params.NewUpdateBandwidthInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update-bandwidth parameter: \n%s\n", debugMarshalIndent(updateBandwidthParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var internetSubnetInfoCmd = &cobra.Command{
 
 	Short: "SubnetInfo Internet",
 	Long:  `SubnetInfo Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		subnetInfoParam, err := params.NewSubnetInfoInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("subnet-info parameter: \n%s\n", debugMarshalIndent(subnetInfoParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var internetSubnetAddCmd = &cobra.Command{
 
 	Short: "SubnetAdd Internet",
 	Long:  `SubnetAdd Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		subnetAddParam, err := params.NewSubnetAddInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("subnet-add parameter: \n%s\n", debugMarshalIndent(subnetAddParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var internetSubnetDeleteCmd = &cobra.Command{
 
 	Short: "SubnetDelete Internet",
 	Long:  `SubnetDelete Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		subnetDeleteParam, err := params.NewSubnetDeleteInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("subnet-delete parameter: \n%s\n", debugMarshalIndent(subnetDeleteParam))
+		return err
 	},
 }
 
@@ -111,8 +141,11 @@ var internetSubnetUpdateCmd = &cobra.Command{
 
 	Short: "SubnetUpdate Internet",
 	Long:  `SubnetUpdate Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		subnetUpdateParam, err := params.NewSubnetUpdateInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("subnet-update parameter: \n%s\n", debugMarshalIndent(subnetUpdateParam))
+		return err
 	},
 }
 
@@ -121,8 +154,11 @@ var internetIpv6InfoCmd = &cobra.Command{
 
 	Short: "Ipv6Info Internet",
 	Long:  `Ipv6Info Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ipv6InfoParam, err := params.NewIpv6InfoInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ipv6-info parameter: \n%s\n", debugMarshalIndent(ipv6InfoParam))
+		return err
 	},
 }
 
@@ -131,8 +167,11 @@ var internetIpv6EnableCmd = &cobra.Command{
 
 	Short: "Ipv6Enable Internet",
 	Long:  `Ipv6Enable Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ipv6EnableParam, err := params.NewIpv6EnableInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ipv6-enable parameter: \n%s\n", debugMarshalIndent(ipv6EnableParam))
+		return err
 	},
 }
 
@@ -141,8 +180,11 @@ var internetIpv6DisableCmd = &cobra.Command{
 
 	Short: "Ipv6Disable Internet",
 	Long:  `Ipv6Disable Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ipv6DisableParam, err := params.NewIpv6DisableInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ipv6-disable parameter: \n%s\n", debugMarshalIndent(ipv6DisableParam))
+		return err
 	},
 }
 
@@ -151,8 +193,11 @@ var internetMonitorCmd = &cobra.Command{
 
 	Short: "Monitor Internet",
 	Long:  `Monitor Internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorParam, err := params.NewMonitorInternetParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(monitorParam))
+		return err
 	},
 }
 

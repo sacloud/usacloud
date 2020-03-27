@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var packetfilterListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List Packetfilter",
 	Long:    `List Packetfilter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListPacketfilterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var packetfilterCreateCmd = &cobra.Command{
 
 	Short: "Create Packetfilter",
 	Long:  `Create Packetfilter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreatePacketfilterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var packetfilterReadCmd = &cobra.Command{
 
 	Short: "Read Packetfilter",
 	Long:  `Read Packetfilter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadPacketfilterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var packetfilterUpdateCmd = &cobra.Command{
 
 	Short: "Update Packetfilter",
 	Long:  `Update Packetfilter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdatePacketfilterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var packetfilterDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Packetfilter",
 	Long:    `Delete Packetfilter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeletePacketfilterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var packetfilterRuleInfoCmd = &cobra.Command{
 	Aliases: []string{"rules", "rule-list"},
 	Short:   "RuleInfo Packetfilter",
 	Long:    `RuleInfo Packetfilter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ruleInfoParam, err := params.NewRuleInfoPacketfilterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("rule-info parameter: \n%s\n", debugMarshalIndent(ruleInfoParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var packetfilterRuleAddCmd = &cobra.Command{
 
 	Short: "RuleAdd Packetfilter",
 	Long:  `RuleAdd Packetfilter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ruleAddParam, err := params.NewRuleAddPacketfilterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("rule-add parameter: \n%s\n", debugMarshalIndent(ruleAddParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var packetfilterRuleUpdateCmd = &cobra.Command{
 
 	Short: "RuleUpdate Packetfilter",
 	Long:  `RuleUpdate Packetfilter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ruleUpdateParam, err := params.NewRuleUpdatePacketfilterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("rule-update parameter: \n%s\n", debugMarshalIndent(ruleUpdateParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var packetfilterRuleDeleteCmd = &cobra.Command{
 
 	Short: "RuleDelete Packetfilter",
 	Long:  `RuleDelete Packetfilter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ruleDeleteParam, err := params.NewRuleDeletePacketfilterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("rule-delete parameter: \n%s\n", debugMarshalIndent(ruleDeleteParam))
+		return err
 	},
 }
 
@@ -111,8 +141,11 @@ var packetfilterInterfaceConnectCmd = &cobra.Command{
 
 	Short: "InterfaceConnect Packetfilter",
 	Long:  `InterfaceConnect Packetfilter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceConnectParam, err := params.NewInterfaceConnectPacketfilterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-connect parameter: \n%s\n", debugMarshalIndent(interfaceConnectParam))
+		return err
 	},
 }
 
@@ -121,8 +154,11 @@ var packetfilterInterfaceDisconnectCmd = &cobra.Command{
 
 	Short: "InterfaceDisconnect Packetfilter",
 	Long:  `InterfaceDisconnect Packetfilter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceDisconnectParam, err := params.NewInterfaceDisconnectPacketfilterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-disconnect parameter: \n%s\n", debugMarshalIndent(interfaceDisconnectParam))
+		return err
 	},
 }
 

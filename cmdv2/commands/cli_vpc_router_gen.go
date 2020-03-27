@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var vpcrouterListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Vpcrouter",
 	Long:    `List Vpcrouter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var vpcrouterCreateCmd = &cobra.Command{
 
 	Short: "Create Vpcrouter",
 	Long:  `Create Vpcrouter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var vpcrouterReadCmd = &cobra.Command{
 
 	Short: "Read Vpcrouter",
 	Long:  `Read Vpcrouter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var vpcrouterUpdateCmd = &cobra.Command{
 
 	Short: "Update Vpcrouter",
 	Long:  `Update Vpcrouter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var vpcrouterDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Vpcrouter",
 	Long:    `Delete Vpcrouter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var vpcrouterBootCmd = &cobra.Command{
 	Aliases: []string{"power-on"},
 	Short:   "Boot Vpcrouter",
 	Long:    `Boot Vpcrouter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		bootParam, err := params.NewBootVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("boot parameter: \n%s\n", debugMarshalIndent(bootParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var vpcrouterShutdownCmd = &cobra.Command{
 	Aliases: []string{"power-off"},
 	Short:   "Shutdown Vpcrouter",
 	Long:    `Shutdown Vpcrouter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		shutdownParam, err := params.NewShutdownVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("shutdown parameter: \n%s\n", debugMarshalIndent(shutdownParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var vpcrouterShutdownForceCmd = &cobra.Command{
 	Aliases: []string{"stop"},
 	Short:   "ShutdownForce Vpcrouter",
 	Long:    `ShutdownForce Vpcrouter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		shutdownForceParam, err := params.NewShutdownForceVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("shutdown-force parameter: \n%s\n", debugMarshalIndent(shutdownForceParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var vpcrouterResetCmd = &cobra.Command{
 
 	Short: "Reset Vpcrouter",
 	Long:  `Reset Vpcrouter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		resetParam, err := params.NewResetVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("reset parameter: \n%s\n", debugMarshalIndent(resetParam))
+		return err
 	},
 }
 
@@ -111,8 +141,11 @@ var vpcrouterWaitForBootCmd = &cobra.Command{
 
 	Short: "Wait until boot is completed",
 	Long:  `Wait until boot is completed`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		waitForBootParam, err := params.NewWaitForBootVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("wait-for-boot parameter: \n%s\n", debugMarshalIndent(waitForBootParam))
+		return err
 	},
 }
 
@@ -121,8 +154,11 @@ var vpcrouterWaitForDownCmd = &cobra.Command{
 
 	Short: "Wait until shutdown is completed",
 	Long:  `Wait until shutdown is completed`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		waitForDownParam, err := params.NewWaitForDownVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("wait-for-down parameter: \n%s\n", debugMarshalIndent(waitForDownParam))
+		return err
 	},
 }
 
@@ -131,8 +167,11 @@ var vpcrouterEnableInternetConnectionCmd = &cobra.Command{
 
 	Short: "Enable internet connection from VPCRouter",
 	Long:  `Enable internet connection from VPCRouter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		enableInternetConnectionParam, err := params.NewEnableInternetConnectionVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("enable-internet-connection parameter: \n%s\n", debugMarshalIndent(enableInternetConnectionParam))
+		return err
 	},
 }
 
@@ -141,8 +180,11 @@ var vpcrouterDisableInternetConnectionCmd = &cobra.Command{
 
 	Short: "Enable internet connection from VPCRouter",
 	Long:  `Enable internet connection from VPCRouter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		disableInternetConnectionParam, err := params.NewDisableInternetConnectionVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("disable-internet-connection parameter: \n%s\n", debugMarshalIndent(disableInternetConnectionParam))
+		return err
 	},
 }
 
@@ -151,8 +193,11 @@ var vpcrouterInterfaceInfoCmd = &cobra.Command{
 	Aliases: []string{"interface-list"},
 	Short:   "Show information of NIC(s) connected to vpc-router",
 	Long:    `Show information of NIC(s) connected to vpc-router`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceInfoParam, err := params.NewInterfaceInfoVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-info parameter: \n%s\n", debugMarshalIndent(interfaceInfoParam))
+		return err
 	},
 }
 
@@ -161,8 +206,11 @@ var vpcrouterInterfaceConnectCmd = &cobra.Command{
 
 	Short: "Connected to switch",
 	Long:  `Connected to switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceConnectParam, err := params.NewInterfaceConnectVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-connect parameter: \n%s\n", debugMarshalIndent(interfaceConnectParam))
+		return err
 	},
 }
 
@@ -171,8 +219,11 @@ var vpcrouterInterfaceUpdateCmd = &cobra.Command{
 
 	Short: "Update interface",
 	Long:  `Update interface`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceUpdateParam, err := params.NewInterfaceUpdateVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-update parameter: \n%s\n", debugMarshalIndent(interfaceUpdateParam))
+		return err
 	},
 }
 
@@ -181,8 +232,11 @@ var vpcrouterInterfaceDisconnectCmd = &cobra.Command{
 
 	Short: "Disconnected to switch",
 	Long:  `Disconnected to switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceDisconnectParam, err := params.NewInterfaceDisconnectVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-disconnect parameter: \n%s\n", debugMarshalIndent(interfaceDisconnectParam))
+		return err
 	},
 }
 
@@ -191,8 +245,11 @@ var vpcrouterStaticNatInfoCmd = &cobra.Command{
 	Aliases: []string{"static-nat-list"},
 	Short:   "Show information of static NAT settings",
 	Long:    `Show information of static NAT settings`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		staticNatInfoParam, err := params.NewStaticNatInfoVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("static-nat-info parameter: \n%s\n", debugMarshalIndent(staticNatInfoParam))
+		return err
 	},
 }
 
@@ -201,8 +258,11 @@ var vpcrouterStaticNatAddCmd = &cobra.Command{
 
 	Short: "Add static NAT",
 	Long:  `Add static NAT`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		staticNatAddParam, err := params.NewStaticNatAddVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("static-nat-add parameter: \n%s\n", debugMarshalIndent(staticNatAddParam))
+		return err
 	},
 }
 
@@ -211,8 +271,11 @@ var vpcrouterStaticNatUpdateCmd = &cobra.Command{
 
 	Short: "Update static NAT",
 	Long:  `Update static NAT`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		staticNatUpdateParam, err := params.NewStaticNatUpdateVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("static-nat-update parameter: \n%s\n", debugMarshalIndent(staticNatUpdateParam))
+		return err
 	},
 }
 
@@ -221,8 +284,11 @@ var vpcrouterStaticNatDeleteCmd = &cobra.Command{
 
 	Short: "Delete static NAT",
 	Long:  `Delete static NAT`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		staticNatDeleteParam, err := params.NewStaticNatDeleteVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("static-nat-delete parameter: \n%s\n", debugMarshalIndent(staticNatDeleteParam))
+		return err
 	},
 }
 
@@ -231,8 +297,11 @@ var vpcrouterPortForwardingInfoCmd = &cobra.Command{
 	Aliases: []string{"port-forwarding-list"},
 	Short:   "Show information of port-forwarding settings",
 	Long:    `Show information of port-forwarding settings`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		portForwardingInfoParam, err := params.NewPortForwardingInfoVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("port-forwarding-info parameter: \n%s\n", debugMarshalIndent(portForwardingInfoParam))
+		return err
 	},
 }
 
@@ -241,8 +310,11 @@ var vpcrouterPortForwardingAddCmd = &cobra.Command{
 
 	Short: "Add port forwarding",
 	Long:  `Add port forwarding`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		portForwardingAddParam, err := params.NewPortForwardingAddVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("port-forwarding-add parameter: \n%s\n", debugMarshalIndent(portForwardingAddParam))
+		return err
 	},
 }
 
@@ -251,8 +323,11 @@ var vpcrouterPortForwardingUpdateCmd = &cobra.Command{
 
 	Short: "Update port forwarding",
 	Long:  `Update port forwarding`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		portForwardingUpdateParam, err := params.NewPortForwardingUpdateVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("port-forwarding-update parameter: \n%s\n", debugMarshalIndent(portForwardingUpdateParam))
+		return err
 	},
 }
 
@@ -261,8 +336,11 @@ var vpcrouterPortForwardingDeleteCmd = &cobra.Command{
 
 	Short: "Delete port forwarding",
 	Long:  `Delete port forwarding`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		portForwardingDeleteParam, err := params.NewPortForwardingDeleteVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("port-forwarding-delete parameter: \n%s\n", debugMarshalIndent(portForwardingDeleteParam))
+		return err
 	},
 }
 
@@ -271,8 +349,11 @@ var vpcrouterFirewallInfoCmd = &cobra.Command{
 	Aliases: []string{"firewall-list"},
 	Short:   "Show information of firewall rules",
 	Long:    `Show information of firewall rules`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		firewallInfoParam, err := params.NewFirewallInfoVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("firewall-info parameter: \n%s\n", debugMarshalIndent(firewallInfoParam))
+		return err
 	},
 }
 
@@ -281,8 +362,11 @@ var vpcrouterFirewallAddCmd = &cobra.Command{
 
 	Short: "Add firewall rule",
 	Long:  `Add firewall rule`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		firewallAddParam, err := params.NewFirewallAddVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("firewall-add parameter: \n%s\n", debugMarshalIndent(firewallAddParam))
+		return err
 	},
 }
 
@@ -291,8 +375,11 @@ var vpcrouterFirewallUpdateCmd = &cobra.Command{
 
 	Short: "Update firewall rule",
 	Long:  `Update firewall rule`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		firewallUpdateParam, err := params.NewFirewallUpdateVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("firewall-update parameter: \n%s\n", debugMarshalIndent(firewallUpdateParam))
+		return err
 	},
 }
 
@@ -301,8 +388,11 @@ var vpcrouterFirewallDeleteCmd = &cobra.Command{
 
 	Short: "Delete firewall rule",
 	Long:  `Delete firewall rule`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		firewallDeleteParam, err := params.NewFirewallDeleteVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("firewall-delete parameter: \n%s\n", debugMarshalIndent(firewallDeleteParam))
+		return err
 	},
 }
 
@@ -311,8 +401,11 @@ var vpcrouterDhcpServerInfoCmd = &cobra.Command{
 	Aliases: []string{"dhcp-server-list"},
 	Short:   "Show information of DHCP servers",
 	Long:    `Show information of DHCP servers`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		dhcpServerInfoParam, err := params.NewDhcpServerInfoVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("dhcp-server-info parameter: \n%s\n", debugMarshalIndent(dhcpServerInfoParam))
+		return err
 	},
 }
 
@@ -321,8 +414,11 @@ var vpcrouterDhcpServerAddCmd = &cobra.Command{
 
 	Short: "Add DHCP server",
 	Long:  `Add DHCP server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		dhcpServerAddParam, err := params.NewDhcpServerAddVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("dhcp-server-add parameter: \n%s\n", debugMarshalIndent(dhcpServerAddParam))
+		return err
 	},
 }
 
@@ -331,8 +427,11 @@ var vpcrouterDhcpServerUpdateCmd = &cobra.Command{
 
 	Short: "Update DHCP server",
 	Long:  `Update DHCP server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		dhcpServerUpdateParam, err := params.NewDhcpServerUpdateVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("dhcp-server-update parameter: \n%s\n", debugMarshalIndent(dhcpServerUpdateParam))
+		return err
 	},
 }
 
@@ -341,8 +440,11 @@ var vpcrouterDhcpServerDeleteCmd = &cobra.Command{
 
 	Short: "Delete DHCP server",
 	Long:  `Delete DHCP server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		dhcpServerDeleteParam, err := params.NewDhcpServerDeleteVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("dhcp-server-delete parameter: \n%s\n", debugMarshalIndent(dhcpServerDeleteParam))
+		return err
 	},
 }
 
@@ -351,8 +453,11 @@ var vpcrouterDhcpStaticMappingInfoCmd = &cobra.Command{
 	Aliases: []string{"dhcp-static-mapping-list"},
 	Short:   "Show information of DHCP static mapping",
 	Long:    `Show information of DHCP static mapping`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		dhcpStaticMappingInfoParam, err := params.NewDhcpStaticMappingInfoVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("dhcp-static-mapping-info parameter: \n%s\n", debugMarshalIndent(dhcpStaticMappingInfoParam))
+		return err
 	},
 }
 
@@ -361,8 +466,11 @@ var vpcrouterDhcpStaticMappingAddCmd = &cobra.Command{
 
 	Short: "Add DHCP static mapping",
 	Long:  `Add DHCP static mapping`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		dhcpStaticMappingAddParam, err := params.NewDhcpStaticMappingAddVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("dhcp-static-mapping-add parameter: \n%s\n", debugMarshalIndent(dhcpStaticMappingAddParam))
+		return err
 	},
 }
 
@@ -371,8 +479,11 @@ var vpcrouterDhcpStaticMappingUpdateCmd = &cobra.Command{
 
 	Short: "Update DHCP static mapping",
 	Long:  `Update DHCP static mapping`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		dhcpStaticMappingUpdateParam, err := params.NewDhcpStaticMappingUpdateVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("dhcp-static-mapping-update parameter: \n%s\n", debugMarshalIndent(dhcpStaticMappingUpdateParam))
+		return err
 	},
 }
 
@@ -381,8 +492,11 @@ var vpcrouterDhcpStaticMappingDeleteCmd = &cobra.Command{
 
 	Short: "Delete DHCP static mapping",
 	Long:  `Delete DHCP static mapping`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		dhcpStaticMappingDeleteParam, err := params.NewDhcpStaticMappingDeleteVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("dhcp-static-mapping-delete parameter: \n%s\n", debugMarshalIndent(dhcpStaticMappingDeleteParam))
+		return err
 	},
 }
 
@@ -391,8 +505,11 @@ var vpcrouterPptpServerInfoCmd = &cobra.Command{
 
 	Short: "Show information of PPTP server",
 	Long:  `Show information of PPTP server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		pptpServerInfoParam, err := params.NewPptpServerInfoVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("pptp-server-info parameter: \n%s\n", debugMarshalIndent(pptpServerInfoParam))
+		return err
 	},
 }
 
@@ -401,8 +518,11 @@ var vpcrouterPptpServerUpdateCmd = &cobra.Command{
 
 	Short: "Update PPTP server setting",
 	Long:  `Update PPTP server setting`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		pptpServerUpdateParam, err := params.NewPptpServerUpdateVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("pptp-server-update parameter: \n%s\n", debugMarshalIndent(pptpServerUpdateParam))
+		return err
 	},
 }
 
@@ -411,8 +531,11 @@ var vpcrouterL2tpServerInfoCmd = &cobra.Command{
 
 	Short: "Show information of L2TP/IPSec server",
 	Long:  `Show information of L2TP/IPSec server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		l2tpServerInfoParam, err := params.NewL2tpServerInfoVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("l2tp-server-info parameter: \n%s\n", debugMarshalIndent(l2tpServerInfoParam))
+		return err
 	},
 }
 
@@ -421,8 +544,11 @@ var vpcrouterL2tpServerUpdateCmd = &cobra.Command{
 
 	Short: "Update L2TP/IPSec server setting",
 	Long:  `Update L2TP/IPSec server setting`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		l2tpServerUpdateParam, err := params.NewL2tpServerUpdateVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("l2tp-server-update parameter: \n%s\n", debugMarshalIndent(l2tpServerUpdateParam))
+		return err
 	},
 }
 
@@ -431,8 +557,11 @@ var vpcrouterUserInfoCmd = &cobra.Command{
 	Aliases: []string{"user-list"},
 	Short:   "Show information of remote-access users",
 	Long:    `Show information of remote-access users`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		userInfoParam, err := params.NewUserInfoVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("user-info parameter: \n%s\n", debugMarshalIndent(userInfoParam))
+		return err
 	},
 }
 
@@ -441,8 +570,11 @@ var vpcrouterUserAddCmd = &cobra.Command{
 
 	Short: "Add remote-access user",
 	Long:  `Add remote-access user`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		userAddParam, err := params.NewUserAddVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("user-add parameter: \n%s\n", debugMarshalIndent(userAddParam))
+		return err
 	},
 }
 
@@ -451,8 +583,11 @@ var vpcrouterUserUpdateCmd = &cobra.Command{
 
 	Short: "Update remote-access user",
 	Long:  `Update remote-access user`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		userUpdateParam, err := params.NewUserUpdateVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("user-update parameter: \n%s\n", debugMarshalIndent(userUpdateParam))
+		return err
 	},
 }
 
@@ -461,8 +596,11 @@ var vpcrouterUserDeleteCmd = &cobra.Command{
 
 	Short: "Delete remote-access user",
 	Long:  `Delete remote-access user`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		userDeleteParam, err := params.NewUserDeleteVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("user-delete parameter: \n%s\n", debugMarshalIndent(userDeleteParam))
+		return err
 	},
 }
 
@@ -471,8 +609,11 @@ var vpcrouterSiteToSiteVpnInfoCmd = &cobra.Command{
 	Aliases: []string{"site-to-site-vpn-list"},
 	Short:   "Show information of site-to-site IPSec VPN settings",
 	Long:    `Show information of site-to-site IPSec VPN settings`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		siteToSiteVpnInfoParam, err := params.NewSiteToSiteVpnInfoVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("site-to-site-vpn-info parameter: \n%s\n", debugMarshalIndent(siteToSiteVpnInfoParam))
+		return err
 	},
 }
 
@@ -481,8 +622,11 @@ var vpcrouterSiteToSiteVpnAddCmd = &cobra.Command{
 
 	Short: "Add site-to-site IPSec VPN setting",
 	Long:  `Add site-to-site IPSec VPN setting`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		siteToSiteVpnAddParam, err := params.NewSiteToSiteVpnAddVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("site-to-site-vpn-add parameter: \n%s\n", debugMarshalIndent(siteToSiteVpnAddParam))
+		return err
 	},
 }
 
@@ -491,8 +635,11 @@ var vpcrouterSiteToSiteVpnUpdateCmd = &cobra.Command{
 
 	Short: "Update site-to-site IPSec VPN setting",
 	Long:  `Update site-to-site IPSec VPN setting`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		siteToSiteVpnUpdateParam, err := params.NewSiteToSiteVpnUpdateVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("site-to-site-vpn-update parameter: \n%s\n", debugMarshalIndent(siteToSiteVpnUpdateParam))
+		return err
 	},
 }
 
@@ -501,8 +648,11 @@ var vpcrouterSiteToSiteVpnDeleteCmd = &cobra.Command{
 
 	Short: "Delete site-to-site IPSec VPN setting",
 	Long:  `Delete site-to-site IPSec VPN setting`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		siteToSiteVpnDeleteParam, err := params.NewSiteToSiteVpnDeleteVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("site-to-site-vpn-delete parameter: \n%s\n", debugMarshalIndent(siteToSiteVpnDeleteParam))
+		return err
 	},
 }
 
@@ -511,8 +661,11 @@ var vpcrouterSiteToSiteVpnPeersCmd = &cobra.Command{
 
 	Short: "Show status of site-to-site IPSec VPN peers",
 	Long:  `Show status of site-to-site IPSec VPN peers`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		siteToSiteVpnPeersParam, err := params.NewSiteToSiteVpnPeersVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("site-to-site-vpn-peers parameter: \n%s\n", debugMarshalIndent(siteToSiteVpnPeersParam))
+		return err
 	},
 }
 
@@ -521,8 +674,11 @@ var vpcrouterStaticRouteInfoCmd = &cobra.Command{
 	Aliases: []string{"static-route-list"},
 	Short:   "Show information of static-routes",
 	Long:    `Show information of static-routes`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		staticRouteInfoParam, err := params.NewStaticRouteInfoVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("static-route-info parameter: \n%s\n", debugMarshalIndent(staticRouteInfoParam))
+		return err
 	},
 }
 
@@ -531,8 +687,11 @@ var vpcrouterStaticRouteAddCmd = &cobra.Command{
 
 	Short: "Add static-route",
 	Long:  `Add static-route`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		staticRouteAddParam, err := params.NewStaticRouteAddVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("static-route-add parameter: \n%s\n", debugMarshalIndent(staticRouteAddParam))
+		return err
 	},
 }
 
@@ -541,8 +700,11 @@ var vpcrouterStaticRouteUpdateCmd = &cobra.Command{
 
 	Short: "Update static-route",
 	Long:  `Update static-route`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		staticRouteUpdateParam, err := params.NewStaticRouteUpdateVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("static-route-update parameter: \n%s\n", debugMarshalIndent(staticRouteUpdateParam))
+		return err
 	},
 }
 
@@ -551,8 +713,11 @@ var vpcrouterStaticRouteDeleteCmd = &cobra.Command{
 
 	Short: "Delete static-route",
 	Long:  `Delete static-route`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		staticRouteDeleteParam, err := params.NewStaticRouteDeleteVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("static-route-delete parameter: \n%s\n", debugMarshalIndent(staticRouteDeleteParam))
+		return err
 	},
 }
 
@@ -561,8 +726,11 @@ var vpcrouterMonitorCmd = &cobra.Command{
 
 	Short: "Monitor Vpcrouter",
 	Long:  `Monitor Vpcrouter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorParam, err := params.NewMonitorVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(monitorParam))
+		return err
 	},
 }
 
@@ -571,8 +739,11 @@ var vpcrouterLogsCmd = &cobra.Command{
 
 	Short: "Logs Vpcrouter",
 	Long:  `Logs Vpcrouter`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		logsParam, err := params.NewLogsVpcrouterParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("logs parameter: \n%s\n", debugMarshalIndent(logsParam))
+		return err
 	},
 }
 

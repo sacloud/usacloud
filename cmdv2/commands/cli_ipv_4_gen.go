@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var ipv4ListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List Ipv4",
 	Long:    `List Ipv4`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListIpv4Param(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var ipv4PtrAddCmd = &cobra.Command{
 
 	Short: "PtrAdd Ipv4",
 	Long:  `PtrAdd Ipv4`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ptrAddParam, err := params.NewPtrAddIpv4Param(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ptr-add parameter: \n%s\n", debugMarshalIndent(ptrAddParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var ipv4PtrReadCmd = &cobra.Command{
 
 	Short: "PtrRead Ipv4",
 	Long:  `PtrRead Ipv4`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ptrReadParam, err := params.NewPtrReadIpv4Param(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ptr-read parameter: \n%s\n", debugMarshalIndent(ptrReadParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var ipv4PtrUpdateCmd = &cobra.Command{
 
 	Short: "PtrUpdate Ipv4",
 	Long:  `PtrUpdate Ipv4`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ptrUpdateParam, err := params.NewPtrUpdateIpv4Param(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ptr-update parameter: \n%s\n", debugMarshalIndent(ptrUpdateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var ipv4PtrDeleteCmd = &cobra.Command{
 
 	Short: "PtrDelete Ipv4",
 	Long:  `PtrDelete Ipv4`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ptrDeleteParam, err := params.NewPtrDeleteIpv4Param(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ptr-delete parameter: \n%s\n", debugMarshalIndent(ptrDeleteParam))
+		return err
 	},
 }
 

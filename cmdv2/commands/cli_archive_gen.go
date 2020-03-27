@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var archiveListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Archive",
 	Long:    `List Archive`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListArchiveParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var archiveCreateCmd = &cobra.Command{
 
 	Short: "Create Archive",
 	Long:  `Create Archive`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateArchiveParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var archiveReadCmd = &cobra.Command{
 
 	Short: "Read Archive",
 	Long:  `Read Archive`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadArchiveParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var archiveUpdateCmd = &cobra.Command{
 
 	Short: "Update Archive",
 	Long:  `Update Archive`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateArchiveParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var archiveDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Archive",
 	Long:    `Delete Archive`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteArchiveParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var archiveUploadCmd = &cobra.Command{
 
 	Short: "Upload Archive",
 	Long:  `Upload Archive`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		uploadParam, err := params.NewUploadArchiveParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("upload parameter: \n%s\n", debugMarshalIndent(uploadParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var archiveDownloadCmd = &cobra.Command{
 
 	Short: "Download Archive",
 	Long:  `Download Archive`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		downloadParam, err := params.NewDownloadArchiveParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("download parameter: \n%s\n", debugMarshalIndent(downloadParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var archiveFtpOpenCmd = &cobra.Command{
 
 	Short: "FtpOpen Archive",
 	Long:  `FtpOpen Archive`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ftpOpenParam, err := params.NewFtpOpenArchiveParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ftp-open parameter: \n%s\n", debugMarshalIndent(ftpOpenParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var archiveFtpCloseCmd = &cobra.Command{
 
 	Short: "FtpClose Archive",
 	Long:  `FtpClose Archive`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		ftpCloseParam, err := params.NewFtpCloseArchiveParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ftp-close parameter: \n%s\n", debugMarshalIndent(ftpCloseParam))
+		return err
 	},
 }
 
@@ -111,8 +141,11 @@ var archiveWaitForCopyCmd = &cobra.Command{
 
 	Short: "WaitForCopy Archive",
 	Long:  `WaitForCopy Archive`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		waitForCopyParam, err := params.NewWaitForCopyArchiveParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("wait-for-copy parameter: \n%s\n", debugMarshalIndent(waitForCopyParam))
+		return err
 	},
 }
 

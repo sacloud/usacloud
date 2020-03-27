@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var interfaceListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List Interface",
 	Long:    `List Interface`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListInterfaceParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var interfacePacketFilterConnectCmd = &cobra.Command{
 
 	Short: "PacketFilterConnect Interface",
 	Long:  `PacketFilterConnect Interface`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		packetFilterConnectParam, err := params.NewPacketFilterConnectInterfaceParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("packet-filter-connect parameter: \n%s\n", debugMarshalIndent(packetFilterConnectParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var interfaceCreateCmd = &cobra.Command{
 
 	Short: "Create Interface",
 	Long:  `Create Interface`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateInterfaceParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var interfacePacketFilterDisconnectCmd = &cobra.Command{
 
 	Short: "PacketFilterDisconnect Interface",
 	Long:  `PacketFilterDisconnect Interface`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		packetFilterDisconnectParam, err := params.NewPacketFilterDisconnectInterfaceParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("packet-filter-disconnect parameter: \n%s\n", debugMarshalIndent(packetFilterDisconnectParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var interfaceReadCmd = &cobra.Command{
 
 	Short: "Read Interface",
 	Long:  `Read Interface`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadInterfaceParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var interfaceUpdateCmd = &cobra.Command{
 
 	Short: "Update Interface",
 	Long:  `Update Interface`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateInterfaceParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var interfaceDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Interface",
 	Long:    `Delete Interface`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteInterfaceParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 

@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var mobilegatewayListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Mobilegateway",
 	Long:    `List Mobilegateway`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var mobilegatewayCreateCmd = &cobra.Command{
 
 	Short: "Create Mobilegateway",
 	Long:  `Create Mobilegateway`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var mobilegatewayReadCmd = &cobra.Command{
 
 	Short: "Read Mobilegateway",
 	Long:  `Read Mobilegateway`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var mobilegatewayUpdateCmd = &cobra.Command{
 
 	Short: "Update Mobilegateway",
 	Long:  `Update Mobilegateway`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var mobilegatewayDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Mobilegateway",
 	Long:    `Delete Mobilegateway`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var mobilegatewayBootCmd = &cobra.Command{
 	Aliases: []string{"power-on"},
 	Short:   "Boot Mobilegateway",
 	Long:    `Boot Mobilegateway`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		bootParam, err := params.NewBootMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("boot parameter: \n%s\n", debugMarshalIndent(bootParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var mobilegatewayShutdownCmd = &cobra.Command{
 	Aliases: []string{"power-off"},
 	Short:   "Shutdown Mobilegateway",
 	Long:    `Shutdown Mobilegateway`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		shutdownParam, err := params.NewShutdownMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("shutdown parameter: \n%s\n", debugMarshalIndent(shutdownParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var mobilegatewayShutdownForceCmd = &cobra.Command{
 	Aliases: []string{"stop"},
 	Short:   "ShutdownForce Mobilegateway",
 	Long:    `ShutdownForce Mobilegateway`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		shutdownForceParam, err := params.NewShutdownForceMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("shutdown-force parameter: \n%s\n", debugMarshalIndent(shutdownForceParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var mobilegatewayResetCmd = &cobra.Command{
 
 	Short: "Reset Mobilegateway",
 	Long:  `Reset Mobilegateway`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		resetParam, err := params.NewResetMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("reset parameter: \n%s\n", debugMarshalIndent(resetParam))
+		return err
 	},
 }
 
@@ -111,8 +141,11 @@ var mobilegatewayWaitForBootCmd = &cobra.Command{
 
 	Short: "Wait until boot is completed",
 	Long:  `Wait until boot is completed`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		waitForBootParam, err := params.NewWaitForBootMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("wait-for-boot parameter: \n%s\n", debugMarshalIndent(waitForBootParam))
+		return err
 	},
 }
 
@@ -121,8 +154,11 @@ var mobilegatewayWaitForDownCmd = &cobra.Command{
 
 	Short: "Wait until shutdown is completed",
 	Long:  `Wait until shutdown is completed`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		waitForDownParam, err := params.NewWaitForDownMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("wait-for-down parameter: \n%s\n", debugMarshalIndent(waitForDownParam))
+		return err
 	},
 }
 
@@ -131,8 +167,11 @@ var mobilegatewayInterfaceInfoCmd = &cobra.Command{
 	Aliases: []string{"interface-list"},
 	Short:   "Show information of NIC(s) connected to mobile-gateway",
 	Long:    `Show information of NIC(s) connected to mobile-gateway`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceInfoParam, err := params.NewInterfaceInfoMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-info parameter: \n%s\n", debugMarshalIndent(interfaceInfoParam))
+		return err
 	},
 }
 
@@ -141,8 +180,11 @@ var mobilegatewayInterfaceConnectCmd = &cobra.Command{
 
 	Short: "Connected to switch",
 	Long:  `Connected to switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceConnectParam, err := params.NewInterfaceConnectMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-connect parameter: \n%s\n", debugMarshalIndent(interfaceConnectParam))
+		return err
 	},
 }
 
@@ -151,8 +193,11 @@ var mobilegatewayInterfaceUpdateCmd = &cobra.Command{
 
 	Short: "Update interface",
 	Long:  `Update interface`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceUpdateParam, err := params.NewInterfaceUpdateMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-update parameter: \n%s\n", debugMarshalIndent(interfaceUpdateParam))
+		return err
 	},
 }
 
@@ -161,8 +206,11 @@ var mobilegatewayInterfaceDisconnectCmd = &cobra.Command{
 
 	Short: "Disconnected to switch",
 	Long:  `Disconnected to switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceDisconnectParam, err := params.NewInterfaceDisconnectMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-disconnect parameter: \n%s\n", debugMarshalIndent(interfaceDisconnectParam))
+		return err
 	},
 }
 
@@ -171,8 +219,11 @@ var mobilegatewayTrafficControlInfoCmd = &cobra.Command{
 
 	Short: "Show information of traffic-control",
 	Long:  `Show information of traffic-control`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		trafficControlInfoParam, err := params.NewTrafficControlInfoMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("traffic-control-info parameter: \n%s\n", debugMarshalIndent(trafficControlInfoParam))
+		return err
 	},
 }
 
@@ -181,8 +232,11 @@ var mobilegatewayTrafficControlEnableCmd = &cobra.Command{
 
 	Short: "Enable traffic-control",
 	Long:  `Enable traffic-control`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		trafficControlEnableParam, err := params.NewTrafficControlEnableMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("traffic-control-enable parameter: \n%s\n", debugMarshalIndent(trafficControlEnableParam))
+		return err
 	},
 }
 
@@ -191,8 +245,11 @@ var mobilegatewayTrafficControlUpdateCmd = &cobra.Command{
 
 	Short: "Update traffic-control config",
 	Long:  `Update traffic-control config`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		trafficControlUpdateParam, err := params.NewTrafficControlUpdateMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("traffic-control-update parameter: \n%s\n", debugMarshalIndent(trafficControlUpdateParam))
+		return err
 	},
 }
 
@@ -201,8 +258,11 @@ var mobilegatewayTrafficControlDisableCmd = &cobra.Command{
 	Aliases: []string{"traffic-control-delete"},
 	Short:   "Disable traffic-control config",
 	Long:    `Disable traffic-control config`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		trafficControlDisableParam, err := params.NewTrafficControlDisableMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("traffic-control-disable parameter: \n%s\n", debugMarshalIndent(trafficControlDisableParam))
+		return err
 	},
 }
 
@@ -211,8 +271,11 @@ var mobilegatewayStaticRouteInfoCmd = &cobra.Command{
 	Aliases: []string{"static-route-list"},
 	Short:   "Show information of static-routes",
 	Long:    `Show information of static-routes`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		staticRouteInfoParam, err := params.NewStaticRouteInfoMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("static-route-info parameter: \n%s\n", debugMarshalIndent(staticRouteInfoParam))
+		return err
 	},
 }
 
@@ -221,8 +284,11 @@ var mobilegatewayStaticRouteAddCmd = &cobra.Command{
 
 	Short: "Add static-route",
 	Long:  `Add static-route`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		staticRouteAddParam, err := params.NewStaticRouteAddMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("static-route-add parameter: \n%s\n", debugMarshalIndent(staticRouteAddParam))
+		return err
 	},
 }
 
@@ -231,8 +297,11 @@ var mobilegatewayStaticRouteUpdateCmd = &cobra.Command{
 
 	Short: "Update static-route",
 	Long:  `Update static-route`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		staticRouteUpdateParam, err := params.NewStaticRouteUpdateMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("static-route-update parameter: \n%s\n", debugMarshalIndent(staticRouteUpdateParam))
+		return err
 	},
 }
 
@@ -241,8 +310,11 @@ var mobilegatewayStaticRouteDeleteCmd = &cobra.Command{
 
 	Short: "Delete static-route",
 	Long:  `Delete static-route`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		staticRouteDeleteParam, err := params.NewStaticRouteDeleteMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("static-route-delete parameter: \n%s\n", debugMarshalIndent(staticRouteDeleteParam))
+		return err
 	},
 }
 
@@ -251,8 +323,11 @@ var mobilegatewaySimInfoCmd = &cobra.Command{
 	Aliases: []string{"interface-list"},
 	Short:   "Show information of NIC(s) connected to mobile-gateway",
 	Long:    `Show information of NIC(s) connected to mobile-gateway`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		simInfoParam, err := params.NewSimInfoMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("sim-info parameter: \n%s\n", debugMarshalIndent(simInfoParam))
+		return err
 	},
 }
 
@@ -261,8 +336,11 @@ var mobilegatewaySimAddCmd = &cobra.Command{
 
 	Short: "Connected to switch",
 	Long:  `Connected to switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		simAddParam, err := params.NewSimAddMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("sim-add parameter: \n%s\n", debugMarshalIndent(simAddParam))
+		return err
 	},
 }
 
@@ -271,8 +349,11 @@ var mobilegatewaySimUpdateCmd = &cobra.Command{
 
 	Short: "Connected to switch",
 	Long:  `Connected to switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		simUpdateParam, err := params.NewSimUpdateMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("sim-update parameter: \n%s\n", debugMarshalIndent(simUpdateParam))
+		return err
 	},
 }
 
@@ -281,8 +362,11 @@ var mobilegatewaySimDeleteCmd = &cobra.Command{
 
 	Short: "Disconnected to switch",
 	Long:  `Disconnected to switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		simDeleteParam, err := params.NewSimDeleteMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("sim-delete parameter: \n%s\n", debugMarshalIndent(simDeleteParam))
+		return err
 	},
 }
 
@@ -291,8 +375,11 @@ var mobilegatewaySimRouteInfoCmd = &cobra.Command{
 	Aliases: []string{"sim-route-list"},
 	Short:   "Show information of sim-routes",
 	Long:    `Show information of sim-routes`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		simRouteInfoParam, err := params.NewSimRouteInfoMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("sim-route-info parameter: \n%s\n", debugMarshalIndent(simRouteInfoParam))
+		return err
 	},
 }
 
@@ -301,8 +388,11 @@ var mobilegatewaySimRouteAddCmd = &cobra.Command{
 
 	Short: "Add sim-route",
 	Long:  `Add sim-route`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		simRouteAddParam, err := params.NewSimRouteAddMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("sim-route-add parameter: \n%s\n", debugMarshalIndent(simRouteAddParam))
+		return err
 	},
 }
 
@@ -311,8 +401,11 @@ var mobilegatewaySimRouteUpdateCmd = &cobra.Command{
 
 	Short: "Update sim-route",
 	Long:  `Update sim-route`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		simRouteUpdateParam, err := params.NewSimRouteUpdateMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("sim-route-update parameter: \n%s\n", debugMarshalIndent(simRouteUpdateParam))
+		return err
 	},
 }
 
@@ -321,8 +414,11 @@ var mobilegatewaySimRouteDeleteCmd = &cobra.Command{
 
 	Short: "Delete sim-route",
 	Long:  `Delete sim-route`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		simRouteDeleteParam, err := params.NewSimRouteDeleteMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("sim-route-delete parameter: \n%s\n", debugMarshalIndent(simRouteDeleteParam))
+		return err
 	},
 }
 
@@ -331,8 +427,11 @@ var mobilegatewayDnsUpdateCmd = &cobra.Command{
 
 	Short: "Update interface",
 	Long:  `Update interface`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		dnsUpdateParam, err := params.NewDnsUpdateMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("dns-update parameter: \n%s\n", debugMarshalIndent(dnsUpdateParam))
+		return err
 	},
 }
 
@@ -341,8 +440,11 @@ var mobilegatewayLogsCmd = &cobra.Command{
 
 	Short: "Logs Mobilegateway",
 	Long:  `Logs Mobilegateway`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		logsParam, err := params.NewLogsMobilegatewayParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("logs parameter: \n%s\n", debugMarshalIndent(logsParam))
+		return err
 	},
 }
 

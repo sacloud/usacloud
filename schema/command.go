@@ -132,6 +132,7 @@ func (c *Command) BuildedParams() SortableParams {
 		}
 	}
 
+	// TODO あとで消す
 	if _, ok := c.Params["param-template"]; !ok {
 		c.Params["param-template"] = &Schema{
 			Type:        TypeString,
@@ -141,11 +142,31 @@ func (c *Command) BuildedParams() SortableParams {
 			Order:       20,
 		}
 	}
+	// TODO あとで消す
 	if _, ok := c.Params["param-template-file"]; !ok {
 		c.Params["param-template-file"] = &Schema{
 			Type:        TypeString,
 			HandlerType: HandlerNoop,
 			Description: "Set input parameter from file",
+			Category:    "input",
+			Order:       30,
+		}
+	}
+
+	if _, ok := c.Params["parameters"]; !ok {
+		c.Params["parameters"] = &Schema{
+			Type:        TypeString,
+			HandlerType: HandlerNoop,
+			Description: "Set input parameters from JSON string",
+			Category:    "input",
+			Order:       20,
+		}
+	}
+	if _, ok := c.Params["parameter-file"]; !ok {
+		c.Params["parameter-file"] = &Schema{
+			Type:        TypeString,
+			HandlerType: HandlerNoop,
+			Description: "Set input parameters from file",
 			Category:    "input",
 			Order:       30,
 		}

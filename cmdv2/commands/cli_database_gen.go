@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var databaseListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Database",
 	Long:    `List Database`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var databaseCreateCmd = &cobra.Command{
 
 	Short: "Create Database",
 	Long:  `Create Database`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var databaseReadCmd = &cobra.Command{
 
 	Short: "Read Database",
 	Long:  `Read Database`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var databaseUpdateCmd = &cobra.Command{
 
 	Short: "Update Database",
 	Long:  `Update Database`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var databaseDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Database",
 	Long:    `Delete Database`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var databaseBootCmd = &cobra.Command{
 	Aliases: []string{"power-on"},
 	Short:   "Boot Database",
 	Long:    `Boot Database`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		bootParam, err := params.NewBootDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("boot parameter: \n%s\n", debugMarshalIndent(bootParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var databaseShutdownCmd = &cobra.Command{
 	Aliases: []string{"power-off"},
 	Short:   "Shutdown Database",
 	Long:    `Shutdown Database`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		shutdownParam, err := params.NewShutdownDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("shutdown parameter: \n%s\n", debugMarshalIndent(shutdownParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var databaseShutdownForceCmd = &cobra.Command{
 	Aliases: []string{"stop"},
 	Short:   "ShutdownForce Database",
 	Long:    `ShutdownForce Database`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		shutdownForceParam, err := params.NewShutdownForceDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("shutdown-force parameter: \n%s\n", debugMarshalIndent(shutdownForceParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var databaseResetCmd = &cobra.Command{
 
 	Short: "Reset Database",
 	Long:  `Reset Database`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		resetParam, err := params.NewResetDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("reset parameter: \n%s\n", debugMarshalIndent(resetParam))
+		return err
 	},
 }
 
@@ -111,8 +141,11 @@ var databaseWaitForBootCmd = &cobra.Command{
 
 	Short: "Wait until boot is completed",
 	Long:  `Wait until boot is completed`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		waitForBootParam, err := params.NewWaitForBootDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("wait-for-boot parameter: \n%s\n", debugMarshalIndent(waitForBootParam))
+		return err
 	},
 }
 
@@ -121,8 +154,11 @@ var databaseWaitForDownCmd = &cobra.Command{
 
 	Short: "Wait until shutdown is completed",
 	Long:  `Wait until shutdown is completed`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		waitForDownParam, err := params.NewWaitForDownDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("wait-for-down parameter: \n%s\n", debugMarshalIndent(waitForDownParam))
+		return err
 	},
 }
 
@@ -131,8 +167,11 @@ var databaseBackupInfoCmd = &cobra.Command{
 	Aliases: []string{"backups", "backup-list"},
 	Short:   "Show information of backup",
 	Long:    `Show information of backup`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		backupInfoParam, err := params.NewBackupInfoDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("backup-info parameter: \n%s\n", debugMarshalIndent(backupInfoParam))
+		return err
 	},
 }
 
@@ -141,8 +180,11 @@ var databaseBackupCreateCmd = &cobra.Command{
 
 	Short: "Make new database backup",
 	Long:  `Make new database backup`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		backupCreateParam, err := params.NewBackupCreateDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("backup-create parameter: \n%s\n", debugMarshalIndent(backupCreateParam))
+		return err
 	},
 }
 
@@ -151,8 +193,11 @@ var databaseBackupRestoreCmd = &cobra.Command{
 
 	Short: "Restore database from backup",
 	Long:  `Restore database from backup`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		backupRestoreParam, err := params.NewBackupRestoreDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("backup-restore parameter: \n%s\n", debugMarshalIndent(backupRestoreParam))
+		return err
 	},
 }
 
@@ -161,8 +206,11 @@ var databaseBackupLockCmd = &cobra.Command{
 
 	Short: "Lock backup",
 	Long:  `Lock backup`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		backupLockParam, err := params.NewBackupLockDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("backup-lock parameter: \n%s\n", debugMarshalIndent(backupLockParam))
+		return err
 	},
 }
 
@@ -171,8 +219,11 @@ var databaseBackupUnlockCmd = &cobra.Command{
 
 	Short: "Unlock backup",
 	Long:  `Unlock backup`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		backupUnlockParam, err := params.NewBackupUnlockDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("backup-unlock parameter: \n%s\n", debugMarshalIndent(backupUnlockParam))
+		return err
 	},
 }
 
@@ -181,8 +232,11 @@ var databaseBackupRemoveCmd = &cobra.Command{
 
 	Short: "Remove backup",
 	Long:  `Remove backup`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		backupRemoveParam, err := params.NewBackupRemoveDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("backup-remove parameter: \n%s\n", debugMarshalIndent(backupRemoveParam))
+		return err
 	},
 }
 
@@ -191,8 +245,11 @@ var databaseCloneCmd = &cobra.Command{
 
 	Short: "Create clone instance",
 	Long:  `Create clone instance`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		cloneParam, err := params.NewCloneDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("clone parameter: \n%s\n", debugMarshalIndent(cloneParam))
+		return err
 	},
 }
 
@@ -201,8 +258,11 @@ var databaseReplicaCreateCmd = &cobra.Command{
 
 	Short: "Create replication slave instance",
 	Long:  `Create replication slave instance`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		replicaCreateParam, err := params.NewReplicaCreateDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("replica-create parameter: \n%s\n", debugMarshalIndent(replicaCreateParam))
+		return err
 	},
 }
 
@@ -211,8 +271,11 @@ var databaseMonitorCpuCmd = &cobra.Command{
 
 	Short: "Collect CPU monitor values",
 	Long:  `Collect CPU monitor values`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorCpuParam, err := params.NewMonitorCpuDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor-cpu parameter: \n%s\n", debugMarshalIndent(monitorCpuParam))
+		return err
 	},
 }
 
@@ -221,8 +284,11 @@ var databaseMonitorMemoryCmd = &cobra.Command{
 
 	Short: "Collect memory monitor values",
 	Long:  `Collect memory monitor values`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorMemoryParam, err := params.NewMonitorMemoryDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor-memory parameter: \n%s\n", debugMarshalIndent(monitorMemoryParam))
+		return err
 	},
 }
 
@@ -231,8 +297,11 @@ var databaseMonitorNicCmd = &cobra.Command{
 
 	Short: "Collect NIC(s) monitor values",
 	Long:  `Collect NIC(s) monitor values`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorNicParam, err := params.NewMonitorNicDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor-nic parameter: \n%s\n", debugMarshalIndent(monitorNicParam))
+		return err
 	},
 }
 
@@ -241,8 +310,11 @@ var databaseMonitorSystemDiskCmd = &cobra.Command{
 
 	Short: "Collect system-disk monitor values(IO)",
 	Long:  `Collect system-disk monitor values(IO)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorSystemDiskParam, err := params.NewMonitorSystemDiskDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor-system-disk parameter: \n%s\n", debugMarshalIndent(monitorSystemDiskParam))
+		return err
 	},
 }
 
@@ -251,8 +323,11 @@ var databaseMonitorBackupDiskCmd = &cobra.Command{
 
 	Short: "Collect backup-disk monitor values(IO)",
 	Long:  `Collect backup-disk monitor values(IO)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorBackupDiskParam, err := params.NewMonitorBackupDiskDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor-backup-disk parameter: \n%s\n", debugMarshalIndent(monitorBackupDiskParam))
+		return err
 	},
 }
 
@@ -261,8 +336,11 @@ var databaseMonitorSystemDiskSizeCmd = &cobra.Command{
 
 	Short: "Collect system-disk monitor values(usage)",
 	Long:  `Collect system-disk monitor values(usage)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorSystemDiskSizeParam, err := params.NewMonitorSystemDiskSizeDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor-system-disk-size parameter: \n%s\n", debugMarshalIndent(monitorSystemDiskSizeParam))
+		return err
 	},
 }
 
@@ -271,8 +349,11 @@ var databaseMonitorBackupDiskSizeCmd = &cobra.Command{
 
 	Short: "Collect backup-disk monitor values(usage)",
 	Long:  `Collect backup-disk monitor values(usage)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorBackupDiskSizeParam, err := params.NewMonitorBackupDiskSizeDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor-backup-disk-size parameter: \n%s\n", debugMarshalIndent(monitorBackupDiskSizeParam))
+		return err
 	},
 }
 
@@ -281,8 +362,11 @@ var databaseLogsCmd = &cobra.Command{
 
 	Short: "Logs Database",
 	Long:  `Logs Database`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		logsParam, err := params.NewLogsDatabaseParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("logs parameter: \n%s\n", debugMarshalIndent(logsParam))
+		return err
 	},
 }
 

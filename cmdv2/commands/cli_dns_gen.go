@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var dnsListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Dns",
 	Long:    `List Dns`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListDnsParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var dnsRecordInfoCmd = &cobra.Command{
 	Aliases: []string{"record-list"},
 	Short:   "RecordInfo Dns",
 	Long:    `RecordInfo Dns`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		recordInfoParam, err := params.NewRecordInfoDnsParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("record-info parameter: \n%s\n", debugMarshalIndent(recordInfoParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var dnsRecordBulkUpdateCmd = &cobra.Command{
 
 	Short: "RecordBulkUpdate Dns",
 	Long:  `RecordBulkUpdate Dns`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		recordBulkUpdateParam, err := params.NewRecordBulkUpdateDnsParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("record-bulk-update parameter: \n%s\n", debugMarshalIndent(recordBulkUpdateParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var dnsCreateCmd = &cobra.Command{
 
 	Short: "Create Dns",
 	Long:  `Create Dns`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateDnsParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var dnsRecordAddCmd = &cobra.Command{
 
 	Short: "RecordAdd Dns",
 	Long:  `RecordAdd Dns`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		recordAddParam, err := params.NewRecordAddDnsParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("record-add parameter: \n%s\n", debugMarshalIndent(recordAddParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var dnsReadCmd = &cobra.Command{
 
 	Short: "Read Dns",
 	Long:  `Read Dns`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadDnsParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var dnsRecordUpdateCmd = &cobra.Command{
 
 	Short: "RecordUpdate Dns",
 	Long:  `RecordUpdate Dns`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		recordUpdateParam, err := params.NewRecordUpdateDnsParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("record-update parameter: \n%s\n", debugMarshalIndent(recordUpdateParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var dnsRecordDeleteCmd = &cobra.Command{
 
 	Short: "RecordDelete Dns",
 	Long:  `RecordDelete Dns`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		recordDeleteParam, err := params.NewRecordDeleteDnsParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("record-delete parameter: \n%s\n", debugMarshalIndent(recordDeleteParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var dnsUpdateCmd = &cobra.Command{
 
 	Short: "Update Dns",
 	Long:  `Update Dns`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateDnsParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -111,8 +141,11 @@ var dnsDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Dns",
 	Long:    `Delete Dns`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteDnsParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 

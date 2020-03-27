@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var serverListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Server",
 	Long:    `List Server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var serverBuildCmd = &cobra.Command{
 
 	Short: "Build Server",
 	Long:  `Build Server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		buildParam, err := params.NewBuildServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("build parameter: \n%s\n", debugMarshalIndent(buildParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var serverReadCmd = &cobra.Command{
 
 	Short: "Read Server",
 	Long:  `Read Server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var serverUpdateCmd = &cobra.Command{
 
 	Short: "Update Server",
 	Long:  `Update Server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var serverDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Server",
 	Long:    `Delete Server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var serverPlanChangeCmd = &cobra.Command{
 
 	Short: "Change server plan(core/memory)",
 	Long:  `Change server plan(core/memory)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		planChangeParam, err := params.NewPlanChangeServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("plan-change parameter: \n%s\n", debugMarshalIndent(planChangeParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var serverBootCmd = &cobra.Command{
 	Aliases: []string{"power-on"},
 	Short:   "Boot Server",
 	Long:    `Boot Server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		bootParam, err := params.NewBootServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("boot parameter: \n%s\n", debugMarshalIndent(bootParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var serverShutdownCmd = &cobra.Command{
 	Aliases: []string{"power-off"},
 	Short:   "Shutdown Server",
 	Long:    `Shutdown Server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		shutdownParam, err := params.NewShutdownServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("shutdown parameter: \n%s\n", debugMarshalIndent(shutdownParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var serverShutdownForceCmd = &cobra.Command{
 	Aliases: []string{"stop"},
 	Short:   "ShutdownForce Server",
 	Long:    `ShutdownForce Server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		shutdownForceParam, err := params.NewShutdownForceServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("shutdown-force parameter: \n%s\n", debugMarshalIndent(shutdownForceParam))
+		return err
 	},
 }
 
@@ -111,8 +141,11 @@ var serverResetCmd = &cobra.Command{
 
 	Short: "Reset Server",
 	Long:  `Reset Server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		resetParam, err := params.NewResetServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("reset parameter: \n%s\n", debugMarshalIndent(resetParam))
+		return err
 	},
 }
 
@@ -121,8 +154,11 @@ var serverWaitForBootCmd = &cobra.Command{
 
 	Short: "Wait until boot is completed",
 	Long:  `Wait until boot is completed`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		waitForBootParam, err := params.NewWaitForBootServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("wait-for-boot parameter: \n%s\n", debugMarshalIndent(waitForBootParam))
+		return err
 	},
 }
 
@@ -131,8 +167,11 @@ var serverWaitForDownCmd = &cobra.Command{
 
 	Short: "Wait until shutdown is completed",
 	Long:  `Wait until shutdown is completed`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		waitForDownParam, err := params.NewWaitForDownServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("wait-for-down parameter: \n%s\n", debugMarshalIndent(waitForDownParam))
+		return err
 	},
 }
 
@@ -141,8 +180,11 @@ var serverSshCmd = &cobra.Command{
 
 	Short: "Connect to server by SSH",
 	Long:  `Connect to server by SSH`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		sshParam, err := params.NewSshServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ssh parameter: \n%s\n", debugMarshalIndent(sshParam))
+		return err
 	},
 }
 
@@ -151,8 +193,11 @@ var serverSshExecCmd = &cobra.Command{
 
 	Short: "Execute command on server connected by SSH",
 	Long:  `Execute command on server connected by SSH`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		sshExecParam, err := params.NewSshExecServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("ssh-exec parameter: \n%s\n", debugMarshalIndent(sshExecParam))
+		return err
 	},
 }
 
@@ -161,8 +206,11 @@ var serverScpCmd = &cobra.Command{
 
 	Short: "Copy files/directories by SSH",
 	Long:  `Copy files/directories by SSH`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		scpParam, err := params.NewScpServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("scp parameter: \n%s\n", debugMarshalIndent(scpParam))
+		return err
 	},
 }
 
@@ -171,8 +219,11 @@ var serverVncCmd = &cobra.Command{
 
 	Short: "Open VNC client using the OS's default application",
 	Long:  `Open VNC client using the OS's default application`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		vncParam, err := params.NewVncServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("vnc parameter: \n%s\n", debugMarshalIndent(vncParam))
+		return err
 	},
 }
 
@@ -181,8 +232,11 @@ var serverVncInfoCmd = &cobra.Command{
 
 	Short: "Show VNC proxy information",
 	Long:  `Show VNC proxy information`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		vncInfoParam, err := params.NewVncInfoServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("vnc-info parameter: \n%s\n", debugMarshalIndent(vncInfoParam))
+		return err
 	},
 }
 
@@ -191,8 +245,11 @@ var serverVncSendCmd = &cobra.Command{
 
 	Short: "Send keys over VNC connection",
 	Long:  `Send keys over VNC connection`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		vncSendParam, err := params.NewVncSendServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("vnc-send parameter: \n%s\n", debugMarshalIndent(vncSendParam))
+		return err
 	},
 }
 
@@ -201,8 +258,11 @@ var serverVncSnapshotCmd = &cobra.Command{
 
 	Short: "Capture VNC snapshot",
 	Long:  `Capture VNC snapshot`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		vncSnapshotParam, err := params.NewVncSnapshotServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("vnc-snapshot parameter: \n%s\n", debugMarshalIndent(vncSnapshotParam))
+		return err
 	},
 }
 
@@ -211,8 +271,11 @@ var serverRemoteDesktopCmd = &cobra.Command{
 	Aliases: []string{"rdp"},
 	Short:   "Open RDP client using the OS's default application",
 	Long:    `Open RDP client using the OS's default application`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		remoteDesktopParam, err := params.NewRemoteDesktopServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("remote-desktop parameter: \n%s\n", debugMarshalIndent(remoteDesktopParam))
+		return err
 	},
 }
 
@@ -221,8 +284,11 @@ var serverRemoteDesktopInfoCmd = &cobra.Command{
 	Aliases: []string{"rdp-info"},
 	Short:   "Show RDP information(.rdp)",
 	Long:    `Show RDP information(.rdp)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		remoteDesktopInfoParam, err := params.NewRemoteDesktopInfoServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("remote-desktop-info parameter: \n%s\n", debugMarshalIndent(remoteDesktopInfoParam))
+		return err
 	},
 }
 
@@ -231,8 +297,11 @@ var serverDiskInfoCmd = &cobra.Command{
 	Aliases: []string{"disk-list"},
 	Short:   "Show information of disk(s) connected to server",
 	Long:    `Show information of disk(s) connected to server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		diskInfoParam, err := params.NewDiskInfoServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("disk-info parameter: \n%s\n", debugMarshalIndent(diskInfoParam))
+		return err
 	},
 }
 
@@ -241,8 +310,11 @@ var serverDiskConnectCmd = &cobra.Command{
 
 	Short: "Connect disk to server",
 	Long:  `Connect disk to server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		diskConnectParam, err := params.NewDiskConnectServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("disk-connect parameter: \n%s\n", debugMarshalIndent(diskConnectParam))
+		return err
 	},
 }
 
@@ -251,8 +323,11 @@ var serverDiskDisconnectCmd = &cobra.Command{
 
 	Short: "Disconnect disk from server",
 	Long:  `Disconnect disk from server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		diskDisconnectParam, err := params.NewDiskDisconnectServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("disk-disconnect parameter: \n%s\n", debugMarshalIndent(diskDisconnectParam))
+		return err
 	},
 }
 
@@ -261,8 +336,11 @@ var serverInterfaceInfoCmd = &cobra.Command{
 	Aliases: []string{"interface-list"},
 	Short:   "Show information of NIC(s) connected to server",
 	Long:    `Show information of NIC(s) connected to server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceInfoParam, err := params.NewInterfaceInfoServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-info parameter: \n%s\n", debugMarshalIndent(interfaceInfoParam))
+		return err
 	},
 }
 
@@ -271,8 +349,11 @@ var serverInterfaceAddForInternetCmd = &cobra.Command{
 
 	Short: "Create and connect NIC connected to the internet",
 	Long:  `Create and connect NIC connected to the internet`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceAddForInternetParam, err := params.NewInterfaceAddForInternetServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-add-for-internet parameter: \n%s\n", debugMarshalIndent(interfaceAddForInternetParam))
+		return err
 	},
 }
 
@@ -281,8 +362,11 @@ var serverInterfaceAddForRouterCmd = &cobra.Command{
 
 	Short: "Create and connect NIC connected to the router",
 	Long:  `Create and connect NIC connected to the router`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceAddForRouterParam, err := params.NewInterfaceAddForRouterServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-add-for-router parameter: \n%s\n", debugMarshalIndent(interfaceAddForRouterParam))
+		return err
 	},
 }
 
@@ -291,8 +375,11 @@ var serverInterfaceAddForSwitchCmd = &cobra.Command{
 
 	Short: "Create and connect NIC connected to the switch",
 	Long:  `Create and connect NIC connected to the switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceAddForSwitchParam, err := params.NewInterfaceAddForSwitchServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-add-for-switch parameter: \n%s\n", debugMarshalIndent(interfaceAddForSwitchParam))
+		return err
 	},
 }
 
@@ -301,8 +388,11 @@ var serverInterfaceAddDisconnectedCmd = &cobra.Command{
 
 	Short: "Create and connect a disconnected NIC",
 	Long:  `Create and connect a disconnected NIC`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		interfaceAddDisconnectedParam, err := params.NewInterfaceAddDisconnectedServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("interface-add-disconnected parameter: \n%s\n", debugMarshalIndent(interfaceAddDisconnectedParam))
+		return err
 	},
 }
 
@@ -311,8 +401,11 @@ var serverIsoInfoCmd = &cobra.Command{
 
 	Short: "Show information of ISO-Image inserted to server",
 	Long:  `Show information of ISO-Image inserted to server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		isoInfoParam, err := params.NewIsoInfoServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("iso-info parameter: \n%s\n", debugMarshalIndent(isoInfoParam))
+		return err
 	},
 }
 
@@ -321,8 +414,11 @@ var serverIsoInsertCmd = &cobra.Command{
 
 	Short: "Insert ISO-Image to server",
 	Long:  `Insert ISO-Image to server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		isoInsertParam, err := params.NewIsoInsertServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("iso-insert parameter: \n%s\n", debugMarshalIndent(isoInsertParam))
+		return err
 	},
 }
 
@@ -331,8 +427,11 @@ var serverIsoEjectCmd = &cobra.Command{
 
 	Short: "Eject ISO-Image from server",
 	Long:  `Eject ISO-Image from server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		isoEjectParam, err := params.NewIsoEjectServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("iso-eject parameter: \n%s\n", debugMarshalIndent(isoEjectParam))
+		return err
 	},
 }
 
@@ -341,8 +440,11 @@ var serverMonitorCpuCmd = &cobra.Command{
 
 	Short: "Collect CPU monitor values",
 	Long:  `Collect CPU monitor values`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorCpuParam, err := params.NewMonitorCpuServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor-cpu parameter: \n%s\n", debugMarshalIndent(monitorCpuParam))
+		return err
 	},
 }
 
@@ -351,8 +453,11 @@ var serverMonitorNicCmd = &cobra.Command{
 
 	Short: "Collect NIC(s) monitor values",
 	Long:  `Collect NIC(s) monitor values`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorNicParam, err := params.NewMonitorNicServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor-nic parameter: \n%s\n", debugMarshalIndent(monitorNicParam))
+		return err
 	},
 }
 
@@ -361,8 +466,11 @@ var serverMonitorDiskCmd = &cobra.Command{
 
 	Short: "Collect Disk(s) monitor values",
 	Long:  `Collect Disk(s) monitor values`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorDiskParam, err := params.NewMonitorDiskServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor-disk parameter: \n%s\n", debugMarshalIndent(monitorDiskParam))
+		return err
 	},
 }
 
@@ -371,8 +479,11 @@ var serverMaintenanceInfoCmd = &cobra.Command{
 
 	Short: "MaintenanceInfo Server",
 	Long:  `MaintenanceInfo Server`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		maintenanceInfoParam, err := params.NewMaintenanceInfoServerParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("maintenance-info parameter: \n%s\n", debugMarshalIndent(maintenanceInfoParam))
+		return err
 	},
 }
 

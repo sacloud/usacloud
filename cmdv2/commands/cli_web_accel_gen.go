@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var webaccelListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Webaccel",
 	Long:    `List Webaccel`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListWebaccelParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var webaccelReadCmd = &cobra.Command{
 
 	Short: "Read Webaccel",
 	Long:  `Read Webaccel`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadWebaccelParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var webaccelCertificateInfoCmd = &cobra.Command{
 	Aliases: []string{"cert-info"},
 	Short:   "CertificateInfo Webaccel",
 	Long:    `CertificateInfo Webaccel`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		certificateInfoParam, err := params.NewCertificateInfoWebaccelParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("certificate-info parameter: \n%s\n", debugMarshalIndent(certificateInfoParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var webaccelCertificateNewCmd = &cobra.Command{
 	Aliases: []string{"cert-new", "cert-create", "certificate-create"},
 	Short:   "CertificateNew Webaccel",
 	Long:    `CertificateNew Webaccel`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		certificateNewParam, err := params.NewCertificateNewWebaccelParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("certificate-new parameter: \n%s\n", debugMarshalIndent(certificateNewParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var webaccelCertificateUpdateCmd = &cobra.Command{
 	Aliases: []string{"cert-update"},
 	Short:   "CertificateUpdate Webaccel",
 	Long:    `CertificateUpdate Webaccel`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		certificateUpdateParam, err := params.NewCertificateUpdateWebaccelParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("certificate-update parameter: \n%s\n", debugMarshalIndent(certificateUpdateParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var webaccelDeleteCacheCmd = &cobra.Command{
 	Aliases: []string{"purge"},
 	Short:   "DeleteCache Webaccel",
 	Long:    `DeleteCache Webaccel`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteCacheParam, err := params.NewDeleteCacheWebaccelParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete-cache parameter: \n%s\n", debugMarshalIndent(deleteCacheParam))
+		return err
 	},
 }
 

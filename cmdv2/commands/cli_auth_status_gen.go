@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var authstatusShowCmd = &cobra.Command{
 
 	Short: "Show Authstatus (default)",
 	Long:  `Show Authstatus (default)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		showParam, err := params.NewShowAuthstatusParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("show parameter: \n%s\n", debugMarshalIndent(showParam))
+		return err
 	},
 }
 

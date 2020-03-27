@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var diskListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Disk",
 	Long:    `List Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var diskCreateCmd = &cobra.Command{
 
 	Short: "Create Disk",
 	Long:  `Create Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var diskReadCmd = &cobra.Command{
 
 	Short: "Read Disk",
 	Long:  `Read Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var diskUpdateCmd = &cobra.Command{
 
 	Short: "Update Disk",
 	Long:  `Update Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var diskDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Disk",
 	Long:    `Delete Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var diskEditCmd = &cobra.Command{
 	Aliases: []string{"config"},
 	Short:   "Edit Disk",
 	Long:    `Edit Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		editParam, err := params.NewEditDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("edit parameter: \n%s\n", debugMarshalIndent(editParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var diskResizePartitionCmd = &cobra.Command{
 
 	Short: "ResizePartition Disk",
 	Long:  `ResizePartition Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		resizePartitionParam, err := params.NewResizePartitionDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("resize-partition parameter: \n%s\n", debugMarshalIndent(resizePartitionParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var diskReinstallFromArchiveCmd = &cobra.Command{
 
 	Short: "ReinstallFromArchive Disk",
 	Long:  `ReinstallFromArchive Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		reinstallFromArchiveParam, err := params.NewReinstallFromArchiveDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("reinstall-from-archive parameter: \n%s\n", debugMarshalIndent(reinstallFromArchiveParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var diskReinstallFromDiskCmd = &cobra.Command{
 
 	Short: "ReinstallFromDisk Disk",
 	Long:  `ReinstallFromDisk Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		reinstallFromDiskParam, err := params.NewReinstallFromDiskDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("reinstall-from-disk parameter: \n%s\n", debugMarshalIndent(reinstallFromDiskParam))
+		return err
 	},
 }
 
@@ -111,8 +141,11 @@ var diskReinstallToBlankCmd = &cobra.Command{
 
 	Short: "ReinstallToBlank Disk",
 	Long:  `ReinstallToBlank Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		reinstallToBlankParam, err := params.NewReinstallToBlankDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("reinstall-to-blank parameter: \n%s\n", debugMarshalIndent(reinstallToBlankParam))
+		return err
 	},
 }
 
@@ -121,8 +154,11 @@ var diskServerConnectCmd = &cobra.Command{
 
 	Short: "ServerConnect Disk",
 	Long:  `ServerConnect Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverConnectParam, err := params.NewServerConnectDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-connect parameter: \n%s\n", debugMarshalIndent(serverConnectParam))
+		return err
 	},
 }
 
@@ -131,8 +167,11 @@ var diskServerDisconnectCmd = &cobra.Command{
 
 	Short: "ServerDisconnect Disk",
 	Long:  `ServerDisconnect Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverDisconnectParam, err := params.NewServerDisconnectDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-disconnect parameter: \n%s\n", debugMarshalIndent(serverDisconnectParam))
+		return err
 	},
 }
 
@@ -141,8 +180,11 @@ var diskMonitorCmd = &cobra.Command{
 
 	Short: "Monitor Disk",
 	Long:  `Monitor Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorParam, err := params.NewMonitorDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(monitorParam))
+		return err
 	},
 }
 
@@ -151,8 +193,11 @@ var diskWaitForCopyCmd = &cobra.Command{
 	Aliases: []string{"wait"},
 	Short:   "WaitForCopy Disk",
 	Long:    `WaitForCopy Disk`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		waitForCopyParam, err := params.NewWaitForCopyDiskParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("wait-for-copy parameter: \n%s\n", debugMarshalIndent(waitForCopyParam))
+		return err
 	},
 }
 

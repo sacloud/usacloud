@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var sshkeyListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List Sshkey",
 	Long:    `List Sshkey`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListSshkeyParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var sshkeyCreateCmd = &cobra.Command{
 
 	Short: "Create Sshkey",
 	Long:  `Create Sshkey`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateSshkeyParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var sshkeyReadCmd = &cobra.Command{
 
 	Short: "Read Sshkey",
 	Long:  `Read Sshkey`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadSshkeyParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var sshkeyUpdateCmd = &cobra.Command{
 
 	Short: "Update Sshkey",
 	Long:  `Update Sshkey`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateSshkeyParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var sshkeyDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Sshkey",
 	Long:    `Delete Sshkey`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteSshkeyParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var sshkeyGenerateCmd = &cobra.Command{
 	Aliases: []string{"gen"},
 	Short:   "Generate Sshkey",
 	Long:    `Generate Sshkey`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		generateParam, err := params.NewGenerateSshkeyParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("generate parameter: \n%s\n", debugMarshalIndent(generateParam))
+		return err
 	},
 }
 

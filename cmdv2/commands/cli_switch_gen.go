@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var switchListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Switch",
 	Long:    `List Switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListSwitchParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var switchCreateCmd = &cobra.Command{
 
 	Short: "Create Switch",
 	Long:  `Create Switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateSwitchParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var switchReadCmd = &cobra.Command{
 
 	Short: "Read Switch",
 	Long:  `Read Switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadSwitchParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var switchUpdateCmd = &cobra.Command{
 
 	Short: "Update Switch",
 	Long:  `Update Switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateSwitchParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var switchDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Switch",
 	Long:    `Delete Switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteSwitchParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var switchBridgeConnectCmd = &cobra.Command{
 
 	Short: "BridgeConnect Switch",
 	Long:  `BridgeConnect Switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		bridgeConnectParam, err := params.NewBridgeConnectSwitchParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("bridge-connect parameter: \n%s\n", debugMarshalIndent(bridgeConnectParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var switchBridgeDisconnectCmd = &cobra.Command{
 
 	Short: "BridgeDisconnect Switch",
 	Long:  `BridgeDisconnect Switch`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		bridgeDisconnectParam, err := params.NewBridgeDisconnectSwitchParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("bridge-disconnect parameter: \n%s\n", debugMarshalIndent(bridgeDisconnectParam))
+		return err
 	},
 }
 

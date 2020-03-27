@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var proxylbListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find", "selector"},
 	Short:   "List Proxylb",
 	Long:    `List Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var proxylbCreateCmd = &cobra.Command{
 
 	Short: "Create Proxylb",
 	Long:  `Create Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		createParam, err := params.NewCreateProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("create parameter: \n%s\n", debugMarshalIndent(createParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var proxylbReadCmd = &cobra.Command{
 
 	Short: "Read Proxylb",
 	Long:  `Read Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		readParam, err := params.NewReadProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("read parameter: \n%s\n", debugMarshalIndent(readParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var proxylbUpdateCmd = &cobra.Command{
 
 	Short: "Update Proxylb",
 	Long:  `Update Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		updateParam, err := params.NewUpdateProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("update parameter: \n%s\n", debugMarshalIndent(updateParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var proxylbDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Proxylb",
 	Long:    `Delete Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var proxylbPlanChangeCmd = &cobra.Command{
 
 	Short: "Change ProxyLB plan",
 	Long:  `Change ProxyLB plan`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		planChangeParam, err := params.NewPlanChangeProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("plan-change parameter: \n%s\n", debugMarshalIndent(planChangeParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var proxylbBindPortInfoCmd = &cobra.Command{
 	Aliases: []string{"bind-port-list"},
 	Short:   "BindPortInfo Proxylb",
 	Long:    `BindPortInfo Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		bindPortInfoParam, err := params.NewBindPortInfoProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("bind-port-info parameter: \n%s\n", debugMarshalIndent(bindPortInfoParam))
+		return err
 	},
 }
 
@@ -91,8 +115,11 @@ var proxylbBindPortAddCmd = &cobra.Command{
 
 	Short: "BindPortAdd Proxylb",
 	Long:  `BindPortAdd Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		bindPortAddParam, err := params.NewBindPortAddProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("bind-port-add parameter: \n%s\n", debugMarshalIndent(bindPortAddParam))
+		return err
 	},
 }
 
@@ -101,8 +128,11 @@ var proxylbBindPortUpdateCmd = &cobra.Command{
 
 	Short: "BindPortUpdate Proxylb",
 	Long:  `BindPortUpdate Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		bindPortUpdateParam, err := params.NewBindPortUpdateProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("bind-port-update parameter: \n%s\n", debugMarshalIndent(bindPortUpdateParam))
+		return err
 	},
 }
 
@@ -111,8 +141,11 @@ var proxylbBindPortDeleteCmd = &cobra.Command{
 
 	Short: "BindPortDelete Proxylb",
 	Long:  `BindPortDelete Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		bindPortDeleteParam, err := params.NewBindPortDeleteProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("bind-port-delete parameter: \n%s\n", debugMarshalIndent(bindPortDeleteParam))
+		return err
 	},
 }
 
@@ -121,8 +154,11 @@ var proxylbResponseHeaderInfoCmd = &cobra.Command{
 	Aliases: []string{"response-header-list"},
 	Short:   "ResponseHeaderInfo Proxylb",
 	Long:    `ResponseHeaderInfo Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		responseHeaderInfoParam, err := params.NewResponseHeaderInfoProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("response-header-info parameter: \n%s\n", debugMarshalIndent(responseHeaderInfoParam))
+		return err
 	},
 }
 
@@ -131,8 +167,11 @@ var proxylbResponseHeaderAddCmd = &cobra.Command{
 
 	Short: "ResponseHeaderAdd Proxylb",
 	Long:  `ResponseHeaderAdd Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		responseHeaderAddParam, err := params.NewResponseHeaderAddProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("response-header-add parameter: \n%s\n", debugMarshalIndent(responseHeaderAddParam))
+		return err
 	},
 }
 
@@ -141,8 +180,11 @@ var proxylbResponseHeaderUpdateCmd = &cobra.Command{
 
 	Short: "ResponseHeaderUpdate Proxylb",
 	Long:  `ResponseHeaderUpdate Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		responseHeaderUpdateParam, err := params.NewResponseHeaderUpdateProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("response-header-update parameter: \n%s\n", debugMarshalIndent(responseHeaderUpdateParam))
+		return err
 	},
 }
 
@@ -151,8 +193,11 @@ var proxylbResponseHeaderDeleteCmd = &cobra.Command{
 
 	Short: "ResponseHeaderDelete Proxylb",
 	Long:  `ResponseHeaderDelete Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		responseHeaderDeleteParam, err := params.NewResponseHeaderDeleteProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("response-header-delete parameter: \n%s\n", debugMarshalIndent(responseHeaderDeleteParam))
+		return err
 	},
 }
 
@@ -161,8 +206,11 @@ var proxylbAcmeInfoCmd = &cobra.Command{
 
 	Short: "AcmeInfo Proxylb",
 	Long:  `AcmeInfo Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		acmeInfoParam, err := params.NewAcmeInfoProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("acme-info parameter: \n%s\n", debugMarshalIndent(acmeInfoParam))
+		return err
 	},
 }
 
@@ -171,8 +219,11 @@ var proxylbAcmeSettingCmd = &cobra.Command{
 
 	Short: "AcmeSetting Proxylb",
 	Long:  `AcmeSetting Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		acmeSettingParam, err := params.NewAcmeSettingProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("acme-setting parameter: \n%s\n", debugMarshalIndent(acmeSettingParam))
+		return err
 	},
 }
 
@@ -181,8 +232,11 @@ var proxylbAcmeRenewCmd = &cobra.Command{
 
 	Short: "AcmeRenew Proxylb",
 	Long:  `AcmeRenew Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		acmeRenewParam, err := params.NewAcmeRenewProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("acme-renew parameter: \n%s\n", debugMarshalIndent(acmeRenewParam))
+		return err
 	},
 }
 
@@ -191,8 +245,11 @@ var proxylbServerInfoCmd = &cobra.Command{
 	Aliases: []string{"server-list"},
 	Short:   "ServerInfo Proxylb",
 	Long:    `ServerInfo Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverInfoParam, err := params.NewServerInfoProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-info parameter: \n%s\n", debugMarshalIndent(serverInfoParam))
+		return err
 	},
 }
 
@@ -201,8 +258,11 @@ var proxylbServerAddCmd = &cobra.Command{
 
 	Short: "ServerAdd Proxylb",
 	Long:  `ServerAdd Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverAddParam, err := params.NewServerAddProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-add parameter: \n%s\n", debugMarshalIndent(serverAddParam))
+		return err
 	},
 }
 
@@ -211,8 +271,11 @@ var proxylbServerUpdateCmd = &cobra.Command{
 
 	Short: "ServerUpdate Proxylb",
 	Long:  `ServerUpdate Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverUpdateParam, err := params.NewServerUpdateProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-update parameter: \n%s\n", debugMarshalIndent(serverUpdateParam))
+		return err
 	},
 }
 
@@ -221,8 +284,11 @@ var proxylbServerDeleteCmd = &cobra.Command{
 
 	Short: "ServerDelete Proxylb",
 	Long:  `ServerDelete Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		serverDeleteParam, err := params.NewServerDeleteProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("server-delete parameter: \n%s\n", debugMarshalIndent(serverDeleteParam))
+		return err
 	},
 }
 
@@ -231,8 +297,11 @@ var proxylbCertificateInfoCmd = &cobra.Command{
 	Aliases: []string{"certificate-list", "cert-list", "cert-info"},
 	Short:   "CertificateInfo Proxylb",
 	Long:    `CertificateInfo Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		certificateInfoParam, err := params.NewCertificateInfoProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("certificate-info parameter: \n%s\n", debugMarshalIndent(certificateInfoParam))
+		return err
 	},
 }
 
@@ -241,8 +310,11 @@ var proxylbCertificateAddCmd = &cobra.Command{
 	Aliases: []string{"cert-add"},
 	Short:   "CertificateAdd Proxylb",
 	Long:    `CertificateAdd Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		certificateAddParam, err := params.NewCertificateAddProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("certificate-add parameter: \n%s\n", debugMarshalIndent(certificateAddParam))
+		return err
 	},
 }
 
@@ -251,8 +323,11 @@ var proxylbCertificateUpdateCmd = &cobra.Command{
 	Aliases: []string{"cert-update"},
 	Short:   "CertificateUpdate Proxylb",
 	Long:    `CertificateUpdate Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		certificateUpdateParam, err := params.NewCertificateUpdateProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("certificate-update parameter: \n%s\n", debugMarshalIndent(certificateUpdateParam))
+		return err
 	},
 }
 
@@ -261,8 +336,11 @@ var proxylbCertificateDeleteCmd = &cobra.Command{
 	Aliases: []string{"cert-delete"},
 	Short:   "CertificateDelete Proxylb",
 	Long:    `CertificateDelete Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		certificateDeleteParam, err := params.NewCertificateDeleteProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("certificate-delete parameter: \n%s\n", debugMarshalIndent(certificateDeleteParam))
+		return err
 	},
 }
 
@@ -271,8 +349,11 @@ var proxylbMonitorCmd = &cobra.Command{
 
 	Short: "Monitor Proxylb",
 	Long:  `Monitor Proxylb`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		monitorParam, err := params.NewMonitorProxylbParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("monitor parameter: \n%s\n", debugMarshalIndent(monitorParam))
+		return err
 	},
 }
 

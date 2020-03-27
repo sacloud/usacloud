@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var configCurrentCmd = &cobra.Command{
 
 	Short: "Current Config",
 	Long:  `Current Config`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		currentParam, err := params.NewCurrentConfigParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("current parameter: \n%s\n", debugMarshalIndent(currentParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var configDeleteCmd = &cobra.Command{
 	Aliases: []string{"rm"},
 	Short:   "Delete Config",
 	Long:    `Delete Config`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		deleteParam, err := params.NewDeleteConfigParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("delete parameter: \n%s\n", debugMarshalIndent(deleteParam))
+		return err
 	},
 }
 
@@ -41,8 +50,11 @@ var configEditCmd = &cobra.Command{
 
 	Short: "Edit Config (default)",
 	Long:  `Edit Config (default)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		editParam, err := params.NewEditConfigParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("edit parameter: \n%s\n", debugMarshalIndent(editParam))
+		return err
 	},
 }
 
@@ -51,8 +63,11 @@ var configListCmd = &cobra.Command{
 	Aliases: []string{"ls"},
 	Short:   "List Config",
 	Long:    `List Config`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListConfigParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
@@ -61,8 +76,11 @@ var configMigrateCmd = &cobra.Command{
 
 	Short: "Migrate Config",
 	Long:  `Migrate Config`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		migrateParam, err := params.NewMigrateConfigParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("migrate parameter: \n%s\n", debugMarshalIndent(migrateParam))
+		return err
 	},
 }
 
@@ -71,8 +89,11 @@ var configShowCmd = &cobra.Command{
 
 	Short: "Show Config",
 	Long:  `Show Config`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		showParam, err := params.NewShowConfigParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("show parameter: \n%s\n", debugMarshalIndent(showParam))
+		return err
 	},
 }
 
@@ -81,8 +102,11 @@ var configUseCmd = &cobra.Command{
 
 	Short: "Use Config",
 	Long:  `Use Config`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		useParam, err := params.NewUseConfigParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("use parameter: \n%s\n", debugMarshalIndent(useParam))
+		return err
 	},
 }
 

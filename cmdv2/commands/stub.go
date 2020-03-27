@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/spf13/cobra"
@@ -35,4 +36,12 @@ func dumpFlagsAndArgs(cmd *cobra.Command, args []string) {
 	cmd.Flags().VisitAll(func(f *pflag.Flag) {
 		fmt.Println("\t" + f.Name + "\t: " + f.Value.String())
 	})
+}
+
+func debugMarshalIndent(in interface{}) string {
+	data, err := json.MarshalIndent(in, "", "    ")
+	if err != nil {
+		return ""
+	}
+	return string(data)
 }

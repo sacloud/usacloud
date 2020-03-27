@@ -3,6 +3,9 @@
 package commands
 
 import (
+	"fmt"
+
+	"github.com/sacloud/usacloud/cmdv2/params"
 	"github.com/spf13/cobra"
 )
 
@@ -21,8 +24,11 @@ var billCsvCmd = &cobra.Command{
 
 	Short: "Csv Bill",
 	Long:  `Csv Bill`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		csvParam, err := params.NewCsvBillParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("csv parameter: \n%s\n", debugMarshalIndent(csvParam))
+		return err
 	},
 }
 
@@ -31,8 +37,11 @@ var billListCmd = &cobra.Command{
 	Aliases: []string{"ls", "find"},
 	Short:   "List Bill (default)",
 	Long:    `List Bill (default)`,
-	Run: func(cmd *cobra.Command, args []string) {
-		// TODO not implements
+	RunE: func(cmd *cobra.Command, args []string) error {
+		listParam, err := params.NewListBillParam(newParamsAdapter(cmd.Flags()))
+		// TODO DEBUG
+		fmt.Printf("list parameter: \n%s\n", debugMarshalIndent(listParam))
+		return err
 	},
 }
 
